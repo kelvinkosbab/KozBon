@@ -17,14 +17,25 @@ class MyBonjourDiscoveryService: NSObject, MyNetServiceBrowserDelegate {
   // MARK: - Properties
   
   var completion: ((_ services: [MyNetService]) -> Void)? = nil
+  var didStartSearch: (() -> Void)? = nil
   
-  var state: MyNetServiceBrowserState = .stopped {
+  private var state: MyNetServiceBrowserState = .stopped {
     didSet {
-      if self.state.isStopped && oldValue.isSearching {
+      if self.state.isSearching && oldValue.isStopped {
+        self.didStartSearch?()
+      } else if self.state.isStopped && oldValue.isSearching {
         print("\(self.className) : State is now \(self.state.string)")
         self.completion?(self.services)
       }
     }
+  }
+  
+  var isSearching: Bool {
+    return self.state.isSearching
+  }
+  
+  var isStopped: Bool {
+    return self.state.isStopped
   }
   
   private var serviceBrowsers: [MyNetServiceBrowser] = []
@@ -70,14 +81,15 @@ class MyBonjourDiscoveryService: NSObject, MyNetServiceBrowserDelegate {
   
   // MARK: - Start / Stop Discovery
   
-  func startDiscovery(serviceType: MyServiceType, completion: @escaping (_ services: [MyNetService]) -> Void) {
-    self.startDiscovery(serviceTypes: [ serviceType ], completion: completion)
+  func startDiscovery(serviceType: MyServiceType, completion: @escaping (_ services: [MyNetService]) -> Void, didStartSearch: (() -> Void)? = nil) {
+    self.startDiscovery(serviceTypes: [ serviceType ], completion: completion, didStartSearch: didStartSearch)
   }
   
-  func startDiscovery(serviceTypes: [MyServiceType]? = nil, completion: @escaping (_ services: [MyNetService]) -> Void) {
+  func startDiscovery(serviceTypes: [MyServiceType]? = nil, completion: @escaping (_ services: [MyNetService]) -> Void, didStartSearch: (() -> Void)? = nil) {
     self.clearServices()
     self.serviceBrowsers = []
     self.completion = completion
+    self.didStartSearch = didStartSearch
     
     // Populate service browsers
     for serviceType in serviceTypes ?? MyServiceType.allServiceTypes {

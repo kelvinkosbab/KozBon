@@ -12,6 +12,8 @@ import UIKit
 class NetServicesTableHeaderCell: UITableViewCell {
   static let identifier: String = "NetServicesTableHeaderCell"
   @IBOutlet weak var titleLabel: UILabel!
+  @IBOutlet weak var reloadButton: UIButton!
+  @IBOutlet weak var loadingImageView: UIImageView!
 }
 
 class NetServicesTableServiceCell: UITableViewCell {
@@ -23,7 +25,7 @@ class NetServicesTableServiceCell: UITableViewCell {
 
 class NetServicesTableLoadingCell: UITableViewCell {
   static let identifier: String = "NetServicesTableLoadingCell"
-  @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+  @IBOutlet weak var loadingImageView: UIImageView!
 }
 
 class NetServicesTableViewController: UITableViewController {
@@ -37,8 +39,6 @@ class NetServicesTableViewController: UITableViewController {
   // MARK: - Properties
   
   var services: [MyNetService] = []
-  
-  var isProcessingServices: Bool = false
   
   // MARK: - Lifecycle
   
@@ -58,11 +58,10 @@ class NetServicesTableViewController: UITableViewController {
   
   func reloadAllServices() {
     self.services = []
-    self.isProcessingServices = true
-    self.tableView.reloadData()
-    MyBonjourDiscoveryService.shared.startDiscovery { (services) in
-      self.isProcessingServices = false
+    MyBonjourDiscoveryService.shared.startDiscovery(completion: { (services) in
       self.services = services
+      self.tableView.reloadData()
+    }) { 
       self.tableView.reloadData()
     }
   }
@@ -84,12 +83,20 @@ class NetServicesTableViewController: UITableViewController {
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return self.isProcessingServices ? 1 : self.services.count
+    return MyBonjourDiscoveryService.shared.isSearching ? 1 : self.services.count
   }
   
   override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     let cell = tableView.dequeueReusableCell(withIdentifier: "NetServicesTableHeaderCell") as! NetServicesTableHeaderCell
     cell.titleLabel.text = "Available Services".uppercased()
+    if MyBonjourDiscoveryService.shared.isSearching {
+      cell.loadingImageView.image = UIImage.gif(name: "dotLoadingGif")
+      cell.loadingImageView.isHidden = false
+      cell.reloadButton.isHidden = true
+    } else {
+      cell.loadingImageView.isHidden = true
+      cell.reloadButton.isHidden = false
+    }
     return cell
   }
   
@@ -104,9 +111,9 @@ class NetServicesTableViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
     // If services are loading
-    if self.isProcessingServices {
+    if MyBonjourDiscoveryService.shared.isSearching {
       let cell = tableView.dequeueReusableCell(withIdentifier: "NetServicesTableLoadingCell", for: indexPath) as! NetServicesTableLoadingCell
-      cell.activityIndicator.startAnimating()
+      cell.loadingImageView.image = UIImage.gif(name: "dotLoadingGif")
       return cell
     }
     

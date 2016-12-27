@@ -49,32 +49,44 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1uo-gh-rgZ">
-                                            <rect key="frame" x="0.0" y="42.5" width="375" height="1"/>
+                                            <rect key="frame" x="0.0" y="43" width="375" height="1"/>
                                             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="1" id="hMg-YB-Vnd"/>
                                             </constraints>
                                         </view>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="spa-3j-m0M">
-                                            <rect key="frame" x="320" y="7" width="47" height="30"/>
+                                            <rect key="frame" x="325" y="13" width="42" height="28"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <state key="normal" title="Reload"/>
                                             <connections>
                                                 <action selector="reloadButtonSelected:" destination="Eto-in-gN7" eventType="touchUpInside" id="B8V-IZ-joC"/>
                                             </connections>
                                         </button>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fmO-lp-KLA">
+                                            <rect key="frame" x="327" y="13" width="40" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="30" id="MjO-dg-rBg"/>
+                                                <constraint firstAttribute="width" constant="40" id="YAb-oc-9r2"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
+                                        <constraint firstItem="spa-3j-m0M" firstAttribute="centerY" secondItem="C9r-Hp-NSj" secondAttribute="centerY" id="64l-76-cKc"/>
                                         <constraint firstAttribute="bottom" secondItem="1uo-gh-rgZ" secondAttribute="bottom" id="CBe-bl-jmg"/>
                                         <constraint firstItem="1uo-gh-rgZ" firstAttribute="leading" secondItem="RAb-bw-KIW" secondAttribute="leading" id="NWD-t1-eGU"/>
                                         <constraint firstAttribute="trailing" secondItem="1uo-gh-rgZ" secondAttribute="trailing" id="R6c-Ry-GbT"/>
-                                        <constraint firstItem="spa-3j-m0M" firstAttribute="centerY" secondItem="RAb-bw-KIW" secondAttribute="centerY" id="XcZ-jI-Z8U"/>
                                         <constraint firstItem="C9r-Hp-NSj" firstAttribute="bottom" secondItem="RAb-bw-KIW" secondAttribute="bottomMargin" id="YYq-Hy-nnS"/>
+                                        <constraint firstAttribute="trailing" secondItem="fmO-lp-KLA" secondAttribute="trailing" constant="8" id="apZ-pO-pks"/>
                                         <constraint firstItem="C9r-Hp-NSj" firstAttribute="leading" secondItem="RAb-bw-KIW" secondAttribute="leadingMargin" id="cO9-Bp-gBL"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="spa-3j-m0M" secondAttribute="trailing" id="rhZ-e1-wcr"/>
+                                        <constraint firstItem="1uo-gh-rgZ" firstAttribute="top" secondItem="fmO-lp-KLA" secondAttribute="bottom" id="tjA-VI-5V1"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="loadingImageView" destination="fmO-lp-KLA" id="aAY-8D-Riz"/>
+                                    <outlet property="reloadButton" destination="spa-3j-m0M" id="526-ls-hx8"/>
                                     <outlet property="titleLabel" destination="C9r-Hp-NSj" id="udF-Ly-FE1"/>
                                 </connections>
                             </tableViewCell>
@@ -92,19 +104,19 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0a5-Ch-7nf">
-                                            <rect key="frame" x="8" y="28" width="76.5" height="13.5"/>
+                                            <rect key="frame" x="8" y="28" width="77" height="14"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4iB-d8-XGI">
-                                            <rect key="frame" x="86.5" y="28" width="5.5" height="13.5"/>
+                                            <rect key="frame" x="87" y="28" width="6" height="14"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0hU-WF-I4v">
-                                            <rect key="frame" x="94" y="28" width="76.5" height="13.5"/>
+                                            <rect key="frame" x="95" y="28" width="77" height="14"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -134,18 +146,21 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="12i-m0-KPL">
-                                            <rect key="frame" x="177" y="15" width="20" height="20"/>
-                                            <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                        </activityIndicatorView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kbJ-5S-MFT">
+                                            <rect key="frame" x="154.5" y="4" width="65" height="40"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="65" id="Pgs-Xu-VkB"/>
+                                                <constraint firstAttribute="height" constant="40" id="bLf-3T-Tpz"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="12i-m0-KPL" firstAttribute="centerY" secondItem="Be2-Mi-vP0" secondAttribute="centerY" id="RTU-Q4-rCs"/>
-                                        <constraint firstItem="12i-m0-KPL" firstAttribute="centerX" secondItem="Be2-Mi-vP0" secondAttribute="centerX" id="VYV-ll-I6u"/>
+                                        <constraint firstItem="kbJ-5S-MFT" firstAttribute="centerY" secondItem="Be2-Mi-vP0" secondAttribute="centerY" id="Mch-oz-MtZ"/>
+                                        <constraint firstItem="kbJ-5S-MFT" firstAttribute="centerX" secondItem="Be2-Mi-vP0" secondAttribute="centerX" id="XxL-MD-fUo"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="activityIndicator" destination="12i-m0-KPL" id="iFg-vy-uHT"/>
+                                    <outlet property="loadingImageView" destination="kbJ-5S-MFT" id="nWm-pc-rR5"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

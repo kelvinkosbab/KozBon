@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B603A6D81E12177700ED333D /* UIImage+Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = B603A6D71E12177700ED333D /* UIImage+Gif.swift */; };
+		B603A6DE1E1217B300ED333D /* dotLoadingGif.gif in Resources */ = {isa = PBXBuildFile; fileRef = B603A6DB1E1217B300ED333D /* dotLoadingGif.gif */; };
 		B6CE1D281E1208C1003D4FFA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D271E1208C1003D4FFA /* AppDelegate.swift */; };
 		B6CE1D301E1208C1003D4FFA /* iDiscover.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D2E1E1208C1003D4FFA /* iDiscover.xcdatamodeld */; };
 		B6CE1D321E1208C1003D4FFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6CE1D311E1208C1003D4FFA /* Assets.xcassets */; };
@@ -30,6 +32,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B603A6D71E12177700ED333D /* UIImage+Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Gif.swift"; sourceTree = "<group>"; };
+		B603A6DB1E1217B300ED333D /* dotLoadingGif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = dotLoadingGif.gif; sourceTree = "<group>"; };
 		B6CE1D241E1208C1003D4FFA /* iDiscover.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iDiscover.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6CE1D271E1208C1003D4FFA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B6CE1D2F1E1208C1003D4FFA /* iDiscover.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iDiscover.xcdatamodel; sourceTree = "<group>"; };
@@ -65,6 +69,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B603A6D91E12179F00ED333D /* Gifs */ = {
+			isa = PBXGroup;
+			children = (
+				B603A6DB1E1217B300ED333D /* dotLoadingGif.gif */,
+			);
+			name = Gifs;
+			sourceTree = "<group>";
+		};
 		B6CE1D1B1E1208C1003D4FFA = {
 			isa = PBXGroup;
 			children = (
@@ -150,6 +162,7 @@
 			children = (
 				B6CE1D451E120ADC003D4FFA /* Date+Util.swift */,
 				B6CE1D461E120ADC003D4FFA /* DispatchQueue+Util.swift */,
+				B603A6D71E12177700ED333D /* UIImage+Gif.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -173,6 +186,7 @@
 		B6CE1D441E12098A003D4FFA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B603A6D91E12179F00ED333D /* Gifs */,
 				B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */,
 				B6CE1D311E1208C1003D4FFA /* Assets.xcassets */,
 				B6CE1D331E1208C1003D4FFA /* LaunchScreen.storyboard */,
@@ -243,6 +257,7 @@
 			files = (
 				B6CE1D351E1208C1003D4FFA /* LaunchScreen.storyboard in Resources */,
 				B6CE1D4A1E120AF8003D4FFA /* service-names-port-numbers.csv in Resources */,
+				B603A6DE1E1217B300ED333D /* dotLoadingGif.gif in Resources */,
 				B6CE1D321E1208C1003D4FFA /* Assets.xcassets in Resources */,
 				B6CE1D621E120D10003D4FFA /* Main.storyboard in Resources */,
 			);
@@ -255,6 +270,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B603A6D81E12177700ED333D /* UIImage+Gif.swift in Sources */,
 				B6CE1D5D1E120CCC003D4FFA /* MyNetBrowserState.swift in Sources */,
 				B6CE1D661E120E4D003D4FFA /* CustomServiceType.swift in Sources */,
 				B6CE1D471E120ADC003D4FFA /* Date+Util.swift in Sources */,
@@ -426,6 +442,7 @@
 				B6CE1D3B1E1208C1003D4FFA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
