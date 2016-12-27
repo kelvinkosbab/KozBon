@@ -8,22 +8,50 @@
 
 /* Begin PBXBuildFile section */
 		B6CE1D281E1208C1003D4FFA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D271E1208C1003D4FFA /* AppDelegate.swift */; };
-		B6CE1D2A1E1208C1003D4FFA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D291E1208C1003D4FFA /* ViewController.swift */; };
-		B6CE1D2D1E1208C1003D4FFA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6CE1D2B1E1208C1003D4FFA /* Main.storyboard */; };
 		B6CE1D301E1208C1003D4FFA /* iDiscover.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D2E1E1208C1003D4FFA /* iDiscover.xcdatamodeld */; };
 		B6CE1D321E1208C1003D4FFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6CE1D311E1208C1003D4FFA /* Assets.xcassets */; };
 		B6CE1D351E1208C1003D4FFA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6CE1D331E1208C1003D4FFA /* LaunchScreen.storyboard */; };
+		B6CE1D471E120ADC003D4FFA /* Date+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D451E120ADC003D4FFA /* Date+Util.swift */; };
+		B6CE1D481E120ADC003D4FFA /* DispatchQueue+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D461E120ADC003D4FFA /* DispatchQueue+Util.swift */; };
+		B6CE1D4A1E120AF8003D4FFA /* service-names-port-numbers.csv in Resources */ = {isa = PBXBuildFile; fileRef = B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */; };
+		B6CE1D4C1E120B01003D4FFA /* NetServicesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D4B1E120B01003D4FFA /* NetServicesTableViewController.swift */; };
+		B6CE1D4F1E120B90003D4FFA /* MyClassProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D4D1E120B90003D4FFA /* MyClassProtocol.swift */; };
+		B6CE1D501E120B90003D4FFA /* MyControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D4E1E120B90003D4FFA /* MyControllerProtocol.swift */; };
+		B6CE1D521E120B9F003D4FFA /* MyDataManagerObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D511E120B9F003D4FFA /* MyDataManagerObject.swift */; };
+		B6CE1D551E120BF4003D4FFA /* MyCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D531E120BF4003D4FFA /* MyCoreDataStack.swift */; };
+		B6CE1D561E120BF4003D4FFA /* MyDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D541E120BF4003D4FFA /* MyDataManager.swift */; };
+		B6CE1D5C1E120CCC003D4FFA /* MyBonjourDiscoveryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D571E120CCC003D4FFA /* MyBonjourDiscoveryService.swift */; };
+		B6CE1D5D1E120CCC003D4FFA /* MyNetBrowserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D581E120CCC003D4FFA /* MyNetBrowserState.swift */; };
+		B6CE1D5E1E120CCC003D4FFA /* MyNetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D591E120CCC003D4FFA /* MyNetService.swift */; };
+		B6CE1D5F1E120CCC003D4FFA /* MyNetServiceBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D5A1E120CCC003D4FFA /* MyNetServiceBrowser.swift */; };
+		B6CE1D601E120CCC003D4FFA /* MyServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D5B1E120CCC003D4FFA /* MyServiceType.swift */; };
+		B6CE1D621E120D10003D4FFA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6CE1D611E120D10003D4FFA /* Main.storyboard */; };
+		B6CE1D661E120E4D003D4FFA /* CustomServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D641E120E4D003D4FFA /* CustomServiceType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B6CE1D241E1208C1003D4FFA /* iDiscover.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iDiscover.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6CE1D271E1208C1003D4FFA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B6CE1D291E1208C1003D4FFA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		B6CE1D2C1E1208C1003D4FFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B6CE1D2F1E1208C1003D4FFA /* iDiscover.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iDiscover.xcdatamodel; sourceTree = "<group>"; };
 		B6CE1D311E1208C1003D4FFA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B6CE1D341E1208C1003D4FFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B6CE1D361E1208C1003D4FFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B6CE1D451E120ADC003D4FFA /* Date+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Util.swift"; sourceTree = "<group>"; };
+		B6CE1D461E120ADC003D4FFA /* DispatchQueue+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Util.swift"; sourceTree = "<group>"; };
+		B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "service-names-port-numbers.csv"; sourceTree = "<group>"; };
+		B6CE1D4B1E120B01003D4FFA /* NetServicesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetServicesTableViewController.swift; sourceTree = "<group>"; };
+		B6CE1D4D1E120B90003D4FFA /* MyClassProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyClassProtocol.swift; sourceTree = "<group>"; };
+		B6CE1D4E1E120B90003D4FFA /* MyControllerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyControllerProtocol.swift; sourceTree = "<group>"; };
+		B6CE1D511E120B9F003D4FFA /* MyDataManagerObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDataManagerObject.swift; sourceTree = "<group>"; };
+		B6CE1D531E120BF4003D4FFA /* MyCoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCoreDataStack.swift; sourceTree = "<group>"; };
+		B6CE1D541E120BF4003D4FFA /* MyDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDataManager.swift; sourceTree = "<group>"; };
+		B6CE1D571E120CCC003D4FFA /* MyBonjourDiscoveryService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyBonjourDiscoveryService.swift; sourceTree = "<group>"; };
+		B6CE1D581E120CCC003D4FFA /* MyNetBrowserState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyNetBrowserState.swift; sourceTree = "<group>"; };
+		B6CE1D591E120CCC003D4FFA /* MyNetService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyNetService.swift; sourceTree = "<group>"; };
+		B6CE1D5A1E120CCC003D4FFA /* MyNetServiceBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyNetServiceBrowser.swift; sourceTree = "<group>"; };
+		B6CE1D5B1E120CCC003D4FFA /* MyServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyServiceType.swift; sourceTree = "<group>"; };
+		B6CE1D611E120D10003D4FFA /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		B6CE1D641E120E4D003D4FFA /* CustomServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomServiceType.swift; path = "Managed Objects/CustomServiceType.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,14 +85,100 @@
 			isa = PBXGroup;
 			children = (
 				B6CE1D271E1208C1003D4FFA /* AppDelegate.swift */,
-				B6CE1D291E1208C1003D4FFA /* ViewController.swift */,
-				B6CE1D2B1E1208C1003D4FFA /* Main.storyboard */,
+				B6CE1D3C1E1208D8003D4FFA /* Common */,
+				B6CE1D421E120925003D4FFA /* View */,
+				B6CE1D431E120977003D4FFA /* Controller */,
+				B6CE1D441E12098A003D4FFA /* Supporting Files */,
+			);
+			path = iDiscover;
+			sourceTree = "<group>";
+		};
+		B6CE1D3C1E1208D8003D4FFA /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				B6CE1D3D1E1208DC003D4FFA /* Protocols */,
+				B6CE1D3E1E1208E5003D4FFA /* Services */,
+				B6CE1D3F1E1208EE003D4FFA /* Data Manager */,
+				B6CE1D401E1208F6003D4FFA /* Managed Objects */,
+				B6CE1D411E120907003D4FFA /* Extensions */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
+		B6CE1D3D1E1208DC003D4FFA /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				B6CE1D4D1E120B90003D4FFA /* MyClassProtocol.swift */,
+				B6CE1D4E1E120B90003D4FFA /* MyControllerProtocol.swift */,
+				B6CE1D511E120B9F003D4FFA /* MyDataManagerObject.swift */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		B6CE1D3E1E1208E5003D4FFA /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				B6CE1D581E120CCC003D4FFA /* MyNetBrowserState.swift */,
+				B6CE1D571E120CCC003D4FFA /* MyBonjourDiscoveryService.swift */,
+				B6CE1D591E120CCC003D4FFA /* MyNetService.swift */,
+				B6CE1D5A1E120CCC003D4FFA /* MyNetServiceBrowser.swift */,
+				B6CE1D5B1E120CCC003D4FFA /* MyServiceType.swift */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		B6CE1D3F1E1208EE003D4FFA /* Data Manager */ = {
+			isa = PBXGroup;
+			children = (
+				B6CE1D2E1E1208C1003D4FFA /* iDiscover.xcdatamodeld */,
+				B6CE1D531E120BF4003D4FFA /* MyCoreDataStack.swift */,
+				B6CE1D541E120BF4003D4FFA /* MyDataManager.swift */,
+			);
+			name = "Data Manager";
+			sourceTree = "<group>";
+		};
+		B6CE1D401E1208F6003D4FFA /* Managed Objects */ = {
+			isa = PBXGroup;
+			children = (
+				B6CE1D641E120E4D003D4FFA /* CustomServiceType.swift */,
+			);
+			name = "Managed Objects";
+			sourceTree = "<group>";
+		};
+		B6CE1D411E120907003D4FFA /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B6CE1D451E120ADC003D4FFA /* Date+Util.swift */,
+				B6CE1D461E120ADC003D4FFA /* DispatchQueue+Util.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		B6CE1D421E120925003D4FFA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B6CE1D611E120D10003D4FFA /* Main.storyboard */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		B6CE1D431E120977003D4FFA /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				B6CE1D4B1E120B01003D4FFA /* NetServicesTableViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		B6CE1D441E12098A003D4FFA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */,
 				B6CE1D311E1208C1003D4FFA /* Assets.xcassets */,
 				B6CE1D331E1208C1003D4FFA /* LaunchScreen.storyboard */,
 				B6CE1D361E1208C1003D4FFA /* Info.plist */,
-				B6CE1D2E1E1208C1003D4FFA /* iDiscover.xcdatamodeld */,
 			);
-			path = iDiscover;
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -128,8 +242,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6CE1D351E1208C1003D4FFA /* LaunchScreen.storyboard in Resources */,
+				B6CE1D4A1E120AF8003D4FFA /* service-names-port-numbers.csv in Resources */,
 				B6CE1D321E1208C1003D4FFA /* Assets.xcassets in Resources */,
-				B6CE1D2D1E1208C1003D4FFA /* Main.storyboard in Resources */,
+				B6CE1D621E120D10003D4FFA /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,23 +255,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6CE1D5D1E120CCC003D4FFA /* MyNetBrowserState.swift in Sources */,
+				B6CE1D661E120E4D003D4FFA /* CustomServiceType.swift in Sources */,
+				B6CE1D471E120ADC003D4FFA /* Date+Util.swift in Sources */,
+				B6CE1D481E120ADC003D4FFA /* DispatchQueue+Util.swift in Sources */,
+				B6CE1D4F1E120B90003D4FFA /* MyClassProtocol.swift in Sources */,
+				B6CE1D5F1E120CCC003D4FFA /* MyNetServiceBrowser.swift in Sources */,
+				B6CE1D601E120CCC003D4FFA /* MyServiceType.swift in Sources */,
+				B6CE1D5C1E120CCC003D4FFA /* MyBonjourDiscoveryService.swift in Sources */,
+				B6CE1D561E120BF4003D4FFA /* MyDataManager.swift in Sources */,
+				B6CE1D501E120B90003D4FFA /* MyControllerProtocol.swift in Sources */,
+				B6CE1D4C1E120B01003D4FFA /* NetServicesTableViewController.swift in Sources */,
 				B6CE1D301E1208C1003D4FFA /* iDiscover.xcdatamodeld in Sources */,
-				B6CE1D2A1E1208C1003D4FFA /* ViewController.swift in Sources */,
+				B6CE1D521E120B9F003D4FFA /* MyDataManagerObject.swift in Sources */,
 				B6CE1D281E1208C1003D4FFA /* AppDelegate.swift in Sources */,
+				B6CE1D5E1E120CCC003D4FFA /* MyNetService.swift in Sources */,
+				B6CE1D551E120BF4003D4FFA /* MyCoreDataStack.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		B6CE1D2B1E1208C1003D4FFA /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B6CE1D2C1E1208C1003D4FFA /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		B6CE1D331E1208C1003D4FFA /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
