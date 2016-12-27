@@ -1,5 +1,5 @@
 //
-//  MyBonjourDiscoveryService.swift
+//  MyBonjourManager.swift
 //  Test
 //
 //  Created by Kelvin Kosbab on 12/24/16.
@@ -8,11 +8,13 @@
 
 import Foundation
 
-class MyBonjourDiscoveryService: NSObject, MyNetServiceBrowserDelegate {
+class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
   
   // MARK: - Singleton
   
-  static let shared = MyBonjourDiscoveryService()
+  static let shared = MyBonjourManager()
+  
+  private override init() { super.init() }
   
   // MARK: - Properties
   
@@ -39,11 +41,7 @@ class MyBonjourDiscoveryService: NSObject, MyNetServiceBrowserDelegate {
   }
   
   private var serviceBrowsers: [MyNetServiceBrowser] = []
-  private let concurrentServicesQueue: DispatchQueue = DispatchQueue(label: "MyBonjourDiscoveryService.concurrentServicesQueue", attributes: .concurrent)
-  
-  // MARK: - Init
-  
-  private override init() { super.init() }
+  private let concurrentServicesQueue: DispatchQueue = DispatchQueue(label: "\(MyBonjourManager.name).concurrentServicesQueue", attributes: .concurrent)
   
   // MARK: - Services
   
@@ -86,6 +84,7 @@ class MyBonjourDiscoveryService: NSObject, MyNetServiceBrowserDelegate {
   }
   
   func startDiscovery(serviceTypes: [MyServiceType]? = nil, completion: @escaping (_ services: [MyNetService]) -> Void, didStartSearch: (() -> Void)? = nil) {
+    self.stopDiscovery()
     self.clearServices()
     self.serviceBrowsers = []
     self.completion = completion

@@ -22,13 +22,15 @@
 		B6CE1D521E120B9F003D4FFA /* MyDataManagerObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D511E120B9F003D4FFA /* MyDataManagerObject.swift */; };
 		B6CE1D551E120BF4003D4FFA /* MyCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D531E120BF4003D4FFA /* MyCoreDataStack.swift */; };
 		B6CE1D561E120BF4003D4FFA /* MyDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D541E120BF4003D4FFA /* MyDataManager.swift */; };
-		B6CE1D5C1E120CCC003D4FFA /* MyBonjourDiscoveryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D571E120CCC003D4FFA /* MyBonjourDiscoveryService.swift */; };
+		B6CE1D5C1E120CCC003D4FFA /* MyBonjourManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D571E120CCC003D4FFA /* MyBonjourManager.swift */; };
 		B6CE1D5D1E120CCC003D4FFA /* MyNetBrowserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D581E120CCC003D4FFA /* MyNetBrowserState.swift */; };
 		B6CE1D5E1E120CCC003D4FFA /* MyNetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D591E120CCC003D4FFA /* MyNetService.swift */; };
 		B6CE1D5F1E120CCC003D4FFA /* MyNetServiceBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D5A1E120CCC003D4FFA /* MyNetServiceBrowser.swift */; };
 		B6CE1D601E120CCC003D4FFA /* MyServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D5B1E120CCC003D4FFA /* MyServiceType.swift */; };
 		B6CE1D621E120D10003D4FFA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6CE1D611E120D10003D4FFA /* Main.storyboard */; };
 		B6CE1D661E120E4D003D4FFA /* CustomServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D641E120E4D003D4FFA /* CustomServiceType.swift */; };
+		B6F93AB41E123AD500FE2DC7 /* MyBluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F93AB31E123AD500FE2DC7 /* MyBluetoothManager.swift */; };
+		B6F93AB61E1240EC00FE2DC7 /* MyBluetoothDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F93AB51E1240EC00FE2DC7 /* MyBluetoothDevice.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,13 +51,15 @@
 		B6CE1D511E120B9F003D4FFA /* MyDataManagerObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDataManagerObject.swift; sourceTree = "<group>"; };
 		B6CE1D531E120BF4003D4FFA /* MyCoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCoreDataStack.swift; sourceTree = "<group>"; };
 		B6CE1D541E120BF4003D4FFA /* MyDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDataManager.swift; sourceTree = "<group>"; };
-		B6CE1D571E120CCC003D4FFA /* MyBonjourDiscoveryService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyBonjourDiscoveryService.swift; sourceTree = "<group>"; };
+		B6CE1D571E120CCC003D4FFA /* MyBonjourManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyBonjourManager.swift; sourceTree = "<group>"; };
 		B6CE1D581E120CCC003D4FFA /* MyNetBrowserState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyNetBrowserState.swift; sourceTree = "<group>"; };
 		B6CE1D591E120CCC003D4FFA /* MyNetService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyNetService.swift; sourceTree = "<group>"; };
 		B6CE1D5A1E120CCC003D4FFA /* MyNetServiceBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyNetServiceBrowser.swift; sourceTree = "<group>"; };
 		B6CE1D5B1E120CCC003D4FFA /* MyServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyServiceType.swift; sourceTree = "<group>"; };
 		B6CE1D611E120D10003D4FFA /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		B6CE1D641E120E4D003D4FFA /* CustomServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomServiceType.swift; path = "Managed Objects/CustomServiceType.swift"; sourceTree = "<group>"; };
+		B6F93AB31E123AD500FE2DC7 /* MyBluetoothManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyBluetoothManager.swift; sourceTree = "<group>"; };
+		B6F93AB51E1240EC00FE2DC7 /* MyBluetoothDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyBluetoothDevice.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,7 +113,8 @@
 			isa = PBXGroup;
 			children = (
 				B6CE1D3D1E1208DC003D4FFA /* Protocols */,
-				B6CE1D3E1E1208E5003D4FFA /* Services */,
+				B6CE1D3E1E1208E5003D4FFA /* Bonjour */,
+				B6F93AB21E123AB800FE2DC7 /* Bluetooth */,
 				B6CE1D3F1E1208EE003D4FFA /* Data Manager */,
 				B6CE1D401E1208F6003D4FFA /* Managed Objects */,
 				B6CE1D411E120907003D4FFA /* Extensions */,
@@ -127,16 +132,16 @@
 			name = Protocols;
 			sourceTree = "<group>";
 		};
-		B6CE1D3E1E1208E5003D4FFA /* Services */ = {
+		B6CE1D3E1E1208E5003D4FFA /* Bonjour */ = {
 			isa = PBXGroup;
 			children = (
 				B6CE1D581E120CCC003D4FFA /* MyNetBrowserState.swift */,
-				B6CE1D571E120CCC003D4FFA /* MyBonjourDiscoveryService.swift */,
+				B6CE1D571E120CCC003D4FFA /* MyBonjourManager.swift */,
 				B6CE1D591E120CCC003D4FFA /* MyNetService.swift */,
 				B6CE1D5A1E120CCC003D4FFA /* MyNetServiceBrowser.swift */,
 				B6CE1D5B1E120CCC003D4FFA /* MyServiceType.swift */,
 			);
-			name = Services;
+			name = Bonjour;
 			sourceTree = "<group>";
 		};
 		B6CE1D3F1E1208EE003D4FFA /* Data Manager */ = {
@@ -193,6 +198,15 @@
 				B6CE1D361E1208C1003D4FFA /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B6F93AB21E123AB800FE2DC7 /* Bluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				B6F93AB31E123AD500FE2DC7 /* MyBluetoothManager.swift */,
+				B6F93AB51E1240EC00FE2DC7 /* MyBluetoothDevice.swift */,
+			);
+			name = Bluetooth;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -278,10 +292,12 @@
 				B6CE1D4F1E120B90003D4FFA /* MyClassProtocol.swift in Sources */,
 				B6CE1D5F1E120CCC003D4FFA /* MyNetServiceBrowser.swift in Sources */,
 				B6CE1D601E120CCC003D4FFA /* MyServiceType.swift in Sources */,
-				B6CE1D5C1E120CCC003D4FFA /* MyBonjourDiscoveryService.swift in Sources */,
+				B6CE1D5C1E120CCC003D4FFA /* MyBonjourManager.swift in Sources */,
 				B6CE1D561E120BF4003D4FFA /* MyDataManager.swift in Sources */,
 				B6CE1D501E120B90003D4FFA /* MyControllerProtocol.swift in Sources */,
 				B6CE1D4C1E120B01003D4FFA /* NetServicesTableViewController.swift in Sources */,
+				B6F93AB61E1240EC00FE2DC7 /* MyBluetoothDevice.swift in Sources */,
+				B6F93AB41E123AD500FE2DC7 /* MyBluetoothManager.swift in Sources */,
 				B6CE1D301E1208C1003D4FFA /* iDiscover.xcdatamodeld in Sources */,
 				B6CE1D521E120B9F003D4FFA /* MyDataManagerObject.swift in Sources */,
 				B6CE1D281E1208C1003D4FFA /* AppDelegate.swift in Sources */,
