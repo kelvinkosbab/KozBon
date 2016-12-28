@@ -10,30 +10,27 @@ import Foundation
 import UIKit
 
 class NetServicesTableHeaderCell: UITableViewCell {
-  static let identifier: String = "NetServicesTableHeaderCell"
   @IBOutlet weak var titleLabel: UILabel!
   @IBOutlet weak var reloadButton: UIButton!
   @IBOutlet weak var loadingImageView: UIImageView!
 }
 
 class NetServicesTableServiceCell: UITableViewCell {
-  static let identifier: String = "NetServicesTableServiceCell"
   @IBOutlet weak var nameLabel: UILabel!
   @IBOutlet weak var typeLabel: UILabel!
   @IBOutlet weak var protocolLabel: UILabel!
 }
 
 class NetServicesTableLoadingCell: UITableViewCell {
-  static let identifier: String = "NetServicesTableLoadingCell"
   @IBOutlet weak var loadingImageView: UIImageView!
 }
 
-class NetServicesTableViewController: UITableViewController {
+class NetServicesTableViewController: MyTableViewController {
   
   // MARK: - Class Accessors
   
-  static func getController() -> NetServicesTableViewController {
-    return self.newController(fromStoryboard: "Main", withIdentifier: "NetServicesTableViewController") as! NetServicesTableViewController
+  static func newController() -> NetServicesTableViewController {
+    return self.newController(fromStoryboard: "Main", withIdentifier: self.name) as! NetServicesTableViewController
   }
   
   // MARK: - Properties
@@ -87,7 +84,7 @@ class NetServicesTableViewController: UITableViewController {
   }
   
   override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "NetServicesTableHeaderCell") as! NetServicesTableHeaderCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableHeaderCell.name) as! NetServicesTableHeaderCell
     cell.titleLabel.text = "Available Services".uppercased()
     if MyBonjourManager.shared.isSearching {
       cell.loadingImageView.image = UIImage.gif(name: "dotLoadingGif")
@@ -100,26 +97,18 @@ class NetServicesTableViewController: UITableViewController {
     return cell
   }
   
-  override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return 40
-  }
-  
-  override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return 50
-  }
-  
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
     // If services are loading
     if MyBonjourManager.shared.isSearching {
-      let cell = tableView.dequeueReusableCell(withIdentifier: "NetServicesTableLoadingCell", for: indexPath) as! NetServicesTableLoadingCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableLoadingCell.name, for: indexPath) as! NetServicesTableLoadingCell
       cell.loadingImageView.image = UIImage.gif(name: "dotLoadingGif")
       return cell
     }
     
     // Configure service cell
     let service = self.services[indexPath.row]
-    let cell = tableView.dequeueReusableCell(withIdentifier: "NetServicesTableServiceCell", for: indexPath) as! NetServicesTableServiceCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableServiceCell.name, for: indexPath) as! NetServicesTableServiceCell
     cell.nameLabel.text = service.serviceType.name
     cell.typeLabel.text = service.serviceType.type
     cell.protocolLabel.text = service.serviceType.transportLayer.string.uppercased()
@@ -128,5 +117,11 @@ class NetServicesTableViewController: UITableViewController {
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
+    
+    if !MyBonjourManager.shared.isSearching {
+      let service = self.services[indexPath.row]
+      let viewController = NetServiceViewController.newController(service: service)
+      self.show(viewController, sender: self)
+    }
   }
 }

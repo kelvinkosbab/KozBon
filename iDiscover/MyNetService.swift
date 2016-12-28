@@ -10,16 +10,7 @@ import Foundation
 
 class MyNetService: NSObject, NetServiceDelegate {
   
-  // Comparable
-  
-  static func < (lhs: MyNetService, rhs: MyNetService) -> Bool {
-    if let lhsIp = lhs.ip, let rhsIp = rhs.ip {
-      return lhsIp < rhsIp
-    } else if let _ = lhs.ip {
-      return true
-    }
-    return false
-  }
+  // Equatable
   
   static func == (lhs: MyNetService, rhs: MyNetService) -> Bool {
     return lhs.service == rhs.service
@@ -29,7 +20,11 @@ class MyNetService: NSObject, NetServiceDelegate {
   
   let service: NetService
   let serviceType: MyServiceType
-  var ip: String? = nil
+  var addresses: [MyAddress] = []
+  
+  var didResolveAddress: (() -> Void)? = nil
+  var didNotResolveAddress: (() -> Void)? = nil
+  
   
   init(service: NetService, serviceType: MyServiceType) {
     self.service = service
@@ -45,28 +40,43 @@ class MyNetService: NSObject, NetServiceDelegate {
     }
   }
   
-  var port: Int {
-    return self.service.port
-  }
-  
   var hostname: String? {
     return self.service.hostName
   }
   
-  var hasResolvedAddress: Bool {
-    return self.port != -1
+  var hasResolvedAddresses: Bool {
+    if let _ = self.service.addresses {
+      return true
+    }
+    return false
+  }
+  
+  func stop() {
+    self.didResolveAddress = nil
+    self.didNotResolveAddress = nil
+    self.service.stop()
+  }
+  
+  func resolve(didResolveAddress: (() -> Void)? = nil, didNotResolveAddress: (() -> Void)? = nil) {
+    self.didResolveAddress = didResolveAddress
+    self.didNotResolveAddress = didNotResolveAddress
+    self.service.delegate = self
+    self.service.resolve(withTimeout: 5.0)
   }
   
   // MARK: - NetServiceDelegate
   
   func netServiceDidResolveAddress(_ sender: NetService) {
     print("\(self.className) : Service did resolve address \(sender)")
+    self.addresses = MyAddress.parseAddresses(forNetService: sender)
     self.service.stop()
+    self.didResolveAddress?()
   }
   
   func netService(_ sender: NetService, didNotResolve errorDict: [String : NSNumber]) {
     print("\(self.className) : Service did not resolve address \(sender)")
     self.service.stop()
+    self.didNotResolveAddress?()
   }
   
   func netServiceDidPublish(_ sender: NetService) {
@@ -77,3 +87,4 @@ class MyNetService: NSObject, NetServiceDelegate {
     print("\(self.className) : Service did not publish \(sender)")
   }
 }
+

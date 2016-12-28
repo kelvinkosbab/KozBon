@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		B603A6D81E12177700ED333D /* UIImage+Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = B603A6D71E12177700ED333D /* UIImage+Gif.swift */; };
 		B603A6DE1E1217B300ED333D /* dotLoadingGif.gif in Resources */ = {isa = PBXBuildFile; fileRef = B603A6DB1E1217B300ED333D /* dotLoadingGif.gif */; };
+		B691545F1E1317A000382F41 /* MyAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = B691545E1E1317A000382F41 /* MyAddress.swift */; };
+		B69154611E137E0400382F41 /* NetServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69154601E137E0400382F41 /* NetServiceViewController.swift */; };
+		B69154631E138E4A00382F41 /* MyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69154621E138E4A00382F41 /* MyTableViewController.swift */; };
+		B69154651E13906500382F41 /* String+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69154641E13906500382F41 /* String+Util.swift */; };
 		B6CE1D281E1208C1003D4FFA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D271E1208C1003D4FFA /* AppDelegate.swift */; };
 		B6CE1D301E1208C1003D4FFA /* iDiscover.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D2E1E1208C1003D4FFA /* iDiscover.xcdatamodeld */; };
 		B6CE1D321E1208C1003D4FFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6CE1D311E1208C1003D4FFA /* Assets.xcassets */; };
@@ -36,6 +40,10 @@
 /* Begin PBXFileReference section */
 		B603A6D71E12177700ED333D /* UIImage+Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Gif.swift"; sourceTree = "<group>"; };
 		B603A6DB1E1217B300ED333D /* dotLoadingGif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = dotLoadingGif.gif; sourceTree = "<group>"; };
+		B691545E1E1317A000382F41 /* MyAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAddress.swift; sourceTree = "<group>"; };
+		B69154601E137E0400382F41 /* NetServiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetServiceViewController.swift; sourceTree = "<group>"; };
+		B69154621E138E4A00382F41 /* MyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTableViewController.swift; sourceTree = "<group>"; };
+		B69154641E13906500382F41 /* String+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Util.swift"; sourceTree = "<group>"; };
 		B6CE1D241E1208C1003D4FFA /* iDiscover.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iDiscover.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6CE1D271E1208C1003D4FFA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B6CE1D2F1E1208C1003D4FFA /* iDiscover.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iDiscover.xcdatamodel; sourceTree = "<group>"; };
@@ -81,6 +89,14 @@
 			name = Gifs;
 			sourceTree = "<group>";
 		};
+		B691545D1E12DB0E00382F41 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				B691545E1E1317A000382F41 /* MyAddress.swift */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
 		B6CE1D1B1E1208C1003D4FFA = {
 			isa = PBXGroup;
 			children = (
@@ -112,6 +128,7 @@
 		B6CE1D3C1E1208D8003D4FFA /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				B691545D1E12DB0E00382F41 /* Helpers */,
 				B6CE1D3D1E1208DC003D4FFA /* Protocols */,
 				B6CE1D3E1E1208E5003D4FFA /* Bonjour */,
 				B6F93AB21E123AB800FE2DC7 /* Bluetooth */,
@@ -168,6 +185,7 @@
 				B6CE1D451E120ADC003D4FFA /* Date+Util.swift */,
 				B6CE1D461E120ADC003D4FFA /* DispatchQueue+Util.swift */,
 				B603A6D71E12177700ED333D /* UIImage+Gif.swift */,
+				B69154641E13906500382F41 /* String+Util.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -183,7 +201,9 @@
 		B6CE1D431E120977003D4FFA /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				B69154621E138E4A00382F41 /* MyTableViewController.swift */,
 				B6CE1D4B1E120B01003D4FFA /* NetServicesTableViewController.swift */,
+				B69154601E137E0400382F41 /* NetServiceViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -286,6 +306,7 @@
 			files = (
 				B603A6D81E12177700ED333D /* UIImage+Gif.swift in Sources */,
 				B6CE1D5D1E120CCC003D4FFA /* MyNetBrowserState.swift in Sources */,
+				B69154651E13906500382F41 /* String+Util.swift in Sources */,
 				B6CE1D661E120E4D003D4FFA /* CustomServiceType.swift in Sources */,
 				B6CE1D471E120ADC003D4FFA /* Date+Util.swift in Sources */,
 				B6CE1D481E120ADC003D4FFA /* DispatchQueue+Util.swift in Sources */,
@@ -294,14 +315,17 @@
 				B6CE1D601E120CCC003D4FFA /* MyServiceType.swift in Sources */,
 				B6CE1D5C1E120CCC003D4FFA /* MyBonjourManager.swift in Sources */,
 				B6CE1D561E120BF4003D4FFA /* MyDataManager.swift in Sources */,
+				B691545F1E1317A000382F41 /* MyAddress.swift in Sources */,
 				B6CE1D501E120B90003D4FFA /* MyControllerProtocol.swift in Sources */,
 				B6CE1D4C1E120B01003D4FFA /* NetServicesTableViewController.swift in Sources */,
 				B6F93AB61E1240EC00FE2DC7 /* MyBluetoothDevice.swift in Sources */,
 				B6F93AB41E123AD500FE2DC7 /* MyBluetoothManager.swift in Sources */,
+				B69154631E138E4A00382F41 /* MyTableViewController.swift in Sources */,
 				B6CE1D301E1208C1003D4FFA /* iDiscover.xcdatamodeld in Sources */,
 				B6CE1D521E120B9F003D4FFA /* MyDataManagerObject.swift in Sources */,
 				B6CE1D281E1208C1003D4FFA /* AppDelegate.swift in Sources */,
 				B6CE1D5E1E120CCC003D4FFA /* MyNetService.swift in Sources */,
+				B69154611E137E0400382F41 /* NetServiceViewController.swift in Sources */,
 				B6CE1D551E120BF4003D4FFA /* MyCoreDataStack.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

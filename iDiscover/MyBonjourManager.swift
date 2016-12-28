@@ -8,6 +8,12 @@
 
 import Foundation
 
+extension Notification.Name {
+  static let bonjourDidAddService = Notification.Name(rawValue: "MyBonjourManager.bonjourDidAddService")
+  static let bonjourDidRemoveService = Notification.Name(rawValue: "MyBonjourManager.bonjourDidRemoveService")
+  static let bonjourDidClearServices = Notification.Name(rawValue: "MyBonjourManager.bonjourDidClearServices")
+}
+
 class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
   
   // MARK: - Singleton
@@ -58,6 +64,9 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
   private func clearServices() {
     self.concurrentServicesQueue.async(flags: .barrier, execute: { () -> Void in
       self._services = []
+      DispatchQueue.main.async {
+        NotificationCenter.default.post(name: .bonjourDidClearServices, object: nil)
+      }
     })
   }
   
@@ -65,6 +74,9 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
     self.concurrentServicesQueue.async(flags: .barrier, execute: { () -> Void in
       if !self._services.contains(service) {
         self._services.append(service)
+        DispatchQueue.main.async {
+          NotificationCenter.default.post(name: .bonjourDidAddService, object: service)
+        }
       }
     })
   }
@@ -73,6 +85,9 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
     self.concurrentServicesQueue.async(flags: .barrier, execute: { () -> Void in
       if let index = self._services.index(of: service) {
         self._services.remove(at: index)
+        DispatchQueue.main.async {
+          NotificationCenter.default.post(name: .bonjourDidRemoveService, object: service)
+        }
       }
     })
   }
@@ -107,6 +122,9 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
     for serviceBrowser in self.serviceBrowsers {
       serviceBrowser.stopSearch()
     }
+    for service in self.services {
+      service.stop()
+    }
   }
   
   // MARK: - MyNetServiceBrowserDelegate
@@ -126,6 +144,7 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
   
   func myNetServiceBrowser(_ browser: MyNetServiceBrowser, didFind service: MyNetService) {
     self.add(service: service)
+    service.resolve()
   }
   
   func myNetServiceBrowser(_ browser: MyNetServiceBrowser, didRemove service: MyNetService) {
