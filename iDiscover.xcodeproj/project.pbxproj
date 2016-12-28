@@ -154,8 +154,8 @@
 			children = (
 				B6CE1D581E120CCC003D4FFA /* MyNetBrowserState.swift */,
 				B6CE1D571E120CCC003D4FFA /* MyBonjourManager.swift */,
-				B6CE1D591E120CCC003D4FFA /* MyNetService.swift */,
 				B6CE1D5A1E120CCC003D4FFA /* MyNetServiceBrowser.swift */,
+				B6CE1D591E120CCC003D4FFA /* MyNetService.swift */,
 				B6CE1D5B1E120CCC003D4FFA /* MyServiceType.swift */,
 			);
 			name = Bonjour;

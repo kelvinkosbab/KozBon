@@ -62,12 +62,10 @@ class MyNetServiceBrowser: NSObject, NetServiceBrowserDelegate {
   // MARK: - NetServiceBrowserDelegate
   
   func netServiceBrowserWillSearch(_ browser: NetServiceBrowser) {
-    print("\(self.className) : Will search for type \(self.serviceType.netServiceType) and domain \(self.domain)")
     self.state = .searching
   }
   
   func netServiceBrowserDidStopSearch(_ browser: NetServiceBrowser) {
-    print("\(self.className) : Did stop search for type \(self.serviceType.netServiceType) and domain \(self.domain)")
     self.state = .stopped
   }
   

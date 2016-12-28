@@ -89,7 +89,7 @@ class NetServiceViewController: MyTableViewController {
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     if section == 0 {
       // Information section
-      return self.service.serviceType.detail != nil ? 5 : 4
+      return self.service.serviceType.detail != nil ? 6 : 5
     } else if self.service.isResolving {
       return 1
     } else if !self.service.isResolving && self.service.addresses.count == 0 {
@@ -100,7 +100,14 @@ class NetServiceViewController: MyTableViewController {
   
   override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceHeaderCell.name) as! NetServiceHeaderCell
-    cell.titleLabel.text = section == 0 ? "Information".uppercased() : "Discovered Addresses".uppercased()
+    if section == 0 {
+      cell.titleLabel.text = "Information".uppercased()
+    } else if section == 1 {
+      let addressesString = "Addresses".uppercased()
+      cell.titleLabel.text = self.service.hostName == "NA" ? addressesString : "\(addressesString) : \(self.service.hostName)"
+    } else {
+      cell.titleLabel.text = ""
+    }
     return cell
   }
   
@@ -115,7 +122,7 @@ class NetServiceViewController: MyTableViewController {
   }
   
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    if indexPath.section == 0 && indexPath.row == 4, let detail = self.service.serviceType.detail {
+    if indexPath.section == 0 && indexPath.row == 5, let detail = self.service.serviceType.detail {
       return detail.getLabelHeight(width: self.tableView.bounds.width - 16, font: UIFont.systemFont(ofSize: 13))
     }
     return super.tableView(tableView, heightForRowAt: indexPath)
@@ -127,22 +134,28 @@ class NetServiceViewController: MyTableViewController {
     if indexPath.section == 0 {
       if indexPath.row == 0 {
         let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceKeyValueCell.name, for: indexPath) as! NetServiceKeyValueCell
+        cell.keyLabel.text = "Hostname".uppercased()
+        cell.valueLabel.text = self.service.hostName
+        return cell
+        
+      } else if indexPath.row == 1 {
+        let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceKeyValueCell.name, for: indexPath) as! NetServiceKeyValueCell
         cell.keyLabel.text = "Name".uppercased()
         cell.valueLabel.text = self.service.serviceType.name
         return cell
         
-      } else if indexPath.row == 1 {
+      } else if indexPath.row == 2 {
         let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceKeyValueCell.name, for: indexPath) as! NetServiceKeyValueCell
         cell.keyLabel.text = "Type".uppercased()
         cell.valueLabel.text = self.service.serviceType.type
         return cell
         
-      } else if indexPath.row == 2 {
+      } else if indexPath.row == 3 {
         let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceKeyValueCell.name, for: indexPath) as! NetServiceKeyValueCell
         cell.keyLabel.text = "Layer".uppercased()
         cell.valueLabel.text = self.service.serviceType.transportLayer.string
         return cell
-      } else if indexPath.row == 3 {
+      } else if indexPath.row == 4 {
         let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceKeyValueCell.name, for: indexPath) as! NetServiceKeyValueCell
         cell.keyLabel.text = "Full Type".uppercased()
         cell.valueLabel.text = self.service.serviceType.netServiceType

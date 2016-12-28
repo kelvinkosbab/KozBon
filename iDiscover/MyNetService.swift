@@ -40,8 +40,11 @@ class MyNetService: NSObject, NetServiceDelegate {
     }
   }
   
-  var hostname: String? {
-    return self.service.hostName
+  var hostName: String {
+    if let hostName = self.service.hostName {
+      return hostName.replacingOccurrences(of: self.service.domain, with: "").replacingOccurrences(of: ".", with: "")
+    }
+    return "NA"
   }
   
   var hasResolvedAddresses: Bool {
@@ -69,7 +72,7 @@ class MyNetService: NSObject, NetServiceDelegate {
   // MARK: - NetServiceDelegate
   
   func netServiceDidResolveAddress(_ sender: NetService) {
-    print("\(self.className) : Service did resolve address \(sender)")
+    print("\(self.className) : Service did resolve address \(sender) with hostname \(self.service.hostName)")
     self.addresses = MyAddress.parseAddresses(forNetService: sender)
     self.didResolveAddress?()
     self.stop()
