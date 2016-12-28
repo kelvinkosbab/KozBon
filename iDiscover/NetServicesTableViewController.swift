@@ -43,10 +43,6 @@ class NetServicesTableViewController: MyTableViewController {
     super.viewDidLoad()
     
     self.title = "Network Services"
-  }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
     
     self.reloadAllServices()
   }
@@ -93,6 +89,14 @@ class NetServicesTableViewController: MyTableViewController {
     } else {
       cell.loadingImageView.isHidden = true
       cell.reloadButton.isHidden = false
+    }
+    return cell
+  }
+  
+  override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceFooterCell.name) as! NetServiceFooterCell
+    for subview in cell.subviews {
+      subview.alpha = MyBonjourManager.shared.isSearching ? 0.0 : 1.0
     }
     return cell
   }

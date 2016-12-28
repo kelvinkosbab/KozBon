@@ -44,7 +44,6 @@ class NetServiceViewController: MyTableViewController {
   // MARK: - Properties
   
   var service: MyNetService!
-  var isResolvingAddresses: Bool = false
   
   // MARK: - Lifecycle
   
@@ -52,8 +51,6 @@ class NetServiceViewController: MyTableViewController {
     super.viewDidLoad()
     
     self.title = self.service.serviceType.netServiceType
-    
-    self.isResolvingAddresses = false
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -64,15 +61,12 @@ class NetServiceViewController: MyTableViewController {
     
     // Check if the service has resolved addresses
     if !self.service.hasResolvedAddresses {
-      self.isResolvingAddresses = true
-      self.tableView.reloadData()
       self.service.resolve(didResolveAddress: {
-        self.isResolvingAddresses = false
         self.tableView.reloadData()
       }, didNotResolveAddress: {
-        self.isResolvingAddresses = false
         self.tableView.reloadData()
       })
+      self.tableView.reloadData()
     }
   }
   
@@ -96,9 +90,9 @@ class NetServiceViewController: MyTableViewController {
     if section == 0 {
       // Information section
       return self.service.serviceType.detail != nil ? 5 : 4
-    } else if self.isResolvingAddresses {
+    } else if self.service.isResolving {
       return 1
-    } else if !self.isResolvingAddresses && self.service.addresses.count == 0 {
+    } else if !self.service.isResolving && self.service.addresses.count == 0 {
       return 1
     }
     return self.service.addresses.count
@@ -107,6 +101,16 @@ class NetServiceViewController: MyTableViewController {
   override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceHeaderCell.name) as! NetServiceHeaderCell
     cell.titleLabel.text = section == 0 ? "Information".uppercased() : "Discovered Addresses".uppercased()
+    return cell
+  }
+  
+  override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceFooterCell.name) as! NetServiceFooterCell
+    if section == 1 {
+      for subview in cell.subviews {
+        subview.alpha = MyBonjourManager.shared.isSearching ? 0.0 : 1.0
+      }
+    }
     return cell
   }
   
@@ -135,7 +139,7 @@ class NetServiceViewController: MyTableViewController {
         
       } else if indexPath.row == 2 {
         let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceKeyValueCell.name, for: indexPath) as! NetServiceKeyValueCell
-        cell.keyLabel.text = "Transport Layer".uppercased()
+        cell.keyLabel.text = "Layer".uppercased()
         cell.valueLabel.text = self.service.serviceType.transportLayer.string
         return cell
       } else if indexPath.row == 3 {
@@ -152,12 +156,12 @@ class NetServiceViewController: MyTableViewController {
     
     // Addresses section 1
     
-    if self.isResolvingAddresses {
+    if self.service.isResolving {
       let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableLoadingCell.name, for: indexPath) as! NetServicesTableLoadingCell
       cell.loadingImageView.image = UIImage.gif(name: "dotLoadingGif")
       return cell
       
-    } else if !self.isResolvingAddresses && self.service.addresses.count == 0 {
+    } else if !self.service.isResolving && self.service.addresses.count == 0 {
       let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceDetailCell.name, for: indexPath) as! NetServiceDetailCell
       cell.detailLabel.text = "NA"
       return cell

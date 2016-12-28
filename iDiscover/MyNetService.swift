@@ -21,10 +21,10 @@ class MyNetService: NSObject, NetServiceDelegate {
   let service: NetService
   let serviceType: MyServiceType
   var addresses: [MyAddress] = []
+  var isResolving: Bool = false
   
   var didResolveAddress: (() -> Void)? = nil
   var didNotResolveAddress: (() -> Void)? = nil
-  
   
   init(service: NetService, serviceType: MyServiceType) {
     self.service = service
@@ -55,9 +55,11 @@ class MyNetService: NSObject, NetServiceDelegate {
     self.didResolveAddress = nil
     self.didNotResolveAddress = nil
     self.service.stop()
+    self.isResolving = false
   }
   
   func resolve(didResolveAddress: (() -> Void)? = nil, didNotResolveAddress: (() -> Void)? = nil) {
+    self.isResolving = true
     self.didResolveAddress = didResolveAddress
     self.didNotResolveAddress = didNotResolveAddress
     self.service.delegate = self
@@ -69,14 +71,14 @@ class MyNetService: NSObject, NetServiceDelegate {
   func netServiceDidResolveAddress(_ sender: NetService) {
     print("\(self.className) : Service did resolve address \(sender)")
     self.addresses = MyAddress.parseAddresses(forNetService: sender)
-    self.service.stop()
     self.didResolveAddress?()
+    self.stop()
   }
   
   func netService(_ sender: NetService, didNotResolve errorDict: [String : NSNumber]) {
     print("\(self.className) : Service did not resolve address \(sender)")
-    self.service.stop()
     self.didNotResolveAddress?()
+    self.stop()
   }
   
   func netServiceDidPublish(_ sender: NetService) {

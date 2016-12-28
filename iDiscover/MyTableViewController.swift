@@ -38,9 +38,4 @@ class MyTableViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return 50
   }
-  
-  override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-    let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceFooterCell.name) as! NetServiceFooterCell
-    return cell
-  }
 }

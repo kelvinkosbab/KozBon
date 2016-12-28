@@ -39,13 +39,13 @@ class MyServiceType: Equatable {
   // For a full list of all registered services: http://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml
   
   static var allServiceTypes: [MyServiceType] {
-    return self.miscServiceTypes + self.appleOSXServiceTypes
+    return self.miscServiceTypes + self.appleServiceTypes
   }
   
   // MARK: - MISC Service Types
   
   static var miscServiceTypes: [MyServiceType] {
-    return [ self.powerViewHubV2, self.netBIOSNameService, self.netBIOSSessionService, self.rokuControlProtocol, self.beatsTransferProtocol, self.googleXpeditionsUdp, self.googleXpeditionsTcp, self.googleCast, self.goProWake, self.goProWeb ]
+    return [ self.powerViewHubV2, self.netBIOSNameService, self.netBIOSSessionService, self.rokuControlProtocol, self.beatsTransferProtocol, self.androidTvRemote, self.googleXpeditionsUdp, self.googleXpeditionsTcp, self.googleCast, self.goProWake, self.goProWeb ]
   }
   
   static let powerViewHubV2: MyServiceType = MyServiceType(name: "PowerView Hub 2.0", type: "powerview")
@@ -62,6 +62,8 @@ class MyServiceType: Equatable {
   
   // MARK: - Google
   
+  static let androidTvRemote: MyServiceType = MyServiceType(name: "Android TV Remote", type: "androidtvremote")
+  
   static let googleXpeditionsUdp: MyServiceType = MyServiceType(name: "Google Expeditions", type: "googlexpeditions", transportLayer: .udp, detail: "Service related to Google Expeditions which is a technology for enabling multi-participant virtual fieldtrip experiences over a local wireless network. See http://g.co/expeditions for more details")
   static let googleXpeditionsTcp: MyServiceType = MyServiceType(name: "Google Expeditions", type: "googlexpeditions", detail: "Service related to Google Expeditions which is a technology for enabling multi-participant virtual fieldtrip experiences over a local wireless network. See http://g.co/expeditions for more details")
   static let googleCast: MyServiceType = MyServiceType(name: "Google Cast", type: "googlecast", detail: "Service related to Google Cast which is a technology for enabling multi-screen experiences. See developers.google.com/cast for more details")
@@ -73,8 +75,8 @@ class MyServiceType: Equatable {
   
   // MARK: - Apple
   
-  static var appleOSXServiceTypes: [MyServiceType] {
-    return [ self.airplayUdp, self.airplayTcp, self.airdrop, self.appleMobileDeviceProtocol, self.appleMIDI, self.appleRemoteDebugServices, self.appleTV, self.appleTViTunes, self.appleTVPairing, self.keynoteAccess, self.keynotePairing, self.appleTalkFilingProtocol, self.networkFileSystem, self.webDAVFileSystem, self.fileTransferProtocol, self.secureShell, self.remoteAppleEvents, self.http, self.remoteLogin, self.linePrinterDaemon, self.internetPrintingProtocol, self.pdlDataStream, self.remoteIOUSBPrinterProtocol, self.digitalAudioAccessProtocol, self.digitalPhotoAccessProtocol, self.iChatInstantMessagingProtocolDeprecated, self.iChatInstantMessagingProtocol, self.imageCaptureSharing, self.airPortBaseStation, self.xServeRAID, self.distributedCompiler, self.applePasswordServer, self.workgroupManager, self.serverAdmin, self.remoteAudioOutputProtocol ]
+  static var appleServiceTypes: [MyServiceType] {
+    return [ self.airplayUdp, self.airplayTcp, self.airdrop, self.appleMobileDeviceProtocol, self.appleMIDI, self.appleRemoteDebugServices, self.appleTV, self.appleTVv2, self.appleTVv3, self.appleTVv4, self.appleTViTunes, self.appleTVPairing, self.keynoteAccess, self.keynotePairing, self.homeKitAccessoryProtocol, self.bonjourSleepProxy, self.appleTalkFilingProtocol, self.networkFileSystem, self.webDAVFileSystem, self.fileTransferProtocol, self.secureShell, self.remoteAppleEvents, self.http, self.remoteLogin, self.linePrinterDaemon, self.internetPrintingProtocol, self.pdlDataStream, self.remoteIOUSBPrinterProtocol, self.digitalAudioAccessProtocol, self.digitalPhotoAccessProtocol, self.iChatInstantMessagingProtocolDeprecated, self.iChatInstantMessagingProtocol, self.imageCaptureSharing, self.airPortBaseStation, self.xServeRAID, self.distributedCompiler, self.applePasswordServer, self.workgroupManager, self.serverAdmin, self.remoteAudioOutputProtocol, self.touchAble ]
   }
   
   static let airplayUdp: MyServiceType = MyServiceType(name: "Airplay", type: "airplay", transportLayer: .udp, detail: "Protocol for streaming audio / video content")
@@ -84,10 +86,16 @@ class MyServiceType: Equatable {
   static let appleMIDI: MyServiceType = MyServiceType(name: "Apple MIDI", type: "apple-midi")
   static let appleRemoteDebugServices: MyServiceType = MyServiceType(name: "Apple Remote Debug Services (OpenGL Profiler)", type: "applerdbg")
   static let appleTV: MyServiceType = MyServiceType(name: "Apple TV", type: "appletv")
+  static let appleTVv2: MyServiceType = MyServiceType(name: "Apple TV (2nd Generation)", type: "appletv-v2")
+  static let appleTVv3: MyServiceType = MyServiceType(name: "Apple TV (3rd Generation)", type: "appletv-v3")
+  static let appleTVv4: MyServiceType = MyServiceType(name: "Apple TV (4th Generation)", type: "appletv-v4")
   static let appleTViTunes: MyServiceType = MyServiceType(name: "Apple TV Discovery of iTunes", type: "appletv-itunes")
   static let appleTVPairing: MyServiceType = MyServiceType(name: "Apple TV Pairing", type: "appletv-pair")
   static let keynoteAccess: MyServiceType = MyServiceType(name: "KeynoteAccess", type: "keynoteaccess", detail: "KeynoteAccess is used for sending remote requests/responses when controlling a slideshow with Keynote Remote")
   static let keynotePairing: MyServiceType = MyServiceType(name: "KeynotePairing", type: "keynotepairing", detail: "KeynotePairing is used to pair Keynote Remote with Keynote")
+  static let homeKitAccessoryProtocol: MyServiceType = MyServiceType(name: "HomeKit Accessory Protocol (HAP)", type: "hap", detail: "HomeKit speaks HomeKit Accessory Protocol (HAP), which runs on top of a BLE/Bluetooth Smart or an HTTP/TCP/IP stack.  If an accessory does not support HAP directly a gateway is needed.")
+  static let bonjourSleepProxy: MyServiceType = MyServiceType(name: "Bonjour Sleep Proxy", type: "sleep-proxy", transportLayer: .udp, detail: "Apple's Bonjour Sleep Proxy service is an open source[1] component of zero configuration networking, designed to assist in reducing power consumption of networked electronic devices.[2] A device acting as a sleep proxy server will respond to Multicast DNS queries for another, compatible device which has gone into low power mode. The low-power-mode device remains asleep while the sleep proxy server responds to any Multicast DNS queries.")
+  static let touchAble: MyServiceType = MyServiceType(name: "Touchable", type: "touch-able")
   
   // MARK: - Protocols Used by Apple OS X
   
