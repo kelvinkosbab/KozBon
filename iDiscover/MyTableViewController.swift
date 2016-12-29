@@ -32,7 +32,7 @@ class MyTableViewController: UITableViewController {
   }
   
   override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-    return 30
+    return 15
   }
   
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -43,7 +43,36 @@ class NetServiceViewController: MyTableViewController {
   
   // MARK: - Properties
   
+  var moreDetailsButton: UIButton? = nil
+  
   var service: MyNetService!
+  var isMoreDetails: Bool = false {
+    didSet {
+      self.moreDetailsButton?.setTitle(self.isMoreDetails ? "Less" : "More", for: .normal)
+      if self.isMoreDetails {
+        // Show the extra details
+        var indexPathsToInsert: [IndexPath] = []
+        indexPathsToInsert.append(IndexPath(row: 2, section: 0))
+        indexPathsToInsert.append(IndexPath(row: 3, section: 0))
+        indexPathsToInsert.append(IndexPath(row: 4, section: 0))
+        if let _ = self.service.serviceType.detail {
+          indexPathsToInsert.append(IndexPath(row: 5, section: 0))
+        }
+        self.tableView.insertRows(at: indexPathsToInsert, with: .top)
+        
+      } else {
+        // Hide the extra details
+        var indexPathsToDelete: [IndexPath] = []
+        indexPathsToDelete.append(IndexPath(row: 2, section: 0))
+        indexPathsToDelete.append(IndexPath(row: 3, section: 0))
+        indexPathsToDelete.append(IndexPath(row: 4, section: 0))
+        if let _ = self.service.serviceType.detail {
+          indexPathsToDelete.append(IndexPath(row: 5, section: 0))
+        }
+        self.tableView.deleteRows(at: indexPathsToDelete, with: .top)
+      }
+    }
+  }
   
   // MARK: - Lifecycle
   
@@ -80,6 +109,12 @@ class NetServiceViewController: MyTableViewController {
     }
   }
   
+  // MARK: - Actions
+  
+  @objc private func moreDetailsButtonSelected(_ sender: UIButton) {
+    self.isMoreDetails = !isMoreDetails
+  }
+  
   // MARK: - UITableView
   
   override func numberOfSections(in tableView: UITableView) -> Int {
@@ -87,9 +122,13 @@ class NetServiceViewController: MyTableViewController {
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    if section == 0 {
-      // Information section
+    // Information section
+    if section == 0 && self.isMoreDetails {
       return self.service.serviceType.detail != nil ? 6 : 5
+    } else if section == 0 && !self.isMoreDetails {
+      return 2
+    
+    // Addresses section
     } else if self.service.isResolving {
       return 1
     } else if !self.service.isResolving && self.service.addresses.count == 0 {
@@ -99,16 +138,22 @@ class NetServiceViewController: MyTableViewController {
   }
   
   override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceHeaderCell.name) as! NetServiceHeaderCell
     if section == 0 {
+      let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableHeaderCell.name) as! NetServicesTableHeaderCell
       cell.titleLabel.text = "Information".uppercased()
-    } else if section == 1 {
-      let addressesString = "Addresses".uppercased()
-      cell.titleLabel.text = self.service.hostName == "NA" ? addressesString : "\(addressesString) : \(self.service.hostName)"
-    } else {
-      cell.titleLabel.text = ""
+      cell.loadingImageView.image = nil
+      cell.loadingImageView.isHidden = true
+      self.moreDetailsButton = cell.reloadButton
+      cell.reloadButton.setTitle(self.isMoreDetails ? "Less" : "More", for: .normal)
+      cell.reloadButton.addTarget(self, action: #selector(self.moreDetailsButtonSelected(_:)), for: .touchUpInside)
+      return cell.contentView
     }
-    return cell
+    
+    // Addresses
+    let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceHeaderCell.name) as! NetServiceHeaderCell
+    let addressesString = "Addresses".uppercased()
+    cell.titleLabel.text = self.service.hostName == "NA" ? addressesString : "\(addressesString) : \(self.service.hostName)"
+    return cell.contentView
   }
   
   override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -118,7 +163,7 @@ class NetServiceViewController: MyTableViewController {
         subview.alpha = MyBonjourManager.shared.isSearching ? 0.0 : 1.0
       }
     }
-    return cell
+    return cell.contentView
   }
   
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -140,25 +185,26 @@ class NetServiceViewController: MyTableViewController {
         
       } else if indexPath.row == 1 {
         let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceKeyValueCell.name, for: indexPath) as! NetServiceKeyValueCell
+        cell.keyLabel.text = "Full Type".uppercased()
+        cell.valueLabel.text = self.service.serviceType.netServiceType
+        return cell
+        
+      } else if indexPath.row == 2 {
+        let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceKeyValueCell.name, for: indexPath) as! NetServiceKeyValueCell
         cell.keyLabel.text = "Name".uppercased()
         cell.valueLabel.text = self.service.serviceType.name
         return cell
         
-      } else if indexPath.row == 2 {
+      } else if indexPath.row == 3 {
         let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceKeyValueCell.name, for: indexPath) as! NetServiceKeyValueCell
         cell.keyLabel.text = "Type".uppercased()
         cell.valueLabel.text = self.service.serviceType.type
         return cell
         
-      } else if indexPath.row == 3 {
+      } else if indexPath.row == 4 {
         let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceKeyValueCell.name, for: indexPath) as! NetServiceKeyValueCell
         cell.keyLabel.text = "Layer".uppercased()
         cell.valueLabel.text = self.service.serviceType.transportLayer.string
-        return cell
-      } else if indexPath.row == 4 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceKeyValueCell.name, for: indexPath) as! NetServiceKeyValueCell
-        cell.keyLabel.text = "Full Type".uppercased()
-        cell.valueLabel.text = self.service.serviceType.netServiceType
         return cell
       }
       

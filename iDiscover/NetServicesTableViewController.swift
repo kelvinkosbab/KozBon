@@ -35,6 +35,8 @@ class NetServicesTableViewController: MyTableViewController {
   
   // MARK: - Properties
   
+  var reloadButton: UIButton? = nil
+  
   var services: [MyNetService] = []
   
   // MARK: - Lifecycle
@@ -61,11 +63,7 @@ class NetServicesTableViewController: MyTableViewController {
   
   // MARK: - Button Actions
   
-  @IBAction func reloadButtonSelected(_ sender: UIButton) {
-    self.reloadAllServices()
-  }
-  
-  @objc func refreshButtonSelected(_ sender: UIBarButtonItem) {
+  @objc private func reloadButtonSelected(_ sender: UIButton) {
     self.reloadAllServices()
   }
   
@@ -82,6 +80,8 @@ class NetServicesTableViewController: MyTableViewController {
   override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableHeaderCell.name) as! NetServicesTableHeaderCell
     cell.titleLabel.text = "Available Services".uppercased()
+    self.reloadButton = cell.reloadButton
+    self.reloadButton?.addTarget(self, action: #selector(self.reloadButtonSelected(_:)), for: .touchUpInside)
     if MyBonjourManager.shared.isSearching {
       cell.loadingImageView.image = UIImage.gif(name: "dotLoadingGif")
       cell.loadingImageView.isHidden = false
@@ -90,7 +90,7 @@ class NetServicesTableViewController: MyTableViewController {
       cell.loadingImageView.isHidden = true
       cell.reloadButton.isHidden = false
     }
-    return cell
+    return cell.contentView
   }
   
   override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -98,7 +98,7 @@ class NetServicesTableViewController: MyTableViewController {
     for subview in cell.subviews {
       subview.alpha = MyBonjourManager.shared.isSearching ? 0.0 : 1.0
     }
-    return cell
+    return cell.contentView
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
