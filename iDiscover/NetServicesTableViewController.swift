@@ -18,7 +18,7 @@ class NetServicesTableHeaderCell: UITableViewCell {
 class NetServicesTableServiceCell: UITableViewCell {
   @IBOutlet weak var nameLabel: UILabel!
   @IBOutlet weak var typeLabel: UILabel!
-  @IBOutlet weak var protocolLabel: UILabel!
+  @IBOutlet weak var hostLabel: UILabel!
 }
 
 class NetServicesTableLoadingCell: UITableViewCell {
@@ -36,6 +36,7 @@ class NetServicesTableViewController: MyTableViewController {
   // MARK: - Properties
   
   var reloadButton: UIButton? = nil
+  var reloadingImageView: UIImageView? = nil
   
   var services: [MyNetService] = []
   
@@ -47,17 +48,60 @@ class NetServicesTableViewController: MyTableViewController {
     self.title = "Network Services"
     
     self.reloadAllServices()
+    
+    NotificationCenter.default.addObserver(self, selector: #selector(self.netServiceResolveCompleted(_:)), name: .netServiceResolveAddressComplete, object: nil)
   }
   
   // MARK: - Content
   
   func reloadAllServices() {
+    
+    // Update the header row button and loading gif
+    self.reloadingImageView?.image = UIImage.gif(name: "dotLoadingGif")
+    self.reloadingImageView?.isHidden = false
+    self.reloadButton?.isHidden = true
+    
+    // Clear existing services
+    let currentServicesCount = self.services.count
     self.services = []
+    var indexPathsToDelete: [IndexPath] = []
+    for index in 0..<currentServicesCount {
+      indexPathsToDelete.append(IndexPath(row: index, section: 0))
+    }
+    self.tableView.deleteRows(at: indexPathsToDelete, with: .top)
+    
+    // Start service discovery
     MyBonjourManager.shared.startDiscovery(completion: { (services) in
+      
+      // Remove the loading row
+      let loadingIndexPath = IndexPath(row: 0, section: 0)
+      self.tableView.deleteRows(at: [ loadingIndexPath ], with: .top)
+      
+      // Add disovered services
       self.services = services
-      self.tableView.reloadData()
-    }) { 
-      self.tableView.reloadData()
+      var indexPathsToInsert: [IndexPath] = []
+      for index in 0..<self.services.count {
+        indexPathsToInsert.append(IndexPath(row: index, section: 0))
+      }
+      self.tableView.insertRows(at: indexPathsToInsert, with: .top)
+      
+      // Update the header row button and loading gif
+      self.reloadingImageView?.image = nil
+      self.reloadingImageView?.isHidden = true
+      self.reloadButton?.isHidden = false
+      
+    }, didStartSearch: {
+      let loadingIndexPath = IndexPath(row: 0, section: 0)
+      self.tableView.insertRows(at: [ loadingIndexPath ], with: .top)
+    })
+  }
+  
+  // MARK: - Notifications
+  
+  @objc private func netServiceResolveCompleted(_ notification: Notification) {
+    if let service = notification.object as? MyNetService, let index = self.services.index(of: service) {
+      let indexPathToUpdate = IndexPath(row: index, section: 0)
+      self.tableView.reloadRows(at: [ indexPathToUpdate ], with: .automatic)
     }
   }
   
@@ -82,6 +126,7 @@ class NetServicesTableViewController: MyTableViewController {
     cell.titleLabel.text = "Available Services".uppercased()
     self.reloadButton = cell.reloadButton
     self.reloadButton?.addTarget(self, action: #selector(self.reloadButtonSelected(_:)), for: .touchUpInside)
+    self.reloadingImageView = cell.loadingImageView
     if MyBonjourManager.shared.isSearching {
       cell.loadingImageView.image = UIImage.gif(name: "dotLoadingGif")
       cell.loadingImageView.isHidden = false
@@ -89,14 +134,6 @@ class NetServicesTableViewController: MyTableViewController {
     } else {
       cell.loadingImageView.isHidden = true
       cell.reloadButton.isHidden = false
-    }
-    return cell.contentView
-  }
-  
-  override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-    let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceFooterCell.name) as! NetServiceFooterCell
-    for subview in cell.subviews {
-      subview.alpha = MyBonjourManager.shared.isSearching ? 0.0 : 1.0
     }
     return cell.contentView
   }
@@ -114,8 +151,8 @@ class NetServicesTableViewController: MyTableViewController {
     let service = self.services[indexPath.row]
     let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableServiceCell.name, for: indexPath) as! NetServicesTableServiceCell
     cell.nameLabel.text = service.serviceType.name
-    cell.typeLabel.text = service.serviceType.type
-    cell.protocolLabel.text = service.serviceType.transportLayer.string.uppercased()
+    cell.typeLabel.text = "(\(service.serviceType.fullType))"
+    cell.hostLabel.text = service.hostName
     return cell
   }
   
@@ -124,7 +161,8 @@ class NetServicesTableViewController: MyTableViewController {
     
     if !MyBonjourManager.shared.isSearching {
       let service = self.services[indexPath.row]
-      let viewController = NetServiceViewController.newController(service: service)
+      let viewController = NetServiceDetailViewController.newController(service: service)
+      viewController.hidesBottomBarWhenPushed = true
       self.show(viewController, sender: self)
     }
   }

@@ -48,7 +48,7 @@ class MyNetServiceBrowser: NSObject, NetServiceBrowserDelegate {
   
   func startSearch(timeout: Double = 2.0) {
     self.stopSearch()
-    self.serviceBrowser.searchForServices(ofType: self.serviceType.netServiceType, inDomain: self.domain)
+    self.serviceBrowser.searchForServices(ofType: self.serviceType.fullType, inDomain: self.domain)
     
     DispatchQueue.main.asyncAfter(after: timeout) { 
       self.serviceBrowser.stop()
@@ -70,7 +70,7 @@ class MyNetServiceBrowser: NSObject, NetServiceBrowserDelegate {
   }
   
   func netServiceBrowser(_ browser: NetServiceBrowser, didNotSearch errorDict: [String : NSNumber]) {
-    print("\(self.className) : Did not search for type \(self.serviceType.netServiceType) and domain \(self.domain) with error \(errorDict)")
+    print("\(self.className) : Did not search for type \(self.serviceType.fullType) and domain \(self.domain) with error \(errorDict)")
     self.state = .stopped
   }
   

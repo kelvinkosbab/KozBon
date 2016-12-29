@@ -49,6 +49,15 @@ class MyAddress: Equatable {
     self.internetProtocol = internetProtocol
   }
   
+  var fullAddress: String {
+    switch self.internetProtocol {
+    case .v4:
+      return "\(self.ip):\(self.port)"
+    case .v6:
+      return "[\(self.ip)]:\(self.port)"
+    }
+  }
+  
   // MARK: - Static Helpers
   
   static func parseAddresses(forNetService service: NetService) -> [MyAddress] {

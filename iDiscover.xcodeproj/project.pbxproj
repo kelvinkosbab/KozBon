@@ -10,7 +10,7 @@
 		B603A6D81E12177700ED333D /* UIImage+Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = B603A6D71E12177700ED333D /* UIImage+Gif.swift */; };
 		B603A6DE1E1217B300ED333D /* dotLoadingGif.gif in Resources */ = {isa = PBXBuildFile; fileRef = B603A6DB1E1217B300ED333D /* dotLoadingGif.gif */; };
 		B691545F1E1317A000382F41 /* MyAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = B691545E1E1317A000382F41 /* MyAddress.swift */; };
-		B69154611E137E0400382F41 /* NetServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69154601E137E0400382F41 /* NetServiceViewController.swift */; };
+		B69154611E137E0400382F41 /* NetServiceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69154601E137E0400382F41 /* NetServiceDetailViewController.swift */; };
 		B69154631E138E4A00382F41 /* MyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69154621E138E4A00382F41 /* MyTableViewController.swift */; };
 		B69154651E13906500382F41 /* String+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69154641E13906500382F41 /* String+Util.swift */; };
 		B6CE1D281E1208C1003D4FFA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D271E1208C1003D4FFA /* AppDelegate.swift */; };
@@ -41,7 +41,7 @@
 		B603A6D71E12177700ED333D /* UIImage+Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Gif.swift"; sourceTree = "<group>"; };
 		B603A6DB1E1217B300ED333D /* dotLoadingGif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = dotLoadingGif.gif; sourceTree = "<group>"; };
 		B691545E1E1317A000382F41 /* MyAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAddress.swift; sourceTree = "<group>"; };
-		B69154601E137E0400382F41 /* NetServiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetServiceViewController.swift; sourceTree = "<group>"; };
+		B69154601E137E0400382F41 /* NetServiceDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetServiceDetailViewController.swift; sourceTree = "<group>"; };
 		B69154621E138E4A00382F41 /* MyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTableViewController.swift; sourceTree = "<group>"; };
 		B69154641E13906500382F41 /* String+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Util.swift"; sourceTree = "<group>"; };
 		B6CE1D241E1208C1003D4FFA /* iDiscover.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iDiscover.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -203,7 +203,7 @@
 			children = (
 				B69154621E138E4A00382F41 /* MyTableViewController.swift */,
 				B6CE1D4B1E120B01003D4FFA /* NetServicesTableViewController.swift */,
-				B69154601E137E0400382F41 /* NetServiceViewController.swift */,
+				B69154601E137E0400382F41 /* NetServiceDetailViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -325,7 +325,7 @@
 				B6CE1D521E120B9F003D4FFA /* MyDataManagerObject.swift in Sources */,
 				B6CE1D281E1208C1003D4FFA /* AppDelegate.swift in Sources */,
 				B6CE1D5E1E120CCC003D4FFA /* MyNetService.swift in Sources */,
-				B69154611E137E0400382F41 /* NetServiceViewController.swift in Sources */,
+				B69154611E137E0400382F41 /* NetServiceDetailViewController.swift in Sources */,
 				B6CE1D551E120BF4003D4FFA /* MyCoreDataStack.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

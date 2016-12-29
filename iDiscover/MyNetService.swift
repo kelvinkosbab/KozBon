@@ -8,6 +8,10 @@
 
 import Foundation
 
+extension Notification.Name {
+  static let netServiceResolveAddressComplete = Notification.Name(rawValue: "\(MyNetService.name).netServiceResolveAddressComplete")
+}
+
 class MyNetService: NSObject, NetServiceDelegate {
   
   // Equatable
@@ -23,8 +27,7 @@ class MyNetService: NSObject, NetServiceDelegate {
   var addresses: [MyAddress] = []
   var isResolving: Bool = false
   
-  var didResolveAddress: (() -> Void)? = nil
-  var didNotResolveAddress: (() -> Void)? = nil
+  var resolveAddressComplete: (() -> Void)? = nil
   
   init(service: NetService, serviceType: MyServiceType) {
     self.service = service
@@ -55,16 +58,14 @@ class MyNetService: NSObject, NetServiceDelegate {
   }
   
   func stop() {
-    self.didResolveAddress = nil
-    self.didNotResolveAddress = nil
+    self.resolveAddressComplete = nil
     self.service.stop()
     self.isResolving = false
   }
   
-  func resolve(didResolveAddress: (() -> Void)? = nil, didNotResolveAddress: (() -> Void)? = nil) {
+  func resolve(resolveAddressComplete: (() -> Void)? = nil) {
     self.isResolving = true
-    self.didResolveAddress = didResolveAddress
-    self.didNotResolveAddress = didNotResolveAddress
+    self.resolveAddressComplete = resolveAddressComplete
     self.service.delegate = self
     self.service.resolve(withTimeout: 5.0)
   }
@@ -72,15 +73,17 @@ class MyNetService: NSObject, NetServiceDelegate {
   // MARK: - NetServiceDelegate
   
   func netServiceDidResolveAddress(_ sender: NetService) {
-    print("\(self.className) : Service did resolve address \(sender) with hostname \(self.service.hostName)")
+    print("\(self.className) : Service did resolve address \(sender) with hostname \(self.hostName)")
     self.addresses = MyAddress.parseAddresses(forNetService: sender)
-    self.didResolveAddress?()
+    NotificationCenter.default.post(name: .netServiceResolveAddressComplete, object: self)
+    self.resolveAddressComplete?()
     self.stop()
   }
   
   func netService(_ sender: NetService, didNotResolve errorDict: [String : NSNumber]) {
     print("\(self.className) : Service did not resolve address \(sender)")
-    self.didNotResolveAddress?()
+    NotificationCenter.default.post(name: .netServiceResolveAddressComplete, object: self)
+    self.resolveAddressComplete?()
     self.stop()
   }
   

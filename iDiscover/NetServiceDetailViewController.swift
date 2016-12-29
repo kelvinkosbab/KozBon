@@ -1,5 +1,5 @@
 //
-//  NetServiceViewController.swift
+//  NetServiceDetailViewController.swift
 //  iDiscover
 //
 //  Created by Kelvin Kosbab on 12/27/16.
@@ -13,9 +13,6 @@ class NetServiceHeaderCell: UITableViewCell {
   @IBOutlet weak var titleLabel: UILabel!
 }
 
-class NetServiceFooterCell: UITableViewCell {
-}
-
 class NetServiceKeyValueCell: UITableViewCell {
   @IBOutlet weak var keyLabel: UILabel!
   @IBOutlet weak var valueLabel: UILabel!
@@ -27,16 +24,15 @@ class NetServiceDetailCell: UITableViewCell {
 
 class NetServiceAddressCell: UITableViewCell {
   @IBOutlet weak var ipLabel: UILabel!
-  @IBOutlet weak var portLabel: UILabel!
   @IBOutlet weak var ipLayerProtocolLabel: UILabel!
 }
 
-class NetServiceViewController: MyTableViewController {
+class NetServiceDetailViewController: MyTableViewController {
   
   // MARK: - Class Accessors
   
-  static func newController(service: MyNetService) -> NetServiceViewController {
-    let viewController = self.newController(fromStoryboard: "Main", withIdentifier: self.name) as! NetServiceViewController
+  static func newController(service: MyNetService) -> NetServiceDetailViewController {
+    let viewController = self.newController(fromStoryboard: "Main", withIdentifier: self.name) as! NetServiceDetailViewController
     viewController.service = service
     return viewController
   }
@@ -79,23 +75,21 @@ class NetServiceViewController: MyTableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    self.title = self.service.serviceType.netServiceType
+    self.title = self.service.serviceType.fullType
+    
+    NotificationCenter.default.addObserver(self, selector: #selector(self.serviceWasRemoved(_:)), name: .bonjourDidRemoveService, object: self.service)
+    NotificationCenter.default.addObserver(self, selector: #selector(self.serviceWasRemoved(_:)), name: .bonjourDidClearServices, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(self.netServiceResolveCompleted(_:)), name: .netServiceResolveAddressComplete, object: self.service)
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     
-    NotificationCenter.default.addObserver(self, selector: #selector(self.serviceWasRemoved(_:)), name: .bonjourDidRemoveService, object: self.service)
-    NotificationCenter.default.addObserver(self, selector: #selector(self.serviceWasRemoved(_:)), name: .bonjourDidClearServices, object: nil)
-    
     // Check if the service has resolved addresses
     if !self.service.hasResolvedAddresses {
-      self.service.resolve(didResolveAddress: {
-        self.tableView.reloadData()
-      }, didNotResolveAddress: {
+      self.service.resolve(resolveAddressComplete: {
         self.tableView.reloadData()
       })
-      self.tableView.reloadData()
     }
   }
   
@@ -107,6 +101,10 @@ class NetServiceViewController: MyTableViewController {
     } else {
       self.dismiss(animated: true, completion: nil)
     }
+  }
+  
+  @objc private func netServiceResolveCompleted(_ notification: Notification) {
+    self.tableView.reloadData()
   }
   
   // MARK: - Actions
@@ -156,16 +154,6 @@ class NetServiceViewController: MyTableViewController {
     return cell.contentView
   }
   
-  override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-    let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceFooterCell.name) as! NetServiceFooterCell
-    if section == 1 {
-      for subview in cell.subviews {
-        subview.alpha = MyBonjourManager.shared.isSearching ? 0.0 : 1.0
-      }
-    }
-    return cell.contentView
-  }
-  
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     if indexPath.section == 0 && indexPath.row == 5, let detail = self.service.serviceType.detail {
       return detail.getLabelHeight(width: self.tableView.bounds.width - 16, font: UIFont.systemFont(ofSize: 13))
@@ -186,7 +174,7 @@ class NetServiceViewController: MyTableViewController {
       } else if indexPath.row == 1 {
         let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceKeyValueCell.name, for: indexPath) as! NetServiceKeyValueCell
         cell.keyLabel.text = "Full Type".uppercased()
-        cell.valueLabel.text = self.service.serviceType.netServiceType
+        cell.valueLabel.text = self.service.serviceType.fullType
         return cell
         
       } else if indexPath.row == 2 {
@@ -228,8 +216,7 @@ class NetServiceViewController: MyTableViewController {
     
     let address = self.service.addresses[indexPath.row]
     let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceAddressCell.name, for: indexPath) as! NetServiceAddressCell
-    cell.ipLabel.text = address.ip
-    cell.portLabel.text = "\(address.port)"
+    cell.ipLabel.text = address.fullAddress
     cell.ipLayerProtocolLabel.text = address.internetProtocol.string
     return cell
   }

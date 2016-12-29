@@ -9,9 +9,9 @@
 import Foundation
 
 extension Notification.Name {
-  static let bonjourDidAddService = Notification.Name(rawValue: "MyBonjourManager.bonjourDidAddService")
-  static let bonjourDidRemoveService = Notification.Name(rawValue: "MyBonjourManager.bonjourDidRemoveService")
-  static let bonjourDidClearServices = Notification.Name(rawValue: "MyBonjourManager.bonjourDidClearServices")
+  static let bonjourDidAddService = Notification.Name(rawValue: "\(MyBonjourManager.name).bonjourDidAddService")
+  static let bonjourDidRemoveService = Notification.Name(rawValue: "\(MyBonjourManager.name).bonjourDidRemoveService")
+  static let bonjourDidClearServices = Notification.Name(rawValue: "\(MyBonjourManager.name).bonjourDidClearServices")
 }
 
 class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {

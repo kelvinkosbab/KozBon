@@ -13,7 +13,7 @@ class MyServiceType: Equatable {
   // Equatable
   
   static func == (lhs: MyServiceType, rhs: MyServiceType) -> Bool {
-    return lhs.netServiceType == rhs.netServiceType
+    return lhs.fullType == rhs.fullType
   }
   
   // MARK: - Properties \ Init
@@ -30,7 +30,7 @@ class MyServiceType: Equatable {
     self.detail = detail
   }
   
-  var netServiceType: String {
+  var fullType: String {
     return "_\(self.type)._\(self.transportLayer.string)"
   }
   
@@ -40,13 +40,14 @@ class MyServiceType: Equatable {
   // More at https://support.apple.com/en-us/HT202944
   
   static var allServiceTypes: [MyServiceType] {
-    return [ self.powerViewHubV2, self.netBIOSNameService, self.netBIOSDatagramService, self.netBIOSSessionService, self.rokuControlProtocol, self.beatsTransferProtocol, self.androidTvRemote, self.googleXpeditionsUdp, self.googleXpeditionsTcp, self.googleCast, self.goProWake, self.goProWeb, self.airplayUdp, self.airplayTcp, self.airdrop, self.appleMobileDeviceProtocol, self.appleMIDI, self.appleRemoteDebugServices, self.appleTV, self.appleTVv2, self.appleTVv3, self.appleTVv4, self.appleTViTunes, self.appleTVPairing, self.keynoteAccess, self.keynotePairing, self.homeKitAccessoryProtocol, self.bonjourSleepProxy, self.appleTalkFilingProtocol, self.networkFileSystem, self.webDAVFileSystem, self.fileTransferProtocol, self.secureShell, self.remoteAppleEvents, self.http, self.https, self.remoteLogin, self.linePrinterDaemon, self.internetPrintingProtocol, self.pdlDataStream, self.remoteIOUSBPrinterProtocol, self.digitalAudioAccessProtocol, self.digitalPhotoAccessProtocol, self.iChatInstantMessagingProtocolDeprecated, self.iChatInstantMessagingProtocol, self.imageCaptureSharing, self.airPortBaseStation, self.xServeRAID, self.distributedCompiler, self.applePasswordServer, self.workgroupManager, self.serverAdmin, self.remoteAudioOutputProtocol, self.touchAble, self.remoteFrameBuffer, self.netAssistant, self.ssdp, self.wifiCalling, self.rtspUdp, self.rtspTcp ]
+    return [ self.powerViewHubV2, self.spotifyConnect, self.netBIOSNameService, self.netBIOSDatagramService, self.netBIOSSessionService, self.rokuControlProtocol, self.beatsTransferProtocol, self.androidTvRemote, self.googleXpeditionsUdp, self.googleXpeditionsTcp, self.googleCast, self.goProWake, self.goProWeb, self.airplayUdp, self.airplayTcp, self.airdrop, self.appleMobileDeviceProtocol, self.appleMIDI, self.appleRemoteDebugServices, self.appleTV, self.appleTVv2, self.appleTVv3, self.appleTVv4, self.appleTViTunes, self.appleTVPairing, self.keynoteAccess, self.keynotePairing, self.homeKitAccessoryProtocol, self.bonjourSleepProxy, self.appleTalkFilingProtocol, self.networkFileSystem, self.webDAVFileSystem, self.fileTransferProtocol, self.secureShell, self.remoteAppleEvents, self.http, self.https, self.remoteLogin, self.linePrinterDaemon, self.internetPrintingProtocol, self.pdlDataStream, self.remoteIOUSBPrinterProtocol, self.digitalAudioAccessProtocol, self.digitalPhotoAccessProtocol, self.iChatInstantMessagingProtocolDeprecated, self.iChatInstantMessagingProtocol, self.imageCaptureSharing, self.airPortBaseStation, self.xServeRAID, self.distributedCompiler, self.applePasswordServer, self.workgroupManager, self.serverAdmin, self.remoteAudioOutputProtocol, self.touchAble, self.remoteFrameBuffer, self.netAssistant, self.ssdp, self.wifiCalling, self.rtspUdp, self.rtspTcp ]
   }
   
   // MARK: - MISC Service Types
   
   static let powerViewHubV2: MyServiceType = MyServiceType(name: "PowerView Hub 2.0", type: "powerview")
   
+  static let spotifyConnect: MyServiceType = MyServiceType(name: "Spotify Connect", type: "spotify-connect")
   static let netBIOSNameService: MyServiceType = MyServiceType(name: "NetBIOS Name Service", type: "netbios-ns", transportLayer: .udp)
   static let netBIOSDatagramService: MyServiceType = MyServiceType(name: "NETBIOS Datagram Service", type: "netbios-dgm", transportLayer: .udp)
   static let netBIOSSessionService: MyServiceType = MyServiceType(name: "NetBIOS Session Service", type: "netbios-ssn")
