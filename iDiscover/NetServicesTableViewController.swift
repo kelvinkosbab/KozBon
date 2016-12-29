@@ -40,12 +40,23 @@ class NetServicesTableViewController: MyTableViewController {
   
   var services: [MyNetService] = []
   
+  var servicesSortType: MyNetServiceSortType? = nil {
+    didSet {
+      if let sortType = self.servicesSortType {
+        self.services = sortType.sorted(services: self.services)
+        self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+      }
+    }
+  }
+  
   // MARK: - Lifecycle
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
     self.title = "Network Services"
+    
+    self.navigationItem.rightBarButtonItem = UIBarButtonItem(text: "Sort", target: self, action: #selector(self.sortButtonSelected(_:)))
     
     self.reloadAllServices()
     
@@ -78,7 +89,11 @@ class NetServicesTableViewController: MyTableViewController {
       self.tableView.deleteRows(at: [ loadingIndexPath ], with: .top)
       
       // Add disovered services
-      self.services = services
+      if let sortType = self.servicesSortType {
+        self.services = sortType.sorted(services: services)
+      } else {
+        self.services = services
+      }
       var indexPathsToInsert: [IndexPath] = []
       for index in 0..<self.services.count {
         indexPathsToInsert.append(IndexPath(row: index, section: 0))
@@ -90,7 +105,7 @@ class NetServicesTableViewController: MyTableViewController {
       self.reloadingImageView?.isHidden = true
       self.reloadButton?.isHidden = false
       
-    }, didStartSearch: {
+    }, didStartDiscovery: {
       let loadingIndexPath = IndexPath(row: 0, section: 0)
       self.tableView.insertRows(at: [ loadingIndexPath ], with: .top)
     })
@@ -111,6 +126,27 @@ class NetServicesTableViewController: MyTableViewController {
     self.reloadAllServices()
   }
   
+  @objc private func sortButtonSelected(_ sender: UIBarButtonItem) {
+    
+    // Construct sort message
+    let message: String?
+    if let sortType = self.servicesSortType {
+      message = "Currently: \(sortType.string)"
+    } else {
+      message = nil
+    }
+    
+    // Construct action sheet
+    let sortMenu = UIAlertController(title: "Sort By", message: message, preferredStyle: .actionSheet)
+    for sortType in MyNetServiceSortType.all {
+      sortMenu.addAction(UIAlertAction(title: sortType.string, style: .default, handler: { (_) in
+        self.servicesSortType = sortType
+      }))
+    }
+    sortMenu.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+    self.present(sortMenu, animated: true, completion: nil)
+  }
+  
   // MARK: - UITableView
   
   override func numberOfSections(in tableView: UITableView) -> Int {
@@ -118,7 +154,11 @@ class NetServicesTableViewController: MyTableViewController {
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return MyBonjourManager.shared.isSearching ? 1 : self.services.count
+    if MyBonjourManager.shared.isProcessing {
+      return 1
+    } else {
+      return self.services.count
+    }
   }
   
   override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -127,7 +167,7 @@ class NetServicesTableViewController: MyTableViewController {
     self.reloadButton = cell.reloadButton
     self.reloadButton?.addTarget(self, action: #selector(self.reloadButtonSelected(_:)), for: .touchUpInside)
     self.reloadingImageView = cell.loadingImageView
-    if MyBonjourManager.shared.isSearching {
+    if MyBonjourManager.shared.isProcessing {
       cell.loadingImageView.image = UIImage.gif(name: "dotLoadingGif")
       cell.loadingImageView.isHidden = false
       cell.reloadButton.isHidden = true
@@ -141,7 +181,7 @@ class NetServicesTableViewController: MyTableViewController {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
     // If services are loading
-    if MyBonjourManager.shared.isSearching {
+    if MyBonjourManager.shared.isProcessing {
       let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableLoadingCell.name, for: indexPath) as! NetServicesTableLoadingCell
       cell.loadingImageView.image = UIImage.gif(name: "dotLoadingGif")
       return cell
@@ -159,7 +199,7 @@ class NetServicesTableViewController: MyTableViewController {
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     
-    if !MyBonjourManager.shared.isSearching {
+    if !MyBonjourManager.shared.isProcessing {
       let service = self.services[indexPath.row]
       let viewController = NetServiceDetailViewController.newController(service: service)
       viewController.hidesBottomBarWhenPushed = true

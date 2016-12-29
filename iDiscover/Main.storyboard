@@ -11,10 +11,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
+        <!--My Navigation Controller-->
         <scene sceneID="6cj-dz-fKt">
             <objects>
-                <navigationController id="qcg-X4-XdG" sceneMemberID="viewController">
+                <navigationController id="qcg-X4-XdG" customClass="MyNavigationController" customModule="iDiscover" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="25b-L3-6v5">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

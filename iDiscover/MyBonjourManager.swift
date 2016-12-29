@@ -25,29 +25,43 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
   // MARK: - Properties
   
   var completion: ((_ services: [MyNetService]) -> Void)? = nil
-  var didStartSearch: (() -> Void)? = nil
-  
-  private var state: MyNetServiceBrowserState = .stopped {
-    didSet {
-      if self.state.isSearching && oldValue.isStopped {
-        self.didStartSearch?()
-      } else if self.state.isStopped && oldValue.isSearching {
-        print("\(self.className) : State is now \(self.state.string)")
-        self.completion?(self.services)
-      }
-    }
-  }
-  
-  var isSearching: Bool {
-    return self.state.isSearching
-  }
-  
-  var isStopped: Bool {
-    return self.state.isStopped
-  }
   
   private var serviceBrowsers: [MyNetServiceBrowser] = []
   private let concurrentServicesQueue: DispatchQueue = DispatchQueue(label: "\(MyBonjourManager.name).concurrentServicesQueue", attributes: .concurrent)
+  
+  // MARK: - Service Browser State
+  
+  private var browserState: MyNetServiceBrowserState {
+    for serviceBrowser in self.serviceBrowsers {
+      if serviceBrowser.state.isSearching {
+        return .searching
+      }
+    }
+    return.stopped
+  }
+  
+  // MARK: - Resolving Addresses
+  
+  private var isResolvingFoundServiceAddresses: Bool {
+    for service in self.services {
+      if service.isResolving {
+        return true
+      }
+    }
+    return false
+  }
+  
+  // MARK: - Completed Discovery Process
+  
+  var isProcessing: Bool {
+    return self.browserState.isSearching || self.isResolvingFoundServiceAddresses
+  }
+  
+  private func checkDiscoveryCompletion() {
+    if !self.isProcessing {
+      self.completion?(self.services)
+    }
+  }
   
   // MARK: - Services
   
@@ -76,6 +90,9 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
         self._services.append(service)
         DispatchQueue.main.async {
           NotificationCenter.default.post(name: .bonjourDidAddService, object: service)
+          service.resolve {
+            self.checkDiscoveryCompletion()
+          }
         }
       }
     })
@@ -94,16 +111,15 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
   
   // MARK: - Start / Stop Discovery
   
-  func startDiscovery(serviceType: MyServiceType, completion: @escaping (_ services: [MyNetService]) -> Void, didStartSearch: (() -> Void)? = nil) {
-    self.startDiscovery(serviceTypes: [ serviceType ], completion: completion, didStartSearch: didStartSearch)
+  func startDiscovery(serviceType: MyServiceType, completion: @escaping (_ services: [MyNetService]) -> Void, didStartDiscovery: (() -> Void)? = nil) {
+    self.startDiscovery(serviceTypes: [ serviceType ], completion: completion, didStartDiscovery: didStartDiscovery)
   }
   
-  func startDiscovery(serviceTypes: [MyServiceType]? = nil, completion: @escaping (_ services: [MyNetService]) -> Void, didStartSearch: (() -> Void)? = nil) {
+  func startDiscovery(serviceTypes: [MyServiceType]? = nil, completion: @escaping (_ services: [MyNetService]) -> Void, didStartDiscovery: (() -> Void)? = nil) {
     self.stopDiscovery()
     self.clearServices()
     self.serviceBrowsers = []
     self.completion = completion
-    self.didStartSearch = didStartSearch
     
     // Populate service browsers
     for serviceType in serviceTypes ?? MyServiceType.allServiceTypes {
@@ -116,6 +132,9 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
     for serviceBrowser in self.serviceBrowsers {
       serviceBrowser.startSearch()
     }
+    
+    // Signal the start of the search
+    didStartDiscovery?()
   }
   
   func stopDiscovery() {
@@ -130,21 +149,11 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
   // MARK: - MyNetServiceBrowserDelegate
   
   func myNetServiceBrowserDidChangeState(_ browser: MyNetServiceBrowser, state: MyNetServiceBrowserState) {
-    
-    // Calculate new state
-    var isSearching: Bool = false
-    for serviceBrowser in self.serviceBrowsers {
-      if serviceBrowser.state.isSearching {
-        isSearching = true
-        break
-      }
-    }
-    self.state = isSearching ? .searching : .stopped
+    self.checkDiscoveryCompletion()
   }
   
   func myNetServiceBrowser(_ browser: MyNetServiceBrowser, didFind service: MyNetService) {
     self.add(service: service)
-    service.resolve()
   }
   
   func myNetServiceBrowser(_ browser: MyNetServiceBrowser, didRemove service: MyNetService) {

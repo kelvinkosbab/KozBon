@@ -75,7 +75,7 @@ class NetServiceDetailViewController: MyTableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    self.title = self.service.serviceType.fullType
+    self.title = self.service.serviceType.name
     
     NotificationCenter.default.addObserver(self, selector: #selector(self.serviceWasRemoved(_:)), name: .bonjourDidRemoveService, object: self.service)
     NotificationCenter.default.addObserver(self, selector: #selector(self.serviceWasRemoved(_:)), name: .bonjourDidClearServices, object: nil)
@@ -87,9 +87,9 @@ class NetServiceDetailViewController: MyTableViewController {
     
     // Check if the service has resolved addresses
     if !self.service.hasResolvedAddresses {
-      self.service.resolve(resolveAddressComplete: {
+      self.service.resolve {
         self.tableView.reloadData()
-      })
+      }
     }
   }
   

@@ -27,7 +27,7 @@ class MyNetService: NSObject, NetServiceDelegate {
   var addresses: [MyAddress] = []
   var isResolving: Bool = false
   
-  var resolveAddressComplete: (() -> Void)? = nil
+  var completedAddressResolution: (() -> Void)? = nil
   
   init(service: NetService, serviceType: MyServiceType) {
     self.service = service
@@ -58,16 +58,16 @@ class MyNetService: NSObject, NetServiceDelegate {
   }
   
   func stop() {
-    self.resolveAddressComplete = nil
+    self.completedAddressResolution = nil
     self.service.stop()
     self.isResolving = false
   }
   
-  func resolve(resolveAddressComplete: (() -> Void)? = nil) {
+  func resolve(completedAddressResolution: (() -> Void)? = nil) {
     self.isResolving = true
-    self.resolveAddressComplete = resolveAddressComplete
+    self.completedAddressResolution = completedAddressResolution
     self.service.delegate = self
-    self.service.resolve(withTimeout: 5.0)
+    self.service.resolve(withTimeout: 2.0)
   }
   
   // MARK: - NetServiceDelegate
@@ -76,14 +76,14 @@ class MyNetService: NSObject, NetServiceDelegate {
     print("\(self.className) : Service did resolve address \(sender) with hostname \(self.hostName)")
     self.addresses = MyAddress.parseAddresses(forNetService: sender)
     NotificationCenter.default.post(name: .netServiceResolveAddressComplete, object: self)
-    self.resolveAddressComplete?()
+    self.completedAddressResolution?()
     self.stop()
   }
   
   func netService(_ sender: NetService, didNotResolve errorDict: [String : NSNumber]) {
     print("\(self.className) : Service did not resolve address \(sender)")
     NotificationCenter.default.post(name: .netServiceResolveAddressComplete, object: self)
-    self.resolveAddressComplete?()
+    self.completedAddressResolution?()
     self.stop()
   }
   
