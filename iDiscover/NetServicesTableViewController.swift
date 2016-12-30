@@ -147,6 +147,11 @@ class NetServicesTableViewController: MyTableViewController {
     self.present(sortMenu, animated: true, completion: nil)
   }
   
+  // MARK: - Table View Helpers
+  
+  private let availableServicesTableViewSection: Int = 0
+  private let publishedServicesTableViewSection: Int = 1
+  
   // MARK: - UITableView
   
   override func numberOfSections(in tableView: UITableView) -> Int {
@@ -154,56 +159,83 @@ class NetServicesTableViewController: MyTableViewController {
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    if MyBonjourManager.shared.isProcessing {
+    if section == self.availableServicesTableViewSection {
+      if MyBonjourManager.shared.isProcessing {
+        return 1
+      } else {
+        return self.services.count
+      }
+      
+    } else if section == self.publishedServicesTableViewSection {
       return 1
-    } else {
-      return self.services.count
     }
+    return 0
   }
   
   override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableHeaderCell.name) as! NetServicesTableHeaderCell
-    cell.titleLabel.text = "Available Services".uppercased()
-    self.reloadButton = cell.reloadButton
-    self.reloadButton?.addTarget(self, action: #selector(self.reloadButtonSelected(_:)), for: .touchUpInside)
-    self.reloadingImageView = cell.loadingImageView
-    if MyBonjourManager.shared.isProcessing {
-      cell.loadingImageView.image = UIImage.gif(name: "dotLoadingGif")
-      cell.loadingImageView.isHidden = false
-      cell.reloadButton.isHidden = true
-    } else {
-      cell.loadingImageView.isHidden = true
-      cell.reloadButton.isHidden = false
+    if section == self.availableServicesTableViewSection {
+      let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableHeaderCell.name) as! NetServicesTableHeaderCell
+      cell.titleLabel.text = "Available Services".uppercased()
+      self.reloadButton = cell.reloadButton
+      self.reloadButton?.addTarget(self, action: #selector(self.reloadButtonSelected(_:)), for: .touchUpInside)
+      self.reloadingImageView = cell.loadingImageView
+      if MyBonjourManager.shared.isProcessing {
+        cell.loadingImageView.image = UIImage.gif(name: "dotLoadingGif")
+        cell.loadingImageView.isHidden = false
+        cell.reloadButton.isHidden = true
+      } else {
+        cell.loadingImageView.isHidden = true
+        cell.reloadButton.isHidden = false
+      }
+      return cell.contentView
+      
+    } else if section == self.publishedServicesTableViewSection {
+      let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceHeaderCell.name) as! NetServiceHeaderCell
+      cell.titleLabel.text = "Published Services".uppercased()
+      return cell.contentView
     }
-    return cell.contentView
+    return nil
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
-    // If services are loading
-    if MyBonjourManager.shared.isProcessing {
+    if indexPath.section == self.availableServicesTableViewSection {
+      // If services are loading
+      if MyBonjourManager.shared.isProcessing {
+        let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableLoadingCell.name, for: indexPath) as! NetServicesTableLoadingCell
+        cell.loadingImageView.image = UIImage.gif(name: "dotLoadingGif")
+        return cell
+      }
+      
+      // Configure service cell
+      let service = self.services[indexPath.row]
+      let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableServiceCell.name, for: indexPath) as! NetServicesTableServiceCell
+      cell.nameLabel.text = service.serviceType.name
+      cell.typeLabel.text = "(\(service.serviceType.fullType))"
+      cell.hostLabel.text = service.hostName
+      return cell
+      
+    } else if indexPath.section == self.publishedServicesTableViewSection {
       let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableLoadingCell.name, for: indexPath) as! NetServicesTableLoadingCell
       cell.loadingImageView.image = UIImage.gif(name: "dotLoadingGif")
       return cell
     }
-    
-    // Configure service cell
-    let service = self.services[indexPath.row]
-    let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableServiceCell.name, for: indexPath) as! NetServicesTableServiceCell
-    cell.nameLabel.text = service.serviceType.name
-    cell.typeLabel.text = "(\(service.serviceType.fullType))"
-    cell.hostLabel.text = service.hostName
-    return cell
+    return UITableViewCell()
   }
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     
-    if !MyBonjourManager.shared.isProcessing {
-      let service = self.services[indexPath.row]
-      let viewController = NetServiceDetailViewController.newController(service: service)
-      viewController.hidesBottomBarWhenPushed = true
-      self.show(viewController, sender: self)
+    if indexPath.section == self.availableServicesTableViewSection {
+      if !MyBonjourManager.shared.isProcessing {
+        let service = self.services[indexPath.row]
+        let viewController = NetServiceDetailViewController.newController(service: service)
+        viewController.hidesBottomBarWhenPushed = true
+        self.show(viewController, sender: self)
+      }
+      
+    } else if indexPath.section == self.publishedServicesTableViewSection {
+      
     }
   }
 }

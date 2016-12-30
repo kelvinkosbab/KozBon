@@ -11,6 +11,11 @@
 		B603A6DE1E1217B300ED333D /* dotLoadingGif.gif in Resources */ = {isa = PBXBuildFile; fileRef = B603A6DB1E1217B300ED333D /* dotLoadingGif.gif */; };
 		B63B27BD1E15A9BB003E13F0 /* MyNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63B27BC1E15A9BB003E13F0 /* MyNavigationController.swift */; };
 		B63B27BF1E15AE62003E13F0 /* UIBarButtonItem+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63B27BE1E15AE62003E13F0 /* UIBarButtonItem+Util.swift */; };
+		B679CC0A1E1618840056C7B5 /* MyRootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B679CC091E1618840056C7B5 /* MyRootController.swift */; };
+		B679CC0F1E1620860056C7B5 /* BluetoothDevicesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B679CC0E1E1620860056C7B5 /* BluetoothDevicesTableViewController.swift */; };
+		B679CC131E1624740056C7B5 /* PublishNetServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B679CC121E1624740056C7B5 /* PublishNetServiceViewController.swift */; };
+		B679CC151E1624A20056C7B5 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B679CC141E1624A20056C7B5 /* MyViewController.swift */; };
+		B679CC171E1647670056C7B5 /* MyPublishServicesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B679CC161E1647670056C7B5 /* MyPublishServicesManager.swift */; };
 		B691545F1E1317A000382F41 /* MyAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = B691545E1E1317A000382F41 /* MyAddress.swift */; };
 		B69154611E137E0400382F41 /* NetServiceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69154601E137E0400382F41 /* NetServiceDetailViewController.swift */; };
 		B69154631E138E4A00382F41 /* MyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69154621E138E4A00382F41 /* MyTableViewController.swift */; };
@@ -44,6 +49,11 @@
 		B603A6DB1E1217B300ED333D /* dotLoadingGif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = dotLoadingGif.gif; sourceTree = "<group>"; };
 		B63B27BC1E15A9BB003E13F0 /* MyNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyNavigationController.swift; sourceTree = "<group>"; };
 		B63B27BE1E15AE62003E13F0 /* UIBarButtonItem+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Util.swift"; sourceTree = "<group>"; };
+		B679CC091E1618840056C7B5 /* MyRootController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyRootController.swift; sourceTree = "<group>"; };
+		B679CC0E1E1620860056C7B5 /* BluetoothDevicesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothDevicesTableViewController.swift; sourceTree = "<group>"; };
+		B679CC121E1624740056C7B5 /* PublishNetServiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishNetServiceViewController.swift; sourceTree = "<group>"; };
+		B679CC141E1624A20056C7B5 /* MyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
+		B679CC161E1647670056C7B5 /* MyPublishServicesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPublishServicesManager.swift; sourceTree = "<group>"; };
 		B691545E1E1317A000382F41 /* MyAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAddress.swift; sourceTree = "<group>"; };
 		B69154601E137E0400382F41 /* NetServiceDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetServiceDetailViewController.swift; sourceTree = "<group>"; };
 		B69154621E138E4A00382F41 /* MyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTableViewController.swift; sourceTree = "<group>"; };
@@ -91,6 +101,34 @@
 				B603A6DB1E1217B300ED333D /* dotLoadingGif.gif */,
 			);
 			name = Gifs;
+			sourceTree = "<group>";
+		};
+		B679CC0D1E161C010056C7B5 /* Inherited Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				B63B27BC1E15A9BB003E13F0 /* MyNavigationController.swift */,
+				B679CC141E1624A20056C7B5 /* MyViewController.swift */,
+				B69154621E138E4A00382F41 /* MyTableViewController.swift */,
+			);
+			name = "Inherited Controllers";
+			sourceTree = "<group>";
+		};
+		B679CC101E16243C0056C7B5 /* Bonjour */ = {
+			isa = PBXGroup;
+			children = (
+				B6CE1D4B1E120B01003D4FFA /* NetServicesTableViewController.swift */,
+				B69154601E137E0400382F41 /* NetServiceDetailViewController.swift */,
+				B679CC121E1624740056C7B5 /* PublishNetServiceViewController.swift */,
+			);
+			name = Bonjour;
+			sourceTree = "<group>";
+		};
+		B679CC111E1624550056C7B5 /* Bluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				B679CC0E1E1620860056C7B5 /* BluetoothDevicesTableViewController.swift */,
+			);
+			name = Bluetooth;
 			sourceTree = "<group>";
 		};
 		B691545D1E12DB0E00382F41 /* Helpers */ = {
@@ -161,6 +199,7 @@
 				B6CE1D5A1E120CCC003D4FFA /* MyNetServiceBrowser.swift */,
 				B6CE1D591E120CCC003D4FFA /* MyNetService.swift */,
 				B6CE1D5B1E120CCC003D4FFA /* MyServiceType.swift */,
+				B679CC161E1647670056C7B5 /* MyPublishServicesManager.swift */,
 			);
 			name = Bonjour;
 			sourceTree = "<group>";
@@ -206,10 +245,10 @@
 		B6CE1D431E120977003D4FFA /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				B63B27BC1E15A9BB003E13F0 /* MyNavigationController.swift */,
-				B69154621E138E4A00382F41 /* MyTableViewController.swift */,
-				B6CE1D4B1E120B01003D4FFA /* NetServicesTableViewController.swift */,
-				B69154601E137E0400382F41 /* NetServiceDetailViewController.swift */,
+				B679CC091E1618840056C7B5 /* MyRootController.swift */,
+				B679CC101E16243C0056C7B5 /* Bonjour */,
+				B679CC111E1624550056C7B5 /* Bluetooth */,
+				B679CC0D1E161C010056C7B5 /* Inherited Controllers */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -315,21 +354,26 @@
 				B69154651E13906500382F41 /* String+Util.swift in Sources */,
 				B6CE1D661E120E4D003D4FFA /* CustomServiceType.swift in Sources */,
 				B6CE1D471E120ADC003D4FFA /* Date+Util.swift in Sources */,
+				B679CC151E1624A20056C7B5 /* MyViewController.swift in Sources */,
 				B6CE1D481E120ADC003D4FFA /* DispatchQueue+Util.swift in Sources */,
 				B6CE1D4F1E120B90003D4FFA /* MyClassProtocol.swift in Sources */,
+				B679CC0A1E1618840056C7B5 /* MyRootController.swift in Sources */,
 				B63B27BF1E15AE62003E13F0 /* UIBarButtonItem+Util.swift in Sources */,
 				B6CE1D5F1E120CCC003D4FFA /* MyNetServiceBrowser.swift in Sources */,
 				B6CE1D601E120CCC003D4FFA /* MyServiceType.swift in Sources */,
 				B63B27BD1E15A9BB003E13F0 /* MyNavigationController.swift in Sources */,
 				B6CE1D5C1E120CCC003D4FFA /* MyBonjourManager.swift in Sources */,
 				B6CE1D561E120BF4003D4FFA /* MyDataManager.swift in Sources */,
+				B679CC0F1E1620860056C7B5 /* BluetoothDevicesTableViewController.swift in Sources */,
 				B691545F1E1317A000382F41 /* MyAddress.swift in Sources */,
+				B679CC171E1647670056C7B5 /* MyPublishServicesManager.swift in Sources */,
 				B6CE1D501E120B90003D4FFA /* MyControllerProtocol.swift in Sources */,
 				B6CE1D4C1E120B01003D4FFA /* NetServicesTableViewController.swift in Sources */,
 				B6F93AB61E1240EC00FE2DC7 /* MyBluetoothDevice.swift in Sources */,
 				B6F93AB41E123AD500FE2DC7 /* MyBluetoothManager.swift in Sources */,
 				B69154631E138E4A00382F41 /* MyTableViewController.swift in Sources */,
 				B6CE1D301E1208C1003D4FFA /* iDiscover.xcdatamodeld in Sources */,
+				B679CC131E1624740056C7B5 /* PublishNetServiceViewController.swift in Sources */,
 				B6CE1D521E120B9F003D4FFA /* MyDataManagerObject.swift in Sources */,
 				B6CE1D281E1208C1003D4FFA /* AppDelegate.swift in Sources */,
 				B6CE1D5E1E120CCC003D4FFA /* MyNetService.swift in Sources */,

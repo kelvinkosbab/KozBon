@@ -10,6 +10,7 @@ import Foundation
 
 extension Notification.Name {
   static let netServiceResolveAddressComplete = Notification.Name(rawValue: "\(MyNetService.name).netServiceResolveAddressComplete")
+  static let netServicePublishingComplete = Notification.Name(rawValue: "\(MyNetService.name).netServicePublishingComplete")
 }
 
 class MyNetService: NSObject, NetServiceDelegate {
@@ -25,22 +26,10 @@ class MyNetService: NSObject, NetServiceDelegate {
   let service: NetService
   let serviceType: MyServiceType
   var addresses: [MyAddress] = []
-  var isResolving: Bool = false
-  
-  var completedAddressResolution: (() -> Void)? = nil
   
   init(service: NetService, serviceType: MyServiceType) {
     self.service = service
     self.serviceType = serviceType
-  }
-  
-  var delegate: NetServiceDelegate? {
-    get {
-      return self.service.delegate
-    }
-    set {
-      self.service.delegate = newValue
-    }
   }
   
   var hostName: String {
@@ -57,11 +46,21 @@ class MyNetService: NSObject, NetServiceDelegate {
     return false
   }
   
+  // MARK: - Stopping Resolution / Publishing
+  
   func stop() {
     self.completedAddressResolution = nil
+    self.publishServiceSuccess = nil
+    self.publishServiceFailure = nil
     self.service.stop()
     self.isResolving = false
+    self.isPublishing = false
   }
+  
+  // MARK: - Resolving Address
+  
+  var isResolving: Bool = false
+  private var completedAddressResolution: (() -> Void)? = nil
   
   func resolve(completedAddressResolution: (() -> Void)? = nil) {
     self.isResolving = true
@@ -70,7 +69,7 @@ class MyNetService: NSObject, NetServiceDelegate {
     self.service.resolve(withTimeout: 2.0)
   }
   
-  // MARK: - NetServiceDelegate
+  // MARK: - NetServiceDelegate - Resolving Address
   
   func netServiceDidResolveAddress(_ sender: NetService) {
     print("\(self.className) : Service did resolve address \(sender) with hostname \(self.hostName)")
@@ -87,12 +86,34 @@ class MyNetService: NSObject, NetServiceDelegate {
     self.stop()
   }
   
+  // MARK: - Publishing Service
+  
+  var isPublishing: Bool = false
+  private var publishServiceSuccess: (() -> Void)? = nil
+  private var publishServiceFailure: (() -> Void)? = nil
+  
+  func publish(publishServiceSuccess: @escaping () -> Void, publishServiceFailure: @escaping () -> Void) {
+    self.isPublishing = true
+    self.publishServiceSuccess = publishServiceSuccess
+    self.publishServiceFailure = publishServiceFailure
+    self.service.delegate = self
+    self.service.publish()
+  }
+  
+  // MARK: - NetServiceDelegate - Publishing Service
+  
   func netServiceDidPublish(_ sender: NetService) {
     print("\(self.className) : Service did publish \(sender)")
+    NotificationCenter.default.post(name: .netServicePublishingComplete, object: self)
+    self.publishServiceSuccess?()
+    self.stop()
   }
   
   func netService(_ sender: NetService, didNotPublish errorDict: [String : NSNumber]) {
     print("\(self.className) : Service did not publish \(sender)")
+    NotificationCenter.default.post(name: .netServicePublishingComplete, object: self)
+    self.publishServiceFailure?()
+    self.stop()
   }
 }
 

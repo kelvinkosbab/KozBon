@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qcg-X4-XdG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Tx0-wz-VhI">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -11,21 +11,48 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--My Navigation Controller-->
-        <scene sceneID="6cj-dz-fKt">
+        <!--My Root Controller-->
+        <scene sceneID="QXN-ST-FAi">
             <objects>
-                <navigationController id="qcg-X4-XdG" customClass="MyNavigationController" customModule="iDiscover" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="25b-L3-6v5">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                <tabBarController storyboardIdentifier="MyRootController" id="Tx0-wz-VhI" customClass="MyRootController" customModule="iDiscover" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="Gj6-fv-P0d">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="Eto-in-gN7" kind="relationship" relationship="rootViewController" id="TeG-QF-vlx"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="TXP-Ls-1K2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="i5d-AF-a4Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-759" y="157"/>
+            <point key="canvasLocation" x="-724" y="499"/>
+        </scene>
+        <!--Root View Controller-->
+        <scene sceneID="c78-eS-dpt">
+            <objects>
+                <tableViewController storyboardIdentifier="BluetoothDevicesTableViewController" id="MFL-6P-yeB" customClass="BluetoothDevicesTableViewController" customModule="iDiscover" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="5k0-le-zGl">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Dae-mP-Btr">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Dae-mP-Btr" id="ikE-FV-CV7">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="MFL-6P-yeB" id="qsq-93-pwl"/>
+                            <outlet property="delegate" destination="MFL-6P-yeB" id="8Q3-ZU-uSw"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Root View Controller" id="L70-1K-kgi"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8VA-wi-2Xf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-39" y="814"/>
         </scene>
         <!--Net Services Table View Controller-->
         <scene sceneID="z1Y-q9-5hx">
@@ -174,6 +201,40 @@
                                     <outlet property="loadingImageView" destination="kbJ-5S-MFT" id="nWm-pc-rR5"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="Ot3-iy-pM3" customClass="NetServiceHeaderCell" customModule="iDiscover" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="172" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ot3-iy-pM3" id="Rs4-UE-MnQ">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vPG-hd-ZZu">
+                                            <rect key="frame" x="8" y="20" width="89" height="16"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xG9-f3-XgI">
+                                            <rect key="frame" x="0.0" y="43" width="375" height="1"/>
+                                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="1" id="0w0-OO-vFR"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstItem="vPG-hd-ZZu" firstAttribute="bottom" secondItem="Rs4-UE-MnQ" secondAttribute="bottomMargin" id="LpH-b1-l53"/>
+                                        <constraint firstItem="xG9-f3-XgI" firstAttribute="leading" secondItem="Rs4-UE-MnQ" secondAttribute="leading" id="k4w-j1-sYp"/>
+                                        <constraint firstAttribute="bottom" secondItem="xG9-f3-XgI" secondAttribute="bottom" id="sJq-Su-zEF"/>
+                                        <constraint firstAttribute="trailing" secondItem="xG9-f3-XgI" secondAttribute="trailing" id="srb-iZ-LmE"/>
+                                        <constraint firstItem="vPG-hd-ZZu" firstAttribute="leading" secondItem="Rs4-UE-MnQ" secondAttribute="leadingMargin" id="yzy-jB-MeK"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="titleLabel" destination="vPG-hd-ZZu" id="bal-Tc-Pmm"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="Eto-in-gN7" id="JJe-MF-jvC"/>
@@ -184,7 +245,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MTP-Jz-egw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-76" y="156.97151424287858"/>
+            <point key="canvasLocation" x="-39" y="157"/>
         </scene>
         <!--Net Service Detail View Controller-->
         <scene sceneID="Gjl-LI-fcQ">
@@ -425,7 +486,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9XP-Vz-Nu3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="586" y="157"/>
+            <point key="canvasLocation" x="660" y="157"/>
         </scene>
     </scenes>
     <resources>
