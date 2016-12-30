@@ -48,7 +48,11 @@ extension PresentableController where Self : UIViewController {
       _ = self.navigationController?.popViewController(animated: true)
       completion?()
     case .splitDetail:
-      self.splitViewController?.viewControllers.removeLast()
+      if let index = self.splitViewController?.viewControllers.index(of: self) {
+        self.splitViewController?.viewControllers.remove(at: index)
+      } else {
+        self.splitViewController?.viewControllers.removeLast()
+      }
       completion?()
     }
   }

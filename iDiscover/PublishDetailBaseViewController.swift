@@ -16,4 +16,11 @@ class PublishDetailBaseViewController: MyViewController {
   static func newController() -> PublishDetailBaseViewController {
     return self.newController(fromStoryboard: "Main", withIdentifier: self.name) as! PublishDetailBaseViewController
   }
+  
+  // MARK: - Actions
+  
+  @IBAction func createButtonSelected(_ sender: UIButton) {
+    var viewController = PublishDetailCreateViewController.newController()
+    viewController.presentControllerIn(self, forMode: .navStack)
+  }
 }

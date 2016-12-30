@@ -24,8 +24,8 @@ class PublishNetServiceSearchViewController: MyTableViewController, UISearchResu
   
   // MARK: - Properties
   
-  var existingServices: [MyServiceType] = []
-  var filteredServices: [MyServiceType] = []
+  var serviceTypes: [MyServiceType] = []
+  var filteredServiceTypes: [MyServiceType] = []
   let searchController = UISearchController(searchResultsController: nil)
   var publishDetailBaseController: PublishDetailBaseViewController? = nil
   
@@ -50,13 +50,15 @@ class PublishNetServiceSearchViewController: MyTableViewController, UISearchResu
     self.searchController.dimsBackgroundDuringPresentation = false
     self.tableView.tableHeaderView = self.searchController.searchBar
     
-    self.existingServices = MyServiceType.allServiceTypes.sorted { (serviceType1: MyServiceType, serviceType2: MyServiceType) -> Bool in
+    self.serviceTypes = MyServiceType.allServiceTypes.sorted { (serviceType1: MyServiceType, serviceType2: MyServiceType) -> Bool in
       return serviceType1.name < serviceType2.name
     }
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    
+    self.navigationItem.rightBarButtonItem = UIBarButtonItem(text: "Create", target: self, action: #selector(self.createButtonSelected(_:)))
     
     if !UIDevice.isPhone {
       self.publishDetailBaseController = PublishDetailBaseViewController.newController()
@@ -72,15 +74,30 @@ class PublishNetServiceSearchViewController: MyTableViewController, UISearchResu
   
   // MARK: - Actions
   
-  @objc private func closeButtonSelected(_ sender: UIBarButtonItem) {
-    self.dismissController()
+  @objc private func createButtonSelected(_ sender: UIBarButtonItem) {
+    var viewController = PublishDetailCreateViewController.newController()
+    if UIDevice.isPhone {
+      viewController.presentControllerIn(self, forMode: .navStack)
+    } else if let publishDetailBaseController = self.publishDetailBaseController {
+      
+      // Check if already showing create
+      if let _ = publishDetailBaseController.navigationController?.viewControllers.last as? PublishDetailCreateViewController {
+        // Already showing, do nothing
+      } else {
+        viewController.presentControllerIn(publishDetailBaseController, forMode: .navStack, completion: {
+          if let navigationController = publishDetailBaseController.navigationController {
+            navigationController.viewControllers = [ navigationController.viewControllers.first!, viewController ]
+          }
+        })
+      }
+    }
   }
   
   // MARK: - Search Controller
   
   func filterContent(forSearchText searchText: String? = nil) {
     if let text = searchText {
-      self.filteredServices = self.existingServices.filter({ (serviceType: MyServiceType) -> Bool in
+      self.filteredServiceTypes = self.serviceTypes.filter({ (serviceType: MyServiceType) -> Bool in
         let isInName = serviceType.name.containsIgnoreCase(text)
         let isInType = serviceType.fullType.containsIgnoreCase(text)
         var isInDetail = false
@@ -123,9 +140,9 @@ class PublishNetServiceSearchViewController: MyTableViewController, UISearchResu
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     if self.isFiltered {
-      return self.filteredServices.count
+      return self.filteredServiceTypes.count
     }
-    return self.existingServices.count
+    return self.serviceTypes.count
   }
   
   override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -133,7 +150,7 @@ class PublishNetServiceSearchViewController: MyTableViewController, UISearchResu
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let service = self.isFiltered ? self.filteredServices[indexPath.row] : self.existingServices[indexPath.row]
+    let service = self.isFiltered ? self.filteredServiceTypes[indexPath.row] : self.serviceTypes[indexPath.row]
     let cell = tableView.dequeueReusableCell(withIdentifier: PublishNetServiceCell.name, for: indexPath) as! PublishNetServiceCell
     cell.nameLabel.text = service.name
     cell.typeLabel.text = service.fullType
@@ -141,7 +158,29 @@ class PublishNetServiceSearchViewController: MyTableViewController, UISearchResu
   }
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let service = self.isFiltered ? self.filteredServices[indexPath.row] : self.existingServices[indexPath.row]
-    print("\(self.className) : Selected service \(service)")
+    tableView.deselectRow(at: indexPath, animated: true)
+    
+    let serviceType = self.isFiltered ? self.filteredServiceTypes[indexPath.row] : self.serviceTypes[indexPath.row]
+    var viewController = PublishDetailExistingViewController.newController(withServiceType: serviceType)
+    if UIDevice.isPhone {
+      viewController.presentControllerIn(self, forMode: .navStack)
+      
+    } else if let publishDetailBaseController = self.publishDetailBaseController {
+      
+      // Check if already showing a existing publish view controller
+      if let existingViewController = publishDetailBaseController.navigationController?.viewControllers.last as? PublishDetailExistingViewController {
+        // Currently presenting a form for this service type. Update the content.
+        existingViewController.serviceType = serviceType
+        existingViewController.updateServiceContent()
+        
+      } else {
+        // Currently on base controller. Push the new controller.
+        viewController.presentControllerIn(publishDetailBaseController, forMode: .navStack, completion: {
+          if let navigationController = publishDetailBaseController.navigationController {
+            navigationController.viewControllers = [ navigationController.viewControllers.first!, viewController ]
+          }
+        })
+      }
+    }
   }
 }
