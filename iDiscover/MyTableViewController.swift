@@ -9,7 +9,11 @@
 import Foundation
 import UIKit
 
-class MyTableViewController: UITableViewController {
+class MyTableViewController: UITableViewController, PresentableController {
+  
+  // MARK: - Properties
+  
+  var presentedMode: PresentationMode = .navStack
   
   // MARK: - Lifecycle
   

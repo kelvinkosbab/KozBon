@@ -42,7 +42,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Saves changes in the application's managed object context before the application terminates.
     MyDataManager.shared.saveMainContext()
     
-    MyPublishServicesManager.shared.stopAllServices()
+    MyBonjourManager.shared.stopDiscovery()
+    MyBonjourPublishManager.shared.stopAllServices()
   }
 }
 

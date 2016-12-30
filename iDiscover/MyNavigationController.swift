@@ -19,6 +19,10 @@ class MyNavigationController: UINavigationController {
     self.styleTitleText()
   }
   
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
+  
   // MARK: - Styles
   
   func styleTitleText() {

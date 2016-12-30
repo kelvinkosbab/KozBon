@@ -96,11 +96,7 @@ class NetServiceDetailViewController: MyTableViewController {
   // MARK: - Notifications
   
   @objc private func serviceWasRemoved(_ notification: Notification) {
-    if let navigationController = self.navigationController {
-      navigationController.popViewController(animated: true)
-    } else {
-      self.dismiss(animated: true, completion: nil)
-    }
+    self.dismissController()
   }
   
   @objc private func netServiceResolveCompleted(_ notification: Notification) {

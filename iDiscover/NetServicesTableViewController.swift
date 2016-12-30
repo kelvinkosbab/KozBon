@@ -9,6 +9,17 @@
 import Foundation
 import UIKit
 
+class NetServiceButtonCell: UITableViewCell {
+  private var didPressButton: (() -> Void)? = nil
+  @IBOutlet weak var button: UIButton!
+  @IBAction private func buttonSelected(_ sender: UIButton) {
+    self.didPressButton?()
+  }
+  func setPressHandler(didPress didPressButton: (() -> Void)? = nil) {
+    self.didPressButton = didPressButton
+  }
+}
+
 class NetServicesTableHeaderCell: UITableViewCell {
   @IBOutlet weak var titleLabel: UILabel!
   @IBOutlet weak var reloadButton: UIButton!
@@ -155,7 +166,7 @@ class NetServicesTableViewController: MyTableViewController {
   // MARK: - UITableView
   
   override func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
+    return 2
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -167,7 +178,7 @@ class NetServicesTableViewController: MyTableViewController {
       }
       
     } else if section == self.publishedServicesTableViewSection {
-      return 1
+      return 1 + MyBonjourPublishManager.shared.publishedServices.count
     }
     return 0
   }
@@ -216,8 +227,24 @@ class NetServicesTableViewController: MyTableViewController {
       return cell
       
     } else if indexPath.section == self.publishedServicesTableViewSection {
-      let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableLoadingCell.name, for: indexPath) as! NetServicesTableLoadingCell
-      cell.loadingImageView.image = UIImage.gif(name: "dotLoadingGif")
+      
+      // Publish a service cell
+      if indexPath.row == 0 {
+        let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceButtonCell.name, for: indexPath) as! NetServiceButtonCell
+        cell.button.setTitle("Publish a Service", for: .normal)
+        cell.setPressHandler(didPress: {
+          var viewController = PublishNetServiceSearchViewController.newController()
+          viewController.presentControllerIn(self, forMode: .navStack)
+        })
+        return cell
+      }
+      
+      // Configure service cell
+      let service = MyBonjourPublishManager.shared.publishedServices[indexPath.row - 1]
+      let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableServiceCell.name, for: indexPath) as! NetServicesTableServiceCell
+      cell.nameLabel.text = service.serviceType.name
+      cell.typeLabel.text = "(\(service.serviceType.fullType))"
+      cell.hostLabel.text = service.hostName
       return cell
     }
     return UITableViewCell()
@@ -229,13 +256,16 @@ class NetServicesTableViewController: MyTableViewController {
     if indexPath.section == self.availableServicesTableViewSection {
       if !MyBonjourManager.shared.isProcessing {
         let service = self.services[indexPath.row]
-        let viewController = NetServiceDetailViewController.newController(service: service)
-        viewController.hidesBottomBarWhenPushed = true
-        self.show(viewController, sender: self)
+        var viewController = NetServiceDetailViewController.newController(service: service)
+        viewController.presentControllerIn(self, forMode: .splitDetail)
       }
       
     } else if indexPath.section == self.publishedServicesTableViewSection {
       
+      if indexPath.row > 0 {
+        let service = MyBonjourPublishManager.shared.publishedServices[indexPath.row - 1]
+        print("\(self.className) : Did selected published service \(service)")
+      }
     }
   }
 }

@@ -11,6 +11,8 @@ import Foundation
 extension Notification.Name {
   static let netServiceResolveAddressComplete = Notification.Name(rawValue: "\(MyNetService.name).netServiceResolveAddressComplete")
   static let netServicePublishingComplete = Notification.Name(rawValue: "\(MyNetService.name).netServicePublishingComplete")
+  static let netServiceDidPublish = Notification.Name(rawValue: "\(MyNetService.name).netServiceDidPublish")
+  static let netServiceDidUnPublish = Notification.Name(rawValue: "\(MyNetService.name).netServiceDidUnPublish")
 }
 
 class MyNetService: NSObject, NetServiceDelegate {
@@ -55,6 +57,7 @@ class MyNetService: NSObject, NetServiceDelegate {
     self.service.stop()
     self.isResolving = false
     self.isPublishing = false
+    NotificationCenter.default.post(name: .netServiceDidUnPublish, object: self)
   }
   
   // MARK: - Resolving Address
@@ -105,6 +108,7 @@ class MyNetService: NSObject, NetServiceDelegate {
   func netServiceDidPublish(_ sender: NetService) {
     print("\(self.className) : Service did publish \(sender)")
     NotificationCenter.default.post(name: .netServicePublishingComplete, object: self)
+    NotificationCenter.default.post(name: .netServiceDidPublish, object: self)
     self.publishServiceSuccess?()
     self.stop()
   }

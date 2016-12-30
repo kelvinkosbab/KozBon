@@ -1,5 +1,5 @@
 //
-//  MyPublishServicesManager.swift
+//  MyBonjourPublishManager.swift
 //  iDiscover
 //
 //  Created by Kelvin Kosbab on 12/29/16.
@@ -8,11 +8,11 @@
 
 import Foundation
 
-class MyPublishServicesManager: NSObject {
+class MyBonjourPublishManager: NSObject {
   
   // MARK: - Singleton
   
-  static let shared = MyPublishServicesManager()
+  static let shared = MyBonjourPublishManager()
   
   private override init() { super.init() }
   
