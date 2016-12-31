@@ -9,6 +9,10 @@
 import Foundation
 import UIKit
 
+extension Notification.Name {
+  static let publishNetServiceSearchShouldDismiss = Notification.Name(rawValue: "\(PublishNetServiceSearchViewController.name).publishNetServiceSearchShouldDismiss")
+}
+
 class PublishNetServiceCell: UITableViewCell {
   @IBOutlet weak var nameLabel: UILabel!
   @IBOutlet weak var typeLabel: UILabel!
@@ -51,12 +55,12 @@ class PublishNetServiceSearchViewController: MyTableViewController, UISearchResu
     self.tableView.tableHeaderView = self.searchController.searchBar
     
     // Populate existing service types
-    self.serviceTypes = MyServiceType.allServiceTypes.sorted { (serviceType1: MyServiceType, serviceType2: MyServiceType) -> Bool in
+    self.serviceTypes = MyServiceType.tcpServiceTypes.sorted { (serviceType1: MyServiceType, serviceType2: MyServiceType) -> Bool in
       return serviceType1.name < serviceType2.name
     }
     
     // Notifications
-    NotificationCenter.default.addObserver(self, selector: #selector(self.didPublishService(_:)), name: .netServiceDidPublish, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(self.shouldDismiss(_:)), name: .publishNetServiceSearchShouldDismiss, object: nil)
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -78,7 +82,7 @@ class PublishNetServiceSearchViewController: MyTableViewController, UISearchResu
   
   // MARK: - Actions
   
-  @objc private func didPublishService(_ notification: Notification) {
+  @objc private func shouldDismiss(_ notification: Notification) {
     self.dismissController()
   }
   

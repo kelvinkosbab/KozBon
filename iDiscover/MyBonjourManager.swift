@@ -118,7 +118,7 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
     self.completion = completion
     
     // Populate service browsers
-    let serviceTypesToDiscover = MyServiceType.allServiceTypes + MyBonjourPublishManager.shared.publishedServiceTypes
+    let serviceTypesToDiscover = MyServiceType.tcpServiceTypes + MyBonjourPublishManager.shared.publishedServiceTypes
     for serviceType in serviceTypesToDiscover {
       let serviceBrowser = MyNetServiceBrowser(serviceType: serviceType, domain: "")
       serviceBrowser.delegate = self

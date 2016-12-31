@@ -21,6 +21,7 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
   
   @IBOutlet weak var nameTextField: UITextField!
   @IBOutlet weak var typeTextField: UITextField!
+  @IBOutlet weak var fullTypeLabel: UILabel!
   @IBOutlet weak var portTextField: UITextField!
   @IBOutlet weak var domainTextField: UITextField!
   @IBOutlet weak var detailTextField: UITextField!
@@ -48,6 +49,7 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
   func resetForm() {
     self.nameTextField.text = ""
     self.typeTextField.text = ""
+    self.fullTypeLabel.text = "(REQUIRED)"
     self.portTextField.text = "3000"
     self.domainTextField.text = ""
     self.detailTextField.text = nil
@@ -60,7 +62,7 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
   }
   
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    if indexPath.section == 6 || indexPath.row == 7 {
+    if indexPath.section == 5 || indexPath.row == 6 {
       return super.tableView(tableView, heightForRowAt: indexPath) + 10
     }
     return super.tableView(tableView, heightForRowAt: indexPath)
@@ -83,6 +85,17 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
   }
   
   // MARK: - UITextFieldDelegate
+  
+  @IBAction func textFieldEditingChanged(_ sender: UITextField) {
+    if sender == self.typeTextField {
+      // Update the helper label
+      if let type = self.typeTextField.text, !type.isEmpty {
+        self.fullTypeLabel.text = "(_\(type)._tcp)"
+      } else {
+        self.fullTypeLabel.text = "(REQUIRED)"
+      }
+    }
+  }
   
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
@@ -139,7 +152,9 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
       // Success
       MyLoadingManager.hideLoading()
       self.showAlertDialog(title: "Service Published!") {
-        self.dismissController()
+        self.dismissController(completion: {
+          NotificationCenter.default.post(name: .publishNetServiceSearchShouldDismiss, object: nil)
+        })
       }
     }) { 
       // Failure

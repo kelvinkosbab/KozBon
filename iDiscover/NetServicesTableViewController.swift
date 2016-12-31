@@ -305,10 +305,9 @@ class NetServicesTableViewController: MyTableViewController {
       
       // Configure published service cell
       let service = self.publishedServices[indexPath.row]
-      let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableServiceCell.name, for: indexPath) as! NetServicesTableServiceCell
-      cell.nameLabel.text = service.serviceType.name
-      cell.typeLabel.text = "(\(service.serviceType.fullType))"
-      cell.hostLabel.text = service.hostName
+      let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceAddressCell.name, for: indexPath) as! NetServiceAddressCell
+      cell.ipLabel.text = service.serviceType.name
+      cell.ipLayerProtocolLabel.text = service.serviceType.fullType
       return cell
     }
     return UITableViewCell()

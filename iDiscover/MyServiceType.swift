@@ -39,8 +39,8 @@ class MyServiceType: Equatable {
   // For a full list of all registered services: http://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml
   // More at https://support.apple.com/en-us/HT202944
   
-  static var allServiceTypes: [MyServiceType] {
-    return [ self.powerViewHubV2, self.spotifyConnect, self.netBIOSNameService, self.netBIOSDatagramService, self.netBIOSSessionService, self.rokuControlProtocol, self.beatsTransferProtocol, self.androidTvRemote, self.googleXpeditionsUdp, self.googleXpeditionsTcp, self.googleCast, self.goProWake, self.goProWeb, self.airplayUdp, self.airplayTcp, self.airdrop, self.appleMobileDeviceProtocol, self.appleMIDI, self.appleRemoteDebugServices, self.appleTV, self.appleTVv2, self.appleTVv3, self.appleTVv4, self.appleTViTunes, self.appleTVPairing, self.keynoteAccess, self.keynotePairing, self.homeKitAccessoryProtocol, self.bonjourSleepProxy, self.appleTalkFilingProtocol, self.networkFileSystem, self.webDAVFileSystem, self.fileTransferProtocol, self.secureShell, self.remoteAppleEvents, self.http, self.https, self.remoteLogin, self.linePrinterDaemon, self.internetPrintingProtocol, self.pdlDataStream, self.remoteIOUSBPrinterProtocol, self.digitalAudioAccessProtocol, self.digitalPhotoAccessProtocol, self.iChatInstantMessagingProtocolDeprecated, self.iChatInstantMessagingProtocol, self.imageCaptureSharing, self.airPortBaseStation, self.xServeRAID, self.distributedCompiler, self.applePasswordServer, self.workgroupManager, self.serverAdmin, self.remoteAudioOutputProtocol, self.touchAble, self.remoteFrameBuffer, self.netAssistant, self.ssdp, self.wifiCalling, self.rtspUdp, self.rtspTcp ]
+  static var tcpServiceTypes: [MyServiceType] {
+    return [ self.powerViewHubV2, self.spotifyConnect, self.netBIOSSessionService, self.rokuControlProtocol, self.beatsTransferProtocol, self.androidTvRemote, self.googleXpeditionsTcp, self.googleCast, self.airplayTcp, self.airdrop, self.appleMobileDeviceProtocol, self.appleMIDI, self.appleRemoteDebugServices, self.appleTV, self.appleTVv2, self.appleTVv3, self.appleTVv4, self.appleTViTunes, self.appleTVPairing, self.keynoteAccess, self.keynotePairing, self.homeKitAccessoryProtocol, self.appleTalkFilingProtocol, self.networkFileSystem, self.webDAVFileSystem, self.fileTransferProtocol, self.secureShell, self.remoteAppleEvents, self.http, self.https, self.remoteLogin, self.linePrinterDaemon, self.internetPrintingProtocol, self.pdlDataStream, self.remoteIOUSBPrinterProtocol, self.digitalAudioAccessProtocol, self.digitalPhotoAccessProtocol, self.iChatInstantMessagingProtocolDeprecated, self.iChatInstantMessagingProtocol, self.imageCaptureSharing, self.airPortBaseStation, self.xServeRAID, self.distributedCompiler, self.applePasswordServer, self.workgroupManager, self.serverAdmin, self.remoteAudioOutputProtocol, self.touchAble, self.remoteFrameBuffer, self.rtspTcp ]
   }
   
   // MARK: - MISC Service Types
@@ -48,18 +48,13 @@ class MyServiceType: Equatable {
   static let powerViewHubV2: MyServiceType = MyServiceType(name: "PowerView Hub 2.0", type: "powerview")
   
   static let spotifyConnect: MyServiceType = MyServiceType(name: "Spotify Connect", type: "spotify-connect")
-  static let netBIOSNameService: MyServiceType = MyServiceType(name: "NetBIOS Name Service", type: "netbios-ns", transportLayer: .udp)
-  static let netBIOSDatagramService: MyServiceType = MyServiceType(name: "NETBIOS Datagram Service", type: "netbios-dgm", transportLayer: .udp)
+  
   static let netBIOSSessionService: MyServiceType = MyServiceType(name: "NetBIOS Session Service", type: "netbios-ssn")
   static let rokuControlProtocol: MyServiceType = MyServiceType(name: "ROKU Control Protocol", type: "roku-rcp")
   static let beatsTransferProtocol: MyServiceType = MyServiceType(name: "Beats Transfer Protocol", type: "btp", detail: "Beats Transfer Protocol allows for the discovery and control of devices")
   static let androidTvRemote: MyServiceType = MyServiceType(name: "Android TV Remote", type: "androidtvremote")
-  static let googleXpeditionsUdp: MyServiceType = MyServiceType(name: "Google Expeditions", type: "googlexpeditions", transportLayer: .udp, detail: "Service related to Google Expeditions which is a technology for enabling multi-participant virtual fieldtrip experiences over a local wireless network. See http://g.co/expeditions for more details")
   static let googleXpeditionsTcp: MyServiceType = MyServiceType(name: "Google Expeditions", type: "googlexpeditions", detail: "Service related to Google Expeditions which is a technology for enabling multi-participant virtual fieldtrip experiences over a local wireless network. See http://g.co/expeditions for more details")
   static let googleCast: MyServiceType = MyServiceType(name: "Google Cast", type: "googlecast", detail: "Service related to Google Cast which is a technology for enabling multi-screen experiences. See developers.google.com/cast for more details")
-  static let goProWake: MyServiceType = MyServiceType(name: "GoPro Wake", type: "gopro-wake", transportLayer: .udp, detail: "GoPro proprietary protocol to wake devices")
-  static let goProWeb: MyServiceType = MyServiceType(name: "GoPro Web", type: "gopro-web", transportLayer: .udp, detail: "GoPro proprietary protocol for devices")
-  static let airplayUdp: MyServiceType = MyServiceType(name: "Airplay", type: "airplay", transportLayer: .udp, detail: "Protocol for streaming audio / video content")
   static let airplayTcp: MyServiceType = MyServiceType(name: "Airplay", type: "airplay", detail: "Protocol for streaming audio / video content")
   static let airdrop: MyServiceType = MyServiceType(name: "Airdrop", type: "airdrop", detail: "airdrop")
   static let appleMobileDeviceProtocol: MyServiceType = MyServiceType(name: "Apple Mobile Device Protocol", type: "apple-mobdev")
@@ -74,13 +69,8 @@ class MyServiceType: Equatable {
   static let keynoteAccess: MyServiceType = MyServiceType(name: "KeynoteAccess", type: "keynoteaccess", detail: "KeynoteAccess is used for sending remote requests/responses when controlling a slideshow with Keynote Remote")
   static let keynotePairing: MyServiceType = MyServiceType(name: "KeynotePairing", type: "keynotepairing", detail: "KeynotePairing is used to pair Keynote Remote with Keynote")
   static let homeKitAccessoryProtocol: MyServiceType = MyServiceType(name: "HomeKit Accessory Protocol (HAP)", type: "hap", detail: "HomeKit speaks HomeKit Accessory Protocol (HAP), which runs on top of a BLE/Bluetooth Smart or an HTTP/TCP/IP stack.  If an accessory does not support HAP directly a gateway is needed.")
-  static let bonjourSleepProxy: MyServiceType = MyServiceType(name: "Bonjour Sleep Proxy", type: "sleep-proxy", transportLayer: .udp, detail: "Apple's Bonjour Sleep Proxy service is an open source[1] component of zero configuration networking, designed to assist in reducing power consumption of networked electronic devices.[2] A device acting as a sleep proxy server will respond to Multicast DNS queries for another, compatible device which has gone into low power mode. The low-power-mode device remains asleep while the sleep proxy server responds to any Multicast DNS queries.")
   static let touchAble: MyServiceType = MyServiceType(name: "Touchable", type: "touch-able")
   static let remoteFrameBuffer: MyServiceType = MyServiceType(name: "Remote Frame Buffer", type: "rfb", detail: "RFB (remote framebuffer) is a simple protocol for remote access to graphical user interfaces. Because it works at the framebuffer level it is applicable to all windowing systems and applications, including Microsoft Windows, macOS and the X Window System. RFB is the protocol used in Virtual Network Computing (VNC) and its derivatives.")
-  static let netAssistant: MyServiceType = MyServiceType(name: "Net Assistant", type: "net-assistant", transportLayer: .udp, detail: "Apple Remote Desktop 2.0 or later")
-  static let ssdp: MyServiceType = MyServiceType(name: "SSDP", type: "ssdp", transportLayer: .udp)
-  static let wifiCalling: MyServiceType = MyServiceType(name: "Wi-Fi Calling", type: "ssdp", transportLayer: .udp)
-  static let rtspUdp: MyServiceType = MyServiceType(name: "Real Time Streaming Protocol (RTSP)", type: "rtsp", transportLayer: .udp, detail: "AirPlay, QuickTime Streaming Server (QTSS), streaming media players")
   static let rtspTcp: MyServiceType = MyServiceType(name: "Real Time Streaming Protocol (RTSP)", type: "rtsp", detail: "AirPlay, QuickTime Streaming Server (QTSS), streaming media players")
   static let appleTalkFilingProtocol: MyServiceType = MyServiceType(name: "AppleTalk Filing Protocol (AFP)", type: "afpovertcp", detail: "Used by Personal File Sharing in the Sharing preference panel starting in Mac OS X 10.2. The Finder browses for AFP servers starting in Mac OS X 10.2.")
   static let networkFileSystem: MyServiceType = MyServiceType(name: "Network File System (NFS)", type: "nfs", detail: "The Finder browses for NFS servers starting in Mac OS X 10.2.")
@@ -107,4 +97,22 @@ class MyServiceType: Equatable {
   static let workgroupManager: MyServiceType = MyServiceType(name: "Workgroup Manager", type: "workstation", detail: "Open Directory advertises this service starting in Mac OS X 10.2. Workgroup Manager browses for this service starting in Mac OS X Server 10.2.")
   static let serverAdmin: MyServiceType = MyServiceType(name: "Server Admin", type: "servermgr", detail: "Mac OS X Server machines advertise this service starting in Mac OS X 10.3. Server Admin browses for this service starting in Mac OS X Server 10.3.")
   static let remoteAudioOutputProtocol: MyServiceType = MyServiceType(name: "Remote Audio Output Protocol (RAOP)", type: "raop", detail: "Also known as AirTunes. The AirPort Express Base Station advertises this service. iTunes browses for this service starting in iTunes 4.6.")
+  
+  // MARK: - UDP Services (Unused)
+  
+  static var udpServiceTypes: [MyServiceType] {
+    return [ self.netBIOSNameService, self.netBIOSDatagramService, self.googleXpeditionsUdp, self.goProWake, self.goProWeb, self.airplayUdp, self.bonjourSleepProxy, self.netAssistant, self.ssdp, self.wifiCalling, self.rtspUdp ]
+  }
+  
+  static let netBIOSNameService: MyServiceType = MyServiceType(name: "NetBIOS Name Service", type: "netbios-ns", transportLayer: .udp)
+  static let netBIOSDatagramService: MyServiceType = MyServiceType(name: "NETBIOS Datagram Service", type: "netbios-dgm", transportLayer: .udp)
+  static let googleXpeditionsUdp: MyServiceType = MyServiceType(name: "Google Expeditions", type: "googlexpeditions", transportLayer: .udp, detail: "Service related to Google Expeditions which is a technology for enabling multi-participant virtual fieldtrip experiences over a local wireless network. See http://g.co/expeditions for more details")
+  static let goProWake: MyServiceType = MyServiceType(name: "GoPro Wake", type: "gopro-wake", transportLayer: .udp, detail: "GoPro proprietary protocol to wake devices")
+  static let goProWeb: MyServiceType = MyServiceType(name: "GoPro Web", type: "gopro-web", transportLayer: .udp, detail: "GoPro proprietary protocol for devices")
+  static let airplayUdp: MyServiceType = MyServiceType(name: "Airplay", type: "airplay", transportLayer: .udp, detail: "Protocol for streaming audio / video content")
+  static let bonjourSleepProxy: MyServiceType = MyServiceType(name: "Bonjour Sleep Proxy", type: "sleep-proxy", transportLayer: .udp, detail: "Apple's Bonjour Sleep Proxy service is an open source[1] component of zero configuration networking, designed to assist in reducing power consumption of networked electronic devices.[2] A device acting as a sleep proxy server will respond to Multicast DNS queries for another, compatible device which has gone into low power mode. The low-power-mode device remains asleep while the sleep proxy server responds to any Multicast DNS queries.")
+  static let netAssistant: MyServiceType = MyServiceType(name: "Net Assistant", type: "net-assistant", transportLayer: .udp, detail: "Apple Remote Desktop 2.0 or later")
+  static let ssdp: MyServiceType = MyServiceType(name: "SSDP", type: "ssdp", transportLayer: .udp)
+  static let wifiCalling: MyServiceType = MyServiceType(name: "Wi-Fi Calling", type: "ssdp", transportLayer: .udp)
+  static let rtspUdp: MyServiceType = MyServiceType(name: "Real Time Streaming Protocol (RTSP)", type: "rtsp", transportLayer: .udp, detail: "AirPlay, QuickTime Streaming Server (QTSS), streaming media players")
 }
