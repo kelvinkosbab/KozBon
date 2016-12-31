@@ -23,36 +23,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i5d-AF-a4Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-718" y="503"/>
-        </scene>
-        <!--Root View Controller-->
-        <scene sceneID="c78-eS-dpt">
-            <objects>
-                <tableViewController storyboardIdentifier="BluetoothDevicesTableViewController" id="MFL-6P-yeB" customClass="BluetoothDevicesTableViewController" customModule="iDiscover" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="5k0-le-zGl">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Dae-mP-Btr">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Dae-mP-Btr" id="ikE-FV-CV7">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="MFL-6P-yeB" id="qsq-93-pwl"/>
-                            <outlet property="delegate" destination="MFL-6P-yeB" id="8Q3-ZU-uSw"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="L70-1K-kgi"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8VA-wi-2Xf" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-39" y="814"/>
+            <point key="canvasLocation" x="-451" y="157"/>
         </scene>
         <!--Net Services Table View Controller-->
         <scene sceneID="z1Y-q9-5hx">
@@ -316,7 +287,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MTP-Jz-egw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-39" y="157"/>
+            <point key="canvasLocation" x="191" y="157"/>
         </scene>
         <!--Net Service Detail View Controller-->
         <scene sceneID="Gjl-LI-fcQ">
@@ -557,7 +528,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9XP-Vz-Nu3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="660" y="157"/>
+            <point key="canvasLocation" x="839" y="157"/>
         </scene>
         <!--Publish Net Service Search View Controller-->
         <scene sceneID="0E0-fx-Gl2">
@@ -631,7 +602,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kig-EB-MVc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1380" y="156.97151424287858"/>
+            <point key="canvasLocation" x="1484" y="157"/>
         </scene>
         <!--Publish Detail Base View Controller-->
         <scene sceneID="m58-dl-Ap4">
@@ -678,7 +649,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tCt-ds-oTQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2031" y="157"/>
+            <point key="canvasLocation" x="2137" y="157"/>
         </scene>
         <!--Publish Detail Create View Controller-->
         <scene sceneID="Chf-4G-Isi">
@@ -1108,7 +1079,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mgn-4o-55j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2706" y="157"/>
+            <point key="canvasLocation" x="2782" y="157"/>
         </scene>
         <!--Publish Detail Existing View Controller-->
         <scene sceneID="eg2-E3-deK">
@@ -1535,7 +1506,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="10W-H6-eT3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3420" y="157"/>
+            <point key="canvasLocation" x="3426" y="157"/>
         </scene>
     </scenes>
     <resources>

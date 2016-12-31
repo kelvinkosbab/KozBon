@@ -327,7 +327,8 @@ class NetServicesTableViewController: MyTableViewController {
       
       if indexPath.row < self.publishedServices.count {
         let service = self.publishedServices[indexPath.row - 1]
-        print("\(self.className) : Did select published service \(service)")
+        var viewController = ServiceTypeDetailTableViewController.newController(serviceType: service.serviceType)
+        viewController.presentControllerIn(self, forMode: .splitDetail)
       }
     }
   }

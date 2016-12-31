@@ -52,6 +52,9 @@ class SettingsTableViewController: MyTableViewController {
     if indexPath.section == 0 {
       if indexPath.row == 1 {
         // All service types
+        var viewController = ExistingServiceTypesTableViewController.newController()
+        viewController.presentControllerIn(self, forMode: .navStack)
+        
       } else if indexPath.row == 2 {
         // Created service types
       } else if indexPath.row == 3 {
