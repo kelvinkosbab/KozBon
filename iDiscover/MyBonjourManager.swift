@@ -111,10 +111,6 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
   
   // MARK: - Start / Stop Discovery
   
-  func startDiscovery(serviceType: MyServiceType, completion: @escaping (_ services: [MyNetService]) -> Void, didStartDiscovery: (() -> Void)? = nil) {
-    self.startDiscovery(serviceTypes: [ serviceType ], completion: completion, didStartDiscovery: didStartDiscovery)
-  }
-  
   func startDiscovery(serviceTypes: [MyServiceType]? = nil, completion: @escaping (_ services: [MyNetService]) -> Void, didStartDiscovery: (() -> Void)? = nil) {
     self.stopDiscovery()
     self.clearServices()
@@ -122,7 +118,8 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
     self.completion = completion
     
     // Populate service browsers
-    for serviceType in serviceTypes ?? MyServiceType.allServiceTypes {
+    let serviceTypesToDiscover = MyServiceType.allServiceTypes + MyBonjourPublishManager.shared.publishedServiceTypes
+    for serviceType in serviceTypesToDiscover {
       let serviceBrowser = MyNetServiceBrowser(serviceType: serviceType, domain: "")
       serviceBrowser.delegate = self
       self.serviceBrowsers.append(serviceBrowser)

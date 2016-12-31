@@ -50,6 +50,7 @@ class NetServicesTableViewController: MyTableViewController {
   var reloadingImageView: UIImageView? = nil
   
   var services: [MyNetService] = []
+  var publishedServices: [MyNetService] = []
   
   var servicesSortType: MyNetServiceSortType? = nil {
     didSet {
@@ -69,14 +70,17 @@ class NetServicesTableViewController: MyTableViewController {
     
     self.navigationItem.rightBarButtonItem = UIBarButtonItem(text: "Sort", target: self, action: #selector(self.sortButtonSelected(_:)))
     
-    self.reloadAllServices()
+    self.reloadBrowsingServices()
+    self.reloadPublishedServices()
     
     NotificationCenter.default.addObserver(self, selector: #selector(self.netServiceResolveCompleted(_:)), name: .netServiceResolveAddressComplete, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(self.didPublishService(_:)), name: .netServiceDidPublish, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(self.didUnPublishService(_:)), name: .netServiceDidUnPublish, object: nil)
   }
   
   // MARK: - Content
   
-  func reloadAllServices() {
+  func reloadBrowsingServices() {
     
     // Update the header row button and loading gif
     self.reloadingImageView?.image = UIImage.gif(name: "dotLoadingGif")
@@ -122,6 +126,66 @@ class NetServicesTableViewController: MyTableViewController {
     })
   }
   
+  @objc private func reloadPublishedServices() {
+    
+    // Fetch and sort the published services
+    let services = MyBonjourPublishManager.shared.publishedServices
+    if let sortType = self.servicesSortType {
+      self.publishedServices = sortType.sorted(services: services)
+    } else {
+      self.publishedServices = services
+    }
+    self.tableView.reloadSections(IndexSet(integer: self.publishedServicesTableViewSection), with: .automatic)
+  }
+  
+  @objc private func didPublishService(_ notification: Notification) {
+    if let service = notification.object as? MyNetService {
+      
+      // Add the published address
+      self.publishedServices.append(service)
+      
+      // Sort the published services with the additional service
+      if let sortType = self.servicesSortType {
+        self.publishedServices = sortType.sorted(services: publishedServices)
+      }
+      
+      // Update the table view
+      if let index = self.publishedServices.index(of: service) {
+        let indexPathToInsert = IndexPath(row: index, section: self.publishedServicesTableViewSection)
+        self.tableView.insertRows(at: [ indexPathToInsert ], with: .automatic)
+      } else {
+        // Error case
+        self.reloadPublishedServices()
+      }
+      
+    } else {
+      // Error case
+      self.reloadPublishedServices()
+    }
+    
+    // Reload browsed services
+    self.reloadBrowsingServices()
+  }
+  
+  @objc private func didUnPublishService(_ notification: Notification) {
+    if let service = notification.object as? MyNetService, let index = self.publishedServices.index(of: service) {
+      
+      // Remove the service
+      self.publishedServices.remove(at: index)
+      
+      // Update the table view
+      let indexPathToDelete = IndexPath(row: index, section: self.publishedServicesTableViewSection)
+      self.tableView.deleteRows(at: [ indexPathToDelete ], with: .automatic)
+      
+    } else {
+      // Error case
+      self.reloadPublishedServices()
+    }
+    
+    // Reload browsed services
+    self.reloadBrowsingServices()
+  }
+  
   // MARK: - Notifications
   
   @objc private func netServiceResolveCompleted(_ notification: Notification) {
@@ -134,7 +198,7 @@ class NetServicesTableViewController: MyTableViewController {
   // MARK: - Button Actions
   
   @objc private func reloadButtonSelected(_ sender: UIButton) {
-    self.reloadAllServices()
+    self.reloadBrowsingServices()
   }
   
   @objc private func sortButtonSelected(_ sender: UIBarButtonItem) {
@@ -178,7 +242,7 @@ class NetServicesTableViewController: MyTableViewController {
       }
       
     } else if section == self.publishedServicesTableViewSection {
-      return 1 + MyBonjourPublishManager.shared.publishedServices.count
+      return 1 + self.publishedServices.count
     }
     return 0
   }
@@ -229,7 +293,7 @@ class NetServicesTableViewController: MyTableViewController {
     } else if indexPath.section == self.publishedServicesTableViewSection {
       
       // Publish a service cell
-      if indexPath.row == 0 {
+      if indexPath.row == self.publishedServices.count {
         let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceButtonCell.name, for: indexPath) as! NetServiceButtonCell
         cell.button.setTitle("Publish a Service", for: .normal)
         cell.setPressHandler(didPress: {
@@ -239,8 +303,8 @@ class NetServicesTableViewController: MyTableViewController {
         return cell
       }
       
-      // Configure service cell
-      let service = MyBonjourPublishManager.shared.publishedServices[indexPath.row - 1]
+      // Configure published service cell
+      let service = self.publishedServices[indexPath.row]
       let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableServiceCell.name, for: indexPath) as! NetServicesTableServiceCell
       cell.nameLabel.text = service.serviceType.name
       cell.typeLabel.text = "(\(service.serviceType.fullType))"
@@ -262,9 +326,9 @@ class NetServicesTableViewController: MyTableViewController {
       
     } else if indexPath.section == self.publishedServicesTableViewSection {
       
-      if indexPath.row > 0 {
-        let service = MyBonjourPublishManager.shared.publishedServices[indexPath.row - 1]
-        print("\(self.className) : Did selected published service \(service)")
+      if indexPath.row < self.publishedServices.count {
+        let service = self.publishedServices[indexPath.row - 1]
+        print("\(self.className) : Did select published service \(service)")
       }
     }
   }

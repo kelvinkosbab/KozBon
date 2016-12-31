@@ -11,9 +11,22 @@ import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+  
+  class var shared: AppDelegate {
+    return UIApplication.shared.delegate as! AppDelegate
+  }
+  
+  var rootViewController: UIViewController? {
+    get {
+      return self.window?.rootViewController
+    }
+    set {
+      self.window?.rootViewController = newValue
+    }
+  }
 
   var window: UIWindow?
-
+  
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
     return true

@@ -47,6 +47,28 @@ extension String {
     return self.lowercased().range(of: string.lowercased()) != nil
   }
   
+  var containsWhitespace: Bool {
+    if let _ = self.rangeOfCharacter(from: .whitespacesAndNewlines) {
+      return false
+    }
+    return true
+  }
+  
+  var containsDecimalDigits: Bool {
+    if let _ = self.rangeOfCharacter(from: .decimalDigits) {
+      return true
+    }
+    return false
+  }
+  
+  var convertToDouble: Double? {
+    return NumberFormatter().number(from: self)?.doubleValue
+  }
+  
+  var convertToInt: Int? {
+    return NumberFormatter().number(from: self)?.intValue
+  }
+  
   // MARK: - Subscript Operations
   
   subscript (i: Int) -> Character? {

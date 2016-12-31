@@ -21,6 +21,8 @@ class PublishDetailExistingViewController: MyTableViewController {
   
   // MARK: - Properties
   
+  @IBOutlet weak var portTextField: UITextField!
+  
   var serviceType: MyServiceType!
   
   // MARK: - Lifecycle

@@ -48,10 +48,32 @@ extension PresentableController where Self : UIViewController {
       _ = self.navigationController?.popViewController(animated: true)
       completion?()
     case .splitDetail:
-      if let index = self.splitViewController?.viewControllers.index(of: self) {
-        self.splitViewController?.viewControllers.remove(at: index)
+      if let splitViewController = self.splitViewController {
+        if let index = splitViewController.viewControllers.index(of: self) {
+          splitViewController.viewControllers.remove(at: index)
+        } else {
+          
+          // Look for self embedded in a navigation controller
+          for controller in splitViewController.viewControllers {
+            var found = false
+            if let navigationController = controller as? UINavigationController {
+              for subController in navigationController.viewControllers {
+                if self == subController {
+                  found = true
+                  break
+                }
+              }
+            }
+            
+            if found, let index = splitViewController.viewControllers.index(of: controller) {
+              splitViewController.viewControllers.remove(at: index)
+              break
+            }
+          }
+        }
       } else {
-        self.splitViewController?.viewControllers.removeLast()
+        // Default navStack behavior
+        _ = self.navigationController?.popViewController(animated: true)
       }
       completion?()
     }

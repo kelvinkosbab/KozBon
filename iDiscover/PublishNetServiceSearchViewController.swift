@@ -50,9 +50,13 @@ class PublishNetServiceSearchViewController: MyTableViewController, UISearchResu
     self.searchController.dimsBackgroundDuringPresentation = false
     self.tableView.tableHeaderView = self.searchController.searchBar
     
+    // Populate existing service types
     self.serviceTypes = MyServiceType.allServiceTypes.sorted { (serviceType1: MyServiceType, serviceType2: MyServiceType) -> Bool in
       return serviceType1.name < serviceType2.name
     }
+    
+    // Notifications
+    NotificationCenter.default.addObserver(self, selector: #selector(self.didPublishService(_:)), name: .netServiceDidPublish, object: nil)
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -73,6 +77,10 @@ class PublishNetServiceSearchViewController: MyTableViewController, UISearchResu
   }
   
   // MARK: - Actions
+  
+  @objc private func didPublishService(_ notification: Notification) {
+    self.dismissController()
+  }
   
   @objc private func createButtonSelected(_ sender: UIBarButtonItem) {
     var viewController = PublishDetailCreateViewController.newController()
