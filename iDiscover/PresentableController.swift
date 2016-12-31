@@ -31,11 +31,19 @@ extension PresentableController where Self : UIViewController {
       self.hidesBottomBarWhenPushed = true
       completion?()
     case .splitDetail:
-      if let splitViewController = parentController.splitViewController {
-        let navigationController = MyNavigationController(rootViewController: self)
-        splitViewController.showDetailViewController(navigationController, sender: self)
+      
+      // Check if on phone vs pad. If phone proceed with default navStack behavior
+      if UIDevice.isPhone {
+        self.presentControllerIn(parentController, forMode: .navStack, completion: completion)
+        
       } else {
-        self.presentControllerIn(parentController, forMode: .navStack)
+        // Present in split view detail controller
+        if let splitViewController = parentController.splitViewController {
+          let navigationController = MyNavigationController(rootViewController: self)
+          splitViewController.showDetailViewController(navigationController, sender: self)
+        } else {
+          self.presentControllerIn(parentController, forMode: .navStack, completion: completion)
+        }
       }
     }
   }

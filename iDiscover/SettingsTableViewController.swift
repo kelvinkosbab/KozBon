@@ -65,24 +65,13 @@ class SettingsTableViewController: MyTableViewController {
         // Url
         let path = "http://kozinga.net/"
         UIPasteboard.general.string = path
-        self.showAlertDialog(title: "URL Copied", message: "\(path) copied to the clipboard.")
+        self.showDisappearingAlertDialog(title: "Website Copied", message: "\(path) copied to the clipboard.")
         
       } else if indexPath.row == 4 {
         // Email
         let email = "kelvin.kosbab@kozinga.net"
         UIPasteboard.general.string = email
-        self.showAlertDialog(title: "Email Copied", message: "\(email) copied to the clipboard.")
-      }
-    }
-  }
-  
-  // MARK: - Helpers
-  
-  private func showAlertDialog(title: String, message: String? = nil) {
-    let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-    self.present(alertController, animated: true) {
-      DispatchQueue.main.asyncAfter(after: 1.5) {
-        self.dismiss(animated: true, completion: nil)
+        self.showDisappearingAlertDialog(title: "Email Copied", message: "\(email) copied to the clipboard.")
       }
     }
   }

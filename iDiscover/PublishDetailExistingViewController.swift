@@ -132,7 +132,7 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
   @IBAction func publishButtonSelected(_ sender: UIButton) {
     
     guard let port = self.portTextField.text, let portValue = port.convertToInt, portValue > 0 else {
-      self.showAlertDialog(title: "Invalid Port Number")
+      self.showDisappearingAlertDialog(title: "Invalid Port Number")
       return
     }
     
@@ -143,7 +143,7 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
     MyBonjourPublishManager.shared.publish(name: self.serviceType.name, type: self.serviceType.type, port: portValue, domain: domain, transportLayer: .tcp, detail: self.serviceType.detail, success: {
       // Success
       MyLoadingManager.hideLoading()
-      self.showAlertDialog(title: "Service Published!") {
+      self.showDisappearingAlertDialog(title: "Service Published!") {
         self.dismissController(completion: {
           NotificationCenter.default.post(name: .publishNetServiceSearchShouldDismiss, object: nil)
         })
@@ -151,19 +151,11 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
     }) {
       // Failure
       MyLoadingManager.hideLoading()
-      self.showAlertDialog(title: "☹️ Something Went Wrong ☹️", message: "Please try again.")
+      self.showDisappearingAlertDialog(title: "☹️ Something Went Wrong ☹️", message: "Please try again.")
     }
   }
   
   @IBAction func clearButtonSelected(_ sender: UIButton) {
     self.resetForm()
-  }
-  
-  private func showAlertDialog(title: String, message: String? = nil, okSelected: (() -> Void)? = nil) {
-    let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in
-      okSelected?()
-    }))
-    self.present(alertController, animated: true, completion: nil)
   }
 }

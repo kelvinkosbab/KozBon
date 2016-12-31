@@ -126,17 +126,17 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
     
     // Validate the form
     guard let name = self.nameTextField.text, !name.trim().isEmpty else {
-      self.showAlertDialog(title: "Service Name Required")
+      self.showDisappearingAlertDialog(title: "Service Name Required")
       return
     }
     
     guard let type = self.typeTextField.text, !type.trim().isEmpty else {
-      self.showAlertDialog(title: "Service Type Required")
+      self.showDisappearingAlertDialog(title: "Service Type Required")
       return
     }
     
     guard let port = self.portTextField.text, let portValue = port.convertToInt, portValue > 0 else {
-      self.showAlertDialog(title: "Invalid Port Number")
+      self.showDisappearingAlertDialog(title: "Invalid Port Number")
       return
     }
     
@@ -151,7 +151,7 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
     MyBonjourPublishManager.shared.publish(name: name, type: type, port: portValue, domain: domain, transportLayer: .tcp, detail: detail, success: {
       // Success
       MyLoadingManager.hideLoading()
-      self.showAlertDialog(title: "Service Published!") {
+      self.showDisappearingAlertDialog(title: "Service Published!") {
         self.dismissController(completion: {
           NotificationCenter.default.post(name: .publishNetServiceSearchShouldDismiss, object: nil)
         })
@@ -159,19 +159,11 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
     }) { 
       // Failure
       MyLoadingManager.hideLoading()
-      self.showAlertDialog(title: "☹️ Something Went Wrong ☹️", message: "Please try again.")
+      self.showDisappearingAlertDialog(title: "☹️ Something Went Wrong ☹️", message: "Please try again.")
     }
   }
   
   @IBAction func clearButtonSelected(_ sender: UIButton) {
     self.resetForm()
-  }
-  
-  private func showAlertDialog(title: String, message: String? = nil, okSelected: (() -> Void)? = nil) {
-    let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in
-      okSelected?()
-    }))
-    self.present(alertController, animated: true, completion: nil)
   }
 }

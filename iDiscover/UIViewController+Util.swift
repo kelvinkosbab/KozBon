@@ -31,4 +31,13 @@ extension UIViewController {
   static func newController(fromStoryboard storyboard: MyStoryboard, withIdentifier identifier: String) -> UIViewController {
     return storyboard.storyboard.instantiateViewController(withIdentifier: identifier)
   }
+  
+  func showDisappearingAlertDialog(title: String, message: String? = nil, didDismiss: (() -> Void)? = nil) {
+    let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    self.present(alertController, animated: true) {
+      DispatchQueue.main.asyncAfter(after: 1.5) {
+        self.dismiss(animated: true, completion: didDismiss)
+      }
+    }
+  }
 }
