@@ -41,7 +41,7 @@ class NetServicesTableViewController: MyTableViewController {
   // MARK: - Class Accessors
   
   static func newController() -> NetServicesTableViewController {
-    return self.newController(fromStoryboard: "Main", withIdentifier: self.name) as! NetServicesTableViewController
+    return self.newController(fromStoryboard: .main, withIdentifier: self.name) as! NetServicesTableViewController
   }
   
   // MARK: - Properties
@@ -250,7 +250,7 @@ class NetServicesTableViewController: MyTableViewController {
   override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     if section == self.availableServicesTableViewSection {
       let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableHeaderCell.name) as! NetServicesTableHeaderCell
-      cell.titleLabel.text = "Available Services".uppercased()
+      cell.titleLabel.text = "Discovered Services".uppercased()
       self.reloadButton = cell.reloadButton
       self.reloadButton?.addTarget(self, action: #selector(self.reloadButtonSelected(_:)), for: .touchUpInside)
       self.reloadingImageView = cell.loadingImageView
@@ -266,7 +266,7 @@ class NetServicesTableViewController: MyTableViewController {
       
     } else if section == self.publishedServicesTableViewSection {
       let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceHeaderCell.name) as! NetServiceHeaderCell
-      cell.titleLabel.text = "Published Services".uppercased()
+      cell.titleLabel.text = "Your Published Services".uppercased()
       return cell.contentView
     }
     return nil

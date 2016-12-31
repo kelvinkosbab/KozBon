@@ -32,7 +32,7 @@ class NetServiceDetailViewController: MyTableViewController {
   // MARK: - Class Accessors
   
   static func newController(service: MyNetService) -> NetServiceDetailViewController {
-    let viewController = self.newController(fromStoryboard: "Main", withIdentifier: self.name) as! NetServiceDetailViewController
+    let viewController = self.newController(fromStoryboard: .main, withIdentifier: self.name) as! NetServiceDetailViewController
     viewController.service = service
     return viewController
   }

@@ -14,7 +14,7 @@ class MyRootController: UITabBarController {
   // MARK: - Class Accessors
   
   static func newController() -> MyRootController {
-    return self.newController(fromStoryboard: "Main", withIdentifier: self.name) as! MyRootController
+    return self.newController(fromStoryboard: .main, withIdentifier: self.name) as! MyRootController
   }
   
   // MARK: - Lifecycle
@@ -23,8 +23,8 @@ class MyRootController: UITabBarController {
     super.viewDidLoad()
     
     let servicesViewController = self.setupServicesController()
-    let bluetoothViewController = self.setupBluetoothController()
-    self.viewControllers = [ servicesViewController, bluetoothViewController ]
+    let settingsViewController = self.setupSettingsController()
+    self.viewControllers = [ servicesViewController, settingsViewController ]
   }
   
   // MARK: - Controllers
@@ -48,10 +48,22 @@ class MyRootController: UITabBarController {
     return servicesSplitViewController
   }
   
-  func setupBluetoothController() -> UIViewController {
-    let bluetoothViewController = BluetoothDevicesTableViewController.newController()
-    bluetoothViewController.title = "Bluetooth"
-    bluetoothViewController.tabBarItem = UITabBarItem(title: "Bluetooth", image: #imageLiteral(resourceName: "iconBluetooth"), selectedImage: nil)
-    return MyNavigationController(rootViewController: bluetoothViewController)
+  func setupSettingsController() -> UIViewController {
+    
+    // Configure the master controller
+    let settingsMasterViewController = SettingsTableViewController.newController()
+    let settingsNavigationController = MyNavigationController(rootViewController: settingsMasterViewController)
+    
+    // Set up split view for services
+    let settingsSplitViewController = MySplitViewController()
+    settingsSplitViewController.viewControllers = [ settingsNavigationController ]
+    if !UIDevice.isPhone {
+      settingsSplitViewController.minimumPrimaryColumnWidth = 300
+      settingsSplitViewController.maximumPrimaryColumnWidth = 300
+    }
+    settingsSplitViewController.preferredDisplayMode = .allVisible
+    settingsSplitViewController.title = "Settings"
+    settingsSplitViewController.tabBarItem = UITabBarItem(title: "Settings", image: #imageLiteral(resourceName: "iconTools"), selectedImage: nil)
+    return settingsSplitViewController
   }
 }

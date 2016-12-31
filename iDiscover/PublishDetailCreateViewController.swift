@@ -14,7 +14,7 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
   // MARK: - Class Accessors
   
   static func newController() -> PublishDetailCreateViewController {
-    return self.newController(fromStoryboard: "Main", withIdentifier: self.name) as! PublishDetailCreateViewController
+    return self.newController(fromStoryboard: .main, withIdentifier: self.name) as! PublishDetailCreateViewController
   }
   
   // MARK: - Properties

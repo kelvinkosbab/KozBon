@@ -14,7 +14,7 @@ class PublishDetailBaseViewController: MyViewController {
   // MARK: - Class Accessors
   
   static func newController() -> PublishDetailBaseViewController {
-    return self.newController(fromStoryboard: "Main", withIdentifier: self.name) as! PublishDetailBaseViewController
+    return self.newController(fromStoryboard: .main, withIdentifier: self.name) as! PublishDetailBaseViewController
   }
   
   // MARK: - Actions
