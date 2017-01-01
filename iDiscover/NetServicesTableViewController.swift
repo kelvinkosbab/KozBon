@@ -9,6 +9,10 @@
 import Foundation
 import UIKit
 
+class MyBasicCenterLabelCell: UITableViewCell {
+  @IBOutlet weak var titleLabel: UILabel!
+}
+
 class NetServiceButtonCell: UITableViewCell {
   private var didPressButton: (() -> Void)? = nil
   @IBOutlet weak var button: UIButton!
@@ -23,17 +27,16 @@ class NetServiceButtonCell: UITableViewCell {
 class NetServicesTableHeaderCell: UITableViewCell {
   @IBOutlet weak var titleLabel: UILabel!
   @IBOutlet weak var reloadButton: UIButton!
-  @IBOutlet weak var loadingImageView: UIImageView!
+  @IBOutlet weak var loadingActivityIndicator: UIActivityIndicatorView!
 }
 
 class NetServicesTableServiceCell: UITableViewCell {
   @IBOutlet weak var nameLabel: UILabel!
-  @IBOutlet weak var typeLabel: UILabel!
   @IBOutlet weak var hostLabel: UILabel!
 }
 
 class NetServicesTableLoadingCell: UITableViewCell {
-  @IBOutlet weak var loadingImageView: UIImageView!
+  @IBOutlet weak var loadingActivityIndicator: UIActivityIndicatorView!
 }
 
 class NetServicesTableViewController: MyTableViewController {
@@ -47,7 +50,7 @@ class NetServicesTableViewController: MyTableViewController {
   // MARK: - Properties
   
   var reloadButton: UIButton? = nil
-  var reloadingImageView: UIImageView? = nil
+  var loadingActivityIndicator: UIActivityIndicatorView? = nil
   
   var services: [MyNetService] = []
   var publishedServices: [MyNetService] = []
@@ -60,6 +63,8 @@ class NetServicesTableViewController: MyTableViewController {
       }
     }
   }
+  
+  // TODO: - HERE
   
   // MARK: - Lifecycle
   
@@ -80,49 +85,96 @@ class NetServicesTableViewController: MyTableViewController {
   
   // MARK: - Content
   
+  var isBrowsingForServces: Bool = false {
+    didSet {
+      
+      // Update the header loading content
+      if self.isBrowsingForServces {
+        self.loadingActivityIndicator?.startAnimating()
+        self.loadingActivityIndicator?.isHidden = false
+        self.reloadButton?.isHidden = true
+      } else {
+        self.loadingActivityIndicator?.stopAnimating()
+        self.loadingActivityIndicator?.isHidden = true
+        self.reloadButton?.isHidden = false
+      }
+      
+      // Update the table view
+      self.tableView.beginUpdates()
+      
+      if self.isBrowsingForServces {
+        
+        // Will start to browse for services
+        
+        // Remove any services
+        if self.services.count > 0 {
+          let currentServicesCount = self.services.count
+          var indexPathsToDelete: [IndexPath] = []
+          for index in 0..<currentServicesCount {
+            indexPathsToDelete.append(IndexPath(row: index, section: 0))
+          }
+          self.tableView.deleteRows(at: indexPathsToDelete, with: .top)
+          
+        } else {
+          // Remove the no services cell
+          let noServicesIndexPath = IndexPath(row: 0, section: 0)
+          self.tableView.deleteRows(at: [ noServicesIndexPath ], with: .top)
+        }
+        self.services = []
+        
+        // Show the loading row
+        let loadingIndexPath = IndexPath(row: 0, section: 0)
+        self.tableView.insertRows(at: [ loadingIndexPath ], with: .top)
+        
+      } else {
+        
+        // Done searching for services
+        
+        // Hide the loading row
+        let loadingIndexPath = IndexPath(row: 0, section: 0)
+        self.tableView.deleteRows(at: [ loadingIndexPath ], with: .top)
+        
+        // Check if there were any discovered services
+        if self.services.count > 0 {
+          
+          // Add disovered services to the table view
+          var indexPathsToInsert: [IndexPath] = []
+          for index in 0..<self.services.count {
+            indexPathsToInsert.append(IndexPath(row: index, section: 0))
+          }
+          self.tableView.insertRows(at: indexPathsToInsert, with: .top)
+          
+        } else {
+          
+          // Add the no services found cell
+          let noServicesIndexPath = IndexPath(row: 0, section: 0)
+          self.tableView.insertRows(at: [ noServicesIndexPath ], with: .top)
+        }
+      }
+      
+      
+      // Done updating table view
+      self.tableView.endUpdates()
+    }
+  }
+  
   func reloadBrowsingServices() {
     
-    // Update the header row button and loading gif
-    self.reloadingImageView?.image = UIImage.gif(name: "dotLoadingGif")
-    self.reloadingImageView?.isHidden = false
-    self.reloadButton?.isHidden = true
-    
-    // Clear existing services
-    let currentServicesCount = self.services.count
-    self.services = []
-    var indexPathsToDelete: [IndexPath] = []
-    for index in 0..<currentServicesCount {
-      indexPathsToDelete.append(IndexPath(row: index, section: 0))
-    }
-    self.tableView.deleteRows(at: indexPathsToDelete, with: .top)
+    // Update the browsing for services flag
+    self.isBrowsingForServces = true
     
     // Start service discovery
     MyBonjourManager.shared.startDiscovery(completion: { (services) in
       
-      // Remove the loading row
-      let loadingIndexPath = IndexPath(row: 0, section: 0)
-      self.tableView.deleteRows(at: [ loadingIndexPath ], with: .top)
-      
-      // Add disovered services
+      // Sort and set the discovered services
       if let sortType = self.servicesSortType {
         self.services = sortType.sorted(services: services)
       } else {
         self.services = services
       }
-      var indexPathsToInsert: [IndexPath] = []
-      for index in 0..<self.services.count {
-        indexPathsToInsert.append(IndexPath(row: index, section: 0))
-      }
-      self.tableView.insertRows(at: indexPathsToInsert, with: .top)
       
-      // Update the header row button and loading gif
-      self.reloadingImageView?.image = nil
-      self.reloadingImageView?.isHidden = true
-      self.reloadButton?.isHidden = false
-      
-    }, didStartDiscovery: {
-      let loadingIndexPath = IndexPath(row: 0, section: 0)
-      self.tableView.insertRows(at: [ loadingIndexPath ], with: .top)
+      // Update the browsing for services flag
+      self.isBrowsingForServces = false
     })
   }
   
@@ -237,6 +289,8 @@ class NetServicesTableViewController: MyTableViewController {
     if section == self.availableServicesTableViewSection {
       if MyBonjourManager.shared.isProcessing {
         return 1
+      } else if self.services.count == 0 {
+        return 1
       } else {
         return self.services.count
       }
@@ -253,13 +307,14 @@ class NetServicesTableViewController: MyTableViewController {
       cell.titleLabel.text = "Discovered Services".uppercased()
       self.reloadButton = cell.reloadButton
       self.reloadButton?.addTarget(self, action: #selector(self.reloadButtonSelected(_:)), for: .touchUpInside)
-      self.reloadingImageView = cell.loadingImageView
+      self.loadingActivityIndicator = cell.loadingActivityIndicator
       if MyBonjourManager.shared.isProcessing {
-        cell.loadingImageView.image = UIImage.gif(name: "dotLoadingGif")
-        cell.loadingImageView.isHidden = false
+        cell.loadingActivityIndicator.startAnimating()
+        cell.loadingActivityIndicator.isHidden = false
         cell.reloadButton.isHidden = true
       } else {
-        cell.loadingImageView.isHidden = true
+        cell.loadingActivityIndicator.stopAnimating()
+        cell.loadingActivityIndicator.isHidden = true
         cell.reloadButton.isHidden = false
       }
       return cell.contentView
@@ -275,10 +330,16 @@ class NetServicesTableViewController: MyTableViewController {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
     if indexPath.section == self.availableServicesTableViewSection {
+      
       // If services are loading
-      if MyBonjourManager.shared.isProcessing {
+      if self.isBrowsingForServces {
         let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableLoadingCell.name, for: indexPath) as! NetServicesTableLoadingCell
-        cell.loadingImageView.image = UIImage.gif(name: "dotLoadingGif")
+        cell.loadingActivityIndicator.startAnimating()
+        return cell
+        
+      } else if self.services.count == 0 {
+        let cell = tableView.dequeueReusableCell(withIdentifier: MyBasicCenterLabelCell.name, for: indexPath) as! MyBasicCenterLabelCell
+        cell.titleLabel.text = "No Services Discovered"
         return cell
       }
       
@@ -286,7 +347,6 @@ class NetServicesTableViewController: MyTableViewController {
       let service = self.services[indexPath.row]
       let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableServiceCell.name, for: indexPath) as! NetServicesTableServiceCell
       cell.nameLabel.text = service.serviceType.name
-      cell.typeLabel.text = "(\(service.serviceType.fullType))"
       cell.hostLabel.text = service.hostName
       return cell
       
@@ -317,7 +377,8 @@ class NetServicesTableViewController: MyTableViewController {
     tableView.deselectRow(at: indexPath, animated: true)
     
     if indexPath.section == self.availableServicesTableViewSection {
-      if !MyBonjourManager.shared.isProcessing {
+      
+      if !self.isBrowsingForServces && self.services.count > 0 {
         let service = self.services[indexPath.row]
         var viewController = NetServiceDetailViewController.newController(service: service)
         viewController.presentControllerIn(self, forMode: .splitDetail)
@@ -326,7 +387,7 @@ class NetServicesTableViewController: MyTableViewController {
     } else if indexPath.section == self.publishedServicesTableViewSection {
       
       if indexPath.row < self.publishedServices.count {
-        let service = self.publishedServices[indexPath.row - 1]
+        let service = self.publishedServices[indexPath.row]
         var viewController = ServiceTypeDetailTableViewController.newController(serviceType: service.serviceType)
         viewController.presentControllerIn(self, forMode: .splitDetail)
       }

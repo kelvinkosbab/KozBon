@@ -135,8 +135,8 @@ class NetServiceDetailViewController: MyTableViewController {
     if section == 0 {
       let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableHeaderCell.name) as! NetServicesTableHeaderCell
       cell.titleLabel.text = "Information".uppercased()
-      cell.loadingImageView.image = nil
-      cell.loadingImageView.isHidden = true
+      cell.loadingActivityIndicator.stopAnimating()
+      cell.loadingActivityIndicator.isHidden = true
       self.moreDetailsButton = cell.reloadButton
       cell.reloadButton.setTitle(self.isMoreDetails ? "Less" : "More", for: .normal)
       cell.reloadButton.addTarget(self, action: #selector(self.moreDetailsButtonSelected(_:)), for: .touchUpInside)
@@ -201,7 +201,8 @@ class NetServiceDetailViewController: MyTableViewController {
     
     if self.service.isResolving {
       let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableLoadingCell.name, for: indexPath) as! NetServicesTableLoadingCell
-      cell.loadingImageView.image = UIImage.gif(name: "dotLoadingGif")
+      cell.loadingActivityIndicator.startAnimating()
+      cell.loadingActivityIndicator.isHidden = false
       return cell
       
     } else if !self.service.isResolving && self.service.addresses.count == 0 {

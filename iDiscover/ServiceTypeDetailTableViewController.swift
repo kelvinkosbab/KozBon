@@ -50,8 +50,8 @@ class ServiceTypeDetailTableViewController: MyTableViewController {
   override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableHeaderCell.name) as! NetServicesTableHeaderCell
     cell.titleLabel.text = "Information".uppercased()
-    cell.loadingImageView.image = nil
-    cell.loadingImageView.isHidden = true
+    cell.loadingActivityIndicator.stopAnimating()
+    cell.loadingActivityIndicator.isHidden = true
     cell.reloadButton.isHidden = true
     return cell.contentView
   }
