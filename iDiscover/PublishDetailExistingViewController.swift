@@ -27,8 +27,6 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
   @IBOutlet weak var portTextField: UITextField!
   @IBOutlet weak var domainTextField: UITextField!
   @IBOutlet weak var detailTextField: UITextField!
-  @IBOutlet weak var publishButton: UIButton!
-  @IBOutlet weak var clearButton: UIButton!
   
   var serviceType: MyServiceType!
   
@@ -101,6 +99,11 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
       self.portTextField.becomeFirstResponder()
     } else if indexPath.section == 3 {
       self.domainTextField.becomeFirstResponder()
+      
+    } else if indexPath.section == 5 && indexPath.row == 0 {
+      self.publishButtonSelected()
+    } else if indexPath.section == 6 && indexPath.row == 0{
+      self.clearButtonSelected()
     }
   }
   
@@ -129,7 +132,7 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
   
   // MARK: - Actions
   
-  @IBAction func publishButtonSelected(_ sender: UIButton) {
+  private func publishButtonSelected() {
     
     guard let port = self.portTextField.text, let portValue = port.convertToInt, portValue > 0 else {
       self.showDisappearingAlertDialog(title: "Invalid Port Number")
@@ -155,7 +158,7 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
     }
   }
   
-  @IBAction func clearButtonSelected(_ sender: UIButton) {
+  private func clearButtonSelected() {
     self.resetForm()
   }
 }

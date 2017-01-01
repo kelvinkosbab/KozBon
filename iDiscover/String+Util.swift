@@ -49,9 +49,16 @@ extension String {
   
   var containsWhitespace: Bool {
     if let _ = self.rangeOfCharacter(from: .whitespacesAndNewlines) {
-      return false
+      return true
     }
-    return true
+    return false
+  }
+  
+  var containsAlphanumerics: Bool {
+    if let _ = self.rangeOfCharacter(from: .alphanumerics) {
+      return true
+    }
+    return false
   }
   
   var containsDecimalDigits: Bool {

@@ -20,14 +20,6 @@ class MyBonjourPublishManager: NSObject {
   
   var publishedServices: [MyNetService] = []
   
-  var publishedServiceTypes: [MyServiceType] {
-    var serviceTypes: [MyServiceType] = []
-    for publishedService in self.publishedServices {
-      serviceTypes.append(publishedService.serviceType)
-    }
-    return serviceTypes
-  }
-  
   // MARK: - Publishing
   
   func publish(name: String, type: String, port: Int, domain: String, transportLayer: MyTransportLayer, detail: String? = nil, success: @escaping () -> Void, failure: @escaping () -> Void) {

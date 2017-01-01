@@ -25,8 +25,6 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
   @IBOutlet weak var portTextField: UITextField!
   @IBOutlet weak var domainTextField: UITextField!
   @IBOutlet weak var detailTextField: UITextField!
-  @IBOutlet weak var publishButton: UIButton!
-  @IBOutlet weak var clearButton: UIButton!
   
   // MARK: - Lifecycle
   
@@ -81,6 +79,11 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
       self.domainTextField.becomeFirstResponder()
     } else if indexPath.section == 4 {
       self.detailTextField.becomeFirstResponder()
+      
+    } else if indexPath.section == 5 && indexPath.row == 0 {
+      self.publishButtonSelected()
+    } else if indexPath.section == 6 && indexPath.row == 0{
+      self.clearButtonSelected()
     }
   }
   
@@ -110,9 +113,9 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
     }
     
     // Character validations by text field
-    if textField == self.typeTextField && !string.containsWhitespace {
+    if textField == self.typeTextField && !string.containsWhitespace && !string.contains("-") && !string.contains("_") && !string.containsAlphanumerics {
       return false
-    } else if textField == self.domainTextField && !string.containsWhitespace {
+    } else if textField == self.domainTextField && string.containsWhitespace {
       return false
     } else if textField == self.portTextField && !string.containsDecimalDigits {
       return false
@@ -122,7 +125,7 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
   
   // MARK: - Actions
   
-  @IBAction func publishButtonSelected(_ sender: UIButton) {
+  private func publishButtonSelected() {
     
     // Validate the form
     guard let name = self.nameTextField.text, !name.trim().isEmpty else {
@@ -132,6 +135,19 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
     
     guard let type = self.typeTextField.text, !type.trim().isEmpty else {
       self.showDisappearingAlertDialog(title: "Service Type Required")
+      return
+    }
+    
+    // Check that type does not match existing service types
+    var doesTypeMatchExisting: Bool = false
+    for serviceType in MyServiceType.tcpServiceTypes {
+      if serviceType.type == type {
+        doesTypeMatchExisting = true
+        break
+      }
+    }
+    if doesTypeMatchExisting {
+      self.showDisappearingAlertDialog(title: "Invalid Type", message: "This service type is already taken.")
       return
     }
     
@@ -163,7 +179,7 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
     }
   }
   
-  @IBAction func clearButtonSelected(_ sender: UIButton) {
+  private func clearButtonSelected() {
     self.resetForm()
   }
 }

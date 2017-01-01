@@ -117,12 +117,21 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
     self.serviceBrowsers = []
     self.completion = completion
     
-    // Populate service browsers
-    let serviceTypesToDiscover = MyServiceType.tcpServiceTypes + MyBonjourPublishManager.shared.publishedServiceTypes
-    for serviceType in serviceTypesToDiscover {
+    // Populate service browsers with existing service types
+    let existingServiceTypes = MyServiceType.tcpServiceTypes
+    for serviceType in existingServiceTypes {
       let serviceBrowser = MyNetServiceBrowser(serviceType: serviceType, domain: "")
       serviceBrowser.delegate = self
       self.serviceBrowsers.append(serviceBrowser)
+    }
+    
+    // Populate service browsers with user-created service types
+    for publishedService in MyBonjourPublishManager.shared.publishedServices {
+      if !existingServiceTypes.contains(publishedService.serviceType) {
+        let serviceBrowser = MyNetServiceBrowser(serviceType: publishedService.serviceType, domain: publishedService.service.domain)
+        serviceBrowser.delegate = self
+        self.serviceBrowsers.append(serviceBrowser)
+      }
     }
     
     // Start the search for each service browser
