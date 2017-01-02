@@ -1,5 +1,5 @@
 //
-//  ExistingServiceTypesTableViewController.swift
+//  AllServiceTypesTableViewController.swift
 //  iDiscover
 //
 //  Created by Kelvin Kosbab on 12/31/16.
@@ -9,12 +9,12 @@
 import Foundation
 import UIKit
 
-class ExistingServiceTypesTableViewController: MyTableViewController, UISearchResultsUpdating, UISearchBarDelegate {
+class AllServiceTypesTableViewController: MyTableViewController, UISearchResultsUpdating, UISearchBarDelegate {
   
   // MARK: - Class Accessors
   
-  static func newController() -> ExistingServiceTypesTableViewController {
-    return self.newController(fromStoryboard: .settings, withIdentifier: self.name) as! ExistingServiceTypesTableViewController
+  static func newController() -> AllServiceTypesTableViewController {
+    return self.newController(fromStoryboard: .settings, withIdentifier: self.name) as! AllServiceTypesTableViewController
   }
   
   // MARK: - Properties
@@ -25,7 +25,10 @@ class ExistingServiceTypesTableViewController: MyTableViewController, UISearchRe
   var serviceDetailViewController: ServiceDetailTableViewController? = nil
   
   private var isFiltered: Bool {
+    let scope = MyServiceTypeScope.allScopes[self.searchController.searchBar.selectedScopeButtonIndex]
     if self.searchController.isActive, let text = self.searchController.searchBar.text, !text.isEmpty {
+      return true
+    } else if !scope.isAll {
       return true
     }
     return false
@@ -43,10 +46,11 @@ class ExistingServiceTypesTableViewController: MyTableViewController, UISearchRe
     self.searchController.searchBar.delegate = self
     self.definesPresentationContext = true
     self.searchController.dimsBackgroundDuringPresentation = false
+    self.searchController.searchBar.scopeButtonTitles = MyServiceTypeScope.allScopeTitles
     self.tableView.tableHeaderView = self.searchController.searchBar
     
     // Populate existing service types
-    self.serviceTypes = MyServiceType.tcpServiceTypes.sorted { (serviceType1: MyServiceType, serviceType2: MyServiceType) -> Bool in
+    self.serviceTypes = MyServiceType.fetchAll().sorted { (serviceType1: MyServiceType, serviceType2: MyServiceType) -> Bool in
       return serviceType1.name < serviceType2.name
     }
   }
@@ -59,19 +63,29 @@ class ExistingServiceTypesTableViewController: MyTableViewController, UISearchRe
   
   // MARK: - Search Controller
   
-  func filterContent(forSearchText searchText: String? = nil) {
-    if let text = searchText {
-      self.filteredServiceTypes = self.serviceTypes.filter({ (serviceType: MyServiceType) -> Bool in
-        let isInName = serviceType.name.containsIgnoreCase(text)
-        let isInType = serviceType.fullType.containsIgnoreCase(text)
-        var isInDetail = false
-        if let detail = serviceType.detail {
-          isInDetail = detail.containsIgnoreCase(text)
+  func filterContent(searchText: String? = nil, scope: MyServiceTypeScope = .all) {
+    
+    self.filteredServiceTypes = self.serviceTypes.filter { (serviceType: MyServiceType) -> Bool in
+      
+      // Check category match
+      let categoryMatch = (scope.isAll) || (scope.isBuiltIn && serviceType.isBuiltIn) || (scope.isCreated && serviceType.hasPersistentCopy)
+      if categoryMatch {
+        
+        // Check text match
+        if let text = searchText, !text.isEmpty {
+          let isInName = serviceType.name.containsIgnoreCase(text)
+          let isInType = serviceType.fullType.containsIgnoreCase(text)
+          var isInDetail = false
+          if let detail = serviceType.detail {
+            isInDetail = detail.containsIgnoreCase(text)
+          }
+          return isInName || isInType || isInDetail
+          
+        } else {
+          return true
         }
-        return isInName || isInType || isInDetail
-      })
-    } else {
-      self.searchController.searchBar.text = ""
+      }
+      return false
     }
     self.tableView.reloadData()
   }
@@ -79,21 +93,27 @@ class ExistingServiceTypesTableViewController: MyTableViewController, UISearchRe
   // MARK: - UISearchResultsUpdating
   
   func updateSearchResults(for searchController: UISearchController) {
-    if let text = searchController.searchBar.text, !text.isEmpty {
-      self.filterContent(forSearchText: text)
-    }
+    let scope = MyServiceTypeScope.allScopes[searchController.searchBar.selectedScopeButtonIndex]
+    self.filterContent(searchText: searchController.searchBar.text, scope: scope)
   }
   
   // MARK: - UISearchBarDelegate
   
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
     if searchText.isEmpty {
-      self.filterContent()
+      let scope = MyServiceTypeScope.allScopes[searchBar.selectedScopeButtonIndex]
+      self.filterContent(scope: scope)
     }
   }
   
   func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-    self.filterContent()
+    let scope = MyServiceTypeScope.allScopes[searchBar.selectedScopeButtonIndex]
+    self.filterContent(scope: scope)
+  }
+  
+  func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+    let scope = MyServiceTypeScope.allScopes[selectedScope]
+    self.filterContent(searchText: searchBar.text, scope: scope)
   }
   
   // MARK: - UITableView

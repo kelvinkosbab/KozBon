@@ -35,7 +35,7 @@ extension UIViewController {
   func showDisappearingAlertDialog(title: String, message: String? = nil, didDismiss: (() -> Void)? = nil) {
     let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
     self.present(alertController, animated: true) {
-      DispatchQueue.main.asyncAfter(after: 1.5) {
+      DispatchQueue.main.asyncAfter(after: 1.0) {
         self.dismiss(animated: true, completion: didDismiss)
       }
     }

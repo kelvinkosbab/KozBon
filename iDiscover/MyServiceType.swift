@@ -34,11 +34,19 @@ class MyServiceType: Equatable {
     return "_\(self.type)._\(self.transportLayer.string)"
   }
   
+  var isBuiltIn: Bool {
+    for serviceType in MyServiceType.serviceTypeLibrary {
+      if self == serviceType {
+        return true
+      }
+    }
+    return false
+  }
+  
   // MARK: - Static Helpers
   
   static func fetchAll() -> [MyServiceType] {
     var all = self.serviceTypeLibrary
-    self.deleteAllPersistentCopies()
     for persistentServiceType in self.fetchAllPersistentCopies() {
       if !all.contains(persistentServiceType) {
         all.append(persistentServiceType)
