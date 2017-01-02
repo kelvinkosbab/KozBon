@@ -13,6 +13,7 @@ extension Notification.Name {
   static let netServiceDidPublish = Notification.Name(rawValue: "\(MyNetService.name).netServiceDidPublish")
   static let netServiceDidUnPublish = Notification.Name(rawValue: "\(MyNetService.name).netServiceDidUnPublish")
   static let netServiceDidNotPublish = Notification.Name(rawValue: "\(MyNetService.name).netServiceDidNotPublish")
+  static let netServiceDidStop = Notification.Name(rawValue: "\(MyNetService.name).netServiceDidStop")
 }
 
 class MyNetService: NSObject, NetServiceDelegate {
@@ -50,13 +51,28 @@ class MyNetService: NSObject, NetServiceDelegate {
   
   // MARK: - Stopping Resolution / Publishing
   
-  func stop() {
+  var isStopping: Bool = false
+  private var didStop: (() -> Void)? = nil
+  
+  func stop(didStop: (() -> Void)? = nil) {
+    self.isStopping = true
+    self.isResolving = false
+    self.isPublishing = false
+    self.didStop = didStop
     self.completedAddressResolution = nil
     self.publishServiceSuccess = nil
     self.publishServiceFailure = nil
     self.service.stop()
-    self.isResolving = false
-    self.isPublishing = false
+  }
+  
+  // MARK: - NetServiceDelegate - Stopping
+  
+  func netServiceDidStop(_ sender: NetService) {
+    print("\(self.className) : Service did stop \(sender)")
+    NotificationCenter.default.post(name: .netServiceDidStop, object: self)
+    self.isStopping = false
+    self.didStop?()
+    self.didStop = nil
   }
   
   // MARK: - Resolving Address
@@ -104,9 +120,13 @@ class MyNetService: NSObject, NetServiceDelegate {
     self.service.publish(options: [.listenForConnections])
   }
   
-  func unPublish() {
-    self.service.stop()
-    NotificationCenter.default.post(name: .netServiceDidUnPublish, object: self)
+  func unPublish(completion: (() -> Void)? = nil) {
+    self.stop {
+      DispatchQueue.main.asyncAfter(after: 0.5, closure: {
+        NotificationCenter.default.post(name: .netServiceDidUnPublish, object: self)
+        completion?()
+      })
+    }
   }
   
   // MARK: - NetServiceDelegate - Publishing Service

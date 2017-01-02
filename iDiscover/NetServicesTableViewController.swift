@@ -380,7 +380,7 @@ class NetServicesTableViewController: MyTableViewController {
       
       if !self.isBrowsingForServces && self.services.count > 0 {
         let service = self.services[indexPath.row]
-        var viewController = NetServiceDetailViewController.newController(service: service)
+        var viewController = ServiceDetailTableViewController.newController(browsedService: service)
         viewController.presentControllerIn(self, forMode: .splitDetail)
       }
       
@@ -388,7 +388,7 @@ class NetServicesTableViewController: MyTableViewController {
       
       if indexPath.row < self.publishedServices.count {
         let service = self.publishedServices[indexPath.row]
-        var viewController = ServiceTypeDetailTableViewController.newController(serviceType: service.serviceType)
+        var viewController = ServiceDetailTableViewController.newController(publishedService: service)
         viewController.presentControllerIn(self, forMode: .splitDetail)
       }
     }

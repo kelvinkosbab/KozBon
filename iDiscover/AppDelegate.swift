@@ -56,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     MyDataManager.shared.saveMainContext()
     
     MyBonjourManager.shared.stopDiscovery()
-    MyBonjourPublishManager.shared.stopAllServices()
+    MyBonjourPublishManager.shared.unPublishAllServices()
   }
 }
 

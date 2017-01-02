@@ -27,7 +27,6 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
   var completion: ((_ services: [MyNetService]) -> Void)? = nil
   
   private var serviceBrowsers: [MyNetServiceBrowser] = []
-  private let concurrentServicesQueue: DispatchQueue = DispatchQueue(label: "\(MyBonjourManager.name).concurrentServicesQueue", attributes: .concurrent)
   
   // MARK: - Service Browser State
   
@@ -66,6 +65,7 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
   // MARK: - Services
   
   private var _services: [MyNetService] = []
+  private let concurrentServicesQueue: DispatchQueue = DispatchQueue(label: "\(MyBonjourManager.name).concurrentServicesQueue", attributes: .concurrent)
   
   private var services: [MyNetService] {
     var copy: [MyNetService]!

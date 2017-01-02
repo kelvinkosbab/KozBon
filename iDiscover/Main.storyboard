@@ -261,7 +261,7 @@
                                     <outlet property="ipLayerProtocolLabel" destination="rL2-Vh-cYL" id="brQ-xw-nmd"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MyBasicCenterLabelCell" id="ibC-Il-GKF" customClass="MyBasicCenterLabelCell" customModule="iDiscover" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="MyBasicCenterLabelCell" id="ibC-Il-GKF" customClass="MyBasicCenterLabelCell" customModule="iDiscover" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="310" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ibC-Il-GKF" id="Ob3-yc-ln3">
@@ -295,239 +295,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MTP-Jz-egw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="191" y="157"/>
-        </scene>
-        <!--Net Service Detail View Controller-->
-        <scene sceneID="Gjl-LI-fcQ">
-            <objects>
-                <tableViewController storyboardIdentifier="NetServiceDetailViewController" id="kYc-yd-ogE" customClass="NetServiceDetailViewController" customModule="iDiscover" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="DIO-Nc-Ab1">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="yqt-og-V8f" customClass="NetServiceHeaderCell" customModule="iDiscover" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yqt-og-V8f" id="k4H-tz-1X2">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1sX-8M-YNk">
-                                            <rect key="frame" x="8" y="20" width="89" height="16"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qZB-Se-Dm5">
-                                            <rect key="frame" x="0.0" y="43" width="375" height="1"/>
-                                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="1" id="Bev-4q-JE0"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="qZB-Se-Dm5" secondAttribute="trailing" id="J8H-zn-z96"/>
-                                        <constraint firstItem="qZB-Se-Dm5" firstAttribute="leading" secondItem="k4H-tz-1X2" secondAttribute="leading" id="Sap-uC-hor"/>
-                                        <constraint firstAttribute="bottom" secondItem="qZB-Se-Dm5" secondAttribute="bottom" id="VOz-G7-h91"/>
-                                        <constraint firstItem="1sX-8M-YNk" firstAttribute="bottom" secondItem="k4H-tz-1X2" secondAttribute="bottomMargin" id="YNT-VI-7eL"/>
-                                        <constraint firstItem="1sX-8M-YNk" firstAttribute="leading" secondItem="k4H-tz-1X2" secondAttribute="leadingMargin" id="dfl-Zm-2Qd"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="titleLabel" destination="1sX-8M-YNk" id="KOG-XA-uWM"/>
-                                </connections>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceKeyValueCell" rowHeight="50" id="rhc-Vn-XYB" customClass="NetServiceKeyValueCell" customModule="iDiscover" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="375" height="50"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rhc-Vn-XYB" id="KcE-fj-Y6U">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UQR-uf-siy">
-                                            <rect key="frame" x="48.5" y="17" width="89" height="16"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SHB-8r-F60">
-                                            <rect key="frame" x="152.5" y="18" width="77" height="14"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0BK-O9-6U1">
-                                            <rect key="frame" x="0.0" y="49" width="375" height="1"/>
-                                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="1" id="cMu-Kp-vsZ"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="SHB-8r-F60" firstAttribute="centerY" secondItem="UQR-uf-siy" secondAttribute="centerY" id="39d-ky-ace"/>
-                                        <constraint firstAttribute="bottom" secondItem="0BK-O9-6U1" secondAttribute="bottom" id="3Oa-eE-5FK"/>
-                                        <constraint firstItem="0BK-O9-6U1" firstAttribute="leading" secondItem="KcE-fj-Y6U" secondAttribute="leading" id="Gog-4Y-1kL"/>
-                                        <constraint firstItem="SHB-8r-F60" firstAttribute="leading" secondItem="UQR-uf-siy" secondAttribute="trailing" constant="15" id="Hsq-KR-lHM"/>
-                                        <constraint firstItem="UQR-uf-siy" firstAttribute="trailing" secondItem="KcE-fj-Y6U" secondAttribute="centerX" constant="-50" id="JLo-8S-wil"/>
-                                        <constraint firstAttribute="trailing" secondItem="0BK-O9-6U1" secondAttribute="trailing" id="c7R-xR-Qvn"/>
-                                        <constraint firstItem="UQR-uf-siy" firstAttribute="centerY" secondItem="KcE-fj-Y6U" secondAttribute="centerY" id="ujM-QW-fFz"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="keyLabel" destination="UQR-uf-siy" id="EsD-Zb-x9e"/>
-                                    <outlet property="valueLabel" destination="SHB-8r-F60" id="GMx-sc-Iph"/>
-                                </connections>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceDetailCell" rowHeight="50" id="2tf-h0-7Xg" customClass="NetServiceDetailCell" customModule="iDiscover" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="122" width="375" height="50"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2tf-h0-7Xg" id="K5U-4i-iqW">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Krl-6K-1Zx">
-                                            <rect key="frame" x="8" y="8" width="359" height="33.5"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="trailingMargin" secondItem="Krl-6K-1Zx" secondAttribute="trailing" id="Acq-bx-4Gc"/>
-                                        <constraint firstItem="Krl-6K-1Zx" firstAttribute="leading" secondItem="K5U-4i-iqW" secondAttribute="leadingMargin" id="GwB-Mi-1QD"/>
-                                        <constraint firstItem="Krl-6K-1Zx" firstAttribute="top" secondItem="K5U-4i-iqW" secondAttribute="topMargin" id="Kuk-ov-tzV"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="Krl-6K-1Zx" secondAttribute="bottom" id="Z44-Fy-zPi"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="detailLabel" destination="Krl-6K-1Zx" id="vjW-2s-UJp"/>
-                                </connections>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceAddressCell" rowHeight="50" id="Oe1-re-u5I" customClass="NetServiceAddressCell" customModule="iDiscover" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="172" width="375" height="50"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Oe1-re-u5I" id="qi9-Ge-0Ss">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LD2-Wk-VkA">
-                                            <rect key="frame" x="8" y="8" width="89" height="17"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ao9-5t-2KA">
-                                            <rect key="frame" x="0.0" y="49" width="375" height="1"/>
-                                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="1" id="Yft-4C-qFO"/>
-                                            </constraints>
-                                        </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0PF-fg-Xr7">
-                                            <rect key="frame" x="8" y="25" width="77" height="24"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="0PF-fg-Xr7" firstAttribute="leading" secondItem="qi9-Ge-0Ss" secondAttribute="leadingMargin" id="455-qW-uuZ"/>
-                                        <constraint firstItem="Ao9-5t-2KA" firstAttribute="leading" secondItem="qi9-Ge-0Ss" secondAttribute="leading" id="7Hh-0Q-MmE"/>
-                                        <constraint firstAttribute="bottom" secondItem="Ao9-5t-2KA" secondAttribute="bottom" id="KpR-oW-Zhu"/>
-                                        <constraint firstItem="LD2-Wk-VkA" firstAttribute="bottom" secondItem="qi9-Ge-0Ss" secondAttribute="centerY" id="Ly5-Xt-1JL"/>
-                                        <constraint firstAttribute="trailing" secondItem="Ao9-5t-2KA" secondAttribute="trailing" id="YUB-bi-42P"/>
-                                        <constraint firstItem="0PF-fg-Xr7" firstAttribute="top" secondItem="qi9-Ge-0Ss" secondAttribute="centerY" id="dO7-hF-STS"/>
-                                        <constraint firstItem="LD2-Wk-VkA" firstAttribute="top" secondItem="qi9-Ge-0Ss" secondAttribute="topMargin" id="fFg-9t-A5A"/>
-                                        <constraint firstItem="Ao9-5t-2KA" firstAttribute="top" secondItem="0PF-fg-Xr7" secondAttribute="bottom" id="har-G5-0QC"/>
-                                        <constraint firstItem="LD2-Wk-VkA" firstAttribute="leading" secondItem="qi9-Ge-0Ss" secondAttribute="leadingMargin" id="vC6-g8-qcY"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="ipLabel" destination="LD2-Wk-VkA" id="MEW-0z-jDP"/>
-                                    <outlet property="ipLayerProtocolLabel" destination="0PF-fg-Xr7" id="XlU-7E-2cc"/>
-                                </connections>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServicesTableHeaderCell" id="Nwf-sX-f3z" customClass="NetServicesTableHeaderCell" customModule="iDiscover" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="222" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Nwf-sX-f3z" id="2tM-sK-Btu">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="25n-kl-DN8">
-                                            <rect key="frame" x="8" y="20" width="89" height="16"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zBE-Fi-VjA">
-                                            <rect key="frame" x="0.0" y="43" width="375" height="1"/>
-                                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="1" id="xEN-Ib-OQL"/>
-                                            </constraints>
-                                        </view>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7hf-zf-m4v">
-                                            <rect key="frame" x="325" y="14" width="42" height="28"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                            <state key="normal" title="Reload"/>
-                                        </button>
-                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Ocj-Lu-Lmz">
-                                            <rect key="frame" x="335" y="18" width="20" height="20"/>
-                                        </activityIndicatorView>
-                                    </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <constraints>
-                                        <constraint firstItem="Ocj-Lu-Lmz" firstAttribute="centerY" secondItem="25n-kl-DN8" secondAttribute="centerY" id="AmQ-al-u0i"/>
-                                        <constraint firstItem="25n-kl-DN8" firstAttribute="bottom" secondItem="2tM-sK-Btu" secondAttribute="bottomMargin" id="Idc-ZL-hxn"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="7hf-zf-m4v" secondAttribute="trailing" id="KRz-T5-Cno"/>
-                                        <constraint firstItem="25n-kl-DN8" firstAttribute="leading" secondItem="2tM-sK-Btu" secondAttribute="leadingMargin" id="Xjr-8x-yCt"/>
-                                        <constraint firstItem="zBE-Fi-VjA" firstAttribute="leading" secondItem="2tM-sK-Btu" secondAttribute="leading" id="Xk7-Ww-O8n"/>
-                                        <constraint firstItem="7hf-zf-m4v" firstAttribute="centerY" secondItem="25n-kl-DN8" secondAttribute="centerY" id="avi-VT-L3L"/>
-                                        <constraint firstAttribute="trailing" secondItem="zBE-Fi-VjA" secondAttribute="trailing" id="bmU-o4-ELO"/>
-                                        <constraint firstAttribute="trailing" secondItem="Ocj-Lu-Lmz" secondAttribute="trailing" constant="20" id="iKe-Vd-T7q"/>
-                                        <constraint firstAttribute="bottom" secondItem="zBE-Fi-VjA" secondAttribute="bottom" id="kJU-h2-hlp"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="loadingActivityIndicator" destination="Ocj-Lu-Lmz" id="xkT-6L-nMk"/>
-                                    <outlet property="reloadButton" destination="7hf-zf-m4v" id="mmf-gy-IrC"/>
-                                    <outlet property="titleLabel" destination="25n-kl-DN8" id="VAl-Dt-Zs8"/>
-                                </connections>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServicesTableLoadingCell" rowHeight="50" id="tZr-9H-YEX" customClass="NetServicesTableLoadingCell" customModule="iDiscover" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="266" width="375" height="50"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tZr-9H-YEX" id="4F0-sG-ZCB">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="jnw-0J-Ij6">
-                                            <rect key="frame" x="177" y="15" width="20" height="20"/>
-                                        </activityIndicatorView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="jnw-0J-Ij6" firstAttribute="centerY" secondItem="4F0-sG-ZCB" secondAttribute="centerY" id="RNz-fy-gBr"/>
-                                        <constraint firstItem="jnw-0J-Ij6" firstAttribute="centerX" secondItem="4F0-sG-ZCB" secondAttribute="centerX" id="f5l-hk-JBb"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="loadingActivityIndicator" destination="jnw-0J-Ij6" id="fAM-kA-BaZ"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="kYc-yd-ogE" id="lXO-L0-chF"/>
-                            <outlet property="delegate" destination="kYc-yd-ogE" id="qrc-jZ-a0Q"/>
-                        </connections>
-                    </tableView>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9XP-Vz-Nu3" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="839" y="157"/>
         </scene>
         <!--Publish Net Service Search View Controller-->
         <scene sceneID="0E0-fx-Gl2">
@@ -1490,6 +1257,262 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="10W-H6-eT3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3426" y="157"/>
+        </scene>
+        <!--Service Detail Table View Controller-->
+        <scene sceneID="g4u-Sj-aFc">
+            <objects>
+                <tableViewController storyboardIdentifier="ServiceDetailTableViewController" id="kvA-Io-kB7" customClass="ServiceDetailTableViewController" customModule="iDiscover" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="3kF-4z-XwE">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="LW1-dD-mpY" customClass="NetServiceHeaderCell" customModule="iDiscover" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LW1-dD-mpY" id="24g-oZ-S8c">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pWM-rH-hff">
+                                            <rect key="frame" x="8" y="20" width="89" height="16"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3bJ-fP-vZw">
+                                            <rect key="frame" x="0.0" y="43" width="375" height="1"/>
+                                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="1" id="oFy-b8-C3f"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstItem="pWM-rH-hff" firstAttribute="bottom" secondItem="24g-oZ-S8c" secondAttribute="bottomMargin" id="Ddg-Tk-h9N"/>
+                                        <constraint firstItem="pWM-rH-hff" firstAttribute="leading" secondItem="24g-oZ-S8c" secondAttribute="leadingMargin" id="GNm-xf-QnI"/>
+                                        <constraint firstItem="3bJ-fP-vZw" firstAttribute="leading" secondItem="24g-oZ-S8c" secondAttribute="leading" id="YuX-ww-niz"/>
+                                        <constraint firstAttribute="bottom" secondItem="3bJ-fP-vZw" secondAttribute="bottom" id="hpR-aa-nWn"/>
+                                        <constraint firstAttribute="trailing" secondItem="3bJ-fP-vZw" secondAttribute="trailing" id="uGR-lq-xpE"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="titleLabel" destination="pWM-rH-hff" id="olg-JT-0Y9"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceKeyValueCell" rowHeight="50" id="Lvc-ae-sIW" customClass="NetServiceKeyValueCell" customModule="iDiscover" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="72" width="375" height="50"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lvc-ae-sIW" id="5dY-JV-KQ0">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eLQ-7o-ctR">
+                                            <rect key="frame" x="49" y="17" width="89" height="16"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OBh-xY-4lu">
+                                            <rect key="frame" x="153" y="18" width="77" height="14"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o6s-eT-LQ9">
+                                            <rect key="frame" x="0.0" y="49" width="375" height="1"/>
+                                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="1" id="y2b-UX-jmj"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="o6s-eT-LQ9" secondAttribute="bottom" id="Hbh-ds-oMH"/>
+                                        <constraint firstItem="OBh-xY-4lu" firstAttribute="leading" secondItem="eLQ-7o-ctR" secondAttribute="trailing" constant="15" id="RZD-GI-vUZ"/>
+                                        <constraint firstItem="eLQ-7o-ctR" firstAttribute="centerY" secondItem="5dY-JV-KQ0" secondAttribute="centerY" id="ewj-T2-nkm"/>
+                                        <constraint firstAttribute="trailing" secondItem="o6s-eT-LQ9" secondAttribute="trailing" id="kIl-KE-u4R"/>
+                                        <constraint firstItem="OBh-xY-4lu" firstAttribute="centerY" secondItem="eLQ-7o-ctR" secondAttribute="centerY" id="r5S-9D-3fZ"/>
+                                        <constraint firstItem="eLQ-7o-ctR" firstAttribute="trailing" secondItem="5dY-JV-KQ0" secondAttribute="centerX" constant="-50" id="uvj-vg-nRl"/>
+                                        <constraint firstItem="o6s-eT-LQ9" firstAttribute="leading" secondItem="5dY-JV-KQ0" secondAttribute="leading" id="xaE-gg-NEK"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="keyLabel" destination="eLQ-7o-ctR" id="Ubh-fH-xrt"/>
+                                    <outlet property="valueLabel" destination="OBh-xY-4lu" id="K71-88-CmP"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceDetailCell" rowHeight="50" id="VcY-FX-Xhp" customClass="NetServiceDetailCell" customModule="iDiscover" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="122" width="375" height="50"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VcY-FX-Xhp" id="sUW-4q-mZ8">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jf7-dl-nKn">
+                                            <rect key="frame" x="8" y="8" width="359" height="34"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Jf7-dl-nKn" firstAttribute="leading" secondItem="sUW-4q-mZ8" secondAttribute="leadingMargin" id="FXd-Yg-EDh"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="Jf7-dl-nKn" secondAttribute="bottom" id="PL5-pZ-F3d"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Jf7-dl-nKn" secondAttribute="trailing" id="yLa-Ug-KN6"/>
+                                        <constraint firstItem="Jf7-dl-nKn" firstAttribute="top" secondItem="sUW-4q-mZ8" secondAttribute="topMargin" id="zc2-R4-L8t"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="detailLabel" destination="Jf7-dl-nKn" id="QLS-O4-C8O"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceAddressCell" rowHeight="50" id="ZJV-qk-6Sx" customClass="NetServiceAddressCell" customModule="iDiscover" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="172" width="375" height="50"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZJV-qk-6Sx" id="kDo-4i-tsQ">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yjo-Gq-tuJ">
+                                            <rect key="frame" x="8" y="8" width="89" height="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DHi-yM-JP7">
+                                            <rect key="frame" x="0.0" y="49" width="375" height="1"/>
+                                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="1" id="Mf0-6Q-7jY"/>
+                                            </constraints>
+                                        </view>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KTg-iF-TPU">
+                                            <rect key="frame" x="8" y="25" width="77" height="24"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="KTg-iF-TPU" firstAttribute="leading" secondItem="kDo-4i-tsQ" secondAttribute="leadingMargin" id="DLQ-fQ-ahY"/>
+                                        <constraint firstItem="KTg-iF-TPU" firstAttribute="top" secondItem="kDo-4i-tsQ" secondAttribute="centerY" id="VUf-CT-JPz"/>
+                                        <constraint firstItem="yjo-Gq-tuJ" firstAttribute="bottom" secondItem="kDo-4i-tsQ" secondAttribute="centerY" id="cvx-oI-YfE"/>
+                                        <constraint firstAttribute="trailing" secondItem="DHi-yM-JP7" secondAttribute="trailing" id="eyI-UI-dDI"/>
+                                        <constraint firstItem="yjo-Gq-tuJ" firstAttribute="top" secondItem="kDo-4i-tsQ" secondAttribute="topMargin" id="oa1-VI-olp"/>
+                                        <constraint firstAttribute="bottom" secondItem="DHi-yM-JP7" secondAttribute="bottom" id="pmk-hv-drq"/>
+                                        <constraint firstItem="yjo-Gq-tuJ" firstAttribute="leading" secondItem="kDo-4i-tsQ" secondAttribute="leadingMargin" id="rBq-ca-TY4"/>
+                                        <constraint firstItem="DHi-yM-JP7" firstAttribute="leading" secondItem="kDo-4i-tsQ" secondAttribute="leading" id="rlr-B3-IKG"/>
+                                        <constraint firstItem="DHi-yM-JP7" firstAttribute="top" secondItem="KTg-iF-TPU" secondAttribute="bottom" id="sq1-o9-FNS"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="ipLabel" destination="yjo-Gq-tuJ" id="gOT-xO-NTw"/>
+                                    <outlet property="ipLayerProtocolLabel" destination="KTg-iF-TPU" id="DQR-uY-S1S"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServicesTableHeaderCell" id="gEI-a1-kxp" customClass="NetServicesTableHeaderCell" customModule="iDiscover" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="222" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gEI-a1-kxp" id="jV8-KU-3Sc">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nvG-EG-UuZ">
+                                            <rect key="frame" x="8" y="20" width="89" height="16"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2yt-YO-tQs">
+                                            <rect key="frame" x="0.0" y="43" width="375" height="1"/>
+                                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="1" id="LU3-0X-rjZ"/>
+                                            </constraints>
+                                        </view>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nk6-wg-OA0">
+                                            <rect key="frame" x="325" y="14" width="42" height="28"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <state key="normal" title="Reload"/>
+                                        </button>
+                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Txj-Tz-Xlf">
+                                            <rect key="frame" x="335" y="18" width="20" height="20"/>
+                                        </activityIndicatorView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstItem="nvG-EG-UuZ" firstAttribute="bottom" secondItem="jV8-KU-3Sc" secondAttribute="bottomMargin" id="6AO-wm-L3P"/>
+                                        <constraint firstAttribute="bottom" secondItem="2yt-YO-tQs" secondAttribute="bottom" id="9ww-AH-gNk"/>
+                                        <constraint firstAttribute="trailing" secondItem="Txj-Tz-Xlf" secondAttribute="trailing" constant="20" id="FAR-6u-MkU"/>
+                                        <constraint firstItem="nk6-wg-OA0" firstAttribute="centerY" secondItem="nvG-EG-UuZ" secondAttribute="centerY" id="RHi-Xm-PKa"/>
+                                        <constraint firstItem="nvG-EG-UuZ" firstAttribute="leading" secondItem="jV8-KU-3Sc" secondAttribute="leadingMargin" id="aIO-Te-hjv"/>
+                                        <constraint firstItem="Txj-Tz-Xlf" firstAttribute="centerY" secondItem="nvG-EG-UuZ" secondAttribute="centerY" id="jvR-jv-jsq"/>
+                                        <constraint firstAttribute="trailing" secondItem="2yt-YO-tQs" secondAttribute="trailing" id="pbM-WZ-ET7"/>
+                                        <constraint firstItem="2yt-YO-tQs" firstAttribute="leading" secondItem="jV8-KU-3Sc" secondAttribute="leading" id="qvP-IA-GdZ"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="nk6-wg-OA0" secondAttribute="trailing" id="yzf-ER-t2D"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="loadingActivityIndicator" destination="Txj-Tz-Xlf" id="cD7-SC-ULp"/>
+                                    <outlet property="reloadButton" destination="nk6-wg-OA0" id="fLK-kq-RnF"/>
+                                    <outlet property="titleLabel" destination="nvG-EG-UuZ" id="19C-ZY-dFl"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServicesTableLoadingCell" rowHeight="50" id="pYf-dq-Nq5" customClass="NetServicesTableLoadingCell" customModule="iDiscover" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="266" width="375" height="50"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pYf-dq-Nq5" id="SrR-Fo-p9W">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="lOp-ch-SHz">
+                                            <rect key="frame" x="177" y="15" width="20" height="20"/>
+                                        </activityIndicatorView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="lOp-ch-SHz" firstAttribute="centerY" secondItem="SrR-Fo-p9W" secondAttribute="centerY" id="LUm-j7-1Tf"/>
+                                        <constraint firstItem="lOp-ch-SHz" firstAttribute="centerX" secondItem="SrR-Fo-p9W" secondAttribute="centerX" id="b2Q-08-ncG"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="loadingActivityIndicator" destination="lOp-ch-SHz" id="mwr-1l-6Ij"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="MyBasicCenterLabelCell" id="pJH-K8-LC5" customClass="MyBasicCenterLabelCell" customModule="iDiscover" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="316" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pJH-K8-LC5" id="qUP-ke-Y2r">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YBc-u2-Xcz">
+                                            <rect key="frame" x="143" y="14" width="89" height="16"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="YBc-u2-Xcz" firstAttribute="centerY" secondItem="qUP-ke-Y2r" secondAttribute="centerY" id="Fsf-tc-r9e"/>
+                                        <constraint firstItem="YBc-u2-Xcz" firstAttribute="centerX" secondItem="qUP-ke-Y2r" secondAttribute="centerX" id="HtV-PC-67H"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="titleLabel" destination="YBc-u2-Xcz" id="jdG-aD-bax"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="kvA-Io-kB7" id="W9Q-aw-mOU"/>
+                            <outlet property="delegate" destination="kvA-Io-kB7" id="BK0-XP-bDP"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QgS-lQ-5Ok" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="836" y="157"/>
         </scene>
     </scenes>
     <resources>

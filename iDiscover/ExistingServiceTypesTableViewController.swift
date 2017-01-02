@@ -22,7 +22,7 @@ class ExistingServiceTypesTableViewController: MyTableViewController, UISearchRe
   var serviceTypes: [MyServiceType] = []
   var filteredServiceTypes: [MyServiceType] = []
   let searchController = UISearchController(searchResultsController: nil)
-  var serviceTypeDetailViewController: ServiceTypeDetailTableViewController? = nil
+  var serviceDetailViewController: ServiceDetailTableViewController? = nil
   
   private var isFiltered: Bool {
     if self.searchController.isActive, let text = self.searchController.searchBar.text, !text.isEmpty {
@@ -54,7 +54,7 @@ class ExistingServiceTypesTableViewController: MyTableViewController, UISearchRe
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     
-    self.serviceTypeDetailViewController?.dismissController()
+    self.serviceDetailViewController?.dismissController()
   }
   
   // MARK: - Search Controller
@@ -125,18 +125,18 @@ class ExistingServiceTypesTableViewController: MyTableViewController, UISearchRe
     tableView.deselectRow(at: indexPath, animated: true)
     
     let serviceType = self.isFiltered ? self.filteredServiceTypes[indexPath.row] : self.serviceTypes[indexPath.row]
-    var viewController = ServiceTypeDetailTableViewController.newController(serviceType: serviceType)
+    var viewController = ServiceDetailTableViewController.newController(serviceType: serviceType)
     if UIDevice.isPhone {
       viewController.presentControllerIn(self, forMode: .navStack)
       
-    } else if let serviceTypeDetailViewController = self.serviceTypeDetailViewController {
+    } else if let serviceDetailViewController = self.serviceDetailViewController {
       
       // Already showing a existing service type detail
-      serviceTypeDetailViewController.serviceType = serviceType
-      serviceTypeDetailViewController.updateServiceTypeContent()
+      serviceDetailViewController.serviceType = serviceType
+      serviceDetailViewController.reloadData()
       
     } else {
-      self.serviceTypeDetailViewController = viewController
+      self.serviceDetailViewController = viewController
       viewController.presentControllerIn(self, forMode: .splitDetail, completion: nil)
     }
   }

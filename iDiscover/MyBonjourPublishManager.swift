@@ -14,11 +14,46 @@ class MyBonjourPublishManager: NSObject {
   
   static let shared = MyBonjourPublishManager()
   
-  private override init() { super.init() }
+  private override init() {
+    super.init()
+    
+    NotificationCenter.default.addObserver(self, selector: #selector(self.serviceDidPublish(_:)), name: .netServiceDidPublish, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(self.serviceDidUnPublish(_:)), name: .netServiceDidUnPublish, object: nil)
+  }
   
-  // MARK: - Properties
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
+  
+  // MARK: - Published Services
   
   var publishedServices: [MyNetService] = []
+  
+  private func add(publishedService service: MyNetService) {
+    if !self.publishedServices.contains(service) {
+      self.publishedServices.append(service)
+    }
+  }
+  
+  private func remove(publishedService service: MyNetService) {
+    if let index = self.publishedServices.index(of: service) {
+      self.publishedServices.remove(at: index)
+    }
+  }
+  
+  // MARK: - Notifications
+  
+  @objc private func serviceDidPublish(_ notification: Notification) {
+    if let service = notification.object as? MyNetService {
+      self.add(publishedService: service)
+    }
+  }
+  
+  @objc private func serviceDidUnPublish(_ notification: Notification) {
+    if let service = notification.object as? MyNetService {
+      self.remove(publishedService: service)
+    }
+  }
   
   // MARK: - Publishing
   
@@ -31,15 +66,29 @@ class MyBonjourPublishManager: NSObject {
   
   func publish(service: MyNetService, success: @escaping () -> Void, failure: @escaping () -> Void) {
     service.publish(publishServiceSuccess: {
-      self.publishedServices.append(service)
+      self.add(publishedService: service)
       success()
       
     }, publishServiceFailure: failure)
   }
   
-  func stopAllServices() {
+  func unPublish(service: MyNetService, completion: (() -> Void)? = nil) {
+    service.unPublish { 
+      self.remove(publishedService: service)
+      completion?()
+    }
+  }
+  
+  func unPublishAllServices(completion: (() -> Void)? = nil) {
+    let dispatchGroup = DispatchGroup()
     for service in self.publishedServices {
-      service.stop()
+      dispatchGroup.enter()
+      self.unPublish(service: service, completion: {
+        dispatchGroup.leave()
+      })
+    }
+    dispatchGroup.notify(queue: DispatchQueue.main) { 
+      completion?()
     }
   }
 }
