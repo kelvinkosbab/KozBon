@@ -139,15 +139,8 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
     }
     
     // Check that type does not match existing service types
-    var doesTypeMatchExisting: Bool = false
-    for serviceType in MyServiceType.tcpServiceTypes {
-      if serviceType.type == type {
-        doesTypeMatchExisting = true
-        break
-      }
-    }
-    if doesTypeMatchExisting {
-      self.showDisappearingAlertDialog(title: "Invalid Type", message: "This service type is already taken.")
+    if MyServiceType.typeExists(type) {
+      self.showDisappearingAlertDialog(title: "Invalid Type", message: "The entered service type \(type) is already taken.")
       return
     }
     

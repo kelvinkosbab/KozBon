@@ -18,7 +18,7 @@ extension CustomServiceType: MyDataManagerObject {
   
   // MARK: - Properties
   
-  var transportLayer: MyTransportLayer {
+  private var transportLayer: MyTransportLayer {
     get {
       return MyTransportLayer(rawValue: Int(self.transportLayerValue))!
     }
@@ -33,13 +33,21 @@ extension CustomServiceType: MyDataManagerObject {
   
   // MARK: - Fetch
   
-  class func fetch(type: String) -> CustomServiceType? {
-    return self.fetchOne(format: "type == %@", name)
+  static func fetch(serviceType: MyServiceType) -> CustomServiceType? {
+    return self.fetch(type: serviceType.type)
+  }
+  
+  static func fetch(type: String) -> CustomServiceType? {
+    return self.fetchOne(format: "type == %@", type)
   }
   
   // MARK: - Create / Update
   
-  class func createOrUpdate(name: String, type: String, transportLayer: MyTransportLayer, detail: String? = nil) -> CustomServiceType {
+  static func createOrUpdate(serviceType: MyServiceType) -> CustomServiceType{
+    return self.createOrUpdate(name: serviceType.name, type: serviceType.type, transportLayer: serviceType.transportLayer, detail: serviceType.detail)
+  }
+  
+  static private func createOrUpdate(name: String, type: String, transportLayer: MyTransportLayer, detail: String? = nil) -> CustomServiceType {
     let object = self.fetch(type: type) ?? self.create()
     object.name = name
     object.type = type

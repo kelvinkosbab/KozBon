@@ -89,22 +89,22 @@ class ServiceDetailTableViewController: MyTableViewController {
       if self.isMoreDetails {
         // Show the extra details
         var indexPathsToInsert: [IndexPath] = []
-        indexPathsToInsert.append(IndexPath(row: 2, section: 0))
         indexPathsToInsert.append(IndexPath(row: 3, section: 0))
         indexPathsToInsert.append(IndexPath(row: 4, section: 0))
+        indexPathsToInsert.append(IndexPath(row: 5, section: 0))
         if let _ = self.serviceType.detail {
-          indexPathsToInsert.append(IndexPath(row: 5, section: 0))
+          indexPathsToInsert.append(IndexPath(row: 6, section: 0))
         }
         self.tableView.insertRows(at: indexPathsToInsert, with: .top)
         
       } else {
         // Hide the extra details
         var indexPathsToDelete: [IndexPath] = []
-        indexPathsToDelete.append(IndexPath(row: 2, section: 0))
         indexPathsToDelete.append(IndexPath(row: 3, section: 0))
         indexPathsToDelete.append(IndexPath(row: 4, section: 0))
+        indexPathsToDelete.append(IndexPath(row: 5, section: 0))
         if let _ = self.serviceType.detail {
-          indexPathsToDelete.append(IndexPath(row: 5, section: 0))
+          indexPathsToDelete.append(IndexPath(row: 6, section: 0))
         }
         self.tableView.deleteRows(at: indexPathsToDelete, with: .top)
       }
@@ -161,6 +161,7 @@ class ServiceDetailTableViewController: MyTableViewController {
     if let service = self.service {
       // Hostname
       self.serviceInformationSectionItems.append(ServiceInformationItem(key: "Hostname", value: service.hostName))
+      self.serviceInformationSectionItems.append(ServiceInformationItem(key: "Domain", value: service.service.domain))
     }
     self.serviceInformationSectionItems.append(ServiceInformationItem(key: "Full Type", value: self.serviceType.fullType))
     self.serviceInformationSectionItems.append(ServiceInformationItem(key: "Name", value: self.serviceType.name))
@@ -200,7 +201,7 @@ class ServiceDetailTableViewController: MyTableViewController {
     // Information section
     if section == 0 {
       if let _ = self.service, !self.isMoreDetails {
-        return 2
+        return 3
       } else {
         return self.serviceInformationSectionItems.count
       }

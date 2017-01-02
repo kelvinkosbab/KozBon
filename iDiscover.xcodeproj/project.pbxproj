@@ -10,9 +10,11 @@
 		B603A6D81E12177700ED333D /* UIImage+Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = B603A6D71E12177700ED333D /* UIImage+Gif.swift */; };
 		B603A6DE1E1217B300ED333D /* dotLoadingGif.gif in Resources */ = {isa = PBXBuildFile; fileRef = B603A6DB1E1217B300ED333D /* dotLoadingGif.gif */; };
 		B6089C9A1E19D76D00C7CF29 /* ServiceDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6089C991E19D76D00C7CF29 /* ServiceDetailTableViewController.swift */; };
+		B6089C9C1E1A2A3900C7CF29 /* MyServiceType+CustomServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6089C9B1E1A2A3900C7CF29 /* MyServiceType+CustomServiceType.swift */; };
 		B62E19971E174236008BC91C /* MyLoadingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62E19961E174236008BC91C /* MyLoadingManager.swift */; };
 		B63B27BD1E15A9BB003E13F0 /* MyNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63B27BC1E15A9BB003E13F0 /* MyNavigationController.swift */; };
 		B63B27BF1E15AE62003E13F0 /* UIBarButtonItem+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63B27BE1E15AE62003E13F0 /* UIBarButtonItem+Util.swift */; };
+		B64D06261E1A2C55008B3FC8 /* MyServiceType+Library.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64D06251E1A2C55008B3FC8 /* MyServiceType+Library.swift */; };
 		B679CC0A1E1618840056C7B5 /* MyRootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B679CC091E1618840056C7B5 /* MyRootController.swift */; };
 		B679CC131E1624740056C7B5 /* PublishNetServiceSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B679CC121E1624740056C7B5 /* PublishNetServiceSearchViewController.swift */; };
 		B679CC151E1624A20056C7B5 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B679CC141E1624A20056C7B5 /* MyViewController.swift */; };
@@ -57,9 +59,11 @@
 		B603A6D71E12177700ED333D /* UIImage+Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Gif.swift"; sourceTree = "<group>"; };
 		B603A6DB1E1217B300ED333D /* dotLoadingGif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = dotLoadingGif.gif; sourceTree = "<group>"; };
 		B6089C991E19D76D00C7CF29 /* ServiceDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailTableViewController.swift; sourceTree = "<group>"; };
+		B6089C9B1E1A2A3900C7CF29 /* MyServiceType+CustomServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MyServiceType+CustomServiceType.swift"; sourceTree = "<group>"; };
 		B62E19961E174236008BC91C /* MyLoadingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyLoadingManager.swift; sourceTree = "<group>"; };
 		B63B27BC1E15A9BB003E13F0 /* MyNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyNavigationController.swift; sourceTree = "<group>"; };
 		B63B27BE1E15AE62003E13F0 /* UIBarButtonItem+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Util.swift"; sourceTree = "<group>"; };
+		B64D06251E1A2C55008B3FC8 /* MyServiceType+Library.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MyServiceType+Library.swift"; sourceTree = "<group>"; };
 		B679CC091E1618840056C7B5 /* MyRootController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyRootController.swift; sourceTree = "<group>"; };
 		B679CC121E1624740056C7B5 /* PublishNetServiceSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishNetServiceSearchViewController.swift; sourceTree = "<group>"; };
 		B679CC141E1624A20056C7B5 /* MyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
@@ -231,8 +235,10 @@
 				B679CC161E1647670056C7B5 /* MyBonjourPublishManager.swift */,
 				B6CE1D571E120CCC003D4FFA /* MyBonjourManager.swift */,
 				B6CE1D5A1E120CCC003D4FFA /* MyNetServiceBrowser.swift */,
-				B6CE1D5B1E120CCC003D4FFA /* MyServiceType.swift */,
 				B6CE1D591E120CCC003D4FFA /* MyNetService.swift */,
+				B6CE1D5B1E120CCC003D4FFA /* MyServiceType.swift */,
+				B64D06251E1A2C55008B3FC8 /* MyServiceType+Library.swift */,
+				B6089C9B1E1A2A3900C7CF29 /* MyServiceType+CustomServiceType.swift */,
 			);
 			name = Bonjour;
 			sourceTree = "<group>";
@@ -389,6 +395,7 @@
 				B6CE1D5D1E120CCC003D4FFA /* MyNetBrowserState.swift in Sources */,
 				B69154651E13906500382F41 /* String+Util.swift in Sources */,
 				B6CE1D661E120E4D003D4FFA /* CustomServiceType.swift in Sources */,
+				B6089C9C1E1A2A3900C7CF29 /* MyServiceType+CustomServiceType.swift in Sources */,
 				B6CE1D471E120ADC003D4FFA /* Date+Util.swift in Sources */,
 				B679CC151E1624A20056C7B5 /* MyViewController.swift in Sources */,
 				B6CE1D481E120ADC003D4FFA /* DispatchQueue+Util.swift in Sources */,
@@ -399,6 +406,7 @@
 				B6089C9A1E19D76D00C7CF29 /* ServiceDetailTableViewController.swift in Sources */,
 				B63B27BF1E15AE62003E13F0 /* UIBarButtonItem+Util.swift in Sources */,
 				B6CE1D5F1E120CCC003D4FFA /* MyNetServiceBrowser.swift in Sources */,
+				B64D06261E1A2C55008B3FC8 /* MyServiceType+Library.swift in Sources */,
 				B6CE1D601E120CCC003D4FFA /* MyServiceType.swift in Sources */,
 				B63B27BD1E15A9BB003E13F0 /* MyNavigationController.swift in Sources */,
 				B6CE1D5C1E120CCC003D4FFA /* MyBonjourManager.swift in Sources */,
