@@ -59,6 +59,7 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
   private func checkDiscoveryCompletion() {
     if !self.isProcessing {
       self.completion?(self.services)
+      self.completion = nil
     }
   }
   
@@ -111,7 +112,7 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
   
   // MARK: - Start / Stop Discovery
   
-  func startDiscovery(serviceTypes: [MyServiceType]? = nil, completion: @escaping (_ services: [MyNetService]) -> Void) {
+  func startDiscovery(timeout: Double = 5.0, completion: @escaping (_ services: [MyNetService]) -> Void) {
     self.stopDiscovery()
     self.clearServices()
     self.serviceBrowsers = []
@@ -137,6 +138,13 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
     // Start the search for each service browser
     for serviceBrowser in self.serviceBrowsers {
       serviceBrowser.startSearch()
+    }
+    
+    // Establish timeout
+    DispatchQueue.main.asyncAfter(after: timeout) {
+      self.completion?(self.services)
+      self.completion = nil
+      self.stopDiscovery()
     }
   }
   

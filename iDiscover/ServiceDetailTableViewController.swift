@@ -89,6 +89,7 @@ class ServiceDetailTableViewController: MyTableViewController {
       if self.isMoreDetails {
         // Show the extra details
         var indexPathsToInsert: [IndexPath] = []
+        indexPathsToInsert.append(IndexPath(row: 2, section: 0))
         indexPathsToInsert.append(IndexPath(row: 3, section: 0))
         indexPathsToInsert.append(IndexPath(row: 4, section: 0))
         indexPathsToInsert.append(IndexPath(row: 5, section: 0))
@@ -100,6 +101,7 @@ class ServiceDetailTableViewController: MyTableViewController {
       } else {
         // Hide the extra details
         var indexPathsToDelete: [IndexPath] = []
+        indexPathsToDelete.append(IndexPath(row: 2, section: 0))
         indexPathsToDelete.append(IndexPath(row: 3, section: 0))
         indexPathsToDelete.append(IndexPath(row: 4, section: 0))
         indexPathsToDelete.append(IndexPath(row: 5, section: 0))
@@ -158,15 +160,16 @@ class ServiceDetailTableViewController: MyTableViewController {
   
   @objc func reloadData() {
     self.serviceInformationSectionItems = []
+    self.serviceInformationSectionItems.append(ServiceInformationItem(key: "Name", value: self.serviceType.name))
     if let service = self.service {
-      // Hostname
       self.serviceInformationSectionItems.append(ServiceInformationItem(key: "Hostname", value: service.hostName))
-      self.serviceInformationSectionItems.append(ServiceInformationItem(key: "Domain", value: service.service.domain))
     }
     self.serviceInformationSectionItems.append(ServiceInformationItem(key: "Full Type", value: self.serviceType.fullType))
-    self.serviceInformationSectionItems.append(ServiceInformationItem(key: "Name", value: self.serviceType.name))
     self.serviceInformationSectionItems.append(ServiceInformationItem(key: "Type", value: self.serviceType.type))
     self.serviceInformationSectionItems.append(ServiceInformationItem(key: "Layer", value: self.serviceType.transportLayer.string))
+    if let service = self.service {
+      self.serviceInformationSectionItems.append(ServiceInformationItem(key: "Domain", value: service.service.domain))
+    }
     if let detail = self.serviceType.detail {
       self.serviceInformationSectionItems.append(ServiceInformationItem(key: "Detail", value: detail, isDetail: true))
     }
@@ -201,7 +204,7 @@ class ServiceDetailTableViewController: MyTableViewController {
     // Information section
     if section == 0 {
       if let _ = self.service, !self.isMoreDetails {
-        return 3
+        return 2
       } else {
         return self.serviceInformationSectionItems.count
       }

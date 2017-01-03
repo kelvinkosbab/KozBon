@@ -79,7 +79,7 @@ class MyDataManager {
   
   func fetch(entityName: String, predicate: NSPredicate? = nil, sortDescriptors: [NSSortDescriptor]? = nil) -> [NSManagedObject] {
     let request = NSFetchRequest<NSFetchRequestResult>()
-    request.entity = self.getEntity(entityName: entityName, context: coreDataStack.mainContext)
+    request.entity = self.getEntity(entityName: entityName, context: self.coreDataStack.mainContext)
     request.predicate = predicate
     request.sortDescriptors = sortDescriptors
     request.returnsObjectsAsFaults = false
