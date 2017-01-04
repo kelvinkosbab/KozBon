@@ -198,19 +198,26 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sR0-dq-LNf">
-                                            <rect key="frame" x="8" y="8" width="359" height="28"/>
+                                            <rect key="frame" x="268" y="8" width="79" height="28"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <state key="normal" title="Lorem Ipsum"/>
                                             <connections>
                                                 <action selector="buttonSelected:" destination="zTi-9v-qHX" eventType="touchUpInside" id="vAD-4O-JYJ"/>
                                             </connections>
                                         </button>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconChevronRight" translatesAutoresizingMaskIntoConstraints="NO" id="L4k-LX-6EF">
+                                            <rect key="frame" x="352" y="15" width="15" height="15"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="15" id="JCe-x2-O31"/>
+                                                <constraint firstAttribute="height" constant="15" id="jxD-dG-ln0"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="sR0-dq-LNf" firstAttribute="top" secondItem="FYJ-pL-g3O" secondAttribute="topMargin" id="46o-hI-Rsw"/>
-                                        <constraint firstItem="sR0-dq-LNf" firstAttribute="leading" secondItem="FYJ-pL-g3O" secondAttribute="leadingMargin" id="HIH-Bv-cg4"/>
-                                        <constraint firstItem="sR0-dq-LNf" firstAttribute="bottom" secondItem="FYJ-pL-g3O" secondAttribute="bottomMargin" id="Jz8-sq-fXu"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="sR0-dq-LNf" secondAttribute="trailing" id="otw-G1-VrC"/>
+                                        <constraint firstItem="L4k-LX-6EF" firstAttribute="centerY" secondItem="FYJ-pL-g3O" secondAttribute="centerY" id="7vI-kc-SSH"/>
+                                        <constraint firstItem="sR0-dq-LNf" firstAttribute="centerY" secondItem="FYJ-pL-g3O" secondAttribute="centerY" id="cFx-Ar-Yhr"/>
+                                        <constraint firstItem="L4k-LX-6EF" firstAttribute="leading" secondItem="sR0-dq-LNf" secondAttribute="trailing" constant="5" id="tfR-dw-ac6"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="L4k-LX-6EF" secondAttribute="trailing" id="z4P-Yy-lj3"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>

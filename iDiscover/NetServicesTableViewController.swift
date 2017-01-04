@@ -34,8 +34,6 @@ class NetServicesTableViewController: MyTableViewController {
     }
   }
   
-  // TODO: - HERE
-  
   // MARK: - Lifecycle
   
   override func viewDidLoad() {
@@ -82,7 +80,6 @@ class NetServicesTableViewController: MyTableViewController {
           let currentServicesCount = self.services.count
           var indexPathsToDelete: [IndexPath] = []
           for index in 0..<currentServicesCount {
-            print("Adding row - \(index)")
             indexPathsToDelete.append(IndexPath(row: index, section: 0))
           }
           self.tableView.deleteRows(at: indexPathsToDelete, with: .top)
@@ -90,14 +87,12 @@ class NetServicesTableViewController: MyTableViewController {
         } else {
           // Remove the no services cell
           let noServicesIndexPath = IndexPath(row: 0, section: 0)
-          print("Delete row - \(0)")
           self.tableView.deleteRows(at: [ noServicesIndexPath ], with: .top)
         }
         self.services = []
         
         // Show the loading row
         let loadingIndexPath = IndexPath(row: 0, section: 0)
-        print("Insert row - \(0)")
         self.tableView.insertRows(at: [ loadingIndexPath ], with: .top)
         
       } else {
@@ -106,7 +101,6 @@ class NetServicesTableViewController: MyTableViewController {
         
         // Hide the loading row
         let loadingIndexPath = IndexPath(row: 0, section: 0)
-        print("Delete row - \(0)")
         self.tableView.deleteRows(at: [ loadingIndexPath ], with: .top)
         
         // Check if there were any discovered services
@@ -115,7 +109,6 @@ class NetServicesTableViewController: MyTableViewController {
           // Add disovered services to the table view
           var indexPathsToInsert: [IndexPath] = []
           for index in 0..<self.services.count {
-            print("Insert row - \(index)")
             indexPathsToInsert.append(IndexPath(row: index, section: 0))
           }
           self.tableView.insertRows(at: indexPathsToInsert, with: .top)
@@ -124,7 +117,6 @@ class NetServicesTableViewController: MyTableViewController {
           
           // Add the no services found cell
           let noServicesIndexPath = IndexPath(row: 0, section: 0)
-          print("Insert row - \(0)")
           self.tableView.insertRows(at: [ noServicesIndexPath ], with: .top)
         }
       }
@@ -170,6 +162,9 @@ class NetServicesTableViewController: MyTableViewController {
   @objc private func didPublishService(_ notification: Notification) {
     if let service = notification.object as? MyNetService {
       
+      // Check if have to remove none cell
+      let initialPublishedServicesCount = self.publishedServices.count
+      
       // Add the published address
       self.publishedServices.append(service)
       
@@ -180,8 +175,23 @@ class NetServicesTableViewController: MyTableViewController {
       
       // Update the table view
       if let index = self.publishedServices.index(of: service) {
+        
+        // Begin table updates
+        self.tableView.beginUpdates()
+        
+        // Remove none cell if necessary
+        if initialPublishedServicesCount == 0 {
+          let indexPathToDelete = IndexPath(row: 0, section: self.publishedServicesTableViewSection)
+          self.tableView.deleteRows(at: [ indexPathToDelete ], with: .automatic)
+        }
+        
+        // Insert service cell
         let indexPathToInsert = IndexPath(row: index, section: self.publishedServicesTableViewSection)
         self.tableView.insertRows(at: [ indexPathToInsert ], with: .automatic)
+        
+        // End table updates
+        self.tableView.endUpdates()
+        
       } else {
         // Error case
         self.reloadPublishedServices()
@@ -202,9 +212,21 @@ class NetServicesTableViewController: MyTableViewController {
       // Remove the service
       self.publishedServices.remove(at: index)
       
+      // Begin table updates
+      self.tableView.beginUpdates()
+      
       // Update the table view
       let indexPathToDelete = IndexPath(row: index, section: self.publishedServicesTableViewSection)
       self.tableView.deleteRows(at: [ indexPathToDelete ], with: .automatic)
+      
+      // Insert none cell if necessary
+      if self.publishedServices.count == 0 {
+        let indexPathToInsert = IndexPath(row: 0, section: self.publishedServicesTableViewSection)
+        self.tableView.insertRows(at: [ indexPathToInsert ], with: .automatic)
+      }
+      
+      // End table updates
+      self.tableView.endUpdates()
       
     } else {
       // Error case
@@ -256,11 +278,12 @@ class NetServicesTableViewController: MyTableViewController {
   private let availableServicesTableViewSection: Int = 0
   private let expectingSomethingDifferentSection: Int = 1
   private let publishedServicesTableViewSection: Int = 2
+  private let publishServiceTableViewSection: Int = 3
   
   // MARK: - UITableView
   
   override func numberOfSections(in tableView: UITableView) -> Int {
-    return 3
+    return 4
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -277,20 +300,23 @@ class NetServicesTableViewController: MyTableViewController {
       return 1
     
     } else if section == self.publishedServicesTableViewSection {
-      return 1 + self.publishedServices.count
+      return self.publishedServices.count == 0 ? 1 : self.publishedServices.count
+      
+    } else if section == self.publishServiceTableViewSection {
+      return 1
     }
     return 0
   }
   
   override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    if section == self.expectingSomethingDifferentSection {
+    if section == self.expectingSomethingDifferentSection || section == self.publishServiceTableViewSection {
       return 0
     }
     return super.tableView(tableView, heightForHeaderInSection: section)
   }
   
   override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-    if section == self.expectingSomethingDifferentSection - 1 {
+    if section == self.expectingSomethingDifferentSection - 1 || section == self.publishServiceTableViewSection - 1 {
       return 0
     }
     return super.tableView(tableView, heightForFooterInSection: section)
@@ -324,7 +350,9 @@ class NetServicesTableViewController: MyTableViewController {
   
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     if indexPath.section == self.expectingSomethingDifferentSection {
-      return 75
+      return 65
+    } else if indexPath.section == self.publishServiceTableViewSection {
+      return 30
     }
     return super.tableView(tableView, heightForRowAt: indexPath)
   }
@@ -362,14 +390,9 @@ class NetServicesTableViewController: MyTableViewController {
       
     } else if indexPath.section == self.publishedServicesTableViewSection {
       
-      // Publish a service cell
-      if indexPath.row == self.publishedServices.count {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceButtonCell.name, for: indexPath) as! NetServiceButtonCell
-        cell.button.setTitle("Publish a Service", for: .normal)
-        cell.setPressHandler(didPress: {
-          var viewController = PublishNetServiceSearchViewController.newController()
-          viewController.presentControllerIn(self, forMode: .navStack)
-        })
+      if self.publishedServices.count == 0 {
+        let cell = tableView.dequeueReusableCell(withIdentifier: MyBasicCenterLabelCell.name, for: indexPath) as! MyBasicCenterLabelCell
+        cell.titleLabel.text = "None"
         return cell
       }
       
@@ -378,6 +401,15 @@ class NetServicesTableViewController: MyTableViewController {
       let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceAddressCell.name, for: indexPath) as! NetServiceAddressCell
       cell.ipLabel.text = service.serviceType.name
       cell.ipLayerProtocolLabel.text = service.serviceType.fullType
+      return cell
+      
+    } else if indexPath.section == publishServiceTableViewSection {
+      let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceButtonCell.name, for: indexPath) as! NetServiceButtonCell
+      cell.button.setTitle("Publish a Service", for: .normal)
+      cell.setPressHandler(didPress: {
+        var viewController = PublishNetServiceSearchViewController.newController()
+        viewController.presentControllerIn(self, forMode: .navStack)
+      })
       return cell
     }
     return UITableViewCell()
@@ -396,11 +428,9 @@ class NetServicesTableViewController: MyTableViewController {
       
     } else if indexPath.section == self.publishedServicesTableViewSection {
       
-      if indexPath.row < self.publishedServices.count {
-        let service = self.publishedServices[indexPath.row]
-        var viewController = ServiceDetailTableViewController.newController(publishedService: service)
-        viewController.presentControllerIn(self, forMode: .splitDetail)
-      }
+      let service = self.publishedServices[indexPath.row]
+      var viewController = ServiceDetailTableViewController.newController(publishedService: service)
+      viewController.presentControllerIn(self, forMode: .splitDetail)
     }
   }
 }

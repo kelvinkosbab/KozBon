@@ -46,7 +46,7 @@ class MyNetServiceBrowser: NSObject, NetServiceBrowserDelegate {
   
   // MARK: - Start / Stop
   
-  func startSearch(timeout: Double = 2.0) {
+  func startSearch(timeout: Double = 1.0) {
     self.stopSearch()
     self.serviceBrowser.searchForServices(ofType: self.serviceType.fullType, inDomain: self.domain)
     
