@@ -145,8 +145,9 @@ class AllServiceTypesTableViewController: MyTableViewController, UISearchResults
     tableView.deselectRow(at: indexPath, animated: true)
     
     let serviceType = self.isFiltered ? self.filteredServiceTypes[indexPath.row] : self.serviceTypes[indexPath.row]
-    var viewController = ServiceDetailTableViewController.newController(serviceType: serviceType)
+    
     if UIDevice.isPhone {
+      var viewController = ServiceDetailTableViewController.newController(serviceType: serviceType)
       viewController.presentControllerIn(self, forMode: .navStack)
       
     } else if let serviceDetailViewController = self.serviceDetailViewController {
@@ -156,6 +157,7 @@ class AllServiceTypesTableViewController: MyTableViewController, UISearchResults
       serviceDetailViewController.reloadData()
       
     } else {
+      var viewController = ServiceDetailTableViewController.newController(serviceType: serviceType)
       self.serviceDetailViewController = viewController
       viewController.presentControllerIn(self, forMode: .splitDetail, completion: nil)
     }
