@@ -59,7 +59,7 @@ class PublishNetServiceSearchViewController: MyTableViewController, UISearchResu
     self.tableView.tableHeaderView = self.searchController.searchBar
     
     // Populate existing service types
-    self.serviceTypes = MyServiceType.tcpServiceTypes.sorted { (serviceType1: MyServiceType, serviceType2: MyServiceType) -> Bool in
+    self.serviceTypes = MyServiceType.fetchAll().sorted { (serviceType1: MyServiceType, serviceType2: MyServiceType) -> Bool in
       return serviceType1.name < serviceType2.name
     }
     
@@ -116,7 +116,7 @@ class PublishNetServiceSearchViewController: MyTableViewController, UISearchResu
     self.filteredServiceTypes = self.serviceTypes.filter { (serviceType: MyServiceType) -> Bool in
       
       // Check category match
-      let categoryMatch = (scope.isAll) || (scope.isBuiltIn && serviceType.isBuiltIn) || (scope.isCreated && serviceType.hasPersistentCopy)
+      let categoryMatch = (scope.isAll) || (scope.isBuiltIn && serviceType.isBuiltIn) || (scope.isCreated && serviceType.isCreated)
       if categoryMatch {
         
         // Check text match

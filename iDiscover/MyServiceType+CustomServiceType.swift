@@ -12,31 +12,23 @@ extension MyServiceType {
   
   // MARK: - Saving / Deleting Persistent Copies
   
-  var hasPersistentCopy: Bool {
-    if let _  = CustomServiceType.fetch(serviceType: self) {
-      return true
-    }
-    return false
-  }
-  
   func savePersistentCopy() {
     // Check if type already exists in the built in library
     if !MyServiceType.serviceTypeLibrary.contains(self) {
-      _ = CustomServiceType.createOrUpdate(serviceType: self)
+      _ = CustomServiceType.createOrUpdate(name: self.name, serviceType: self.type, transportLayer: self.transportLayer, detail: self.detail)
     }
   }
   
   func deletePersistentCopy() {
-    if let persistentCopy = CustomServiceType.fetch(serviceType: self) {
+    if let persistentCopy = CustomServiceType.fetch(serviceType: self.type) {
       CustomServiceType.destroy(object: persistentCopy)
-      MyDataManager.shared.saveMainContext()
     }
   }
   
   // MARK: - Static Helpers
   
   static func fetchPersistentCopy(type: String) -> MyServiceType? {
-    if let persistentCopy = CustomServiceType.fetch(type: type) {
+    if let persistentCopy = CustomServiceType.fetch(serviceType: type) {
       return persistentCopy.myServiceType
     }
     return nil
@@ -56,6 +48,5 @@ extension MyServiceType {
   
   static func deleteAllPersistentCopies() {
     CustomServiceType.destroyAll()
-    MyDataManager.shared.saveMainContext()
   }
 }

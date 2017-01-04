@@ -49,6 +49,7 @@ class NetServicesTableViewController: MyTableViewController {
     NotificationCenter.default.addObserver(self, selector: #selector(self.netServiceResolveCompleted(_:)), name: .netServiceResolveAddressComplete, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(self.didPublishService(_:)), name: .netServiceDidPublish, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(self.didUnPublishService(_:)), name: .netServiceDidUnPublish, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(self.reloadBrowsingServices), name: .myServiceTypeDidCreateAndSave, object: nil)
   }
   
   // MARK: - Content
@@ -383,8 +384,10 @@ class NetServicesTableViewController: MyTableViewController {
     } else if indexPath.section == self.expectingSomethingDifferentSection {
       let cell = tableView.dequeueReusableCell(withIdentifier: MyTopLabelBottomButtonCell.name) as! MyTopLabelBottomButtonCell
       cell.setPressHandler(didPress: {
-        // Do something
-        print("TODO: DID PRESS CREATE BUTTON")
+        
+        // Create a service type
+        var viewController = CreateServiceTypeTableViewController.newController()
+        viewController.presentControllerIn(self, forMode: .splitDetail)
       })
       return cell
       
@@ -392,7 +395,7 @@ class NetServicesTableViewController: MyTableViewController {
       
       if self.publishedServices.count == 0 {
         let cell = tableView.dequeueReusableCell(withIdentifier: MyBasicCenterLabelCell.name, for: indexPath) as! MyBasicCenterLabelCell
-        cell.titleLabel.text = "None"
+        cell.titleLabel.text = "No Published Services"
         return cell
       }
       

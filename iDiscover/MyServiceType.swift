@@ -8,7 +8,11 @@
 
 import Foundation
 
-class MyServiceType: Equatable {
+extension Notification.Name {
+  static let myServiceTypeDidCreateAndSave = Notification.Name(rawValue: "\(MyServiceType.name).myServiceTypeDidCreateAndSave")
+}
+
+class MyServiceType: NSObject {
   
   // Equatable
   
@@ -22,12 +26,14 @@ class MyServiceType: Equatable {
   let type: String
   let transportLayer: MyTransportLayer
   let detail: String?
+  let isCreated: Bool
   
-  init(name: String, type: String, transportLayer: MyTransportLayer = .tcp, detail: String? = nil) {
+  init(name: String, type: String, transportLayer: MyTransportLayer = .tcp, detail: String? = nil, isCreated: Bool = false) {
     self.name = name
     self.type = type
     self.transportLayer = transportLayer
     self.detail = detail
+    self.isCreated = isCreated
   }
   
   var fullType: String {

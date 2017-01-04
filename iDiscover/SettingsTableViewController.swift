@@ -57,6 +57,8 @@ class SettingsTableViewController: MyTableViewController {
         
       } else if indexPath.row == 2 {
         // Create a service type
+        var viewController = CreateServiceTypeTableViewController.newController()
+        viewController.presentControllerIn(self, forMode: .splitDetail)
       }
       
     } else if indexPath.section == 1 {

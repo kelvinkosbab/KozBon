@@ -14,9 +14,13 @@ extension CustomServiceType: MyDataManagerObject {
   
   // MARK: - MyDataManagerObject
   
-  static let sortDescriptors: [NSSortDescriptor]? = []
+  static let sortDescriptors: [NSSortDescriptor]? = nil
   
   // MARK: - Properties
+  
+  var fullType: String? {
+    return "_\(self.serviceType!)._\(self.transportLayer.string)"
+  }
   
   private var transportLayer: MyTransportLayer {
     get {
@@ -28,29 +32,21 @@ extension CustomServiceType: MyDataManagerObject {
   }
   
   var myServiceType: MyServiceType {
-    return MyServiceType(name: self.name!, type: self.type!, transportLayer: self.transportLayer, detail: self.detail)
+    return MyServiceType(name: self.name!, type: self.serviceType!, transportLayer: self.transportLayer, detail: self.detail, isCreated: true)
   }
   
   // MARK: - Fetch
   
-  static func fetch(serviceType: MyServiceType) -> CustomServiceType? {
-    return self.fetch(type: serviceType.type)
-  }
-  
-  static func fetch(type: String) -> CustomServiceType? {
-    return self.fetchOne(format: "type == %@", type)
+  static func fetch(serviceType: String) -> CustomServiceType? {
+    return self.fetchOne(format: "serviceType == %@", serviceType)
   }
   
   // MARK: - Create / Update
   
-  static func createOrUpdate(serviceType: MyServiceType) -> CustomServiceType{
-    return self.createOrUpdate(name: serviceType.name, type: serviceType.type, transportLayer: serviceType.transportLayer, detail: serviceType.detail)
-  }
-  
-  static private func createOrUpdate(name: String, type: String, transportLayer: MyTransportLayer, detail: String? = nil) -> CustomServiceType {
-    let object = self.fetch(type: type) ?? self.create()
+  static func createOrUpdate(name: String, serviceType: String, transportLayer: MyTransportLayer, detail: String? = nil) -> CustomServiceType {
+    let object = self.fetch(serviceType: serviceType) ?? self.create()
     object.name = name
-    object.type = type
+    object.serviceType = serviceType
     object.transportLayer = transportLayer
     object.detail = detail
     MyDataManager.shared.saveMainContext()

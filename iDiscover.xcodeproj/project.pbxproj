@@ -32,6 +32,7 @@
 		B6AE53841E17090A00FB57E3 /* PublishDetailCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AE53831E17090A00FB57E3 /* PublishDetailCreateViewController.swift */; };
 		B6AE53861E170A6400FB57E3 /* PublishDetailExistingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AE53851E170A6400FB57E3 /* PublishDetailExistingViewController.swift */; };
 		B6C4BC521E1CC2CD004409F1 /* TableViewCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C4BC511E1CC2CD004409F1 /* TableViewCells.swift */; };
+		B6C4BC551E1CD30A004409F1 /* CreateServiceTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C4BC541E1CD30A004409F1 /* CreateServiceTypeTableViewController.swift */; };
 		B6CE1D281E1208C1003D4FFA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D271E1208C1003D4FFA /* AppDelegate.swift */; };
 		B6CE1D301E1208C1003D4FFA /* iDiscover.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D2E1E1208C1003D4FFA /* iDiscover.xcdatamodeld */; };
 		B6CE1D321E1208C1003D4FFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6CE1D311E1208C1003D4FFA /* Assets.xcassets */; };
@@ -82,6 +83,7 @@
 		B6AE53831E17090A00FB57E3 /* PublishDetailCreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishDetailCreateViewController.swift; sourceTree = "<group>"; };
 		B6AE53851E170A6400FB57E3 /* PublishDetailExistingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishDetailExistingViewController.swift; sourceTree = "<group>"; };
 		B6C4BC511E1CC2CD004409F1 /* TableViewCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCells.swift; sourceTree = "<group>"; };
+		B6C4BC541E1CD30A004409F1 /* CreateServiceTypeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateServiceTypeTableViewController.swift; sourceTree = "<group>"; };
 		B6CE1D241E1208C1003D4FFA /* iDiscover.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iDiscover.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6CE1D271E1208C1003D4FFA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B6CE1D2F1E1208C1003D4FFA /* iDiscover.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iDiscover.xcdatamodel; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 			children = (
 				B6CE1D4B1E120B01003D4FFA /* NetServicesTableViewController.swift */,
 				B6089C991E19D76D00C7CF29 /* ServiceDetailTableViewController.swift */,
+				B6C4BC541E1CD30A004409F1 /* CreateServiceTypeTableViewController.swift */,
 				B6AE53871E170A7D00FB57E3 /* Publishing */,
 			);
 			name = Bonjour;
@@ -421,6 +424,7 @@
 				B679CC151E1624A20056C7B5 /* MyViewController.swift in Sources */,
 				B6CE1D481E120ADC003D4FFA /* DispatchQueue+Util.swift in Sources */,
 				B6AE537E1E16E09300FB57E3 /* MySplitViewController.swift in Sources */,
+				B6C4BC551E1CD30A004409F1 /* CreateServiceTypeTableViewController.swift in Sources */,
 				B6CE1D4F1E120B90003D4FFA /* MyClassProtocol.swift in Sources */,
 				B679CC0A1E1618840056C7B5 /* MyRootController.swift in Sources */,
 				B6AE53841E17090A00FB57E3 /* PublishDetailCreateViewController.swift in Sources */,
