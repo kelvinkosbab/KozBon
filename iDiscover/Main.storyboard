@@ -284,6 +284,49 @@
                                     <outlet property="titleLabel" destination="77G-kt-xzE" id="8tA-DY-0wz"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="MyTopLabelBottomButtonCell" rowHeight="68" id="TnU-vy-9wT" customClass="MyTopLabelBottomButtonCell" customModule="iDiscover" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="354" width="375" height="68"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TnU-vy-9wT" id="7cc-rF-T1E">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="68"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Expecting something different?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3E1-hx-5Y4">
+                                            <rect key="frame" x="157.5" y="13" width="189.5" height="16"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconChevronRight" translatesAutoresizingMaskIntoConstraints="NO" id="UO9-Gg-kaC">
+                                            <rect key="frame" x="352" y="39" width="15" height="15"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="15" id="U11-Vg-N5m"/>
+                                                <constraint firstAttribute="width" constant="15" id="cIh-s3-DfN"/>
+                                            </constraints>
+                                        </imageView>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OJE-YN-1Aj">
+                                            <rect key="frame" x="209" y="32.5" width="138" height="28"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <state key="normal" title="Specify a Service Type"/>
+                                            <connections>
+                                                <action selector="buttonSelected:" destination="TnU-vy-9wT" eventType="touchUpInside" id="d6A-gg-4wG"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="UO9-Gg-kaC" firstAttribute="leading" secondItem="OJE-YN-1Aj" secondAttribute="trailing" constant="5" id="NFa-8T-R1O"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="UO9-Gg-kaC" secondAttribute="trailing" id="ett-PF-CIj"/>
+                                        <constraint firstItem="UO9-Gg-kaC" firstAttribute="centerY" secondItem="OJE-YN-1Aj" secondAttribute="centerY" id="m94-Cd-70R"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="3E1-hx-5Y4" secondAttribute="trailing" constant="20" id="mFD-SN-c0A"/>
+                                        <constraint firstItem="UO9-Gg-kaC" firstAttribute="top" secondItem="3E1-hx-5Y4" secondAttribute="bottom" constant="10" id="stV-gn-N95"/>
+                                        <constraint firstItem="3E1-hx-5Y4" firstAttribute="top" secondItem="7cc-rF-T1E" secondAttribute="topMargin" constant="5" id="tf5-Mk-HXZ"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="button" destination="OJE-YN-1Aj" id="Vdr-4o-MSy"/>
+                                    <outlet property="label" destination="3E1-hx-5Y4" id="8Wg-hc-Bit"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="Eto-in-gN7" id="JJe-MF-jvC"/>
@@ -294,7 +337,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MTP-Jz-egw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="191" y="157"/>
+            <point key="canvasLocation" x="189.59999999999999" y="156.97151424287858"/>
         </scene>
         <!--Publish Net Service Search View Controller-->
         <scene sceneID="0E0-fx-Gl2">

@@ -148,4 +148,10 @@ class MyNetService: NSObject, NetServiceDelegate {
     self.isPublishing = false
     NotificationCenter.default.post(name: .netServiceDidNotPublish, object: self)
   }
+  
+  // MARK: - NetServiceDelegate
+  
+  func netService(_ sender: NetService, didUpdateTXTRecord data: Data) {
+    print("\(self.className) : Did update TXT record \(data)")
+  }
 }

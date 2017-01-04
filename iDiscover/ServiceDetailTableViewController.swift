@@ -9,24 +9,6 @@
 import Foundation
 import UIKit
 
-class NetServiceHeaderCell: UITableViewCell {
-  @IBOutlet weak var titleLabel: UILabel!
-}
-
-class NetServiceKeyValueCell: UITableViewCell {
-  @IBOutlet weak var keyLabel: UILabel!
-  @IBOutlet weak var valueLabel: UILabel!
-}
-
-class NetServiceDetailCell: UITableViewCell {
-  @IBOutlet weak var detailLabel: UILabel!
-}
-
-class NetServiceAddressCell: UITableViewCell {
-  @IBOutlet weak var ipLabel: UILabel!
-  @IBOutlet weak var ipLayerProtocolLabel: UILabel!
-}
-
 class ServiceDetailTableViewController: MyTableViewController {
   
   // MARK: - Class Accessors

@@ -152,9 +152,6 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
     for serviceBrowser in self.serviceBrowsers {
       serviceBrowser.stopSearch()
     }
-    for service in self.services {
-      service.stop()
-    }
   }
   
   // MARK: - MyNetServiceBrowserDelegate

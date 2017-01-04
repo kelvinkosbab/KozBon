@@ -33,12 +33,20 @@ class MyTableViewController: UITableViewController, PresentableController {
     return 50
   }
   
+  override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    let headerView = UIView()
+    headerView.backgroundColor = UIColor.white
+    return headerView
+  }
+  
   override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
     return 15
   }
   
   override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-    return UIView()
+    let footerView = UIView()
+    footerView.backgroundColor = UIColor.white
+    return footerView
   }
   
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
