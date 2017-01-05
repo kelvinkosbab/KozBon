@@ -12,6 +12,10 @@ extension MyServiceType {
   
   // MARK: - Saving / Deleting Persistent Copies
   
+  var hasPersistentCopy: Bool {
+    return CustomServiceType.fetch(serviceType: self.type) != nil
+  }
+  
   func savePersistentCopy() {
     // Check if type already exists in the built in library
     if !MyServiceType.serviceTypeLibrary.contains(self) {

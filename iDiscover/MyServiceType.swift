@@ -26,14 +26,12 @@ class MyServiceType: NSObject {
   let type: String
   let transportLayer: MyTransportLayer
   let detail: String?
-  let isCreated: Bool
   
-  init(name: String, type: String, transportLayer: MyTransportLayer = .tcp, detail: String? = nil, isCreated: Bool = false) {
+  init(name: String, type: String, transportLayer: MyTransportLayer = .tcp, detail: String? = nil) {
     self.name = name
     self.type = type
     self.transportLayer = transportLayer
     self.detail = detail
-    self.isCreated = isCreated
   }
   
   var fullType: String {

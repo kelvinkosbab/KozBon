@@ -9,13 +9,13 @@
 import Foundation
 import CoreData
 
-class MyDataManager {
+class MyDataManager: NSObject {
   
   // MARK: - Singleton
   
   static let shared = MyDataManager()
   
-  private init() {}
+  private override init() { super.init() }
   
   // MARK: - Properties
   
@@ -54,13 +54,13 @@ class MyDataManager {
     self.saveMainContext()
   }
   
-  func destroy(entityName: String, format: String, _ args: CVarArg...) {
+  func destroy(request: NSFetchRequest<NSFetchRequestResult>, format: String, _ args: CVarArg...) {
     let predicate = NSPredicate(format: format, arguments: getVaList(args))
-    self.destroyAll(entityName: entityName, predicate: predicate)
+    self.destroyAll(request: request, predicate: predicate)
   }
   
-  func destroyAll(entityName: String, predicate: NSPredicate? = nil) {
-    for object in self.fetch(entityName: entityName, predicate: predicate) {
+  func destroyAll(request: NSFetchRequest<NSFetchRequestResult>, predicate: NSPredicate? = nil) {
+    for object in self.fetch(request: request, predicate: predicate) {
       self.delete(object: object)
     }
     self.saveMainContext()
@@ -72,14 +72,12 @@ class MyDataManager {
   
   // MARK: - Fetching
   
-  func fetch(entityName: String, sortDescriptors: [NSSortDescriptor]? = nil, format: String, _ args: CVarArg...) -> [NSManagedObject] {
+  func fetch(request: NSFetchRequest<NSFetchRequestResult>, sortDescriptors: [NSSortDescriptor]? = nil, format: String, _ args: CVarArg...) -> [NSManagedObject] {
     let predicate = NSPredicate(format: format, arguments: getVaList(args))
-    return self.fetch(entityName: entityName, predicate: predicate, sortDescriptors: sortDescriptors)
+    return self.fetch(request: request, predicate: predicate, sortDescriptors: sortDescriptors)
   }
   
-  func fetch(entityName: String, predicate: NSPredicate? = nil, sortDescriptors: [NSSortDescriptor]? = nil) -> [NSManagedObject] {
-    let request = NSFetchRequest<NSFetchRequestResult>()
-    request.entity = self.getEntity(entityName: entityName, context: self.coreDataStack.mainContext)
+  func fetch(request: NSFetchRequest<NSFetchRequestResult>, predicate: NSPredicate? = nil, sortDescriptors: [NSSortDescriptor]? = nil) -> [NSManagedObject] {
     request.predicate = predicate
     request.sortDescriptors = sortDescriptors
     request.returnsObjectsAsFaults = false
@@ -91,28 +89,26 @@ class MyDataManager {
       if let objects = try context.fetch(request) as? [NSManagedObject] {
         return objects
       } else {
-        NSLog("get: Failed to cast to NSManagedObject")
+        NSLog("\(self.className) : Failed to cast to NSManagedObject")
       }
-    } catch let error as NSError {
-      NSLog("get: \(error.localizedDescription)")
+    } catch {
+      NSLog("\(self.className) : \(error.localizedDescription)")
     }
     return []
   }
   
   // MARK: - Counting
   
-  func count(entityName: String) -> Int {
-    return self.count(entityName: entityName, predicate: nil)
+  func count(request: NSFetchRequest<NSFetchRequestResult>) -> Int {
+    return self.count(request: request, predicate: nil)
   }
   
-  func count(entityName: String, format: String, _ args: CVarArg...) -> Int {
+  func count(request: NSFetchRequest<NSFetchRequestResult>, format: String, _ args: CVarArg...) -> Int {
     let predicate = NSPredicate(format: format, arguments: getVaList(args))
-    return self.count(entityName: entityName, predicate: predicate)
+    return self.count(request: request, predicate: predicate)
   }
   
-  private func count(entityName: String, predicate: NSPredicate?) -> Int {
-    let request = NSFetchRequest<NSFetchRequestResult>()
-    request.entity = self.getEntity(entityName: entityName, context: self.coreDataStack.mainContext)
+  private func count(request: NSFetchRequest<NSFetchRequestResult>, predicate: NSPredicate?) -> Int {
     request.predicate = predicate
     request.returnsObjectsAsFaults = false
     request.includesSubentities = false

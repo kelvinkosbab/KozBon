@@ -68,7 +68,7 @@ class AllServiceTypesTableViewController: MyTableViewController, UISearchResults
     self.filteredServiceTypes = self.serviceTypes.filter { (serviceType: MyServiceType) -> Bool in
       
       // Check category match
-      let categoryMatch = (scope.isAll) || (scope.isBuiltIn && serviceType.isBuiltIn) || (scope.isCreated && serviceType.isCreated)
+      let categoryMatch = (scope.isAll) || (scope.isBuiltIn && serviceType.isBuiltIn) || (scope.isCreated && serviceType.hasPersistentCopy)
       if categoryMatch {
         
         // Check text match

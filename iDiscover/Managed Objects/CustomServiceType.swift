@@ -10,6 +10,16 @@
 import Foundation
 import CoreData
 
+@objc(CustomServiceType)
+public class CustomServiceType: NSManagedObject {
+  
+  @NSManaged public var detail: String?
+  @NSManaged public var name: String
+  @NSManaged public var serviceType: String
+  @NSManaged public var transportLayerValue: Int16
+  
+}
+
 extension CustomServiceType: MyDataManagerObject {
   
   // MARK: - MyDataManagerObject
@@ -19,7 +29,7 @@ extension CustomServiceType: MyDataManagerObject {
   // MARK: - Properties
   
   var fullType: String? {
-    return "_\(self.serviceType!)._\(self.transportLayer.string)"
+    return "_\(self.serviceType)._\(self.transportLayer.string)"
   }
   
   private var transportLayer: MyTransportLayer {
@@ -32,13 +42,13 @@ extension CustomServiceType: MyDataManagerObject {
   }
   
   var myServiceType: MyServiceType {
-    return MyServiceType(name: self.name!, type: self.serviceType!, transportLayer: self.transportLayer, detail: self.detail, isCreated: true)
+    return MyServiceType(name: self.name, type: self.serviceType, transportLayer: self.transportLayer, detail: self.detail)
   }
   
   // MARK: - Fetch
   
   static func fetch(serviceType: String) -> CustomServiceType? {
-    return self.fetchOne(format: "serviceType == %@", serviceType)
+    return self.fetchOne(format: "serviceType = %@", serviceType)
   }
   
   // MARK: - Create / Update

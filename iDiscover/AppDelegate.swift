@@ -29,6 +29,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
+    
+    for serviceType in MyServiceType.fetchAllPersistentCopies() {
+      print("KAK : Found persistent copy \(serviceType.type)")
+      print("KAK : \(serviceType.type) has persistent copy? \(serviceType.hasPersistentCopy)")
+    }
+    
     return true
   }
 

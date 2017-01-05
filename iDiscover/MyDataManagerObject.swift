@@ -13,10 +13,14 @@ protocol MyDataManagerObject {
   static var sortDescriptors: [NSSortDescriptor]? { get }
 }
 
-extension MyDataManagerObject where Self: NSManagedObject {
+extension MyDataManagerObject where Self : NSManagedObject {
   
   private static var entityName: String {
     return String(describing: Self.self)
+  }
+  
+  static func newFetchRequest() -> NSFetchRequest<NSFetchRequestResult> {
+    return NSFetchRequest<CustomServiceType>(entityName: self.entityName) as! NSFetchRequest<NSFetchRequestResult>
   }
   
   static func create() -> Self {
@@ -28,11 +32,11 @@ extension MyDataManagerObject where Self: NSManagedObject {
   }
   
   static func destroyAll() {
-    MyDataManager.shared.destroyAll(entityName: self.entityName)
+    MyDataManager.shared.destroyAll(request: self.newFetchRequest())
   }
   
   static var count: Int {
-    return MyDataManager.shared.count(entityName: self.entityName)
+    return MyDataManager.shared.count(request: self.newFetchRequest())
   }
   
   static func fetchOne(format: String, _ args: CVarArg...) -> Self? {
@@ -45,10 +49,10 @@ extension MyDataManagerObject where Self: NSManagedObject {
   
   static func fetchMany(sortDescriptors: [NSSortDescriptor]?, format: String, _ args: CVarArg...) -> [Self] {
     let predicate = NSPredicate(format: format, arguments: getVaList(args))
-    return MyDataManager.shared.fetch(entityName: self.entityName, predicate: predicate, sortDescriptors: sortDescriptors) as! [Self]
+    return MyDataManager.shared.fetch(request: self.newFetchRequest(), predicate: predicate, sortDescriptors: sortDescriptors) as! [Self]
   }
   
   static func fetchAll(sortDescriptors: [NSSortDescriptor]? = nil) -> [Self] {
-    return MyDataManager.shared.fetch(entityName: self.entityName, sortDescriptors: sortDescriptors ?? self.sortDescriptors) as! [Self]
+    return MyDataManager.shared.fetch(request: self.newFetchRequest(), sortDescriptors: sortDescriptors ?? self.sortDescriptors) as! [Self]
   }
 }
