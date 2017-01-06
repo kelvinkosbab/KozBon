@@ -25,7 +25,7 @@ extension MyServiceType {
   
   func deletePersistentCopy() {
     if let persistentCopy = CustomServiceType.fetch(serviceType: self.type) {
-      CustomServiceType.destroy(object: persistentCopy)
+      CustomServiceType.deleteOne(persistentCopy)
     }
   }
   
@@ -51,6 +51,6 @@ extension MyServiceType {
   }
   
   static func deleteAllPersistentCopies() {
-    CustomServiceType.destroyAll()
+    CustomServiceType.deleteAll()
   }
 }

@@ -57,7 +57,7 @@ extension CustomServiceType: MyDataManagerObject {
     object.serviceType = serviceType
     object.transportLayer = transportLayer
     object.detail = detail
-    MyDataManager.shared.saveMainContext()
+    self.saveMainContext()
     return object
   }
 }
