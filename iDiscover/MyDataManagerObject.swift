@@ -19,8 +19,12 @@ extension MyDataManagerObject where Self : NSManagedObject {
     return String(describing: Self.self)
   }
   
-  static func newFetchRequest() -> NSFetchRequest<NSFetchRequestResult> {
-    return NSFetchRequest<CustomServiceType>(entityName: self.entityName) as! NSFetchRequest<NSFetchRequestResult>
+//  static func newFetchRequest() -> NSFetchRequest<NSFetchRequestResult> {
+//    return NSFetchRequest<Self>(entityName: self.entityName) as! NSFetchRequest<NSFetchRequestResult>
+//  }
+  
+  static func newFetchRequest() -> NSFetchRequest<Self> {
+    return NSFetchRequest<Self>(entityName: self.entityName)
   }
   
   static func create() -> Self {
@@ -32,11 +36,11 @@ extension MyDataManagerObject where Self : NSManagedObject {
   }
   
   static func destroyAll() {
-    MyDataManager.shared.destroyAll(request: self.newFetchRequest())
+    MyDataManager.shared.destroyAll(entityName: self.entityName)
   }
   
   static var count: Int {
-    return MyDataManager.shared.count(request: self.newFetchRequest())
+    return MyDataManager.shared.count(entityName: self.entityName)
   }
   
   static func fetchOne(format: String, _ args: CVarArg...) -> Self? {
@@ -49,10 +53,10 @@ extension MyDataManagerObject where Self : NSManagedObject {
   
   static func fetchMany(sortDescriptors: [NSSortDescriptor]?, format: String, _ args: CVarArg...) -> [Self] {
     let predicate = NSPredicate(format: format, arguments: getVaList(args))
-    return MyDataManager.shared.fetch(request: self.newFetchRequest(), predicate: predicate, sortDescriptors: sortDescriptors) as! [Self]
+    return MyDataManager.shared.fetch(entityName: self.entityName, predicate: predicate, sortDescriptors: sortDescriptors) as! [Self]
   }
   
   static func fetchAll(sortDescriptors: [NSSortDescriptor]? = nil) -> [Self] {
-    return MyDataManager.shared.fetch(request: self.newFetchRequest(), sortDescriptors: sortDescriptors ?? self.sortDescriptors) as! [Self]
+    return MyDataManager.shared.fetch(entityName: self.entityName, sortDescriptors: sortDescriptors ?? self.sortDescriptors) as! [Self]
   }
 }

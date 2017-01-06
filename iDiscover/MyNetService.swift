@@ -37,7 +37,7 @@ class MyNetService: NSObject, NetServiceDelegate {
   
   var hostName: String {
     if let hostName = self.service.hostName {
-      return hostName.replacingOccurrences(of: self.service.domain, with: "").replacingOccurrences(of: ".", with: "")
+      return hostName.replacingOccurrences(of: self.service.domain, with: "").replacingOccurrences(of: ".", with: "").replacingOccurrences(of: "-", with: " ")
     }
     return "NA"
   }

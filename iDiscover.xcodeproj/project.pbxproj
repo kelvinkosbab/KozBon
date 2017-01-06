@@ -216,8 +216,7 @@
 				B6CE1D3D1E1208DC003D4FFA /* Protocols */,
 				B6CE1D3E1E1208E5003D4FFA /* Bonjour */,
 				B6F93AB21E123AB800FE2DC7 /* Bluetooth */,
-				B6CE1D3F1E1208EE003D4FFA /* Data Manager */,
-				B6CE1D401E1208F6003D4FFA /* Managed Objects */,
+				B6CE1D3F1E1208EE003D4FFA /* Model */,
 				B6CE1D411E120907003D4FFA /* Extensions */,
 			);
 			name = Common;
@@ -247,20 +246,21 @@
 			name = Bonjour;
 			sourceTree = "<group>";
 		};
-		B6CE1D3F1E1208EE003D4FFA /* Data Manager */ = {
+		B6CE1D3F1E1208EE003D4FFA /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				B6CE1D2E1E1208C1003D4FFA /* iDiscover.xcdatamodeld */,
 				B6CE1D531E120BF4003D4FFA /* MyCoreDataStack.swift */,
 				B6CE1D541E120BF4003D4FFA /* MyDataManager.swift */,
+				B6CE1D511E120B9F003D4FFA /* MyDataManagerObject.swift */,
+				B6CE1D401E1208F6003D4FFA /* Managed Objects */,
 			);
-			name = "Data Manager";
+			name = Model;
 			sourceTree = "<group>";
 		};
 		B6CE1D401E1208F6003D4FFA /* Managed Objects */ = {
 			isa = PBXGroup;
 			children = (
-				B6CE1D511E120B9F003D4FFA /* MyDataManagerObject.swift */,
 				B6CE1D641E120E4D003D4FFA /* CustomServiceType.swift */,
 			);
 			name = "Managed Objects";

@@ -54,13 +54,13 @@ class MyDataManager: NSObject {
     self.saveMainContext()
   }
   
-  func destroy(request: NSFetchRequest<NSFetchRequestResult>, format: String, _ args: CVarArg...) {
+  func destroy(entityName: String, format: String, _ args: CVarArg...) {
     let predicate = NSPredicate(format: format, arguments: getVaList(args))
-    self.destroyAll(request: request, predicate: predicate)
+    self.destroyAll(entityName: entityName, predicate: predicate)
   }
   
-  func destroyAll(request: NSFetchRequest<NSFetchRequestResult>, predicate: NSPredicate? = nil) {
-    for object in self.fetch(request: request, predicate: predicate) {
+  func destroyAll(entityName: String, predicate: NSPredicate? = nil) {
+    for object in self.fetch(entityName: entityName, predicate: predicate) {
       self.delete(object: object)
     }
     self.saveMainContext()
@@ -72,12 +72,9 @@ class MyDataManager: NSObject {
   
   // MARK: - Fetching
   
-  func fetch(request: NSFetchRequest<NSFetchRequestResult>, sortDescriptors: [NSSortDescriptor]? = nil, format: String, _ args: CVarArg...) -> [NSManagedObject] {
-    let predicate = NSPredicate(format: format, arguments: getVaList(args))
-    return self.fetch(request: request, predicate: predicate, sortDescriptors: sortDescriptors)
-  }
-  
-  func fetch(request: NSFetchRequest<NSFetchRequestResult>, predicate: NSPredicate? = nil, sortDescriptors: [NSSortDescriptor]? = nil) -> [NSManagedObject] {
+  func fetch(entityName: String, predicate: NSPredicate? = nil, sortDescriptors: [NSSortDescriptor]? = nil) -> [NSManagedObject] {
+    let request: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+    request.entity = self.getEntity(entityName: entityName)
     request.predicate = predicate
     request.sortDescriptors = sortDescriptors
     request.returnsObjectsAsFaults = false
@@ -88,27 +85,26 @@ class MyDataManager: NSObject {
     do {
       if let objects = try context.fetch(request) as? [NSManagedObject] {
         return objects
-      } else {
-        NSLog("\(self.className) : Failed to cast to NSManagedObject")
       }
     } catch {
-      NSLog("\(self.className) : \(error.localizedDescription)")
+      print("\(self.className) : \(error.localizedDescription)")
     }
     return []
   }
   
   // MARK: - Counting
   
-  func count(request: NSFetchRequest<NSFetchRequestResult>) -> Int {
-    return self.count(request: request, predicate: nil)
+  func count(entityName: String) -> Int {
+    return self.count(entityName: entityName, predicate: nil)
   }
   
-  func count(request: NSFetchRequest<NSFetchRequestResult>, format: String, _ args: CVarArg...) -> Int {
+  func count(entityName: String, format: String, _ args: CVarArg...) -> Int {
     let predicate = NSPredicate(format: format, arguments: getVaList(args))
-    return self.count(request: request, predicate: predicate)
+    return self.count(entityName: entityName, predicate: predicate)
   }
   
-  private func count(request: NSFetchRequest<NSFetchRequestResult>, predicate: NSPredicate?) -> Int {
+  private func count(entityName: String, predicate: NSPredicate?) -> Int {
+    let request: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
     request.predicate = predicate
     request.returnsObjectsAsFaults = false
     request.includesSubentities = false

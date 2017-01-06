@@ -12,12 +12,10 @@ import CoreData
 
 @objc(CustomServiceType)
 public class CustomServiceType: NSManagedObject {
-  
   @NSManaged public var detail: String?
   @NSManaged public var name: String
   @NSManaged public var serviceType: String
   @NSManaged public var transportLayerValue: Int16
-  
 }
 
 extension CustomServiceType: MyDataManagerObject {
