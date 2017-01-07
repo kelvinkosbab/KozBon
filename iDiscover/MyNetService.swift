@@ -84,7 +84,7 @@ class MyNetService: NSObject, NetServiceDelegate {
     self.isResolving = true
     self.completedAddressResolution = completedAddressResolution
     self.service.delegate = self
-    self.service.resolve(withTimeout: 2.0)
+    self.service.resolve(withTimeout: 5.0)
   }
   
   // MARK: - NetServiceDelegate - Resolving Address
@@ -99,7 +99,7 @@ class MyNetService: NSObject, NetServiceDelegate {
   }
   
   func netService(_ sender: NetService, didNotResolve errorDict: [String : NSNumber]) {
-    print("\(self.className) : Service did not resolve address \(sender)")
+    print("\(self.className) : Service did not resolve address \(sender) with errorDict \(errorDict)")
     NotificationCenter.default.post(name: .netServiceResolveAddressComplete, object: self)
     self.completedAddressResolution?()
     self.completedAddressResolution = nil

@@ -41,7 +41,7 @@ extension Date {
   }
   
   var nsDate: NSDate {
-    return NSDate(timeIntervalSince1970: self.timeIntervalSince1970)
+    return self as NSDate
   }
   
   var isToday: Bool {

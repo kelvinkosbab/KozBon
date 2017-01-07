@@ -48,7 +48,8 @@ extension MyDataManagerObject where Self : NSManagedObject {
   }
   
   static func fetchOne(format: String, _ args: CVarArg...) -> Self? {
-    return self.fetchMany(format: format, args).first
+    let predicate = NSPredicate(format: format, arguments: getVaList(args))
+    return self.fetch(predicate: predicate).first
   }
   
   static func fetchMany(format: String, _ args: CVarArg...) -> [Self] {

@@ -13,6 +13,7 @@ extension MyServiceType {
   // MARK: - Saving / Deleting Persistent Copies
   
   var hasPersistentCopy: Bool {
+    print("KAK : \(CustomServiceType.fetch(serviceType: self.type))")
     return CustomServiceType.fetch(serviceType: self.type) != nil
   }
   
