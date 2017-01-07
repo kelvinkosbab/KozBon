@@ -45,7 +45,7 @@ extension Date {
   }
   
   var isToday: Bool {
-    return NSCalendar.current.isDateInToday(self)
+    return Calendar.current.isDateInToday(self)
   }
   
   // MARK: - Comparison

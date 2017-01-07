@@ -176,6 +176,9 @@ class ServiceDetailTableViewController: MyTableViewController {
     if self.mode.isPublishedService {
       return 2
     } else if self.mode.isBrowsedService {
+      if let service = self.service, service.dataRecords.count > 0 {
+        return 3
+      }
       return 2
     }
     return 1
@@ -199,12 +202,18 @@ class ServiceDetailTableViewController: MyTableViewController {
     
     // The service was discovered by this device
     if self.mode.isBrowsedService, let service = self.service {
-      if service.isResolving {
-        return 1
-      } else if !service.isResolving && service.addresses.count == 0 {
-        return 1
+      if section == 1 {
+        // Addresses section
+        if service.isResolving {
+          return 1
+        } else if !service.isResolving && service.addresses.count == 0 {
+          return 1
+        }
+        return service.addresses.count
+        
+      } else if section == 2 {
+        return service.dataRecords.count
       }
-      return service.addresses.count
     }
     
     return 0
@@ -234,18 +243,29 @@ class ServiceDetailTableViewController: MyTableViewController {
     
     // The service was published by this device
     if self.mode.isPublishedService {
-      let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceHeaderCell.name) as! NetServiceHeaderCell
-      cell.titleLabel.text = "Actions".uppercased()
-      return cell.contentView
+      if section == 1 {
+        let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceHeaderCell.name) as! NetServiceHeaderCell
+        cell.titleLabel.text = "Actions".uppercased()
+        return cell.contentView
+      }
     }
     
     // The service was discovered by this device
     if self.mode.isBrowsedService, let service = self.service {
-      // Addresses
-      let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceHeaderCell.name) as! NetServiceHeaderCell
-      let addressesString = "Addresses".uppercased()
-      cell.titleLabel.text = service.hostName == "NA" ? addressesString : "\(addressesString) : \(service.hostName)"
-      return cell.contentView
+      
+      if section == 1 {
+        // Addresses
+        let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceHeaderCell.name) as! NetServiceHeaderCell
+        let addressesString = "Addresses".uppercased()
+        cell.titleLabel.text = service.hostName == "NA" ? addressesString : "\(addressesString) : \(service.hostName)"
+        return cell.contentView
+        
+      } else if section == 2 {
+        // Data Records
+        let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceHeaderCell.name) as! NetServiceHeaderCell
+        cell.titleLabel.text = "Data Records".uppercased()
+        return cell.contentView
+      }
     }
     
     return nil
@@ -302,23 +322,34 @@ class ServiceDetailTableViewController: MyTableViewController {
     // The service was discovered by this device
     if self.mode.isBrowsedService, let service = self.service {
       
-      if service.isResolving {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableLoadingCell.name, for: indexPath) as! NetServicesTableLoadingCell
-        cell.loadingActivityIndicator.startAnimating()
-        cell.loadingActivityIndicator.isHidden = false
+      if indexPath.section == 1 {
+        // Addresses section
+        if service.isResolving {
+          let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableLoadingCell.name, for: indexPath) as! NetServicesTableLoadingCell
+          cell.loadingActivityIndicator.startAnimating()
+          cell.loadingActivityIndicator.isHidden = false
+          return cell
+          
+        } else if !service.isResolving && service.addresses.count == 0 {
+          let cell = tableView.dequeueReusableCell(withIdentifier: MyBasicCenterLabelCell.name, for: indexPath) as! MyBasicCenterLabelCell
+          cell.titleLabel.text = "No Addresses Resolved"
+          return cell
+        }
+        
+        let address = service.addresses[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceAddressCell.name, for: indexPath) as! NetServiceAddressCell
+        cell.ipLabel.text = address.fullAddress
+        cell.ipLayerProtocolLabel.text = address.internetProtocol.string
         return cell
         
-      } else if !service.isResolving && service.addresses.count == 0 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: MyBasicCenterLabelCell.name, for: indexPath) as! MyBasicCenterLabelCell
-        cell.titleLabel.text = "No Addresses Resolved"
+      } else if indexPath.section == 2 {
+        // Data records section
+        let record = service.dataRecords[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceKeyValueCell.name, for: indexPath) as! NetServiceKeyValueCell
+        cell.keyLabel.text = record.key
+        cell.valueLabel.text = record.value
         return cell
       }
-      
-      let address = service.addresses[indexPath.row]
-      let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceAddressCell.name, for: indexPath) as! NetServiceAddressCell
-      cell.ipLabel.text = address.fullAddress
-      cell.ipLayerProtocolLabel.text = address.internetProtocol.string
-      return cell
     }
     
     return UITableViewCell()

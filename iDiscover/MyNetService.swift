@@ -24,11 +24,27 @@ class MyNetService: NSObject, NetServiceDelegate {
     return lhs.service == rhs.service
   }
   
-  // Init
+  // MARK: - Init
   
   let service: NetService
   let serviceType: MyServiceType
   var addresses: [MyAddress] = []
+  var dataRecords: [MyDataRecord] = []
+  
+  class MyDataRecord: Equatable, Comparable {
+    static func == (lhs: MyDataRecord, rhs: MyDataRecord) -> Bool {
+      return lhs.key == rhs.key
+    }
+    static func < (lhs: MyDataRecord, rhs: MyDataRecord) -> Bool {
+      return lhs.key < rhs.key
+    }
+    let key: String
+    let value: String
+    init(key: String, value: String) {
+      self.key = key
+      self.value = value
+    }
+  }
   
   init(service: NetService, serviceType: MyServiceType) {
     self.service = service
@@ -84,7 +100,8 @@ class MyNetService: NSObject, NetServiceDelegate {
     self.isResolving = true
     self.completedAddressResolution = completedAddressResolution
     self.service.delegate = self
-    self.service.resolve(withTimeout: 5.0)
+    self.service.resolve(withTimeout: 10.0)
+    self.startMonitoring()
   }
   
   // MARK: - NetServiceDelegate - Resolving Address
@@ -149,9 +166,27 @@ class MyNetService: NSObject, NetServiceDelegate {
     NotificationCenter.default.post(name: .netServiceDidNotPublish, object: self)
   }
   
-  // MARK: - NetServiceDelegate
+  // MARK: - NetServiceDelegate - TXT Records
+  
+  func startMonitoring() {
+    self.service.startMonitoring()
+  }
+  
+  func stopMonitoring() {
+    self.service.stopMonitoring()
+  }
   
   func netService(_ sender: NetService, didUpdateTXTRecord data: Data) {
     print("\(self.className) : Did update TXT record \(data)")
+    
+    var records: [MyDataRecord] = []
+    for (key, value) in NetService.dictionary(fromTXTRecord: data) {
+      if let stringValue = String(data: value, encoding: .utf8) {
+        records.append(MyDataRecord(key: key, value: stringValue.isEmpty ? "NA" : stringValue))
+      }
+    }
+    self.dataRecords = records.sorted(by: { (r1, r2) -> Bool in
+      return r1 < r2
+    })
   }
 }
