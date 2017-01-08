@@ -576,7 +576,7 @@
 				DEVELOPMENT_TEAM = 6SS93B87P2;
 				INFOPLIST_FILE = iDiscover/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kozinga.iDiscover;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kozinga.KozBon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -589,7 +589,7 @@
 				DEVELOPMENT_TEAM = 6SS93B87P2;
 				INFOPLIST_FILE = iDiscover/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kozinga.iDiscover;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kozinga.KozBon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
