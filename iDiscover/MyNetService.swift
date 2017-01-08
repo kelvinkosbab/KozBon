@@ -21,7 +21,7 @@ class MyNetService: NSObject, NetServiceDelegate {
   // Equatable
   
   static func == (lhs: MyNetService, rhs: MyNetService) -> Bool {
-    return lhs.service == rhs.service
+    return lhs.serviceType == rhs.serviceType && lhs.hostName == rhs.hostName
   }
   
   // MARK: - Init
@@ -182,6 +182,9 @@ class MyNetService: NSObject, NetServiceDelegate {
     var records: [MyDataRecord] = []
     for (key, value) in NetService.dictionary(fromTXTRecord: data) {
       if let stringValue = String(data: value, encoding: .utf8) {
+        if key == "features" {
+          print("KAK features : \(NetService.dictionary(fromTXTRecord: value)) : \(value)")
+        }
         records.append(MyDataRecord(key: key, value: stringValue.isEmpty ? "NA" : stringValue))
       }
     }

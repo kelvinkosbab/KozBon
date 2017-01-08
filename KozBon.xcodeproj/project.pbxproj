@@ -84,7 +84,7 @@
 		B6AE53851E170A6400FB57E3 /* PublishDetailExistingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishDetailExistingViewController.swift; sourceTree = "<group>"; };
 		B6C4BC511E1CC2CD004409F1 /* TableViewCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCells.swift; sourceTree = "<group>"; };
 		B6C4BC541E1CD30A004409F1 /* CreateServiceTypeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateServiceTypeTableViewController.swift; sourceTree = "<group>"; };
-		B6CE1D241E1208C1003D4FFA /* iDiscover.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iDiscover.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6CE1D241E1208C1003D4FFA /* KozBon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KozBon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6CE1D271E1208C1003D4FFA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B6CE1D2F1E1208C1003D4FFA /* iDiscover.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iDiscover.xcdatamodel; sourceTree = "<group>"; };
 		B6CE1D311E1208C1003D4FFA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -192,7 +192,7 @@
 		B6CE1D251E1208C1003D4FFA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B6CE1D241E1208C1003D4FFA /* iDiscover.app */,
+				B6CE1D241E1208C1003D4FFA /* KozBon.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -324,9 +324,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B6CE1D231E1208C1003D4FFA /* iDiscover */ = {
+		B6CE1D231E1208C1003D4FFA /* KozBon */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B6CE1D391E1208C1003D4FFA /* Build configuration list for PBXNativeTarget "iDiscover" */;
+			buildConfigurationList = B6CE1D391E1208C1003D4FFA /* Build configuration list for PBXNativeTarget "KozBon" */;
 			buildPhases = (
 				B6CE1D201E1208C1003D4FFA /* Sources */,
 				B6CE1D211E1208C1003D4FFA /* Frameworks */,
@@ -337,9 +337,9 @@
 			);
 			dependencies = (
 			);
-			name = iDiscover;
+			name = KozBon;
 			productName = iDiscover;
-			productReference = B6CE1D241E1208C1003D4FFA /* iDiscover.app */;
+			productReference = B6CE1D241E1208C1003D4FFA /* KozBon.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -359,7 +359,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B6CE1D1F1E1208C1003D4FFA /* Build configuration list for PBXProject "iDiscover" */;
+			buildConfigurationList = B6CE1D1F1E1208C1003D4FFA /* Build configuration list for PBXProject "KozBon" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -372,7 +372,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B6CE1D231E1208C1003D4FFA /* iDiscover */,
+				B6CE1D231E1208C1003D4FFA /* KozBon */,
 			);
 		};
 /* End PBXProject section */
@@ -478,6 +478,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_DISPLAY_NAME = KozBon;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -528,6 +529,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_DISPLAY_NAME = KozBon;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -596,7 +598,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B6CE1D1F1E1208C1003D4FFA /* Build configuration list for PBXProject "iDiscover" */ = {
+		B6CE1D1F1E1208C1003D4FFA /* Build configuration list for PBXProject "KozBon" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B6CE1D371E1208C1003D4FFA /* Debug */,
@@ -605,7 +607,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B6CE1D391E1208C1003D4FFA /* Build configuration list for PBXNativeTarget "iDiscover" */ = {
+		B6CE1D391E1208C1003D4FFA /* Build configuration list for PBXNativeTarget "KozBon" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B6CE1D3A1E1208C1003D4FFA /* Debug */,

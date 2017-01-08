@@ -69,12 +69,12 @@ class NetServicesTableViewController: MyTableViewController {
         self.reloadButton?.isHidden = false
       }
       
-      // Update the table view
-      self.tableView.beginUpdates()
-      
       if self.isBrowsingForServces {
         
         // Will start to browse for services
+        
+        // Update the table view
+        self.tableView.beginUpdates()
         
         // Remove any services
         if self.services.count > 0 {
@@ -96,9 +96,15 @@ class NetServicesTableViewController: MyTableViewController {
         let loadingIndexPath = IndexPath(row: 0, section: 0)
         self.tableView.insertRows(at: [ loadingIndexPath ], with: .top)
         
+        // Done updating table view
+        self.tableView.endUpdates()
+        
       } else {
         
         // Done searching for services
+        
+        // Update the table view
+        self.tableView.beginUpdates()
         
         // Hide the loading row
         let loadingIndexPath = IndexPath(row: 0, section: 0)
@@ -120,11 +126,10 @@ class NetServicesTableViewController: MyTableViewController {
           let noServicesIndexPath = IndexPath(row: 0, section: 0)
           self.tableView.insertRows(at: [ noServicesIndexPath ], with: .top)
         }
+        
+        // Done updating table view
+        self.tableView.endUpdates()
       }
-      
-      
-      // Done updating table view
-      self.tableView.endUpdates()
     }
   }
   
