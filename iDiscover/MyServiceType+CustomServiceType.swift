@@ -13,13 +13,12 @@ extension MyServiceType {
   // MARK: - Saving / Deleting Persistent Copies
   
   var hasPersistentCopy: Bool {
-    print("KAK : \(CustomServiceType.fetch(serviceType: self.type))")
     return CustomServiceType.fetch(serviceType: self.type) != nil
   }
   
   func savePersistentCopy() {
     // Check if type already exists in the built in library
-    if !MyServiceType.serviceTypeLibrary.contains(self) {
+    if !MyServiceType.exists(serviceTypes: MyServiceType.serviceTypeLibrary, type: self.type) {
       _ = CustomServiceType.createOrUpdate(name: self.name, serviceType: self.type, transportLayer: self.transportLayer, detail: self.detail)
     }
   }

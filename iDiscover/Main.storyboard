@@ -14,7 +14,7 @@
         <!--My Root Controller-->
         <scene sceneID="QXN-ST-FAi">
             <objects>
-                <tabBarController storyboardIdentifier="MyRootController" id="Tx0-wz-VhI" customClass="MyRootController" customModule="iDiscover" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="MyRootController" id="Tx0-wz-VhI" customClass="MyRootController" customModule="KozBon" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="Gj6-fv-P0d">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -28,13 +28,13 @@
         <!--Net Services Table View Controller-->
         <scene sceneID="z1Y-q9-5hx">
             <objects>
-                <tableViewController storyboardIdentifier="NetServicesTableViewController" id="Eto-in-gN7" customClass="NetServicesTableViewController" customModule="iDiscover" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="NetServicesTableViewController" id="Eto-in-gN7" customClass="NetServicesTableViewController" customModule="KozBon" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="6hq-Op-ZRO">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServicesTableHeaderCell" id="iNq-VO-ldL" customClass="NetServicesTableHeaderCell" customModule="iDiscover" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServicesTableHeaderCell" id="iNq-VO-ldL" customClass="NetServicesTableHeaderCell" customModule="KozBon" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iNq-VO-ldL" id="RAb-bw-KIW">
@@ -82,7 +82,7 @@
                                     <outlet property="titleLabel" destination="C9r-Hp-NSj" id="udF-Ly-FE1"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NetServicesTableServiceCell" rowHeight="50" id="754-wS-6xC" customClass="NetServicesTableServiceCell" customModule="iDiscover" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NetServicesTableServiceCell" rowHeight="50" id="754-wS-6xC" customClass="NetServicesTableServiceCell" customModule="KozBon" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="72" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="754-wS-6xC" id="2ke-gm-t9b">
@@ -136,7 +136,7 @@
                                     <outlet property="nameLabel" destination="c8d-Ut-qnx" id="rmL-y6-GeH"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServicesTableLoadingCell" rowHeight="50" id="lkV-xs-ovP" customClass="NetServicesTableLoadingCell" customModule="iDiscover" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServicesTableLoadingCell" rowHeight="50" id="lkV-xs-ovP" customClass="NetServicesTableLoadingCell" customModule="KozBon" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="122" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lkV-xs-ovP" id="Be2-Mi-vP0">
@@ -144,7 +144,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="MOc-Ht-P0w">
-                                            <rect key="frame" x="177.5" y="15" width="20" height="20"/>
+                                            <rect key="frame" x="178" y="15" width="20" height="20"/>
                                         </activityIndicatorView>
                                     </subviews>
                                     <constraints>
@@ -156,7 +156,7 @@
                                     <outlet property="loadingActivityIndicator" destination="MOc-Ht-P0w" id="I45-2E-xZA"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="Ot3-iy-pM3" customClass="NetServiceHeaderCell" customModule="iDiscover" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="Ot3-iy-pM3" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="172" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ot3-iy-pM3" id="Rs4-UE-MnQ">
@@ -190,7 +190,7 @@
                                     <outlet property="titleLabel" destination="vPG-hd-ZZu" id="bal-Tc-Pmm"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceButtonCell" id="zTi-9v-qHX" customClass="NetServiceButtonCell" customModule="iDiscover" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceButtonCell" id="zTi-9v-qHX" customClass="NetServiceButtonCell" customModule="KozBon" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="216" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zTi-9v-qHX" id="FYJ-pL-g3O">
@@ -224,7 +224,7 @@
                                     <outlet property="button" destination="sR0-dq-LNf" id="LrO-F6-Fye"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceAddressCell" rowHeight="50" id="TK8-CJ-u0q" customClass="NetServiceAddressCell" customModule="iDiscover" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceAddressCell" rowHeight="50" id="TK8-CJ-u0q" customClass="NetServiceAddressCell" customModule="KozBon" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="260" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TK8-CJ-u0q" id="xga-B3-ygu">
@@ -268,7 +268,7 @@
                                     <outlet property="ipLayerProtocolLabel" destination="rL2-Vh-cYL" id="brQ-xw-nmd"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="MyBasicCenterLabelCell" id="ibC-Il-GKF" customClass="MyBasicCenterLabelCell" customModule="iDiscover" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="MyBasicCenterLabelCell" id="ibC-Il-GKF" customClass="MyBasicCenterLabelCell" customModule="KozBon" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="310" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ibC-Il-GKF" id="Ob3-yc-ln3">
@@ -291,7 +291,7 @@
                                     <outlet property="titleLabel" destination="77G-kt-xzE" id="8tA-DY-0wz"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="MyTopLabelBottomButtonCell" rowHeight="68" id="TnU-vy-9wT" customClass="MyTopLabelBottomButtonCell" customModule="iDiscover" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="MyTopLabelBottomButtonCell" rowHeight="68" id="TnU-vy-9wT" customClass="MyTopLabelBottomButtonCell" customModule="KozBon" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="354" width="375" height="68"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TnU-vy-9wT" id="7cc-rF-T1E">
@@ -349,13 +349,13 @@
         <!--Publish Net Service Search View Controller-->
         <scene sceneID="0E0-fx-Gl2">
             <objects>
-                <tableViewController storyboardIdentifier="PublishNetServiceSearchViewController" id="VF1-Yw-Xed" customClass="PublishNetServiceSearchViewController" customModule="iDiscover" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="PublishNetServiceSearchViewController" id="VF1-Yw-Xed" customClass="PublishNetServiceSearchViewController" customModule="KozBon" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="nZG-Zo-vqC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PublishNetServiceCell" rowHeight="50" id="jcU-Ou-DOT" customClass="PublishNetServiceCell" customModule="iDiscover" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PublishNetServiceCell" rowHeight="50" id="jcU-Ou-DOT" customClass="PublishNetServiceCell" customModule="KozBon" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jcU-Ou-DOT" id="6UI-B4-A83">
@@ -423,7 +423,7 @@
         <!--Publish Detail Base View Controller-->
         <scene sceneID="m58-dl-Ap4">
             <objects>
-                <viewController storyboardIdentifier="PublishDetailBaseViewController" id="800-DN-cbp" customClass="PublishDetailBaseViewController" customModule="iDiscover" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PublishDetailBaseViewController" id="800-DN-cbp" customClass="PublishDetailBaseViewController" customModule="KozBon" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="F0i-z1-p0P"/>
                         <viewControllerLayoutGuide type="bottom" id="P0I-JN-QXf"/>
@@ -433,7 +433,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="← Select an Existing Service" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3MT-T2-PLz">
-                                <rect key="frame" x="79.5" y="272" width="216" height="21"/>
+                                <rect key="frame" x="80" y="272" width="216" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -446,7 +446,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="or" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pRo-Fk-WPv">
-                                <rect key="frame" x="179.5" y="323" width="16" height="21"/>
+                                <rect key="frame" x="180" y="323" width="16" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -470,7 +470,7 @@
         <!--Publish Detail Create View Controller-->
         <scene sceneID="Chf-4G-Isi">
             <objects>
-                <tableViewController storyboardIdentifier="PublishDetailCreateViewController" id="STB-Iz-Wwh" customClass="PublishDetailCreateViewController" customModule="iDiscover" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="PublishDetailCreateViewController" id="STB-Iz-Wwh" customClass="PublishDetailCreateViewController" customModule="KozBon" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="static" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="rdc-3z-0E4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -478,7 +478,7 @@
                         <sections>
                             <tableViewSection id="m0E-qK-mZI">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="1qE-UE-Yok" customClass="NetServiceHeaderCell" customModule="iDiscover" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="1qE-UE-Yok" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1qE-UE-Yok" id="7l7-hj-hWw">
@@ -537,7 +537,7 @@
                             </tableViewSection>
                             <tableViewSection id="YYc-rQ-wl3">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="KZ4-yK-zFN" customClass="NetServiceHeaderCell" customModule="iDiscover" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="KZ4-yK-zFN" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="88" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KZ4-yK-zFN" id="nCK-D4-MdG">
@@ -607,7 +607,7 @@
                             </tableViewSection>
                             <tableViewSection id="yOn-8B-ZVh">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="hJ9-o2-oQt" customClass="NetServiceHeaderCell" customModule="iDiscover" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="hJ9-o2-oQt" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="176" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hJ9-o2-oQt" id="ATF-cO-r8e">
@@ -666,7 +666,7 @@
                             </tableViewSection>
                             <tableViewSection id="iuD-T4-Imm">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="i7f-fU-XiD" customClass="NetServiceHeaderCell" customModule="iDiscover" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="i7f-fU-XiD" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="264" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="i7f-fU-XiD" id="79C-n2-jlS">
@@ -725,7 +725,7 @@
                             </tableViewSection>
                             <tableViewSection id="9Uu-x2-iyT">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="M00-UM-leA" customClass="NetServiceHeaderCell" customModule="iDiscover" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="M00-UM-leA" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="352" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="M00-UM-leA" id="QTt-BQ-vQc">
@@ -892,7 +892,7 @@
         <!--Publish Detail Existing View Controller-->
         <scene sceneID="eg2-E3-deK">
             <objects>
-                <tableViewController storyboardIdentifier="PublishDetailExistingViewController" id="Qmt-nz-A4n" customClass="PublishDetailExistingViewController" customModule="iDiscover" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="PublishDetailExistingViewController" id="Qmt-nz-A4n" customClass="PublishDetailExistingViewController" customModule="KozBon" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="static" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="FiU-5V-wNa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -900,7 +900,7 @@
                         <sections>
                             <tableViewSection id="uSy-Nc-O4B">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="sgm-1m-OgK" customClass="NetServiceHeaderCell" customModule="iDiscover" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="sgm-1m-OgK" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sgm-1m-OgK" id="YKz-xL-ikg">
@@ -959,7 +959,7 @@
                             </tableViewSection>
                             <tableViewSection id="Wr7-C3-GhW">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="thY-Yg-PvJ" customClass="NetServiceHeaderCell" customModule="iDiscover" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="thY-Yg-PvJ" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="88" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="thY-Yg-PvJ" id="FN7-9c-IL0">
@@ -1026,7 +1026,7 @@
                             </tableViewSection>
                             <tableViewSection id="sQt-yf-EC5">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="JIY-9o-Fn4" customClass="NetServiceHeaderCell" customModule="iDiscover" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="JIY-9o-Fn4" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="176" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JIY-9o-Fn4" id="bUD-Yn-g12">
@@ -1085,7 +1085,7 @@
                             </tableViewSection>
                             <tableViewSection id="Tx6-VE-owy">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="OTW-K8-Cj0" customClass="NetServiceHeaderCell" customModule="iDiscover" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="OTW-K8-Cj0" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="264" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OTW-K8-Cj0" id="2rE-Cx-J8K">
@@ -1144,7 +1144,7 @@
                             </tableViewSection>
                             <tableViewSection id="eJL-vp-zop">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="yAa-2z-oAd" customClass="NetServiceHeaderCell" customModule="iDiscover" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="yAa-2z-oAd" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="352" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yAa-2z-oAd" id="GWp-xH-PU5">
@@ -1311,13 +1311,13 @@
         <!--Service Detail Table View Controller-->
         <scene sceneID="g4u-Sj-aFc">
             <objects>
-                <tableViewController storyboardIdentifier="ServiceDetailTableViewController" id="kvA-Io-kB7" customClass="ServiceDetailTableViewController" customModule="iDiscover" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ServiceDetailTableViewController" id="kvA-Io-kB7" customClass="ServiceDetailTableViewController" customModule="KozBon" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="3kF-4z-XwE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="LW1-dD-mpY" customClass="NetServiceHeaderCell" customModule="iDiscover" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="LW1-dD-mpY" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LW1-dD-mpY" id="24g-oZ-S8c">
@@ -1351,7 +1351,7 @@
                                     <outlet property="titleLabel" destination="pWM-rH-hff" id="olg-JT-0Y9"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceKeyValueCell" rowHeight="50" id="Lvc-ae-sIW" customClass="NetServiceKeyValueCell" customModule="iDiscover" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceKeyValueCell" rowHeight="50" id="Lvc-ae-sIW" customClass="NetServiceKeyValueCell" customModule="KozBon" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="72" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lvc-ae-sIW" id="5dY-JV-KQ0">
@@ -1359,13 +1359,13 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eLQ-7o-ctR">
-                                            <rect key="frame" x="48.5" y="17" width="89" height="16"/>
+                                            <rect key="frame" x="49" y="17" width="89" height="16"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OBh-xY-4lu">
-                                            <rect key="frame" x="152.5" y="18" width="214.5" height="14"/>
+                                            <rect key="frame" x="153" y="18" width="214" height="14"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1394,7 +1394,7 @@
                                     <outlet property="valueLabel" destination="OBh-xY-4lu" id="K71-88-CmP"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceDetailCell" rowHeight="50" id="VcY-FX-Xhp" customClass="NetServiceDetailCell" customModule="iDiscover" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceDetailCell" rowHeight="50" id="VcY-FX-Xhp" customClass="NetServiceDetailCell" customModule="KozBon" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="122" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VcY-FX-Xhp" id="sUW-4q-mZ8">
@@ -1419,7 +1419,7 @@
                                     <outlet property="detailLabel" destination="Jf7-dl-nKn" id="QLS-O4-C8O"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceAddressCell" rowHeight="50" id="ZJV-qk-6Sx" customClass="NetServiceAddressCell" customModule="iDiscover" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceAddressCell" rowHeight="50" id="ZJV-qk-6Sx" customClass="NetServiceAddressCell" customModule="KozBon" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="172" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZJV-qk-6Sx" id="kDo-4i-tsQ">
@@ -1463,7 +1463,7 @@
                                     <outlet property="ipLayerProtocolLabel" destination="KTg-iF-TPU" id="DQR-uY-S1S"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServicesTableHeaderCell" id="gEI-a1-kxp" customClass="NetServicesTableHeaderCell" customModule="iDiscover" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServicesTableHeaderCell" id="gEI-a1-kxp" customClass="NetServicesTableHeaderCell" customModule="KozBon" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="222" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gEI-a1-kxp" id="jV8-KU-3Sc">
@@ -1511,7 +1511,7 @@
                                     <outlet property="titleLabel" destination="nvG-EG-UuZ" id="19C-ZY-dFl"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServicesTableLoadingCell" rowHeight="50" id="pYf-dq-Nq5" customClass="NetServicesTableLoadingCell" customModule="iDiscover" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServicesTableLoadingCell" rowHeight="50" id="pYf-dq-Nq5" customClass="NetServicesTableLoadingCell" customModule="KozBon" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="266" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pYf-dq-Nq5" id="SrR-Fo-p9W">
@@ -1519,7 +1519,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="lOp-ch-SHz">
-                                            <rect key="frame" x="177.5" y="15" width="20" height="20"/>
+                                            <rect key="frame" x="178" y="15" width="20" height="20"/>
                                         </activityIndicatorView>
                                     </subviews>
                                     <constraints>
@@ -1531,7 +1531,7 @@
                                     <outlet property="loadingActivityIndicator" destination="lOp-ch-SHz" id="mwr-1l-6Ij"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="MyBasicCenterLabelCell" id="pJH-K8-LC5" customClass="MyBasicCenterLabelCell" customModule="iDiscover" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="MyBasicCenterLabelCell" id="pJH-K8-LC5" customClass="MyBasicCenterLabelCell" customModule="KozBon" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="316" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pJH-K8-LC5" id="qUP-ke-Y2r">
@@ -1568,7 +1568,7 @@
         <!--Create Service Type Table View Controller-->
         <scene sceneID="87D-Nz-szZ">
             <objects>
-                <tableViewController storyboardIdentifier="CreateServiceTypeTableViewController" id="8zq-A1-6ka" customClass="CreateServiceTypeTableViewController" customModule="iDiscover" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="CreateServiceTypeTableViewController" id="8zq-A1-6ka" customClass="CreateServiceTypeTableViewController" customModule="KozBon" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="static" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="F8d-UP-Fbx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1576,7 +1576,7 @@
                         <sections>
                             <tableViewSection id="Skh-cZ-Fmq">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="vL0-QU-IRy" customClass="NetServiceHeaderCell" customModule="iDiscover" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="vL0-QU-IRy" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vL0-QU-IRy" id="LrH-ft-MCR">
@@ -1635,7 +1635,7 @@
                             </tableViewSection>
                             <tableViewSection id="ddP-O8-lwm">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="pDU-Iy-wdz" customClass="NetServiceHeaderCell" customModule="iDiscover" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="pDU-Iy-wdz" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="88" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pDU-Iy-wdz" id="69W-GB-4il">
@@ -1705,7 +1705,7 @@
                             </tableViewSection>
                             <tableViewSection id="8RD-ja-RmS">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="7iX-db-Ezf" customClass="NetServiceHeaderCell" customModule="iDiscover" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="7iX-db-Ezf" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="176" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7iX-db-Ezf" id="fuB-fc-1Fn">

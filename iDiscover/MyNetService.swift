@@ -134,7 +134,8 @@ class MyNetService: NSObject, NetServiceDelegate {
     self.publishServiceSuccess = publishServiceSuccess
     self.publishServiceFailure = publishServiceFailure
     self.service.delegate = self
-    self.service.publish(options: [.listenForConnections])
+    self.service.publish()
+//    self.service.publish(options: [.listenForConnections])
   }
   
   func unPublish(completion: (() -> Void)? = nil) {
@@ -147,6 +148,10 @@ class MyNetService: NSObject, NetServiceDelegate {
   }
   
   // MARK: - NetServiceDelegate - Publishing Service
+  
+  func netServiceWillPublish(_ sender: NetService) {
+    print("\(self.className) : Service will publish \(sender)")
+  }
   
   func netServiceDidPublish(_ sender: NetService) {
     print("\(self.className) : Service did publish \(sender)")

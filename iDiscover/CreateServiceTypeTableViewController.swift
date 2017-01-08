@@ -125,7 +125,7 @@ class CreateServiceTypeTableViewController: MyTableViewController, UITextFieldDe
     }
     
     // Check that type does not match existing service types
-    if MyServiceType.typeExists(type) {
+    if MyServiceType.exists(type: type) {
       self.showDisappearingAlertDialog(title: "Invalid Type", message: "The entered service type \(type) is already taken.")
       return
     }

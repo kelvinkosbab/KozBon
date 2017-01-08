@@ -52,7 +52,9 @@ class MyServiceType: NSObject {
   static func fetchAll() -> [MyServiceType] {
     var all = self.serviceTypeLibrary
     for persistentServiceType in self.fetchAllPersistentCopies() {
-      if !all.contains(persistentServiceType) {
+      print("KAK : checking \(persistentServiceType.type)")
+      if self.fetch(serviceTypes: all, type: persistentServiceType.type) == nil {
+        print("KAK : adding \(persistentServiceType.type)")
         all.append(persistentServiceType)
       }
     }
@@ -63,12 +65,15 @@ class MyServiceType: NSObject {
     return self.tcpServiceTypes
   }
   
-  static func typeExists(_ type: String) -> Bool {
-    for serviceType in self.fetchAll() {
-      if serviceType.type == type {
-        return true
-      }
+  static func fetch(serviceTypes: [MyServiceType]? = nil, type: String) -> MyServiceType? {
+    let typesToFilter = serviceTypes ?? self.fetchAll()
+    let filtered = typesToFilter.filter { (serviceType) -> Bool in
+      serviceType.type == type
     }
-    return false
+    return filtered.first
+  }
+  
+  static func exists(serviceTypes: [MyServiceType]? = nil, type: String) -> Bool {
+    return self.fetch(serviceTypes: serviceTypes, type: type) != nil
   }
 }
