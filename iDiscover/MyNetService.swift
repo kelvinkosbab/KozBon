@@ -18,12 +18,6 @@ extension Notification.Name {
 
 class MyNetService: NSObject, NetServiceDelegate {
   
-  // Equatable
-  
-  static func == (lhs: MyNetService, rhs: MyNetService) -> Bool {
-    return lhs.serviceType == rhs.serviceType && lhs.hostName == rhs.hostName
-  }
-  
   // MARK: - Init
   
   let service: NetService

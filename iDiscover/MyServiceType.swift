@@ -14,12 +14,6 @@ extension Notification.Name {
 
 class MyServiceType: NSObject {
   
-  // Equatable
-  
-  static func == (lhs: MyServiceType, rhs: MyServiceType) -> Bool {
-    return lhs.fullType == rhs.fullType
-  }
-  
   // MARK: - Properties \ Init
   
   let name: String
