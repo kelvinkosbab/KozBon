@@ -45,14 +45,14 @@ extension CustomServiceType: MyDataManagerObject {
   
   // MARK: - Fetch
   
-  static func fetch(serviceType: String) -> CustomServiceType? {
-    return self.fetchOne(format: "serviceType = %@", serviceType)
+  static func fetch(serviceType: String, transportLayer: MyTransportLayer) -> CustomServiceType? {
+    return self.fetchOne(format: "serviceType = %@ AND transportLayerValue = %ld", serviceType, Int16(transportLayer.rawValue))
   }
   
   // MARK: - Create / Update
   
   static func createOrUpdate(name: String, serviceType: String, transportLayer: MyTransportLayer, detail: String? = nil) -> CustomServiceType {
-    let object = self.fetch(serviceType: serviceType) ?? self.create()
+    let object = self.fetch(serviceType: serviceType, transportLayer: transportLayer) ?? self.create()
     object.name = name
     object.serviceType = serviceType
     object.transportLayer = transportLayer

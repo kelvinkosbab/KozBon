@@ -128,6 +128,9 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
   private func publishButtonSelected() {
     
     // Validate the form
+    
+    let transportLayer = MyTransportLayer.tcp
+    
     guard let name = self.nameTextField.text, !name.trim().isEmpty else {
       self.showDisappearingAlertDialog(title: "Service Name Required")
       return
@@ -139,7 +142,7 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
     }
     
     // Check that type does not match existing service types
-    if MyServiceType.exists(type: type) {
+    if MyServiceType.exists(type: type, transportLayer: transportLayer) {
       self.showDisappearingAlertDialog(title: "Invalid Type", message: "The entered service type \(type) is already taken.")
       return
     }

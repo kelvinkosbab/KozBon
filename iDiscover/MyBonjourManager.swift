@@ -128,7 +128,7 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
     
     // Populate service browsers with user-created service types
     for publishedService in MyBonjourPublishManager.shared.publishedServices {
-      if !MyServiceType.exists(serviceTypes: allServiceTypes, type: publishedService.serviceType.type) {
+      if !MyServiceType.exists(serviceTypes: allServiceTypes, fullType: publishedService.serviceType.fullType) {
         let serviceBrowser = MyNetServiceBrowser(serviceType: publishedService.serviceType, domain: publishedService.service.domain)
         serviceBrowser.delegate = self
         self.serviceBrowsers.append(serviceBrowser)

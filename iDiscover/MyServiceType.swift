@@ -46,9 +46,7 @@ class MyServiceType: NSObject {
   static func fetchAll() -> [MyServiceType] {
     var all = self.serviceTypeLibrary
     for persistentServiceType in self.fetchAllPersistentCopies() {
-      print("KAK : checking \(persistentServiceType.type)")
-      if self.fetch(serviceTypes: all, type: persistentServiceType.type) == nil {
-        print("KAK : adding \(persistentServiceType.type)")
+      if self.fetch(serviceTypes: all, type: persistentServiceType.type, transportLayer: persistentServiceType.transportLayer) == nil {
         all.append(persistentServiceType)
       }
     }
@@ -59,15 +57,27 @@ class MyServiceType: NSObject {
     return self.tcpServiceTypes
   }
   
-  static func fetch(serviceTypes: [MyServiceType]? = nil, type: String) -> MyServiceType? {
+  static func fetch(serviceTypes: [MyServiceType]? = nil, type: String, transportLayer: MyTransportLayer) -> MyServiceType? {
     let typesToFilter = serviceTypes ?? self.fetchAll()
     let filtered = typesToFilter.filter { (serviceType) -> Bool in
-      serviceType.type == type
+      serviceType.type == type && serviceType.transportLayer == transportLayer
     }
     return filtered.first
   }
   
-  static func exists(serviceTypes: [MyServiceType]? = nil, type: String) -> Bool {
-    return self.fetch(serviceTypes: serviceTypes, type: type) != nil
+  static func fetch(serviceTypes: [MyServiceType]? = nil, fullType: String) -> MyServiceType? {
+    let typesToFilter = serviceTypes ?? self.fetchAll()
+    let filtered = typesToFilter.filter { (serviceType) -> Bool in
+      serviceType.fullType == fullType
+    }
+    return filtered.first
+  }
+  
+  static func exists(serviceTypes: [MyServiceType]? = nil, type: String, transportLayer: MyTransportLayer) -> Bool {
+    return self.fetch(serviceTypes: serviceTypes, type: type, transportLayer: transportLayer) != nil
+  }
+  
+  static func exists(serviceTypes: [MyServiceType]? = nil, fullType: String) -> Bool {
+    return self.fetch(serviceTypes: serviceTypes, fullType: fullType) != nil
   }
 }
