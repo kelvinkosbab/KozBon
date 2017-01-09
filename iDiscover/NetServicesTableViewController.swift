@@ -50,6 +50,7 @@ class NetServicesTableViewController: MyTableViewController {
     NotificationCenter.default.addObserver(self, selector: #selector(self.didPublishService(_:)), name: .netServiceDidPublish, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(self.didUnPublishService(_:)), name: .netServiceDidUnPublish, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(self.reloadBrowsingServices), name: .myServiceTypeDidCreateAndSave, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(self.reloadBrowsingServices), name: .UIApplicationWillEnterForeground, object: nil)
   }
   
   // MARK: - Content
