@@ -21,6 +21,7 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
   
   // MARK: - Properties
   
+  @IBOutlet weak var transportLayerSegmentedControl: UISegmentedControl!
   @IBOutlet weak var nameTextField: UITextField!
   @IBOutlet weak var typeTextField: UITextField!
   @IBOutlet weak var fullTypeLabel: UILabel!
@@ -68,6 +69,8 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
   
   func updateServiceContent() {
     self.title = self.serviceType.fullType
+    self.transportLayerSegmentedControl.selectedSegmentIndex = self.serviceType.transportLayer.isTcp ? 0 : 1
+    self.transportLayerSegmentedControl.isUserInteractionEnabled = false
     self.nameTextField.text = self.serviceType.name
     self.typeTextField.text = self.serviceType.type
     self.fullTypeLabel.text = "(\(self.serviceType.fullType))"
@@ -76,7 +79,6 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
     } else {
       self.detailTextField.text = "No additional information"
     }
-    
   }
   
   // MARK: - UITableView
@@ -86,7 +88,7 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
   }
   
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    if indexPath.section == 5 || indexPath.row == 6 {
+    if indexPath.section == 6 || indexPath.row == 7 {
       return super.tableView(tableView, heightForRowAt: indexPath) + 10
     }
     return super.tableView(tableView, heightForRowAt: indexPath)
@@ -95,14 +97,14 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     
-    if indexPath.section == 2 {
+    if indexPath.section == 3 {
       self.portTextField.becomeFirstResponder()
-    } else if indexPath.section == 3 {
+    } else if indexPath.section == 4 {
       self.domainTextField.becomeFirstResponder()
       
-    } else if indexPath.section == 5 && indexPath.row == 0 {
+    } else if indexPath.section == 6 && indexPath.row == 0 {
       self.publishButtonSelected()
-    } else if indexPath.section == 6 && indexPath.row == 0{
+    } else if indexPath.section == 7 && indexPath.row == 0 {
       self.clearButtonSelected()
     }
   }
@@ -143,7 +145,7 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
     
     // Publish the service
     MyLoadingManager.showLoading()
-    MyBonjourPublishManager.shared.publish(name: self.serviceType.name, type: self.serviceType.type, port: portValue, domain: domain, transportLayer: .tcp, detail: self.serviceType.detail, success: {
+    MyBonjourPublishManager.shared.publish(name: self.serviceType.name, type: self.serviceType.type, port: portValue, domain: domain, transportLayer: self.serviceType.transportLayer, detail: self.serviceType.detail, success: {
       // Success
       MyLoadingManager.hideLoading()
       self.showDisappearingAlertDialog(title: "Service Published!") {

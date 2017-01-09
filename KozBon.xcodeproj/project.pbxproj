@@ -175,8 +175,8 @@
 			children = (
 				B679CC121E1624740056C7B5 /* PublishNetServiceSearchViewController.swift */,
 				B6AE53811E16FF5500FB57E3 /* PublishDetailBaseViewController.swift */,
-				B6AE53831E17090A00FB57E3 /* PublishDetailCreateViewController.swift */,
 				B6AE53851E170A6400FB57E3 /* PublishDetailExistingViewController.swift */,
+				B6AE53831E17090A00FB57E3 /* PublishDetailCreateViewController.swift */,
 			);
 			name = Publishing;
 			sourceTree = "<group>";

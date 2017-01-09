@@ -19,6 +19,7 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
   
   // MARK: - Properties
   
+  @IBOutlet weak var transportLayerSegmentedControl: UISegmentedControl!
   @IBOutlet weak var nameTextField: UITextField!
   @IBOutlet weak var typeTextField: UITextField!
   @IBOutlet weak var fullTypeLabel: UILabel!
@@ -45,12 +46,31 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
   // MARK: - Content
   
   func resetForm() {
+    self.transportLayerSegmentedControl.selectedSegmentIndex = 0
     self.nameTextField.text = ""
     self.typeTextField.text = ""
     self.fullTypeLabel.text = "(REQUIRED)"
     self.portTextField.text = "3000"
     self.domainTextField.text = ""
     self.detailTextField.text = nil
+  }
+  
+  func updateTypeHelperLabel() {
+    if let type = self.typeTextField.text, !type.isEmpty {
+      self.fullTypeLabel.text = MyServiceType.generateFullType(type: type, transportLayer: self.selectedTransportLayer)
+    } else {
+      self.fullTypeLabel.text = "(REQUIRED)"
+    }
+  }
+  
+  // MARK: - Transport Layer Control
+  
+  @IBAction func transportLayerSegmentedControlValueChanged(_ sender: UISegmentedControl) {
+    self.updateTypeHelperLabel()
+  }
+  
+  var selectedTransportLayer: MyTransportLayer {
+    return self.transportLayerSegmentedControl.selectedSegmentIndex == 0 ? .tcp : .udp
   }
   
   // MARK: - UITableView
@@ -60,7 +80,7 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
   }
   
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    if indexPath.section == 5 || indexPath.row == 6 {
+    if indexPath.section == 6 || indexPath.row == 7 {
       return super.tableView(tableView, heightForRowAt: indexPath) + 10
     }
     return super.tableView(tableView, heightForRowAt: indexPath)
@@ -69,20 +89,20 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     
-    if indexPath.section == 0 {
+    if indexPath.section == 1 {
       self.nameTextField.becomeFirstResponder()
-    } else if indexPath.section == 1 {
-      self.typeTextField.becomeFirstResponder()
     } else if indexPath.section == 2 {
-      self.portTextField.becomeFirstResponder()
+      self.typeTextField.becomeFirstResponder()
     } else if indexPath.section == 3 {
-      self.domainTextField.becomeFirstResponder()
+      self.portTextField.becomeFirstResponder()
     } else if indexPath.section == 4 {
+      self.domainTextField.becomeFirstResponder()
+    } else if indexPath.section == 5 {
       self.detailTextField.becomeFirstResponder()
       
-    } else if indexPath.section == 5 && indexPath.row == 0 {
+    } else if indexPath.section == 6 && indexPath.row == 0 {
       self.publishButtonSelected()
-    } else if indexPath.section == 6 && indexPath.row == 0{
+    } else if indexPath.section == 7 && indexPath.row == 0{
       self.clearButtonSelected()
     }
   }
@@ -93,7 +113,7 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
     if sender == self.typeTextField {
       // Update the helper label
       if let type = self.typeTextField.text, !type.isEmpty {
-        self.fullTypeLabel.text = "(_\(type)._tcp)"
+        self.fullTypeLabel.text = "(\(MyServiceType.generateFullType(type: type, transportLayer: self.selectedTransportLayer)))"
       } else {
         self.fullTypeLabel.text = "(REQUIRED)"
       }
@@ -129,8 +149,6 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
     
     // Validate the form
     
-    let transportLayer = MyTransportLayer.tcp
-    
     guard let name = self.nameTextField.text, !name.trim().isEmpty else {
       self.showDisappearingAlertDialog(title: "Service Name Required")
       return
@@ -142,8 +160,8 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
     }
     
     // Check that type does not match existing service types
-    if MyServiceType.exists(type: type, transportLayer: transportLayer) {
-      self.showDisappearingAlertDialog(title: "Invalid Type", message: "The entered service type \(type) is already taken.")
+    if MyServiceType.exists(type: type, transportLayer: self.selectedTransportLayer) {
+      self.showDisappearingAlertDialog(title: "Invalid \(self.selectedTransportLayer.string.uppercased()) Type", message: "The entered \(self.selectedTransportLayer.string.uppercased()) service type \(type) is already taken.")
       return
     }
     

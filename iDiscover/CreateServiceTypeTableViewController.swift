@@ -19,6 +19,7 @@ class CreateServiceTypeTableViewController: MyTableViewController, UITextFieldDe
   
   // MARK: - Properties
   
+  @IBOutlet weak var transportLayerSegmentedControl: UISegmentedControl!
   @IBOutlet weak var nameTextField: UITextField!
   @IBOutlet weak var typeTextField: UITextField!
   @IBOutlet weak var fullTypeLabel: UILabel!
@@ -41,10 +42,29 @@ class CreateServiceTypeTableViewController: MyTableViewController, UITextFieldDe
   // MARK: - Content
   
   func resetForm() {
+    self.transportLayerSegmentedControl.selectedSegmentIndex = 0
     self.nameTextField.text = ""
     self.typeTextField.text = ""
     self.fullTypeLabel.text = "(REQUIRED)"
     self.detailTextField.text = nil
+  }
+  
+  func updateTypeHelperLabel() {
+    if let type = self.typeTextField.text, !type.isEmpty {
+      self.fullTypeLabel.text = MyServiceType.generateFullType(type: type, transportLayer: self.selectedTransportLayer)
+    } else {
+      self.fullTypeLabel.text = "(REQUIRED)"
+    }
+  }
+  
+  // MARK: - Transport Layer Control
+  
+  @IBAction func transportLayerSegmentedControlValueChanged(_ sender: UISegmentedControl) {
+    self.updateTypeHelperLabel()
+  }
+  
+  var selectedTransportLayer: MyTransportLayer {
+    return self.transportLayerSegmentedControl.selectedSegmentIndex == 0 ? .tcp : .udp
   }
   
   // MARK: - UITableView
@@ -54,7 +74,7 @@ class CreateServiceTypeTableViewController: MyTableViewController, UITextFieldDe
   }
   
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    if indexPath.section == 3 || indexPath.row == 4 {
+    if indexPath.section == 4 || indexPath.row == 5 {
       return super.tableView(tableView, heightForRowAt: indexPath) + 10
     }
     return super.tableView(tableView, heightForRowAt: indexPath)
@@ -63,16 +83,16 @@ class CreateServiceTypeTableViewController: MyTableViewController, UITextFieldDe
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     
-    if indexPath.section == 0 {
+    if indexPath.section == 1 {
       self.nameTextField.becomeFirstResponder()
-    } else if indexPath.section == 1 {
-      self.typeTextField.becomeFirstResponder()
     } else if indexPath.section == 2 {
+      self.typeTextField.becomeFirstResponder()
+    } else if indexPath.section == 3 {
       self.detailTextField.becomeFirstResponder()
       
-    } else if indexPath.section == 3 && indexPath.row == 0 {
+    } else if indexPath.section == 4 && indexPath.row == 0 {
       self.createButtonSelected()
-    } else if indexPath.section == 4 && indexPath.row == 0{
+    } else if indexPath.section == 5 && indexPath.row == 0{
       self.clearButtonSelected()
     }
   }
@@ -81,12 +101,7 @@ class CreateServiceTypeTableViewController: MyTableViewController, UITextFieldDe
   
   @IBAction func textFieldEditingChanged(_ sender: UITextField) {
     if sender == self.typeTextField {
-      // Update the helper label
-      if let type = self.typeTextField.text, !type.isEmpty {
-        self.fullTypeLabel.text = "(_\(type)._tcp)"
-      } else {
-        self.fullTypeLabel.text = "(REQUIRED)"
-      }
+      self.updateTypeHelperLabel()
     }
   }
   
@@ -129,7 +144,7 @@ class CreateServiceTypeTableViewController: MyTableViewController, UITextFieldDe
     
     // Check that type does not match existing service types
     if MyServiceType.exists(type: type, transportLayer: transportLayer) {
-      self.showDisappearingAlertDialog(title: "Invalid Type", message: "The entered service type \(type) is already taken.")
+      self.showDisappearingAlertDialog(title: "Invalid \(transportLayer.string.uppercased()) Type", message: "The entered \(transportLayer.string.uppercased()) service type \(type) is already taken.")
       return
     }
     

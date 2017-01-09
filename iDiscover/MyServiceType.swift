@@ -29,7 +29,7 @@ class MyServiceType: NSObject {
   }
   
   var fullType: String {
-    return "_\(self.type)._\(self.transportLayer.string)"
+    return MyServiceType.generateFullType(type: self.type, transportLayer: self.transportLayer)
   }
   
   var isBuiltIn: Bool {
@@ -43,6 +43,10 @@ class MyServiceType: NSObject {
   
   // MARK: - Static Helpers
   
+  static func generateFullType(type: String, transportLayer: MyTransportLayer) -> String {
+    return "_\(type)._\(transportLayer.string)"
+  }
+  
   static func fetchAll() -> [MyServiceType] {
     var all = self.serviceTypeLibrary
     for persistentServiceType in self.fetchAllPersistentCopies() {
@@ -54,7 +58,7 @@ class MyServiceType: NSObject {
   }
   
   static var serviceTypeLibrary: [MyServiceType] {
-    return self.tcpServiceTypes
+    return self.tcpServiceTypes + self.udpServiceTypes
   }
   
   static func fetch(serviceTypes: [MyServiceType]? = nil, type: String, transportLayer: MyTransportLayer) -> MyServiceType? {

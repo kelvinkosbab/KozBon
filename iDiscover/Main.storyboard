@@ -476,10 +476,75 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <sections>
+                            <tableViewSection id="uwy-By-38n">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="2Vr-BV-6tP" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2Vr-BV-6tP" id="h04-GO-teB">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TRANSPORT LAYER" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bp3-hB-AL2">
+                                                    <rect key="frame" x="8" y="20" width="121" height="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NRv-UR-RqE">
+                                                    <rect key="frame" x="0.0" y="43" width="375" height="1"/>
+                                                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="Ci3-li-ZaF"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="NRv-UR-RqE" secondAttribute="trailing" id="8ab-d7-zvF"/>
+                                                <constraint firstItem="bp3-hB-AL2" firstAttribute="bottom" secondItem="h04-GO-teB" secondAttribute="bottomMargin" id="FaB-Q9-9Ix"/>
+                                                <constraint firstItem="bp3-hB-AL2" firstAttribute="leading" secondItem="h04-GO-teB" secondAttribute="leadingMargin" id="afO-2p-l6M"/>
+                                                <constraint firstItem="NRv-UR-RqE" firstAttribute="leading" secondItem="h04-GO-teB" secondAttribute="leading" id="eIo-OI-wk8"/>
+                                                <constraint firstAttribute="bottom" secondItem="NRv-UR-RqE" secondAttribute="bottom" id="l3I-Rz-esk"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="bp3-hB-AL2" id="3Gm-rx-N8y"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NameTextFieldCell" id="GHX-b9-e2S">
+                                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GHX-b9-e2S" id="SXo-5l-NYL">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="cvR-29-Qg0">
+                                                    <rect key="frame" x="87.5" y="8" width="200" height="29"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="200" id="3Bn-Og-Bjt"/>
+                                                    </constraints>
+                                                    <segments>
+                                                        <segment title="TCP"/>
+                                                        <segment title="UDP"/>
+                                                    </segments>
+                                                    <connections>
+                                                        <action selector="transportLayerSegmentedControlValueChanged:" destination="STB-Iz-Wwh" eventType="valueChanged" id="q4Q-bo-KJg"/>
+                                                    </connections>
+                                                </segmentedControl>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="cvR-29-Qg0" firstAttribute="centerX" secondItem="SXo-5l-NYL" secondAttribute="centerX" id="QP1-er-rsD"/>
+                                                <constraint firstItem="cvR-29-Qg0" firstAttribute="centerY" secondItem="SXo-5l-NYL" secondAttribute="centerY" id="hVa-tr-OEP"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection id="m0E-qK-mZI">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="1qE-UE-Yok" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="88" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1qE-UE-Yok" id="7l7-hj-hWw">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -513,7 +578,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NameTextFieldCell" id="BUF-qf-TXs">
-                                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="132" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BUF-qf-TXs" id="hBW-p8-9tl">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -538,7 +603,7 @@
                             <tableViewSection id="YYc-rQ-wl3">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="KZ4-yK-zFN" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="88" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="176" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KZ4-yK-zFN" id="nCK-D4-MdG">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -580,7 +645,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TypeTextFieldCell" id="GYR-Zj-783">
-                                        <rect key="frame" x="0.0" y="132" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="220" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GYR-Zj-783" id="oz8-GW-BqA">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -608,7 +673,7 @@
                             <tableViewSection id="yOn-8B-ZVh">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="hJ9-o2-oQt" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="176" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="264" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hJ9-o2-oQt" id="ATF-cO-r8e">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -642,7 +707,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PortTextFieldCell" id="fhb-LS-PKH">
-                                        <rect key="frame" x="0.0" y="220" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="308" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fhb-LS-PKH" id="yMf-3g-HZz">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -667,7 +732,7 @@
                             <tableViewSection id="iuD-T4-Imm">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="i7f-fU-XiD" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="264" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="352" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="i7f-fU-XiD" id="79C-n2-jlS">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -701,7 +766,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DomainTextFieldCell" id="CFB-DQ-S2b">
-                                        <rect key="frame" x="0.0" y="308" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="396" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CFB-DQ-S2b" id="FQQ-eW-LZM">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -726,7 +791,7 @@
                             <tableViewSection id="9Uu-x2-iyT">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="M00-UM-leA" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="352" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="440" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="M00-UM-leA" id="QTt-BQ-vQc">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -760,7 +825,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DetailsTextFieldCell" id="jWT-ub-VIi">
-                                        <rect key="frame" x="0.0" y="396" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="484" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jWT-ub-VIi" id="R9H-MV-Ub6">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -785,7 +850,7 @@
                             <tableViewSection id="8A6-O4-qEh">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PublishCell" id="JDp-Cj-WNO">
-                                        <rect key="frame" x="0.0" y="440" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="528" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JDp-Cj-WNO" id="qdv-ut-MI8">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -829,7 +894,7 @@
                             <tableViewSection id="8IJ-Nz-wB2">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ResetCell" id="sCN-Ze-niH">
-                                        <rect key="frame" x="0.0" y="484" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="572" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sCN-Ze-niH" id="WOf-MG-otN">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -882,6 +947,7 @@
                         <outlet property="fullTypeLabel" destination="iXv-zs-TOT" id="p8H-0E-MTG"/>
                         <outlet property="nameTextField" destination="sfX-oM-cRu" id="WUK-Gj-zwo"/>
                         <outlet property="portTextField" destination="ouk-3l-zaP" id="fit-sa-trm"/>
+                        <outlet property="transportLayerSegmentedControl" destination="cvR-29-Qg0" id="1hk-kd-iiG"/>
                         <outlet property="typeTextField" destination="iVY-YK-cwo" id="lLc-zc-MaS"/>
                     </connections>
                 </tableViewController>
@@ -898,10 +964,72 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <sections>
+                            <tableViewSection id="biZ-10-flI">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="3KK-eh-wbN" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3KK-eh-wbN" id="7Zy-WT-92G">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TRANSPORT LAYER" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6h2-V0-YFx">
+                                                    <rect key="frame" x="8" y="20" width="121" height="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D7P-hb-8oW">
+                                                    <rect key="frame" x="0.0" y="43" width="375" height="1"/>
+                                                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="GfN-9V-NmG"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstItem="D7P-hb-8oW" firstAttribute="leading" secondItem="7Zy-WT-92G" secondAttribute="leading" id="0WN-W2-hjK"/>
+                                                <constraint firstAttribute="bottom" secondItem="D7P-hb-8oW" secondAttribute="bottom" id="OZR-kU-Pud"/>
+                                                <constraint firstItem="6h2-V0-YFx" firstAttribute="bottom" secondItem="7Zy-WT-92G" secondAttribute="bottomMargin" id="Xfk-io-OZj"/>
+                                                <constraint firstAttribute="trailing" secondItem="D7P-hb-8oW" secondAttribute="trailing" id="a6L-ng-Hpz"/>
+                                                <constraint firstItem="6h2-V0-YFx" firstAttribute="leading" secondItem="7Zy-WT-92G" secondAttribute="leadingMargin" id="eJI-fc-UcA"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="6h2-V0-YFx" id="zmq-Lk-cBC"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NameTextFieldCell" id="jeE-YS-eQG">
+                                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jeE-YS-eQG" id="fBy-Hn-n5J">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ScH-Hm-M6T">
+                                                    <rect key="frame" x="87.5" y="8" width="200" height="29"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="200" id="FuF-42-LGb"/>
+                                                    </constraints>
+                                                    <segments>
+                                                        <segment title="TCP"/>
+                                                        <segment title="UDP"/>
+                                                    </segments>
+                                                </segmentedControl>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="ScH-Hm-M6T" firstAttribute="centerX" secondItem="fBy-Hn-n5J" secondAttribute="centerX" id="3X4-l7-sG5"/>
+                                                <constraint firstItem="ScH-Hm-M6T" firstAttribute="centerY" secondItem="fBy-Hn-n5J" secondAttribute="centerY" id="d2x-uN-6QZ"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection id="uSy-Nc-O4B">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="sgm-1m-OgK" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="88" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sgm-1m-OgK" id="YKz-xL-ikg">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -935,7 +1063,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NameTextFieldCell" id="N2e-gz-zQ3">
-                                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="132" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="N2e-gz-zQ3" id="D7q-0c-n4h">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -960,7 +1088,7 @@
                             <tableViewSection id="Wr7-C3-GhW">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="thY-Yg-PvJ" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="88" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="176" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="thY-Yg-PvJ" id="FN7-9c-IL0">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1002,7 +1130,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TypeTextFieldCell" id="rNx-z4-eHM">
-                                        <rect key="frame" x="0.0" y="132" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="220" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rNx-z4-eHM" id="6hU-hL-zQ8">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1027,7 +1155,7 @@
                             <tableViewSection id="sQt-yf-EC5">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="JIY-9o-Fn4" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="176" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="264" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JIY-9o-Fn4" id="bUD-Yn-g12">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1061,7 +1189,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PortTextFieldCell" id="HGb-Vj-0yd">
-                                        <rect key="frame" x="0.0" y="220" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="308" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HGb-Vj-0yd" id="cIm-Wb-cyg">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1086,7 +1214,7 @@
                             <tableViewSection id="Tx6-VE-owy">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="OTW-K8-Cj0" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="264" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="352" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OTW-K8-Cj0" id="2rE-Cx-J8K">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1120,7 +1248,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DomainTextFieldCell" id="GPp-nG-O7S">
-                                        <rect key="frame" x="0.0" y="308" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="396" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GPp-nG-O7S" id="ktv-ZL-0a3">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1145,7 +1273,7 @@
                             <tableViewSection id="eJL-vp-zop">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="yAa-2z-oAd" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="352" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="440" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yAa-2z-oAd" id="GWp-xH-PU5">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1179,7 +1307,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DetailsTextFieldCell" id="d2i-aR-RWC">
-                                        <rect key="frame" x="0.0" y="396" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="484" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="d2i-aR-RWC" id="BAA-Rz-YTs">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1204,7 +1332,7 @@
                             <tableViewSection id="Rhr-B5-Lgw">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PublishTextFieldCell" id="FFY-AF-7Zx">
-                                        <rect key="frame" x="0.0" y="440" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="528" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FFY-AF-7Zx" id="ZpL-Y6-qRK">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1248,7 +1376,7 @@
                             <tableViewSection id="vnY-c2-g5d">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ResetTextFieldCell" id="8gG-hv-okm">
-                                        <rect key="frame" x="0.0" y="484" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="572" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8gG-hv-okm" id="ykB-yn-zNt">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1301,6 +1429,7 @@
                         <outlet property="fullTypeLabel" destination="Jpy-3T-Kbf" id="JkH-sZ-Sck"/>
                         <outlet property="nameTextField" destination="YuL-Us-V9e" id="HuM-Xg-5V3"/>
                         <outlet property="portTextField" destination="tSG-yQ-3SK" id="3BT-bd-zAf"/>
+                        <outlet property="transportLayerSegmentedControl" destination="ScH-Hm-M6T" id="u0u-gb-ZCY"/>
                         <outlet property="typeTextField" destination="kQa-4h-piE" id="f8D-Pa-Lt8"/>
                     </connections>
                 </tableViewController>
@@ -1574,10 +1703,75 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <sections>
+                            <tableViewSection id="aFm-Mu-Y9Z">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="opi-yE-8qJ" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="opi-yE-8qJ" id="U1E-3D-Jd4">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TRANSPORT LAYER" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3QU-GC-MfE">
+                                                    <rect key="frame" x="8" y="20" width="121" height="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T6L-ua-GUm">
+                                                    <rect key="frame" x="0.0" y="43" width="375" height="1"/>
+                                                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="mHx-EP-bEy"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstItem="3QU-GC-MfE" firstAttribute="bottom" secondItem="U1E-3D-Jd4" secondAttribute="bottomMargin" id="kjm-tX-aXe"/>
+                                                <constraint firstItem="3QU-GC-MfE" firstAttribute="leading" secondItem="U1E-3D-Jd4" secondAttribute="leadingMargin" id="s7d-44-NLt"/>
+                                                <constraint firstAttribute="bottom" secondItem="T6L-ua-GUm" secondAttribute="bottom" id="uZc-QC-29i"/>
+                                                <constraint firstItem="T6L-ua-GUm" firstAttribute="leading" secondItem="U1E-3D-Jd4" secondAttribute="leading" id="yjN-rQ-gwk"/>
+                                                <constraint firstAttribute="trailing" secondItem="T6L-ua-GUm" secondAttribute="trailing" id="zoy-2M-AgB"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="3QU-GC-MfE" id="TcS-vJ-MvH"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NameTextFieldCell" id="Nh7-8m-IKD">
+                                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Nh7-8m-IKD" id="ZXl-bi-pLz">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="gak-C0-zJe">
+                                                    <rect key="frame" x="87.5" y="8" width="200" height="29"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="200" id="3Mw-mL-aZt"/>
+                                                    </constraints>
+                                                    <segments>
+                                                        <segment title="TCP"/>
+                                                        <segment title="UDP"/>
+                                                    </segments>
+                                                    <connections>
+                                                        <action selector="transportLayerSegmentedControlValueChanged:" destination="8zq-A1-6ka" eventType="valueChanged" id="gpB-Uw-0cm"/>
+                                                    </connections>
+                                                </segmentedControl>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="gak-C0-zJe" firstAttribute="centerY" secondItem="ZXl-bi-pLz" secondAttribute="centerY" id="IPi-5m-7pa"/>
+                                                <constraint firstItem="gak-C0-zJe" firstAttribute="centerX" secondItem="ZXl-bi-pLz" secondAttribute="centerX" id="W16-oT-u05"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection id="Skh-cZ-Fmq">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="vL0-QU-IRy" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="88" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vL0-QU-IRy" id="LrH-ft-MCR">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1611,7 +1805,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NameTextFieldCell" id="Fhi-Cg-q4v">
-                                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="132" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Fhi-Cg-q4v" id="0ts-Oy-kZK">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1636,7 +1830,7 @@
                             <tableViewSection id="ddP-O8-lwm">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="pDU-Iy-wdz" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="88" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="176" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pDU-Iy-wdz" id="69W-GB-4il">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1678,7 +1872,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TypeTextFieldCell" id="87Y-sq-kt7">
-                                        <rect key="frame" x="0.0" y="132" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="220" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="87Y-sq-kt7" id="AKG-cu-YLD">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1706,7 +1900,7 @@
                             <tableViewSection id="8RD-ja-RmS">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServiceHeaderCell" id="7iX-db-Ezf" customClass="NetServiceHeaderCell" customModule="KozBon" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="176" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="264" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7iX-db-Ezf" id="fuB-fc-1Fn">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1740,7 +1934,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DetailsTextFieldCell" id="how-Jy-Ct0">
-                                        <rect key="frame" x="0.0" y="220" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="308" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="how-Jy-Ct0" id="1uU-zf-8ZZ">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1765,7 +1959,7 @@
                             <tableViewSection id="NPE-mU-kEn">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PublishCell" id="Kqn-nv-hln">
-                                        <rect key="frame" x="0.0" y="264" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="352" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Kqn-nv-hln" id="GwZ-vq-gky">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1809,7 +2003,7 @@
                             <tableViewSection id="zFB-lq-dHM">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ResetCell" id="5ss-Aq-EFR">
-                                        <rect key="frame" x="0.0" y="308" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="396" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5ss-Aq-EFR" id="2Xj-9f-vxm">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1860,6 +2054,7 @@
                         <outlet property="detailTextField" destination="q9x-QZ-rNx" id="cGQ-PK-5jR"/>
                         <outlet property="fullTypeLabel" destination="GJn-0N-FGy" id="qnk-Of-OlT"/>
                         <outlet property="nameTextField" destination="Wnz-65-oew" id="xDd-kY-F60"/>
+                        <outlet property="transportLayerSegmentedControl" destination="gak-C0-zJe" id="9ND-JS-Yab"/>
                         <outlet property="typeTextField" destination="2d6-dh-hby" id="AyY-3g-yXW"/>
                     </connections>
                 </tableViewController>
