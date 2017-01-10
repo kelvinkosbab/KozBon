@@ -296,7 +296,7 @@ class NetServicesTableViewController: MyTableViewController {
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     if section == self.availableServicesTableViewSection {
-      if MyBonjourManager.shared.isProcessing {
+      if self.isBrowsingForServces {
         return 1
       } else if self.services.count == 0 {
         return 1
@@ -337,7 +337,7 @@ class NetServicesTableViewController: MyTableViewController {
       self.reloadButton = cell.reloadButton
       self.reloadButton?.addTarget(self, action: #selector(self.reloadButtonSelected(_:)), for: .touchUpInside)
       self.loadingActivityIndicator = cell.loadingActivityIndicator
-      if MyBonjourManager.shared.isProcessing {
+      if self.isBrowsingForServces {
         cell.loadingActivityIndicator.startAnimating()
         cell.loadingActivityIndicator.isHidden = false
         cell.reloadButton.isHidden = true
