@@ -58,78 +58,79 @@ class NetServicesTableViewController: MyTableViewController {
   var isBrowsingForServces: Bool = false {
     
     didSet {
-      
-      // Update the header loading content
-      if self.isBrowsingForServces {
-        self.loadingActivityIndicator?.startAnimating()
-        self.loadingActivityIndicator?.isHidden = false
-        self.reloadButton?.isHidden = true
-      } else {
-        self.loadingActivityIndicator?.stopAnimating()
-        self.loadingActivityIndicator?.isHidden = true
-        self.reloadButton?.isHidden = false
-      }
-      
-      if self.isBrowsingForServces {
-        
-        // Will start to browse for services
-        
-        // Update the table view
-        self.tableView.beginUpdates()
-        
-        // Remove any services
-        if self.services.count > 0 {
-          let currentServicesCount = self.services.count
-          var indexPathsToDelete: [IndexPath] = []
-          for index in 0..<currentServicesCount {
-            indexPathsToDelete.append(IndexPath(row: index, section: 0))
-          }
-          self.tableView.deleteRows(at: indexPathsToDelete, with: .top)
-          
+      if self.isBrowsingForServces != oldValue {
+        // Update the header loading content
+        if self.isBrowsingForServces {
+          self.loadingActivityIndicator?.startAnimating()
+          self.loadingActivityIndicator?.isHidden = false
+          self.reloadButton?.isHidden = true
         } else {
-          // Remove the no services cell
-          let noServicesIndexPath = IndexPath(row: 0, section: 0)
-          self.tableView.deleteRows(at: [ noServicesIndexPath ], with: .top)
+          self.loadingActivityIndicator?.stopAnimating()
+          self.loadingActivityIndicator?.isHidden = true
+          self.reloadButton?.isHidden = false
         }
-        self.services = []
         
-        // Show the loading row
-        let loadingIndexPath = IndexPath(row: 0, section: 0)
-        self.tableView.insertRows(at: [ loadingIndexPath ], with: .top)
-        
-        // Done updating table view
-        self.tableView.endUpdates()
-        
-      } else {
-        
-        // Done searching for services
-        
-        // Update the table view
-        self.tableView.beginUpdates()
-        
-        // Hide the loading row
-        let loadingIndexPath = IndexPath(row: 0, section: 0)
-        self.tableView.deleteRows(at: [ loadingIndexPath ], with: .top)
-        
-        // Check if there were any discovered services
-        if self.services.count > 0 {
+        if self.isBrowsingForServces {
           
-          // Add disovered services to the table view
-          var indexPathsToInsert: [IndexPath] = []
-          for index in 0..<self.services.count {
-            indexPathsToInsert.append(IndexPath(row: index, section: 0))
+          // Will start to browse for services
+          
+          // Update the table view
+          self.tableView.beginUpdates()
+          
+          // Remove any services
+          if self.services.count > 0 {
+            let currentServicesCount = self.services.count
+            var indexPathsToDelete: [IndexPath] = []
+            for index in 0..<currentServicesCount {
+              indexPathsToDelete.append(IndexPath(row: index, section: 0))
+            }
+            self.tableView.deleteRows(at: indexPathsToDelete, with: .top)
+            
+          } else {
+            // Remove the no services cell
+            let noServicesIndexPath = IndexPath(row: 0, section: 0)
+            self.tableView.deleteRows(at: [ noServicesIndexPath ], with: .top)
           }
-          self.tableView.insertRows(at: indexPathsToInsert, with: .top)
+          self.services = []
+          
+          // Show the loading row
+          let loadingIndexPath = IndexPath(row: 0, section: 0)
+          self.tableView.insertRows(at: [ loadingIndexPath ], with: .top)
+          
+          // Done updating table view
+          self.tableView.endUpdates()
           
         } else {
           
-          // Add the no services found cell
-          let noServicesIndexPath = IndexPath(row: 0, section: 0)
-          self.tableView.insertRows(at: [ noServicesIndexPath ], with: .top)
+          // Done searching for services
+          
+          // Update the table view
+          self.tableView.beginUpdates()
+          
+          // Hide the loading row
+          let loadingIndexPath = IndexPath(row: 0, section: 0)
+          self.tableView.deleteRows(at: [ loadingIndexPath ], with: .top)
+          
+          // Check if there were any discovered services
+          if self.services.count > 0 {
+            
+            // Add disovered services to the table view
+            var indexPathsToInsert: [IndexPath] = []
+            for index in 0..<self.services.count {
+              indexPathsToInsert.append(IndexPath(row: index, section: 0))
+            }
+            self.tableView.insertRows(at: indexPathsToInsert, with: .top)
+            
+          } else {
+            
+            // Add the no services found cell
+            let noServicesIndexPath = IndexPath(row: 0, section: 0)
+            self.tableView.insertRows(at: [ noServicesIndexPath ], with: .top)
+          }
+          
+          // Done updating table view
+          self.tableView.endUpdates()
         }
-        
-        // Done updating table view
-        self.tableView.endUpdates()
       }
     }
   }
