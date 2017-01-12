@@ -271,14 +271,25 @@ class NetServicesTableViewController: MyTableViewController {
     }
     
     // Construct action sheet
-    let sortMenu = UIAlertController(title: "Sort By", message: message, preferredStyle: .actionSheet)
+    let sortMenuController = UIAlertController(title: "Sort By", message: message, preferredStyle: .actionSheet)
     for sortType in MyNetServiceSortType.all {
-      sortMenu.addAction(UIAlertAction(title: sortType.string, style: .default, handler: { (_) in
+      sortMenuController.addAction(UIAlertAction(title: sortType.string, style: .default, handler: { (_) in
         self.servicesSortType = sortType
       }))
     }
-    sortMenu.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-    self.present(sortMenu, animated: true, completion: nil)
+    sortMenuController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+    
+    if UIDevice.isPhone {
+      self.present(sortMenuController, animated: true, completion: nil)
+      
+    } else {
+      sortMenuController.modalPresentationStyle = .popover
+      if let popoverPresenter = sortMenuController.popoverPresentationController {
+        popoverPresenter.sourceView = self.view
+        popoverPresenter.sourceRect = self.view.bounds
+        self.present(sortMenuController, animated: true, completion: nil)
+      }
+    }
   }
   
   // MARK: - Table View Helpers

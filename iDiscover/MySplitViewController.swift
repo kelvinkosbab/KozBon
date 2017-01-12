@@ -16,4 +16,10 @@ class MySplitViewController: UISplitViewController {
   deinit {
     NotificationCenter.default.removeObserver(self)
   }
+  
+  // MARK: - Status Bar
+  
+  override var preferredStatusBarStyle: UIStatusBarStyle {
+    return .lightContent
+  }
 }

@@ -17,15 +17,28 @@ class MyNavigationController: UINavigationController {
     super.viewDidLoad()
     
     self.styleTitleText()
+    self.styleColors()
   }
   
   deinit {
     NotificationCenter.default.removeObserver(self)
   }
   
+  // MARK: - Status Bar
+  
+  override var preferredStatusBarStyle: UIStatusBarStyle {
+    return .lightContent
+  }
+  
   // MARK: - Styles
   
-  func styleTitleText() {
-    self.navigationBar.titleTextAttributes = [ NSFontAttributeName : UIFont.systemFont(ofSize: 18) ]
+  func styleTitleText(font: UIFont = UIFont.systemFont(ofSize: 18)) {
+    self.navigationBar.titleTextAttributes = [ NSFontAttributeName : font ]
+  }
+  
+  func styleColors(barColor: UIColor = UIColor(hex: "007AFF"), fontColor: UIColor = UIColor.white) {
+    self.navigationBar.barTintColor = barColor
+    self.navigationBar.tintColor = fontColor
+    self.navigationBar.titleTextAttributes = [ NSForegroundColorAttributeName: fontColor ]
   }
 }

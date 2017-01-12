@@ -87,13 +87,6 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
     return 0
   }
   
-  override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    if indexPath.section == 6 || indexPath.row == 7 {
-      return super.tableView(tableView, heightForRowAt: indexPath) + 10
-    }
-    return super.tableView(tableView, heightForRowAt: indexPath)
-  }
-  
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     

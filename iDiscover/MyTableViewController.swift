@@ -27,6 +27,12 @@ class MyTableViewController: UITableViewController, PresentableController {
     NotificationCenter.default.removeObserver(self)
   }
   
+  // MARK: - Status Bar
+  
+  override var preferredStatusBarStyle: UIStatusBarStyle {
+    return .lightContent
+  }
+  
   // MARK: - UITableView
   
   override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
