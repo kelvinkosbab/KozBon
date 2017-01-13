@@ -22,7 +22,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="KozBon3" translatesAutoresizingMaskIntoConstraints="NO" id="SRi-Hr-qD3">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="KozBon4" translatesAutoresizingMaskIntoConstraints="NO" id="SRi-Hr-qD3">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="SRi-Hr-qD3" secondAttribute="height" multiplier="1:1" id="UGw-U1-81d"/>
@@ -54,6 +54,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="KozBon3" width="1024" height="1024"/>
+        <image name="KozBon4" width="1024" height="1024"/>
     </resources>
 </document>
