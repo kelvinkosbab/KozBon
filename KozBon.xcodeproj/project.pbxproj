@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		B603A6D81E12177700ED333D /* UIImage+Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = B603A6D71E12177700ED333D /* UIImage+Gif.swift */; };
-		B603A6DE1E1217B300ED333D /* dotLoadingGif.gif in Resources */ = {isa = PBXBuildFile; fileRef = B603A6DB1E1217B300ED333D /* dotLoadingGif.gif */; };
 		B6089C9A1E19D76D00C7CF29 /* ServiceDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6089C991E19D76D00C7CF29 /* ServiceDetailTableViewController.swift */; };
 		B6089C9C1E1A2A3900C7CF29 /* MyServiceType+CustomServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6089C9B1E1A2A3900C7CF29 /* MyServiceType+CustomServiceType.swift */; };
 		B62E19971E174236008BC91C /* MyLoadingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62E19961E174236008BC91C /* MyLoadingManager.swift */; };
@@ -60,7 +59,6 @@
 
 /* Begin PBXFileReference section */
 		B603A6D71E12177700ED333D /* UIImage+Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Gif.swift"; sourceTree = "<group>"; };
-		B603A6DB1E1217B300ED333D /* dotLoadingGif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = dotLoadingGif.gif; sourceTree = "<group>"; };
 		B6089C991E19D76D00C7CF29 /* ServiceDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailTableViewController.swift; sourceTree = "<group>"; };
 		B6089C9B1E1A2A3900C7CF29 /* MyServiceType+CustomServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MyServiceType+CustomServiceType.swift"; sourceTree = "<group>"; };
 		B62E19961E174236008BC91C /* MyLoadingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyLoadingManager.swift; sourceTree = "<group>"; };
@@ -123,14 +121,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B603A6D91E12179F00ED333D /* Gifs */ = {
-			isa = PBXGroup;
-			children = (
-				B603A6DB1E1217B300ED333D /* dotLoadingGif.gif */,
-			);
-			name = Gifs;
-			sourceTree = "<group>";
-		};
 		B679CC0D1E161C010056C7B5 /* Inherited Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -306,7 +296,6 @@
 		B6CE1D441E12098A003D4FFA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				B603A6D91E12179F00ED333D /* Gifs */,
 				B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */,
 				B6CE1D311E1208C1003D4FFA /* Assets.xcassets */,
 				B6CE1D331E1208C1003D4FFA /* LaunchScreen.storyboard */,
@@ -388,7 +377,6 @@
 				B6CE1D351E1208C1003D4FFA /* LaunchScreen.storyboard in Resources */,
 				B68262231E18200D00D0445D /* Settings.storyboard in Resources */,
 				B6CE1D4A1E120AF8003D4FFA /* service-names-port-numbers.csv in Resources */,
-				B603A6DE1E1217B300ED333D /* dotLoadingGif.gif in Resources */,
 				B6CE1D321E1208C1003D4FFA /* Assets.xcassets in Resources */,
 				B6CE1D621E120D10003D4FFA /* Main.storyboard in Resources */,
 			);
