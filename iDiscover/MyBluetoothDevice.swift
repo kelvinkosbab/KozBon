@@ -9,7 +9,7 @@
 import Foundation
 import CoreBluetooth
 
-class MyBluetoothDevice: NSObject {
+class MyBluetoothDevice: Equatable {
   
   // Equatable
   
@@ -23,6 +23,5 @@ class MyBluetoothDevice: NSObject {
   
   init(peripheral: CBPeripheral) {
     self.peripheral = peripheral
-    super.init()
   }
 }

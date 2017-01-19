@@ -9,41 +9,12 @@
 import Foundation
 import CoreBluetooth
 
-enum MyBluetoothManagerState {
-  case poweredOff, poweredOn, resetting, unauthorized, unknown, unsupported
-  
-  static func convert(cbMManagerState state: CBManagerState) -> MyBluetoothManagerState {
-    switch state {
-    case .poweredOff: return .poweredOff
-      case .poweredOn: return .poweredOn
-      case .resetting: return .resetting
-      case .unauthorized: return .unauthorized
-      case .unknown: return .unknown
-      case .unsupported: return .unsupported
-    }
-  }
-  
-  var string: String {
-    switch self {
-    case .poweredOff: return "Powered Off"
-    case .poweredOn: return "Powered On"
-    case .resetting: return "Resetting"
-    case .unauthorized: return "Unauthorized"
-    case .unknown: return "Unknown"
-    case .unsupported: return "Unsupported"
-    }
-  }
-  
-  var isPoweredOn: Bool {
-    return self == .poweredOn
-  }
-}
-
-extension CBCentralManager {
-  
-  var bluetoothManagerState: MyBluetoothManagerState {
-    return MyBluetoothManagerState.convert(cbMManagerState: self.state)
-  }
+protocol MyBluetoothManagerProtocol {
+  func didStartScan(_ manager: MyBluetoothManager)
+  func didAddDevice(_ manager: MyBluetoothManager, device: MyBluetoothDevice)
+  func didRemoveDevice(_ manager: MyBluetoothManager, device: MyBluetoothDevice)
+  func didClearDevices(_ manager: MyBluetoothManager)
+  func didStopScan(_ manager: MyBluetoothManager)
 }
 
 class MyBluetoothManager: NSObject, CBCentralManagerDelegate {
@@ -52,22 +23,29 @@ class MyBluetoothManager: NSObject, CBCentralManagerDelegate {
   
   static let shared = MyBluetoothManager()
   
-  private override init() { super.init() }
+  private override init() {
+    super.init()
+    
+    self.centralManager = CBCentralManager(delegate: self, queue: self.centralManagerDispatchQueue)
+  }
   
   // MARK: - Properties
   
-  var completion: ((_ services: [MyBluetoothDevice]) -> Void)? = nil
-  var didStartSearch: (() -> Void)? = nil
+  var delegate: MyBluetoothManagerProtocol? = nil
   
-  private var centralManager: CBCentralManager? = nil
+  private var centralManager: CBCentralManager!
   private let centralManagerDispatchQueue: DispatchQueue = DispatchQueue(label: "\(MyBluetoothManager.name).centralManagerQueue")
   private let concurrentDevicesQueue: DispatchQueue = DispatchQueue(label: "\(MyBluetoothManager.name).concurrentDevicesQueue", attributes: .concurrent)
+  
+  var state: MyBluetoothManagerState {
+    return self.centralManager.bluetoothManagerState
+  }
   
   // MARK: - Devices
   
   private var _devices: [MyBluetoothDevice] = []
   
-  private var devices: [MyBluetoothDevice] {
+  var devices: [MyBluetoothDevice] {
     var copy: [MyBluetoothDevice]!
     self.concurrentDevicesQueue.sync {
       copy = self._devices
@@ -77,7 +55,9 @@ class MyBluetoothManager: NSObject, CBCentralManagerDelegate {
   
   private func clearDevices() {
     self.concurrentDevicesQueue.async(flags: .barrier, execute: { () -> Void in
-      self._devices = []
+      DispatchQueue.main.async {
+        self.delegate?.didClearDevices(self)
+      }
     })
   }
   
@@ -85,6 +65,9 @@ class MyBluetoothManager: NSObject, CBCentralManagerDelegate {
     self.concurrentDevicesQueue.async(flags: .barrier, execute: { () -> Void in
       if !self._devices.contains(device) {
         self._devices.append(device)
+        DispatchQueue.main.async {
+          self.delegate?.didAddDevice(self, device: device)
+        }
       }
     })
   }
@@ -93,23 +76,25 @@ class MyBluetoothManager: NSObject, CBCentralManagerDelegate {
     self.concurrentDevicesQueue.async(flags: .barrier, execute: { () -> Void in
       if let index = self._devices.index(of: device) {
         self._devices.remove(at: index)
+        DispatchQueue.main.async {
+          self.delegate?.didRemoveDevice(self, device: device)
+        }
       }
     })
   }
   
   // MARK: - Start / Stop Scan
   
-  func startScan(completion: @escaping (_ devices: [MyBluetoothDevice]) -> Void, didStartSearch: (() -> Void)? = nil) {
+  func startScan() {
     self.stopScan()
     self.clearDevices()
-    self.completion = completion
-    self.didStartSearch = didStartSearch
-    self.centralManager = CBCentralManager(delegate: self, queue: self.centralManagerDispatchQueue)
   }
   
   func stopScan() {
-    self.centralManager?.stopScan()
-    self.centralManager = nil
+    if !self.state.isUnsupported {
+      self.centralManager.stopScan()
+    }
+    self.delegate?.didStopScan(self)
   }
   
   // MARK: - CBCentralManagerDelegate
@@ -118,21 +103,26 @@ class MyBluetoothManager: NSObject, CBCentralManagerDelegate {
     let state = central.bluetoothManagerState
     print("\(self.className) : State is now \(state.string)")
     if state.isPoweredOn {
-      self.didStartSearch?()
       
       // Start the scan
-      self.centralManager?.scanForPeripherals(withServices: nil, options: nil)
+      self.delegate?.didStartScan(self)
+      self.centralManager.scanForPeripherals(withServices: nil, options: nil)
       
       // Initialise timeout
       DispatchQueue.main.asyncAfter(after: 10.0) {
         self.stopScan()
-        self.completion?(self.devices)
       }
+      
+    } else if state.isUnsupported {
+      self.stopScan()
     }
   }
   
   func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-    print("\(self.className) : Did discover peripheral \(peripheral) wih RSSI \(RSSI)")
+    print("\(self.className) : Did discover peripheral \(peripheral) | RSSI \(RSSI) | advertisement data \(advertisementData)")
+    
+    let device = MyBluetoothDevice(peripheral: peripheral)
+    self.add(device: device)
   }
   
   func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {

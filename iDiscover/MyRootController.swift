@@ -20,6 +20,7 @@ class MyRootController: UITabBarController {
   // MARK: - Properties
   
   var servicesSplitViewController: MySplitViewController!
+  var bluetoothSplitViewController: MySplitViewController!
   var settingsSplitViewController: MySplitViewController!
   
   // MARK: - Lifecycle
@@ -28,10 +29,9 @@ class MyRootController: UITabBarController {
     super.viewDidLoad()
     
     self.servicesSplitViewController = self.setupServicesController()
+    self.bluetoothSplitViewController = self.setupBluetoothController()
     self.settingsSplitViewController = self.setupSettingsController()
-    self.viewControllers = [ self.servicesSplitViewController, self.settingsSplitViewController ]
-    
-//    NotificationCenter.default.addObserver(self, selector: #selector(self.didRotate), name: .UIDeviceOrientationDidChange, object: nil)
+    self.viewControllers = [ self.servicesSplitViewController, self.bluetoothSplitViewController, self.settingsSplitViewController ]
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -43,12 +43,10 @@ class MyRootController: UITabBarController {
   // MARK: - Orientation
   
   override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-    self.updateSplitViewWidths(newWidth: min(size.width, size.height))
+    if !UIDevice.isPhone {
+      self.updateSplitViewWidths(newWidth: size.width)
+    }
   }
-  
-//  @objc private func didRotateOrientation() {
-//    self.updateSplitViewWidths()
-//  }
   
   private func updateSplitViewWidths(newWidth: CGFloat? = nil) {
     if !UIDevice.isPhone {
@@ -72,14 +70,32 @@ class MyRootController: UITabBarController {
     let servicesSplitViewController = MySplitViewController()
     servicesSplitViewController.viewControllers = [ servicesNavigationController ]
     if !UIDevice.isPhone {
-      let minimum = min(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
-      servicesSplitViewController.minimumPrimaryColumnWidth = minimum / 2
-      servicesSplitViewController.maximumPrimaryColumnWidth = minimum / 2
+      servicesSplitViewController.minimumPrimaryColumnWidth = UIScreen.main.bounds.width / 2
+      servicesSplitViewController.maximumPrimaryColumnWidth = UIScreen.main.bounds.width / 2
     }
     servicesSplitViewController.preferredDisplayMode = .allVisible
     servicesSplitViewController.title = "Bonjour"
     servicesSplitViewController.tabBarItem = UITabBarItem(title: "Bonjour", image: #imageLiteral(resourceName: "iconBonjour"), selectedImage: nil)
     return servicesSplitViewController
+  }
+  
+  func setupBluetoothController() -> MySplitViewController {
+    
+    // Configure the master controller
+    let bluetoothMasterViewController = BluetoothViewController.newViewController()
+    let bluetoothNavigationController = MyNavigationController(rootViewController: bluetoothMasterViewController)
+    
+    // Set up split view for services
+    let bluetoothSplitViewController = MySplitViewController()
+    bluetoothSplitViewController.viewControllers = [ bluetoothNavigationController ]
+    if !UIDevice.isPhone {
+      bluetoothSplitViewController.minimumPrimaryColumnWidth = UIScreen.main.bounds.width / 2
+      bluetoothSplitViewController.maximumPrimaryColumnWidth = UIScreen.main.bounds.width / 2
+    }
+    bluetoothSplitViewController.preferredDisplayMode = .allVisible
+    bluetoothSplitViewController.title = "Bluetooth"
+    bluetoothSplitViewController.tabBarItem = UITabBarItem(title: "Bluetooth", image: #imageLiteral(resourceName: "iconBluetooth"), selectedImage: nil)
+    return bluetoothSplitViewController
   }
   
   func setupSettingsController() -> MySplitViewController {
@@ -92,8 +108,8 @@ class MyRootController: UITabBarController {
     let settingsSplitViewController = MySplitViewController()
     settingsSplitViewController.viewControllers = [ settingsNavigationController ]
     if !UIDevice.isPhone {
-      settingsSplitViewController.minimumPrimaryColumnWidth = 300
-      settingsSplitViewController.maximumPrimaryColumnWidth = 300
+      settingsSplitViewController.minimumPrimaryColumnWidth = UIScreen.main.bounds.width / 2
+      settingsSplitViewController.maximumPrimaryColumnWidth = UIScreen.main.bounds.width / 2
     }
     settingsSplitViewController.preferredDisplayMode = .allVisible
     settingsSplitViewController.title = "Settings"
