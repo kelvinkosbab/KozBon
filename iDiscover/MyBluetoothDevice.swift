@@ -74,6 +74,17 @@ class MyBluetoothDevice : NSObject, CBPeripheralDelegate {
   
   func connect(options: [String : Any]? = nil, completion: @escaping (_ error: Error?) -> Void) {
     self.connectCompletion = completion
+    
+    guard self.state.isConnected else {
+      self.didConnect(device: self)
+      return
+    }
+    
+    guard self.state.isConnecting else {
+      return
+    }
+    
+    // Connect to the peripheral
     self.manager.centralManager?.connect(self.peripheral, options: options)
   }
   
@@ -83,6 +94,17 @@ class MyBluetoothDevice : NSObject, CBPeripheralDelegate {
   
   func disconnect(completion: @escaping () -> Void) {
     self.disconnectCompletion = completion
+    
+    guard self.state.isDisconnected else {
+      self.didConnect(device: self)
+      return
+    }
+    
+    guard self.state.isDisconnecting else {
+      return
+    }
+    
+    // Disconnect from the peripheral
     self.manager.centralManager?.cancelPeripheralConnection(self.peripheral)
   }
   
