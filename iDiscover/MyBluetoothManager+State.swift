@@ -23,6 +23,11 @@ enum MyBluetoothManagerState {
     }
   }
   
+  
+}
+
+extension CBManagerState {
+  
   var string: String {
     switch self {
     case .poweredOff: return "Powered Off"
@@ -57,11 +62,8 @@ enum MyBluetoothManagerState {
   var isUnsupported: Bool {
     return self == .unsupported
   }
-}
-
-extension CBCentralManager {
   
-  var bluetoothManagerState: MyBluetoothManagerState {
-    return MyBluetoothManagerState.convert(cbMManagerState: self.state)
+  var isScanning: Bool {
+    return !self.isUnknown && !self.isUnsupported && !self.isPoweredOff
   }
 }

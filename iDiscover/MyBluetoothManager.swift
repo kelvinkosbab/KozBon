@@ -11,10 +11,14 @@ import CoreBluetooth
 
 protocol MyBluetoothManagerProtocol {
   func didStartScan(_ manager: MyBluetoothManager)
-  func didAddDevice(_ manager: MyBluetoothManager, device: MyBluetoothDevice)
-  func didRemoveDevice(_ manager: MyBluetoothManager, device: MyBluetoothDevice)
-  func didClearDevices(_ manager: MyBluetoothManager)
+  func didUpdateDevices(_ manager: MyBluetoothManager)
   func didStopScan(_ manager: MyBluetoothManager)
+}
+
+protocol MyBluetoothManagerDeviceProtocol {
+  func didConnect(device: MyBluetoothDevice)
+  func didFailToConnect(device: MyBluetoothDevice, error: Error)
+  func didDisconnect(device: MyBluetoothDevice)
 }
 
 class MyBluetoothManager: NSObject, CBCentralManagerDelegate {
@@ -33,12 +37,12 @@ class MyBluetoothManager: NSObject, CBCentralManagerDelegate {
   
   var delegate: MyBluetoothManagerProtocol? = nil
   
-  private var centralManager: CBCentralManager!
+  var centralManager: CBCentralManager? = nil
   private let centralManagerDispatchQueue: DispatchQueue = DispatchQueue(label: "\(MyBluetoothManager.name).centralManagerQueue")
   private let concurrentDevicesQueue: DispatchQueue = DispatchQueue(label: "\(MyBluetoothManager.name).concurrentDevicesQueue", attributes: .concurrent)
   
-  var state: MyBluetoothManagerState {
-    return self.centralManager.bluetoothManagerState
+  var state: CBManagerState {
+    return self.centralManager?.state ?? .unknown
   }
   
   // MARK: - Devices
@@ -54,11 +58,9 @@ class MyBluetoothManager: NSObject, CBCentralManagerDelegate {
   }
   
   private func clearDevices() {
-    self.concurrentDevicesQueue.async(flags: .barrier, execute: { () -> Void in
-      DispatchQueue.main.async {
-        self.delegate?.didClearDevices(self)
-      }
-    })
+    for device in self.devices {
+      self.remove(device: device)
+    }
   }
   
   private func add(device: MyBluetoothDevice) {
@@ -66,7 +68,7 @@ class MyBluetoothManager: NSObject, CBCentralManagerDelegate {
       if !self._devices.contains(device) {
         self._devices.append(device)
         DispatchQueue.main.async {
-          self.delegate?.didAddDevice(self, device: device)
+          self.delegate?.didUpdateDevices(self)
         }
       }
     })
@@ -77,7 +79,7 @@ class MyBluetoothManager: NSObject, CBCentralManagerDelegate {
       if let index = self._devices.index(of: device) {
         self._devices.remove(at: index)
         DispatchQueue.main.async {
-          self.delegate?.didRemoveDevice(self, device: device)
+          self.delegate?.didUpdateDevices(self)
         }
       }
     })
@@ -86,13 +88,15 @@ class MyBluetoothManager: NSObject, CBCentralManagerDelegate {
   // MARK: - Start / Stop Scan
   
   func startScan() {
-    self.stopScan()
-    self.clearDevices()
+    if !self.state.isUnsupported {
+      self.delegate?.didStartScan(self)
+      self.centralManager?.scanForPeripherals(withServices: nil, options: nil)
+    }
   }
   
   func stopScan() {
     if !self.state.isUnsupported {
-      self.centralManager.stopScan()
+      self.centralManager?.stopScan()
     }
     self.delegate?.didStopScan(self)
   }
@@ -100,13 +104,13 @@ class MyBluetoothManager: NSObject, CBCentralManagerDelegate {
   // MARK: - CBCentralManagerDelegate
   
   func centralManagerDidUpdateState(_ central: CBCentralManager) {
-    let state = central.bluetoothManagerState
+    let state = self.state
     print("\(self.className) : State is now \(state.string)")
     if state.isPoweredOn {
       
       // Start the scan
       self.delegate?.didStartScan(self)
-      self.centralManager.scanForPeripherals(withServices: nil, options: nil)
+      self.centralManager?.scanForPeripherals(withServices: nil, options: nil)
       
       // Initialise timeout
       DispatchQueue.main.asyncAfter(after: 10.0) {
@@ -121,7 +125,7 @@ class MyBluetoothManager: NSObject, CBCentralManagerDelegate {
   func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
     print("\(self.className) : Did discover peripheral \(peripheral) | RSSI \(RSSI) | advertisement data \(advertisementData)")
     
-    let device = MyBluetoothDevice(peripheral: peripheral)
+    let device = MyBluetoothDevice(manager: self, peripheral: peripheral, lastKnownRSSI: Int(RSSI))
     self.add(device: device)
   }
   
