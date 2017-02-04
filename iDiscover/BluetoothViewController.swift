@@ -14,7 +14,7 @@ class BluetoothViewController : MyTableViewController, MyBluetoothManagerProtoco
   // MARK: - Class Accessors
   
   static func newViewController() -> BluetoothViewController {
-    return self.newController(fromStoryboard: .main, withIdentifier: self.name) as! BluetoothViewController
+    return self.newViewController(fromStoryboard: .main)
   }
   
   // MARK: - Properties

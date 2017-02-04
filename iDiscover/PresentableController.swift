@@ -15,6 +15,7 @@ enum PresentationMode {
 
 protocol PresentableController {
   var presentedMode: PresentationMode { get set }
+  var transitioningDelegateReference: UIViewControllerTransitioningDelegate? { get set }
 }
 
 extension PresentableController where Self : UIViewController {

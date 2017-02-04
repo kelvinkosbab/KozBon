@@ -2127,13 +2127,13 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Veq-9Q-CPU">
-                                            <rect key="frame" x="8" y="8" width="334" height="17"/>
+                                            <rect key="frame" x="8" y="8" width="309" height="17"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6d0-vN-LvN">
-                                            <rect key="frame" x="8" y="25" width="77" height="17"/>
+                                            <rect key="frame" x="8" y="25" width="309" height="17"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -2152,23 +2152,34 @@
                                                 <constraint firstAttribute="height" constant="15" id="z97-52-CXs"/>
                                             </constraints>
                                         </imageView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icSignal" translatesAutoresizingMaskIntoConstraints="NO" id="5IT-Vg-WiN">
+                                            <rect key="frame" x="327" y="17.5" width="15" height="15"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="15" id="0lU-c2-NzZ"/>
+                                                <constraint firstAttribute="width" constant="15" id="RfG-ql-aOs"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="pNh-O1-c6S" firstAttribute="centerY" secondItem="nTc-C0-99z" secondAttribute="centerY" id="6ep-Of-GTR"/>
                                         <constraint firstItem="Veq-9Q-CPU" firstAttribute="top" secondItem="nTc-C0-99z" secondAttribute="topMargin" id="6lD-zE-4h1"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="pNh-O1-c6S" secondAttribute="trailing" id="Co9-7o-eAQ"/>
                                         <constraint firstItem="Veq-9Q-CPU" firstAttribute="bottom" secondItem="nTc-C0-99z" secondAttribute="centerY" id="KCX-Dg-abG"/>
-                                        <constraint firstItem="pNh-O1-c6S" firstAttribute="leading" secondItem="Veq-9Q-CPU" secondAttribute="trailing" constant="10" id="Mce-ye-tah"/>
                                         <constraint firstItem="Veq-9Q-CPU" firstAttribute="leading" secondItem="nTc-C0-99z" secondAttribute="leadingMargin" id="MnL-oP-qww"/>
                                         <constraint firstAttribute="bottom" secondItem="bj3-bB-cRh" secondAttribute="bottom" id="QfZ-hB-ElQ"/>
                                         <constraint firstItem="bj3-bB-cRh" firstAttribute="leading" secondItem="nTc-C0-99z" secondAttribute="leading" id="Uiw-V1-jsT"/>
+                                        <constraint firstItem="5IT-Vg-WiN" firstAttribute="centerY" secondItem="nTc-C0-99z" secondAttribute="centerY" id="VH4-Sk-5cC"/>
                                         <constraint firstAttribute="trailing" secondItem="bj3-bB-cRh" secondAttribute="trailing" id="Vc5-lu-aPL"/>
+                                        <constraint firstItem="pNh-O1-c6S" firstAttribute="leading" secondItem="5IT-Vg-WiN" secondAttribute="trailing" constant="10" id="XKk-Gu-PUZ"/>
+                                        <constraint firstItem="5IT-Vg-WiN" firstAttribute="leading" secondItem="6d0-vN-LvN" secondAttribute="trailing" constant="10" id="jEq-4U-bMD"/>
                                         <constraint firstItem="6d0-vN-LvN" firstAttribute="top" secondItem="nTc-C0-99z" secondAttribute="centerY" id="m7S-Qm-Gl7"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="6d0-vN-LvN" secondAttribute="bottom" id="o2i-5k-pR4"/>
+                                        <constraint firstItem="5IT-Vg-WiN" firstAttribute="leading" secondItem="Veq-9Q-CPU" secondAttribute="trailing" constant="10" id="sM9-D0-Eb4"/>
                                         <constraint firstItem="6d0-vN-LvN" firstAttribute="leading" secondItem="nTc-C0-99z" secondAttribute="leadingMargin" id="vNn-Af-CcO"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="connectionStatusImageView" destination="5IT-Vg-WiN" id="bfy-JQ-WHT"/>
                                     <outlet property="detailLabel" destination="6d0-vN-LvN" id="cAE-Km-P4z"/>
                                     <outlet property="titleLabel" destination="Veq-9Q-CPU" id="R2z-A6-Uba"/>
                                 </connections>
@@ -2210,6 +2221,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="icSignal" width="22" height="22"/>
         <image name="iconChevronRight" width="22" height="22"/>
     </resources>
 </document>

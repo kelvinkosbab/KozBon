@@ -13,28 +13,28 @@ class ServiceDetailTableViewController: MyTableViewController {
   
   // MARK: - Class Accessors
   
-  static private func newController() -> ServiceDetailTableViewController {
-    return self.newController(fromStoryboard: .main, withIdentifier: self.name) as! ServiceDetailTableViewController
+  static private func newViewController() -> ServiceDetailTableViewController {
+    return self.newViewController(fromStoryboard: .main)
   }
   
-  static func newController(browsedService service: MyNetService) -> ServiceDetailTableViewController {
-    let viewController = self.newController()
+  static func newViewController(browsedService service: MyNetService) -> ServiceDetailTableViewController {
+    let viewController = self.newViewController()
     viewController.mode = .browsedService
     viewController.service = service
     viewController.serviceType = service.serviceType
     return viewController
   }
   
-  static func newController(publishedService service: MyNetService) -> ServiceDetailTableViewController {
-    let viewController = self.newController()
+  static func newViewController(publishedService service: MyNetService) -> ServiceDetailTableViewController {
+    let viewController = self.newViewController()
     viewController.mode = .publishedService
     viewController.service = service
     viewController.serviceType = service.serviceType
     return viewController
   }
   
-  static func newController(serviceType: MyServiceType) -> ServiceDetailTableViewController {
-    let viewController = self.newController()
+  static func newViewController(serviceType: MyServiceType) -> ServiceDetailTableViewController {
+    let viewController = self.newViewController()
     viewController.mode = .serviceType
     viewController.service = nil
     viewController.serviceType = serviceType

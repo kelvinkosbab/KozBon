@@ -13,14 +13,14 @@ class PublishDetailBaseViewController: MyViewController {
   
   // MARK: - Class Accessors
   
-  static func newController() -> PublishDetailBaseViewController {
-    return self.newController(fromStoryboard: .main, withIdentifier: self.name) as! PublishDetailBaseViewController
+  static func newViewController() -> PublishDetailBaseViewController {
+    return self.newViewController(fromStoryboard: .main)
   }
   
   // MARK: - Actions
   
   @IBAction func createButtonSelected(_ sender: UIButton) {
-    var viewController = PublishDetailCreateViewController.newController()
+    var viewController = PublishDetailCreateViewController.newViewController()
     viewController.presentControllerIn(self, forMode: .navStack)
   }
 }

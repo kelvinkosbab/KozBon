@@ -13,8 +13,8 @@ class CreateServiceTypeTableViewController: MyTableViewController, UITextFieldDe
   
   // MARK: - Class Accessors
   
-  static func newController() -> CreateServiceTypeTableViewController {
-    return self.newController(fromStoryboard: .main, withIdentifier: self.name) as! CreateServiceTypeTableViewController
+  static func newViewController() -> CreateServiceTypeTableViewController {
+    return self.newViewController(fromStoryboard: .main)
   }
   
   // MARK: - Properties

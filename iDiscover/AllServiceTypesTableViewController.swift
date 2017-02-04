@@ -13,8 +13,8 @@ class AllServiceTypesTableViewController: MyTableViewController, UISearchResults
   
   // MARK: - Class Accessors
   
-  static func newController() -> AllServiceTypesTableViewController {
-    return self.newController(fromStoryboard: .settings, withIdentifier: self.name) as! AllServiceTypesTableViewController
+  static func newViewController() -> AllServiceTypesTableViewController {
+    return self.newViewController(fromStoryboard: .settings)
   }
   
   // MARK: - Properties
@@ -147,7 +147,7 @@ class AllServiceTypesTableViewController: MyTableViewController, UISearchResults
     let serviceType = self.isFiltered ? self.filteredServiceTypes[indexPath.row] : self.serviceTypes[indexPath.row]
     
     if UIDevice.isPhone {
-      var viewController = ServiceDetailTableViewController.newController(serviceType: serviceType)
+      var viewController = ServiceDetailTableViewController.newViewController(serviceType: serviceType)
       viewController.presentControllerIn(self, forMode: .navStack)
       
     } else if let serviceDetailViewController = self.serviceDetailViewController {
@@ -157,7 +157,7 @@ class AllServiceTypesTableViewController: MyTableViewController, UISearchResults
       serviceDetailViewController.reloadData()
       
     } else {
-      var viewController = ServiceDetailTableViewController.newController(serviceType: serviceType)
+      var viewController = ServiceDetailTableViewController.newViewController(serviceType: serviceType)
       self.serviceDetailViewController = viewController
       viewController.presentControllerIn(self, forMode: .splitDetail, completion: nil)
     }

@@ -9,7 +9,12 @@
 import Foundation
 import UIKit
 
-class MySplitViewController: UISplitViewController {
+class MySplitViewController : UISplitViewController, PresentableController, MyViewControllerIdentifierProtocol {
+  
+  // MARK: - PresentableController
+  
+  var presentedMode: PresentationMode = .navStack
+  var transitioningDelegateReference: UIViewControllerTransitioningDelegate? = nil
   
   // MARK: - Lifecycle
   

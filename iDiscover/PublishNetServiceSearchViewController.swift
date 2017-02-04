@@ -22,8 +22,8 @@ class PublishNetServiceSearchViewController: MyTableViewController, UISearchResu
   
   // MARK: - Class Accessors
   
-  static func newController() -> PublishNetServiceSearchViewController {
-    return self.newController(fromStoryboard: .main, withIdentifier: self.name) as! PublishNetServiceSearchViewController
+  static func newViewController() -> PublishNetServiceSearchViewController {
+    return self.newViewController(fromStoryboard: .main)
   }
   
   // MARK: - Properties
@@ -73,7 +73,7 @@ class PublishNetServiceSearchViewController: MyTableViewController, UISearchResu
     self.navigationItem.rightBarButtonItem = UIBarButtonItem(text: "Create", target: self, action: #selector(self.createButtonSelected(_:)))
     
     if !UIDevice.isPhone {
-      self.publishDetailBaseController = PublishDetailBaseViewController.newController()
+      self.publishDetailBaseController = PublishDetailBaseViewController.newViewController()
       self.publishDetailBaseController?.presentControllerIn(self, forMode: .splitDetail)
     }
   }
@@ -91,7 +91,7 @@ class PublishNetServiceSearchViewController: MyTableViewController, UISearchResu
   }
   
   @objc private func createButtonSelected(_ sender: UIBarButtonItem) {
-    var viewController = PublishDetailCreateViewController.newController()
+    var viewController = PublishDetailCreateViewController.newViewController()
     if UIDevice.isPhone {
       viewController.presentControllerIn(self, forMode: .navStack)
     } else if let publishDetailBaseController = self.publishDetailBaseController {
@@ -193,7 +193,7 @@ class PublishNetServiceSearchViewController: MyTableViewController, UISearchResu
     tableView.deselectRow(at: indexPath, animated: true)
     
     let serviceType = self.isFiltered ? self.filteredServiceTypes[indexPath.row] : self.serviceTypes[indexPath.row]
-    var viewController = PublishDetailExistingViewController.newController(serviceType: serviceType)
+    var viewController = PublishDetailExistingViewController.newViewController(serviceType: serviceType)
     if UIDevice.isPhone {
       viewController.presentControllerIn(self, forMode: .navStack)
       

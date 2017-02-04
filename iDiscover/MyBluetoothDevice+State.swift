@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreBluetooth
+import UIKit
 
 extension CBPeripheralState {
   
@@ -25,5 +26,18 @@ extension CBPeripheralState {
   
   var isConnected: Bool {
     return self == .connected
+  }
+  
+  var icon: UIImage {
+    switch self {
+    case .connected:
+      return #imageLiteral(resourceName: "icSignal")
+    case .connecting:
+      return #imageLiteral(resourceName: "icReload")
+    case .disconnecting:
+      return #imageLiteral(resourceName: "icReload")
+    case .disconnected:
+      return #imageLiteral(resourceName: "icCross")
+    }
   }
 }

@@ -13,8 +13,8 @@ class NetServicesTableViewController: MyTableViewController {
   
   // MARK: - Class Accessors
   
-  static func newController() -> NetServicesTableViewController {
-    return self.newController(fromStoryboard: .main, withIdentifier: self.name) as! NetServicesTableViewController
+  static func newViewController() -> NetServicesTableViewController {
+    return self.newViewController(fromStoryboard: .main)
   }
   
   // MARK: - Properties
@@ -404,7 +404,7 @@ class NetServicesTableViewController: MyTableViewController {
       cell.setPressHandler(didPress: {
         
         // Create a service type
-        var viewController = CreateServiceTypeTableViewController.newController()
+        var viewController = CreateServiceTypeTableViewController.newViewController()
         viewController.presentControllerIn(self, forMode: .splitDetail)
       })
       return cell
@@ -428,7 +428,7 @@ class NetServicesTableViewController: MyTableViewController {
       let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceButtonCell.name, for: indexPath) as! NetServiceButtonCell
       cell.button.setTitle("Publish a Service", for: .normal)
       cell.setPressHandler(didPress: {
-        var viewController = PublishNetServiceSearchViewController.newController()
+        var viewController = PublishNetServiceSearchViewController.newViewController()
         viewController.presentControllerIn(self, forMode: .navStack)
       })
       return cell
@@ -443,14 +443,14 @@ class NetServicesTableViewController: MyTableViewController {
       
       if !self.isBrowsingForServces && self.services.count > 0 {
         let service = self.services[indexPath.row]
-        var viewController = ServiceDetailTableViewController.newController(browsedService: service)
+        var viewController = ServiceDetailTableViewController.newViewController(browsedService: service)
         viewController.presentControllerIn(self, forMode: .splitDetail)
       }
       
     } else if indexPath.section == self.publishedServicesTableViewSection {
       
       let service = self.publishedServices[indexPath.row]
-      var viewController = ServiceDetailTableViewController.newController(publishedService: service)
+      var viewController = ServiceDetailTableViewController.newViewController(publishedService: service)
       viewController.presentControllerIn(self, forMode: .splitDetail)
     }
   }

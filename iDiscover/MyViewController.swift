@@ -9,11 +9,12 @@
 import Foundation
 import UIKit
 
-class MyViewController: UIViewController, PresentableController {
+class MyViewController : UIViewController, PresentableController, MyViewControllerIdentifierProtocol {
   
-  // MARK: - Properties
+  // MARK: - PresentableController
   
   var presentedMode: PresentationMode = .navStack
+  var transitioningDelegateReference: UIViewControllerTransitioningDelegate? = nil
   
   // MARK: - Lifecycle
   

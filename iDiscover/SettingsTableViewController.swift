@@ -13,8 +13,8 @@ class SettingsTableViewController: MyTableViewController {
   
   // MARK: - Class Accessors
   
-  static func newController() -> SettingsTableViewController {
-    return self.newController(fromStoryboard: .settings, withIdentifier: self.name) as! SettingsTableViewController
+  static func newViewController() -> SettingsTableViewController {
+    return self.newViewController(fromStoryboard: .settings)
   }
   
   // MARK: - Properties
@@ -52,12 +52,12 @@ class SettingsTableViewController: MyTableViewController {
     if indexPath.section == 0 {
       if indexPath.row == 1 {
         // All service types
-        var viewController = AllServiceTypesTableViewController.newController()
+        var viewController = AllServiceTypesTableViewController.newViewController()
         viewController.presentControllerIn(self, forMode: .navStack)
         
       } else if indexPath.row == 2 {
         // Create a service type
-        var viewController = CreateServiceTypeTableViewController.newController()
+        var viewController = CreateServiceTypeTableViewController.newViewController()
         viewController.presentControllerIn(self, forMode: .splitDetail)
       }
       

@@ -12,6 +12,7 @@ import UIKit
 class BluetoothDeviceCell : UITableViewCell {
   @IBOutlet weak private var titleLabel: UILabel!
   @IBOutlet weak private var detailLabel: UILabel!
+  @IBOutlet weak private var connectionStatusImageView: UIImageView!
   
   var device: MyBluetoothDevice? = nil
   
@@ -20,6 +21,7 @@ class BluetoothDeviceCell : UITableViewCell {
     device.delegate = self
     self.titleLabel.text = device.name
     self.detailLabel.text  = "Total Services: \(device.services.count)"
+    self.connectionStatusImageView.image = device.state.icon
   }
 }
 

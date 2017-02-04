@@ -9,12 +9,12 @@
 import Foundation
 import UIKit
 
-class MyRootController: UITabBarController {
+class MyRootController: MyTabBarController {
   
   // MARK: - Class Accessors
   
-  static func newController() -> MyRootController {
-    return self.newController(fromStoryboard: .main, withIdentifier: self.name) as! MyRootController
+  static func newViewController() -> MyRootController {
+    return self.newViewController(fromStoryboard: .main)
   }
   
   // MARK: - Properties
@@ -63,7 +63,7 @@ class MyRootController: UITabBarController {
   func setupServicesController() -> MySplitViewController {
     
     // Configure the master controller
-    let servicesMasterViewController = NetServicesTableViewController.newController()
+    let servicesMasterViewController = NetServicesTableViewController.newViewController()
     let servicesNavigationController = MyNavigationController(rootViewController: servicesMasterViewController)
     
     // Set up split view for services
@@ -101,7 +101,7 @@ class MyRootController: UITabBarController {
   func setupSettingsController() -> MySplitViewController {
     
     // Configure the master controller
-    let settingsMasterViewController = SettingsTableViewController.newController()
+    let settingsMasterViewController = SettingsTableViewController.newViewController()
     let settingsNavigationController = MyNavigationController(rootViewController: settingsMasterViewController)
     
     // Set up split view for services
