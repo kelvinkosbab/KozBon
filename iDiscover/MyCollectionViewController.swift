@@ -57,11 +57,11 @@ class MyCollectionViewController : UICollectionViewController, UICollectionViewD
     self.updateContentInsets(size: self.collectionView?.bounds.size ?? self.view.bounds.size)
   }
   
-//  override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-//    super.viewWillTransition(to: size, with: coordinator)
-//    
-//    self.updateContentInsets(size: size)
-//  }
+  override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    super.viewWillTransition(to: size, with: coordinator)
+    
+    self.updateContentInsets(size: size)
+  }
   
   // MARK: - NSFetchedResultsControllerDelegate
   
