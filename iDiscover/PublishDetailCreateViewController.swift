@@ -18,7 +18,7 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
   // MARK: - Class Accessors
   
   static func newViewController() -> PublishDetailCreateViewController {
-    return self.newViewController(fromStoryboard: .main)
+    return self.newViewController(fromStoryboard: .services)
   }
   
   // MARK: - Properties
@@ -39,6 +39,9 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
     super.viewDidLoad()
     
     self.title = "Create a Service"
+    
+    self.navigationItem.leftBarButtonItem = UIBarButtonItem(text: "Cancel", target: self, action: #selector(self.cancelButtonSelected))
+    self.navigationItem.rightBarButtonItem = UIBarButtonItem(text: "Publish", target: self, action: #selector(self.publishButtonSelected))
     
     self.nameTextField.delegate = self
     self.typeTextField.delegate = self
@@ -100,9 +103,7 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
       self.detailTextField.becomeFirstResponder()
       
     } else if indexPath.section == 6 && indexPath.row == 0 {
-      self.publishButtonSelected()
-    } else if indexPath.section == 7 && indexPath.row == 0{
-      self.clearButtonSelected()
+      self.resetForm()
     }
   }
   
@@ -144,7 +145,11 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
   
   // MARK: - Actions
   
-  private func publishButtonSelected() {
+  @objc func cancelButtonSelected() {
+    self.dismissController()
+  }
+  
+  @objc func publishButtonSelected() {
     
     // Validate the form
     
@@ -190,9 +195,5 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
       MyLoadingManager.hideLoading()
       self.showDisappearingAlertDialog(title: "☹️ Something Went Wrong ☹️", message: "Please try again.")
     }
-  }
-  
-  private func clearButtonSelected() {
-    self.resetForm()
   }
 }

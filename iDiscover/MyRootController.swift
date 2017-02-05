@@ -25,8 +25,8 @@ class MyRootController: MyTabBarController {
     let servicesViewController = self.setupServicesController()
     let publishedServicesViewController = self.setupPublishedServicesController()
     let bluetoothViewController = self.setupBluetoothController()
-    let settingsViewController = self.setupSettingsController()
-    self.viewControllers = [ servicesViewController, publishedServicesViewController, settingsViewController ]
+    let infoViewController = self.setupInfoController()
+    self.viewControllers = [ servicesViewController, publishedServicesViewController, infoViewController ]
   }
   
   // MARK: - Controllers
@@ -45,10 +45,10 @@ class MyRootController: MyTabBarController {
     return viewController
   }
   
-  func setupSettingsController() -> UIViewController {
+  func setupInfoController() -> UIViewController {
     let viewController = MyNavigationController(rootViewController: SettingsViewController.newViewController())
-    viewController.title = "Settings"
-    viewController.tabBarItem = UITabBarItem(title: "Settings", image: #imageLiteral(resourceName: "iconTools"), selectedImage: nil)
+    viewController.title = "Information"
+    viewController.tabBarItem = UITabBarItem(title: "Information", image: #imageLiteral(resourceName: "icInfo"), selectedImage: nil)
     return viewController
   }
   

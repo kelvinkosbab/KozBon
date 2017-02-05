@@ -14,7 +14,7 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
   // MARK: - Class Accessors
   
   static func newViewController() -> PublishDetailExistingViewController {
-    return self.newViewController(fromStoryboard: .main)
+    return self.newViewController(fromStoryboard: .services)
   }
   
   static func newViewController(serviceType: MyServiceType) -> PublishDetailExistingViewController {

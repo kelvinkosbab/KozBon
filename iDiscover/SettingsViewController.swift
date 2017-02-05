@@ -14,13 +14,13 @@ class SettingsViewController : MyCollectionViewController {
   // MARK: - Class Accessors
   
   static func newViewController() -> SettingsViewController {
-    return self.newViewController(fromStoryboard: .settings)
+    return self.newViewController(fromStoryboard: .info)
   }
   
   // MARK: - Edit Mode Properties
   
   override var defaultViewTitle: String? {
-    return "Settings"
+    return "Information"
   }
   
   // MARK: - UICollectionView Helpers
@@ -31,7 +31,7 @@ class SettingsViewController : MyCollectionViewController {
     var sectionTitle: String {
       switch self {
       case .serviceTypes:
-        return "Service Types"
+        return "Bonjour Services"
       case .other:
         return "Other"
       }
@@ -111,7 +111,7 @@ class SettingsViewController : MyCollectionViewController {
       
     case UICollectionElementKindSectionHeader:
       let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SettingsHeaderView.name, for: indexPath) as! SettingsHeaderView
-      let sectionType = SettingsSectionType.all[indexPath.row]
+      let sectionType = SettingsSectionType.all[indexPath.section]
       headerView.configure(title: sectionType.sectionTitle)
       return headerView
       

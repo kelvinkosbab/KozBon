@@ -19,7 +19,7 @@ class PublishNetServiceSearchViewController: MyTableViewController, UISearchResu
   // MARK: - Class Accessors
   
   static func newViewController() -> PublishNetServiceSearchViewController {
-    return self.newViewController(fromStoryboard: .main)
+    return self.newViewController(fromStoryboard: .services)
   }
   
   // MARK: - Properties
