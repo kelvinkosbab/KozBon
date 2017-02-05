@@ -24,6 +24,13 @@
 		B6833CBB1E3D42E400F56A90 /* MyBluetoothService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6833CBA1E3D42E400F56A90 /* MyBluetoothService.swift */; };
 		B6833CBD1E3D44F200F56A90 /* BluetoothDeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6833CBC1E3D44F200F56A90 /* BluetoothDeviceCell.swift */; };
 		B6859C501E282915001B8245 /* UIColor+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6859C4F1E282915001B8245 /* UIColor+Util.swift */; };
+		B68B21221E4798F600BE2CA2 /* ServiceDetailHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B21211E4798F600BE2CA2 /* ServiceDetailHeaderCell.swift */; };
+		B68B21251E47A0AB00BE2CA2 /* ServiceDetailSimpleHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B21241E47A0AB00BE2CA2 /* ServiceDetailSimpleHeaderCell.swift */; };
+		B68B21271E47A2C700BE2CA2 /* ServiceDetailAddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B21261E47A2C700BE2CA2 /* ServiceDetailAddressCell.swift */; };
+		B68B21291E47A2E100BE2CA2 /* ServiceDetailKeyValueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B21281E47A2E100BE2CA2 /* ServiceDetailKeyValueCell.swift */; };
+		B68B212B1E47A4F500BE2CA2 /* ServiceDetailLoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B212A1E47A4F500BE2CA2 /* ServiceDetailLoadingCell.swift */; };
+		B68B212D1E47A55800BE2CA2 /* ServiceDetailSimpleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B212C1E47A55800BE2CA2 /* ServiceDetailSimpleCell.swift */; };
+		B68B212F1E47A65C00BE2CA2 /* ServiceDetailDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B212E1E47A65C00BE2CA2 /* ServiceDetailDescriptionCell.swift */; };
 		B68EC5A01E2F226A00C9D5CC /* BluetoothViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EC59F1E2F226A00C9D5CC /* BluetoothViewController.swift */; };
 		B68EEA3D1E46706E00831CC4 /* MyCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA3C1E46706E00831CC4 /* MyCollectionViewController.swift */; };
 		B68EEA3F1E46709000831CC4 /* EmptyStateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA3E1E46709000831CC4 /* EmptyStateProtocol.swift */; };
@@ -95,6 +102,13 @@
 		B6833CBA1E3D42E400F56A90 /* MyBluetoothService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyBluetoothService.swift; sourceTree = "<group>"; };
 		B6833CBC1E3D44F200F56A90 /* BluetoothDeviceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothDeviceCell.swift; sourceTree = "<group>"; };
 		B6859C4F1E282915001B8245 /* UIColor+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Util.swift"; sourceTree = "<group>"; };
+		B68B21211E4798F600BE2CA2 /* ServiceDetailHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailHeaderCell.swift; sourceTree = "<group>"; };
+		B68B21241E47A0AB00BE2CA2 /* ServiceDetailSimpleHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailSimpleHeaderCell.swift; sourceTree = "<group>"; };
+		B68B21261E47A2C700BE2CA2 /* ServiceDetailAddressCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailAddressCell.swift; sourceTree = "<group>"; };
+		B68B21281E47A2E100BE2CA2 /* ServiceDetailKeyValueCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailKeyValueCell.swift; sourceTree = "<group>"; };
+		B68B212A1E47A4F500BE2CA2 /* ServiceDetailLoadingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailLoadingCell.swift; sourceTree = "<group>"; };
+		B68B212C1E47A55800BE2CA2 /* ServiceDetailSimpleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailSimpleCell.swift; sourceTree = "<group>"; };
+		B68B212E1E47A65C00BE2CA2 /* ServiceDetailDescriptionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailDescriptionCell.swift; sourceTree = "<group>"; };
 		B68EC59F1E2F226A00C9D5CC /* BluetoothViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothViewController.swift; sourceTree = "<group>"; };
 		B68EEA3C1E46706E00831CC4 /* MyCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCollectionViewController.swift; sourceTree = "<group>"; };
 		B68EEA3E1E46709000831CC4 /* EmptyStateProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyStateProtocol.swift; sourceTree = "<group>"; };
@@ -164,7 +178,6 @@
 		B679CC101E16243C0056C7B5 /* Service Detail / Create */ = {
 			isa = PBXGroup;
 			children = (
-				B6089C991E19D76D00C7CF29 /* ServiceDetailTableViewController.swift */,
 				B6C4BC541E1CD30A004409F1 /* CreateServiceTypeTableViewController.swift */,
 				B67BB3271E18657F00A3228E /* AllServiceTypesTableViewController.swift */,
 				B6AE53871E170A7D00FB57E3 /* Publishing */,
@@ -182,6 +195,21 @@
 				B68EEA641E47204E00831CC4 /* SettingsKeyValueCell.swift */,
 			);
 			name = Settings;
+			sourceTree = "<group>";
+		};
+		B68B21231E47A00800BE2CA2 /* Service Detail */ = {
+			isa = PBXGroup;
+			children = (
+				B6089C991E19D76D00C7CF29 /* ServiceDetailTableViewController.swift */,
+				B68B21211E4798F600BE2CA2 /* ServiceDetailHeaderCell.swift */,
+				B68B21241E47A0AB00BE2CA2 /* ServiceDetailSimpleHeaderCell.swift */,
+				B68B21261E47A2C700BE2CA2 /* ServiceDetailAddressCell.swift */,
+				B68B21281E47A2E100BE2CA2 /* ServiceDetailKeyValueCell.swift */,
+				B68B212E1E47A65C00BE2CA2 /* ServiceDetailDescriptionCell.swift */,
+				B68B212A1E47A4F500BE2CA2 /* ServiceDetailLoadingCell.swift */,
+				B68B212C1E47A55800BE2CA2 /* ServiceDetailSimpleCell.swift */,
+			);
+			name = "Service Detail";
 			sourceTree = "<group>";
 		};
 		B68EC59E1E2F1F1300C9D5CC /* Bluetooth */ = {
@@ -367,6 +395,7 @@
 				B679CC091E1618840056C7B5 /* MyRootController.swift */,
 				B68EEA481E46869100831CC4 /* Services */,
 				B68EEA4F1E470D3100831CC4 /* Publish Services */,
+				B68B21231E47A00800BE2CA2 /* Service Detail */,
 				B679CC101E16243C0056C7B5 /* Service Detail / Create */,
 				B68EC59E1E2F1F1300C9D5CC /* Bluetooth */,
 				B682621F1E1818B800D0445D /* Settings */,
@@ -495,7 +524,9 @@
 				B6CE1D5D1E120CCC003D4FFA /* MyNetBrowserState.swift in Sources */,
 				B68EEA3D1E46706E00831CC4 /* MyCollectionViewController.swift in Sources */,
 				B68EEA451E46800700831CC4 /* MyTabBarController.swift in Sources */,
+				B68B21271E47A2C700BE2CA2 /* ServiceDetailAddressCell.swift in Sources */,
 				B69154651E13906500382F41 /* String+Util.swift in Sources */,
+				B68B212B1E47A4F500BE2CA2 /* ServiceDetailLoadingCell.swift in Sources */,
 				B6CE1D661E120E4D003D4FFA /* CustomServiceType.swift in Sources */,
 				B6089C9C1E1A2A3900C7CF29 /* MyServiceType+CustomServiceType.swift in Sources */,
 				B6CE1D471E120ADC003D4FFA /* Date+Util.swift in Sources */,
@@ -524,11 +555,14 @@
 				B6C4BC521E1CC2CD004409F1 /* TableViewCells.swift in Sources */,
 				B691545F1E1317A000382F41 /* MyAddress.swift in Sources */,
 				B679CC171E1647670056C7B5 /* MyBonjourPublishManager.swift in Sources */,
+				B68B21291E47A2E100BE2CA2 /* ServiceDetailKeyValueCell.swift in Sources */,
 				B62E19971E174236008BC91C /* MyLoadingManager.swift in Sources */,
 				B68EEA5D1E47137600831CC4 /* PublishedServiceCell.swift in Sources */,
 				B6CE1D501E120B90003D4FFA /* UIViewController+Util.swift in Sources */,
 				B6AE53821E16FF5500FB57E3 /* PublishDetailBaseViewController.swift in Sources */,
+				B68B21221E4798F600BE2CA2 /* ServiceDetailHeaderCell.swift in Sources */,
 				B68EEA5B1E4710B700831CC4 /* PublishedServicesFooterView.swift in Sources */,
+				B68B212D1E47A55800BE2CA2 /* ServiceDetailSimpleCell.swift in Sources */,
 				B68EEA591E47107F00831CC4 /* PublishedServicesHeaderView.swift in Sources */,
 				B68EC5A01E2F226A00C9D5CC /* BluetoothViewController.swift in Sources */,
 				B68EEA571E47104D00831CC4 /* ServicesServiceCell.swift in Sources */,
@@ -551,7 +585,9 @@
 				B6AE537C1E16D45700FB57E3 /* PresentableController.swift in Sources */,
 				B6833CBB1E3D42E400F56A90 /* MyBluetoothService.swift in Sources */,
 				B68EEA551E47103100831CC4 /* ServicesFooterView.swift in Sources */,
+				B68B21251E47A0AB00BE2CA2 /* ServiceDetailSimpleHeaderCell.swift in Sources */,
 				B6CE1D551E120BF4003D4FFA /* MyCoreDataStack.swift in Sources */,
+				B68B212F1E47A65C00BE2CA2 /* ServiceDetailDescriptionCell.swift in Sources */,
 				B6859C501E282915001B8245 /* UIColor+Util.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

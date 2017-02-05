@@ -9,12 +9,16 @@
 import Foundation
 import UIKit
 
+protocol ServiceDetailMoreLessDelegate {
+  func serviceDetailDidUpdateMoreLess(isShowingMore: Bool)
+}
+
 class ServiceDetailTableViewController: MyTableViewController {
   
   // MARK: - Class Accessors
   
   static private func newViewController() -> ServiceDetailTableViewController {
-    return self.newViewController(fromStoryboard: .main)
+    return self.newViewController(fromStoryboard: .services)
   }
   
   static func newViewController(browsedService service: MyNetService) -> ServiceDetailTableViewController {
@@ -59,15 +63,15 @@ class ServiceDetailTableViewController: MyTableViewController {
     }
   }
   
+  var showingMoreDelegate: ServiceDetailMoreLessDelegate? = nil
   var mode: ServiceDetailMode = .browsedService
   var service: MyNetService? = nil
   var serviceType: MyServiceType!
   
-  var moreDetailsButton: UIButton? = nil
-  
   var isMoreDetails: Bool = false {
     didSet {
-      self.moreDetailsButton?.setTitle(self.isMoreDetails ? "Less" : "More", for: .normal)
+      self.showingMoreDelegate?.serviceDetailDidUpdateMoreLess(isShowingMore: self.isMoreDetails)
+      
       if self.isMoreDetails {
         // Show the extra details
         var indexPathsToInsert: [IndexPath] = []
@@ -174,10 +178,6 @@ class ServiceDetailTableViewController: MyTableViewController {
     self.dismissController()
   }
   
-  @objc private func moreDetailsButtonSelected(_ sender: UIButton) {
-    self.isMoreDetails = !self.isMoreDetails
-  }
-  
   // MARK: - UITableView
   
   override func numberOfSections(in tableView: UITableView) -> Int {
@@ -230,20 +230,9 @@ class ServiceDetailTableViewController: MyTableViewController {
   override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     
     if section == 0 {
-      let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableHeaderCell.name) as! NetServicesTableHeaderCell
-      cell.titleLabel.text = "Information".uppercased()
-      if let _ = self.service {
-        cell.loadingActivityIndicator.stopAnimating()
-        cell.loadingActivityIndicator.isHidden = true
-        self.moreDetailsButton = cell.reloadButton
-        cell.reloadButton.setTitle(self.isMoreDetails ? "Less" : "More", for: .normal)
-        cell.reloadButton.addTarget(self, action: #selector(self.moreDetailsButtonSelected(_:)), for: .touchUpInside)
-      } else {
-        cell.loadingActivityIndicator.stopAnimating()
-        cell.loadingActivityIndicator.isHidden = true
-        cell.reloadButton.isHidden = true
-        cell.reloadButton.removeTarget(nil, action: nil, for: .allEvents)
-      }
+      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailButtonHeaderCell.name) as! ServiceDetailButtonHeaderCell
+      cell.configure(self, title: "Information", isShowingMore: self.isMoreDetails)
+      self.showingMoreDelegate = cell
       return cell.contentView
     }
     
@@ -252,8 +241,8 @@ class ServiceDetailTableViewController: MyTableViewController {
     // The service was published by this device
     if self.mode.isPublishedService {
       if section == 1 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceHeaderCell.name) as! NetServiceHeaderCell
-        cell.titleLabel.text = "Actions".uppercased()
+        let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailSimpleHeaderCell.name) as! ServiceDetailSimpleHeaderCell
+        cell.configure(title: "Actions")
         return cell.contentView
       }
     }
@@ -263,15 +252,14 @@ class ServiceDetailTableViewController: MyTableViewController {
       
       if section == 1 {
         // Addresses
-        let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceHeaderCell.name) as! NetServiceHeaderCell
-        let addressesString = "Addresses".uppercased()
-        cell.titleLabel.text = service.hostName == "NA" ? addressesString : "\(addressesString) : \(service.hostName)"
+        let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailSimpleHeaderCell.name) as! ServiceDetailSimpleHeaderCell
+        cell.configure(title: service.hostName == "NA" ? "Addresses" : "Addresses : \(service.hostName)")
         return cell.contentView
         
       } else if section == 2 {
         // Data Records
-        let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceHeaderCell.name) as! NetServiceHeaderCell
-        cell.titleLabel.text = "Data Records".uppercased()
+        let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailSimpleHeaderCell.name) as! ServiceDetailSimpleHeaderCell
+        cell.configure(title: "TXT Records")
         return cell.contentView
       }
     }
@@ -297,23 +285,22 @@ class ServiceDetailTableViewController: MyTableViewController {
     if indexPath.section == 0 {
       let item = self.serviceInformationSectionItems[indexPath.row]
       if item.isDetail {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceDetailCell.name, for: indexPath) as! NetServiceDetailCell
-        cell.detailLabel.text = item.value
+        let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailDescriptionCell.name, for: indexPath) as! ServiceDetailDescriptionCell
+        cell.configure(text: item.value)
         return cell
         
       } else {
         // Key-value cell
-        let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceKeyValueCell.name, for: indexPath) as! NetServiceKeyValueCell
-        cell.keyLabel.text = item.key.uppercased()
-        cell.valueLabel.text = item.value
+        let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailKeyValueCell.name, for: indexPath) as! ServiceDetailKeyValueCell
+        cell.configure(key: item.key, value: item.value)
         return cell
       }
     }
     
     // The service was published by this device
     if self.mode.isPublishedService, let service = self.service {
-      let cell = tableView.dequeueReusableCell(withIdentifier: MyBasicCenterLabelCell.name, for: indexPath) as! MyBasicCenterLabelCell
-      cell.titleLabel.textColor = UIColor.blue
+      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailSimpleCell.name, for: indexPath) as! ServiceDetailSimpleCell
+      cell.configure(textColor: .blue)
       
       // Determine if the service is currently published
       var isCurrentlyPublished: Bool = false
@@ -323,7 +310,7 @@ class ServiceDetailTableViewController: MyTableViewController {
           break
         }
       }
-      cell.titleLabel.text = isCurrentlyPublished ? "Un-Publish Service" : "Publish Service"
+      cell.configure(title: isCurrentlyPublished ? "Un-Publish Service" : "Publish Service")
       return cell
     }
     
@@ -331,31 +318,33 @@ class ServiceDetailTableViewController: MyTableViewController {
     if self.mode.isBrowsedService, let service = self.service {
       
       if indexPath.section == 1 {
+        
         // Addresses section
         if service.isResolving {
-          let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableLoadingCell.name, for: indexPath) as! NetServicesTableLoadingCell
-          cell.loadingActivityIndicator.startAnimating()
-          cell.loadingActivityIndicator.isHidden = false
+          let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailLoadingCell.name, for: indexPath) as! ServiceDetailLoadingCell
+          cell.activityIndicator.startAnimating()
+          cell.activityIndicator.isHidden = false
           return cell
           
         } else if !service.isResolving && service.addresses.count == 0 {
-          let cell = tableView.dequeueReusableCell(withIdentifier: MyBasicCenterLabelCell.name, for: indexPath) as! MyBasicCenterLabelCell
-          cell.titleLabel.text = "No Addresses Resolved"
+          
+          let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailSimpleCell.name, for: indexPath) as! ServiceDetailSimpleCell
+          cell.configure(title: "No Addresses Resolved")
+          cell.configure(textColor: .black)
           return cell
         }
         
         let address = service.addresses[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceAddressCell.name, for: indexPath) as! NetServiceAddressCell
-        cell.ipLabel.text = address.fullAddress
-        cell.ipLayerProtocolLabel.text = address.internetProtocol.string
+        let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell
+        cell.configure(title: address.fullAddress, detail: address.internetProtocol.string)
         return cell
         
       } else if indexPath.section == 2 {
+        
         // Data records section
         let record = service.dataRecords[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: NetServiceKeyValueCell.name, for: indexPath) as! NetServiceKeyValueCell
-        cell.keyLabel.text = record.key
-        cell.valueLabel.text = record.value
+        let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailKeyValueCell.name, for: indexPath) as! ServiceDetailKeyValueCell
+        cell.configure(key: record.key, value: record.value)
         return cell
       }
     }
@@ -395,5 +384,12 @@ class ServiceDetailTableViewController: MyTableViewController {
         })
       }
     }
+  }
+}
+
+extension ServiceDetailTableViewController : ServiceDetailButtonHeaderCellDelegate {
+  
+  func serviceDetailMoreLessButtonSelected() {
+    self.isMoreDetails = !self.isMoreDetails
   }
 }
