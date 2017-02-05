@@ -14,7 +14,7 @@ class AllServiceTypesTableViewController: MyTableViewController, UISearchResults
   // MARK: - Class Accessors
   
   static func newViewController() -> AllServiceTypesTableViewController {
-    return self.newViewController(fromStoryboard: .settings)
+    return self.newViewController(fromStoryboard: .services)
   }
   
   // MARK: - Properties
@@ -22,7 +22,6 @@ class AllServiceTypesTableViewController: MyTableViewController, UISearchResults
   var serviceTypes: [MyServiceType] = []
   var filteredServiceTypes: [MyServiceType] = []
   let searchController = UISearchController(searchResultsController: nil)
-  var serviceDetailViewController: ServiceDetailTableViewController? = nil
   
   private var isFiltered: Bool {
     let scope = MyServiceTypeScope.allScopes[self.searchController.searchBar.selectedScopeButtonIndex]
@@ -41,6 +40,10 @@ class AllServiceTypesTableViewController: MyTableViewController, UISearchResults
     
     self.title = "All Service Types"
     
+    if self.navigationController?.viewControllers.first == self {
+      self.navigationItem.leftBarButtonItem = UIBarButtonItem(text: "Done", target: self, action: #selector(self.doneButtonSelected(_:)))
+    }
+    
     // Setup the Search Controller
     self.searchController.searchResultsUpdater = self
     self.searchController.searchBar.delegate = self
@@ -55,10 +58,10 @@ class AllServiceTypesTableViewController: MyTableViewController, UISearchResults
     }
   }
   
-  override func viewWillDisappear(_ animated: Bool) {
-    super.viewWillDisappear(animated)
-    
-    self.serviceDetailViewController?.dismissController()
+  // MARK: - Button Actions
+  
+  @objc func doneButtonSelected(_ sender: UIBarButtonItem) {
+    self.dismissController()
   }
   
   // MARK: - Search Controller
@@ -145,21 +148,7 @@ class AllServiceTypesTableViewController: MyTableViewController, UISearchResults
     tableView.deselectRow(at: indexPath, animated: true)
     
     let serviceType = self.isFiltered ? self.filteredServiceTypes[indexPath.row] : self.serviceTypes[indexPath.row]
-    
-    if UIDevice.isPhone {
-      var viewController = ServiceDetailTableViewController.newViewController(serviceType: serviceType)
-      viewController.presentControllerIn(self, forMode: .navStack)
-      
-    } else if let serviceDetailViewController = self.serviceDetailViewController {
-      
-      // Already showing a existing service type detail
-      serviceDetailViewController.serviceType = serviceType
-      serviceDetailViewController.reloadData()
-      
-    } else {
-      var viewController = ServiceDetailTableViewController.newViewController(serviceType: serviceType)
-      self.serviceDetailViewController = viewController
-      viewController.presentControllerIn(self, forMode: .splitDetail, completion: nil)
-    }
+    var viewController = ServiceDetailTableViewController.newViewController(serviceType: serviceType)
+    viewController.presentControllerIn(self, forMode: .navStack)
   }
 }
