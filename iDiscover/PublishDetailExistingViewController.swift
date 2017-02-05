@@ -33,12 +33,16 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
   @IBOutlet weak var domainTextField: UITextField!
   @IBOutlet weak var detailTextField: UITextField!
   
+  var delegate: PublishNetServiceDelegate? = nil
+  
   var serviceType: MyServiceType!
   
   // MARK: - Lifecycle
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    self.navigationItem.rightBarButtonItem = UIBarButtonItem(text: "Publish", target: self, action: #selector(self.publishButtonSelected))
     
     self.nameTextField.isUserInteractionEnabled = false
     self.nameTextField.textColor = UIColor.darkGray
@@ -53,20 +57,18 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
     self.resetForm()
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    self.updateServiceContent()
+  }
+  
   // MARK: - Content
   
   func resetForm() {
     self.updateServiceContent()
     self.portTextField.text = "3000"
     self.domainTextField.text = ""
-  }
-  
-  // MARK: - Lifecycle
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    
-    self.updateServiceContent()
   }
   
   // MARK: - Content
@@ -100,8 +102,6 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
       self.domainTextField.becomeFirstResponder()
       
     } else if indexPath.section == 6 && indexPath.row == 0 {
-      self.publishButtonSelected()
-    } else if indexPath.section == 7 && indexPath.row == 0 {
       self.clearButtonSelected()
     }
   }
@@ -131,7 +131,7 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
   
   // MARK: - Actions
   
-  private func publishButtonSelected() {
+  @objc func publishButtonSelected() {
     
     guard let port = self.portTextField.text, let portValue = port.convertToInt, portValue > 0 else {
       self.showDisappearingAlertDialog(title: "Invalid Port Number")
@@ -147,7 +147,7 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
       MyLoadingManager.hideLoading()
       self.showDisappearingAlertDialog(title: "Service Published!") {
         self.dismissController(completion: {
-          NotificationCenter.default.post(name: .publishNetServiceSearchShouldDismiss, object: nil)
+          self.delegate?.servicePublished()
         })
       }
     }) {

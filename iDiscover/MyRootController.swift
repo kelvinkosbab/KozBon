@@ -17,66 +17,32 @@ class MyRootController: MyTabBarController {
     return self.newViewController(fromStoryboard: .main)
   }
   
-  // MARK: - Properties
-  
-  var servicesSplitViewController: MySplitViewController!
-  var bluetoothSplitViewController: MySplitViewController!
-  var settingsSplitViewController: MySplitViewController!
-  
   // MARK: - Lifecycle
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    self.servicesSplitViewController = self.setupServicesController()
-    self.bluetoothSplitViewController = self.setupBluetoothController()
-    self.settingsSplitViewController = self.setupSettingsController()
-    self.viewControllers = [ self.servicesSplitViewController, self.bluetoothSplitViewController, self.settingsSplitViewController ]
-  }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    
-    self.updateSplitViewWidths()
-  }
-  
-  // MARK: - Orientation
-  
-  override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-    if !UIDevice.isPhone {
-      self.updateSplitViewWidths(newWidth: size.width)
-    }
-  }
-  
-  private func updateSplitViewWidths(newWidth: CGFloat? = nil) {
-    if !UIDevice.isPhone {
-      let width = newWidth ?? min(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
-      self.servicesSplitViewController.minimumPrimaryColumnWidth = width / 2
-      self.servicesSplitViewController.maximumPrimaryColumnWidth = width / 2
-      self.settingsSplitViewController.minimumPrimaryColumnWidth = width / 2
-      self.settingsSplitViewController.maximumPrimaryColumnWidth = width / 2
-    }
+    let servicesViewController = self.setupServicesController()
+    let publishedServicesViewController = self.setupPublishedServicesController()
+    let bluetoothViewController = self.setupBluetoothController()
+    let settingsViewController = self.setupSettingsController()
+    self.viewControllers = [ servicesViewController, publishedServicesViewController, settingsViewController ]
   }
   
   // MARK: - Controllers
   
-  func setupServicesController() -> MySplitViewController {
-    
-    // Configure the master controller
-    let servicesMasterViewController = NetServicesTableViewController.newViewController()
-    let servicesNavigationController = MyNavigationController(rootViewController: servicesMasterViewController)
-    
-    // Set up split view for services
-    let servicesSplitViewController = MySplitViewController()
-    servicesSplitViewController.viewControllers = [ servicesNavigationController ]
-    if !UIDevice.isPhone {
-      servicesSplitViewController.minimumPrimaryColumnWidth = UIScreen.main.bounds.width / 2
-      servicesSplitViewController.maximumPrimaryColumnWidth = UIScreen.main.bounds.width / 2
-    }
-    servicesSplitViewController.preferredDisplayMode = .allVisible
-    servicesSplitViewController.title = "Bonjour"
-    servicesSplitViewController.tabBarItem = UITabBarItem(title: "Bonjour", image: #imageLiteral(resourceName: "iconBonjour"), selectedImage: nil)
-    return servicesSplitViewController
+  func setupServicesController() -> UIViewController {
+    let viewController = MyNavigationController(rootViewController: ServicesViewController.newViewController())
+    viewController.title = "Bonjour"
+    viewController.tabBarItem = UITabBarItem(title: "Bonjour", image: #imageLiteral(resourceName: "iconBonjour"), selectedImage: nil)
+    return viewController
+  }
+  
+  func setupPublishedServicesController() -> UIViewController {
+    let viewController = MyNavigationController(rootViewController: PublishedServicesViewController.newViewController())
+    viewController.title = "Publish"
+    viewController.tabBarItem = UITabBarItem(title: "Publish", image: #imageLiteral(resourceName: "icPublish"), selectedImage: nil)
+    return viewController
   }
   
   func setupBluetoothController() -> MySplitViewController {

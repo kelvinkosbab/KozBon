@@ -14,6 +14,10 @@ extension Notification.Name {
   static let bonjourDidClearServices = Notification.Name(rawValue: "\(MyBonjourManager.name).bonjourDidClearServices")
 }
 
+protocol MyBonjourManagerDelegate {
+  func servicesDidUpdate(_ services: [MyNetService])
+}
+
 class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
   
   // MARK: - Singleton
@@ -24,9 +28,19 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
   
   // MARK: - Properties
   
+  var delegate: MyBonjourManagerDelegate? = nil
+  
   var completion: ((_ services: [MyNetService]) -> Void)? = nil
   
   private var serviceBrowsers: [MyNetServiceBrowser] = []
+  
+  var sortType: MyNetServiceSortType? = nil {
+    didSet {
+      if let sortType = self.sortType {
+        self.services = sortType.sorted(services: self.services)
+      }
+    }
+  }
   
   // MARK: - Service Browser State
   
@@ -65,49 +79,33 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
   
   // MARK: - Services
   
-  private var _services: [MyNetService] = []
   private let concurrentServicesQueue: DispatchQueue = DispatchQueue(label: "\(MyBonjourManager.name).concurrentServicesQueue", attributes: .concurrent)
-  
-  private var services: [MyNetService] {
-    var copy: [MyNetService]!
-    self.concurrentServicesQueue.sync {
-      copy = self._services
+  var services: [MyNetService] = [] {
+    didSet {
+      self.delegate?.servicesDidUpdate(self.services)
     }
-    return copy
   }
   
   private func clearServices() {
-    self.concurrentServicesQueue.async(flags: .barrier, execute: { () -> Void in
-      self._services = []
-      DispatchQueue.main.async {
-        NotificationCenter.default.post(name: .bonjourDidClearServices, object: nil)
-      }
-    })
+    self.services = []
+    NotificationCenter.default.post(name: .bonjourDidClearServices, object: nil)
   }
   
   private func add(service: MyNetService) {
-    self.concurrentServicesQueue.async(flags: .barrier, execute: { () -> Void in
-      if !self._services.contains(service) {
-        self._services.append(service)
-        DispatchQueue.main.async {
-          NotificationCenter.default.post(name: .bonjourDidAddService, object: service)
-          service.resolve {
-            self.checkDiscoveryCompletion()
-          }
-        }
-      }
-    })
+    if !self.services.contains(service) {
+      self.services.append(service)
+      NotificationCenter.default.post(name: .bonjourDidAddService, object: service)
+      service.resolve(completedAddressResolution: {
+        self.checkDiscoveryCompletion()
+      })
+    }
   }
   
   private func remove(service: MyNetService) {
-    self.concurrentServicesQueue.async(flags: .barrier, execute: { () -> Void in
-      if let index = self._services.index(of: service) {
-        self._services.remove(at: index)
-        DispatchQueue.main.async {
-          NotificationCenter.default.post(name: .bonjourDidRemoveService, object: service)
-        }
-      }
-    })
+    if let index = self.services.index(of: service) {
+      self.services.remove(at: index)
+      NotificationCenter.default.post(name: .bonjourDidRemoveService, object: service)
+    }
   }
   
   // MARK: - Start / Stop Discovery

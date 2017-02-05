@@ -21,6 +21,8 @@ class MyNavigationController : UINavigationController, PresentableController, My
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    self.navigationBar.isTranslucent = false
+    
     self.styleTitleText()
     self.styleColors()
   }

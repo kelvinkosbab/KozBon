@@ -102,6 +102,10 @@ class ServiceDetailTableViewController: MyTableViewController {
     
     self.title = self.serviceType.name
     
+    if self.navigationController?.viewControllers.first == self {
+      self.navigationItem.leftBarButtonItem = UIBarButtonItem(text: "Done", target: self, action: #selector(self.doneButtonSelected(_:)))
+    }
+    
     if let service = self.service {
       NotificationCenter.default.addObserver(self, selector: #selector(self.serviceWasRemoved(_:)), name: .bonjourDidRemoveService, object: service)
       NotificationCenter.default.addObserver(self, selector: #selector(self.serviceWasRemoved(_:)), name: .bonjourDidClearServices, object: nil)
@@ -165,6 +169,10 @@ class ServiceDetailTableViewController: MyTableViewController {
   }
   
   // MARK: - Actions
+  
+  @objc private func doneButtonSelected(_ sender: UIBarButtonItem) {
+    self.dismissController()
+  }
   
   @objc private func moreDetailsButtonSelected(_ sender: UIButton) {
     self.isMoreDetails = !self.isMoreDetails

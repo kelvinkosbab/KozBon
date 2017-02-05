@@ -32,6 +32,11 @@ class MyCollectionViewController : UICollectionViewController, UICollectionViewD
     
     self.title = self.defaultViewTitle
     
+    self.navigationItem.backBarButtonItem = UIBarButtonItem(text: "")
+    
+    self.view.backgroundColor = UIColor.groupTableViewBackground
+    self.collectionView?.backgroundColor = UIColor.groupTableViewBackground
+    
     // Setting this flag sets the navigation item elements
     self.isEditing = false
     self.updateNavigationAndTabBar()
@@ -52,11 +57,11 @@ class MyCollectionViewController : UICollectionViewController, UICollectionViewD
     self.updateContentInsets(size: self.collectionView?.bounds.size ?? self.view.bounds.size)
   }
   
-  override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-    super.viewWillTransition(to: size, with: coordinator)
-    
-    self.updateContentInsets(size: size)
-  }
+//  override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+//    super.viewWillTransition(to: size, with: coordinator)
+//    
+//    self.updateContentInsets(size: size)
+//  }
   
   // MARK: - NSFetchedResultsControllerDelegate
   
@@ -68,7 +73,7 @@ class MyCollectionViewController : UICollectionViewController, UICollectionViewD
   
   func reloadData() {
     self.collectionView?.reloadData()
-    self.updateEmptyState()
+//    self.updateEmptyState() // TODO: Fix this
   }
   
   // MARK: - EmptyStateProtocol
@@ -83,15 +88,18 @@ class MyCollectionViewController : UICollectionViewController, UICollectionViewD
   
   func updateEmptyState() {
     
+    guard let collectionView = self.collectionView else {
+      self.hideEmptyState()
+      return
+    }
+    
     // Check for empty state
-    if let collectionView = self.collectionView {
-      if self.numberOfSections(in: collectionView) == 0 || (self.numberOfSections(in: collectionView) == 1 && self.collectionView(collectionView, numberOfItemsInSection: 0) == 0) {
-        // Show empty state
-        self.showEmptyState()
-      } else {
-        // Hide empty state
-        self.hideEmptyState()
-      }
+    if self.numberOfSections(in: collectionView) == 0 || (self.numberOfSections(in: collectionView) == 1 && self.collectionView(collectionView, numberOfItemsInSection: 0) == 0) {
+      // Show empty state
+      self.showEmptyState()
+    } else {
+      // Hide empty state
+      self.hideEmptyState()
     }
   }
   
@@ -107,7 +115,7 @@ class MyCollectionViewController : UICollectionViewController, UICollectionViewD
   
   func getContentInsets(width: CGFloat? = nil) -> UIEdgeInsets {
     let collectionWidth = width ?? self.collectionView?.bounds.width ?? self.view.bounds.width
-    if Device.isPhone || collectionWidth < 400 { // Phone and portrait views
+    if self.isConststrainedWidth(view: self.collectionView ?? self.view) {
       return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
       
     } else if collectionWidth < 630 {
@@ -141,24 +149,28 @@ class MyCollectionViewController : UICollectionViewController, UICollectionViewD
   
   // MARK: - UICollectionViewDelegateFlowLayout
   
-  func isConststrainedWidth(collectionView: UICollectionView) -> Bool {
-    return Device.isPhone || collectionView.frame.width < 600
+  func isConststrainedWidth(view: UIView) -> Bool {
+    return UIDevice.isPhone || view.frame.width < 600
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
     return CGSize(width: collectionView.bounds.width, height: 50)
   }
   
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+    return CGSize(width: collectionView.bounds.width, height: 50)
+  }
+  
   func sizeForItemAt(indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
     var width: CGFloat = self.defaultPadCellWidth
     let collectionWidth = collectionView.frame.width
-    if self.isConststrainedWidth(collectionView: collectionView) {
+    if self.isConststrainedWidth(view: collectionView) {
       width = collectionWidth
       
     } else if collectionWidth < 630 {
       width = collectionWidth - 20
     }
-    return CGSize(width: width, height: 84)
+    return CGSize(width: width, height: UIDevice.isPhone ? 55 : 80)
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -166,14 +178,14 @@ class MyCollectionViewController : UICollectionViewController, UICollectionViewD
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-    if self.isConststrainedWidth(collectionView: collectionView) {
+    if self.isConststrainedWidth(view: collectionView) {
       return 1
     }
     return 10
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-    if self.isConststrainedWidth(collectionView: collectionView) {
+    if self.isConststrainedWidth(view: collectionView) {
       return 1
     }
     return 10

@@ -32,6 +32,9 @@ class CreateServiceTypeTableViewController: MyTableViewController, UITextFieldDe
     
     self.title = "Create a Service"
     
+    self.navigationItem.leftBarButtonItem = UIBarButtonItem(text: "Cancel", target: self, action: #selector(self.cancelButtonSelected(_:)))
+    self.navigationItem.rightBarButtonItem = UIBarButtonItem(text: "Create", target: self, action: #selector(self.createButtonSelected(_:)))
+    
     self.nameTextField.delegate = self
     self.typeTextField.delegate = self
     self.detailTextField.delegate = self
@@ -84,9 +87,7 @@ class CreateServiceTypeTableViewController: MyTableViewController, UITextFieldDe
       self.detailTextField.becomeFirstResponder()
       
     } else if indexPath.section == 4 && indexPath.row == 0 {
-      self.createButtonSelected()
-    } else if indexPath.section == 5 && indexPath.row == 0{
-      self.clearButtonSelected()
+      self.resetForm()
     }
   }
   
@@ -119,7 +120,11 @@ class CreateServiceTypeTableViewController: MyTableViewController, UITextFieldDe
   
   // MARK: - Actions
   
-  private func createButtonSelected() {
+  @objc func cancelButtonSelected(_ sender: UIButton) {
+    self.dismissController()
+  }
+  
+  @objc func createButtonSelected(_ sender: UIButton) {
     
     // Validate the form
     
@@ -157,9 +162,5 @@ class CreateServiceTypeTableViewController: MyTableViewController, UITextFieldDe
       self.dismissController()
       NotificationCenter.default.post(name: .myServiceTypeDidCreateAndSave, object: serviceType)
     }
-  }
-  
-  private func clearButtonSelected() {
-    self.resetForm()
   }
 }

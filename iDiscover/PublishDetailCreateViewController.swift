@@ -9,6 +9,10 @@
 import Foundation
 import UIKit
 
+protocol PublishNetServiceDelegate {
+  func servicePublished()
+}
+
 class PublishDetailCreateViewController: MyTableViewController, UITextFieldDelegate {
   
   // MARK: - Class Accessors
@@ -26,6 +30,8 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
   @IBOutlet weak var portTextField: UITextField!
   @IBOutlet weak var domainTextField: UITextField!
   @IBOutlet weak var detailTextField: UITextField!
+  
+  var delegate: PublishNetServiceDelegate? = nil
   
   // MARK: - Lifecycle
   
@@ -176,7 +182,7 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
       MyLoadingManager.hideLoading()
       self.showDisappearingAlertDialog(title: "Service Published!") {
         self.dismissController(completion: {
-          NotificationCenter.default.post(name: .publishNetServiceSearchShouldDismiss, object: nil)
+          self.delegate?.servicePublished()
         })
       }
     }) { 

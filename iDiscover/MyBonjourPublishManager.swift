@@ -8,11 +8,17 @@
 
 import Foundation
 
+protocol MyBonjourPublishManagerDelegate {
+  func publishedServicesUpdated(_ publishedServices: [MyNetService])
+}
+
 class MyBonjourPublishManager: NSObject {
   
   // MARK: - Singleton
   
   static let shared = MyBonjourPublishManager()
+  
+  var delegate: MyBonjourPublishManagerDelegate? = nil
   
   private override init() {
     super.init()
@@ -27,11 +33,16 @@ class MyBonjourPublishManager: NSObject {
   
   // MARK: - Published Services
   
-  var publishedServices: [MyNetService] = []
+  var publishedServices: [MyNetService] = [] {
+    didSet {
+      self.delegate?.publishedServicesUpdated(self.publishedServices)
+    }
+  }
   
   private func add(publishedService service: MyNetService) {
     if !self.publishedServices.contains(service) {
       self.publishedServices.append(service)
+      service.resolve()
     }
   }
   

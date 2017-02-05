@@ -20,17 +20,23 @@ protocol PresentableController {
 
 extension PresentableController where Self : UIViewController {
   
-  mutating func presentControllerIn(_ parentController: UIViewController, forMode mode: PresentationMode, completion: (() -> Void)? = nil) {
+  mutating func presentControllerIn(_ parentController: UIViewController, forMode mode: PresentationMode, inNavigationController: Bool = true, phoneModalTransitionStyle modalTransitionStyle: UIModalTransitionStyle? = nil, completion: (() -> Void)? = nil) {
     self.presentedMode = mode
     switch mode {
+      
     case .modal:
-      let navigationController = MyNavigationController(rootViewController: self)
-      navigationController.modalPresentationStyle = .formSheet //.currentContext
-      parentController.present(navigationController, animated: true, completion: completion)
+      let viewController = inNavigationController ? MyNavigationController(rootViewController: self) : self
+      viewController.modalPresentationStyle = .formSheet
+      if let modalTransitionStyle = modalTransitionStyle {
+        viewController.modalTransitionStyle = modalTransitionStyle
+      }
+      parentController.present(viewController, animated: true, completion: completion)
+      
     case .navStack:
-      parentController.navigationController?.pushViewController(self, animated: true)
       self.hidesBottomBarWhenPushed = true
+      parentController.navigationController?.pushViewController(self, animated: true)
       completion?()
+      
     case .splitDetail:
       
       // Check if on phone vs pad. If phone proceed with default navStack behavior
@@ -40,8 +46,8 @@ extension PresentableController where Self : UIViewController {
       } else {
         // Present in split view detail controller
         if let splitViewController = parentController.splitViewController {
-          let navigationController = MyNavigationController(rootViewController: self)
-          splitViewController.showDetailViewController(navigationController, sender: self)
+          let viewController = inNavigationController ? MyNavigationController(rootViewController: self) : self
+          splitViewController.showDetailViewController(viewController, sender: self)
         } else {
           self.presentControllerIn(parentController, forMode: .navStack, completion: completion)
         }
@@ -51,11 +57,14 @@ extension PresentableController where Self : UIViewController {
   
   func dismissController(completion: (() -> Void)? = nil){
     switch self.presentedMode {
+      
     case .modal:
       self.presentingViewController?.dismiss(animated: true, completion: completion)
+      
     case .navStack:
       _ = self.navigationController?.popViewController(animated: true)
       completion?()
+      
     case .splitDetail:
       if let splitViewController = self.splitViewController {
         if let index = splitViewController.viewControllers.index(of: self) {

@@ -9,10 +9,6 @@
 import Foundation
 import UIKit
 
-extension Notification.Name {
-  static let publishNetServiceSearchShouldDismiss = Notification.Name(rawValue: "\(PublishNetServiceSearchViewController.name).publishNetServiceSearchShouldDismiss")
-}
-
 class PublishNetServiceCell: UITableViewCell {
   @IBOutlet weak var nameLabel: UILabel!
   @IBOutlet weak var typeLabel: UILabel!
@@ -31,7 +27,6 @@ class PublishNetServiceSearchViewController: MyTableViewController, UISearchResu
   var serviceTypes: [MyServiceType] = []
   var filteredServiceTypes: [MyServiceType] = []
   let searchController = UISearchController(searchResultsController: nil)
-  var publishDetailBaseController: PublishDetailBaseViewController? = nil
   
   private var isFiltered: Bool {
     let scope = MyServiceTypeScope.allScopes[self.searchController.searchBar.selectedScopeButtonIndex]
@@ -50,6 +45,11 @@ class PublishNetServiceSearchViewController: MyTableViewController, UISearchResu
     
     self.title = "Publish a Service"
     
+    if self.navigationController?.viewControllers.first == self {
+      self.navigationItem.leftBarButtonItem = UIBarButtonItem(text: "Cancel", target: self, action: #selector(self.cancelButtonSelected(_:)))
+    }
+    self.navigationItem.rightBarButtonItem = UIBarButtonItem(text: "Create", target: self, action: #selector(self.createButtonSelected(_:)))
+    
     // Setup the Search Controller
     self.searchController.searchResultsUpdater = self
     self.searchController.searchBar.delegate = self
@@ -62,51 +62,18 @@ class PublishNetServiceSearchViewController: MyTableViewController, UISearchResu
     self.serviceTypes = MyServiceType.fetchAll().sorted { (serviceType1: MyServiceType, serviceType2: MyServiceType) -> Bool in
       return serviceType1.name < serviceType2.name
     }
-    
-    // Notifications
-    NotificationCenter.default.addObserver(self, selector: #selector(self.shouldDismiss(_:)), name: .publishNetServiceSearchShouldDismiss, object: nil)
-  }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    
-    self.navigationItem.rightBarButtonItem = UIBarButtonItem(text: "Create", target: self, action: #selector(self.createButtonSelected(_:)))
-    
-    if !UIDevice.isPhone {
-      self.publishDetailBaseController = PublishDetailBaseViewController.newViewController()
-      self.publishDetailBaseController?.presentControllerIn(self, forMode: .splitDetail)
-    }
-  }
-  
-  override func viewWillDisappear(_ animated: Bool) {
-    super.viewWillDisappear(animated)
-    
-    self.publishDetailBaseController?.dismissController()
   }
   
   // MARK: - Actions
   
-  @objc private func shouldDismiss(_ notification: Notification) {
+  @objc private func cancelButtonSelected(_ sender: UIBarButtonItem) {
     self.dismissController()
   }
   
   @objc private func createButtonSelected(_ sender: UIBarButtonItem) {
     var viewController = PublishDetailCreateViewController.newViewController()
-    if UIDevice.isPhone {
-      viewController.presentControllerIn(self, forMode: .navStack)
-    } else if let publishDetailBaseController = self.publishDetailBaseController {
-      
-      // Check if already showing create
-      if let _ = publishDetailBaseController.navigationController?.viewControllers.last as? PublishDetailCreateViewController {
-        // Already showing, do nothing
-      } else {
-        viewController.presentControllerIn(publishDetailBaseController, forMode: .navStack, completion: {
-          if let navigationController = publishDetailBaseController.navigationController {
-            navigationController.viewControllers = [ navigationController.viewControllers.first!, viewController ]
-          }
-        })
-      }
-    }
+    viewController.delegate = self
+    viewController.presentControllerIn(self, forMode: .navStack)
   }
   
   // MARK: - Search Controller
@@ -194,25 +161,14 @@ class PublishNetServiceSearchViewController: MyTableViewController, UISearchResu
     
     let serviceType = self.isFiltered ? self.filteredServiceTypes[indexPath.row] : self.serviceTypes[indexPath.row]
     var viewController = PublishDetailExistingViewController.newViewController(serviceType: serviceType)
-    if UIDevice.isPhone {
-      viewController.presentControllerIn(self, forMode: .navStack)
-      
-    } else if let publishDetailBaseController = self.publishDetailBaseController {
-      
-      // Check if already showing a existing publish view controller
-      if let existingViewController = publishDetailBaseController.navigationController?.viewControllers.last as? PublishDetailExistingViewController {
-        // Currently presenting a form for this service type. Update the content.
-        existingViewController.serviceType = serviceType
-        existingViewController.updateServiceContent()
-        
-      } else {
-        // Currently on base controller. Push the new controller.
-        viewController.presentControllerIn(publishDetailBaseController, forMode: .navStack, completion: {
-          if let navigationController = publishDetailBaseController.navigationController {
-            navigationController.viewControllers = [ navigationController.viewControllers.first!, viewController ]
-          }
-        })
-      }
-    }
+    viewController.delegate = self
+    viewController.presentControllerIn(self, forMode: .navStack)
+  }
+}
+
+extension PublishNetServiceSearchViewController : PublishNetServiceDelegate {
+  
+  func servicePublished() {
+    self.dismissController()
   }
 }

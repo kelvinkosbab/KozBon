@@ -16,6 +16,10 @@ extension Notification.Name {
   static let netServiceDidStop = Notification.Name(rawValue: "\(MyNetService.name).netServiceDidStop")
 }
 
+protocol MyNetServiceDelegate {
+  func serviceDidResolveAddress(_ service: MyNetService)
+}
+
 class MyNetService: NSObject, NetServiceDelegate {
   
   // MARK: - Init
@@ -24,6 +28,7 @@ class MyNetService: NSObject, NetServiceDelegate {
   let serviceType: MyServiceType
   var addresses: [MyAddress] = []
   var dataRecords: [MyDataRecord] = []
+  var delegate: MyNetServiceDelegate? = nil
   
   class MyDataRecord: Equatable, Comparable {
     static func == (lhs: MyDataRecord, rhs: MyDataRecord) -> Bool {
@@ -104,6 +109,7 @@ class MyNetService: NSObject, NetServiceDelegate {
     print("\(self.className) : Service did resolve address \(sender) with hostname \(self.hostName)")
     self.addresses = MyAddress.parseAddresses(forNetService: sender)
     NotificationCenter.default.post(name: .netServiceResolveAddressComplete, object: self)
+    self.delegate?.serviceDidResolveAddress(self)
     self.completedAddressResolution?()
     self.completedAddressResolution = nil
     self.isResolving = false
@@ -112,6 +118,7 @@ class MyNetService: NSObject, NetServiceDelegate {
   func netService(_ sender: NetService, didNotResolve errorDict: [String : NSNumber]) {
     print("\(self.className) : Service did not resolve address \(sender) with errorDict \(errorDict)")
     NotificationCenter.default.post(name: .netServiceResolveAddressComplete, object: self)
+    self.delegate?.serviceDidResolveAddress(self)
     self.completedAddressResolution?()
     self.completedAddressResolution = nil
     self.isResolving = false
