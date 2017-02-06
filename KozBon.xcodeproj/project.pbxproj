@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A8B3622C04F9A314502BCA1C /* Pods_KozBon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30E8B8433BB4344BF62B51AC /* Pods_KozBon.framework */; };
 		B603A6D81E12177700ED333D /* UIImage+Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = B603A6D71E12177700ED333D /* UIImage+Gif.swift */; };
 		B6089C9A1E19D76D00C7CF29 /* ServiceDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6089C991E19D76D00C7CF29 /* ServiceDetailTableViewController.swift */; };
 		B6089C9C1E1A2A3900C7CF29 /* MyServiceType+CustomServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6089C9B1E1A2A3900C7CF29 /* MyServiceType+CustomServiceType.swift */; };
@@ -85,9 +84,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		108F79244E78143B0A6A1C76 /* Pods-KozBon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KozBon.release.xcconfig"; path = "Pods/Target Support Files/Pods-KozBon/Pods-KozBon.release.xcconfig"; sourceTree = "<group>"; };
-		30E8B8433BB4344BF62B51AC /* Pods_KozBon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KozBon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9EAE28309CA65D517A74BD9E /* Pods-KozBon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KozBon.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KozBon/Pods-KozBon.debug.xcconfig"; sourceTree = "<group>"; };
 		B603A6D71E12177700ED333D /* UIImage+Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Gif.swift"; sourceTree = "<group>"; };
 		B6089C991E19D76D00C7CF29 /* ServiceDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailTableViewController.swift; sourceTree = "<group>"; };
 		B6089C9B1E1A2A3900C7CF29 /* MyServiceType+CustomServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MyServiceType+CustomServiceType.swift"; sourceTree = "<group>"; };
@@ -171,30 +167,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A8B3622C04F9A314502BCA1C /* Pods_KozBon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2B9EBD92BC518AADEB3AEE7D /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				30E8B8433BB4344BF62B51AC /* Pods_KozBon.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		438285048DC28FB87DBEE039 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				9EAE28309CA65D517A74BD9E /* Pods-KozBon.debug.xcconfig */,
-				108F79244E78143B0A6A1C76 /* Pods-KozBon.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		B679CC101E16243C0056C7B5 /* Creating a Service Type */ = {
 			isa = PBXGroup;
 			children = (
@@ -318,8 +296,6 @@
 			children = (
 				B6CE1D261E1208C1003D4FFA /* iDiscover */,
 				B6CE1D251E1208C1003D4FFA /* Products */,
-				438285048DC28FB87DBEE039 /* Pods */,
-				2B9EBD92BC518AADEB3AEE7D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -470,13 +446,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B6CE1D391E1208C1003D4FFA /* Build configuration list for PBXNativeTarget "KozBon" */;
 			buildPhases = (
-				F835C5F7095BBDF1D398BC3B /* [CP] Check Pods Manifest.lock */,
 				B6CE1D201E1208C1003D4FFA /* Sources */,
 				B6CE1D211E1208C1003D4FFA /* Frameworks */,
 				B6CE1D221E1208C1003D4FFA /* Resources */,
 				B6C4BC531E1CD231004409F1 /* Set Build Number */,
-				C4FA74BEF10BC42421C3A0B6 /* [CP] Embed Pods Frameworks */,
-				BFE6AA9150264B1D8B8BEF19 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -552,51 +525,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/bash\n\ngit=$(sh /etc/profile; which git)\nnumber_of_commits=$(\"$git\" rev-list HEAD --count)\ngit_release_version=$(\"$git\" describe --tags --always --abbrev=0)\n\ntarget_plist=\"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\ndsym_plist=\"$DWARF_DSYM_FOLDER_PATH/$DWARF_DSYM_FILE_NAME/Contents/Info.plist\"\n\nfor plist in \"$target_plist\" \"$dsym_plist\"; do\nif [ -f \"$plist\" ]; then\n# Set build number\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $number_of_commits\" \"$plist\"\n\n# Version (Commented out for now)\n# /usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString ${git_release_version#*v}\" \"$plist\"\nfi\ndone\n";
-		};
-		BFE6AA9150264B1D8B8BEF19 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KozBon/Pods-KozBon-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C4FA74BEF10BC42421C3A0B6 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KozBon/Pods-KozBon-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F835C5F7095BBDF1D398BC3B /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -787,7 +715,6 @@
 		};
 		B6CE1D3A1E1208C1003D4FFA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9EAE28309CA65D517A74BD9E /* Pods-KozBon.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 6SS93B87P2;
@@ -801,7 +728,6 @@
 		};
 		B6CE1D3B1E1208C1003D4FFA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 108F79244E78143B0A6A1C76 /* Pods-KozBon.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 6SS93B87P2;
