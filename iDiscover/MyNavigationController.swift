@@ -27,8 +27,7 @@ class MyNavigationController : UINavigationController, PresentableController, My
       self.navigationBar.prefersLargeTitles = true
     }
     
-    self.styleTitleText()
-    self.styleColors()
+    self.styleNavigationBar()
   }
   
   deinit {
@@ -43,13 +42,9 @@ class MyNavigationController : UINavigationController, PresentableController, My
   
   // MARK: - Styles
   
-  func styleTitleText(font: UIFont = UIFont.systemFont(ofSize: 18)) {
-    self.navigationBar.titleTextAttributes = [ NSAttributedStringKey.font : font ]
-  }
-  
-  func styleColors(barColor: UIColor = UIColor(hex: "007AFF"), fontColor: UIColor = UIColor.white) {
+  func styleNavigationBar(barColor: UIColor = UIColor(hex: "007AFF"), fontColor: UIColor = UIColor.white, font: UIFont = UIFont.systemFont(ofSize: 18)) {
     self.navigationBar.barTintColor = barColor
     self.navigationBar.tintColor = fontColor
-    self.navigationBar.titleTextAttributes = [ NSAttributedStringKey.foregroundColor: fontColor ]
+    self.navigationBar.titleTextAttributes = [ NSAttributedStringKey.font : font, NSAttributedStringKey.foregroundColor: fontColor ]
   }
 }

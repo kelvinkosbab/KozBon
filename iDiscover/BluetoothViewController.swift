@@ -179,7 +179,8 @@ class BluetoothViewController : MyTableViewController {
     
     switch rowType {
     case .device(let device):
-      return
+      let viewController = BluetoothDeviceDetailViewController.newViewController(device: device)
+      viewController.presentControllerIn(self, forMode: UIDevice.isPhone ? .navStack : .modal)
     default:
       return
     }

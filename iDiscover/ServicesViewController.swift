@@ -153,7 +153,7 @@ class ServicesViewController : MyCollectionViewController {
   
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let service = self.services[indexPath.row]
-    var viewController = ServiceDetailTableViewController.newViewController(browsedService: service)
+    let viewController = ServiceDetailTableViewController.newViewController(browsedService: service)
     viewController.presentControllerIn(self, forMode: UIDevice.isPhone ? .navStack : .modal)
   }
   
@@ -181,7 +181,7 @@ extension ServicesViewController : ServicesHeaderViewDelegate {
 extension ServicesViewController : ServicesFooterViewDelegate {
   
   func servicesFooterSpecifyButtonSelected() {
-    var viewController = CreateServiceTypeTableViewController.newViewController()
+    let viewController = CreateServiceTypeTableViewController.newViewController()
     viewController.presentControllerIn(self, forMode: UIDevice.isPhone ? .navStack : .modal)
   }
 }

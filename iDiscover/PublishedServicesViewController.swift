@@ -116,7 +116,7 @@ class PublishedServicesViewController : MyCollectionViewController {
   
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let service = self.publishedServices[indexPath.row]
-    var viewController = ServiceDetailTableViewController.newViewController(publishedService: service)
+    let viewController = ServiceDetailTableViewController.newViewController(publishedService: service)
     viewController.presentControllerIn(self, forMode: UIDevice.isPhone ? .navStack : .modal)
   }
 }
@@ -131,7 +131,7 @@ extension PublishedServicesViewController : MyBonjourPublishManagerDelegate {
 extension PublishedServicesViewController : PublishedServicesFooterViewDelegate {
   
   func publishedServicesFooterPublishButtonSelected() {
-    var viewController = PublishNetServiceSearchViewController.newViewController()
+    let viewController = PublishNetServiceSearchViewController.newViewController()
     viewController.presentControllerIn(self, forMode: UIDevice.isPhone ? .navStack : .modal)
   }
 }

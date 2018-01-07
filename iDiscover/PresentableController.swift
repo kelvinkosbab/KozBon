@@ -13,14 +13,14 @@ enum PresentationMode {
   case modal, navStack, splitDetail
 }
 
-protocol PresentableController {
+protocol PresentableController : class {
   var presentedMode: PresentationMode { get set }
   var transitioningDelegateReference: UIViewControllerTransitioningDelegate? { get set }
 }
 
 extension PresentableController where Self : UIViewController {
   
-  mutating func presentControllerIn(_ parentController: UIViewController, forMode mode: PresentationMode, inNavigationController: Bool = true, phoneModalTransitionStyle modalTransitionStyle: UIModalTransitionStyle? = nil, completion: (() -> Void)? = nil) {
+  func presentControllerIn(_ parentController: UIViewController, forMode mode: PresentationMode, inNavigationController: Bool = true, phoneModalTransitionStyle modalTransitionStyle: UIModalTransitionStyle? = nil, completion: (() -> Void)? = nil) {
     self.presentedMode = mode
     switch mode {
       

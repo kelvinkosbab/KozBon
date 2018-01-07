@@ -71,7 +71,7 @@ class PublishNetServiceSearchViewController: MyTableViewController, UISearchResu
   }
   
   @objc private func createButtonSelected(_ sender: UIBarButtonItem) {
-    var viewController = PublishDetailCreateViewController.newViewController()
+    let viewController = PublishDetailCreateViewController.newViewController()
     viewController.delegate = self
     viewController.presentControllerIn(self, forMode: .navStack)
   }
@@ -160,7 +160,7 @@ class PublishNetServiceSearchViewController: MyTableViewController, UISearchResu
     tableView.deselectRow(at: indexPath, animated: true)
     
     let serviceType = self.isFiltered ? self.filteredServiceTypes[indexPath.row] : self.serviceTypes[indexPath.row]
-    var viewController = PublishDetailExistingViewController.newViewController(serviceType: serviceType)
+    let viewController = PublishDetailExistingViewController.newViewController(serviceType: serviceType)
     viewController.delegate = self
     viewController.presentControllerIn(self, forMode: .navStack)
   }

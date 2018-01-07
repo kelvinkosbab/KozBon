@@ -148,7 +148,7 @@ class AllServiceTypesTableViewController: MyTableViewController, UISearchResults
     tableView.deselectRow(at: indexPath, animated: true)
     
     let serviceType = self.isFiltered ? self.filteredServiceTypes[indexPath.row] : self.serviceTypes[indexPath.row]
-    var viewController = ServiceDetailTableViewController.newViewController(serviceType: serviceType)
+    let viewController = ServiceDetailTableViewController.newViewController(serviceType: serviceType)
     viewController.presentControllerIn(self, forMode: .navStack)
   }
 }
