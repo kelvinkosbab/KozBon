@@ -128,7 +128,7 @@ class BluetoothViewController : MyTableViewController, MyBluetoothManagerProtoco
     tableView.deselectRow(at: indexPath, animated: true)
     
     if indexPath.section == self.bluetoothDevicesSection && !MyBluetoothManager.shared.state.isUnsupported {
-      let device = MyBluetoothManager.shared.devices[indexPath.row]
+      _ = MyBluetoothManager.shared.devices[indexPath.row]
     }
   }
 }

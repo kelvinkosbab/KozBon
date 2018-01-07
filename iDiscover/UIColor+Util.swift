@@ -72,11 +72,11 @@ extension UIColor {
   }
   
   static public func rgbColor(red: Int, green: Int, blue: Int, alpha: Int = 255) -> UIColor {
-    let adjustedRed: Float = Float(red) / 255
-    let adjustedGreen: Float = Float(green) / 255
-    let adjustedBlue: Float = Float(blue) / 255
-    let adjustedAlpha: Float = Float(alpha) / 255
-    return UIColor(colorLiteralRed: adjustedRed, green: adjustedGreen, blue: adjustedBlue, alpha: adjustedAlpha)
+    let adjustedRed: CGFloat = CGFloat(red) / 255
+    let adjustedGreen: CGFloat = CGFloat(green) / 255
+    let adjustedBlue: CGFloat = CGFloat(blue) / 255
+    let adjustedAlpha: CGFloat = CGFloat(alpha) / 255
+    return UIColor(red: adjustedRed, green: adjustedGreen, blue: adjustedBlue, alpha: adjustedAlpha)
   }
   
   var rgbRed: Int {
@@ -146,11 +146,10 @@ extension UIColor {
     }
     
     // Check if valid hex string
-    if (cString.characters.count == 6) {
+    if cString.count == 6 {
       // Valid hex string
       var rgbValue: UInt32 = 0
       Scanner(string: cString).scanHexInt32(&rgbValue)
-      
       self.init(red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0, green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0, blue: CGFloat(rgbValue & 0x0000FF) / 255.0, alpha: alpha)
       
     } else {

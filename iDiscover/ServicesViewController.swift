@@ -58,7 +58,7 @@ class ServicesViewController : MyCollectionViewController {
     }
   }
   
-  func reloadBrowsingServices() {
+  @objc func reloadBrowsingServices() {
     
     // Update the browsing for services flag
     self.isBrowsingForServces = true

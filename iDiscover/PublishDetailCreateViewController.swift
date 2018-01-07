@@ -153,12 +153,12 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
     
     // Validate the form
     
-    guard let name = self.nameTextField.text, !name.trim().isEmpty else {
+    guard let name = self.nameTextField.text?.trimmed, !name.isEmpty else {
       self.showDisappearingAlertDialog(title: "Service Name Required")
       return
     }
     
-    guard let type = self.typeTextField.text, !type.trim().isEmpty else {
+    guard let type = self.typeTextField.text?.trimmed, !type.isEmpty else {
       self.showDisappearingAlertDialog(title: "Service Type Required")
       return
     }
@@ -176,8 +176,8 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
     
     let domain = self.domainTextField.text ?? ""
     var detail: String? = nil
-    if let text = self.detailTextField.text, !text.trim().isEmpty {
-      detail = text.trim()
+    if let text = self.detailTextField.text?.trimmed, !text.isEmpty {
+      detail = text.trimmed
     }
     
     // Publish the service

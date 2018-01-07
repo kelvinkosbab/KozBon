@@ -130,12 +130,12 @@ class CreateServiceTypeTableViewController: MyTableViewController, UITextFieldDe
     
     let transportLayer = MyTransportLayer.tcp
     
-    guard let name = self.nameTextField.text, !name.trim().isEmpty else {
+    guard let name = self.nameTextField.text?.trimmed, !name.isEmpty else {
       self.showDisappearingAlertDialog(title: "Service Name Required")
       return
     }
     
-    guard let type = self.typeTextField.text, !type.trim().isEmpty else {
+    guard let type = self.typeTextField.text?.trimmed, !type.isEmpty else {
       self.showDisappearingAlertDialog(title: "Service Type Required")
       return
     }
@@ -147,8 +147,8 @@ class CreateServiceTypeTableViewController: MyTableViewController, UITextFieldDe
     }
     
     var detail: String? = nil
-    if let text = self.detailTextField.text, !text.trim().isEmpty {
-      detail = text.trim()
+    if let text = self.detailTextField.text?.trimmed, !text.isEmpty {
+      detail = text
     }
     
     // Create the service type

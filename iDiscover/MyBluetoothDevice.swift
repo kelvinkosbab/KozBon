@@ -132,12 +132,11 @@ class MyBluetoothDevice : NSObject, CBPeripheralDelegate {
   }
   
   func peripheral(_ peripheral: CBPeripheral, didReadRSSI RSSI: NSNumber, error: Error?) {
-    print("\(self.className) : Did read RSSI \(peripheral.name)")
+    print("\(self.className) : Did read RSSI \(peripheral.name ?? "Unknown Name")")
     
-    let newRSSI = Int(RSSI)
-    self.lastKnownRSSI = newRSSI
+    self.lastKnownRSSI = RSSI.intValue
     
-    self.readRSSICompletion?(newRSSI)
+    self.readRSSICompletion?(RSSI.intValue)
     self.readRSSICompletion = nil
   }
   

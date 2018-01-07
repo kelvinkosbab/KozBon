@@ -125,7 +125,7 @@ class MyBluetoothManager: NSObject, CBCentralManagerDelegate {
   func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
     print("\(self.className) : Did discover peripheral \(peripheral) | RSSI \(RSSI) | advertisement data \(advertisementData)")
     
-    let device = MyBluetoothDevice(manager: self, peripheral: peripheral, lastKnownRSSI: Int(RSSI))
+    let device = MyBluetoothDevice(manager: self, peripheral: peripheral, lastKnownRSSI: RSSI.intValue)
     self.add(device: device)
   }
   
@@ -134,10 +134,10 @@ class MyBluetoothManager: NSObject, CBCentralManagerDelegate {
   }
   
   func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
-    print("\(self.className) : Did fail to connect to peripheral \(peripheral) with error \(error?.localizedDescription)")
+    print("\(self.className) : Did fail to connect to peripheral \(peripheral) with error \(error?.localizedDescription ?? "Unknown Error")")
   }
   
   func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-    print("\(self.className) : Did disconnect from peripheral \(peripheral) with error \(error?.localizedDescription)")
+    print("\(self.className) : Did disconnect from peripheral \(peripheral) with error \(error?.localizedDescription ?? "Unknown Error")")
   }
 }

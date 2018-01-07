@@ -40,12 +40,12 @@ class MyNavigationController : UINavigationController, PresentableController, My
   // MARK: - Styles
   
   func styleTitleText(font: UIFont = UIFont.systemFont(ofSize: 18)) {
-    self.navigationBar.titleTextAttributes = [ NSFontAttributeName : font ]
+    self.navigationBar.titleTextAttributes = [ NSAttributedStringKey.font : font ]
   }
   
   func styleColors(barColor: UIColor = UIColor(hex: "007AFF"), fontColor: UIColor = UIColor.white) {
     self.navigationBar.barTintColor = barColor
     self.navigationBar.tintColor = fontColor
-    self.navigationBar.titleTextAttributes = [ NSForegroundColorAttributeName: fontColor ]
+    self.navigationBar.titleTextAttributes = [ NSAttributedStringKey.foregroundColor: fontColor ]
   }
 }

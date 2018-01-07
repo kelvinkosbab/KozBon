@@ -22,6 +22,6 @@ extension UIBarButtonItem {
   }
   
   private func setFont() {
-    self.setTitleTextAttributes([ NSFontAttributeName : UIFont.systemFont(ofSize: 15) ], for: .normal)
+    self.setTitleTextAttributes([ NSAttributedStringKey.font : UIFont.systemFont(ofSize: 15) ], for: .normal)
   }
 }
