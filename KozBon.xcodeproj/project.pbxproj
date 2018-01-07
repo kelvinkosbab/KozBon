@@ -58,6 +58,7 @@
 		B6AE53801E16E9F600FB57E3 /* UIDevice+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AE537F1E16E9F600FB57E3 /* UIDevice+Util.swift */; };
 		B6AE53841E17090A00FB57E3 /* PublishDetailCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AE53831E17090A00FB57E3 /* PublishDetailCreateViewController.swift */; };
 		B6AE53861E170A6400FB57E3 /* PublishDetailExistingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AE53851E170A6400FB57E3 /* PublishDetailExistingViewController.swift */; };
+		B6BD8C7E2002C59F009327B2 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BD8C7D2002C59F009327B2 /* Log.swift */; };
 		B6C4BC521E1CC2CD004409F1 /* TableViewCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C4BC511E1CC2CD004409F1 /* TableViewCells.swift */; };
 		B6C4BC551E1CD30A004409F1 /* CreateServiceTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C4BC541E1CD30A004409F1 /* CreateServiceTypeTableViewController.swift */; };
 		B6CE1D281E1208C1003D4FFA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D271E1208C1003D4FFA /* AppDelegate.swift */; };
@@ -135,6 +136,7 @@
 		B6AE537F1E16E9F600FB57E3 /* UIDevice+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Util.swift"; sourceTree = "<group>"; };
 		B6AE53831E17090A00FB57E3 /* PublishDetailCreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishDetailCreateViewController.swift; sourceTree = "<group>"; };
 		B6AE53851E170A6400FB57E3 /* PublishDetailExistingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishDetailExistingViewController.swift; sourceTree = "<group>"; };
+		B6BD8C7D2002C59F009327B2 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		B6C4BC511E1CC2CD004409F1 /* TableViewCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCells.swift; sourceTree = "<group>"; };
 		B6C4BC541E1CD30A004409F1 /* CreateServiceTypeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateServiceTypeTableViewController.swift; sourceTree = "<group>"; };
 		B6CE1D241E1208C1003D4FFA /* KozBon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KozBon.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -287,6 +289,7 @@
 			children = (
 				B691545E1E1317A000382F41 /* MyAddress.swift */,
 				B62E19961E174236008BC91C /* MyLoadingManager.swift */,
+				B6BD8C7D2002C59F009327B2 /* Log.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -581,6 +584,7 @@
 				B68EEA571E47104D00831CC4 /* ServicesServiceCell.swift in Sources */,
 				B6F93AB61E1240EC00FE2DC7 /* MyBluetoothDevice.swift in Sources */,
 				B68EEA631E471FD000831CC4 /* SettingsItemCell.swift in Sources */,
+				B6BD8C7E2002C59F009327B2 /* Log.swift in Sources */,
 				B68EEA671E472B1B00831CC4 /* SettingsFooterView.swift in Sources */,
 				B6F93AB41E123AD500FE2DC7 /* MyBluetoothManager.swift in Sources */,
 				B6A526AE1E30584B00EA6430 /* MyBluetoothManager+State.swift in Sources */,

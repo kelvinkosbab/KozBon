@@ -70,12 +70,12 @@ class MyNetServiceBrowser: NSObject, NetServiceBrowserDelegate {
   }
   
   func netServiceBrowser(_ browser: NetServiceBrowser, didNotSearch errorDict: [String : NSNumber]) {
-    print("\(self.className) : Did not search for type \(self.serviceType.fullType) and domain \(self.domain) with error \(errorDict)")
+    Log.log("Did not search for type \(self.serviceType.fullType) and domain \(self.domain) with error \(errorDict)")
     self.state = .stopped
   }
   
   func netServiceBrowser(_ browser: NetServiceBrowser, didFind service: NetService, moreComing: Bool) {
-    print("\(self.className) : Did find service \(service)")
+    Log.log("Did find service \(service)")
     self.delegate?.myNetServiceBrowser(self, didFind: MyNetService(service: service, serviceType: self.serviceType))
     
     if !moreComing {
@@ -84,7 +84,7 @@ class MyNetServiceBrowser: NSObject, NetServiceBrowserDelegate {
   }
   
   func netServiceBrowser(_ browser: NetServiceBrowser, didRemove service: NetService, moreComing: Bool) {
-    print("\(self.className) : Did remove service \(service)")
+    Log.log("Did remove service \(service)")
     self.delegate?.myNetServiceBrowser(self, didRemove: MyNetService(service: service, serviceType: self.serviceType))
     
     if !moreComing {

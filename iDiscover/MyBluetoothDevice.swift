@@ -63,7 +63,7 @@ class MyBluetoothDevice : NSObject, CBPeripheralDelegate {
   }
   
   func peripheralDidUpdateName(_ peripheral: CBPeripheral) {
-    print("\(self.className) : Did update name \(self.name)")
+    Log.log("Did update name \(self.name)")
     
     self.delegate?.didUpdate(self)
   }
@@ -123,7 +123,7 @@ class MyBluetoothDevice : NSObject, CBPeripheralDelegate {
   func readRSSI(completion: ((_ RSSI: Int) -> Void)? = nil) {
     
     guard self.state.isConnected else {
-      print("\(self.className) : \(self.name) : Cannot perform operation device not connected")
+      Log.log("\(self.name) : Cannot perform operation device not connected")
       return
     }
     
@@ -132,7 +132,7 @@ class MyBluetoothDevice : NSObject, CBPeripheralDelegate {
   }
   
   func peripheral(_ peripheral: CBPeripheral, didReadRSSI RSSI: NSNumber, error: Error?) {
-    print("\(self.className) : Did read RSSI \(peripheral.name ?? "Unknown Name")")
+    Log.log("Did read RSSI \(peripheral.name ?? "Unknown Name")")
     
     self.lastKnownRSSI = RSSI.intValue
     
@@ -155,7 +155,7 @@ class MyBluetoothDevice : NSObject, CBPeripheralDelegate {
   func discoverServices(serviceUUIDs: [CBUUID]? = nil, completion: ((_ services: [MyBluetoothService]) -> Void)? = nil) {
     
     guard self.state.isConnected else {
-      print("\(self.className) : \(self.name) : Cannot perform operation device not connected")
+      Log.log("\(self.name) : Cannot perform operation device not connected")
       return
     }
     
@@ -164,7 +164,7 @@ class MyBluetoothDevice : NSObject, CBPeripheralDelegate {
   }
   
   func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-    print("\(self.className) : Did discover services")
+    Log.log("Did discover services")
     
     self.discoverServicesCompletion?(self.services)
     self.discoverServicesCompletion = nil
@@ -173,7 +173,7 @@ class MyBluetoothDevice : NSObject, CBPeripheralDelegate {
   }
   
   func peripheral(_ peripheral: CBPeripheral, didModifyServices invalidatedServices: [CBService]) {
-    print("\(self.className) : Did modify services")
+    Log.log("Did modify services")
     
     for service in invalidatedServices {
       let invalidatedService = MyBluetoothService(device: self, service: service)

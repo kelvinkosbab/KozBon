@@ -76,7 +76,7 @@ extension MyDataManagerObject where Self : NSManagedObject {
     do {
       return try self.mainContext.fetch(request)
     } catch {
-      print("\(self.entityName) : \(error.localizedDescription)")
+      Log.log("\(error.localizedDescription)")
     }
     return []
   }

@@ -105,7 +105,7 @@ class MyBluetoothManager: NSObject, CBCentralManagerDelegate {
   
   func centralManagerDidUpdateState(_ central: CBCentralManager) {
     let state = self.state
-    print("\(self.className) : State is now \(state.string)")
+    Log.log("State is now \(state.string)")
     if state.isPoweredOn {
       
       // Start the scan
@@ -123,21 +123,21 @@ class MyBluetoothManager: NSObject, CBCentralManagerDelegate {
   }
   
   func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-    print("\(self.className) : Did discover peripheral \(peripheral) | RSSI \(RSSI) | advertisement data \(advertisementData)")
+    Log.log("Did discover peripheral \(peripheral) | RSSI \(RSSI) | advertisement data \(advertisementData)")
     
     let device = MyBluetoothDevice(manager: self, peripheral: peripheral, lastKnownRSSI: RSSI.intValue)
     self.add(device: device)
   }
   
   func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-    print("\(self.className) : Did connect to peripheral \(peripheral)")
+    Log.log("Did connect to peripheral \(peripheral)")
   }
   
   func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
-    print("\(self.className) : Did fail to connect to peripheral \(peripheral) with error \(error?.localizedDescription ?? "Unknown Error")")
+    Log.log("Did fail to connect to peripheral \(peripheral) with error \(error?.localizedDescription ?? "Unknown Error")")
   }
   
   func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-    print("\(self.className) : Did disconnect from peripheral \(peripheral) with error \(error?.localizedDescription ?? "Unknown Error")")
+    Log.log("Did disconnect from peripheral \(peripheral) with error \(error?.localizedDescription ?? "Unknown Error")")
   }
 }
