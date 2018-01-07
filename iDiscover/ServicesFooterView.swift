@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol ServicesFooterViewDelegate {
+protocol ServicesFooterViewDelegate : class {
   func servicesFooterSpecifyButtonSelected()
 }
 
@@ -17,7 +17,7 @@ class ServicesFooterView : UICollectionReusableView {
   @IBOutlet weak private var textLabel: UILabel!
   @IBOutlet weak private var arrowButton: UIButton!
   @IBOutlet weak private var specifyButton: UIButton!
-  var delegate: ServicesFooterViewDelegate? = nil
+  weak var delegate: ServicesFooterViewDelegate? = nil
   
   @IBAction private func specifyButtonSelected(_ sender: UIButton) {
     self.delegate?.servicesFooterSpecifyButtonSelected()

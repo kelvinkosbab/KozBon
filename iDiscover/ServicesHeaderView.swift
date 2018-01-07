@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol ServicesHeaderViewDelegate {
+protocol ServicesHeaderViewDelegate : class {
   func servicesHeaderReloadButtonSelected()
 }
 
@@ -17,7 +17,7 @@ class ServicesHeaderView : UICollectionReusableView {
   @IBOutlet weak private var titleLabel: UILabel!
   @IBOutlet weak private var reloadButton: UIButton!
   @IBOutlet weak private var activityIndicator: UIActivityIndicatorView!
-  var delegate: ServicesHeaderViewDelegate? = nil
+  weak var delegate: ServicesHeaderViewDelegate? = nil
   
   @IBAction private func reloadButtonSelected(_ sender: UIButton) {
     self.delegate?.servicesHeaderReloadButtonSelected()

@@ -14,11 +14,11 @@ extension Notification.Name {
   static let bonjourDidClearServices = Notification.Name(rawValue: "\(MyBonjourManager.name).bonjourDidClearServices")
 }
 
-protocol MyBonjourManagerDelegate {
+protocol MyBonjourManagerDelegate : class {
   func servicesDidUpdate(_ services: [MyNetService])
 }
 
-class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
+class MyBonjourManager: NSObject {
   
   // MARK: - Singleton
   
@@ -28,7 +28,7 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
   
   // MARK: - Properties
   
-  var delegate: MyBonjourManagerDelegate? = nil
+  weak var delegate: MyBonjourManagerDelegate? = nil
   
   var completion: ((_ services: [MyNetService]) -> Void)? = nil
   
@@ -86,12 +86,12 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
     }
   }
   
-  private func clearServices() {
+  internal func clearServices() {
     self.services = []
     NotificationCenter.default.post(name: .bonjourDidClearServices, object: nil)
   }
   
-  private func add(service: MyNetService) {
+  internal func add(service: MyNetService) {
     if !self.services.contains(service) {
       self.services.append(service)
       NotificationCenter.default.post(name: .bonjourDidAddService, object: service)
@@ -101,7 +101,7 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
     }
   }
   
-  private func remove(service: MyNetService) {
+  internal func remove(service: MyNetService) {
     if let index = self.services.index(of: service) {
       self.services.remove(at: index)
       NotificationCenter.default.post(name: .bonjourDidRemoveService, object: service)
@@ -139,10 +139,15 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
     }
     
     // Establish timeout
-    DispatchQueue.main.asyncAfter(after: timeout) {
-      self.completion?(self.services)
-      self.completion = nil
-      self.stopDiscovery()
+    DispatchQueue.main.asyncAfter(deadline: .now() + timeout) { [weak self] in
+      
+      guard let strongSelf = self else {
+        return
+      }
+      
+      strongSelf.completion?(strongSelf.services)
+      strongSelf.completion = nil
+      strongSelf.stopDiscovery()
     }
   }
   
@@ -151,8 +156,11 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
       serviceBrowser.stopSearch()
     }
   }
-  
-  // MARK: - MyNetServiceBrowserDelegate
+}
+
+// MARK: - MyNetServiceBrowserDelegate
+
+extension MyBonjourManager : MyNetServiceBrowserDelegate {
   
   func myNetServiceBrowserDidChangeState(_ browser: MyNetServiceBrowser, state: MyNetServiceBrowserState) {
     self.checkDiscoveryCompletion()
@@ -165,4 +173,5 @@ class MyBonjourManager: NSObject, MyNetServiceBrowserDelegate {
   func myNetServiceBrowser(_ browser: MyNetServiceBrowser, didRemove service: MyNetService) {
     self.remove(service: service)
   }
+  
 }

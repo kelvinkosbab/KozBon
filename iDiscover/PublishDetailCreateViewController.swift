@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol PublishNetServiceDelegate {
+protocol PublishNetServiceDelegate : class {
   func servicePublished()
 }
 
@@ -31,7 +31,7 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
   @IBOutlet weak var domainTextField: UITextField!
   @IBOutlet weak var detailTextField: UITextField!
   
-  var delegate: PublishNetServiceDelegate? = nil
+  weak var delegate: PublishNetServiceDelegate? = nil
   
   // MARK: - Lifecycle
   

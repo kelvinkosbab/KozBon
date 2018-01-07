@@ -1,24 +1,18 @@
 //
 //  MyBluetoothManager.swift
-//  iDiscover
+//  KozBon
 //
-//  Created by Kelvin Kosbab on 12/26/16.
-//  Copyright © 2016 Kozinga. All rights reserved.
+//  Created by Kelvin Kosbab on 1/7/18.
+//  Copyright © 2018 Kozinga. All rights reserved.
 //
 
 import Foundation
 import CoreBluetooth
 
-protocol MyBluetoothManagerProtocol {
+protocol MyBluetoothManagerDelegate : class {
   func didStartScan(_ manager: MyBluetoothManager)
   func didUpdateDevices(_ manager: MyBluetoothManager)
   func didStopScan(_ manager: MyBluetoothManager)
-}
-
-protocol MyBluetoothManagerDeviceProtocol {
-  func didConnect(device: MyBluetoothDevice)
-  func didFailToConnect(device: MyBluetoothDevice, error: Error)
-  func didDisconnect(device: MyBluetoothDevice)
 }
 
 class MyBluetoothManager: NSObject, CBCentralManagerDelegate {
@@ -28,33 +22,27 @@ class MyBluetoothManager: NSObject, CBCentralManagerDelegate {
   static let shared = MyBluetoothManager()
   
   private override init() {
+    let dispatchQueue = DispatchQueue(label: "\(MyBluetoothManager.name).centralManagerQueue.\(UUID().uuidString)")
+    self.centralManager = CBCentralManager(delegate: nil, queue: dispatchQueue)
     super.init()
-    
-    self.centralManager = CBCentralManager(delegate: self, queue: self.centralManagerDispatchQueue)
+    self.centralManager.delegate = self
   }
   
   // MARK: - Properties
   
-  var delegate: MyBluetoothManagerProtocol? = nil
-  
-  var centralManager: CBCentralManager? = nil
-  private let centralManagerDispatchQueue: DispatchQueue = DispatchQueue(label: "\(MyBluetoothManager.name).centralManagerQueue")
-  private let concurrentDevicesQueue: DispatchQueue = DispatchQueue(label: "\(MyBluetoothManager.name).concurrentDevicesQueue", attributes: .concurrent)
+  weak var delegate: MyBluetoothManagerDelegate? = nil
+  private let centralManager: CBCentralManager
   
   var state: CBManagerState {
-    return self.centralManager?.state ?? .unknown
+    return self.centralManager.state
   }
   
   // MARK: - Devices
   
-  private var _devices: [MyBluetoothDevice] = []
-  
-  var devices: [MyBluetoothDevice] {
-    var copy: [MyBluetoothDevice]!
-    self.concurrentDevicesQueue.sync {
-      copy = self._devices
+  private(set) var devices: Set<MyBluetoothDevice> = Set<MyBluetoothDevice>() {
+    didSet {
+      self.delegate?.didUpdateDevices(self)
     }
-    return copy
   }
   
   private func clearDevices() {
@@ -64,80 +52,129 @@ class MyBluetoothManager: NSObject, CBCentralManagerDelegate {
   }
   
   private func add(device: MyBluetoothDevice) {
-    self.concurrentDevicesQueue.async(flags: .barrier, execute: { () -> Void in
-      if !self._devices.contains(device) {
-        self._devices.append(device)
-        DispatchQueue.main.async {
-          self.delegate?.didUpdateDevices(self)
-        }
-      }
-    })
+    if !self.devices.contains(device) {
+      self.devices.insert(device)
+    }
   }
   
   private func remove(device: MyBluetoothDevice) {
-    self.concurrentDevicesQueue.async(flags: .barrier, execute: { () -> Void in
-      if let index = self._devices.index(of: device) {
-        self._devices.remove(at: index)
-        DispatchQueue.main.async {
-          self.delegate?.didUpdateDevices(self)
-        }
-      }
-    })
+    self.devices.remove(device)
+  }
+  
+  private func fetchDevice(peripheral: CBPeripheral) -> MyBluetoothDevice? {
+    return self.devices.first(where: { $0.peripheral == peripheral })
   }
   
   // MARK: - Start / Stop Scan
   
   func startScan() {
-    if !self.state.isUnsupported {
-      self.delegate?.didStartScan(self)
-      self.centralManager?.scanForPeripherals(withServices: nil, options: nil)
+    if self.state != .unsupported {
+      self.scanForDevices()
     }
   }
   
   func stopScan() {
-    if !self.state.isUnsupported {
-      self.centralManager?.stopScan()
+    if self.state != .unsupported {
+      self.delegate?.didStopScan(self)
+      self.centralManager.stopScan()
     }
-    self.delegate?.didStopScan(self)
   }
   
   // MARK: - CBCentralManagerDelegate
   
-  func centralManagerDidUpdateState(_ central: CBCentralManager) {
-    let state = self.state
-    Log.log("State is now \(state.string)")
-    if state.isPoweredOn {
-      
-      // Start the scan
+  private func scanForDevices() {
+    self.centralManager.delegate = self
+    if self.centralManager.state == .poweredOn {
       self.delegate?.didStartScan(self)
-      self.centralManager?.scanForPeripherals(withServices: nil, options: nil)
-      
-      // Initialise timeout
-      DispatchQueue.main.asyncAfter(after: 10.0) {
-        self.stopScan()
-      }
-      
-    } else if state.isUnsupported {
+      self.centralManager.scanForPeripherals(withServices: nil, options: nil)
+    }
+  }
+  
+  func centralManagerDidUpdateState(_ central: CBCentralManager) {
+    Log.log("State is now \(self.state.string)")
+    switch self.state {
+    case .poweredOn:
+      self.scanForDevices()
+    case .poweredOff:
       self.stopScan()
+    default: break
     }
   }
   
   func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
     Log.log("Did discover peripheral \(peripheral) | RSSI \(RSSI) | advertisement data \(advertisementData)")
     
-    let device = MyBluetoothDevice(manager: self, peripheral: peripheral, lastKnownRSSI: RSSI.intValue)
+    let device = MyBluetoothDevice(peripheral: peripheral, lastKnownRSSI: RSSI.intValue)
     self.add(device: device)
   }
   
+  // MARK: - Connecting to Devices
+  
+  func connect(device: MyBluetoothDevice, options: [String : Any]? = nil, completion: @escaping (_ error: Error?) -> Void) {
+    
+    // Connect to the peripheral
+    device.connectCompletion = completion
+    self.centralManager.connect(device.peripheral, options: options)
+  }
+  
+  func connectAndConfigure(device: MyBluetoothDevice, completion: @escaping (_ error: Error?) -> Void) {
+    self.connect(device: device) { (error) in
+      if let error = error {
+        completion(error)
+      } else {
+        device.configure {
+          completion(nil)
+        }
+      }
+    }
+  }
+  
+  // MARK: - Disconnecting from Devices
+  
+  func disconnect(device: MyBluetoothDevice, completion: @escaping (_ error: Error?) -> Void) {
+    
+    // Disconnect from the peripheral
+    device.connectCompletion = completion
+    self.centralManager.cancelPeripheralConnection(device.peripheral)
+  }
+  
+  func disconnectFromAllDevices(completion: (() -> Void)? = nil) {
+    let dispatchGroup = DispatchGroup()
+    for device in self.devices {
+      dispatchGroup.enter()
+      self.disconnect(device: device, completion: { (_) in
+        dispatchGroup.leave()
+      })
+    }
+    
+    dispatchGroup.notify(queue: .main) {
+      completion?()
+    }
+  }
+  
+  // MARK: - Peripheral Connect/Disconnect Delegate Methods
+  
   func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
     Log.log("Did connect to peripheral \(peripheral)")
+    
+    if let firstDevice = self.fetchDevice(peripheral: peripheral) {
+      firstDevice.connectCompletion?(nil)
+    }
   }
   
   func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
     Log.log("Did fail to connect to peripheral \(peripheral) with error \(error?.localizedDescription ?? "Unknown Error")")
+    
+    if let firstDevice = self.fetchDevice(peripheral: peripheral) {
+      firstDevice.connectCompletion?(error)
+    }
   }
   
   func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
     Log.log("Did disconnect from peripheral \(peripheral) with error \(error?.localizedDescription ?? "Unknown Error")")
+    
+    if let firstDevice = self.fetchDevice(peripheral: peripheral) {
+      firstDevice.connectCompletion?(error)
+    }
   }
 }

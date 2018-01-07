@@ -9,14 +9,14 @@
 import Foundation
 import UIKit
 
-protocol PublishedServicesFooterViewDelegate {
+protocol PublishedServicesFooterViewDelegate : class {
   func publishedServicesFooterPublishButtonSelected()
 }
 
 class PublishedServicesFooterView : UICollectionReusableView {
   @IBOutlet weak private var publishButton: UIButton!
   @IBOutlet weak private var arrowButton: UIButton!
-  var delegate: PublishedServicesFooterViewDelegate? = nil
+  weak var delegate: PublishedServicesFooterViewDelegate? = nil
   
   @IBAction private func publishButtonSelected(_ sender: UIButton) {
     self.delegate?.publishedServicesFooterPublishButtonSelected()

@@ -16,7 +16,7 @@ extension Notification.Name {
   static let netServiceDidStop = Notification.Name(rawValue: "\(MyNetService.name).netServiceDidStop")
 }
 
-protocol MyNetServiceDelegate {
+protocol MyNetServiceDelegate : class {
   func serviceDidResolveAddress(_ service: MyNetService)
 }
 
@@ -28,7 +28,7 @@ class MyNetService: NSObject, NetServiceDelegate {
   let serviceType: MyServiceType
   var addresses: [MyAddress] = []
   var dataRecords: [MyDataRecord] = []
-  var delegate: MyNetServiceDelegate? = nil
+  weak var delegate: MyNetServiceDelegate? = nil
   
   class MyDataRecord: Equatable, Comparable {
     static func == (lhs: MyDataRecord, rhs: MyDataRecord) -> Bool {
@@ -136,15 +136,14 @@ class MyNetService: NSObject, NetServiceDelegate {
     self.publishServiceFailure = publishServiceFailure
     self.service.delegate = self
     self.service.publish()
-//    self.service.publish(options: [.listenForConnections])
   }
   
   func unPublish(completion: (() -> Void)? = nil) {
     self.stop {
-      DispatchQueue.main.asyncAfter(after: 0.5, closure: {
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
         NotificationCenter.default.post(name: .netServiceDidUnPublish, object: self)
         completion?()
-      })
+      }
     }
   }
   

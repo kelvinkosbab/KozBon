@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol ServiceDetailButtonHeaderCellDelegate {
+protocol ServiceDetailButtonHeaderCellDelegate : class {
   func serviceDetailMoreLessButtonSelected()
 }
 
@@ -17,7 +17,7 @@ class ServiceDetailButtonHeaderCell : UITableViewCell {
   @IBOutlet weak private var titleLabel: UILabel!
   @IBOutlet weak private var moreLessButton: UIButton!
   @IBOutlet weak private var arrowButton: UIButton!
-  private var delegate: ServiceDetailButtonHeaderCellDelegate? = nil
+  private weak var delegate: ServiceDetailButtonHeaderCellDelegate? = nil
   
   func configure(_ delegate: ServiceDetailButtonHeaderCellDelegate?, title: String, isShowingMore: Bool = false) {
     self.delegate = delegate

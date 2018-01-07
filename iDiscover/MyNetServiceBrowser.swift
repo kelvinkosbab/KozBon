@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol MyNetServiceBrowserDelegate {
+protocol MyNetServiceBrowserDelegate : class{
   func myNetServiceBrowserDidChangeState(_ browser: MyNetServiceBrowser, state: MyNetServiceBrowserState)
   func myNetServiceBrowser(_ browser: MyNetServiceBrowser, didFind service: MyNetService)
   func myNetServiceBrowser(_ browser: MyNetServiceBrowser, didRemove service: MyNetService)
@@ -24,7 +24,7 @@ class MyNetServiceBrowser: NSObject, NetServiceBrowserDelegate {
   
   // MARK: - Properties and Init
   
-  var delegate: MyNetServiceBrowserDelegate? = nil
+  weak var delegate: MyNetServiceBrowserDelegate? = nil
   
   private let serviceBrowser: NetServiceBrowser
   let serviceType: MyServiceType
@@ -50,8 +50,8 @@ class MyNetServiceBrowser: NSObject, NetServiceBrowserDelegate {
     self.stopSearch()
     self.serviceBrowser.searchForServices(ofType: self.serviceType.fullType, inDomain: self.domain)
     
-    DispatchQueue.main.asyncAfter(after: timeout) { 
-      self.serviceBrowser.stop()
+    DispatchQueue.main.asyncAfter(deadline: .now() + timeout) { [weak self] in
+      self?.serviceBrowser.stop()
     }
   }
   
@@ -76,7 +76,8 @@ class MyNetServiceBrowser: NSObject, NetServiceBrowserDelegate {
   
   func netServiceBrowser(_ browser: NetServiceBrowser, didFind service: NetService, moreComing: Bool) {
     Log.log("Did find service \(service)")
-    self.delegate?.myNetServiceBrowser(self, didFind: MyNetService(service: service, serviceType: self.serviceType))
+    let netService = MyNetService(service: service, serviceType: self.serviceType)
+    self.delegate?.myNetServiceBrowser(self, didFind: netService)
     
     if !moreComing {
       browser.stop()
@@ -85,7 +86,8 @@ class MyNetServiceBrowser: NSObject, NetServiceBrowserDelegate {
   
   func netServiceBrowser(_ browser: NetServiceBrowser, didRemove service: NetService, moreComing: Bool) {
     Log.log("Did remove service \(service)")
-    self.delegate?.myNetServiceBrowser(self, didRemove: MyNetService(service: service, serviceType: self.serviceType))
+    let netService = MyNetService(service: service, serviceType: self.serviceType)
+    self.delegate?.myNetServiceBrowser(self, didRemove: netService)
     
     if !moreComing {
       browser.stop()
