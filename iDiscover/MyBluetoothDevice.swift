@@ -18,13 +18,13 @@ class MyBluetoothDevice : NSObject, CBPeripheralDelegate {
   // MARK: - Hashable
   
   override var hashValue: Int {
-    return self.peripheral.hashValue
+    return self.uuid.hashValue
   }
   
   // MARK: - Equatable
   
   static func ==(lhs: MyBluetoothDevice, rhs: MyBluetoothDevice) -> Bool {
-    return lhs.peripheral == rhs.peripheral
+    return lhs.uuid == rhs.uuid
   }
   
   // MARK: - Comparable
@@ -59,15 +59,8 @@ class MyBluetoothDevice : NSObject, CBPeripheralDelegate {
   
   // MARK: - Name
   
-  var name: String {
-    if let name = self.peripheral.name {
-      return name
-    }
-    return "Unnamed Device"
-  }
-  
-  func peripheralDidUpdateName(_ peripheral: CBPeripheral) {
-    Log.log("Did update name \(self.name)")
+  var name: String? {
+    return self.peripheral.name
   }
   
   // MARK: - RSSI
@@ -82,7 +75,7 @@ class MyBluetoothDevice : NSObject, CBPeripheralDelegate {
   }
   
   func peripheral(_ peripheral: CBPeripheral, didReadRSSI RSSI: NSNumber, error: Error?) {
-    Log.log("Did read RSSI \(peripheral.name ?? "Unknown Name")")
+    Log.log("Did read RSSI \(self.name ?? "Unknown Name")")
     
     self.lastKnownRSSI = RSSI.intValue
     self.readRSSICompletion?(RSSI.intValue)

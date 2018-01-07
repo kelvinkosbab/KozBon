@@ -15,15 +15,14 @@ protocol MyBluetoothManagerDelegate : class {
   func didStopScan(_ manager: MyBluetoothManager)
 }
 
-class MyBluetoothManager: NSObject, CBCentralManagerDelegate {
+class MyBluetoothManager: NSObject {
   
   // MARK: - Singleton
   
   static let shared = MyBluetoothManager()
   
   private override init() {
-    let dispatchQueue = DispatchQueue(label: "\(MyBluetoothManager.name).centralManagerQueue.\(UUID().uuidString)")
-    self.centralManager = CBCentralManager(delegate: nil, queue: dispatchQueue)
+    self.centralManager = CBCentralManager()
     super.init()
     self.centralManager.delegate = self
   }
@@ -39,11 +38,7 @@ class MyBluetoothManager: NSObject, CBCentralManagerDelegate {
   
   // MARK: - Devices
   
-  private(set) var devices: Set<MyBluetoothDevice> = Set<MyBluetoothDevice>() {
-    didSet {
-      self.delegate?.didUpdateDevices(self)
-    }
-  }
+  private(set) var devices: Set<MyBluetoothDevice> = Set<MyBluetoothDevice>()
   
   private func clearDevices() {
     for device in self.devices {
@@ -52,17 +47,34 @@ class MyBluetoothManager: NSObject, CBCentralManagerDelegate {
   }
   
   private func add(device: MyBluetoothDevice) {
-    if !self.devices.contains(device) {
+    let contains = self.devices.contains { $0.uuid == device.uuid }
+    if !contains, let deviceName = device.name, !deviceName.isEmpty {
       self.devices.insert(device)
+      
+      print("KAK - added device \(deviceName):\(device.uuid) : total=\(self.devices.count)")
+      
+      DispatchQueue.main.async { [weak self] in
+        if let strongSelf = self {
+          strongSelf.delegate?.didUpdateDevices(strongSelf)
+        }
+      }
     }
   }
   
   private func remove(device: MyBluetoothDevice) {
-    self.devices.remove(device)
+    if self.devices.contains(device) {
+      self.devices.remove(device)
+      
+      DispatchQueue.main.async { [weak self] in
+        if let strongSelf = self {
+          strongSelf.delegate?.didUpdateDevices(strongSelf)
+        }
+      }
+    }
   }
   
   private func fetchDevice(peripheral: CBPeripheral) -> MyBluetoothDevice? {
-    return self.devices.first(where: { $0.peripheral == peripheral })
+    return self.devices.first { $0.peripheral == peripheral }
   }
   
   // MARK: - Start / Stop Scan
@@ -75,8 +87,13 @@ class MyBluetoothManager: NSObject, CBCentralManagerDelegate {
   
   func stopScan() {
     if self.state != .unsupported {
-      self.delegate?.didStopScan(self)
       self.centralManager.stopScan()
+      
+      DispatchQueue.main.async { [weak self] in
+        if let strongSelf = self {
+          strongSelf.delegate?.didStopScan(strongSelf)
+        }
+      }
     }
   }
   
@@ -85,8 +102,13 @@ class MyBluetoothManager: NSObject, CBCentralManagerDelegate {
   private func scanForDevices() {
     self.centralManager.delegate = self
     if self.centralManager.state == .poweredOn {
-      self.delegate?.didStartScan(self)
       self.centralManager.scanForPeripherals(withServices: nil, options: nil)
+      
+      DispatchQueue.main.async { [weak self] in
+        if let strongSelf = self {
+          strongSelf.delegate?.didStartScan(strongSelf)
+        }
+      }
     }
   }
   
@@ -118,7 +140,7 @@ class MyBluetoothManager: NSObject, CBCentralManagerDelegate {
   }
   
   func connectAndConfigure(device: MyBluetoothDevice, completion: @escaping (_ error: Error?) -> Void) {
-    self.connect(device: device) { (error) in
+    self.connect(device: device) { error in
       if let error = error {
         completion(error)
       } else {
@@ -151,30 +173,30 @@ class MyBluetoothManager: NSObject, CBCentralManagerDelegate {
       completion?()
     }
   }
-  
-  // MARK: - Peripheral Connect/Disconnect Delegate Methods
+}
+
+// MARK: - CBCentralManagerDelegate
+
+extension MyBluetoothManager : CBCentralManagerDelegate {
   
   func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-    Log.log("Did connect to peripheral \(peripheral)")
+    Log.log("Did connect to peripheral \(peripheral.name ?? "nil")")
     
-    if let firstDevice = self.fetchDevice(peripheral: peripheral) {
-      firstDevice.connectCompletion?(nil)
-    }
+    let device = self.fetchDevice(peripheral: peripheral)
+    device?.connectCompletion?(nil)
   }
   
   func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
-    Log.log("Did fail to connect to peripheral \(peripheral) with error \(error?.localizedDescription ?? "Unknown Error")")
+    Log.log("Did fail to connect to peripheral \(peripheral.name ?? "nil") with error \(error?.localizedDescription ?? "Unknown Error")")
     
-    if let firstDevice = self.fetchDevice(peripheral: peripheral) {
-      firstDevice.connectCompletion?(error)
-    }
+    let device = self.fetchDevice(peripheral: peripheral)
+    device?.connectCompletion?(error)
   }
   
   func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-    Log.log("Did disconnect from peripheral \(peripheral) with error \(error?.localizedDescription ?? "Unknown Error")")
+    Log.log("Did disconnect from peripheral \(peripheral.name ?? "nil") with error \(error?.localizedDescription ?? "Unknown Error")")
     
-    if let firstDevice = self.fetchDevice(peripheral: peripheral) {
-      firstDevice.connectCompletion?(error)
-    }
+    let device = self.fetchDevice(peripheral: peripheral)
+    device?.connectCompletion?(error)
   }
 }

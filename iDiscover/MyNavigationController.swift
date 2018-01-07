@@ -23,6 +23,10 @@ class MyNavigationController : UINavigationController, PresentableController, My
     
     self.navigationBar.isTranslucent = false
     
+    if #available(iOS 11.0, *) {
+      self.navigationBar.prefersLargeTitles = true
+    }
+    
     self.styleTitleText()
     self.styleColors()
   }

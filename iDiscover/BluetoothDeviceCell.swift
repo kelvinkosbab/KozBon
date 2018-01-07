@@ -13,21 +13,11 @@ class BluetoothDeviceCell : UITableViewCell {
   @IBOutlet weak private var titleLabel: UILabel!
   @IBOutlet weak private var detailLabel: UILabel!
   
-  var device: MyBluetoothDevice? = nil
+  weak var device: MyBluetoothDevice? = nil
   
   func configure(device: MyBluetoothDevice) {
     self.device = device
-    device.delegate = self
     self.titleLabel.text = device.name
-    self.detailLabel.text  = "Total Services: \(device.services.count)"
-  }
-}
-
-// MARK: - MyBluetoothDeviceDelegate
-
-extension BluetoothDeviceCell : MyBluetoothDeviceDelegate {
-  
-  func didUpdate(_ device: MyBluetoothDevice) {
-    self.configure(device: device)
+    self.detailLabel.text = device.uuid
   }
 }
