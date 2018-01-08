@@ -105,7 +105,7 @@ class MyBluetoothDevice : NSObject, CBPeripheralDelegate {
   
   private var discoverServicesCompletion: (() -> Void)? = nil
   
-  private func discoverServices(serviceUUIDs: [CBUUID]? = nil, completion: (() -> Void)? = nil) {
+  func discoverServices(serviceUUIDs: [CBUUID]? = nil, completion: (() -> Void)? = nil) {
     self.discoverServicesCompletion = completion
     self.peripheral.discoverServices(serviceUUIDs)
   }

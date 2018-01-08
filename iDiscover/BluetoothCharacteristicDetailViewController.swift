@@ -29,6 +29,10 @@ class BluetoothCharacteristicDetailViewController : MyTableViewController {
   var device: MyBluetoothDevice!
   var characteristic: CBCharacteristic!
   
+  var descriptors: [CBDescriptor] {
+    return self.characteristic.descriptors ?? []
+  }
+  
   // MARK: - Lifecycle
   
   override func viewDidLoad() {
@@ -80,7 +84,7 @@ class BluetoothCharacteristicDetailViewController : MyTableViewController {
   // MARK: - RowType
   
   enum RowType {
-    case uuid, hexValue, isBroadcast, isRead, isWriteWithoutResponse, isWrite, isNotify, isIndicate, isAuthenticatedSignedWrites, isExtendedProperties, isNotifyEncryptionRequired, isIndicateEncryptionRequired, descriptor(CBDescriptor)
+    case uuid, hexValue, isBroadcast, isRead, isWriteWithoutResponse, isWrite, isNotify, isIndicate, isAuthenticatedSignedWrites, isExtendedProperties, isNotifyEncryptionRequired, isIndicateEncryptionRequired, noDescriptors, descriptor(CBDescriptor)
     
     var title: String {
       switch self {
@@ -108,6 +112,8 @@ class BluetoothCharacteristicDetailViewController : MyTableViewController {
         return "Indicate Notify Encryption"
       case .isIndicateEncryptionRequired:
         return "Indicate Encryption Required"
+      case .noDescriptors:
+        return "No Descriptors Discovered"
       case .descriptor(let descriptor):
         return descriptor.uuid.uuidString
       }
@@ -156,9 +162,12 @@ class BluetoothCharacteristicDetailViewController : MyTableViewController {
         return nil
       }
     case .descriptors:
-      let descriptors = self.characteristic.descriptors ?? []
-      let descriptor = descriptors[indexPath.row]
-      return .descriptor(descriptor)
+      if self.descriptors.count > 0 {
+        let descriptor = self.descriptors[indexPath.row]
+        return .descriptor(descriptor)
+      } else {
+        return .noDescriptors
+      }
     }
   }
   
@@ -191,7 +200,7 @@ class BluetoothCharacteristicDetailViewController : MyTableViewController {
     case .properties:
       return 10
     case .descriptors:
-      let descriptors = self.characteristic.descriptors ?? []
+      let descriptors = self.descriptors ?? []
       if descriptors.count > 0 {
         return descriptors.count
       } else {
@@ -256,6 +265,10 @@ class BluetoothCharacteristicDetailViewController : MyTableViewController {
     case .isIndicateEncryptionRequired:
       let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailKeyValueCell.name, for: indexPath) as! ServiceDetailKeyValueCell
       cell.configure(key: rowType.title, value: "\(self.characteristic.properties.contains(.indicateEncryptionRequired) ? "YES" : "NO")")
+      return cell
+    case .noDescriptors:
+      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailSimpleCell.name, for: indexPath) as! ServiceDetailSimpleCell
+      cell.configure(title: "No Descriptors Discovered")
       return cell
     case .descriptor(let descriptor):
       let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailKeyValueCell.name, for: indexPath) as! ServiceDetailKeyValueCell

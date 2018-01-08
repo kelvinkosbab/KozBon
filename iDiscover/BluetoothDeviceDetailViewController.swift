@@ -31,6 +31,9 @@ class BluetoothDeviceDetailViewController : MyTableViewController {
     return MyBluetoothManager.shared
   }
   
+  var services: [CBService] = []
+  var serviceCharacteristics: [CBService : [CBCharacteristic]] = [:]
+  
   // MARK: - Lifecycle
   
   override func viewDidLoad() {
@@ -45,8 +48,11 @@ class BluetoothDeviceDetailViewController : MyTableViewController {
     // Connect to the device
     self.bluetoothManager.connect(device: self.device) { [weak self] _ in
       self?.reloadContent()
-      self?.device.configure { [weak self] in
+      self?.device.discoverServices { [weak self] in
         self?.reloadContent()
+        self?.device.discoverCharacteristics { [weak self] in
+          self?.reloadContent()
+        }
       }
     }
   }
@@ -61,6 +67,11 @@ class BluetoothDeviceDetailViewController : MyTableViewController {
   // MARK: - Content
   
   func reloadContent() {
+    self.services = self.device.services
+    self.serviceCharacteristics = [:]
+    for service in self.services {
+      self.serviceCharacteristics[service] = service.characteristics ?? []
+    }
     self.tableView.reloadData()
   }
   
@@ -82,8 +93,8 @@ class BluetoothDeviceDetailViewController : MyTableViewController {
       return .info
     default:
       let serviceIndex = section - 1
-      if self.device.services.count > serviceIndex {
-        let service = self.device.services[serviceIndex]
+      if self.services.count > serviceIndex {
+        let service = self.services[serviceIndex]
         return .service(service)
       } else {
         return nil
@@ -118,7 +129,7 @@ class BluetoothDeviceDetailViewController : MyTableViewController {
         return nil
       }
     case .service(let service):
-      let characteristics = service.characteristics ?? []
+      let characteristics = self.serviceCharacteristics[service] ?? []
       if characteristics.count == 0 {
         return .noCharacteristics
       } else {
