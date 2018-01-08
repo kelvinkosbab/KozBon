@@ -37,15 +37,21 @@ class ServicesViewController : MyCollectionViewController {
     super.viewDidLoad()
     
     self.navigationItem.rightBarButtonItem = UIBarButtonItem(text: "Sort", target: self, action: #selector(self.sortButtonSelected(_:)))
-    
-    NotificationCenter.default.addObserver(self, selector: #selector(self.reloadBrowsingServices), name: .UIApplicationWillEnterForeground, object: nil)
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     
+    NotificationCenter.default.addObserver(self, selector: #selector(self.reloadBrowsingServices), name: .UIApplicationWillEnterForeground, object: nil)
+    
     MyBonjourManager.shared.delegate = self
     self.reloadBrowsingServices()
+  }
+  
+  override func viewDidDisappear(_ animated: Bool) {
+    super.viewDidDisappear(animated)
+    
+    NotificationCenter.default.removeObserver(self)
   }
   
   // MARK: - Content

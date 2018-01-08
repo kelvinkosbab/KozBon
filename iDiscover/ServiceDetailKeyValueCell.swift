@@ -13,8 +13,8 @@ class ServiceDetailKeyValueCell : UITableViewCell {
   @IBOutlet weak private var keyLabel: UILabel!
   @IBOutlet weak private var valueLabel: UILabel!
   
-  func configure(key: String, value: String) {
-    self.keyLabel.text = key.uppercased()
+  func configure(key: String?, value: String?) {
+    self.keyLabel.text = key?.localizedUppercase
     self.valueLabel.text = value
   }
 }

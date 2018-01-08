@@ -73,14 +73,6 @@ class ServiceDetailTableViewController: MyTableViewController {
     if self.navigationController?.viewControllers.first == self {
       self.navigationItem.leftBarButtonItem = UIBarButtonItem(text: "Done", target: self, action: #selector(self.doneButtonSelected(_:)))
     }
-    
-    if let service = self.service {
-      NotificationCenter.default.addObserver(self, selector: #selector(self.serviceWasRemoved(_:)), name: .bonjourDidRemoveService, object: service)
-      NotificationCenter.default.addObserver(self, selector: #selector(self.serviceWasRemoved(_:)), name: .bonjourDidClearServices, object: nil)
-      NotificationCenter.default.addObserver(self, selector: #selector(self.reloadData), name: .netServiceResolveAddressComplete, object: service)
-      NotificationCenter.default.addObserver(self, selector: #selector(self.reloadData), name: .netServiceDidPublish, object: service)
-      NotificationCenter.default.addObserver(self, selector: #selector(self.reloadData), name: .netServiceDidUnPublish, object: service)
-    }
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -95,6 +87,20 @@ class ServiceDetailTableViewController: MyTableViewController {
         service.resolve()
       }
     }
+    
+    if let service = self.service {
+      NotificationCenter.default.addObserver(self, selector: #selector(self.serviceWasRemoved(_:)), name: .bonjourDidRemoveService, object: service)
+      NotificationCenter.default.addObserver(self, selector: #selector(self.serviceWasRemoved(_:)), name: .bonjourDidClearServices, object: nil)
+      NotificationCenter.default.addObserver(self, selector: #selector(self.reloadData), name: .netServiceResolveAddressComplete, object: service)
+      NotificationCenter.default.addObserver(self, selector: #selector(self.reloadData), name: .netServiceDidPublish, object: service)
+      NotificationCenter.default.addObserver(self, selector: #selector(self.reloadData), name: .netServiceDidUnPublish, object: service)
+    }
+  }
+  
+  override func viewDidDisappear(_ animated: Bool) {
+    super.viewDidDisappear(animated)
+    
+    NotificationCenter.default.removeObserver(self)
   }
   
   // MARK: - Content
@@ -327,19 +333,19 @@ class ServiceDetailTableViewController: MyTableViewController {
       
       if isCurrentlyPublished {
         MyLoadingManager.showLoading()
-        service.unPublish(completion: {
+        service.unPublish { [weak self] in
           MyLoadingManager.hideLoading()
-          self.tableView.reloadData()
-        })
+          self?.tableView.reloadData()
+        }
         
       } else {
         MyLoadingManager.showLoading()
-        service.publish(publishServiceSuccess: {
+        service.publish(publishServiceSuccess: { [weak self] in
           MyLoadingManager.hideLoading()
-          self.tableView.reloadData()
-        }, publishServiceFailure: {
+          self?.tableView.reloadData()
+        }, publishServiceFailure: { [weak self] in
           MyLoadingManager.hideLoading()
-          self.tableView.reloadData()
+          self?.tableView.reloadData()
         })
       }
     }

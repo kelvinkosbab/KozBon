@@ -17,7 +17,11 @@ class BluetoothDeviceCell : UITableViewCell {
   
   func configure(device: MyBluetoothDevice) {
     self.device = device
-    self.titleLabel.text = device.name
-    self.detailLabel.text = device.uuid
+    self.configure(title: device.name, detail: device.uuid)
+  }
+  
+  func configure(title: String?, detail: String?) {
+    self.titleLabel.text = title
+    self.detailLabel.text = detail
   }
 }

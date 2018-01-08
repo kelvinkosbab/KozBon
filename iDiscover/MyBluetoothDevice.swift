@@ -13,6 +13,10 @@ protocol MyBluetoothDeviceDelegate : class {
   func didUpdate(_ device: MyBluetoothDevice)
 }
 
+protocol MyBluetoothDeviceServicesDelegate : class {
+  func didUpdateServices(_ device: MyBluetoothDevice)
+}
+
 class MyBluetoothDevice : NSObject, CBPeripheralDelegate {
   
   // MARK: - Hashable
@@ -32,6 +36,7 @@ class MyBluetoothDevice : NSObject, CBPeripheralDelegate {
   let peripheral: CBPeripheral
   var connectCompletion: ((_ error: Error?) -> Void)? = nil
   weak var delegate: MyBluetoothDeviceDelegate? = nil
+  weak var servicesDelegate: MyBluetoothDeviceServicesDelegate? = nil
   
   init(peripheral: CBPeripheral, lastKnownRSSI rssi: Int? = nil) {
     self.peripheral = peripheral
@@ -59,7 +64,13 @@ class MyBluetoothDevice : NSObject, CBPeripheralDelegate {
   
   // MARK: - RSSI
   
-  var lastKnownRSSI: Int? = nil
+  var lastKnownRSSI: Int? = nil {
+    didSet {
+      if self.lastKnownRSSI != oldValue {
+        self.delegate?.didUpdate(self)
+      }
+    }
+  }
   
   private var readRSSICompletion: ((_ RSSI: Int) -> Void)? = nil
   
@@ -78,10 +89,10 @@ class MyBluetoothDevice : NSObject, CBPeripheralDelegate {
   
   // MARK: - Configuration
   
-  func configure(completion: @escaping () -> Void) {
+  func configure(completion: (() -> Void)? = nil) {
     self.discoverServices { [weak self] in
       self?.discoverCharacteristics {
-        completion()
+        completion?()
       }
     }
   }
@@ -104,10 +115,13 @@ class MyBluetoothDevice : NSObject, CBPeripheralDelegate {
     
     self.discoverServicesCompletion?()
     self.discoverServicesCompletion = nil
+    self.servicesDelegate?.didUpdateServices(self)
   }
   
   func peripheral(_ peripheral: CBPeripheral, didModifyServices invalidatedServices: [CBService]) {
     Log.log("Did modify services")
+    
+    self.servicesDelegate?.didUpdateServices(self)
   }
   
   // MARK: - Characteristics
@@ -188,6 +202,24 @@ extension Sequence where Iterator.Element : MyBluetoothDevice {
   var nameSorted: [MyBluetoothDevice] {
     return self.sorted { (device1, device2) -> Bool in
       return device1.name ?? "" < device2.name ?? ""
+    }
+  }
+}
+
+// MARK: - CBPeripheralState
+
+extension CBPeripheralState {
+  
+  var string: String {
+    switch self {
+    case .connected:
+      return "Connected"
+    case .connecting:
+      return "Connecting"
+    case .disconnected:
+      return "Disconnected"
+    case .disconnecting:
+      return "Disconnecting"
     }
   }
 }

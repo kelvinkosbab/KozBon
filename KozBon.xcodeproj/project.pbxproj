@@ -29,6 +29,7 @@
 		B68B212B1E47A4F500BE2CA2 /* ServiceDetailLoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B212A1E47A4F500BE2CA2 /* ServiceDetailLoadingCell.swift */; };
 		B68B212D1E47A55800BE2CA2 /* ServiceDetailSimpleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B212C1E47A55800BE2CA2 /* ServiceDetailSimpleCell.swift */; };
 		B68B212F1E47A65C00BE2CA2 /* ServiceDetailDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B212E1E47A65C00BE2CA2 /* ServiceDetailDescriptionCell.swift */; };
+		B68B7DDF2003287100E592D9 /* Data+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B7DDE2003287100E592D9 /* Data+Util.swift */; };
 		B68EC5A01E2F226A00C9D5CC /* BluetoothViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EC59F1E2F226A00C9D5CC /* BluetoothViewController.swift */; };
 		B68EEA3D1E46706E00831CC4 /* MyCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA3C1E46706E00831CC4 /* MyCollectionViewController.swift */; };
 		B68EEA3F1E46709000831CC4 /* EmptyStateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA3E1E46709000831CC4 /* EmptyStateProtocol.swift */; };
@@ -60,6 +61,8 @@
 		B6BD8C822002C6F9009327B2 /* MyBluetoothManager+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BD8C812002C6F9009327B2 /* MyBluetoothManager+State.swift */; };
 		B6BD8C842002C715009327B2 /* MyBluetoothDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BD8C832002C715009327B2 /* MyBluetoothDevice.swift */; };
 		B6BD8C8C2002E0ED009327B2 /* BluetoothDeviceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BD8C8B2002E0ED009327B2 /* BluetoothDeviceDetailViewController.swift */; };
+		B6BD8C8E2002FE1C009327B2 /* Bluetooth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6BD8C8D2002FE1C009327B2 /* Bluetooth.storyboard */; };
+		B6BD8C9020030540009327B2 /* BluetoothCharacteristicDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BD8C8F2003053F009327B2 /* BluetoothCharacteristicDetailViewController.swift */; };
 		B6C4BC521E1CC2CD004409F1 /* TableViewCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C4BC511E1CC2CD004409F1 /* TableViewCells.swift */; };
 		B6C4BC551E1CD30A004409F1 /* CreateServiceTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C4BC541E1CD30A004409F1 /* CreateServiceTypeTableViewController.swift */; };
 		B6CE1D281E1208C1003D4FFA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D271E1208C1003D4FFA /* AppDelegate.swift */; };
@@ -105,6 +108,7 @@
 		B68B212A1E47A4F500BE2CA2 /* ServiceDetailLoadingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailLoadingCell.swift; sourceTree = "<group>"; };
 		B68B212C1E47A55800BE2CA2 /* ServiceDetailSimpleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailSimpleCell.swift; sourceTree = "<group>"; };
 		B68B212E1E47A65C00BE2CA2 /* ServiceDetailDescriptionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailDescriptionCell.swift; sourceTree = "<group>"; };
+		B68B7DDE2003287100E592D9 /* Data+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Util.swift"; sourceTree = "<group>"; };
 		B68EC59F1E2F226A00C9D5CC /* BluetoothViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothViewController.swift; sourceTree = "<group>"; };
 		B68EEA3C1E46706E00831CC4 /* MyCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCollectionViewController.swift; sourceTree = "<group>"; };
 		B68EEA3E1E46709000831CC4 /* EmptyStateProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyStateProtocol.swift; sourceTree = "<group>"; };
@@ -136,6 +140,8 @@
 		B6BD8C812002C6F9009327B2 /* MyBluetoothManager+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyBluetoothManager+State.swift"; sourceTree = "<group>"; };
 		B6BD8C832002C715009327B2 /* MyBluetoothDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBluetoothDevice.swift; sourceTree = "<group>"; };
 		B6BD8C8B2002E0ED009327B2 /* BluetoothDeviceDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothDeviceDetailViewController.swift; sourceTree = "<group>"; };
+		B6BD8C8D2002FE1C009327B2 /* Bluetooth.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Bluetooth.storyboard; sourceTree = "<group>"; };
+		B6BD8C8F2003053F009327B2 /* BluetoothCharacteristicDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothCharacteristicDetailViewController.swift; sourceTree = "<group>"; };
 		B6C4BC511E1CC2CD004409F1 /* TableViewCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCells.swift; sourceTree = "<group>"; };
 		B6C4BC541E1CD30A004409F1 /* CreateServiceTypeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateServiceTypeTableViewController.swift; sourceTree = "<group>"; };
 		B6CE1D241E1208C1003D4FFA /* KozBon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KozBon.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -241,6 +247,7 @@
 			children = (
 				B6BD8C892002E0AE009327B2 /* Bluetooth Device List */,
 				B6BD8C8A2002E0CD009327B2 /* Bluetooth Device Detail */,
+				B6BD8C9120030587009327B2 /* Bluetooth Characteristic Detail */,
 			);
 			name = Bluetooth;
 			sourceTree = "<group>";
@@ -305,6 +312,14 @@
 				B6BD8C8B2002E0ED009327B2 /* BluetoothDeviceDetailViewController.swift */,
 			);
 			name = "Bluetooth Device Detail";
+			sourceTree = "<group>";
+		};
+		B6BD8C9120030587009327B2 /* Bluetooth Characteristic Detail */ = {
+			isa = PBXGroup;
+			children = (
+				B6BD8C8F2003053F009327B2 /* BluetoothCharacteristicDetailViewController.swift */,
+			);
+			name = "Bluetooth Characteristic Detail";
 			sourceTree = "<group>";
 		};
 		B6CE1D1B1E1208C1003D4FFA = {
@@ -404,6 +419,7 @@
 				B63B27BE1E15AE62003E13F0 /* UIBarButtonItem+Util.swift */,
 				B6AE537F1E16E9F600FB57E3 /* UIDevice+Util.swift */,
 				B6859C4F1E282915001B8245 /* UIColor+Util.swift */,
+				B68B7DDE2003287100E592D9 /* Data+Util.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -414,6 +430,7 @@
 				B6CE1D611E120D10003D4FFA /* Main.storyboard */,
 				B68EEA4B1E46C1C800831CC4 /* Services.storyboard */,
 				B68262221E18200D00D0445D /* Info.storyboard */,
+				B6BD8C8D2002FE1C009327B2 /* Bluetooth.storyboard */,
 				B6C4BC511E1CC2CD004409F1 /* TableViewCells.swift */,
 			);
 			name = View;
@@ -514,6 +531,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6BD8C8E2002FE1C009327B2 /* Bluetooth.storyboard in Resources */,
 				B6CE1D351E1208C1003D4FFA /* LaunchScreen.storyboard in Resources */,
 				B68262231E18200D00D0445D /* Info.storyboard in Resources */,
 				B6CE1D4A1E120AF8003D4FFA /* service-names-port-numbers.csv in Resources */,
@@ -568,6 +586,7 @@
 				B6AE53841E17090A00FB57E3 /* PublishDetailCreateViewController.swift in Sources */,
 				B6089C9A1E19D76D00C7CF29 /* ServiceDetailTableViewController.swift in Sources */,
 				B6BD8C842002C715009327B2 /* MyBluetoothDevice.swift in Sources */,
+				B68B7DDF2003287100E592D9 /* Data+Util.swift in Sources */,
 				B63B27BF1E15AE62003E13F0 /* UIBarButtonItem+Util.swift in Sources */,
 				B6CE1D5F1E120CCC003D4FFA /* MyNetServiceBrowser.swift in Sources */,
 				B64D06261E1A2C55008B3FC8 /* MyServiceType+Library.swift in Sources */,
@@ -601,6 +620,7 @@
 				B679CC131E1624740056C7B5 /* PublishNetServiceSearchViewController.swift in Sources */,
 				B6CE1D521E120B9F003D4FFA /* MyDataManagerObject.swift in Sources */,
 				B6CE1D281E1208C1003D4FFA /* AppDelegate.swift in Sources */,
+				B6BD8C9020030540009327B2 /* BluetoothCharacteristicDetailViewController.swift in Sources */,
 				B6CE1D5E1E120CCC003D4FFA /* MyNetService.swift in Sources */,
 				B68EEA611E471F4200831CC4 /* SettingsHeaderView.swift in Sources */,
 				B6AE53801E16E9F600FB57E3 /* UIDevice+Util.swift in Sources */,

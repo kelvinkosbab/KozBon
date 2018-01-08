@@ -14,7 +14,7 @@ class BluetoothViewController : MyTableViewController {
   // MARK: - Class Accessors
   
   static func newViewController() -> BluetoothViewController {
-    return self.newViewController(fromStoryboard: .main)
+    return self.newViewController(fromStoryboard: .bluetooth)
   }
   
   // MARK: - Properties
@@ -54,6 +54,7 @@ class BluetoothViewController : MyTableViewController {
     super.viewDidDisappear(animated)
     
     self.bluetoothManager.stopScan()
+    self.bluetoothManager.disconnectFromAllDevices()
   }
   
   // MARK: - Loading
@@ -181,8 +182,8 @@ class BluetoothViewController : MyTableViewController {
     case .device(let device):
       let viewController = BluetoothDeviceDetailViewController.newViewController(device: device)
       viewController.presentControllerIn(self, forMode: UIDevice.isPhone ? .navStack : .modal)
-    default:
-      return
+      
+    default: break
     }
   }
 }

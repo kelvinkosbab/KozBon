@@ -37,7 +37,7 @@ extension MyViewControllerIdentifierProtocol where Self : UIViewController {
 }
 
 enum MyStoryboard {
-  case main, services, info
+  case main, services, bluetooth, info
   
   private var name: String {
     switch self {
@@ -45,6 +45,8 @@ enum MyStoryboard {
       return "Main"
     case .services:
       return "Services"
+    case .bluetooth:
+      return "Bluetooth"
     case .info:
       return "Info"
     }

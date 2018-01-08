@@ -51,8 +51,6 @@ class MyBluetoothManager: NSObject {
     if !contains, let deviceName = device.name, !deviceName.isEmpty {
       self.devices.insert(device)
       
-      print("KAK - added device \(deviceName):\(device.uuid) : total=\(self.devices.count)")
-      
       DispatchQueue.main.async { [weak self] in
         if let strongSelf = self {
           strongSelf.delegate?.didUpdateDevices(strongSelf)
