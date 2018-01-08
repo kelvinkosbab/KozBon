@@ -9,10 +9,6 @@
 import Foundation
 import UIKit
 
-protocol ServiceDetailMoreLessDelegate {
-  func serviceDetailDidUpdateMoreLess(isShowingMore: Bool)
-}
-
 class ServiceDetailTableViewController: MyTableViewController {
   
   // MARK: - Class Accessors
@@ -63,41 +59,9 @@ class ServiceDetailTableViewController: MyTableViewController {
     }
   }
   
-  var showingMoreDelegate: ServiceDetailMoreLessDelegate? = nil
   var mode: ServiceDetailMode = .browsedService
   var service: MyNetService? = nil
   var serviceType: MyServiceType!
-  
-  var isMoreDetails: Bool = false {
-    didSet {
-      self.showingMoreDelegate?.serviceDetailDidUpdateMoreLess(isShowingMore: self.isMoreDetails)
-      
-      if self.isMoreDetails {
-        // Show the extra details
-        var indexPathsToInsert: [IndexPath] = []
-        indexPathsToInsert.append(IndexPath(row: 2, section: 0))
-        indexPathsToInsert.append(IndexPath(row: 3, section: 0))
-        indexPathsToInsert.append(IndexPath(row: 4, section: 0))
-        indexPathsToInsert.append(IndexPath(row: 5, section: 0))
-        if let _ = self.serviceType.detail {
-          indexPathsToInsert.append(IndexPath(row: 6, section: 0))
-        }
-        self.tableView.insertRows(at: indexPathsToInsert, with: .top)
-        
-      } else {
-        // Hide the extra details
-        var indexPathsToDelete: [IndexPath] = []
-        indexPathsToDelete.append(IndexPath(row: 2, section: 0))
-        indexPathsToDelete.append(IndexPath(row: 3, section: 0))
-        indexPathsToDelete.append(IndexPath(row: 4, section: 0))
-        indexPathsToDelete.append(IndexPath(row: 5, section: 0))
-        if let _ = self.serviceType.detail {
-          indexPathsToDelete.append(IndexPath(row: 6, section: 0))
-        }
-        self.tableView.deleteRows(at: indexPathsToDelete, with: .top)
-      }
-    }
-  }
   
   // MARK: - Lifecycle
   
@@ -196,11 +160,7 @@ class ServiceDetailTableViewController: MyTableViewController {
     
     // Information section
     if section == 0 {
-      if let _ = self.service, !self.isMoreDetails {
-        return 2
-      } else {
-        return self.serviceInformationSectionItems.count
-      }
+      return self.serviceInformationSectionItems.count
     }
     
     // The service was published by this device
@@ -231,8 +191,7 @@ class ServiceDetailTableViewController: MyTableViewController {
     
     if section == 0 {
       let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailButtonHeaderCell.name) as! ServiceDetailButtonHeaderCell
-      cell.configure(self, title: "Information", isShowingMore: self.isMoreDetails)
-      self.showingMoreDelegate = cell
+      cell.configure(title: "Information")
       return cell.contentView
     }
     
@@ -384,12 +343,5 @@ class ServiceDetailTableViewController: MyTableViewController {
         })
       }
     }
-  }
-}
-
-extension ServiceDetailTableViewController : ServiceDetailButtonHeaderCellDelegate {
-  
-  func serviceDetailMoreLessButtonSelected() {
-    self.isMoreDetails = !self.isMoreDetails
   }
 }

@@ -27,12 +27,6 @@ class MyBluetoothDevice : NSObject, CBPeripheralDelegate {
     return lhs.uuid == rhs.uuid
   }
   
-  // MARK: - Comparable
-  
-  static func <(lhs: MyBluetoothDevice, rhs: MyBluetoothDevice) -> Bool {
-    return lhs.peripheral.name ?? "" < rhs.peripheral.name ?? ""
-  }
-  
   // MARK: - Properties and Init
   
   let peripheral: CBPeripheral
@@ -191,9 +185,9 @@ class MyBluetoothDevice : NSObject, CBPeripheralDelegate {
 
 extension Sequence where Iterator.Element : MyBluetoothDevice {
   
-  var typeSorted: [MyBluetoothDevice] {
-    return self.sorted(by: { (device1, device2) -> Bool in
-      return device1 < device2
-    })
+  var nameSorted: [MyBluetoothDevice] {
+    return self.sorted { (device1, device2) -> Bool in
+      return device1.name ?? "" < device2.name ?? ""
+    }
   }
 }

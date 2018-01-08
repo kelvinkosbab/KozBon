@@ -123,7 +123,7 @@ class BluetoothViewController : MyTableViewController {
     
     switch sectionType {
     case .bluetoothUnsupported:
-      return nil
+      return super.tableView(tableView, viewForHeaderInSection: section)
     case .devices:
       let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableHeaderCell.name) as! NetServicesTableHeaderCell
       cell.titleLabel.text = "Scanning".uppercased()
@@ -196,7 +196,7 @@ extension BluetoothViewController : MyBluetoothManagerDelegate {
   }
   
   func didUpdateDevices(_ manager: MyBluetoothManager) {
-    self.devices = manager.devices.typeSorted
+    self.devices = manager.devices.nameSorted
   }
   
   func didStopScan(_ manager: MyBluetoothManager) {

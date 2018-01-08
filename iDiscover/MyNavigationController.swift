@@ -30,10 +30,6 @@ class MyNavigationController : UINavigationController, PresentableController, My
     self.styleNavigationBar()
   }
   
-  deinit {
-    NotificationCenter.default.removeObserver(self)
-  }
-  
   // MARK: - Status Bar
   
   override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -42,9 +38,9 @@ class MyNavigationController : UINavigationController, PresentableController, My
   
   // MARK: - Styles
   
-  func styleNavigationBar(barColor: UIColor = UIColor(hex: "007AFF"), fontColor: UIColor = UIColor.white, font: UIFont = UIFont.systemFont(ofSize: 18)) {
+  func styleNavigationBar(barColor: UIColor = UIColor(hex: "007AFF"), fontColor: UIColor = .white, font: UIFont = UIFont.systemFont(ofSize: 18)) {
     self.navigationBar.barTintColor = barColor
     self.navigationBar.tintColor = fontColor
-    self.navigationBar.titleTextAttributes = [ NSAttributedStringKey.font : font, NSAttributedStringKey.foregroundColor: fontColor ]
+    self.navigationBar.titleTextAttributes = [ .foregroundColor: fontColor, .font : font ]
   }
 }
