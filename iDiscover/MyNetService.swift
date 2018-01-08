@@ -16,7 +16,7 @@ extension Notification.Name {
   static let netServiceDidStop = Notification.Name(rawValue: "\(MyNetService.name).netServiceDidStop")
 }
 
-protocol MyNetServiceDelegate {
+protocol MyNetServiceDelegate : class {
   func serviceDidResolveAddress(_ service: MyNetService)
 }
 
@@ -28,7 +28,7 @@ class MyNetService: NSObject, NetServiceDelegate {
   let serviceType: MyServiceType
   var addresses: [MyAddress] = []
   var dataRecords: [MyDataRecord] = []
-  var delegate: MyNetServiceDelegate? = nil
+  weak var delegate: MyNetServiceDelegate? = nil
   
   class MyDataRecord: Equatable, Comparable {
     static func == (lhs: MyDataRecord, rhs: MyDataRecord) -> Bool {
@@ -83,7 +83,7 @@ class MyNetService: NSObject, NetServiceDelegate {
   // MARK: - NetServiceDelegate - Stopping
   
   func netServiceDidStop(_ sender: NetService) {
-    print("\(self.className) : Service did stop \(sender)")
+    Log.log("Service did stop \(sender)")
     NotificationCenter.default.post(name: .netServiceDidStop, object: self)
     self.isStopping = false
     self.didStop?()
@@ -106,7 +106,7 @@ class MyNetService: NSObject, NetServiceDelegate {
   // MARK: - NetServiceDelegate - Resolving Address
   
   func netServiceDidResolveAddress(_ sender: NetService) {
-    print("\(self.className) : Service did resolve address \(sender) with hostname \(self.hostName)")
+    Log.log("Service did resolve address \(sender) with hostname \(self.hostName)")
     self.addresses = MyAddress.parseAddresses(forNetService: sender)
     NotificationCenter.default.post(name: .netServiceResolveAddressComplete, object: self)
     self.delegate?.serviceDidResolveAddress(self)
@@ -116,7 +116,7 @@ class MyNetService: NSObject, NetServiceDelegate {
   }
   
   func netService(_ sender: NetService, didNotResolve errorDict: [String : NSNumber]) {
-    print("\(self.className) : Service did not resolve address \(sender) with errorDict \(errorDict)")
+    Log.log("Service did not resolve address \(sender) with errorDict \(errorDict)")
     NotificationCenter.default.post(name: .netServiceResolveAddressComplete, object: self)
     self.delegate?.serviceDidResolveAddress(self)
     self.completedAddressResolution?()
@@ -136,26 +136,25 @@ class MyNetService: NSObject, NetServiceDelegate {
     self.publishServiceFailure = publishServiceFailure
     self.service.delegate = self
     self.service.publish()
-//    self.service.publish(options: [.listenForConnections])
   }
   
   func unPublish(completion: (() -> Void)? = nil) {
     self.stop {
-      DispatchQueue.main.asyncAfter(after: 0.5, closure: {
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
         NotificationCenter.default.post(name: .netServiceDidUnPublish, object: self)
         completion?()
-      })
+      }
     }
   }
   
   // MARK: - NetServiceDelegate - Publishing Service
   
   func netServiceWillPublish(_ sender: NetService) {
-    print("\(self.className) : Service will publish \(sender)")
+    Log.log("Service will publish \(sender)")
   }
   
   func netServiceDidPublish(_ sender: NetService) {
-    print("\(self.className) : Service did publish \(sender)")
+    Log.log("Service did publish \(sender)")
     self.publishServiceSuccess?()
     self.publishServiceSuccess = nil
     self.publishServiceFailure = nil
@@ -164,7 +163,7 @@ class MyNetService: NSObject, NetServiceDelegate {
   }
   
   func netService(_ sender: NetService, didNotPublish errorDict: [String : NSNumber]) {
-    print("\(self.className) : Service did not publish \(sender) with errorDict \(errorDict)")
+    Log.log("Service did not publish \(sender) with errorDict \(errorDict)")
     self.publishServiceFailure?()
     self.publishServiceSuccess = nil
     self.publishServiceFailure = nil
@@ -183,7 +182,7 @@ class MyNetService: NSObject, NetServiceDelegate {
   }
   
   func netService(_ sender: NetService, didUpdateTXTRecord data: Data) {
-    print("\(self.className) : Did update TXT record \(data)")
+    Log.log("Did update TXT record \(data)")
     
     var records: [MyDataRecord] = []
     for (key, value) in NetService.dictionary(fromTXTRecord: data) {

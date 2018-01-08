@@ -42,7 +42,7 @@ class MyTableViewController : UITableViewController, PresentableController, MyVi
   
   override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     let headerView = UIView()
-    headerView.backgroundColor = UIColor.white
+    headerView.backgroundColor = .white
     return headerView
   }
   
@@ -52,7 +52,7 @@ class MyTableViewController : UITableViewController, PresentableController, MyVi
   
   override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
     let footerView = UIView()
-    footerView.backgroundColor = UIColor.white
+    footerView.backgroundColor = .clear
     return footerView
   }
   

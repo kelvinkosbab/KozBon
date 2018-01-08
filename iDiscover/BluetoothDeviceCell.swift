@@ -12,24 +12,16 @@ import UIKit
 class BluetoothDeviceCell : UITableViewCell {
   @IBOutlet weak private var titleLabel: UILabel!
   @IBOutlet weak private var detailLabel: UILabel!
-  @IBOutlet weak private var connectionStatusImageView: UIImageView!
   
-  var device: MyBluetoothDevice? = nil
+  weak var device: MyBluetoothDevice? = nil
   
   func configure(device: MyBluetoothDevice) {
     self.device = device
-    device.delegate = self
-    self.titleLabel.text = device.name
-    self.detailLabel.text  = "Total Services: \(device.services.count)"
-    self.connectionStatusImageView.image = device.state.icon
+    self.configure(title: device.name, detail: device.uuid)
   }
-}
-
-extension BluetoothDeviceCell : MyBluetoothDeviceProtocol {
-  func didUpdate(_ device: MyBluetoothDevice) {
-    self.configure(device: device)
+  
+  func configure(title: String?, detail: String?) {
+    self.titleLabel.text = title
+    self.detailLabel.text = detail
   }
-  func didUpdateServices(_ device: MyBluetoothDevice) {}
-  func didInvalidateService(_ device: MyBluetoothDevice, service: MyBluetoothService) {}
-  func didDiscoverCharacteristicsFor(_ device: MyBluetoothDevice, service: MyBluetoothService) {}
 }

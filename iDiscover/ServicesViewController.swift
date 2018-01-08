@@ -37,15 +37,21 @@ class ServicesViewController : MyCollectionViewController {
     super.viewDidLoad()
     
     self.navigationItem.rightBarButtonItem = UIBarButtonItem(text: "Sort", target: self, action: #selector(self.sortButtonSelected(_:)))
-    
-    NotificationCenter.default.addObserver(self, selector: #selector(self.reloadBrowsingServices), name: .UIApplicationWillEnterForeground, object: nil)
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     
+    NotificationCenter.default.addObserver(self, selector: #selector(self.reloadBrowsingServices), name: .UIApplicationWillEnterForeground, object: nil)
+    
     MyBonjourManager.shared.delegate = self
     self.reloadBrowsingServices()
+  }
+  
+  override func viewDidDisappear(_ animated: Bool) {
+    super.viewDidDisappear(animated)
+    
+    NotificationCenter.default.removeObserver(self)
   }
   
   // MARK: - Content
@@ -58,7 +64,7 @@ class ServicesViewController : MyCollectionViewController {
     }
   }
   
-  func reloadBrowsingServices() {
+  @objc func reloadBrowsingServices() {
     
     // Update the browsing for services flag
     self.isBrowsingForServces = true
@@ -153,7 +159,7 @@ class ServicesViewController : MyCollectionViewController {
   
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let service = self.services[indexPath.row]
-    var viewController = ServiceDetailTableViewController.newViewController(browsedService: service)
+    let viewController = ServiceDetailTableViewController.newViewController(browsedService: service)
     viewController.presentControllerIn(self, forMode: UIDevice.isPhone ? .navStack : .modal)
   }
   
@@ -181,7 +187,7 @@ extension ServicesViewController : ServicesHeaderViewDelegate {
 extension ServicesViewController : ServicesFooterViewDelegate {
   
   func servicesFooterSpecifyButtonSelected() {
-    var viewController = CreateServiceTypeTableViewController.newViewController()
+    let viewController = CreateServiceTypeTableViewController.newViewController()
     viewController.presentControllerIn(self, forMode: UIDevice.isPhone ? .navStack : .modal)
   }
 }

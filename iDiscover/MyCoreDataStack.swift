@@ -53,7 +53,7 @@ class MyCoreDataStack: NSObject {
          Check the error message to determine what the actual problem was.
          */
         //fatalError("Unresolved error \(error), \(error.userInfo)")
-        print("Unresolved error \(error), \(error.userInfo)")
+        Log.log("Unresolved error \(error), \(error.userInfo)")
       }
     })
     return container
@@ -62,17 +62,17 @@ class MyCoreDataStack: NSObject {
   // MARK: - Context Notifications
   
   @objc private func contextWillSave(_ notification: Notification) {
-    print("\(self) : Context will save")
+    Log.log("Context will save")
   }
   
   @objc private func contextDidSave(_ notification: Notification) {
     if let _ = notification.object as? NSManagedObjectContext {
-      print("\(self) : Context did save")
+      Log.log("Context did save")
     }
   }
   
   @objc private func contextObjectsDidChange(_ notification: Notification) {
-    print("\(self) : Objects did change")
+    Log.log("Objects did change")
   }
   
   // MARK: - Managed Object Context
@@ -91,7 +91,7 @@ class MyCoreDataStack: NSObject {
         // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
         let nserror = error as NSError
         //fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-        print("Unresolved error \(nserror), \(nserror.userInfo)")
+        Log.log("Unresolved error \(nserror), \(nserror.userInfo)")
       }
     }
   }

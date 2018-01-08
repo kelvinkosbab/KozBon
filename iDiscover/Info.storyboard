@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -26,7 +26,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SettingsItemCell" id="ToO-vM-iw8" customClass="SettingsItemCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="37" y="50" width="302" height="104"/>
+                                <rect key="frame" x="36.5" y="50" width="302" height="104"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="302" height="104"/>
@@ -36,13 +36,13 @@
                                             <rect key="frame" x="0.0" y="0.0" width="302" height="104"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem Ipsum" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gj7-sn-bKB">
-                                                    <rect key="frame" x="10" y="43" width="257" height="18"/>
+                                                    <rect key="frame" x="16" y="43" width="245" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconChevronRight" translatesAutoresizingMaskIntoConstraints="NO" id="xp4-kF-Fa0">
-                                                    <rect key="frame" x="277" y="44" width="15" height="15"/>
+                                                    <rect key="frame" x="271" y="44" width="15" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="15" id="YDl-rj-kLj"/>
                                                         <constraint firstAttribute="height" constant="15" id="f5N-qo-KY2"/>
@@ -51,11 +51,11 @@
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
-                                                <constraint firstItem="Gj7-sn-bKB" firstAttribute="leading" secondItem="46I-V9-oU5" secondAttribute="leading" constant="10" id="4xq-vh-Bma"/>
+                                                <constraint firstItem="Gj7-sn-bKB" firstAttribute="leading" secondItem="46I-V9-oU5" secondAttribute="leading" constant="16" id="4xq-vh-Bma"/>
                                                 <constraint firstItem="xp4-kF-Fa0" firstAttribute="centerY" secondItem="46I-V9-oU5" secondAttribute="centerY" id="ghz-3L-Oyo"/>
                                                 <constraint firstItem="xp4-kF-Fa0" firstAttribute="leading" secondItem="Gj7-sn-bKB" secondAttribute="trailing" constant="10" id="oRZ-it-ihe"/>
                                                 <constraint firstItem="Gj7-sn-bKB" firstAttribute="centerY" secondItem="46I-V9-oU5" secondAttribute="centerY" id="sIV-gS-dhe"/>
-                                                <constraint firstAttribute="trailing" secondItem="xp4-kF-Fa0" secondAttribute="trailing" constant="10" id="yaS-QD-7jX"/>
+                                                <constraint firstAttribute="trailing" secondItem="xp4-kF-Fa0" secondAttribute="trailing" constant="16" id="yaS-QD-7jX"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -72,7 +72,7 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SettingsKeyValueCell" id="VHA-BN-bEM" customClass="SettingsKeyValueCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="37" y="164" width="302" height="104"/>
+                                <rect key="frame" x="36.5" y="164" width="302" height="104"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="302" height="104"/>
@@ -82,13 +82,13 @@
                                             <rect key="frame" x="0.0" y="0.0" width="302" height="104"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem Ipsum" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fos-Q8-PFN">
-                                                    <rect key="frame" x="11.5" y="42.5" width="89" height="18"/>
+                                                    <rect key="frame" x="16" y="42.5" width="97.5" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem Ipsum" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fGU-zE-FZ2">
-                                                    <rect key="frame" x="110.5" y="44" width="181.5" height="16"/>
+                                                    <rect key="frame" x="123.5" y="44" width="162.5" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -96,10 +96,11 @@
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="fGU-zE-FZ2" secondAttribute="trailing" constant="16" id="9qS-cm-V6e"/>
+                                                <constraint firstItem="fGU-zE-FZ2" firstAttribute="width" secondItem="Fos-Q8-PFN" secondAttribute="width" multiplier="5:3" id="CCq-Tv-ItD"/>
+                                                <constraint firstItem="Fos-Q8-PFN" firstAttribute="leading" secondItem="zXo-2H-puv" secondAttribute="leading" constant="16" id="FM3-7D-aJM"/>
                                                 <constraint firstItem="Fos-Q8-PFN" firstAttribute="centerY" secondItem="zXo-2H-puv" secondAttribute="centerY" id="OGU-5U-kWY"/>
-                                                <constraint firstAttribute="trailing" secondItem="fGU-zE-FZ2" secondAttribute="trailing" constant="10" id="OzE-5i-TCI"/>
                                                 <constraint firstItem="fGU-zE-FZ2" firstAttribute="leading" secondItem="Fos-Q8-PFN" secondAttribute="trailing" constant="10" id="nmR-Nh-OYu"/>
-                                                <constraint firstAttribute="trailing" secondItem="Fos-Q8-PFN" secondAttribute="trailing" multiplier="3:1" id="tWl-zE-v7z"/>
                                                 <constraint firstItem="fGU-zE-FZ2" firstAttribute="centerY" secondItem="zXo-2H-puv" secondAttribute="centerY" id="uRv-GP-qUj"/>
                                             </constraints>
                                         </view>
@@ -123,16 +124,16 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem Ipsum" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x74-wL-bY0">
-                                    <rect key="frame" x="10" y="22" width="355" height="18"/>
+                                    <rect key="frame" x="16" y="22" width="343" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
                             <constraints>
-                                <constraint firstAttribute="trailing" secondItem="x74-wL-bY0" secondAttribute="trailing" constant="10" id="7Ed-z1-BO2"/>
+                                <constraint firstAttribute="trailing" secondItem="x74-wL-bY0" secondAttribute="trailing" constant="16" id="7Ed-z1-BO2"/>
                                 <constraint firstAttribute="bottom" secondItem="x74-wL-bY0" secondAttribute="bottom" constant="10" id="CnK-WD-qKZ"/>
-                                <constraint firstItem="x74-wL-bY0" firstAttribute="leading" secondItem="JeX-to-MV4" secondAttribute="leading" constant="10" id="dp7-NO-Kg9"/>
+                                <constraint firstItem="x74-wL-bY0" firstAttribute="leading" secondItem="JeX-to-MV4" secondAttribute="leading" constant="16" id="dp7-NO-Kg9"/>
                             </constraints>
                             <connections>
                                 <outlet property="titleLabel" destination="x74-wL-bY0" id="yAp-Q3-Ep5"/>

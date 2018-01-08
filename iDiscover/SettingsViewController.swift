@@ -157,29 +157,24 @@ class SettingsViewController : MyCollectionViewController {
     switch item {
       
     case .serviceTypeFullList:
-      var viewController = AllServiceTypesTableViewController.newViewController()
+      let viewController = AllServiceTypesTableViewController.newViewController()
       viewController.presentControllerIn(self, forMode: UIDevice.isPhone ? .navStack : .modal)
-      break
       
     case .serviceTypeCreate:
-      var viewController = CreateServiceTypeTableViewController.newViewController()
+      let viewController = CreateServiceTypeTableViewController.newViewController()
       viewController.presentControllerIn(self, forMode: UIDevice.isPhone ? .navStack : .modal)
-      break
       
     case .appWebsite:
       let path = "http://kozinga.net/"
       UIPasteboard.general.string = path
       self.showDisappearingAlertDialog(title: "Website Copied", message: "\(path) copied to the clipboard.")
-      break
       
     case .appContact:
       let email = "kelvin.kosbab@kozinga.net"
       UIPasteboard.general.string = email
       self.showDisappearingAlertDialog(title: "Email Copied", message: "\(email) copied to the clipboard.")
-      break
       
-    default:
-      break
+    default: break
     }
   }
   

@@ -9,17 +9,29 @@
 import Foundation
 import UIKit
 
-class BluetoothViewController : MyTableViewController, MyBluetoothManagerProtocol {
+class BluetoothViewController : MyTableViewController {
   
   // MARK: - Class Accessors
   
   static func newViewController() -> BluetoothViewController {
-    return self.newViewController(fromStoryboard: .main)
+    return self.newViewController(fromStoryboard: .bluetooth)
   }
   
   // MARK: - Properties
   
-  var loadingActivityIndicator: UIActivityIndicatorView? = nil
+  weak var loadingActivityIndicator: UIActivityIndicatorView? = nil
+  
+  var bluetoothManager: MyBluetoothManager {
+    return MyBluetoothManager.shared
+  }
+  
+  internal var devices: [MyBluetoothDevice] = [] {
+    didSet {
+      if self.isViewLoaded {
+        self.tableView.reloadData()
+      }
+    }
+  }
   
   // MARK: - Lifecycle
   
@@ -33,35 +45,22 @@ class BluetoothViewController : MyTableViewController, MyBluetoothManagerProtoco
     super.viewWillAppear(animated)
     
     self.tableView.reloadData()
-    MyBluetoothManager.shared.delegate = self
-    MyBluetoothManager.shared.startScan()
+    self.bluetoothManager.delegate = self
+    self.bluetoothManager.startScan()
     self.updateLoading()
   }
   
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
     
-    MyBluetoothManager.shared.stopScan()
-  }
-  
-  // MARK: - MyBluetoothManagerProtocol
-  
-  func didStartScan(_ manager: MyBluetoothManager) {
-    self.updateLoading()
-  }
-  
-  func didUpdateDevices(_ manager: MyBluetoothManager) {
-    self.tableView.reloadData()
-  }
-  
-  func didStopScan(_ manager: MyBluetoothManager) {
-    self.updateLoading()
+    self.bluetoothManager.stopScan()
+    self.bluetoothManager.disconnectFromAllDevices()
   }
   
   // MARK: - Loading
   
   func updateLoading() {
-    if MyBluetoothManager.shared.state.isScanning {
+    if self.bluetoothManager.state.isScanning {
       self.loadingActivityIndicator?.startAnimating()
       self.loadingActivityIndicator?.isHidden = false
     } else {
@@ -70,16 +69,63 @@ class BluetoothViewController : MyTableViewController, MyBluetoothManagerProtoco
     }
   }
   
-  // MARK: - UITableView
+  // MARK: - SectionType
   
-  let bluetoothDevicesSection: Int = 0
+  enum SectionType {
+    case bluetoothUnsupported, devices
+  }
+  
+  func getSectionType(section: Int) -> SectionType? {
+    
+    guard self.bluetoothManager.state != .unsupported else {
+      return .bluetoothUnsupported
+    }
+    
+    switch section {
+    case 0:
+      return .devices
+    default:
+      return nil
+    }
+  }
+  
+  // MARK: - RowType
+  
+  enum RowType {
+    case bluetoothUnsupported, device(MyBluetoothDevice)
+  }
+  
+  func getRowType(at indexPath: IndexPath) -> RowType? {
+    
+    guard let sectionType = self.getSectionType(section: indexPath.section) else {
+      return nil
+    }
+    
+    switch sectionType {
+    case .bluetoothUnsupported:
+      return .bluetoothUnsupported
+    case .devices:
+      let device = self.devices[indexPath.row]
+      return .device(device)
+    }
+  }
+  
+  // MARK: - UITableView
   
   override func numberOfSections(in tableView: UITableView) -> Int {
     return 1
   }
   
   override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    if section == self.bluetoothDevicesSection && !MyBluetoothManager.shared.state.isUnsupported {
+    
+    guard let sectionType = self.getSectionType(section: section) else {
+      return nil
+    }
+    
+    switch sectionType {
+    case .bluetoothUnsupported:
+      return super.tableView(tableView, viewForHeaderInSection: section)
+    case .devices:
       let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableHeaderCell.name) as! NetServicesTableHeaderCell
       cell.titleLabel.text = "Scanning".uppercased()
       cell.loadingActivityIndicator.startAnimating()
@@ -89,46 +135,72 @@ class BluetoothViewController : MyTableViewController, MyBluetoothManagerProtoco
       cell.reloadButton.isUserInteractionEnabled = false
       return cell.contentView
     }
-    return super.tableView(tableView, viewForHeaderInSection: section)
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    if section == self.bluetoothDevicesSection {
-      if MyBluetoothManager.shared.state.isUnsupported {
-        return 1
-      }
-      return MyBluetoothManager.shared.devices.count
+    
+    guard let sectionType = self.getSectionType(section: section) else {
+      return 0
     }
-    return 0
+    
+    switch sectionType {
+    case .bluetoothUnsupported:
+      return 1
+    case .devices:
+      return self.devices.count
+    }
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
-    switch indexPath.section {
-    case self.bluetoothDevicesSection:
-      
-      if MyBluetoothManager.shared.state.isUnsupported {
-        let cell = tableView.dequeueReusableCell(withIdentifier: MyBasicCenterLabelCell.name, for: indexPath) as! MyBasicCenterLabelCell
-        cell.titleLabel.text = "Bluetooth is Unsupported"
-        return cell
-      }
-      
-      // Device
+    guard let rowType = self.getRowType(at: indexPath) else {
+      let cell = UITableViewCell()
+      cell.backgroundColor = tableView.backgroundColor
+      return cell
+    }
+    
+    switch rowType {
+    case .bluetoothUnsupported:
+      let cell = tableView.dequeueReusableCell(withIdentifier: MyBasicCenterLabelCell.name, for: indexPath) as! MyBasicCenterLabelCell
+      cell.titleLabel.text = "Bluetooth is Unsupported"
+      return cell
+    case .device(let device):
       let cell = tableView.dequeueReusableCell(withIdentifier: BluetoothDeviceCell.name, for: indexPath) as! BluetoothDeviceCell
-      let device = MyBluetoothManager.shared.devices[indexPath.row]
       cell.configure(device: device)
       return cell
-      
-    default:
-      return UITableViewCell()
     }
   }
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     
-    if indexPath.section == self.bluetoothDevicesSection && !MyBluetoothManager.shared.state.isUnsupported {
-      let device = MyBluetoothManager.shared.devices[indexPath.row]
+    guard let rowType = self.getRowType(at: indexPath) else {
+      return
     }
+    
+    switch rowType {
+    case .device(let device):
+      let viewController = BluetoothDeviceDetailViewController.newViewController(device: device)
+      viewController.presentControllerIn(self, forMode: UIDevice.isPhone ? .navStack : .modal)
+      
+    default: break
+    }
+  }
+}
+
+// MARK: - MyBluetoothManagerDelegate
+
+extension BluetoothViewController : MyBluetoothManagerDelegate {
+  
+  func didStartScan(_ manager: MyBluetoothManager) {
+    self.updateLoading()
+  }
+  
+  func didUpdateDevices(_ manager: MyBluetoothManager) {
+    self.devices = manager.devices.nameSorted
+  }
+  
+  func didStopScan(_ manager: MyBluetoothManager) {
+    self.updateLoading()
   }
 }

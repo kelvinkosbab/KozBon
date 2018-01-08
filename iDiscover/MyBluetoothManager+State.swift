@@ -2,8 +2,8 @@
 //  MyBluetoothManager+State.swift
 //  KozBon
 //
-//  Created by Kelvin Kosbab on 1/18/17.
-//  Copyright © 2017 Kozinga. All rights reserved.
+//  Created by Kelvin Kosbab on 1/7/18.
+//  Copyright © 2018 Kozinga. All rights reserved.
 //
 
 import Foundation
@@ -22,8 +22,6 @@ enum MyBluetoothManagerState {
     case .unsupported: return .unsupported
     }
   }
-  
-  
 }
 
 extension CBManagerState {
@@ -39,31 +37,7 @@ extension CBManagerState {
     }
   }
   
-  var isPoweredOn: Bool {
-    return self == .poweredOn
-  }
-  
-  var isPoweredOff: Bool {
-    return self == .poweredOff
-  }
-  
-  var isResetting: Bool {
-    return self == .resetting
-  }
-  
-  var isUnauthorized: Bool {
-    return self == .unauthorized
-  }
-  
-  var isUnknown: Bool {
-    return self == .unknown
-  }
-  
-  var isUnsupported: Bool {
-    return self == .unsupported
-  }
-  
   var isScanning: Bool {
-    return !self.isUnknown && !self.isUnsupported && !self.isPoweredOff
+    return self != .unknown && self != .unsupported && self != .poweredOff
   }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol MyBonjourPublishManagerDelegate {
+protocol MyBonjourPublishManagerDelegate : class {
   func publishedServicesUpdated(_ publishedServices: [MyNetService])
 }
 
@@ -18,7 +18,7 @@ class MyBonjourPublishManager: NSObject {
   
   static let shared = MyBonjourPublishManager()
   
-  var delegate: MyBonjourPublishManagerDelegate? = nil
+  weak var delegate: MyBonjourPublishManagerDelegate? = nil
   
   private override init() {
     super.init()
@@ -95,9 +95,9 @@ class MyBonjourPublishManager: NSObject {
     let dispatchGroup = DispatchGroup()
     for service in self.publishedServices {
       dispatchGroup.enter()
-      self.unPublish(service: service, completion: {
+      self.unPublish(service: service) {
         dispatchGroup.leave()
-      })
+      }
     }
     dispatchGroup.notify(queue: DispatchQueue.main) { 
       completion?()

@@ -26,7 +26,7 @@ class MyRootController: MyTabBarController {
     let publishedServicesViewController = self.setupPublishedServicesController()
     let bluetoothViewController = self.setupBluetoothController()
     let infoViewController = self.setupInfoController()
-    self.viewControllers = [ servicesViewController, publishedServicesViewController, infoViewController ]
+    self.viewControllers = [ servicesViewController, publishedServicesViewController, bluetoothViewController, infoViewController ]
   }
   
   // MARK: - Controllers
@@ -52,22 +52,10 @@ class MyRootController: MyTabBarController {
     return viewController
   }
   
-  func setupBluetoothController() -> UISplitViewController {
-    
-    // Configure the master controller
-    let bluetoothMasterViewController = BluetoothViewController.newViewController()
-    let bluetoothNavigationController = MyNavigationController(rootViewController: bluetoothMasterViewController)
-    
-    // Set up split view for services
-    let bluetoothSplitViewController = UISplitViewController()
-    bluetoothSplitViewController.viewControllers = [ bluetoothNavigationController ]
-    if !UIDevice.isPhone {
-      bluetoothSplitViewController.minimumPrimaryColumnWidth = UIScreen.main.bounds.width / 2
-      bluetoothSplitViewController.maximumPrimaryColumnWidth = UIScreen.main.bounds.width / 2
-    }
-    bluetoothSplitViewController.preferredDisplayMode = .allVisible
-    bluetoothSplitViewController.title = "Bluetooth"
-    bluetoothSplitViewController.tabBarItem = UITabBarItem(title: "Bluetooth", image: #imageLiteral(resourceName: "iconBluetooth"), selectedImage: nil)
-    return bluetoothSplitViewController
+  func setupBluetoothController() -> UIViewController {
+    let viewController = MyNavigationController(rootViewController: BluetoothViewController.newViewController())
+    viewController.title = "Bluetooth"
+    viewController.tabBarItem = UITabBarItem(title: "Bluetooth", image: #imageLiteral(resourceName: "iconBluetooth"), selectedImage: nil)
+    return viewController
   }
 }

@@ -33,7 +33,7 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
   @IBOutlet weak var domainTextField: UITextField!
   @IBOutlet weak var detailTextField: UITextField!
   
-  var delegate: PublishNetServiceDelegate? = nil
+  weak var delegate: PublishNetServiceDelegate? = nil
   
   var serviceType: MyServiceType!
   
