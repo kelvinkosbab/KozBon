@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class BluetoothViewController : MyTableViewController {
+class BluetoothViewController : MyCollectionViewController {
   
   // MARK: - Class Accessors
   
@@ -28,9 +28,15 @@ class BluetoothViewController : MyTableViewController {
   internal var devices: [MyBluetoothDevice] = [] {
     didSet {
       if self.isViewLoaded {
-        self.tableView.reloadData()
+        self.collectionView?.reloadData()
       }
     }
+  }
+  
+  // MARK: - Edit Mode Properties
+  
+  override var defaultViewTitle: String? {
+    return "Bluetooth"
   }
   
   // MARK: - Lifecycle
@@ -44,7 +50,7 @@ class BluetoothViewController : MyTableViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     
-    self.tableView.reloadData()
+    self.collectionView?.reloadData()
     self.bluetoothManager.delegate = self
     self.bluetoothManager.startScan()
     self.updateLoading()
@@ -110,34 +116,47 @@ class BluetoothViewController : MyTableViewController {
     }
   }
   
-  // MARK: - UITableView
+  // MARK: - UICollectionView
   
-  override func numberOfSections(in tableView: UITableView) -> Int {
+  override func numberOfSections(in collectionView: UICollectionView) -> Int {
     return 1
   }
   
-  override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    
-    guard let sectionType = self.getSectionType(section: section) else {
-      return nil
-    }
-    
-    switch sectionType {
-    case .bluetoothUnsupported:
-      return super.tableView(tableView, viewForHeaderInSection: section)
-    case .devices:
-      let cell = tableView.dequeueReusableCell(withIdentifier: NetServicesTableHeaderCell.name) as! NetServicesTableHeaderCell
-      cell.titleLabel.text = "Scanning".uppercased()
-      cell.loadingActivityIndicator.startAnimating()
-      self.loadingActivityIndicator = cell.loadingActivityIndicator
-      cell.loadingActivityIndicator.isHidden = false
-      cell.reloadButton.isHidden = true
-      cell.reloadButton.isUserInteractionEnabled = false
-      return cell.contentView
+  override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    switch kind {
+    case UICollectionElementKindSectionHeader:
+      
+      guard let sectionType = self.getSectionType(section: indexPath.section) else {
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ServicesHeaderView.name, for: indexPath) as! ServicesHeaderView
+        headerView.configure(nil, title: "")
+        headerView.hideButtonAndSpinner()
+        return headerView
+      }
+      
+      switch sectionType {
+      case .bluetoothUnsupported:
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ServicesHeaderView.name, for: indexPath) as! ServicesHeaderView
+        headerView.configure(nil, title: "")
+        headerView.hideButtonAndSpinner()
+        return headerView
+      case .devices:
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ServicesHeaderView.name, for: indexPath) as! ServicesHeaderView
+        headerView.configure(nil, title: "Scanning for Bluetooth Services")
+        headerView.hideButtonAndSpinner()
+        return headerView
+      }
+      
+    case UICollectionElementKindSectionFooter:
+      let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "BluetoothFooterView", for: indexPath)
+      footerView.backgroundColor = collectionView.backgroundColor
+      return footerView
+      
+    default:
+      return super.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)
     }
   }
   
-  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     
     guard let sectionType = self.getSectionType(section: section) else {
       return 0
@@ -151,28 +170,26 @@ class BluetoothViewController : MyTableViewController {
     }
   }
   
-  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+  override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     
     guard let rowType = self.getRowType(at: indexPath) else {
-      let cell = UITableViewCell()
-      cell.backgroundColor = tableView.backgroundColor
+      let cell = UICollectionViewCell()
+      cell.backgroundColor = collectionView.backgroundColor
       return cell
     }
     
     switch rowType {
     case .bluetoothUnsupported:
-      let cell = tableView.dequeueReusableCell(withIdentifier: MyBasicCenterLabelCell.name, for: indexPath) as! MyBasicCenterLabelCell
-      cell.titleLabel.text = "Bluetooth is Unsupported"
+      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BluetoothUnsupportedCell.name, for: indexPath) as! BluetoothUnsupportedCell
       return cell
     case .device(let device):
-      let cell = tableView.dequeueReusableCell(withIdentifier: BluetoothDeviceCell.name, for: indexPath) as! BluetoothDeviceCell
-      cell.configure(device: device)
+      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ServicesServiceCell.name, for: indexPath) as! ServicesServiceCell
+      cell.configure(title: device.name, detail: device.uuid)
       return cell
     }
   }
   
-  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    tableView.deselectRow(at: indexPath, animated: true)
+  override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     
     guard let rowType = self.getRowType(at: indexPath) else {
       return
@@ -182,8 +199,25 @@ class BluetoothViewController : MyTableViewController {
     case .device(let device):
       let viewController = BluetoothDeviceDetailViewController.newViewController(device: device)
       viewController.presentControllerIn(self, forMode: UIDevice.isPhone ? .navStack : .modal)
-      
     default: break
+    }
+  }
+  
+  // MARK: - UICollectionViewDelegateFlowLayout
+  
+  override func sizeForItemAt(indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
+    
+    let defaultSize = super.sizeForItemAt(indexPath: indexPath, collectionView: collectionView)
+    guard let rowType = self.getRowType(at: indexPath) else {
+      return defaultSize
+    }
+    
+    
+    switch rowType {
+    case .bluetoothUnsupported:
+      return CGSize(width: collectionView.bounds.width, height: defaultSize.height)
+    default:
+      return defaultSize
     }
   }
 }
@@ -203,4 +237,10 @@ extension BluetoothViewController : MyBluetoothManagerDelegate {
   func didStopScan(_ manager: MyBluetoothManager) {
     self.updateLoading()
   }
+}
+
+// MARK: - Collection View Cells
+
+class BluetoothUnsupportedCell : UICollectionViewCell {
+  @IBOutlet weak var titleLabel: UILabel!
 }

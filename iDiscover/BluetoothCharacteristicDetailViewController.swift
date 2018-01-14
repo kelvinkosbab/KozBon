@@ -200,7 +200,7 @@ class BluetoothCharacteristicDetailViewController : MyTableViewController {
     case .properties:
       return 10
     case .descriptors:
-      let descriptors = self.descriptors ?? []
+      let descriptors = self.descriptors
       if descriptors.count > 0 {
         return descriptors.count
       } else {

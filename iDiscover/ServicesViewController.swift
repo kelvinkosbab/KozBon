@@ -170,6 +170,8 @@ class ServicesViewController : MyCollectionViewController {
   }
 }
 
+// MARK: - MyBonjourManagerDelegate
+
 extension ServicesViewController : MyBonjourManagerDelegate {
   
   func servicesDidUpdate(_ services: [MyNetService]) {
@@ -177,12 +179,16 @@ extension ServicesViewController : MyBonjourManagerDelegate {
   }
 }
 
+// MARK: - ServicesHeaderViewDelegate
+
 extension ServicesViewController : ServicesHeaderViewDelegate {
   
   func servicesHeaderReloadButtonSelected() {
     self.reloadBrowsingServices()
   }
 }
+
+// MARK: - ServicesFooterViewDelegate
 
 extension ServicesViewController : ServicesFooterViewDelegate {
   

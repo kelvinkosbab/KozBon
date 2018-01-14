@@ -21,7 +21,15 @@ class ServicesServiceCell : UICollectionViewCell {
     self.detailLabel.text = service.hostName
     service.delegate = self
   }
+  
+  func configure(title: String?, detail: String?) {
+    self.service = nil
+    self.titleLabel.text = title
+    self.detailLabel.text = detail
+  }
 }
+
+// MARK: - MyNetServiceDelegate
 
 extension ServicesServiceCell : MyNetServiceDelegate {
   

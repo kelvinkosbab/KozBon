@@ -42,6 +42,13 @@ class ServicesHeaderView : UICollectionReusableView {
       self.reloadButton.isHidden = false
     }
   }
+  
+  func hideButtonAndSpinner() {
+    self.activityIndicator.stopAnimating()
+    self.activityIndicator.isHidden = true
+    self.reloadButton.isUserInteractionEnabled = false
+    self.reloadButton.isHidden = true
+  }
 }
 
 extension ServicesHeaderView : ServicesViewControllerBrowsingDelegate {
