@@ -12,155 +12,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Bluetooth View Controller-->
-        <scene sceneID="TiM-gk-qf3">
-            <objects>
-                <tableViewController storyboardIdentifier="BluetoothViewController" id="yto-LT-tuT" customClass="BluetoothViewController" customModule="KozBon" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Uan-Ef-0Y4">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NetServicesTableHeaderCell" id="cVr-cx-JQ8" customClass="NetServicesTableHeaderCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cVr-cx-JQ8" id="WpQ-iI-6Yt">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2SZ-Du-IrP">
-                                            <rect key="frame" x="0.0" y="43" width="375" height="1"/>
-                                            <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="1" id="jxs-Gv-13y"/>
-                                            </constraints>
-                                        </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Ys-Wo-VSC">
-                                            <rect key="frame" x="16" y="17" width="269" height="16"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="zdv-ct-sgO">
-                                            <rect key="frame" x="335" y="15" width="20" height="20"/>
-                                        </activityIndicatorView>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WIc-zg-AE7">
-                                            <rect key="frame" x="317" y="11" width="42" height="28"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                            <state key="normal" title="Reload"/>
-                                        </button>
-                                    </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <constraints>
-                                        <constraint firstItem="zdv-ct-sgO" firstAttribute="leading" secondItem="1Ys-Wo-VSC" secondAttribute="trailing" constant="50" id="1lM-pG-adQ"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="WIc-zg-AE7" secondAttribute="trailing" id="21b-AC-bkl"/>
-                                        <constraint firstItem="2SZ-Du-IrP" firstAttribute="top" secondItem="1Ys-Wo-VSC" secondAttribute="bottom" constant="10" id="7Jm-Jf-JyJ"/>
-                                        <constraint firstItem="zdv-ct-sgO" firstAttribute="centerY" secondItem="1Ys-Wo-VSC" secondAttribute="centerY" id="8Yj-Ob-UIv"/>
-                                        <constraint firstAttribute="bottom" secondItem="2SZ-Du-IrP" secondAttribute="bottom" id="Nk7-aM-Mnf"/>
-                                        <constraint firstItem="WIc-zg-AE7" firstAttribute="centerY" secondItem="1Ys-Wo-VSC" secondAttribute="centerY" id="WXN-P3-sAb"/>
-                                        <constraint firstAttribute="trailing" secondItem="zdv-ct-sgO" secondAttribute="trailing" constant="20" id="aXp-TT-7AQ"/>
-                                        <constraint firstAttribute="trailing" secondItem="2SZ-Du-IrP" secondAttribute="trailing" id="es8-kN-QAn"/>
-                                        <constraint firstItem="1Ys-Wo-VSC" firstAttribute="leading" secondItem="WpQ-iI-6Yt" secondAttribute="leadingMargin" id="iNV-yL-Ifj"/>
-                                        <constraint firstItem="2SZ-Du-IrP" firstAttribute="leading" secondItem="WpQ-iI-6Yt" secondAttribute="leading" id="zX8-eU-fGl"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="loadingActivityIndicator" destination="zdv-ct-sgO" id="PzV-NJ-HIu"/>
-                                    <outlet property="reloadButton" destination="WIc-zg-AE7" id="Xfx-MG-Niy"/>
-                                    <outlet property="titleLabel" destination="1Ys-Wo-VSC" id="zwk-wg-Ubl"/>
-                                </connections>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BluetoothDeviceCell" rowHeight="50" id="oF3-7Q-PzR" customClass="BluetoothDeviceCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="375" height="50"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oF3-7Q-PzR" id="a3Z-vP-7F6">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5g2-21-Ofd">
-                                            <rect key="frame" x="16" y="11" width="323" height="14"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A0a-fD-Jol">
-                                            <rect key="frame" x="16" y="25" width="323" height="14"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0wJ-G2-sEx">
-                                            <rect key="frame" x="0.0" y="49" width="375" height="1"/>
-                                            <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="1" id="XMb-i9-Go2"/>
-                                            </constraints>
-                                        </view>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconChevronRight" translatesAutoresizingMaskIntoConstraints="NO" id="fGE-tl-XWC">
-                                            <rect key="frame" x="344" y="18" width="15" height="15"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="15" id="9d7-8n-Xmn"/>
-                                                <constraint firstAttribute="width" constant="15" id="GdJ-8t-EyU"/>
-                                            </constraints>
-                                        </imageView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="5g2-21-Ofd" firstAttribute="leading" secondItem="a3Z-vP-7F6" secondAttribute="leadingMargin" id="1aC-ja-mFl"/>
-                                        <constraint firstItem="fGE-tl-XWC" firstAttribute="centerY" secondItem="a3Z-vP-7F6" secondAttribute="centerY" id="7fF-TW-Y0x"/>
-                                        <constraint firstItem="fGE-tl-XWC" firstAttribute="leading" secondItem="5g2-21-Ofd" secondAttribute="trailing" constant="5" id="8jj-Xf-Vqr"/>
-                                        <constraint firstItem="A0a-fD-Jol" firstAttribute="leading" secondItem="a3Z-vP-7F6" secondAttribute="leadingMargin" id="IHc-l3-R3E"/>
-                                        <constraint firstItem="5g2-21-Ofd" firstAttribute="top" secondItem="a3Z-vP-7F6" secondAttribute="topMargin" id="PM2-Gz-qcX"/>
-                                        <constraint firstItem="A0a-fD-Jol" firstAttribute="top" secondItem="a3Z-vP-7F6" secondAttribute="centerY" id="RBj-J0-Lxi"/>
-                                        <constraint firstAttribute="trailing" secondItem="0wJ-G2-sEx" secondAttribute="trailing" id="Sx5-2h-P0I"/>
-                                        <constraint firstItem="fGE-tl-XWC" firstAttribute="leading" secondItem="A0a-fD-Jol" secondAttribute="trailing" constant="5" id="WVf-ZY-eXJ"/>
-                                        <constraint firstAttribute="bottom" secondItem="0wJ-G2-sEx" secondAttribute="bottom" id="a82-nK-uFk"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="A0a-fD-Jol" secondAttribute="bottom" id="fK2-an-5Ei"/>
-                                        <constraint firstItem="0wJ-G2-sEx" firstAttribute="leading" secondItem="a3Z-vP-7F6" secondAttribute="leading" id="fps-wx-qxw"/>
-                                        <constraint firstItem="5g2-21-Ofd" firstAttribute="bottom" secondItem="a3Z-vP-7F6" secondAttribute="centerY" id="riu-AY-XQ1"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="fGE-tl-XWC" secondAttribute="trailing" id="y27-y4-9Lp"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="detailLabel" destination="A0a-fD-Jol" id="47y-YU-MQi"/>
-                                    <outlet property="titleLabel" destination="5g2-21-Ofd" id="AJb-bF-gss"/>
-                                </connections>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="MyBasicCenterLabelCell" id="fdK-OW-GE6" customClass="MyBasicCenterLabelCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="122" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fdK-OW-GE6" id="MOZ-o2-pPS">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="meg-Cy-txv">
-                                            <rect key="frame" x="16" y="13" width="343" height="18"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="trailingMargin" secondItem="meg-Cy-txv" secondAttribute="trailing" id="YCs-Hk-e8N"/>
-                                        <constraint firstItem="meg-Cy-txv" firstAttribute="centerY" secondItem="MOZ-o2-pPS" secondAttribute="centerY" id="bes-7A-fGV"/>
-                                        <constraint firstItem="meg-Cy-txv" firstAttribute="leading" secondItem="MOZ-o2-pPS" secondAttribute="leadingMargin" id="plX-PY-Wxr"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="titleLabel" destination="meg-Cy-txv" id="Rrz-gE-GWd"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="yto-LT-tuT" id="XD2-FR-o7x"/>
-                            <outlet property="delegate" destination="yto-LT-tuT" id="A9a-N3-bD3"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="Iru-rW-wSg"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="M3E-nC-HQj" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-39" y="155"/>
-        </scene>
         <!--Bluetooth Device Detail View Controller-->
         <scene sceneID="9Ds-CZ-Naw">
             <objects>
@@ -637,7 +488,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="1I7-xK-3af">
-                                            <rect key="frame" x="178" y="15" width="20" height="20"/>
+                                            <rect key="frame" x="177.5" y="15" width="20" height="20"/>
                                         </activityIndicatorView>
                                     </subviews>
                                     <constraints>
@@ -762,6 +613,153 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KXd-Bm-IH2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1295" y="154"/>
+        </scene>
+        <!--Bluetooth View Controller-->
+        <scene sceneID="fBk-iw-QHv">
+            <objects>
+                <collectionViewController storyboardIdentifier="BluetoothViewController" id="dP0-Yu-R38" customClass="BluetoothViewController" customModule="KozBon" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="5ef-XV-zcK">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="2yD-is-Fvb">
+                            <size key="itemSize" width="302" height="104"/>
+                            <size key="headerReferenceSize" width="50" height="50"/>
+                            <size key="footerReferenceSize" width="50" height="50"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="BluetoothUnsupportedCell" id="C9a-Ri-Qam" customClass="BluetoothUnsupportedCell" customModule="KozBon" customModuleProvider="target">
+                                <rect key="frame" x="36.5" y="50" width="302" height="104"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                    <rect key="frame" x="0.0" y="0.0" width="302" height="104"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bluetooth is Unsupported" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nxJ-YM-fpV">
+                                            <rect key="frame" x="63" y="42.5" width="176" height="18"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="nxJ-YM-fpV" firstAttribute="centerX" secondItem="C9a-Ri-Qam" secondAttribute="centerX" id="2T6-NR-JTN"/>
+                                    <constraint firstItem="nxJ-YM-fpV" firstAttribute="centerY" secondItem="C9a-Ri-Qam" secondAttribute="centerY" id="5nU-Rl-y8P"/>
+                                </constraints>
+                            </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ServicesServiceCell" id="bla-jN-Lrm" customClass="ServicesServiceCell" customModule="KozBon" customModuleProvider="target">
+                                <rect key="frame" x="36.5" y="164" width="302" height="104"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="302" height="104"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xFW-KR-Mow">
+                                            <rect key="frame" x="0.0" y="0.0" width="302" height="104"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem Ipsum" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wbZ-FH-sF2">
+                                                    <rect key="frame" x="16" y="10" width="251" height="42"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem Ipsum" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iaz-mQ-uB0">
+                                                    <rect key="frame" x="16" y="52" width="251" height="42"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconChevronRight" translatesAutoresizingMaskIntoConstraints="NO" id="4zB-Pt-3bs">
+                                                    <rect key="frame" x="277" y="44" width="15" height="15"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="15" id="MgN-ce-NbC"/>
+                                                        <constraint firstAttribute="height" constant="15" id="ilW-23-fDx"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstItem="4zB-Pt-3bs" firstAttribute="leading" secondItem="wbZ-FH-sF2" secondAttribute="trailing" constant="10" id="0eF-N1-bjf"/>
+                                                <constraint firstItem="wbZ-FH-sF2" firstAttribute="leading" secondItem="xFW-KR-Mow" secondAttribute="leading" constant="16" id="CB5-vR-WpF"/>
+                                                <constraint firstAttribute="trailing" secondItem="4zB-Pt-3bs" secondAttribute="trailing" constant="10" id="EOw-ft-q1V"/>
+                                                <constraint firstItem="wbZ-FH-sF2" firstAttribute="bottom" secondItem="xFW-KR-Mow" secondAttribute="centerY" id="OCg-6t-4WD"/>
+                                                <constraint firstItem="wbZ-FH-sF2" firstAttribute="top" secondItem="xFW-KR-Mow" secondAttribute="top" constant="10" id="T3i-xc-uxN"/>
+                                                <constraint firstItem="4zB-Pt-3bs" firstAttribute="centerY" secondItem="xFW-KR-Mow" secondAttribute="centerY" id="V4p-Ax-RNT"/>
+                                                <constraint firstItem="Iaz-mQ-uB0" firstAttribute="top" secondItem="xFW-KR-Mow" secondAttribute="centerY" id="cJS-Yv-w4K"/>
+                                                <constraint firstItem="Iaz-mQ-uB0" firstAttribute="leading" secondItem="xFW-KR-Mow" secondAttribute="leading" constant="16" id="feW-c2-u2V"/>
+                                                <constraint firstAttribute="bottom" secondItem="Iaz-mQ-uB0" secondAttribute="bottom" constant="10" id="jNX-qk-Gbr"/>
+                                                <constraint firstItem="4zB-Pt-3bs" firstAttribute="leading" secondItem="Iaz-mQ-uB0" secondAttribute="trailing" constant="10" id="xuh-IH-cAu"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="xFW-KR-Mow" secondAttribute="trailing" id="8yk-u7-vx5"/>
+                                    <constraint firstItem="xFW-KR-Mow" firstAttribute="top" secondItem="bla-jN-Lrm" secondAttribute="top" id="Drd-rw-zxi"/>
+                                    <constraint firstItem="xFW-KR-Mow" firstAttribute="leading" secondItem="bla-jN-Lrm" secondAttribute="leading" id="E6D-3r-OBq"/>
+                                    <constraint firstAttribute="bottom" secondItem="xFW-KR-Mow" secondAttribute="bottom" id="qgA-Sm-aSJ"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="containerView" destination="xFW-KR-Mow" id="cpc-pL-Vgq"/>
+                                    <outlet property="detailLabel" destination="Iaz-mQ-uB0" id="paB-me-VJQ"/>
+                                    <outlet property="titleLabel" destination="wbZ-FH-sF2" id="6nd-Gn-lpK"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ServicesHeaderView" id="nGO-lL-KVA" customClass="ServicesHeaderView" customModule="KozBon" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem Ipsum" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MG1-gH-xIP">
+                                    <rect key="frame" x="16" y="22" width="283" height="18"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="TeQ-uq-WWF">
+                                    <rect key="frame" x="324" y="21" width="20" height="20"/>
+                                </activityIndicatorView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sKE-7E-AW4">
+                                    <rect key="frame" x="309" y="16" width="50" height="30"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="50" id="c85-fN-AiD"/>
+                                    </constraints>
+                                    <state key="normal" title="Reload"/>
+                                    <connections>
+                                        <action selector="reloadButtonSelected:" destination="nGO-lL-KVA" eventType="touchUpInside" id="SRa-bV-4Oh"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="sKE-7E-AW4" firstAttribute="centerY" secondItem="MG1-gH-xIP" secondAttribute="centerY" id="QKq-Ka-QVd"/>
+                                <constraint firstAttribute="trailing" secondItem="sKE-7E-AW4" secondAttribute="trailing" constant="16" id="gDp-qe-2fw"/>
+                                <constraint firstItem="sKE-7E-AW4" firstAttribute="centerX" secondItem="TeQ-uq-WWF" secondAttribute="centerX" id="iYb-i9-zOA"/>
+                                <constraint firstItem="sKE-7E-AW4" firstAttribute="leading" secondItem="MG1-gH-xIP" secondAttribute="trailing" constant="10" id="inp-Ux-W2c"/>
+                                <constraint firstItem="MG1-gH-xIP" firstAttribute="leading" secondItem="nGO-lL-KVA" secondAttribute="leading" constant="16" id="kVs-Sf-95V"/>
+                                <constraint firstAttribute="bottom" secondItem="MG1-gH-xIP" secondAttribute="bottom" constant="10" id="rkr-to-CS6"/>
+                                <constraint firstItem="sKE-7E-AW4" firstAttribute="centerY" secondItem="TeQ-uq-WWF" secondAttribute="centerY" id="w1W-lZ-F3D"/>
+                            </constraints>
+                            <connections>
+                                <outlet property="activityIndicator" destination="TeQ-uq-WWF" id="WIE-1j-vev"/>
+                                <outlet property="reloadButton" destination="sKE-7E-AW4" id="dfw-Bq-Nf9"/>
+                                <outlet property="titleLabel" destination="MG1-gH-xIP" id="IcY-fx-sWs"/>
+                            </connections>
+                        </collectionReusableView>
+                        <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="BluetoothFooterView" id="7YR-0j-OIg">
+                            <rect key="frame" x="0.0" y="268" width="375" height="50"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </collectionReusableView>
+                        <connections>
+                            <outlet property="dataSource" destination="dP0-Yu-R38" id="5d9-f7-diO"/>
+                            <outlet property="delegate" destination="dP0-Yu-R38" id="D0E-N5-VJM"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WUV-IX-nwD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4" y="153"/>
         </scene>
     </scenes>
     <resources>
