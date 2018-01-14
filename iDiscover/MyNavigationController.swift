@@ -41,6 +41,9 @@ class MyNavigationController : UINavigationController, PresentableController, My
   func styleNavigationBar(barColor: UIColor = UIColor(hex: "007AFF"), fontColor: UIColor = .white, font: UIFont = UIFont.systemFont(ofSize: 18)) {
     self.navigationBar.barTintColor = barColor
     self.navigationBar.tintColor = fontColor
-    self.navigationBar.titleTextAttributes = [ .foregroundColor: fontColor, .font : font ]
+    self.navigationBar.titleTextAttributes = [ .foregroundColor : fontColor, .font : font ]
+    if #available(iOS 11.0, *) {
+      self.navigationBar.largeTitleTextAttributes = [ .foregroundColor : fontColor ]
+    }
   }
 }
