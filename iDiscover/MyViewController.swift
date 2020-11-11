@@ -16,18 +16,6 @@ class MyViewController : UIViewController, PresentableController, MyViewControll
   var presentedMode: PresentationMode = .navStack
   var transitioningDelegateReference: UIViewControllerTransitioningDelegate? = nil
   
-  // MARK: - Lifecycle
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    
-    self.navigationItem.backBarButtonItem = UIBarButtonItem(text: "")
-  }
-  
-  deinit {
-    NotificationCenter.default.removeObserver(self)
-  }
-  
   // MARK: - Status Bar
   
   override var preferredStatusBarStyle: UIStatusBarStyle {

@@ -41,14 +41,14 @@ class MyRootController: MyTabBarController {
   func setupPublishedServicesController() -> UIViewController {
     let viewController = MyNavigationController(rootViewController: PublishedServicesViewController.newViewController())
     viewController.title = "Publish"
-    viewController.tabBarItem = UITabBarItem(title: "Publish", image: #imageLiteral(resourceName: "icPublish"), selectedImage: nil)
+    viewController.tabBarItem = UITabBarItem(title: "Publish", image: UIImage(systemName: "antenna.radiowaves.left.and.right"), selectedImage: nil)
     return viewController
   }
   
   func setupInfoController() -> UIViewController {
     let viewController = MyNavigationController(rootViewController: SettingsViewController.newViewController())
     viewController.title = "Information"
-    viewController.tabBarItem = UITabBarItem(title: "Information", image: #imageLiteral(resourceName: "icInfo"), selectedImage: nil)
+    viewController.tabBarItem = UITabBarItem(title: "Information", image: UIImage(systemName: "info.circle"), selectedImage: nil)
     return viewController
   }
   

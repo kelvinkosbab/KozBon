@@ -138,6 +138,7 @@ class AllServiceTypesTableViewController: MyTableViewController, UISearchResults
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let service = self.isFiltered ? self.filteredServiceTypes[indexPath.row] : self.serviceTypes[indexPath.row]
     let cell = tableView.dequeueReusableCell(withIdentifier: PublishNetServiceCell.name, for: indexPath) as! PublishNetServiceCell
+    cell.contentView.backgroundColor = .secondarySystemBackground
     cell.nameLabel.text = service.name
     cell.typeLabel.text = service.fullType
     return cell

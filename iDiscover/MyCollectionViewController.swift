@@ -32,8 +32,6 @@ class MyCollectionViewController : UICollectionViewController, UICollectionViewD
     
     self.title = self.defaultViewTitle
     
-    self.navigationItem.backBarButtonItem = UIBarButtonItem(text: "")
-    
     self.view.backgroundColor = UIColor.systemBackground
     self.collectionView?.backgroundColor = UIColor.systemBackground
     

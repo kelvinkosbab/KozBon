@@ -69,6 +69,7 @@ class ServiceDetailTableViewController: MyTableViewController {
     super.viewDidLoad()
     
     self.title = self.serviceType.name
+    self.navigationItem.largeTitleDisplayMode = .never
     
     if self.navigationController?.viewControllers.first == self {
       self.navigationItem.leftBarButtonItem = UIBarButtonItem(text: "Done", target: self, action: #selector(self.doneButtonSelected(_:)))

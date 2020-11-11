@@ -338,7 +338,6 @@
                                             </constraints>
                                         </view>
                                     </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="47Z-pi-csi" firstAttribute="leading" secondItem="d42-Xh-f8e" secondAttribute="leadingMargin" id="OH8-MA-PRA"/>
                                         <constraint firstAttribute="trailing" secondItem="SRD-4N-hRC" secondAttribute="trailing" id="VwP-27-EO5"/>
@@ -373,7 +372,6 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="OC1-FP-3FS" firstAttribute="top" secondItem="ivf-by-FRI" secondAttribute="bottom" constant="10" id="1fT-yF-Qha"/>
                                         <constraint firstAttribute="trailing" secondItem="OC1-FP-3FS" secondAttribute="trailing" id="9pJ-rn-fYy"/>

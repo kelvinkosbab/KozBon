@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17504.1"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -46,6 +47,7 @@
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
+                                            <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstItem="Gj7-sn-bKB" firstAttribute="leading" secondItem="46I-V9-oU5" secondAttribute="leading" constant="16" id="4xq-vh-Bma"/>
                                                 <constraint firstItem="xp4-kF-Fa0" firstAttribute="centerY" secondItem="46I-V9-oU5" secondAttribute="centerY" id="ghz-3L-Oyo"/>
@@ -90,7 +92,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="fGU-zE-FZ2" secondAttribute="trailing" constant="16" id="9qS-cm-V6e"/>
                                                 <constraint firstItem="fGU-zE-FZ2" firstAttribute="width" secondItem="Fos-Q8-PFN" secondAttribute="width" multiplier="5:3" id="CCq-Tv-ItD"/>
@@ -152,5 +154,8 @@
     </scenes>
     <resources>
         <image name="iconChevronRight" width="22" height="22"/>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>
