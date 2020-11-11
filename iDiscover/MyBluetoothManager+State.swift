@@ -20,6 +20,8 @@ enum MyBluetoothManagerState {
     case .unauthorized: return .unauthorized
     case .unknown: return .unknown
     case .unsupported: return .unsupported
+    @unknown default:
+        return .unsupported
     }
   }
 }
@@ -34,6 +36,8 @@ extension CBManagerState {
     case .unauthorized: return "Unauthorized"
     case .unknown: return "Unknown"
     case .unsupported: return "Unsupported"
+    @unknown default:
+        return "Unsupported"
     }
   }
   

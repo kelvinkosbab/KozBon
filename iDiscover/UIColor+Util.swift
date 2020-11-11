@@ -146,10 +146,8 @@ extension UIColor {
     }
     
     // Check if valid hex string
-    if cString.count == 6 {
+    if cString.count == 6, let rgbValue = Scanner(string: cString).scanInt32() {
       // Valid hex string
-      var rgbValue: UInt32 = 0
-      Scanner(string: cString).scanHexInt32(&rgbValue)
       self.init(red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0, green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0, blue: CGFloat(rgbValue & 0x0000FF) / 255.0, alpha: alpha)
       
     } else {

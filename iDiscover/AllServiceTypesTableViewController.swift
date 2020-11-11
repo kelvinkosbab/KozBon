@@ -48,7 +48,6 @@ class AllServiceTypesTableViewController: MyTableViewController, UISearchResults
     self.searchController.searchResultsUpdater = self
     self.searchController.searchBar.delegate = self
     self.definesPresentationContext = true
-    self.searchController.dimsBackgroundDuringPresentation = false
     self.searchController.searchBar.scopeButtonTitles = MyServiceTypeScope.allScopeTitles
     self.tableView.tableHeaderView = self.searchController.searchBar
     

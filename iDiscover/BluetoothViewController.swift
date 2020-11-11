@@ -124,7 +124,7 @@ class BluetoothViewController : MyCollectionViewController {
   
   override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
     switch kind {
-    case UICollectionElementKindSectionHeader:
+    case UICollectionView.elementKindSectionHeader:
       
       guard let sectionType = self.getSectionType(section: indexPath.section) else {
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ServicesHeaderView.name, for: indexPath) as! ServicesHeaderView
@@ -146,7 +146,7 @@ class BluetoothViewController : MyCollectionViewController {
         return headerView
       }
       
-    case UICollectionElementKindSectionFooter:
+    case UICollectionView.elementKindSectionFooter:
       let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "BluetoothFooterView", for: indexPath)
       footerView.backgroundColor = collectionView.backgroundColor
       return footerView

@@ -47,7 +47,7 @@ class MyBonjourPublishManager: NSObject {
   }
   
   private func remove(publishedService service: MyNetService) {
-    if let index = self.publishedServices.index(of: service) {
+    if let index = self.publishedServices.firstIndex(of: service) {
       self.publishedServices.remove(at: index)
     }
   }

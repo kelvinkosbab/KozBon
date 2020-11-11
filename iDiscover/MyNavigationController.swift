@@ -6,7 +6,6 @@
 //  Copyright © 2016 Kozinga. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class MyNavigationController : UINavigationController, PresentableController, MyViewControllerIdentifierProtocol {
@@ -22,10 +21,7 @@ class MyNavigationController : UINavigationController, PresentableController, My
     super.viewDidLoad()
     
     self.navigationBar.isTranslucent = false
-    
-    if #available(iOS 11.0, *) {
-      self.navigationBar.prefersLargeTitles = true
-    }
+    self.navigationBar.prefersLargeTitles = true
     
     self.styleNavigationBar()
   }
@@ -38,10 +34,11 @@ class MyNavigationController : UINavigationController, PresentableController, My
   
   // MARK: - Styles
   
-  func styleNavigationBar(barColor: UIColor = UIColor(hex: "007AFF"), fontColor: UIColor = .white, font: UIFont = UIFont.systemFont(ofSize: 18)) {
-    self.navigationBar.barTintColor = barColor
+  func styleNavigationBar(fontColor: UIColor = .white, font: UIFont = UIFont.systemFont(ofSize: 18)) {
+    let barColor = UIColor(hex: "007AFF")
+    self.navigationBar.barTintColor = nil
     self.navigationBar.tintColor = fontColor
-    self.navigationBar.titleTextAttributes = [ .foregroundColor : fontColor, .font : font ]
+    self.navigationBar.titleTextAttributes = [ .backgroundColor: barColor, .foregroundColor : barColor, .font : font ]
     if #available(iOS 11.0, *) {
       self.navigationBar.largeTitleTextAttributes = [ .foregroundColor : fontColor ]
     }

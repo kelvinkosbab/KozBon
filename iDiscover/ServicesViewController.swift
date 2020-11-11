@@ -42,7 +42,7 @@ class ServicesViewController : MyCollectionViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     
-    NotificationCenter.default.addObserver(self, selector: #selector(self.reloadBrowsingServices), name: .UIApplicationWillEnterForeground, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(self.reloadBrowsingServices), name: UIApplication.willEnterForegroundNotification, object: nil)
     
     MyBonjourManager.shared.delegate = self
     self.reloadBrowsingServices()
@@ -129,13 +129,13 @@ class ServicesViewController : MyCollectionViewController {
   override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
     switch kind {
       
-    case UICollectionElementKindSectionHeader:
+    case UICollectionView.elementKindSectionHeader:
       let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ServicesHeaderView.name, for: indexPath) as! ServicesHeaderView
       headerView.configure(self, title: "Discovered Services", isBrowsing: self.isBrowsingForServces)
       self.browsingDelegate = headerView
       return headerView
       
-    case UICollectionElementKindSectionFooter:
+    case UICollectionView.elementKindSectionFooter:
       let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ServicesFooterView.name, for: indexPath) as! ServicesFooterView
       footerView.delegate = self
       return footerView

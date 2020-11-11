@@ -34,8 +34,8 @@ class MyCollectionViewController : UICollectionViewController, UICollectionViewD
     
     self.navigationItem.backBarButtonItem = UIBarButtonItem(text: "")
     
-    self.view.backgroundColor = UIColor.groupTableViewBackground
-    self.collectionView?.backgroundColor = UIColor.groupTableViewBackground
+    self.view.backgroundColor = UIColor.systemBackground
+    self.collectionView?.backgroundColor = UIColor.systemBackground
     
     // Setting this flag sets the navigation item elements
     self.isEditing = false
@@ -235,7 +235,7 @@ class MyCollectionViewController : UICollectionViewController, UICollectionViewD
     } else {
       self.navigationItem.title = self.defaultViewTitle
       self.navigationItem.hidesBackButton = false
-      if let viewControllers = self.navigationController?.viewControllers, let index = viewControllers.index(of: self), index > 0 {
+      if let viewControllers = self.navigationController?.viewControllers, let index = viewControllers.firstIndex(of: self), index > 0 {
         self.navigationItem.leftBarButtonItems = nil
       } else {
         self.navigationItem.leftBarButtonItems = self.defaultLeftBarButtonItems

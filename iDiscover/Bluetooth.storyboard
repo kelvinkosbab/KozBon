@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17504.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -112,7 +107,7 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5uH-8k-Ywt">
-                                            <rect key="frame" x="151" y="17.5" width="208" height="16"/>
+                                            <rect key="frame" x="151" y="17" width="208" height="16"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -187,7 +182,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hHv-UX-jmd">
-                                            <rect key="frame" x="178" y="15" width="20" height="20"/>
+                                            <rect key="frame" x="177.5" y="15" width="20" height="20"/>
                                         </activityIndicatorView>
                                     </subviews>
                                     <constraints>
@@ -274,7 +269,7 @@
                                             </constraints>
                                         </view>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconChevronRight" translatesAutoresizingMaskIntoConstraints="NO" id="Ozu-e3-zHK">
-                                            <rect key="frame" x="344" y="18" width="15" height="15"/>
+                                            <rect key="frame" x="344" y="17.5" width="15" height="15"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="15" id="Let-kZ-2M9"/>
                                                 <constraint firstAttribute="height" constant="15" id="LjV-8U-bnl"/>
@@ -413,7 +408,7 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="3ld-Zj-QTr">
-                                            <rect key="frame" x="151" y="17.5" width="208" height="16"/>
+                                            <rect key="frame" x="151" y="17" width="208" height="16"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -575,7 +570,7 @@
                                             </constraints>
                                         </view>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconChevronRight" translatesAutoresizingMaskIntoConstraints="NO" id="da3-tT-u5d">
-                                            <rect key="frame" x="344" y="18" width="15" height="15"/>
+                                            <rect key="frame" x="344" y="17.5" width="15" height="15"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="15" id="6j9-eN-ilu"/>
                                                 <constraint firstAttribute="width" constant="15" id="hPw-Mt-1f1"/>
@@ -637,7 +632,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bluetooth is Unsupported" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nxJ-YM-fpV">
-                                            <rect key="frame" x="63" y="42.5" width="176" height="18"/>
+                                            <rect key="frame" x="63" y="43" width="176" height="18"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -672,14 +667,13 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconChevronRight" translatesAutoresizingMaskIntoConstraints="NO" id="4zB-Pt-3bs">
-                                                    <rect key="frame" x="277" y="44" width="15" height="15"/>
+                                                    <rect key="frame" x="277" y="44.5" width="15" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="15" id="MgN-ce-NbC"/>
                                                         <constraint firstAttribute="height" constant="15" id="ilW-23-fDx"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstItem="4zB-Pt-3bs" firstAttribute="leading" secondItem="wbZ-FH-sF2" secondAttribute="trailing" constant="10" id="0eF-N1-bjf"/>
                                                 <constraint firstItem="wbZ-FH-sF2" firstAttribute="leading" secondItem="xFW-KR-Mow" secondAttribute="leading" constant="16" id="CB5-vR-WpF"/>
@@ -721,7 +715,7 @@
                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="TeQ-uq-WWF">
                                     <rect key="frame" x="324" y="21" width="20" height="20"/>
                                 </activityIndicatorView>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sKE-7E-AW4">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sKE-7E-AW4">
                                     <rect key="frame" x="309" y="16" width="50" height="30"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="50" id="c85-fN-AiD"/>

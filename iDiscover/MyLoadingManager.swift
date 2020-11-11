@@ -34,7 +34,7 @@ class MyLoadingManager {
     
     // Activity indicator
     let activityIndicator = MyActivityIndicator()
-    activityIndicator.activityIndicatorViewStyle = .whiteLarge
+    activityIndicator.style = .large
     activityIndicator.color = UIColor.white
     activityIndicator.startAnimating()
     activityIndicator.translatesAutoresizingMaskIntoConstraints = false

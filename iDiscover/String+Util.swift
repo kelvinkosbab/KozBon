@@ -21,7 +21,7 @@ extension String {
   
   func getLabelHeight(width: CGFloat, font: UIFont) -> CGFloat {
     let constraintRect = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
-    let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: font], context: nil)
+    let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
     return boundingBox.height + 20
   }
   
@@ -79,9 +79,5 @@ extension String {
       return self[stringIndex]
     }
     return nil
-  }
-  
-  subscript (i: Int) -> String {
-    return String(self[i])
   }
 }

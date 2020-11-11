@@ -6,7 +6,6 @@
 //  Copyright © 2017 Kozinga. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class MyBasicCenterLabelCell: UITableViewCell {

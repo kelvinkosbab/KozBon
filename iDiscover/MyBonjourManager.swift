@@ -102,7 +102,7 @@ class MyBonjourManager: NSObject {
   }
   
   internal func remove(service: MyNetService) {
-    if let index = self.services.index(of: service) {
+    if let index = self.services.firstIndex(of: service) {
       self.services.remove(at: index)
       NotificationCenter.default.post(name: .bonjourDidRemoveService, object: service)
     }

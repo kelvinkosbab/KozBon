@@ -109,13 +109,13 @@ class SettingsViewController : MyCollectionViewController {
   override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
     switch kind {
       
-    case UICollectionElementKindSectionHeader:
+    case UICollectionView.elementKindSectionHeader:
       let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SettingsHeaderView.name, for: indexPath) as! SettingsHeaderView
       let sectionType = SettingsSectionType.all[indexPath.section]
       headerView.configure(title: sectionType.sectionTitle)
       return headerView
       
-    case UICollectionElementKindSectionFooter:
+    case UICollectionView.elementKindSectionFooter:
       let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SettingsFooterView.name, for: indexPath) as! SettingsFooterView
       return headerView
       

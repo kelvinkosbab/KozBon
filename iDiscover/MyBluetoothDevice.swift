@@ -19,12 +19,6 @@ protocol MyBluetoothDeviceServicesDelegate : class {
 
 class MyBluetoothDevice : NSObject, CBPeripheralDelegate {
   
-  // MARK: - Hashable
-  
-  override var hashValue: Int {
-    return self.uuid.hashValue
-  }
-  
   // MARK: - Equatable
   
   static func ==(lhs: MyBluetoothDevice, rhs: MyBluetoothDevice) -> Bool {
@@ -220,6 +214,8 @@ extension CBPeripheralState {
       return "Disconnected"
     case .disconnecting:
       return "Disconnecting"
+    @unknown default:
+        return "Unknown"
     }
   }
 }

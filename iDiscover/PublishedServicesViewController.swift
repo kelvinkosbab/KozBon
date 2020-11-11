@@ -87,12 +87,12 @@ class PublishedServicesViewController : MyCollectionViewController {
   override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
     switch kind {
       
-    case UICollectionElementKindSectionHeader:
+    case UICollectionView.elementKindSectionHeader:
       let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: PublishedServicesHeaderView.name, for: indexPath) as! PublishedServicesHeaderView
       headerView.configure(title: "Your Published Services")
       return headerView
       
-    case UICollectionElementKindSectionFooter:
+    case UICollectionView.elementKindSectionFooter:
       let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: PublishedServicesFooterView.name, for: indexPath) as! PublishedServicesFooterView
       footerView.delegate = self
       return footerView

@@ -16,12 +16,12 @@ extension UIBarButtonItem {
     self.setFont()
   }
   
-  convenience init(systemItem barButtonSystemItem: UIBarButtonSystemItem, target: Any? = nil, action: Selector? = nil) {
+  convenience init(systemItem barButtonSystemItem: UIBarButtonItem.SystemItem, target: Any? = nil, action: Selector? = nil) {
     self.init(barButtonSystemItem: barButtonSystemItem, target: target, action: action)
     self.setFont()
   }
   
   private func setFont() {
-    self.setTitleTextAttributes([ NSAttributedStringKey.font : UIFont.systemFont(ofSize: 15) ], for: .normal)
+    self.setTitleTextAttributes([ NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15) ], for: .normal)
   }
 }

@@ -32,17 +32,22 @@ extension UIViewController {
   // MARK: - Adding child view controller helpers
   
   func addChildViewController(_ childViewController: UIViewController, intoView: UIView) {
+    
+    guard let childView = childViewController.view else {
+        return
+    }
+    
     childViewController.view.translatesAutoresizingMaskIntoConstraints = false
-    self.addChildViewController(childViewController)
+    self.addChild(childViewController)
     childViewController.view.frame = intoView.frame
     intoView.addSubview(childViewController.view)
-    childViewController.didMove(toParentViewController: self)
+    childViewController.didMove(toParent: self)
     
     // Set up constraints for the embedded controller
-    let top = NSLayoutConstraint(item: childViewController.view, attribute: .top, relatedBy: .equal, toItem: intoView, attribute: .top, multiplier: 1, constant: 0)
-    let bottom = NSLayoutConstraint(item: childViewController.view, attribute: .bottom, relatedBy: .equal, toItem: intoView, attribute: .bottom, multiplier: 1, constant: 0)
-    let leading = NSLayoutConstraint(item: childViewController.view, attribute: .leading, relatedBy: .equal, toItem: intoView, attribute: .leading, multiplier: 1, constant: 0)
-    let trailing = NSLayoutConstraint(item: childViewController.view, attribute: .trailing, relatedBy: .equal, toItem: intoView, attribute: .trailing, multiplier: 1, constant: 0)
+    let top = NSLayoutConstraint(item: childView, attribute: .top, relatedBy: .equal, toItem: intoView, attribute: .top, multiplier: 1, constant: 0)
+    let bottom = NSLayoutConstraint(item: childView, attribute: .bottom, relatedBy: .equal, toItem: intoView, attribute: .bottom, multiplier: 1, constant: 0)
+    let leading = NSLayoutConstraint(item: childView, attribute: .leading, relatedBy: .equal, toItem: intoView, attribute: .leading, multiplier: 1, constant: 0)
+    let trailing = NSLayoutConstraint(item: childView, attribute: .trailing, relatedBy: .equal, toItem: intoView, attribute: .trailing, multiplier: 1, constant: 0)
     intoView.addConstraints([ top, bottom, leading, trailing ])
     self.view.layoutIfNeeded()
   }

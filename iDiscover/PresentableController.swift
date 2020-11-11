@@ -67,7 +67,7 @@ extension PresentableController where Self : UIViewController {
       
     case .splitDetail:
       if let splitViewController = self.splitViewController {
-        if let index = splitViewController.viewControllers.index(of: self) {
+        if let index = splitViewController.viewControllers.firstIndex(of: self) {
           splitViewController.viewControllers.remove(at: index)
         } else {
           
@@ -83,7 +83,7 @@ extension PresentableController where Self : UIViewController {
               }
             }
             
-            if found, let index = splitViewController.viewControllers.index(of: controller) {
+            if found, let index = splitViewController.viewControllers.firstIndex(of: controller) {
               splitViewController.viewControllers.remove(at: index)
               break
             }
