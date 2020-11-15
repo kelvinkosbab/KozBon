@@ -16,12 +16,13 @@ class SettingsViewController : MyCollectionViewController {
   static func newViewController() -> SettingsViewController {
     return self.newViewController(fromStoryboard: .info)
   }
-  
-  // MARK: - Edit Mode Properties
-  
-  override var defaultViewTitle: String? {
-    return "Information"
-  }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.navigationItem.title = "Bonjour Services"
+        self.tabBarItem = UITabBarItem(title: "Information", image: UIImage(systemName: "info.circle.fill"), selectedImage: nil)
+    }
   
   // MARK: - UICollectionView Helpers
   

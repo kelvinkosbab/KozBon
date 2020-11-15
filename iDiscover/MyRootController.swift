@@ -22,30 +22,15 @@ class MyRootController: MyTabBarController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    let servicesViewController = self.setupServicesController()
-    let bluetoothViewController = self.setupBluetoothController()
-    let infoViewController = self.setupInfoController()
-    self.viewControllers = [ servicesViewController, bluetoothViewController, infoViewController ]
-  }
-  
-  // MARK: - Controllers
-  
-  func setupServicesController() -> UIViewController {
-    let viewController = MyNavigationController(rootViewController: ServicesViewController.newViewController())
-    return viewController
-  }
+    let servicesViewController = MyNavigationController(rootViewController: ServicesViewController.newViewController())
+    servicesViewController.tabBarItem = UITabBarItem(title: "Bonjour", image: #imageLiteral(resourceName: "iconBonjour"), selectedImage: nil)
     
-    func setupBluetoothController() -> UIViewController {
-      let viewController = MyNavigationController(rootViewController: BluetoothViewController.newViewController())
-      viewController.title = "Bluetooth"
-      viewController.tabBarItem = UITabBarItem(title: "Bluetooth", image: #imageLiteral(resourceName: "iconBluetooth"), selectedImage: nil)
-      return viewController
-    }
-  
-  func setupInfoController() -> UIViewController {
-    let viewController = MyNavigationController(rootViewController: SettingsViewController.newViewController())
-    viewController.title = "Information"
-    viewController.tabBarItem = UITabBarItem(title: "Information", image: UIImage(systemName: "info.circle.fill"), selectedImage: nil)
-    return viewController
+    let bluetoothViewController = MyNavigationController(rootViewController: BluetoothViewController.newViewController())
+    bluetoothViewController.tabBarItem = UITabBarItem(title: "Bluetooth", image: #imageLiteral(resourceName: "iconBluetooth"), selectedImage: nil)
+    
+    let infoViewController = MyNavigationController(rootViewController: SettingsViewController.newViewController())
+    infoViewController.tabBarItem = UITabBarItem(title: "Information", image: UIImage(systemName: "info.circle.fill"), selectedImage: nil)
+    
+    self.viewControllers = [ servicesViewController, bluetoothViewController, infoViewController ]
   }
 }

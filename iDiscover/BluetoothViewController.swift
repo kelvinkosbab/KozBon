@@ -6,7 +6,6 @@
 //  Copyright © 2017 Kozinga. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class BluetoothViewController : MyCollectionViewController {
@@ -40,19 +39,20 @@ class BluetoothViewController : MyCollectionViewController {
   }
   
   // MARK: - Lifecycle
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
     
-    self.title = "Bluetooth"
-  }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.navigationItem.title = "Bluetooth Devices"
+        self.tabBarItem = UITabBarItem(title: "Bluetooth", image: #imageLiteral(resourceName: "iconBluetooth"), selectedImage: nil)
+    }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     
     self.collectionView?.reloadData()
     self.bluetoothManager.delegate = self
-    self.bluetoothManager.startScan()
+    self.startScan()
     self.updateLoading()
   }
   
@@ -67,13 +67,21 @@ class BluetoothViewController : MyCollectionViewController {
   
   func updateLoading() {
     if self.bluetoothManager.state.isScanning {
-      self.loadingActivityIndicator?.startAnimating()
-      self.loadingActivityIndicator?.isHidden = false
+        let spinner = UIActivityIndicatorView()
+        spinner.startAnimating()
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: spinner)
     } else {
-      self.loadingActivityIndicator?.stopAnimating()
-      self.loadingActivityIndicator?.isHidden = true
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.clockwise.circle.fill"), style: .done, target: self, action: #selector(self.startScan))
     }
   }
+    
+    @objc func startScan() {
+        self.bluetoothManager.startScan()
+    }
+    
+    @objc func stopScan() {
+        self.bluetoothManager.stopScan()
+    }
   
   // MARK: - SectionType
   
@@ -122,40 +130,6 @@ class BluetoothViewController : MyCollectionViewController {
     return 1
   }
   
-//  override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//    switch kind {
-//    case UICollectionView.elementKindSectionHeader:
-//      
-//      guard let sectionType = self.getSectionType(section: indexPath.section) else {
-//        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ServicesHeaderView.name, for: indexPath) as! ServicesHeaderView
-//        headerView.configure(nil, title: "")
-//        headerView.hideButtonAndSpinner()
-//        return headerView
-//      }
-//      
-//      switch sectionType {
-//      case .bluetoothUnsupported:
-//        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ServicesHeaderView.name, for: indexPath) as! ServicesHeaderView
-//        headerView.configure(nil, title: "")
-//        headerView.hideButtonAndSpinner()
-//        return headerView
-//      case .devices:
-//        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ServicesHeaderView.name, for: indexPath) as! ServicesHeaderView
-//        headerView.configure(nil, title: "Scanning for Bluetooth Services")
-//        headerView.hideButtonAndSpinner()
-//        return headerView
-//      }
-//      
-//    case UICollectionView.elementKindSectionFooter:
-//      let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "BluetoothFooterView", for: indexPath)
-//      footerView.backgroundColor = collectionView.backgroundColor
-//      return footerView
-//      
-//    default:
-//      return super.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)
-//    }
-//  }
-  
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     
     guard let sectionType = self.getSectionType(section: section) else {
@@ -185,6 +159,10 @@ class BluetoothViewController : MyCollectionViewController {
     case .device(let device):
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ServicesServiceCell.name, for: indexPath) as! ServicesServiceCell
       cell.configure(title: device.name, detail: device.uuid)
+        if UIDevice.isPad {
+            cell.contentView.layer.cornerRadius = 20
+            cell.contentView.layer.masksToBounds = true
+        }
       return cell
     }
   }
@@ -211,7 +189,6 @@ class BluetoothViewController : MyCollectionViewController {
     guard let rowType = self.getRowType(at: indexPath) else {
       return defaultSize
     }
-    
     
     switch rowType {
     case .bluetoothUnsupported:
