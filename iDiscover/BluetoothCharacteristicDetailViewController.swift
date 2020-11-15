@@ -183,7 +183,7 @@ class BluetoothCharacteristicDetailViewController : MyTableViewController {
       return nil
     }
     
-    let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailButtonHeaderCell.name) as! ServiceDetailButtonHeaderCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailSimpleHeaderCell.name) as! ServiceDetailSimpleHeaderCell
     cell.configure(title: sectionType.title)
     return cell.contentView
   }
@@ -219,60 +219,60 @@ class BluetoothCharacteristicDetailViewController : MyTableViewController {
     
     switch rowType {
     case .uuid:
-      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailKeyValueCell.name, for: indexPath) as! ServiceDetailKeyValueCell
-      cell.configure(key: rowType.title, value: self.device.uuid)
+      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell
+      cell.configure(title: rowType.title, detail: self.device.uuid)
       return cell
     case .hexValue:
-      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailKeyValueCell.name, for: indexPath) as! ServiceDetailKeyValueCell
-      cell.configure(key: rowType.title, value: self.characteristic.value?.hexValue ?? "Unknown Value")
+      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell
+      cell.configure(title: rowType.title, detail: self.characteristic.value?.hexValue ?? "Unknown Value")
       return cell
     case .isBroadcast:
-      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailKeyValueCell.name, for: indexPath) as! ServiceDetailKeyValueCell
-      cell.configure(key: rowType.title, value: "\(self.characteristic.properties.contains(.broadcast) ? "YES" : "NO")")
+      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell
+      cell.configure(title: rowType.title, detail: "\(self.characteristic.properties.contains(.broadcast) ? "YES" : "NO")")
       return cell
     case .isRead:
-      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailKeyValueCell.name, for: indexPath) as! ServiceDetailKeyValueCell
-      cell.configure(key: rowType.title, value: "\(self.characteristic.properties.contains(.read) ? "YES" : "NO")")
+      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell
+      cell.configure(title: rowType.title, detail: "\(self.characteristic.properties.contains(.read) ? "YES" : "NO")")
       return cell
     case .isWriteWithoutResponse:
-      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailKeyValueCell.name, for: indexPath) as! ServiceDetailKeyValueCell
-      cell.configure(key: rowType.title, value: "\(self.characteristic.properties.contains(.writeWithoutResponse) ? "YES" : "NO")")
+      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell
+      cell.configure(title: rowType.title, detail: "\(self.characteristic.properties.contains(.writeWithoutResponse) ? "YES" : "NO")")
       return cell
     case .isWrite:
-      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailKeyValueCell.name, for: indexPath) as! ServiceDetailKeyValueCell
-      cell.configure(key: rowType.title, value: "\(self.characteristic.properties.contains(.write) ? "YES" : "NO")")
+      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell
+      cell.configure(title: rowType.title, detail: "\(self.characteristic.properties.contains(.write) ? "YES" : "NO")")
       return cell
     case .isNotify:
-      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailKeyValueCell.name, for: indexPath) as! ServiceDetailKeyValueCell
-      cell.configure(key: rowType.title, value: "\(self.characteristic.properties.contains(.notify) ? "YES" : "NO")")
+      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell
+      cell.configure(title: rowType.title, detail: "\(self.characteristic.properties.contains(.notify) ? "YES" : "NO")")
       return cell
     case .isIndicate:
-      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailKeyValueCell.name, for: indexPath) as! ServiceDetailKeyValueCell
-      cell.configure(key: rowType.title, value: "\(self.characteristic.properties.contains(.indicate) ? "YES" : "NO")")
+      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell
+      cell.configure(title: rowType.title, detail: "\(self.characteristic.properties.contains(.indicate) ? "YES" : "NO")")
       return cell
     case .isAuthenticatedSignedWrites:
-      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailKeyValueCell.name, for: indexPath) as! ServiceDetailKeyValueCell
-      cell.configure(key: rowType.title, value: "\(self.characteristic.properties.contains(.authenticatedSignedWrites) ? "YES" : "NO")")
+      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell
+      cell.configure(title: rowType.title, detail: "\(self.characteristic.properties.contains(.authenticatedSignedWrites) ? "YES" : "NO")")
       return cell
     case .isExtendedProperties:
-      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailKeyValueCell.name, for: indexPath) as! ServiceDetailKeyValueCell
-      cell.configure(key: rowType.title, value: "\(self.characteristic.properties.contains(.extendedProperties) ? "YES" : "NO")")
+      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell
+      cell.configure(title: rowType.title, detail: "\(self.characteristic.properties.contains(.extendedProperties) ? "YES" : "NO")")
       return cell
     case .isNotifyEncryptionRequired:
-      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailKeyValueCell.name, for: indexPath) as! ServiceDetailKeyValueCell
-      cell.configure(key: rowType.title, value: "\(self.characteristic.properties.contains(.notifyEncryptionRequired) ? "YES" : "NO")")
+      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell
+      cell.configure(title: rowType.title, detail: "\(self.characteristic.properties.contains(.notifyEncryptionRequired) ? "YES" : "NO")")
       return cell
     case .isIndicateEncryptionRequired:
-      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailKeyValueCell.name, for: indexPath) as! ServiceDetailKeyValueCell
-      cell.configure(key: rowType.title, value: "\(self.characteristic.properties.contains(.indicateEncryptionRequired) ? "YES" : "NO")")
+      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell
+      cell.configure(title: rowType.title, detail: "\(self.characteristic.properties.contains(.indicateEncryptionRequired) ? "YES" : "NO")")
       return cell
     case .noDescriptors:
       let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailSimpleCell.name, for: indexPath) as! ServiceDetailSimpleCell
       cell.configure(title: "No Descriptors Discovered")
       return cell
     case .descriptor(let descriptor):
-      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailKeyValueCell.name, for: indexPath) as! ServiceDetailKeyValueCell
-      cell.configure(key: "Descriptor UUID", value: descriptor.uuid.uuidString)
+      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell
+      cell.configure(title: "Descriptor UUID", detail: descriptor.uuid.uuidString)
       return cell
     }
   }

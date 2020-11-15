@@ -90,46 +90,46 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ybh-il-p0C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="88.799999999999997" y="158.77061469265368"/>
+            <point key="canvasLocation" x="695" y="164"/>
         </scene>
         <!--All Service Types Table View Controller-->
         <scene sceneID="EIm-1r-ieb">
             <objects>
                 <tableViewController storyboardIdentifier="AllServiceTypesTableViewController" id="qdp-XQ-0GB" customClass="AllServiceTypesTableViewController" customModule="KozBon" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="8Ve-jh-gur">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="97" sectionHeaderHeight="28" sectionFooterHeight="28" id="8Ve-jh-gur">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PublishNetServiceCell" rowHeight="50" id="cTK-9c-cmJ" customClass="PublishNetServiceCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="50"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PublishNetServiceCell" rowHeight="97" id="cTK-9c-cmJ" customClass="PublishNetServiceCell" customModule="KozBon" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="97"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cTK-9c-cmJ" id="gMJ-Mm-kgA">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="97"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TbD-dp-PXQ">
-                                            <rect key="frame" x="16" y="11" width="318" height="14"/>
+                                            <rect key="frame" x="16" y="11" width="318" height="33.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d4a-Eu-Jg3">
-                                            <rect key="frame" x="0.0" y="49" width="375" height="1"/>
+                                            <rect key="frame" x="0.0" y="96" width="375" height="1"/>
                                             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="1" id="TJA-pm-qjL"/>
                                             </constraints>
                                         </view>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconChevronRight" translatesAutoresizingMaskIntoConstraints="NO" id="Mhp-im-pi3">
-                                            <rect key="frame" x="344" y="17.5" width="15" height="15"/>
+                                            <rect key="frame" x="344" y="41" width="15" height="15"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="15" id="Gz8-DL-7Al"/>
                                                 <constraint firstAttribute="height" constant="15" id="udR-Rs-jWf"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O19-de-wpv">
-                                            <rect key="frame" x="16" y="25" width="318" height="14"/>
+                                            <rect key="frame" x="16" y="52.5" width="318" height="33.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -137,7 +137,7 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="Mhp-im-pi3" firstAttribute="centerY" secondItem="gMJ-Mm-kgA" secondAttribute="centerY" id="5Wa-TM-8us"/>
-                                        <constraint firstItem="O19-de-wpv" firstAttribute="top" secondItem="gMJ-Mm-kgA" secondAttribute="centerY" id="BLv-1w-YgJ"/>
+                                        <constraint firstItem="O19-de-wpv" firstAttribute="top" secondItem="gMJ-Mm-kgA" secondAttribute="centerY" constant="4" id="BLv-1w-YgJ"/>
                                         <constraint firstAttribute="bottom" secondItem="d4a-Eu-Jg3" secondAttribute="bottom" id="BV9-x4-aBf"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="Mhp-im-pi3" secondAttribute="trailing" id="EeY-ZH-Ip1"/>
                                         <constraint firstItem="d4a-Eu-Jg3" firstAttribute="leading" secondItem="gMJ-Mm-kgA" secondAttribute="leading" id="Jjt-WT-kdl"/>
@@ -145,7 +145,7 @@
                                         <constraint firstAttribute="bottomMargin" secondItem="O19-de-wpv" secondAttribute="bottom" id="MUR-y0-qvF"/>
                                         <constraint firstAttribute="trailing" secondItem="d4a-Eu-Jg3" secondAttribute="trailing" id="VYX-vK-m9C"/>
                                         <constraint firstItem="Mhp-im-pi3" firstAttribute="leading" secondItem="O19-de-wpv" secondAttribute="trailing" constant="10" id="fgK-We-nhM"/>
-                                        <constraint firstItem="TbD-dp-PXQ" firstAttribute="bottom" secondItem="gMJ-Mm-kgA" secondAttribute="centerY" id="hAi-9J-XQR"/>
+                                        <constraint firstItem="TbD-dp-PXQ" firstAttribute="bottom" secondItem="gMJ-Mm-kgA" secondAttribute="centerY" constant="-4" id="hAi-9J-XQR"/>
                                         <constraint firstItem="TbD-dp-PXQ" firstAttribute="leading" secondItem="gMJ-Mm-kgA" secondAttribute="leadingMargin" id="lbs-ij-sqf"/>
                                         <constraint firstItem="TbD-dp-PXQ" firstAttribute="top" secondItem="gMJ-Mm-kgA" secondAttribute="topMargin" id="och-ds-l76"/>
                                         <constraint firstItem="O19-de-wpv" firstAttribute="leading" secondItem="gMJ-Mm-kgA" secondAttribute="leadingMargin" id="teM-H5-Tfa"/>
@@ -165,7 +165,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ip8-WL-gu4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1409" y="807"/>
+            <point key="canvasLocation" x="1408.8" y="806.44677661169419"/>
         </scene>
         <!--Service Detail Table View Controller-->
         <scene sceneID="imT-OG-gcZ">
@@ -176,43 +176,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ServiceDetailButtonHeaderCell" id="aUX-4M-Gis" customClass="ServiceDetailButtonHeaderCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aUX-4M-Gis" id="kPf-G5-5c6">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kEd-ju-fkp">
-                                            <rect key="frame" x="16" y="13.5" width="343" height="20.5"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IX7-Fr-eEZ">
-                                            <rect key="frame" x="0.0" y="43" width="375" height="1"/>
-                                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="1" id="cjX-1e-8zn"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
-                                    <constraints>
-                                        <constraint firstAttribute="trailingMargin" secondItem="kEd-ju-fkp" secondAttribute="trailing" id="IHP-x8-sXX"/>
-                                        <constraint firstAttribute="bottom" secondItem="IX7-Fr-eEZ" secondAttribute="bottom" id="OQH-Nr-dfo"/>
-                                        <constraint firstItem="IX7-Fr-eEZ" firstAttribute="leading" secondItem="kPf-G5-5c6" secondAttribute="leading" id="YHW-jd-D4q"/>
-                                        <constraint firstItem="kEd-ju-fkp" firstAttribute="leading" secondItem="kPf-G5-5c6" secondAttribute="leadingMargin" id="dZH-qJ-tVf"/>
-                                        <constraint firstAttribute="trailing" secondItem="IX7-Fr-eEZ" secondAttribute="trailing" id="h0g-h5-6nO"/>
-                                        <constraint firstItem="kEd-ju-fkp" firstAttribute="bottom" secondItem="kPf-G5-5c6" secondAttribute="bottom" constant="-10" id="kLU-3d-oyI"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="titleLabel" destination="kEd-ju-fkp" id="XBg-us-SfA"/>
-                                </connections>
-                            </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ServiceDetailSimpleHeaderCell" id="Bn1-gY-MpF" customClass="ServiceDetailSimpleHeaderCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Bn1-gY-MpF" id="gc8-UY-Y4m">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -226,8 +191,8 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="81Y-gj-eSE">
-                                            <rect key="frame" x="16" y="12.5" width="343" height="20.5"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                            <rect key="frame" x="16" y="9" width="343" height="24"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -246,53 +211,8 @@
                                     <outlet property="titleLabel" destination="81Y-gj-eSE" id="0Pi-Mb-KqX"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ServiceDetailKeyValueCell" rowHeight="50" id="HgO-io-dBW" customClass="ServiceDetailKeyValueCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="116" width="375" height="50"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HgO-io-dBW" id="mSB-Uc-tfc">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xxC-9w-ah5">
-                                            <rect key="frame" x="16" y="15" width="125" height="20.5"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V1E-Yy-ltp">
-                                            <rect key="frame" x="0.0" y="49" width="375" height="1"/>
-                                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="1" id="6yO-Ms-Y3z"/>
-                                            </constraints>
-                                        </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rrD-uL-OfY">
-                                            <rect key="frame" x="151" y="18" width="208" height="14.5"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
-                                    <constraints>
-                                        <constraint firstItem="V1E-Yy-ltp" firstAttribute="leading" secondItem="mSB-Uc-tfc" secondAttribute="leading" id="2p2-iW-LF3"/>
-                                        <constraint firstAttribute="trailing" secondItem="V1E-Yy-ltp" secondAttribute="trailing" id="5fc-gh-ljQ"/>
-                                        <constraint firstAttribute="bottom" secondItem="V1E-Yy-ltp" secondAttribute="bottom" id="6SO-TV-fTL"/>
-                                        <constraint firstItem="rrD-uL-OfY" firstAttribute="centerY" secondItem="mSB-Uc-tfc" secondAttribute="centerY" id="Fis-8M-J8e"/>
-                                        <constraint firstItem="xxC-9w-ah5" firstAttribute="centerY" secondItem="mSB-Uc-tfc" secondAttribute="centerY" id="PUN-yH-ZNL"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="rrD-uL-OfY" secondAttribute="trailing" id="RwC-0J-q2J"/>
-                                        <constraint firstItem="xxC-9w-ah5" firstAttribute="leading" secondItem="mSB-Uc-tfc" secondAttribute="leadingMargin" id="Y4I-rh-vtD"/>
-                                        <constraint firstItem="rrD-uL-OfY" firstAttribute="leading" secondItem="xxC-9w-ah5" secondAttribute="trailing" constant="10" id="xl7-JG-AqH"/>
-                                        <constraint firstItem="rrD-uL-OfY" firstAttribute="width" secondItem="xxC-9w-ah5" secondAttribute="width" multiplier="5:3" id="znT-mX-6sq"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="keyLabel" destination="xxC-9w-ah5" id="3pQ-CB-fLo"/>
-                                    <outlet property="valueLabel" destination="rrD-uL-OfY" id="ou7-m9-tJv"/>
-                                </connections>
-                            </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ServiceDetailAddressCell" rowHeight="50" id="QGf-c2-ScX" customClass="ServiceDetailAddressCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="166" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="72" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QGf-c2-ScX" id="HRh-Uh-jKd">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -336,7 +256,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ServiceDetailLoadingCell" rowHeight="50" id="Hyi-vt-OkJ" customClass="ServiceDetailLoadingCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="216" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="122" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Hyi-vt-OkJ" id="YVM-sH-4sF">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -356,7 +276,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ServiceDetailSimpleCell" id="yWQ-bZ-P7j" customClass="ServiceDetailSimpleCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="266" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="172" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yWQ-bZ-P7j" id="mqH-Vk-AhE">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -379,7 +299,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ServiceDetailDescriptionCell" id="Zzq-bN-XDa" customClass="ServiceDetailDescriptionCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="310" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="216" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Zzq-bN-XDa" id="WRt-Ls-N8E">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -418,40 +338,40 @@
         <scene sceneID="JQJ-VJ-tRt">
             <objects>
                 <tableViewController storyboardIdentifier="PublishNetServiceSearchViewController" id="2TM-EG-vip" customClass="PublishNetServiceSearchViewController" customModule="KozBon" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="w8X-bv-49S">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="90" sectionHeaderHeight="28" sectionFooterHeight="28" id="w8X-bv-49S">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PublishNetServiceCell" rowHeight="50" id="lv6-7Z-b4d" customClass="PublishNetServiceCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="50"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PublishNetServiceCell" rowHeight="90" id="lv6-7Z-b4d" customClass="PublishNetServiceCell" customModule="KozBon" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lv6-7Z-b4d" id="Etm-RC-HQs">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GZt-lu-pTi">
-                                            <rect key="frame" x="16" y="11" width="318" height="14"/>
+                                            <rect key="frame" x="16" y="11" width="318" height="30"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xN6-sb-WEv">
-                                            <rect key="frame" x="0.0" y="49" width="375" height="1"/>
+                                            <rect key="frame" x="0.0" y="89" width="375" height="1"/>
                                             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="1" id="PKc-Hg-W1b"/>
                                             </constraints>
                                         </view>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconChevronRight" translatesAutoresizingMaskIntoConstraints="NO" id="3CP-w0-wOk">
-                                            <rect key="frame" x="344" y="17.5" width="15" height="15"/>
+                                            <rect key="frame" x="344" y="37.5" width="15" height="15"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="15" id="rRZ-m8-J1c"/>
                                                 <constraint firstAttribute="width" constant="15" id="xHI-Kl-Xwk"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qa4-be-uo7">
-                                            <rect key="frame" x="16" y="25" width="318" height="14"/>
+                                            <rect key="frame" x="16" y="49" width="318" height="30"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -464,13 +384,13 @@
                                         <constraint firstItem="GZt-lu-pTi" firstAttribute="leading" secondItem="Etm-RC-HQs" secondAttribute="leadingMargin" id="IOL-6b-i5F"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="3CP-w0-wOk" secondAttribute="trailing" id="Kxx-ej-NQW"/>
                                         <constraint firstAttribute="bottom" secondItem="xN6-sb-WEv" secondAttribute="bottom" id="MXJ-1g-8qA"/>
-                                        <constraint firstItem="Qa4-be-uo7" firstAttribute="top" secondItem="Etm-RC-HQs" secondAttribute="centerY" id="Rj7-bI-UNC"/>
+                                        <constraint firstItem="Qa4-be-uo7" firstAttribute="top" secondItem="Etm-RC-HQs" secondAttribute="centerY" constant="4" id="Rj7-bI-UNC"/>
                                         <constraint firstItem="3CP-w0-wOk" firstAttribute="leading" secondItem="GZt-lu-pTi" secondAttribute="trailing" constant="10" id="Rvq-Ui-rdo"/>
                                         <constraint firstAttribute="trailing" secondItem="xN6-sb-WEv" secondAttribute="trailing" id="bSK-Me-1Ke"/>
                                         <constraint firstItem="xN6-sb-WEv" firstAttribute="leading" secondItem="Etm-RC-HQs" secondAttribute="leading" id="czD-zx-pXd"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="Qa4-be-uo7" secondAttribute="bottom" id="pcF-F2-HG7"/>
                                         <constraint firstItem="3CP-w0-wOk" firstAttribute="centerY" secondItem="Etm-RC-HQs" secondAttribute="centerY" id="r8a-gx-vIM"/>
-                                        <constraint firstItem="GZt-lu-pTi" firstAttribute="bottom" secondItem="Etm-RC-HQs" secondAttribute="centerY" id="zuu-Va-pCl"/>
+                                        <constraint firstItem="GZt-lu-pTi" firstAttribute="bottom" secondItem="Etm-RC-HQs" secondAttribute="centerY" constant="-4" id="zuu-Va-pCl"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -487,7 +407,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8jN-dC-qoz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2052" y="807"/>
+            <point key="canvasLocation" x="2052" y="806.44677661169419"/>
         </scene>
         <!--Publish Detail Create View Controller-->
         <scene sceneID="1bb-OS-KxU">

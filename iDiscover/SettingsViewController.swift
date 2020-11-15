@@ -137,6 +137,10 @@ class SettingsViewController : MyCollectionViewController {
       let sectionType = SettingsSectionType.all[indexPath.section]
       let item = sectionType.items[indexPath.row]
       cell.configure(title: item.title)
+        if UIDevice.isPad {
+            cell.contentView.layer.cornerRadius = 20
+            cell.contentView.layer.masksToBounds = true
+        }
       return cell
       
     case 1:
@@ -144,6 +148,10 @@ class SettingsViewController : MyCollectionViewController {
       let sectionType = SettingsSectionType.all[indexPath.section]
       let item = sectionType.items[indexPath.row]
       cell.configure(key: item.key, value: item.value)
+        if UIDevice.isPad {
+            cell.contentView.layer.cornerRadius = 20
+            cell.contentView.layer.masksToBounds = true
+        }
       return cell
       
     default:

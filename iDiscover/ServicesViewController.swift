@@ -128,6 +128,7 @@ class ServicesViewController : MyCollectionViewController {
         controller.addAction(UIAlertAction(title: "Create a Custom Service Type", style: .default, handler: { [weak self] _ in
             self?.presentCreateServiceType()
         }))
+        controller.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
         if UIDevice.isPhone {
           self.present(controller, animated: true, completion: nil)

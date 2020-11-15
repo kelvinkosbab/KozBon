@@ -3,7 +3,7 @@
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17504.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,7 +12,7 @@
         <scene sceneID="HPL-i6-n4G">
             <objects>
                 <collectionViewController storyboardIdentifier="SettingsViewController" id="cWG-Cy-WUU" customClass="SettingsViewController" customModule="KozBon" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="YGt-Ql-yhD">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" id="YGt-Ql-yhD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -34,8 +34,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="302" height="104"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem Ipsum" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gj7-sn-bKB">
-                                                    <rect key="frame" x="16" y="43" width="245" height="18"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <rect key="frame" x="16" y="42" width="245" height="20.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -80,26 +80,26 @@
                                             <rect key="frame" x="0.0" y="0.0" width="302" height="104"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem Ipsum" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fos-Q8-PFN">
-                                                    <rect key="frame" x="16" y="43" width="97.5" height="18"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <rect key="frame" x="16" y="23.5" width="270" height="20.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem Ipsum" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fGU-zE-FZ2">
-                                                    <rect key="frame" x="123.5" y="44" width="162.5" height="16"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <rect key="frame" x="16" y="60" width="270" height="19.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="fGU-zE-FZ2" secondAttribute="trailing" constant="16" id="9qS-cm-V6e"/>
-                                                <constraint firstItem="fGU-zE-FZ2" firstAttribute="width" secondItem="Fos-Q8-PFN" secondAttribute="width" multiplier="5:3" id="CCq-Tv-ItD"/>
-                                                <constraint firstItem="Fos-Q8-PFN" firstAttribute="leading" secondItem="zXo-2H-puv" secondAttribute="leading" constant="16" id="FM3-7D-aJM"/>
-                                                <constraint firstItem="Fos-Q8-PFN" firstAttribute="centerY" secondItem="zXo-2H-puv" secondAttribute="centerY" id="OGU-5U-kWY"/>
-                                                <constraint firstItem="fGU-zE-FZ2" firstAttribute="leading" secondItem="Fos-Q8-PFN" secondAttribute="trailing" constant="10" id="nmR-Nh-OYu"/>
-                                                <constraint firstItem="fGU-zE-FZ2" firstAttribute="centerY" secondItem="zXo-2H-puv" secondAttribute="centerY" id="uRv-GP-qUj"/>
+                                                <constraint firstItem="fGU-zE-FZ2" firstAttribute="leading" secondItem="zXo-2H-puv" secondAttribute="leading" constant="16" id="JDz-iv-TTj"/>
+                                                <constraint firstItem="Fos-Q8-PFN" firstAttribute="bottom" secondItem="zXo-2H-puv" secondAttribute="centerY" constant="-8" id="VBM-6I-0eP"/>
+                                                <constraint firstAttribute="trailing" secondItem="fGU-zE-FZ2" secondAttribute="trailing" constant="16" id="bhq-0H-O3K"/>
+                                                <constraint firstItem="Fos-Q8-PFN" firstAttribute="leading" secondItem="zXo-2H-puv" secondAttribute="leading" constant="16" id="dUb-dN-gUJ"/>
+                                                <constraint firstItem="fGU-zE-FZ2" firstAttribute="top" secondItem="Fos-Q8-PFN" secondAttribute="bottom" constant="16" id="ddZ-Fc-nnA"/>
+                                                <constraint firstAttribute="trailing" secondItem="Fos-Q8-PFN" secondAttribute="trailing" constant="16" id="e1a-by-h2g"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -122,8 +122,8 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem Ipsum" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x74-wL-bY0">
-                                    <rect key="frame" x="16" y="22" width="343" height="18"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <rect key="frame" x="16" y="16" width="343" height="24"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>

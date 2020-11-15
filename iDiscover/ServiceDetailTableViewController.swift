@@ -69,7 +69,6 @@ class ServiceDetailTableViewController: MyTableViewController {
     super.viewDidLoad()
     
     self.title = self.serviceType.name
-    self.navigationItem.largeTitleDisplayMode = .never
     
     if self.navigationController?.viewControllers.first == self {
       self.navigationItem.leftBarButtonItem = UIBarButtonItem(text: "Done", target: self, action: #selector(self.doneButtonSelected(_:)))
@@ -197,7 +196,8 @@ class ServiceDetailTableViewController: MyTableViewController {
   override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     
     if section == 0 {
-      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailButtonHeaderCell.name) as! ServiceDetailButtonHeaderCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailSimpleHeaderCell.name) as! ServiceDetailSimpleHeaderCell
+        cell.contentView.backgroundColor = .systemBackground
       cell.configure(title: "Information")
       return cell.contentView
     }
@@ -208,6 +208,7 @@ class ServiceDetailTableViewController: MyTableViewController {
     if self.mode.isPublishedService {
       if section == 1 {
         let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailSimpleHeaderCell.name) as! ServiceDetailSimpleHeaderCell
+        cell.contentView.backgroundColor = .systemBackground
         cell.configure(title: "Actions")
         return cell.contentView
       }
@@ -220,12 +221,14 @@ class ServiceDetailTableViewController: MyTableViewController {
         // Addresses
         let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailSimpleHeaderCell.name) as! ServiceDetailSimpleHeaderCell
         cell.configure(title: service.hostName == "NA" ? "Addresses" : "Addresses : \(service.hostName)")
+        cell.contentView.backgroundColor = .systemBackground
         return cell.contentView
         
       } else if section == 2 {
         // Data Records
         let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailSimpleHeaderCell.name) as! ServiceDetailSimpleHeaderCell
         cell.configure(title: "TXT Records")
+        cell.contentView.backgroundColor = .systemBackground
         return cell.contentView
       }
     }
@@ -239,7 +242,7 @@ class ServiceDetailTableViewController: MyTableViewController {
       // Check if this is the detail row
       let item = self.serviceInformationSectionItems[indexPath.row]
       if item.isDetail {
-        return item.value.getLabelHeight(width: self.tableView.bounds.width - 16, font: UIFont.systemFont(ofSize: 13))
+        return item.value.getLabelHeight(width: self.tableView.bounds.width - 16, font: UIFont.systemFont(ofSize: 19))
       }
     }
     return super.tableView(tableView, heightForRowAt: indexPath)
@@ -253,12 +256,14 @@ class ServiceDetailTableViewController: MyTableViewController {
       if item.isDetail {
         let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailDescriptionCell.name, for: indexPath) as! ServiceDetailDescriptionCell
         cell.configure(text: item.value)
+        cell.contentView.backgroundColor = .secondarySystemBackground
         return cell
         
       } else {
         // Key-value cell
-        let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailKeyValueCell.name, for: indexPath) as! ServiceDetailKeyValueCell
-        cell.configure(key: item.key, value: item.value)
+        let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell
+        cell.configure(title: item.key, detail: item.value)
+        cell.contentView.backgroundColor = .secondarySystemBackground
         return cell
       }
     }
@@ -267,6 +272,7 @@ class ServiceDetailTableViewController: MyTableViewController {
     if self.mode.isPublishedService, let service = self.service {
       let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailSimpleCell.name, for: indexPath) as! ServiceDetailSimpleCell
       cell.configure(textColor: .blue)
+        cell.contentView.backgroundColor = .secondarySystemBackground
       
       // Determine if the service is currently published
       var isCurrentlyPublished: Bool = false
@@ -288,6 +294,7 @@ class ServiceDetailTableViewController: MyTableViewController {
         // Addresses section
         if service.isResolving {
           let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailLoadingCell.name, for: indexPath) as! ServiceDetailLoadingCell
+            cell.contentView.backgroundColor = .systemBackground
           cell.activityIndicator.startAnimating()
           cell.activityIndicator.isHidden = false
           return cell
@@ -295,6 +302,7 @@ class ServiceDetailTableViewController: MyTableViewController {
         } else if !service.isResolving && service.addresses.count == 0 {
           
           let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailSimpleCell.name, for: indexPath) as! ServiceDetailSimpleCell
+            cell.contentView.backgroundColor = .secondarySystemBackground
           cell.configure(title: "No Addresses Resolved")
           cell.configure(textColor: .black)
           return cell
@@ -302,6 +310,7 @@ class ServiceDetailTableViewController: MyTableViewController {
         
         let address = service.addresses[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell
+        cell.contentView.backgroundColor = .secondarySystemBackground
         cell.configure(title: address.fullAddress, detail: address.internetProtocol.string)
         return cell
         
@@ -309,8 +318,9 @@ class ServiceDetailTableViewController: MyTableViewController {
         
         // Data records section
         let record = service.dataRecords[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailKeyValueCell.name, for: indexPath) as! ServiceDetailKeyValueCell
-        cell.configure(key: record.key, value: record.value)
+        let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell
+        cell.contentView.backgroundColor = .secondarySystemBackground
+        cell.configure(title: record.key, detail: record.value)
         return cell
       }
     }

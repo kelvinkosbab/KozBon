@@ -21,10 +21,8 @@
 		B68262231E18200D00D0445D /* Info.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B68262221E18200D00D0445D /* Info.storyboard */; };
 		B6833CBD1E3D44F200F56A90 /* BluetoothDeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6833CBC1E3D44F200F56A90 /* BluetoothDeviceCell.swift */; };
 		B6859C501E282915001B8245 /* UIColor+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6859C4F1E282915001B8245 /* UIColor+Util.swift */; };
-		B68B21221E4798F600BE2CA2 /* ServiceDetailHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B21211E4798F600BE2CA2 /* ServiceDetailHeaderCell.swift */; };
 		B68B21251E47A0AB00BE2CA2 /* ServiceDetailSimpleHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B21241E47A0AB00BE2CA2 /* ServiceDetailSimpleHeaderCell.swift */; };
 		B68B21271E47A2C700BE2CA2 /* ServiceDetailAddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B21261E47A2C700BE2CA2 /* ServiceDetailAddressCell.swift */; };
-		B68B21291E47A2E100BE2CA2 /* ServiceDetailKeyValueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B21281E47A2E100BE2CA2 /* ServiceDetailKeyValueCell.swift */; };
 		B68B212B1E47A4F500BE2CA2 /* ServiceDetailLoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B212A1E47A4F500BE2CA2 /* ServiceDetailLoadingCell.swift */; };
 		B68B212D1E47A55800BE2CA2 /* ServiceDetailSimpleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B212C1E47A55800BE2CA2 /* ServiceDetailSimpleCell.swift */; };
 		B68B212F1E47A65C00BE2CA2 /* ServiceDetailDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B212E1E47A65C00BE2CA2 /* ServiceDetailDescriptionCell.swift */; };
@@ -94,10 +92,8 @@
 		B68262221E18200D00D0445D /* Info.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Info.storyboard; sourceTree = "<group>"; };
 		B6833CBC1E3D44F200F56A90 /* BluetoothDeviceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothDeviceCell.swift; sourceTree = "<group>"; };
 		B6859C4F1E282915001B8245 /* UIColor+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Util.swift"; sourceTree = "<group>"; };
-		B68B21211E4798F600BE2CA2 /* ServiceDetailHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailHeaderCell.swift; sourceTree = "<group>"; };
 		B68B21241E47A0AB00BE2CA2 /* ServiceDetailSimpleHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailSimpleHeaderCell.swift; sourceTree = "<group>"; };
 		B68B21261E47A2C700BE2CA2 /* ServiceDetailAddressCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailAddressCell.swift; sourceTree = "<group>"; };
-		B68B21281E47A2E100BE2CA2 /* ServiceDetailKeyValueCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailKeyValueCell.swift; sourceTree = "<group>"; };
 		B68B212A1E47A4F500BE2CA2 /* ServiceDetailLoadingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailLoadingCell.swift; sourceTree = "<group>"; };
 		B68B212C1E47A55800BE2CA2 /* ServiceDetailSimpleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailSimpleCell.swift; sourceTree = "<group>"; };
 		B68B212E1E47A65C00BE2CA2 /* ServiceDetailDescriptionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailDescriptionCell.swift; sourceTree = "<group>"; };
@@ -191,10 +187,8 @@
 			isa = PBXGroup;
 			children = (
 				B6089C991E19D76D00C7CF29 /* ServiceDetailTableViewController.swift */,
-				B68B21211E4798F600BE2CA2 /* ServiceDetailHeaderCell.swift */,
 				B68B21241E47A0AB00BE2CA2 /* ServiceDetailSimpleHeaderCell.swift */,
 				B68B21261E47A2C700BE2CA2 /* ServiceDetailAddressCell.swift */,
-				B68B21281E47A2E100BE2CA2 /* ServiceDetailKeyValueCell.swift */,
 				B68B212E1E47A65C00BE2CA2 /* ServiceDetailDescriptionCell.swift */,
 				B68B212A1E47A4F500BE2CA2 /* ServiceDetailLoadingCell.swift */,
 				B68B212C1E47A55800BE2CA2 /* ServiceDetailSimpleCell.swift */,
@@ -567,10 +561,8 @@
 				B6C4BC521E1CC2CD004409F1 /* TableViewCells.swift in Sources */,
 				B691545F1E1317A000382F41 /* MyAddress.swift in Sources */,
 				B679CC171E1647670056C7B5 /* MyBonjourPublishManager.swift in Sources */,
-				B68B21291E47A2E100BE2CA2 /* ServiceDetailKeyValueCell.swift in Sources */,
 				B62E19971E174236008BC91C /* MyLoadingManager.swift in Sources */,
 				B6CE1D501E120B90003D4FFA /* UIViewController+Util.swift in Sources */,
-				B68B21221E4798F600BE2CA2 /* ServiceDetailHeaderCell.swift in Sources */,
 				B68B212D1E47A55800BE2CA2 /* ServiceDetailSimpleCell.swift in Sources */,
 				B68EC5A01E2F226A00C9D5CC /* BluetoothViewController.swift in Sources */,
 				B68EEA571E47104D00831CC4 /* ServicesServiceCell.swift in Sources */,

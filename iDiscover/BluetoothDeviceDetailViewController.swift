@@ -157,7 +157,7 @@ class BluetoothDeviceDetailViewController : MyTableViewController {
       return nil
     }
     
-    let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailButtonHeaderCell.name) as! ServiceDetailButtonHeaderCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailSimpleHeaderCell.name) as! ServiceDetailSimpleHeaderCell
     switch sectionType {
     case .info:
       cell.configure(title: "Information")
@@ -196,24 +196,24 @@ class BluetoothDeviceDetailViewController : MyTableViewController {
     
     switch rowType {
     case .name:
-      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailKeyValueCell.name, for: indexPath) as! ServiceDetailKeyValueCell
-      cell.configure(key: "Name", value: self.device.name)
+      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell
+        cell.configure(title: "Name", detail: self.device.name ?? "")
       return cell
     case .connectionState:
-      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailKeyValueCell.name, for: indexPath) as! ServiceDetailKeyValueCell
-      cell.configure(key: "State", value: self.device.state.string)
+      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell
+      cell.configure(title: "State", detail: self.device.state.string)
       return cell
     case .lastKnownRssi:
-      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailKeyValueCell.name, for: indexPath) as! ServiceDetailKeyValueCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell
       if let lastKnownRSSI = self.device.lastKnownRSSI {
-        cell.configure(key: "RSSI", value: "\(lastKnownRSSI)")
+        cell.configure(title: "RSSI", detail: "\(lastKnownRSSI)")
       } else {
-        cell.configure(key: "RSSI", value: "Unknown")
+        cell.configure(title: "RSSI", detail: "Unknown")
       }
       return cell
     case .totalServices:
-      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailKeyValueCell.name, for: indexPath) as! ServiceDetailKeyValueCell
-      cell.configure(key: "Total Services", value: "\(self.device.services.count) services")
+      let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell
+      cell.configure(title: "Total Services", detail: "\(self.device.services.count) services")
       return cell
     case .noCharacteristics:
       let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailSimpleCell.name, for: indexPath) as! ServiceDetailSimpleCell
