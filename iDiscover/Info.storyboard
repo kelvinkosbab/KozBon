@@ -80,13 +80,13 @@
                                             <rect key="frame" x="0.0" y="0.0" width="302" height="104"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem Ipsum" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fos-Q8-PFN">
-                                                    <rect key="frame" x="16" y="23.5" width="270" height="20.5"/>
+                                                    <rect key="frame" x="16" y="27.5" width="270" height="20.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem Ipsum" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fGU-zE-FZ2">
-                                                    <rect key="frame" x="16" y="60" width="270" height="19.5"/>
+                                                    <rect key="frame" x="16" y="52" width="270" height="19.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -95,10 +95,10 @@
                                             <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstItem="fGU-zE-FZ2" firstAttribute="leading" secondItem="zXo-2H-puv" secondAttribute="leading" constant="16" id="JDz-iv-TTj"/>
-                                                <constraint firstItem="Fos-Q8-PFN" firstAttribute="bottom" secondItem="zXo-2H-puv" secondAttribute="centerY" constant="-8" id="VBM-6I-0eP"/>
+                                                <constraint firstItem="Fos-Q8-PFN" firstAttribute="bottom" secondItem="zXo-2H-puv" secondAttribute="centerY" constant="-4" id="VBM-6I-0eP"/>
                                                 <constraint firstAttribute="trailing" secondItem="fGU-zE-FZ2" secondAttribute="trailing" constant="16" id="bhq-0H-O3K"/>
                                                 <constraint firstItem="Fos-Q8-PFN" firstAttribute="leading" secondItem="zXo-2H-puv" secondAttribute="leading" constant="16" id="dUb-dN-gUJ"/>
-                                                <constraint firstItem="fGU-zE-FZ2" firstAttribute="top" secondItem="Fos-Q8-PFN" secondAttribute="bottom" constant="16" id="ddZ-Fc-nnA"/>
+                                                <constraint firstItem="fGU-zE-FZ2" firstAttribute="top" secondItem="Fos-Q8-PFN" secondAttribute="bottom" constant="4" id="ddZ-Fc-nnA"/>
                                                 <constraint firstAttribute="trailing" secondItem="Fos-Q8-PFN" secondAttribute="trailing" constant="16" id="e1a-by-h2g"/>
                                             </constraints>
                                         </view>

@@ -170,12 +170,12 @@ class SettingsViewController : MyCollectionViewController {
       
     case .serviceTypeCreate:
       let viewController = CreateServiceTypeTableViewController.newViewController()
-      viewController.presentControllerIn(self, forMode: UIDevice.isPhone ? .navStack : .modal)
+      viewController.presentControllerIn(self, forMode: .modal)
       
     case .appWebsite:
-      let path = "http://kozinga.net/"
-      UIPasteboard.general.string = path
-      self.showDisappearingAlertDialog(title: "Website Copied", message: "\(path) copied to the clipboard.")
+        if let url = URL(string: "http://kozinga.net/") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
       
     case .appContact:
       let email = "kelvin.kosbab@kozinga.net"
