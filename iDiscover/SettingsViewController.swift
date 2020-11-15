@@ -177,10 +177,4 @@ class SettingsViewController : MyCollectionViewController {
     default: break
     }
   }
-  
-  // MARK: - UICollectionViewDelegateFlowLayout
-  
-  override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-    return CGSize(width: collectionView.bounds.width, height: 0)
-  }
 }

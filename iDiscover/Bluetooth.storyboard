@@ -3,7 +3,8 @@
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17504.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -672,6 +673,7 @@
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
+                                            <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstItem="4zB-Pt-3bs" firstAttribute="leading" secondItem="wbZ-FH-sF2" secondAttribute="trailing" constant="10" id="0eF-N1-bjf"/>
                                                 <constraint firstItem="wbZ-FH-sF2" firstAttribute="leading" secondItem="xFW-KR-Mow" secondAttribute="leading" constant="16" id="CB5-vR-WpF"/>
@@ -756,5 +758,8 @@
     </scenes>
     <resources>
         <image name="iconChevronRight" width="22" height="22"/>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

@@ -37,8 +37,6 @@
 		B68EEA471E4685E200831CC4 /* ServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA461E4685E200831CC4 /* ServicesViewController.swift */; };
 		B68EEA4C1E46C1C800831CC4 /* Services.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B68EEA4B1E46C1C800831CC4 /* Services.storyboard */; };
 		B68EEA511E470D4A00831CC4 /* PublishedServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA501E470D4A00831CC4 /* PublishedServicesViewController.swift */; };
-		B68EEA531E47101600831CC4 /* ServicesHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA521E47101600831CC4 /* ServicesHeaderView.swift */; };
-		B68EEA551E47103100831CC4 /* ServicesFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA541E47103100831CC4 /* ServicesFooterView.swift */; };
 		B68EEA571E47104D00831CC4 /* ServicesServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA561E47104D00831CC4 /* ServicesServiceCell.swift */; };
 		B68EEA591E47107F00831CC4 /* PublishedServicesHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA581E47107F00831CC4 /* PublishedServicesHeaderView.swift */; };
 		B68EEA5B1E4710B700831CC4 /* PublishedServicesFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA5A1E4710B700831CC4 /* PublishedServicesFooterView.swift */; };
@@ -116,8 +114,6 @@
 		B68EEA461E4685E200831CC4 /* ServicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesViewController.swift; sourceTree = "<group>"; };
 		B68EEA4B1E46C1C800831CC4 /* Services.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Services.storyboard; sourceTree = "<group>"; };
 		B68EEA501E470D4A00831CC4 /* PublishedServicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishedServicesViewController.swift; sourceTree = "<group>"; };
-		B68EEA521E47101600831CC4 /* ServicesHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesHeaderView.swift; sourceTree = "<group>"; };
-		B68EEA541E47103100831CC4 /* ServicesFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesFooterView.swift; sourceTree = "<group>"; };
 		B68EEA561E47104D00831CC4 /* ServicesServiceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesServiceCell.swift; sourceTree = "<group>"; };
 		B68EEA581E47107F00831CC4 /* PublishedServicesHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishedServicesHeaderView.swift; sourceTree = "<group>"; };
 		B68EEA5A1E4710B700831CC4 /* PublishedServicesFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishedServicesFooterView.swift; sourceTree = "<group>"; };
@@ -189,6 +185,7 @@
 		B682621F1E1818B800D0445D /* Info */ = {
 			isa = PBXGroup;
 			children = (
+				B68262221E18200D00D0445D /* Info.storyboard */,
 				B68EEA5E1E471E6300831CC4 /* SettingsViewController.swift */,
 				B68EEA601E471F4200831CC4 /* SettingsHeaderView.swift */,
 				B68EEA661E472B1B00831CC4 /* SettingsFooterView.swift */,
@@ -234,6 +231,7 @@
 		B68B21321E47AF6600BE2CA2 /* Bonjour Services */ = {
 			isa = PBXGroup;
 			children = (
+				B68EEA4B1E46C1C800831CC4 /* Services.storyboard */,
 				B68EEA481E46869100831CC4 /* Services */,
 				B68EEA4F1E470D3100831CC4 /* Publish Services */,
 				B68B21231E47A00800BE2CA2 /* Service Detail */,
@@ -246,6 +244,7 @@
 		B68EC59E1E2F1F1300C9D5CC /* Bluetooth */ = {
 			isa = PBXGroup;
 			children = (
+				B6BD8C8D2002FE1C009327B2 /* Bluetooth.storyboard */,
 				B6BD8C892002E0AE009327B2 /* Bluetooth Device List */,
 				B6BD8C8A2002E0CD009327B2 /* Bluetooth Device Detail */,
 				B6BD8C9120030587009327B2 /* Bluetooth Characteristic Detail */,
@@ -256,6 +255,7 @@
 		B68EEA3B1E46704B00831CC4 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				B6C4BC511E1CC2CD004409F1 /* TableViewCells.swift */,
 				B63B27BC1E15A9BB003E13F0 /* MyNavigationController.swift */,
 				B68EEA441E46800700831CC4 /* MyTabBarController.swift */,
 				B679CC141E1624A20056C7B5 /* MyViewController.swift */,
@@ -269,8 +269,6 @@
 			isa = PBXGroup;
 			children = (
 				B68EEA461E4685E200831CC4 /* ServicesViewController.swift */,
-				B68EEA521E47101600831CC4 /* ServicesHeaderView.swift */,
-				B68EEA541E47103100831CC4 /* ServicesFooterView.swift */,
 				B68EEA561E47104D00831CC4 /* ServicesServiceCell.swift */,
 			);
 			name = Services;
@@ -345,7 +343,6 @@
 			children = (
 				B6CE1D271E1208C1003D4FFA /* AppDelegate.swift */,
 				B6CE1D3C1E1208D8003D4FFA /* Common */,
-				B6CE1D421E120925003D4FFA /* View */,
 				B6CE1D431E120977003D4FFA /* Controller */,
 				B6CE1D441E12098A003D4FFA /* Supporting Files */,
 			);
@@ -426,23 +423,12 @@
 			name = Extensions;
 			sourceTree = "<group>";
 		};
-		B6CE1D421E120925003D4FFA /* View */ = {
-			isa = PBXGroup;
-			children = (
-				B6CE1D611E120D10003D4FFA /* Main.storyboard */,
-				B68EEA4B1E46C1C800831CC4 /* Services.storyboard */,
-				B68262221E18200D00D0445D /* Info.storyboard */,
-				B6BD8C8D2002FE1C009327B2 /* Bluetooth.storyboard */,
-				B6C4BC511E1CC2CD004409F1 /* TableViewCells.swift */,
-			);
-			name = View;
-			sourceTree = "<group>";
-		};
 		B6CE1D431E120977003D4FFA /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				B68EEA3B1E46704B00831CC4 /* Common */,
+				B6CE1D611E120D10003D4FFA /* Main.storyboard */,
 				B679CC091E1618840056C7B5 /* MyRootController.swift */,
+				B68EEA3B1E46704B00831CC4 /* Common */,
 				B68B21321E47AF6600BE2CA2 /* Bonjour Services */,
 				B68EC59E1E2F1F1300C9D5CC /* Bluetooth */,
 				B682621F1E1818B800D0445D /* Info */,
@@ -584,7 +570,6 @@
 				B6CE1D4F1E120B90003D4FFA /* MyClassProtocol.swift in Sources */,
 				B68EEA651E47204E00831CC4 /* SettingsKeyValueCell.swift in Sources */,
 				B679CC0A1E1618840056C7B5 /* MyRootController.swift in Sources */,
-				B68EEA531E47101600831CC4 /* ServicesHeaderView.swift in Sources */,
 				B6AE53841E17090A00FB57E3 /* PublishDetailCreateViewController.swift in Sources */,
 				B6089C9A1E19D76D00C7CF29 /* ServiceDetailTableViewController.swift in Sources */,
 				B6BD8C842002C715009327B2 /* MyBluetoothDevice.swift in Sources */,
@@ -630,7 +615,6 @@
 				B6833CBD1E3D44F200F56A90 /* BluetoothDeviceCell.swift in Sources */,
 				B67BB3281E18657F00A3228E /* AllServiceTypesTableViewController.swift in Sources */,
 				B6AE537C1E16D45700FB57E3 /* PresentableController.swift in Sources */,
-				B68EEA551E47103100831CC4 /* ServicesFooterView.swift in Sources */,
 				B68B21251E47A0AB00BE2CA2 /* ServiceDetailSimpleHeaderCell.swift in Sources */,
 				B6BD8C822002C6F9009327B2 /* MyBluetoothManager+State.swift in Sources */,
 				B6CE1D551E120BF4003D4FFA /* MyCoreDataStack.swift in Sources */,
@@ -781,9 +765,10 @@
 				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kozinga.KozBon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -800,9 +785,10 @@
 				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kozinga.KozBon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

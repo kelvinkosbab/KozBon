@@ -6,12 +6,7 @@
 //  Copyright © 2017 Kozinga. All rights reserved.
 //
 
-import Foundation
 import UIKit
-
-protocol ServicesViewControllerBrowsingDelegate {
-  func servicesViewControllerDidUpdateBrowsing(isBrowsing: Bool)
-}
 
 class ServicesViewController : MyCollectionViewController {
   
@@ -26,17 +21,17 @@ class ServicesViewController : MyCollectionViewController {
   override var defaultViewTitle: String? {
     return "Bonjour"
   }
-  
-  // MARK: - Properties
-  
-  var browsingDelegate: ServicesViewControllerBrowsingDelegate? = nil
-  
+    
   // MARK: - Lifecycle
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    self.navigationItem.rightBarButtonItem = UIBarButtonItem(text: "Sort", target: self, action: #selector(self.sortButtonSelected(_:)))
+    self.navigationItem.title = "Bonjour Services"
+    
+    let plusBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus.circle.fill"), style: .done, target: self, action: #selector(self.addButtonSelected(_:)))
+    let sortBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.up.arrow.down.circle.fill"), style: .done, target: self, action: #selector(self.sortButtonSelected(_:)))
+    self.navigationItem.rightBarButtonItems = [plusBarButtonItem, sortBarButtonItem]
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -56,11 +51,21 @@ class ServicesViewController : MyCollectionViewController {
   
   // MARK: - Content
   
-  var isBrowsingForServces: Bool = false {
+  var isBrowsingForServces: Bool? {
     didSet {
-      if self.isBrowsingForServces != oldValue {
-        self.browsingDelegate?.servicesViewControllerDidUpdateBrowsing(isBrowsing: self.isBrowsingForServces)
-      }
+        guard let isBrowsingForServces = self.isBrowsingForServces else {
+            return
+        }
+        
+        if isBrowsingForServces != oldValue {
+            if isBrowsingForServces {
+                let spinner = UIActivityIndicatorView()
+                spinner.startAnimating()
+                self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: spinner)
+            } else {
+                self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.clockwise.circle.fill"), style: .done, target: self, action: #selector(self.reloadBrowsingServices))
+            }
+        }
     }
   }
   
@@ -78,6 +83,11 @@ class ServicesViewController : MyCollectionViewController {
   }
   
   // MARK: - Button Actions
+    
+    @objc private func addButtonSelected(_ sender: UIBarButtonItem) {
+        let viewController = PublishedServicesViewController.newViewController()
+        viewController.presentControllerIn(self, forMode: .modal)
+    }
   
   @objc private func sortButtonSelected(_ sender: UIBarButtonItem) {
     
@@ -126,26 +136,6 @@ class ServicesViewController : MyCollectionViewController {
     return 1
   }
   
-  override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-    switch kind {
-      
-    case UICollectionView.elementKindSectionHeader:
-      let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ServicesHeaderView.name, for: indexPath) as! ServicesHeaderView
-      headerView.configure(self, title: "Discovered Services", isBrowsing: self.isBrowsingForServces)
-      self.browsingDelegate = headerView
-      return headerView
-      
-    case UICollectionView.elementKindSectionFooter:
-      let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ServicesFooterView.name, for: indexPath) as! ServicesFooterView
-      footerView.delegate = self
-      return footerView
-      
-    default:
-      return super.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)
-    }
-    
-  }
-  
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return self.services.count
   }
@@ -154,6 +144,10 @@ class ServicesViewController : MyCollectionViewController {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ServicesServiceCell.name, for: indexPath) as! ServicesServiceCell
     let service = self.services[indexPath.row]
     cell.configure(service: service)
+    if UIDevice.isPad {
+        cell.contentView.layer.cornerRadius = 20
+        cell.contentView.layer.masksToBounds = true
+    }
     return cell
   }
   
@@ -161,12 +155,6 @@ class ServicesViewController : MyCollectionViewController {
     let service = self.services[indexPath.row]
     let viewController = ServiceDetailTableViewController.newViewController(browsedService: service)
     viewController.presentControllerIn(self, forMode: UIDevice.isPhone ? .navStack : .modal)
-  }
-  
-  // MARK: - UICollectionViewDelegateFlowLayout
-  
-  override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-    return CGSize(width: collectionView.bounds.width, height: 75)
   }
 }
 
@@ -179,21 +167,12 @@ extension ServicesViewController : MyBonjourManagerDelegate {
   }
 }
 
-// MARK: - ServicesHeaderViewDelegate
-
-extension ServicesViewController : ServicesHeaderViewDelegate {
-  
-  func servicesHeaderReloadButtonSelected() {
-    self.reloadBrowsingServices()
-  }
-}
-
 // MARK: - ServicesFooterViewDelegate
 
-extension ServicesViewController : ServicesFooterViewDelegate {
+extension ServicesViewController{
   
   func servicesFooterSpecifyButtonSelected() {
     let viewController = CreateServiceTypeTableViewController.newViewController()
-    viewController.presentControllerIn(self, forMode: UIDevice.isPhone ? .navStack : .modal)
+    viewController.presentControllerIn(self, forMode: .modal)
   }
 }

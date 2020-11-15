@@ -71,7 +71,6 @@ class MyCollectionViewController : UICollectionViewController, UICollectionViewD
   
   func reloadData() {
     self.collectionView?.reloadData()
-//    self.updateEmptyState() // TODO: Fix this
   }
   
   // MARK: - EmptyStateProtocol
@@ -151,14 +150,6 @@ class MyCollectionViewController : UICollectionViewController, UICollectionViewD
     return UIDevice.isPhone || view.frame.width < 600
   }
   
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-    return CGSize(width: collectionView.bounds.width, height: 50)
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-    return CGSize(width: collectionView.bounds.width, height: 50)
-  }
-  
   func sizeForItemAt(indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
     var width: CGFloat = self.defaultPadCellWidth
     let collectionWidth = collectionView.frame.width
@@ -168,7 +159,7 @@ class MyCollectionViewController : UICollectionViewController, UICollectionViewD
     } else if collectionWidth < 630 {
       width = collectionWidth - 20
     }
-    return CGSize(width: width, height: UIDevice.isPhone ? 55 : 80)
+    return CGSize(width: width, height: UIDevice.isPhone ? 70 : 80)
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

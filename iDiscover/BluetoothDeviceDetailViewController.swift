@@ -63,6 +63,12 @@ class BluetoothDeviceDetailViewController : MyTableViewController {
     self.device.delegate = self
     self.device.servicesDelegate = self
   }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        self.bluetoothManager.disconnect(device: self.device, completion: { _ in })
+    }
   
   // MARK: - Content
   

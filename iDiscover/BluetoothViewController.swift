@@ -122,39 +122,39 @@ class BluetoothViewController : MyCollectionViewController {
     return 1
   }
   
-  override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-    switch kind {
-    case UICollectionView.elementKindSectionHeader:
-      
-      guard let sectionType = self.getSectionType(section: indexPath.section) else {
-        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ServicesHeaderView.name, for: indexPath) as! ServicesHeaderView
-        headerView.configure(nil, title: "")
-        headerView.hideButtonAndSpinner()
-        return headerView
-      }
-      
-      switch sectionType {
-      case .bluetoothUnsupported:
-        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ServicesHeaderView.name, for: indexPath) as! ServicesHeaderView
-        headerView.configure(nil, title: "")
-        headerView.hideButtonAndSpinner()
-        return headerView
-      case .devices:
-        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ServicesHeaderView.name, for: indexPath) as! ServicesHeaderView
-        headerView.configure(nil, title: "Scanning for Bluetooth Services")
-        headerView.hideButtonAndSpinner()
-        return headerView
-      }
-      
-    case UICollectionView.elementKindSectionFooter:
-      let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "BluetoothFooterView", for: indexPath)
-      footerView.backgroundColor = collectionView.backgroundColor
-      return footerView
-      
-    default:
-      return super.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)
-    }
-  }
+//  override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+//    switch kind {
+//    case UICollectionView.elementKindSectionHeader:
+//      
+//      guard let sectionType = self.getSectionType(section: indexPath.section) else {
+//        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ServicesHeaderView.name, for: indexPath) as! ServicesHeaderView
+//        headerView.configure(nil, title: "")
+//        headerView.hideButtonAndSpinner()
+//        return headerView
+//      }
+//      
+//      switch sectionType {
+//      case .bluetoothUnsupported:
+//        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ServicesHeaderView.name, for: indexPath) as! ServicesHeaderView
+//        headerView.configure(nil, title: "")
+//        headerView.hideButtonAndSpinner()
+//        return headerView
+//      case .devices:
+//        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ServicesHeaderView.name, for: indexPath) as! ServicesHeaderView
+//        headerView.configure(nil, title: "Scanning for Bluetooth Services")
+//        headerView.hideButtonAndSpinner()
+//        return headerView
+//      }
+//      
+//    case UICollectionView.elementKindSectionFooter:
+//      let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "BluetoothFooterView", for: indexPath)
+//      footerView.backgroundColor = collectionView.backgroundColor
+//      return footerView
+//      
+//    default:
+//      return super.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)
+//    }
+//  }
   
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     

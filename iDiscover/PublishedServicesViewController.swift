@@ -28,7 +28,11 @@ class PublishedServicesViewController : MyCollectionViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    self.navigationItem.rightBarButtonItem = UIBarButtonItem(text: "Sort", target: self, action: #selector(self.sortButtonSelected(_:)))
+    if self.presentedMode != .navStack {
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark.circle.fill"), style: .done, target: self, action: #selector(self.cancelSelected(_:)))
+    }
+    
+    self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.up.arrow.down.circle.fill"), style: .done, target: self, action: #selector(self.sortButtonSelected(_:)))
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -39,6 +43,10 @@ class PublishedServicesViewController : MyCollectionViewController {
   }
   
   // MARK: - Button Actions
+    
+    @objc private func cancelSelected(_ sender: UIBarButtonItem) {
+        self.dismissController()
+    }
   
   @objc private func sortButtonSelected(_ sender: UIBarButtonItem) {
     
