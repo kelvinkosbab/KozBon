@@ -32,8 +32,6 @@ class MyRootController: MyTabBarController {
   
   func setupServicesController() -> UIViewController {
     let viewController = MyNavigationController(rootViewController: ServicesViewController.newViewController())
-    viewController.title = "Bonjour"
-    viewController.tabBarItem = UITabBarItem(title: "Bonjour", image: #imageLiteral(resourceName: "iconBonjour"), selectedImage: nil)
     return viewController
   }
     

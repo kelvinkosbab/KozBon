@@ -28,8 +28,9 @@ class ServicesViewController : MyCollectionViewController {
     super.viewDidLoad()
     
     self.navigationItem.title = "Bonjour Services"
+    self.tabBarItem = UITabBarItem(title: "Bonjour", image: #imageLiteral(resourceName: "iconBonjour"), selectedImage: nil)
     
-    let plusBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus.circle.fill"), style: .done, target: self, action: #selector(self.addButtonSelected(_:)))
+    let plusBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus.circle.fill"), style: .done, target: self, action: #selector(self.presentAddActionSheet(_:)))
     let sortBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.up.arrow.down.circle.fill"), style: .done, target: self, action: #selector(self.sortButtonSelected(_:)))
     self.navigationItem.rightBarButtonItems = [plusBarButtonItem, sortBarButtonItem]
   }
@@ -40,6 +41,7 @@ class ServicesViewController : MyCollectionViewController {
     NotificationCenter.default.addObserver(self, selector: #selector(self.reloadBrowsingServices), name: UIApplication.willEnterForegroundNotification, object: nil)
     
     MyBonjourManager.shared.delegate = self
+    MyBonjourPublishManager.shared.delegate = self
     self.reloadBrowsingServices()
   }
   
@@ -75,19 +77,14 @@ class ServicesViewController : MyCollectionViewController {
     self.isBrowsingForServces = true
     
     // Start service discovery
-    MyBonjourManager.shared.startDiscovery(completion: { (services) in
+    MyBonjourManager.shared.startDiscovery { [weak self] services in
       
       // Update the browsing for services flag
-      self.isBrowsingForServces = false
-    })
+      self?.isBrowsingForServces = false
+    }
   }
   
   // MARK: - Button Actions
-    
-    @objc private func addButtonSelected(_ sender: UIBarButtonItem) {
-        let viewController = PublishedServicesViewController.newViewController()
-        viewController.presentControllerIn(self, forMode: .modal)
-    }
   
   @objc private func sortButtonSelected(_ sender: UIBarButtonItem) {
     
@@ -114,18 +111,56 @@ class ServicesViewController : MyCollectionViewController {
     } else {
       sortMenuController.modalPresentationStyle = .popover
       if let popoverPresenter = sortMenuController.popoverPresentationController {
-        popoverPresenter.sourceView = self.view
-        popoverPresenter.sourceRect = CGRect(x: self.view.frame.width - 50, y: -10, width: 40, height: 1)
+        popoverPresenter.barButtonItem = sender
+        popoverPresenter.permittedArrowDirections = .up
         self.present(sortMenuController, animated: true, completion: nil)
       }
     }
   }
+    
+    @objc func presentAddActionSheet(_ sender: UIBarButtonItem) {
+        
+        // Construct action sheet
+        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        controller.addAction(UIAlertAction(title: "Publish a Service", style: .default, handler: { [weak self] _ in
+            self?.presentPublishService()
+        }))
+        controller.addAction(UIAlertAction(title: "Create a Custom Service Type", style: .default, handler: { [weak self] _ in
+            self?.presentCreateServiceType()
+        }))
+        
+        if UIDevice.isPhone {
+          self.present(controller, animated: true, completion: nil)
+          
+        } else {
+            controller.modalPresentationStyle = .popover
+          if let popoverPresenter = controller.popoverPresentationController {
+            popoverPresenter.barButtonItem = sender
+            popoverPresenter.permittedArrowDirections = .up
+            self.present(controller, animated: true, completion: nil)
+          }
+        }
+    }
+    
+    private func presentPublishService() {
+        let viewController = PublishNetServiceSearchViewController.newViewController()
+        viewController.presentControllerIn(self, forMode: .modal)
+    }
+    
+    private func presentCreateServiceType() {
+        let viewController = CreateServiceTypeTableViewController.newViewController()
+        viewController.presentControllerIn(self, forMode: .modal)
+    }
   
   // MARK: - UICollectionView Helpers
   
   var services: [MyNetService] {
     return MyBonjourManager.shared.services
   }
+    
+    var publishedServices: [MyNetService] {
+      return MyBonjourPublishManager.shared.publishedServices
+    }
   
   private let availableServicesTableViewSection: Int = 0
   private let publishedServicesTableViewSection: Int = 1
@@ -133,17 +168,29 @@ class ServicesViewController : MyCollectionViewController {
   // MARK: - UICollectionView
   
   override func numberOfSections(in collectionView: UICollectionView) -> Int {
-    return 1
+    return self.publishedServices.count > 0 ? 2 : 1
   }
   
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return self.services.count
+    if section == self.availableServicesTableViewSection {
+        return self.services.count
+    } else if section == self.publishedServicesTableViewSection {
+        return self.publishedServices.count
+    } else {
+        return 0
+    }
   }
   
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ServicesServiceCell.name, for: indexPath) as! ServicesServiceCell
-    let service = self.services[indexPath.row]
-    cell.configure(service: service)
+    let service: MyNetService = {
+        if indexPath.section == 0 {
+            return self.services[indexPath.row]
+        } else {
+            return self.publishedServices[indexPath.row]
+        }
+    }()
+    cell.configure(service: service, isPublished: indexPath.section == self.publishedServicesTableViewSection)
     if UIDevice.isPad {
         cell.contentView.layer.cornerRadius = 20
         cell.contentView.layer.masksToBounds = true
@@ -160,19 +207,13 @@ class ServicesViewController : MyCollectionViewController {
 
 // MARK: - MyBonjourManagerDelegate
 
-extension ServicesViewController : MyBonjourManagerDelegate {
-  
-  func servicesDidUpdate(_ services: [MyNetService]) {
-    self.reloadData()
-  }
-}
-
-// MARK: - ServicesFooterViewDelegate
-
-extension ServicesViewController{
-  
-  func servicesFooterSpecifyButtonSelected() {
-    let viewController = CreateServiceTypeTableViewController.newViewController()
-    viewController.presentControllerIn(self, forMode: .modal)
-  }
+extension ServicesViewController : MyBonjourManagerDelegate, MyBonjourPublishManagerDelegate {
+    
+    func servicesDidUpdate(_ services: [MyNetService]) {
+        self.reloadData()
+    }
+    
+    func publishedServicesUpdated(_ publishedServices: [MyNetService]) {
+        self.reloadData()
+    }
 }

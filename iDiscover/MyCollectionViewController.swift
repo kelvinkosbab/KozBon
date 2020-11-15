@@ -113,12 +113,12 @@ class MyCollectionViewController : UICollectionViewController, UICollectionViewD
   func getContentInsets(width: CGFloat? = nil) -> UIEdgeInsets {
     let collectionWidth = width ?? self.collectionView?.bounds.width ?? self.view.bounds.width
     if self.isConststrainedWidth(view: self.collectionView ?? self.view) {
-      return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+      return UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0)
       
     } else if collectionWidth < 630 {
-      return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+      return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 16)
     } else {
-      let space = collectionWidth - (self.defaultPadCellWidth * 2) - 10;
+      let space = collectionWidth - (self.defaultPadCellWidth * 2) - 106;
       return UIEdgeInsets(top: 0, left: space/2, bottom: 0, right: space/2)
     }
   }
@@ -168,18 +168,18 @@ class MyCollectionViewController : UICollectionViewController, UICollectionViewD
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
     if self.isConststrainedWidth(view: collectionView) {
-      return 1
+      return 2
     }
     return 10
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
     if self.isConststrainedWidth(view: collectionView) {
-      return 1
+      return 2
     }
     return 10
   }
-  
+    
   // MARK: - Editing Mode
   
   var defaultViewTitle: String? {

@@ -36,11 +36,7 @@
 		B68EEA451E46800700831CC4 /* MyTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA441E46800700831CC4 /* MyTabBarController.swift */; };
 		B68EEA471E4685E200831CC4 /* ServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA461E4685E200831CC4 /* ServicesViewController.swift */; };
 		B68EEA4C1E46C1C800831CC4 /* Services.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B68EEA4B1E46C1C800831CC4 /* Services.storyboard */; };
-		B68EEA511E470D4A00831CC4 /* PublishedServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA501E470D4A00831CC4 /* PublishedServicesViewController.swift */; };
 		B68EEA571E47104D00831CC4 /* ServicesServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA561E47104D00831CC4 /* ServicesServiceCell.swift */; };
-		B68EEA591E47107F00831CC4 /* PublishedServicesHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA581E47107F00831CC4 /* PublishedServicesHeaderView.swift */; };
-		B68EEA5B1E4710B700831CC4 /* PublishedServicesFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA5A1E4710B700831CC4 /* PublishedServicesFooterView.swift */; };
-		B68EEA5D1E47137600831CC4 /* PublishedServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA5C1E47137600831CC4 /* PublishedServiceCell.swift */; };
 		B68EEA5F1E471E6300831CC4 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA5E1E471E6300831CC4 /* SettingsViewController.swift */; };
 		B68EEA611E471F4200831CC4 /* SettingsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA601E471F4200831CC4 /* SettingsHeaderView.swift */; };
 		B68EEA631E471FD000831CC4 /* SettingsItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA621E471FD000831CC4 /* SettingsItemCell.swift */; };
@@ -113,11 +109,7 @@
 		B68EEA441E46800700831CC4 /* MyTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTabBarController.swift; sourceTree = "<group>"; };
 		B68EEA461E4685E200831CC4 /* ServicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesViewController.swift; sourceTree = "<group>"; };
 		B68EEA4B1E46C1C800831CC4 /* Services.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Services.storyboard; sourceTree = "<group>"; };
-		B68EEA501E470D4A00831CC4 /* PublishedServicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishedServicesViewController.swift; sourceTree = "<group>"; };
 		B68EEA561E47104D00831CC4 /* ServicesServiceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesServiceCell.swift; sourceTree = "<group>"; };
-		B68EEA581E47107F00831CC4 /* PublishedServicesHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishedServicesHeaderView.swift; sourceTree = "<group>"; };
-		B68EEA5A1E4710B700831CC4 /* PublishedServicesFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishedServicesFooterView.swift; sourceTree = "<group>"; };
-		B68EEA5C1E47137600831CC4 /* PublishedServiceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishedServiceCell.swift; sourceTree = "<group>"; };
 		B68EEA5E1E471E6300831CC4 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		B68EEA601E471F4200831CC4 /* SettingsHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsHeaderView.swift; sourceTree = "<group>"; };
 		B68EEA621E471FD000831CC4 /* SettingsItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsItemCell.swift; sourceTree = "<group>"; };
@@ -233,7 +225,6 @@
 			children = (
 				B68EEA4B1E46C1C800831CC4 /* Services.storyboard */,
 				B68EEA481E46869100831CC4 /* Services */,
-				B68EEA4F1E470D3100831CC4 /* Publish Services */,
 				B68B21231E47A00800BE2CA2 /* Service Detail */,
 				B68B21301E47ACD700BE2CA2 /* Listing / Searching Services */,
 				B679CC101E16243C0056C7B5 /* Creating a Service Type */,
@@ -270,20 +261,9 @@
 			children = (
 				B68EEA461E4685E200831CC4 /* ServicesViewController.swift */,
 				B68EEA561E47104D00831CC4 /* ServicesServiceCell.swift */,
-			);
-			name = Services;
-			sourceTree = "<group>";
-		};
-		B68EEA4F1E470D3100831CC4 /* Publish Services */ = {
-			isa = PBXGroup;
-			children = (
-				B68EEA501E470D4A00831CC4 /* PublishedServicesViewController.swift */,
-				B68EEA581E47107F00831CC4 /* PublishedServicesHeaderView.swift */,
-				B68EEA5A1E4710B700831CC4 /* PublishedServicesFooterView.swift */,
-				B68EEA5C1E47137600831CC4 /* PublishedServiceCell.swift */,
 				B68B21311E47AD4700BE2CA2 /* Publishing a Service */,
 			);
-			name = "Publish Services";
+			name = Services;
 			sourceTree = "<group>";
 		};
 		B691545D1E12DB0E00382F41 /* Helpers */ = {
@@ -565,7 +545,6 @@
 				B6CE1D471E120ADC003D4FFA /* Date+Util.swift in Sources */,
 				B68EEA3F1E46709000831CC4 /* EmptyStateProtocol.swift in Sources */,
 				B679CC151E1624A20056C7B5 /* MyViewController.swift in Sources */,
-				B68EEA511E470D4A00831CC4 /* PublishedServicesViewController.swift in Sources */,
 				B6C4BC551E1CD30A004409F1 /* CreateServiceTypeTableViewController.swift in Sources */,
 				B6CE1D4F1E120B90003D4FFA /* MyClassProtocol.swift in Sources */,
 				B68EEA651E47204E00831CC4 /* SettingsKeyValueCell.swift in Sources */,
@@ -590,12 +569,9 @@
 				B679CC171E1647670056C7B5 /* MyBonjourPublishManager.swift in Sources */,
 				B68B21291E47A2E100BE2CA2 /* ServiceDetailKeyValueCell.swift in Sources */,
 				B62E19971E174236008BC91C /* MyLoadingManager.swift in Sources */,
-				B68EEA5D1E47137600831CC4 /* PublishedServiceCell.swift in Sources */,
 				B6CE1D501E120B90003D4FFA /* UIViewController+Util.swift in Sources */,
 				B68B21221E4798F600BE2CA2 /* ServiceDetailHeaderCell.swift in Sources */,
-				B68EEA5B1E4710B700831CC4 /* PublishedServicesFooterView.swift in Sources */,
 				B68B212D1E47A55800BE2CA2 /* ServiceDetailSimpleCell.swift in Sources */,
-				B68EEA591E47107F00831CC4 /* PublishedServicesHeaderView.swift in Sources */,
 				B68EC5A01E2F226A00C9D5CC /* BluetoothViewController.swift in Sources */,
 				B68EEA571E47104D00831CC4 /* ServicesServiceCell.swift in Sources */,
 				B68EEA631E471FD000831CC4 /* SettingsItemCell.swift in Sources */,
