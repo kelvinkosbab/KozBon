@@ -75,6 +75,7 @@
 		B6CE1D621E120D10003D4FFA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6CE1D611E120D10003D4FFA /* Main.storyboard */; };
 		B6CE1D661E120E4D003D4FFA /* CustomServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D641E120E4D003D4FFA /* CustomServiceType.swift */; };
 		F62EDC66255BAE8B003E5178 /* UIBarButtonItem+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62EDC65255BAE8B003E5178 /* UIBarButtonItem+Util.swift */; };
+		F690B5FB2561E9B600902DAB /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F690B5FA2561E9B600902DAB /* NetworkExtension.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -149,6 +150,7 @@
 		B6CE1D641E120E4D003D4FFA /* CustomServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomServiceType.swift; path = "Managed Objects/CustomServiceType.swift"; sourceTree = "<group>"; };
 		F62EDC5E255B9D25003E5178 /* KozBon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KozBon.entitlements; sourceTree = "<group>"; };
 		F62EDC65255BAE8B003E5178 /* UIBarButtonItem+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Util.swift"; sourceTree = "<group>"; };
+		F690B5FA2561E9B600902DAB /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +158,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F690B5FB2561E9B600902DAB /* NetworkExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,6 +304,7 @@
 				F62EDC5E255B9D25003E5178 /* KozBon.entitlements */,
 				B6CE1D261E1208C1003D4FFA /* iDiscover */,
 				B6CE1D251E1208C1003D4FFA /* Products */,
+				F690B5F92561E9B600902DAB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -429,6 +433,14 @@
 				B6BD8C832002C715009327B2 /* MyBluetoothDevice.swift */,
 			);
 			name = Bluetooth;
+			sourceTree = "<group>";
+		};
+		F690B5F92561E9B600902DAB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F690B5FA2561E9B600902DAB /* NetworkExtension.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -725,12 +737,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = KozBon.entitlements;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 6SS93B87P2;
 				INFOPLIST_FILE = iDiscover/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kozinga.KozBon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;
@@ -745,12 +757,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = KozBon.entitlements;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 6SS93B87P2;
 				INFOPLIST_FILE = iDiscover/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kozinga.KozBon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;

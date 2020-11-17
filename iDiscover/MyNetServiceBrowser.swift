@@ -47,6 +47,7 @@ class MyNetServiceBrowser: NSObject, NetServiceBrowserDelegate {
   // MARK: - Start / Stop
   
   func startSearch(timeout: Double = 1.0) {
+    Log.log("MyNetServiceBrowser: start search")
     self.stopSearch()
     self.serviceBrowser.searchForServices(ofType: self.serviceType.fullType, inDomain: self.domain)
     
@@ -56,6 +57,7 @@ class MyNetServiceBrowser: NSObject, NetServiceBrowserDelegate {
   }
   
   func stopSearch() {
+    Log.log("MyNetServiceBrowser: stop search")
     self.serviceBrowser.stop()
   }
   
@@ -70,12 +72,12 @@ class MyNetServiceBrowser: NSObject, NetServiceBrowserDelegate {
   }
   
   func netServiceBrowser(_ browser: NetServiceBrowser, didNotSearch errorDict: [String : NSNumber]) {
-    Log.log("Did not search for type \(self.serviceType.fullType) and domain \(self.domain) with error \(errorDict)")
+    Log.log("MyNetServiceBrowser: Did not search for type \(self.serviceType.fullType) and domain \(self.domain) with error \(errorDict)")
     self.state = .stopped
   }
   
   func netServiceBrowser(_ browser: NetServiceBrowser, didFind service: NetService, moreComing: Bool) {
-    Log.log("Did find service \(service)")
+    Log.log("MyNetServiceBrowser: Did find service \(service)")
     let netService = MyNetService(service: service, serviceType: self.serviceType)
     self.delegate?.myNetServiceBrowser(self, didFind: netService)
     
@@ -85,7 +87,7 @@ class MyNetServiceBrowser: NSObject, NetServiceBrowserDelegate {
   }
   
   func netServiceBrowser(_ browser: NetServiceBrowser, didRemove service: NetService, moreComing: Bool) {
-    Log.log("Did remove service \(service)")
+    Log.log("MyNetServiceBrowser: Did remove service \(service)")
     let netService = MyNetService(service: service, serviceType: self.serviceType)
     self.delegate?.myNetServiceBrowser(self, didRemove: netService)
     

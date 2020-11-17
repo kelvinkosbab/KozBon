@@ -22,8 +22,102 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Bluetooth is used to scan for nearby devices.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>This app scans for peripherals and fetches data and records associated with that peripheral.</string>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_udisks-ssh._tcp</string>
+		<string>_scanner._tcp</string>
+		<string>_physicalweb._tcp</string>
+		<string>_readynas._tcp</string>
+		<string>_photoshopserver._tcp</string>
+		<string>_omnistate._tcp</string>
+		<string>_nvstream._tcp</string>
+		<string>_keynotepair._tcp</string>
+		<string>_KeynoteControl._tcp</string>
+		<string>_jenkins._tcp</string>
+		<string>_hudson._tcp</string>
+		<string>_home-sharing._tcp</string>
+		<string>_homekit._tcp</string>
+		<string>_esfileshare._tcp</string>
+		<string>_esdevice._tcp</string>
+		<string>_device-info._tcp</string>
+		<string>_amzn-wplay._tcp</string>
+		<string>_cloud._tcp</string>
+		<string>_bcbonjour._tcp</string>
+		<string>_sketchmirror._tcp</string>
+		<string>_atc._tcp</string>
+		<string>_amzn-wplay._tcp</string>
+		<string>_airdroid._tcp</string>
+		<string>_adisk._tcp</string>
+		<string>_airplay._udp</string>
+		<string>_rtsp._udp</string>
+		<string>_ssdp._udp</string>
+		<string>_ssdp._udp</string>
+		<string>_net-assistant._udp</string>
+		<string>_sleep-proxy._udp</string>
+		<string>_gopro-web._udp</string>
+		<string>_gopro-wake._udp</string>
+		<string>_googlexpeditions._udp</string>
+		<string>_netbios-dgm._udp</string>
+		<string>_netbios-ns._udp</string>
+		<string>_rtsp._tcp</string>
+		<string>_rfb._tcp</string>
+		<string>_touch-able._tcp</string>
+		<string>_raop._tcp</string>
+		<string>_servermgr._tcp</string>
+		<string>_workstation._tcp</string>
+		<string>_apple-sasl._tcp</string>
+		<string>_distcc._tcp</string>
+		<string>_xserveraid._tcp</string>
+		<string>_airport._tcp</string>
+		<string>_ica-networking._tcp</string>
+		<string>_presence._tcp</string>
+		<string>_ichat._tcp</string>
+		<string>_dpap._tcp</string>
+		<string>_daap._tcp</string>
+		<string>_riousbprint._tcp</string>
+		<string>_pdl-datastream._tcp</string>
+		<string>_ipp._tcp</string>
+		<string>_printer._tcp</string>
+		<string>_telnet._tcp</string>
+		<string>_https._tcp</string>
+		<string>_http._tcp</string>
+		<string>_eppc._tcp</string>
+		<string>_ssh._tcp</string>
+		<string>_ftp._tcp</string>
+		<string>_webdav._tcp</string>
+		<string>_nfs._tcp</string>
+		<string>_afpovertcp._tcp</string>
+		<string>_hap._tcp</string>
+		<string>_keynotepairing._tcp</string>
+		<string>_keynoteaccess._tcp</string>
+		<string>_appletv-pair._tcp</string>
+		<string>_appletv-itunes._tcp</string>
+		<string>_appletv-v4._tcp</string>
+		<string>_applerdbg._tcp</string>
+		<string>_apple-midi._tcp</string>
+		<string>_apple-mobdev2._tcp</string>
+		<string>_apple-mobdev._tcp</string>
+		<string>_airdrop._tcp</string>
+		<string>_appletv-v3._tcp</string>
+		<string>_appletv-v2._tcp</string>
+		<string>_appletv._tcp</string>
+		<string>_airplay._tcp</string>
+		<string>_mediaremotetv._tcp</string>
+		<string>_googlecast._tcp</string>
+		<string>_googlexpeditions._tcp</string>
+		<string>_androidtvremote._tcp</string>
+		<string>_btp._tcp</string>
+		<string>_roku-rcp._tcp</string>
+		<string>_netbios-ssn._tcp</string>
+		<string>_powerview._tcp</string>
+		<string>_spotify-connect._tcp</string>
+	</array>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Looking for local tcp Bonjour service</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

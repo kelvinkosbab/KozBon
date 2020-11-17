@@ -134,6 +134,7 @@ class BluetoothDeviceDetailViewController : MyTableViewController {
       default:
         return nil
       }
+        
     case .service(let service):
       let characteristics = self.serviceCharacteristics[service] ?? []
       if characteristics.count == 0 {
@@ -158,6 +159,7 @@ class BluetoothDeviceDetailViewController : MyTableViewController {
     }
     
     let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailSimpleHeaderCell.name) as! ServiceDetailSimpleHeaderCell
+    cell.contentView.backgroundColor = .systemBackground
     switch sectionType {
     case .info:
       cell.configure(title: "Information")
@@ -197,14 +199,17 @@ class BluetoothDeviceDetailViewController : MyTableViewController {
     switch rowType {
     case .name:
       let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell
+        cell.contentView.backgroundColor = .secondarySystemBackground
         cell.configure(title: "Name", detail: self.device.name ?? "")
       return cell
     case .connectionState:
       let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell
+        cell.contentView.backgroundColor = .secondarySystemBackground
       cell.configure(title: "State", detail: self.device.state.string)
       return cell
     case .lastKnownRssi:
       let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell
+        cell.contentView.backgroundColor = .secondarySystemBackground
       if let lastKnownRSSI = self.device.lastKnownRSSI {
         cell.configure(title: "RSSI", detail: "\(lastKnownRSSI)")
       } else {
@@ -213,14 +218,17 @@ class BluetoothDeviceDetailViewController : MyTableViewController {
       return cell
     case .totalServices:
       let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell
+        cell.contentView.backgroundColor = .secondarySystemBackground
       cell.configure(title: "Total Services", detail: "\(self.device.services.count) services")
       return cell
     case .noCharacteristics:
       let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailSimpleCell.name, for: indexPath) as! ServiceDetailSimpleCell
+        cell.contentView.backgroundColor = .secondarySystemBackground
       cell.configure(title: "No Characteristics Discovered")
       return cell
     case .characteristic(let characteristic):
       let cell = tableView.dequeueReusableCell(withIdentifier: BluetoothDeviceCell.name, for: indexPath) as! BluetoothDeviceCell
+        cell.contentView.backgroundColor = .secondarySystemBackground
       cell.configure(title: characteristic.uuid.uuidString, detail: characteristic.value?.hexValue ?? "Unknown Value")
       return cell
     }

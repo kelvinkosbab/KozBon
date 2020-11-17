@@ -17,43 +17,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ServiceDetailButtonHeaderCell" id="JUa-XO-G8s" customClass="ServiceDetailButtonHeaderCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JUa-XO-G8s" id="SFL-7u-iI9">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5cc-Np-Ifs">
-                                            <rect key="frame" x="16" y="16" width="343" height="18"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gdf-6i-gj5">
-                                            <rect key="frame" x="0.0" y="43" width="375" height="1"/>
-                                            <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="1" id="kfx-1h-KgZ"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <constraints>
-                                        <constraint firstItem="5cc-Np-Ifs" firstAttribute="leading" secondItem="SFL-7u-iI9" secondAttribute="leadingMargin" id="341-MX-KVl"/>
-                                        <constraint firstAttribute="trailing" secondItem="gdf-6i-gj5" secondAttribute="trailing" id="4pu-4n-IPK"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="5cc-Np-Ifs" secondAttribute="trailing" id="4yB-ju-Ry5"/>
-                                        <constraint firstAttribute="bottom" secondItem="gdf-6i-gj5" secondAttribute="bottom" id="G3O-nZ-N93"/>
-                                        <constraint firstItem="gdf-6i-gj5" firstAttribute="leading" secondItem="SFL-7u-iI9" secondAttribute="leading" id="i7k-sz-H6U"/>
-                                        <constraint firstItem="5cc-Np-Ifs" firstAttribute="bottom" secondItem="SFL-7u-iI9" secondAttribute="bottom" constant="-10" id="laB-p9-TF9"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="titleLabel" destination="5cc-Np-Ifs" id="wdy-xq-85U"/>
-                                </connections>
-                            </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ServiceDetailSimpleHeaderCell" id="ZWI-FZ-PCK" customClass="ServiceDetailSimpleHeaderCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZWI-FZ-PCK" id="cxf-9S-FFP">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -67,8 +32,8 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oxs-JQ-m8O">
-                                            <rect key="frame" x="16" y="15" width="343" height="18"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <rect key="frame" x="16" y="9" width="343" height="24"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -87,60 +52,16 @@
                                     <outlet property="titleLabel" destination="oxs-JQ-m8O" id="zfK-wv-ZBM"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ServiceDetailKeyValueCell" rowHeight="50" id="rHW-sY-9Aj" customClass="ServiceDetailKeyValueCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="116" width="375" height="50"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rHW-sY-9Aj" id="k5T-Ol-jBJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DXK-Is-VFp">
-                                            <rect key="frame" x="16" y="16" width="125" height="18"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="71f-aS-dDE">
-                                            <rect key="frame" x="0.0" y="49" width="375" height="1"/>
-                                            <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="1" id="onj-B1-lI7"/>
-                                            </constraints>
-                                        </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5uH-8k-Ywt">
-                                            <rect key="frame" x="151" y="17" width="208" height="16"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="5uH-8k-Ywt" firstAttribute="leading" secondItem="DXK-Is-VFp" secondAttribute="trailing" constant="10" id="Lfs-Mh-e5d"/>
-                                        <constraint firstItem="DXK-Is-VFp" firstAttribute="centerY" secondItem="k5T-Ol-jBJ" secondAttribute="centerY" id="Q20-5I-JKI"/>
-                                        <constraint firstItem="DXK-Is-VFp" firstAttribute="leading" secondItem="k5T-Ol-jBJ" secondAttribute="leadingMargin" id="SzI-Ru-c7p"/>
-                                        <constraint firstItem="71f-aS-dDE" firstAttribute="leading" secondItem="k5T-Ol-jBJ" secondAttribute="leading" id="V7T-Jf-8OD"/>
-                                        <constraint firstAttribute="trailing" secondItem="71f-aS-dDE" secondAttribute="trailing" id="YtF-pN-JaZ"/>
-                                        <constraint firstItem="5uH-8k-Ywt" firstAttribute="centerY" secondItem="k5T-Ol-jBJ" secondAttribute="centerY" id="cBI-8Z-atf"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="5uH-8k-Ywt" secondAttribute="trailing" id="dh9-a3-4RY"/>
-                                        <constraint firstItem="5uH-8k-Ywt" firstAttribute="width" secondItem="DXK-Is-VFp" secondAttribute="width" multiplier="5:3" id="lVb-T1-Vbl"/>
-                                        <constraint firstAttribute="bottom" secondItem="71f-aS-dDE" secondAttribute="bottom" id="y5O-Yr-R5i"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="keyLabel" destination="DXK-Is-VFp" id="KcR-cu-7Gw"/>
-                                    <outlet property="valueLabel" destination="5uH-8k-Ywt" id="Nbd-OX-7W8"/>
-                                </connections>
-                            </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ServiceDetailAddressCell" rowHeight="50" id="uH4-jI-ce3" customClass="ServiceDetailAddressCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="166" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="72" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uH4-jI-ce3" id="q4T-76-g68">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fYa-1z-Uze">
-                                            <rect key="frame" x="16" y="11" width="101" height="14"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <rect key="frame" x="16" y="11" width="115.5" height="14"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -152,8 +73,8 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hro-Gv-68l">
-                                            <rect key="frame" x="16" y="25" width="89" height="24"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <rect key="frame" x="16" y="25" width="106.5" height="24"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -176,7 +97,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ServiceDetailLoadingCell" rowHeight="50" id="b6K-q8-8Dh" customClass="ServiceDetailLoadingCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="216" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="122" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="b6K-q8-8Dh" id="xbc-yy-517">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -196,15 +117,15 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ServiceDetailSimpleCell" id="7dV-5N-Wmn" customClass="ServiceDetailSimpleCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="266" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="172" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7dV-5N-Wmn" id="9F6-Iu-hDY">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pui-gb-jEc">
-                                            <rect key="frame" x="137" y="13" width="101" height="18"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <rect key="frame" x="130" y="12" width="115.5" height="20.5"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -219,7 +140,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ServiceDetailDescriptionCell" id="DSn-3h-5DN" customClass="ServiceDetailDescriptionCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="310" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="216" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DSn-3h-5DN" id="9eI-Yf-i2z">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -227,7 +148,7 @@
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i7p-o3-2Zv">
                                             <rect key="frame" x="16" y="10" width="343" height="16"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -244,21 +165,21 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BluetoothDeviceCell" rowHeight="50" id="0cm-wL-L9R" customClass="BluetoothDeviceCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="354" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="260" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0cm-wL-L9R" id="l6Z-sC-TbW">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9MG-Zg-5GK">
-                                            <rect key="frame" x="16" y="11" width="323" height="14"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <rect key="frame" x="16" y="11" width="323" height="10"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k4v-EU-rgk">
-                                            <rect key="frame" x="16" y="25" width="323" height="14"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <rect key="frame" x="16" y="29" width="323" height="10"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -285,12 +206,12 @@
                                         <constraint firstItem="k4v-EU-rgk" firstAttribute="leading" secondItem="l6Z-sC-TbW" secondAttribute="leadingMargin" id="U6C-WE-NnU"/>
                                         <constraint firstItem="9MG-Zg-5GK" firstAttribute="leading" secondItem="l6Z-sC-TbW" secondAttribute="leadingMargin" id="aYo-Gj-Wqr"/>
                                         <constraint firstItem="y1U-kg-pfC" firstAttribute="leading" secondItem="l6Z-sC-TbW" secondAttribute="leading" id="agL-Sw-cdL"/>
-                                        <constraint firstItem="9MG-Zg-5GK" firstAttribute="bottom" secondItem="l6Z-sC-TbW" secondAttribute="centerY" id="biC-Wl-ayw"/>
+                                        <constraint firstItem="9MG-Zg-5GK" firstAttribute="bottom" secondItem="l6Z-sC-TbW" secondAttribute="centerY" constant="-4" id="biC-Wl-ayw"/>
                                         <constraint firstAttribute="trailing" secondItem="y1U-kg-pfC" secondAttribute="trailing" id="c3k-FX-dG7"/>
                                         <constraint firstItem="Ozu-e3-zHK" firstAttribute="leading" secondItem="k4v-EU-rgk" secondAttribute="trailing" constant="5" id="f2I-bz-Wr6"/>
                                         <constraint firstItem="Ozu-e3-zHK" firstAttribute="leading" secondItem="9MG-Zg-5GK" secondAttribute="trailing" constant="5" id="mIw-HQ-tvo"/>
                                         <constraint firstItem="Ozu-e3-zHK" firstAttribute="centerY" secondItem="l6Z-sC-TbW" secondAttribute="centerY" id="np0-OZ-P42"/>
-                                        <constraint firstItem="k4v-EU-rgk" firstAttribute="top" secondItem="l6Z-sC-TbW" secondAttribute="centerY" id="oRc-ho-Ujz"/>
+                                        <constraint firstItem="k4v-EU-rgk" firstAttribute="top" secondItem="l6Z-sC-TbW" secondAttribute="centerY" constant="4" id="oRc-ho-Ujz"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -318,42 +239,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ServiceDetailButtonHeaderCell" id="sWa-jR-608" customClass="ServiceDetailButtonHeaderCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sWa-jR-608" id="d42-Xh-f8e">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="47Z-pi-csi">
-                                            <rect key="frame" x="16" y="16" width="343" height="18"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SRD-4N-hRC">
-                                            <rect key="frame" x="0.0" y="43" width="375" height="1"/>
-                                            <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="1" id="qDw-ix-H2j"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="47Z-pi-csi" firstAttribute="leading" secondItem="d42-Xh-f8e" secondAttribute="leadingMargin" id="OH8-MA-PRA"/>
-                                        <constraint firstAttribute="trailing" secondItem="SRD-4N-hRC" secondAttribute="trailing" id="VwP-27-EO5"/>
-                                        <constraint firstItem="47Z-pi-csi" firstAttribute="bottom" secondItem="d42-Xh-f8e" secondAttribute="bottom" constant="-10" id="WKA-1T-MLc"/>
-                                        <constraint firstItem="SRD-4N-hRC" firstAttribute="leading" secondItem="d42-Xh-f8e" secondAttribute="leading" id="ccc-yP-ikA"/>
-                                        <constraint firstAttribute="bottom" secondItem="SRD-4N-hRC" secondAttribute="bottom" id="uee-dN-SIS"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="47Z-pi-csi" secondAttribute="trailing" id="zrB-od-4Rk"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="titleLabel" destination="47Z-pi-csi" id="gg3-7x-lhQ"/>
-                                </connections>
-                            </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ServiceDetailSimpleHeaderCell" id="h1x-R0-u1G" customClass="ServiceDetailSimpleHeaderCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="h1x-R0-u1G" id="1zW-o0-vr2">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -367,8 +254,8 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ivf-by-FRI">
-                                            <rect key="frame" x="16" y="15" width="343" height="18"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <rect key="frame" x="16" y="9" width="343" height="24"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -386,60 +273,16 @@
                                     <outlet property="titleLabel" destination="ivf-by-FRI" id="puE-WL-yTt"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ServiceDetailKeyValueCell" rowHeight="50" id="JF1-rt-HpO" customClass="ServiceDetailKeyValueCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="116" width="375" height="50"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JF1-rt-HpO" id="W89-aW-OOE">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="ny0-zG-Nh0">
-                                            <rect key="frame" x="16" y="16" width="125" height="18"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sLo-gp-FBr">
-                                            <rect key="frame" x="0.0" y="49" width="375" height="1"/>
-                                            <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="1" id="4c5-AK-e9h"/>
-                                            </constraints>
-                                        </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="3ld-Zj-QTr">
-                                            <rect key="frame" x="151" y="17" width="208" height="16"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="3ld-Zj-QTr" firstAttribute="centerY" secondItem="W89-aW-OOE" secondAttribute="centerY" id="H1C-tI-Fck"/>
-                                        <constraint firstItem="sLo-gp-FBr" firstAttribute="leading" secondItem="W89-aW-OOE" secondAttribute="leading" id="IKn-fA-urZ"/>
-                                        <constraint firstAttribute="bottom" secondItem="sLo-gp-FBr" secondAttribute="bottom" id="PLr-Vg-eQQ"/>
-                                        <constraint firstItem="ny0-zG-Nh0" firstAttribute="centerY" secondItem="W89-aW-OOE" secondAttribute="centerY" id="YyD-aV-tSU"/>
-                                        <constraint firstItem="3ld-Zj-QTr" firstAttribute="leading" secondItem="ny0-zG-Nh0" secondAttribute="trailing" constant="10" id="g1a-HL-I1v"/>
-                                        <constraint firstItem="ny0-zG-Nh0" firstAttribute="leading" secondItem="W89-aW-OOE" secondAttribute="leadingMargin" id="hcm-Gd-qqT"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="3ld-Zj-QTr" secondAttribute="trailing" id="o3u-XS-vdM"/>
-                                        <constraint firstAttribute="trailing" secondItem="sLo-gp-FBr" secondAttribute="trailing" id="uDX-oc-eJy"/>
-                                        <constraint firstItem="3ld-Zj-QTr" firstAttribute="width" secondItem="ny0-zG-Nh0" secondAttribute="width" multiplier="5:3" id="wuy-EM-HyV"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="keyLabel" destination="ny0-zG-Nh0" id="3LN-xE-o5O"/>
-                                    <outlet property="valueLabel" destination="3ld-Zj-QTr" id="xqH-Rz-zUc"/>
-                                </connections>
-                            </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ServiceDetailAddressCell" rowHeight="50" id="5VE-zM-K9C" customClass="ServiceDetailAddressCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="166" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="72" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5VE-zM-K9C" id="wDw-Ys-LiD">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mBX-4f-IEP">
-                                            <rect key="frame" x="16" y="11" width="101" height="14"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <rect key="frame" x="16" y="11" width="115.5" height="14"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -451,8 +294,8 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ofO-3W-bhP">
-                                            <rect key="frame" x="16" y="25" width="89" height="24"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <rect key="frame" x="16" y="25" width="106.5" height="24"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -475,7 +318,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ServiceDetailLoadingCell" rowHeight="50" id="Tp5-wM-Fcb" customClass="ServiceDetailLoadingCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="216" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="122" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Tp5-wM-Fcb" id="bSD-Cn-xAD">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -495,15 +338,15 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ServiceDetailSimpleCell" id="Z4Y-gp-Gzw" customClass="ServiceDetailSimpleCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="266" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="172" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Z4Y-gp-Gzw" id="Ebs-ag-ALb">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ogr-cq-Jft">
-                                            <rect key="frame" x="137" y="13" width="101" height="18"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <rect key="frame" x="130" y="12" width="115.5" height="20.5"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -518,7 +361,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ServiceDetailDescriptionCell" id="MsR-KI-I2a" customClass="ServiceDetailDescriptionCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="310" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="216" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MsR-KI-I2a" id="df5-HC-JQr">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -526,7 +369,7 @@
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5PF-o3-24Y">
                                             <rect key="frame" x="16" y="10" width="343" height="16"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -543,21 +386,21 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BluetoothDeviceCell" rowHeight="50" id="UWa-9z-nZa" customClass="BluetoothDeviceCell" customModule="KozBon" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="354" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="260" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UWa-9z-nZa" id="eKp-Cy-9fQ">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3zo-ti-4ho">
-                                            <rect key="frame" x="16" y="11" width="323" height="14"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <rect key="frame" x="16" y="11" width="323" height="10"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOREM IPSUM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0ZK-Af-tHf">
-                                            <rect key="frame" x="16" y="25" width="323" height="14"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <rect key="frame" x="16" y="29" width="323" height="10"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -581,13 +424,13 @@
                                         <constraint firstAttribute="bottomMargin" secondItem="0ZK-Af-tHf" secondAttribute="bottom" id="EZC-WI-ArD"/>
                                         <constraint firstItem="3zo-ti-4ho" firstAttribute="leading" secondItem="eKp-Cy-9fQ" secondAttribute="leadingMargin" id="P5G-Bu-CnN"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="da3-tT-u5d" secondAttribute="trailing" id="Pbm-XI-pb0"/>
-                                        <constraint firstItem="0ZK-Af-tHf" firstAttribute="top" secondItem="eKp-Cy-9fQ" secondAttribute="centerY" id="RVU-h5-VRk"/>
+                                        <constraint firstItem="0ZK-Af-tHf" firstAttribute="top" secondItem="eKp-Cy-9fQ" secondAttribute="centerY" constant="4" id="RVU-h5-VRk"/>
                                         <constraint firstItem="0ZK-Af-tHf" firstAttribute="leading" secondItem="eKp-Cy-9fQ" secondAttribute="leadingMargin" id="Tji-oB-iSn"/>
                                         <constraint firstItem="da3-tT-u5d" firstAttribute="centerY" secondItem="eKp-Cy-9fQ" secondAttribute="centerY" id="WGK-YU-OPs"/>
                                         <constraint firstItem="3zo-ti-4ho" firstAttribute="top" secondItem="eKp-Cy-9fQ" secondAttribute="topMargin" id="Ybc-aZ-jEQ"/>
                                         <constraint firstItem="MoW-5h-Ey6" firstAttribute="leading" secondItem="eKp-Cy-9fQ" secondAttribute="leading" id="d6D-GS-2V2"/>
                                         <constraint firstItem="da3-tT-u5d" firstAttribute="leading" secondItem="3zo-ti-4ho" secondAttribute="trailing" constant="5" id="gCX-ZA-gl5"/>
-                                        <constraint firstItem="3zo-ti-4ho" firstAttribute="bottom" secondItem="eKp-Cy-9fQ" secondAttribute="centerY" id="jT0-zY-H5A"/>
+                                        <constraint firstItem="3zo-ti-4ho" firstAttribute="bottom" secondItem="eKp-Cy-9fQ" secondAttribute="centerY" constant="-4" id="jT0-zY-H5A"/>
                                         <constraint firstAttribute="trailing" secondItem="MoW-5h-Ey6" secondAttribute="trailing" id="nzo-3N-Ur9"/>
                                         <constraint firstItem="da3-tT-u5d" firstAttribute="leading" secondItem="0ZK-Af-tHf" secondAttribute="trailing" constant="5" id="ud4-Zs-xX2"/>
                                     </constraints>

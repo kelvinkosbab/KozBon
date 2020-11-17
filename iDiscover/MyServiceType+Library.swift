@@ -16,11 +16,39 @@ extension MyServiceType {
   // MARK: - TCP Service Types
   
   static var tcpServiceTypes: [MyServiceType] {
-    return [ self.powerViewHubV2, self.spotifyConnect, self.netBIOSSessionService, self.rokuControlProtocol, self.beatsTransferProtocol, self.androidTvRemote, self.googleXpeditionsTcp, self.googleCast, self.mediaRemoteTv, self.airplayTcp, self.airdrop, self.appleMobileDeviceProtocol, self.appleMobileDeviceProtocolV2, self.appleMIDI, self.appleRemoteDebugServices, self.appleTV, self.appleTVv2, self.appleTVv3, self.appleTVv4, self.appleTViTunes, self.appleTVPairing, self.keynoteAccess, self.keynotePairing, self.homeKitAccessoryProtocol, self.appleTalkFilingProtocol, self.networkFileSystem, self.webDAVFileSystem, self.fileTransferProtocol, self.secureShell, self.remoteAppleEvents, self.http, self.https, self.remoteLogin, self.linePrinterDaemon, self.internetPrintingProtocol, self.pdlDataStream, self.remoteIOUSBPrinterProtocol, self.digitalAudioAccessProtocol, self.digitalPhotoAccessProtocol, self.iChatInstantMessagingProtocolDeprecated, self.iChatInstantMessagingProtocol, self.imageCaptureSharing, self.airPortBaseStation, self.xServeRAID, self.distributedCompiler, self.applePasswordServer, self.workgroupManager, self.serverAdmin, self.remoteAudioOutputProtocol, self.touchAble, self.remoteFrameBuffer, self.rtspTcp ]
+    return [ self.powerViewHubV2, self.spotifyConnect, self.netBIOSSessionService, self.rokuControlProtocol, self.beatsTransferProtocol, self.androidTvRemote, self.googleXpeditionsTcp, self.googleCast, self.mediaRemoteTv, self.airplayTcp, self.airdrop, self.appleMobileDeviceProtocol, self.appleMobileDeviceProtocolV2, self.appleMIDI, self.appleRemoteDebugServices, self.appleTV, self.appleTVv2, self.appleTVv3, self.appleTVv4, self.appleTViTunes, self.appleTVPairing, self.keynoteAccess, self.keynotePairing, self.homeKitAccessoryProtocol, self.appleTalkFilingProtocol, self.networkFileSystem, self.webDAVFileSystem, self.fileTransferProtocol, self.secureShell, self.remoteAppleEvents, self.http, self.https, self.remoteLogin, self.linePrinterDaemon, self.internetPrintingProtocol, self.pdlDataStream, self.remoteIOUSBPrinterProtocol, self.digitalAudioAccessProtocol, self.digitalPhotoAccessProtocol, self.iChatInstantMessagingProtocolDeprecated, self.iChatInstantMessagingProtocol, self.imageCaptureSharing, self.airPortBaseStation, self.xServeRAID, self.distributedCompiler, self.applePasswordServer, self.workgroupManager, self.serverAdmin, self.remoteAudioOutputProtocol, self.touchAble, self.remoteFrameBuffer, self.rtspTcp,
+             self.timeCapsuleBackups, self.airDroidApp, self.amazonDevices, self.osxWiFiSync, self.appleSharediTunesLibrary, self.sketchApp, self.sketchApp2, self.airplay2Undocumented, self.cloudByDapile, self.osxDeviceInfo, self.remoteAppleEvents, self.esFileShareApp, self.esFileShareApp2, self.appleHomeKit, self.iTunesHomeSharing, self.jenkinsApp, self.jenkinsApp2, self.iChatInstantMessagingProtocol2, self.osxKeynote, self.osxKeynote2, self.appleTVMediaRemote, self.nVIDIAShieldGameStreaming, self.nvidiaShieldAndroidTV, self.omniGroupOmniGraffleAndOtherApps, self.adobePhotoshopNav, self.netgearReadyNAS, self.physicalWeb, self.scanners, self.ubuntuRaspberryPiAdvertisement]
   }
-  
+    
+    static private let timeCapsuleBackups: MyServiceType = MyServiceType(name: "Time Capsule Backups", type: "adisk")
+    static private let airDroidApp: MyServiceType = MyServiceType(name: "AirDroid App", type: "airdroid")
+    static private let amazonDevices: MyServiceType = MyServiceType(name: "Amazon Devices", type: "amzn-wplay")
+    static private let osxWiFiSync: MyServiceType = MyServiceType(name: "OSX Wi-Fi Sync", type: "apple-mobdev2")
+    static private let appleSharediTunesLibrary: MyServiceType = MyServiceType(name: "Apple Shared iTunes Library", type: "atc")
+    static private let sketchApp: MyServiceType = MyServiceType(name: "Sketch App", type: "sketchmirror")
+    static private let sketchApp2: MyServiceType = MyServiceType(name: "Sketch App", type: "bcbonjour")
+    static private let airplay2Undocumented: MyServiceType = MyServiceType(name: "AirPlay 2 Undocumented", type: "cloud")
+    static private let cloudByDapile: MyServiceType = MyServiceType(name: "Cloud by Dapile", type: "amzn-wplay")
+    static private let osxDeviceInfo: MyServiceType = MyServiceType(name: "OSX Device Info", type: "device-info")
+    static private let esFileShareApp: MyServiceType = MyServiceType(name: "ES File Share App", type: "esdevice")
+    static private let esFileShareApp2: MyServiceType = MyServiceType(name: "ES File Share App", type: "esfileshare")
+    static private let appleHomeKit: MyServiceType = MyServiceType(name: "Apple HomeKit", type: "homekit")
+    static private let iTunesHomeSharing: MyServiceType = MyServiceType(name: "iTunes Home Sharing", type: "home-sharing")
+    static private let jenkinsApp: MyServiceType = MyServiceType(name: "Jenkins App", type: "hudson")
+    static private let jenkinsApp2: MyServiceType = MyServiceType(name: "Jenkins App", type: "jenkins")
+    static private let iChatInstantMessagingProtocol: MyServiceType = MyServiceType(name: "iChat Instant Messaging Protocol", type: "ichat")
+    static private let osxKeynote: MyServiceType = MyServiceType(name: "OSX Keynote", type: "KeynoteControl")
+    static private let osxKeynote2: MyServiceType = MyServiceType(name: "OSX Keynote", type: "keynotepair")
+    static private let appleTVMediaRemote: MyServiceType = MyServiceType(name: "Apple TV Media Remote", type: "mediaremotetv")
+    static private let nVIDIAShieldGameStreaming: MyServiceType = MyServiceType(name: "NVIDIA Shield Game Streaming", type: "nvstream")
+    static private let nvidiaShieldAndroidTV: MyServiceType = MyServiceType(name: "Nvidia Shield / Android TV", type: "androidtvremote")
+    static private let omniGroupOmniGraffleAndOtherApps: MyServiceType = MyServiceType(name: "OmniGroup (OmniGraffle and other apps)", type: "omnistate")
+    static private let adobePhotoshopNav: MyServiceType = MyServiceType(name: "Adobe Photoshop Nav", type: "photoshopserver")
+    static private let netgearReadyNAS: MyServiceType = MyServiceType(name: "Netgear ReadyNAS", type: "readynas")
+    static private let physicalWeb: MyServiceType = MyServiceType(name: "Physical Web", type: "physicalweb")
+    static private let scanners: MyServiceType = MyServiceType(name: "Scanners", type: "scanner")
+    static private let ubuntuRaspberryPiAdvertisement: MyServiceType = MyServiceType(name: "Ubuntu / Raspberry Pi Advertisement", type: "udisks-ssh")
   static private let powerViewHubV2: MyServiceType = MyServiceType(name: "PowerView Hub 2.0", type: "powerview")
-  
   static private let spotifyConnect: MyServiceType = MyServiceType(name: "Spotify Connect", type: "spotify-connect")
   static private let netBIOSSessionService: MyServiceType = MyServiceType(name: "NetBIOS Session Service", type: "netbios-ssn")
   static private let rokuControlProtocol: MyServiceType = MyServiceType(name: "ROKU Control Protocol", type: "roku-rcp")
@@ -63,7 +91,7 @@ extension MyServiceType {
   static private let digitalAudioAccessProtocol: MyServiceType = MyServiceType(name: "Digital Audio Access Protocol (DAAP)", type: "daap", detail: "Also known as iTunes Music Sharing. iTunes advertises and browses for DAAP servers starting in iTunes 4.0.")
   static private let digitalPhotoAccessProtocol: MyServiceType = MyServiceType(name: "Digital Photo Access Protocol (DPAP)", type: "dpap", detail: "Also known as iPhoto Photo Sharing. iPhoto advertises and browses for DPAP servers starting in iPhoto 4.0.")
   static private let iChatInstantMessagingProtocolDeprecated: MyServiceType = MyServiceType(name: "iChat Instant Messaging Protocol", type: "ichat", detail: "Used by iChat 1.0 which shipped with Mac OS X 10.2. This service is now deprecated with the introduction of the \"presence\" service in iChat AV. See below.")
-  static private let iChatInstantMessagingProtocol: MyServiceType = MyServiceType(name: "iChat Instant Messaging Protocol", type: "presence", detail: "Used by iChat AV which shipped with Mac OS X 10.3.")
+  static private let iChatInstantMessagingProtocol2: MyServiceType = MyServiceType(name: "iChat Instant Messaging Protocol", type: "presence", detail: "Used by iChat AV which shipped with Mac OS X 10.3.")
   static private let imageCaptureSharing: MyServiceType = MyServiceType(name: "Image Capture Sharing", type: "ica-networking", detail: "Used by the Image Capture application to share cameras in Mac OS X 10.3.")
   static private let airPortBaseStation: MyServiceType = MyServiceType(name: "AirPort Base Station", type: "airport", detail: "Used by the AirPort Admin Utility starting in Mac OS X 10.2 in order to locate and configure the AirPort Base Station (Dual Ethernet) and the AirPort Extreme Base Station.")
   static private let xServeRAID: MyServiceType = MyServiceType(name: "Xserve RAID", type: "xserveraid", detail: "Used by the Xserve RAID Admin Utility to locate and configure Xserve RAID hardware.")

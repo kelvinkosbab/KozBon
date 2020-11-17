@@ -212,9 +212,11 @@ extension ServicesViewController : MyBonjourManagerDelegate, MyBonjourPublishMan
     
     func servicesDidUpdate(_ services: [MyNetService]) {
         self.reloadData()
+        self.updateEmptyState()
     }
     
     func publishedServicesUpdated(_ publishedServices: [MyNetService]) {
         self.reloadData()
+        self.updateEmptyState()
     }
 }

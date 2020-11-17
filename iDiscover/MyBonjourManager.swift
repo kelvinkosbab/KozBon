@@ -56,10 +56,8 @@ class MyBonjourManager: NSObject {
   // MARK: - Resolving Addresses
   
   private var isResolvingFoundServiceAddresses: Bool {
-    for service in self.services {
-      if service.isResolving {
+    for service in self.services where service.isResolving {
         return true
-      }
     }
     return false
   }
@@ -111,6 +109,7 @@ class MyBonjourManager: NSObject {
   // MARK: - Start / Stop Discovery
   
   func startDiscovery(timeout: Double = 5.0, completion: @escaping (_ services: [MyNetService]) -> Void) {
+    Log.log("MyBonjourManager: start discovery")
     self.stopDiscovery()
     self.clearServices()
     self.serviceBrowsers = []
@@ -145,6 +144,7 @@ class MyBonjourManager: NSObject {
         return
       }
       
+        Log.log("MyBonjourManager: stop discovery")
       strongSelf.completion?(strongSelf.services)
       strongSelf.completion = nil
       strongSelf.stopDiscovery()
@@ -163,15 +163,17 @@ class MyBonjourManager: NSObject {
 extension MyBonjourManager : MyNetServiceBrowserDelegate {
   
   func myNetServiceBrowserDidChangeState(_ browser: MyNetServiceBrowser, state: MyNetServiceBrowserState) {
+    Log.log("MyBonjourManager: state changed \(state.string)")
     self.checkDiscoveryCompletion()
   }
   
   func myNetServiceBrowser(_ browser: MyNetServiceBrowser, didFind service: MyNetService) {
+    Log.log("MyBonjourManager: did find service")
     self.add(service: service)
   }
   
   func myNetServiceBrowser(_ browser: MyNetServiceBrowser, didRemove service: MyNetService) {
+    Log.log("MyBonjourManager: did remove service")
     self.remove(service: service)
   }
-  
 }
