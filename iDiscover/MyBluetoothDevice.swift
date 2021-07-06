@@ -9,11 +9,11 @@
 import Foundation
 import CoreBluetooth
 
-protocol MyBluetoothDeviceDelegate : class {
+protocol MyBluetoothDeviceDelegate : AnyObject {
   func didUpdate(_ device: MyBluetoothDevice)
 }
 
-protocol MyBluetoothDeviceServicesDelegate : class {
+protocol MyBluetoothDeviceServicesDelegate : AnyObject {
   func didUpdateServices(_ device: MyBluetoothDevice)
 }
 

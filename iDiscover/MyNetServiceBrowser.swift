@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol MyNetServiceBrowserDelegate : class{
+protocol MyNetServiceBrowserDelegate : AnyObject {
   func myNetServiceBrowserDidChangeState(_ browser: MyNetServiceBrowser, state: MyNetServiceBrowserState)
   func myNetServiceBrowser(_ browser: MyNetServiceBrowser, didFind service: MyNetService)
   func myNetServiceBrowser(_ browser: MyNetServiceBrowser, didRemove service: MyNetService)

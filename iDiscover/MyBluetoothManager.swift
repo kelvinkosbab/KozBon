@@ -9,7 +9,7 @@
 import Foundation
 import CoreBluetooth
 
-protocol MyBluetoothManagerDelegate : class {
+protocol MyBluetoothManagerDelegate : AnyObject {
   func didStartScan(_ manager: MyBluetoothManager)
   func didUpdateDevices(_ manager: MyBluetoothManager)
   func didStopScan(_ manager: MyBluetoothManager)

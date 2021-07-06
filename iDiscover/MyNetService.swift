@@ -16,7 +16,7 @@ extension Notification.Name {
   static let netServiceDidStop = Notification.Name(rawValue: "\(MyNetService.name).netServiceDidStop")
 }
 
-protocol MyNetServiceDelegate : class {
+protocol MyNetServiceDelegate : AnyObject {
   func serviceDidResolveAddress(_ service: MyNetService)
 }
 

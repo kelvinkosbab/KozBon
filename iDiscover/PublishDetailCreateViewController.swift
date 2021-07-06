@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol PublishNetServiceDelegate : class {
+protocol PublishNetServiceDelegate : AnyObject {
   func servicePublished()
 }
 

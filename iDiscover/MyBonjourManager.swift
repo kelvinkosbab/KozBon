@@ -14,7 +14,7 @@ extension Notification.Name {
   static let bonjourDidClearServices = Notification.Name(rawValue: "\(MyBonjourManager.name).bonjourDidClearServices")
 }
 
-protocol MyBonjourManagerDelegate : class {
+protocol MyBonjourManagerDelegate : AnyObject {
   func servicesDidUpdate(_ services: [MyNetService])
 }
 

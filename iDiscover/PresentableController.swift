@@ -13,7 +13,7 @@ enum PresentationMode {
   case modal, navStack, splitDetail
 }
 
-protocol PresentableController : class {
+protocol PresentableController : AnyObject {
   var presentedMode: PresentationMode { get set }
   var transitioningDelegateReference: UIViewControllerTransitioningDelegate? { get set }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol MyBonjourPublishManagerDelegate : class {
+protocol MyBonjourPublishManagerDelegate : AnyObject {
   func publishedServicesUpdated(_ publishedServices: [MyNetService])
 }
 
