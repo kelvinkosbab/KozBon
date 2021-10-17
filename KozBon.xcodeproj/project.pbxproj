@@ -74,8 +74,10 @@
 		B6CE1D601E120CCC003D4FFA /* MyServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D5B1E120CCC003D4FFA /* MyServiceType.swift */; };
 		B6CE1D621E120D10003D4FFA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6CE1D611E120D10003D4FFA /* Main.storyboard */; };
 		B6CE1D661E120E4D003D4FFA /* CustomServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D641E120E4D003D4FFA /* CustomServiceType.swift */; };
+		F614628626A1495C00D30CC8 /* TxtRecordsCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = F614628526A1495C00D30CC8 /* TxtRecordsCells.swift */; };
 		F62EDC66255BAE8B003E5178 /* UIBarButtonItem+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62EDC65255BAE8B003E5178 /* UIBarButtonItem+Util.swift */; };
 		F690B5FB2561E9B600902DAB /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F690B5FA2561E9B600902DAB /* NetworkExtension.framework */; };
+		F69DF275269AB8BF00B97E9D /* EditTxtRecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69DF274269AB8BF00B97E9D /* EditTxtRecordsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -148,9 +150,12 @@
 		B6CE1D5B1E120CCC003D4FFA /* MyServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyServiceType.swift; sourceTree = "<group>"; };
 		B6CE1D611E120D10003D4FFA /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		B6CE1D641E120E4D003D4FFA /* CustomServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomServiceType.swift; path = "Managed Objects/CustomServiceType.swift"; sourceTree = "<group>"; };
+		F614628526A1495C00D30CC8 /* TxtRecordsCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TxtRecordsCells.swift; sourceTree = "<group>"; };
 		F62EDC5E255B9D25003E5178 /* KozBon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KozBon.entitlements; sourceTree = "<group>"; };
 		F62EDC65255BAE8B003E5178 /* UIBarButtonItem+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Util.swift"; sourceTree = "<group>"; };
+		F6781EF72694C5F6009B79F7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F690B5FA2561E9B600902DAB /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
+		F69DF274269AB8BF00B97E9D /* EditTxtRecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTxtRecordsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +218,7 @@
 			children = (
 				B6AE53851E170A6400FB57E3 /* PublishDetailExistingViewController.swift */,
 				B6AE53831E17090A00FB57E3 /* PublishDetailCreateViewController.swift */,
+				F69DF273269AB89B00B97E9D /* TXT Records */,
 			);
 			name = "Publishing a Service";
 			sourceTree = "<group>";
@@ -222,6 +228,7 @@
 			children = (
 				B68EEA4B1E46C1C800831CC4 /* Services.storyboard */,
 				B68EEA481E46869100831CC4 /* Services */,
+				B68B21311E47AD4700BE2CA2 /* Publishing a Service */,
 				B68B21231E47A00800BE2CA2 /* Service Detail */,
 				B68B21301E47ACD700BE2CA2 /* Listing / Searching Services */,
 				B679CC101E16243C0056C7B5 /* Creating a Service Type */,
@@ -258,7 +265,6 @@
 			children = (
 				B68EEA461E4685E200831CC4 /* ServicesViewController.swift */,
 				B68EEA561E47104D00831CC4 /* ServicesServiceCell.swift */,
-				B68B21311E47AD4700BE2CA2 /* Publishing a Service */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -302,6 +308,7 @@
 			isa = PBXGroup;
 			children = (
 				F62EDC5E255B9D25003E5178 /* KozBon.entitlements */,
+				F6781EF72694C5F6009B79F7 /* README.md */,
 				B6CE1D261E1208C1003D4FFA /* iDiscover */,
 				B6CE1D251E1208C1003D4FFA /* Products */,
 				F690B5F92561E9B600902DAB /* Frameworks */,
@@ -443,6 +450,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		F69DF273269AB89B00B97E9D /* TXT Records */ = {
+			isa = PBXGroup;
+			children = (
+				F69DF274269AB8BF00B97E9D /* EditTxtRecordsViewController.swift */,
+				F614628526A1495C00D30CC8 /* TxtRecordsCells.swift */,
+			);
+			name = "TXT Records";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -535,6 +551,7 @@
 				B679CC151E1624A20056C7B5 /* MyViewController.swift in Sources */,
 				B6C4BC551E1CD30A004409F1 /* CreateServiceTypeTableViewController.swift in Sources */,
 				B6CE1D4F1E120B90003D4FFA /* MyClassProtocol.swift in Sources */,
+				F69DF275269AB8BF00B97E9D /* EditTxtRecordsViewController.swift in Sources */,
 				B68EEA651E47204E00831CC4 /* SettingsKeyValueCell.swift in Sources */,
 				B679CC0A1E1618840056C7B5 /* MyRootController.swift in Sources */,
 				B6AE53841E17090A00FB57E3 /* PublishDetailCreateViewController.swift in Sources */,
@@ -553,6 +570,7 @@
 				B6CE1D561E120BF4003D4FFA /* MyDataManager.swift in Sources */,
 				B6BD8C8C2002E0ED009327B2 /* BluetoothDeviceDetailViewController.swift in Sources */,
 				B6C4BC521E1CC2CD004409F1 /* TableViewCells.swift in Sources */,
+				F614628626A1495C00D30CC8 /* TxtRecordsCells.swift in Sources */,
 				B691545F1E1317A000382F41 /* MyAddress.swift in Sources */,
 				B679CC171E1647670056C7B5 /* MyBonjourPublishManager.swift in Sources */,
 				B62E19971E174236008BC91C /* MyLoadingManager.swift in Sources */,
@@ -720,7 +738,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = KozBon.entitlements;
-				CURRENT_PROJECT_VERSION = 88;
+				CURRENT_PROJECT_VERSION = 89;
 				DEVELOPMENT_TEAM = 6SS93B87P2;
 				INFOPLIST_FILE = iDiscover/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
@@ -743,7 +761,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = KozBon.entitlements;
-				CURRENT_PROJECT_VERSION = 88;
+				CURRENT_PROJECT_VERSION = 89;
 				DEVELOPMENT_TEAM = 6SS93B87P2;
 				INFOPLIST_FILE = iDiscover/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;

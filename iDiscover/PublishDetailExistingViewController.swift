@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class PublishDetailExistingViewController: MyTableViewController, UITextFieldDelegate {
+class PublishDetailExistingViewController: MyTableViewController, UITextFieldDelegate, EditTxtRecordsDelegate {
   
   // MARK: - Class Accessors
   
@@ -32,10 +32,14 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
   @IBOutlet weak var portTextField: UITextField!
   @IBOutlet weak var domainTextField: UITextField!
   @IBOutlet weak var detailTextField: UITextField!
+    
+    @IBOutlet weak var addTxTRecordButton: UIButton!
+    @IBOutlet weak var txtRecordsLabel: UILabel!
   
   weak var delegate: PublishNetServiceDelegate? = nil
   
-  var serviceType: MyServiceType!
+    private var serviceType: MyServiceType!
+    private var txtRecords: [String: String] = [:]
   
   // MARK: - Lifecycle
   
@@ -130,10 +134,18 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
   }
   
   // MARK: - Actions
+    
+    @IBAction func addTxtRecordButtonSelected() {
+        let viewController = EditTxtRecordsViewController.newViewController(txtRecords: self.txtRecords, delegate: self)
+        viewController.delegate = self
+        viewController.presentControllerIn(self, forMode: .modal)
+    }
   
   @objc func publishButtonSelected() {
     
-    guard let port = self.portTextField.text, let portValue = port.convertToInt, portValue > 0 else {
+    guard let port = self.portTextField.text,
+          let portValue = port.convertToInt,
+            portValue > 0 else {
       self.showDisappearingAlertDialog(title: "Invalid Port Number")
       return
     }
@@ -142,22 +154,34 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
     
     // Publish the service
     MyLoadingManager.showLoading()
-    MyBonjourPublishManager.shared.publish(name: self.serviceType.name, type: self.serviceType.type, port: portValue, domain: domain, transportLayer: self.serviceType.transportLayer, detail: self.serviceType.detail, success: {
+    MyBonjourPublishManager.shared.publish(name: self.serviceType.name,
+                                           type: self.serviceType.type,
+                                           port: portValue,
+                                           domain: domain,
+                                           transportLayer: self.serviceType.transportLayer,
+                                           detail: self.serviceType.detail, success: {
       // Success
       MyLoadingManager.hideLoading()
-      self.showDisappearingAlertDialog(title: "Service Published!") {
-        self.dismissController(completion: {
-          self.delegate?.servicePublished()
-        })
+      self.showDisappearingAlertDialog(title: "Service Published!") { [weak self] in
+        self?.dismissController { [weak self] in
+          self?.delegate?.servicePublished()
+        }
       }
     }) {
       // Failure
       MyLoadingManager.hideLoading()
-      self.showDisappearingAlertDialog(title: "☹️ Something Went Wrong ☹️", message: "Please try again.")
+      self.showDisappearingAlertDialog(title: "☹️ Something Went Wrong ☹️",
+                                       message: "Please try again.")
     }
   }
   
   private func clearButtonSelected() {
     self.resetForm()
   }
+    
+    // MARK: - EditTxtRecordsDelegate
+    
+    func didUpdate(txtRecords: [String: String]) {
+        self.txtRecords = txtRecords
+    }
 }

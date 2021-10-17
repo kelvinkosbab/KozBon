@@ -13938,6 +13938,7 @@ carddav,,tcp,vCard Extensions to WebDAV (CardDAV) - non-TLS,[IESG],[IETF_Chair],
 carddavs,,tcp,vCard Extensions to WebDAV (CardDAV) - over TLS,[IESG],[IETF_Chair],2012-02-17,,[RFC6352],,,This is an extension of the https service.  Defined TXT keys: path=<context path>
 cardsend,,,Card Send Protocol,[Jeff_Grossman],[Jeff_Grossman],,,,,,Defined TXT keys: Proprietary
 carousel,,tcp,Carousel Player Protocol,[Tightrope_Media_Systems],[Scott_Jann],2011-10-17,,,,,Defined TXT keys: None
+carplay-ctrl,,,Apple CarPlay control,,,,,,,,Defined TXT keys: txtvers
 cctv,,,IP and Closed-Circuit Television for Securitiy applications,[Frank_Rottmann],[Frank_Rottmann],,,,,,"Defined TXT keys: u=<username>, p=<password>, path=<path to XML file>"
 certificates,,tcp,Server for S/MIME and PGP certificates,[IESG],[John_Levine],2016-07-26,,[draft-bhjl-x509-srv-01],,,Defined TXT keys: None
 cheat,,,The Cheat,[Chaz_McGarvey],[Chaz_McGarvey],,,,,,Defined TXT keys: None

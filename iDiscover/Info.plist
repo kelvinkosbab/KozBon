@@ -28,6 +28,7 @@
 	<string>This app scans for peripherals and fetches data and records associated with that peripheral.</string>
 	<key>NSBonjourServices</key>
 	<array>
+		<string>_carplay_ctrl._tcp</string>
 		<string>_udisks-ssh._tcp</string>
 		<string>_scanner._tcp</string>
 		<string>_physicalweb._tcp</string>

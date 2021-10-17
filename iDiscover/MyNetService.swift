@@ -190,8 +190,9 @@ class MyNetService: NSObject, NetServiceDelegate {
         records.append(MyDataRecord(key: key, value: stringValue.isEmpty ? "NA" : stringValue))
       }
     }
-    self.dataRecords = records.sorted(by: { (r1, r2) -> Bool in
+      
+    self.dataRecords = records.sorted { r1, r2 -> Bool in
       return r1 < r2
-    })
+    }
   }
 }
