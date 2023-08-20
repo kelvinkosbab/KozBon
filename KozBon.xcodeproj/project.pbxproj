@@ -40,7 +40,7 @@
 		B68EEA631E471FD000831CC4 /* SettingsItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA621E471FD000831CC4 /* SettingsItemCell.swift */; };
 		B68EEA651E47204E00831CC4 /* SettingsKeyValueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA641E47204E00831CC4 /* SettingsKeyValueCell.swift */; };
 		B68EEA671E472B1B00831CC4 /* SettingsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA661E472B1B00831CC4 /* SettingsFooterView.swift */; };
-		B691545F1E1317A000382F41 /* MyAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = B691545E1E1317A000382F41 /* MyAddress.swift */; };
+		B691545F1E1317A000382F41 /* InternetAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = B691545E1E1317A000382F41 /* InternetAddress.swift */; };
 		B69154631E138E4A00382F41 /* MyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69154621E138E4A00382F41 /* MyTableViewController.swift */; };
 		B69154651E13906500382F41 /* String+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69154641E13906500382F41 /* String+Util.swift */; };
 		B6AE537C1E16D45700FB57E3 /* PresentableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AE537B1E16D45700FB57E3 /* PresentableController.swift */; };
@@ -75,6 +75,10 @@
 		B6CE1D621E120D10003D4FFA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6CE1D611E120D10003D4FFA /* Main.storyboard */; };
 		B6CE1D661E120E4D003D4FFA /* CustomServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D641E120E4D003D4FFA /* CustomServiceType.swift */; };
 		F614628626A1495C00D30CC8 /* TxtRecordsCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = F614628526A1495C00D30CC8 /* TxtRecordsCells.swift */; };
+		F6240E612A915C1700951875 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = F6240E602A915C1700951875 /* Core */; };
+		F6240E632A915C1700951875 /* CoreStorage in Frameworks */ = {isa = PBXBuildFile; productRef = F6240E622A915C1700951875 /* CoreStorage */; };
+		F6240E652A915C1700951875 /* CoreUI in Frameworks */ = {isa = PBXBuildFile; productRef = F6240E642A915C1700951875 /* CoreUI */; };
+		F6240E672A92B8A100951875 /* RunMode in Frameworks */ = {isa = PBXBuildFile; productRef = F6240E662A92B8A100951875 /* RunMode */; };
 		F62EDC66255BAE8B003E5178 /* UIBarButtonItem+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62EDC65255BAE8B003E5178 /* UIBarButtonItem+Util.swift */; };
 		F690B5FB2561E9B600902DAB /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F690B5FA2561E9B600902DAB /* NetworkExtension.framework */; };
 		F69DF275269AB8BF00B97E9D /* EditTxtRecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69DF274269AB8BF00B97E9D /* EditTxtRecordsViewController.swift */; };
@@ -114,7 +118,7 @@
 		B68EEA621E471FD000831CC4 /* SettingsItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsItemCell.swift; sourceTree = "<group>"; };
 		B68EEA641E47204E00831CC4 /* SettingsKeyValueCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsKeyValueCell.swift; sourceTree = "<group>"; };
 		B68EEA661E472B1B00831CC4 /* SettingsFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsFooterView.swift; sourceTree = "<group>"; };
-		B691545E1E1317A000382F41 /* MyAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAddress.swift; sourceTree = "<group>"; };
+		B691545E1E1317A000382F41 /* InternetAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InternetAddress.swift; sourceTree = "<group>"; };
 		B69154621E138E4A00382F41 /* MyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTableViewController.swift; sourceTree = "<group>"; };
 		B69154641E13906500382F41 /* String+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Util.swift"; sourceTree = "<group>"; };
 		B6AE537B1E16D45700FB57E3 /* PresentableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentableController.swift; sourceTree = "<group>"; };
@@ -163,7 +167,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6240E632A915C1700951875 /* CoreStorage in Frameworks */,
+				F6240E652A915C1700951875 /* CoreUI in Frameworks */,
+				F6240E672A92B8A100951875 /* RunMode in Frameworks */,
 				F690B5FB2561E9B600902DAB /* NetworkExtension.framework in Frameworks */,
+				F6240E612A915C1700951875 /* Core in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,7 +280,7 @@
 		B691545D1E12DB0E00382F41 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				B691545E1E1317A000382F41 /* MyAddress.swift */,
+				B691545E1E1317A000382F41 /* InternetAddress.swift */,
 				B62E19961E174236008BC91C /* MyLoadingManager.swift */,
 				B6BD8C7D2002C59F009327B2 /* Log.swift */,
 			);
@@ -475,6 +483,12 @@
 			dependencies = (
 			);
 			name = KozBon;
+			packageProductDependencies = (
+				F6240E602A915C1700951875 /* Core */,
+				F6240E622A915C1700951875 /* CoreStorage */,
+				F6240E642A915C1700951875 /* CoreUI */,
+				F6240E662A92B8A100951875 /* RunMode */,
+			);
 			productName = iDiscover;
 			productReference = B6CE1D241E1208C1003D4FFA /* KozBon.app */;
 			productType = "com.apple.product-type.application";
@@ -485,8 +499,9 @@
 		B6CE1D1C1E1208C1003D4FFA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 1220;
+				LastUpgradeCheck = 1500;
 				ORGANIZATIONNAME = Kozinga;
 				TargetAttributes = {
 					B6CE1D231E1208C1003D4FFA = {
@@ -506,6 +521,9 @@
 				Base,
 			);
 			mainGroup = B6CE1D1B1E1208C1003D4FFA;
+			packageReferences = (
+				F6240E5F2A915C1700951875 /* XCRemoteSwiftPackageReference "Core" */,
+			);
 			productRefGroup = B6CE1D251E1208C1003D4FFA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -571,7 +589,7 @@
 				B6BD8C8C2002E0ED009327B2 /* BluetoothDeviceDetailViewController.swift in Sources */,
 				B6C4BC521E1CC2CD004409F1 /* TableViewCells.swift in Sources */,
 				F614628626A1495C00D30CC8 /* TxtRecordsCells.swift in Sources */,
-				B691545F1E1317A000382F41 /* MyAddress.swift in Sources */,
+				B691545F1E1317A000382F41 /* InternetAddress.swift in Sources */,
 				B679CC171E1647670056C7B5 /* MyBonjourPublishManager.swift in Sources */,
 				B62E19971E174236008BC91C /* MyLoadingManager.swift in Sources */,
 				B6CE1D501E120B90003D4FFA /* UIViewController+Util.swift in Sources */,
@@ -622,6 +640,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APP_DISPLAY_NAME = KozBon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -654,6 +673,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -683,6 +703,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APP_DISPLAY_NAME = KozBon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -715,6 +736,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -741,15 +763,19 @@
 				CURRENT_PROJECT_VERSION = 89;
 				DEVELOPMENT_TEAM = 6SS93B87P2;
 				INFOPLIST_FILE = iDiscover/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = KozBon;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kozinga.KozBon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -764,15 +790,19 @@
 				CURRENT_PROJECT_VERSION = 89;
 				DEVELOPMENT_TEAM = 6SS93B87P2;
 				INFOPLIST_FILE = iDiscover/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = KozBon;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kozinga.KozBon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -801,6 +831,40 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F6240E5F2A915C1700951875 /* XCRemoteSwiftPackageReference "Core" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kelvinkosbab/Core.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F6240E602A915C1700951875 /* Core */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F6240E5F2A915C1700951875 /* XCRemoteSwiftPackageReference "Core" */;
+			productName = Core;
+		};
+		F6240E622A915C1700951875 /* CoreStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F6240E5F2A915C1700951875 /* XCRemoteSwiftPackageReference "Core" */;
+			productName = CoreStorage;
+		};
+		F6240E642A915C1700951875 /* CoreUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F6240E5F2A915C1700951875 /* XCRemoteSwiftPackageReference "Core" */;
+			productName = CoreUI;
+		};
+		F6240E662A92B8A100951875 /* RunMode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F6240E5F2A915C1700951875 /* XCRemoteSwiftPackageReference "Core" */;
+			productName = RunMode;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		B6CE1D2E1E1208C1003D4FFA /* iDiscover.xcdatamodeld */ = {

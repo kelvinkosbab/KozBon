@@ -26,7 +26,7 @@ class MyNetService: NSObject, NetServiceDelegate {
   
   let service: NetService
   let serviceType: MyServiceType
-  var addresses: [MyAddress] = []
+  var addresses: [InternetAddress] = []
   var dataRecords: [MyDataRecord] = []
   weak var delegate: MyNetServiceDelegate? = nil
   
@@ -107,7 +107,7 @@ class MyNetService: NSObject, NetServiceDelegate {
   
   func netServiceDidResolveAddress(_ sender: NetService) {
     Log.log("Service did resolve address \(sender) with hostname \(self.hostName)")
-    self.addresses = MyAddress.parseAddresses(forNetService: sender)
+      self.addresses = sender.parseInternetAddresses()
     NotificationCenter.default.post(name: .netServiceResolveAddressComplete, object: self)
     self.delegate?.serviceDidResolveAddress(self)
     self.completedAddressResolution?()

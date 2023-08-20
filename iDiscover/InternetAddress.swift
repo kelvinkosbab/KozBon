@@ -1,5 +1,5 @@
 //
-//  MyAddress.swift
+//  InternetAddress.swift
 //  iDiscover
 //
 //  Created by Kelvin Kosbab on 12/27/16.
@@ -15,7 +15,7 @@ public struct InternetAddress : Equatable {
     
     // MARK: - Protocol
     
-    /// Determines the versions supported for sending data over the internet or other network.
+    /// Determines the version supported for sending data over the internet or other network.
     public enum `Protocol` {
         
         /// IP (version 4) addresses are 32-bit integers that can be expressed in hexadecimal notation. The
@@ -47,10 +47,22 @@ public struct InternetAddress : Equatable {
     
     // MARK: - InternetAddress Properties and Init
     
+    /// A unique string of characters that identifies each computer using the Internet Protocol to communicate over a network.
     public let ip: String
+    
+    /// A way to identify a specific process to which an internet or other network message is to be forwarded when it arrives at a server.
     public let port: Int
+    
+    /// The version supported for sending data over the internet or other network.
     public let `protocol`: `Protocol`
     
+    /// Constructor.
+    ///
+    /// - Parameter ip: A unique string of characters that identifies each computer using the Internet Protocol to
+    /// communicate over a network.
+    /// - Parameter port: A way to identify a specific process to which an internet or other network message is
+    /// to be forwarded when it arrives at a server.
+    /// - Parameter protocol: The version supported for sending data over the internet or other network.
     public init(
         ip: String,
         port: Int,
@@ -87,58 +99,42 @@ public struct InternetAddress : Equatable {
 
 public extension NetService {
     
-    func parseInternetAddresses() -> [InternetAddress]
-}
-
-
-class MyAddress: Equatable {
-  
-  
-  
-  
-  
-  
-  
-  // MARK: - Static Helpers
-  
-  static func parseAddresses(forNetService service: NetService) -> [MyAddress] {
-    return self.parseAddresses(addresses: service.addresses)
-  }
-  
-  static func parseAddresses(addresses: [Data]?) -> [MyAddress] {
-    var myAddresses: [MyAddress] = []
-    
-    if let addresses = addresses {
-      for address in addresses {
-        let data = address as NSData
-        
-        var inetAddress = sockaddr_in()
-        data.getBytes(&inetAddress, length: MemoryLayout<sockaddr_in>.size)
-        if inetAddress.sin_family == __uint8_t(AF_INET) {
-          
-          // IPv4
-          if let ip = String(cString: inet_ntoa(inetAddress.sin_addr), encoding: .ascii) {
-            let port = inetAddress.sin_port.bigEndian
-            myAddresses.append(MyAddress(ip: ip, port: Int(port), internetProtocol: .v4))
-          }
-          
-        } else if inetAddress.sin_family == __uint8_t(AF_INET6) {
-          
-          // IPv6
-          var inetAddress6 = sockaddr_in6()
-          data.getBytes(&inetAddress6, length: MemoryLayout<sockaddr_in6>.size)
-          let ipStringBuffer = UnsafeMutablePointer<Int8>.allocate(capacity: Int(INET6_ADDRSTRLEN))
-          var addr = inetAddress6.sin6_addr
-          if let ipString = inet_ntop(Int32(inetAddress6.sin6_family), &addr, ipStringBuffer, __uint32_t(INET6_ADDRSTRLEN)) {
-            if let ip = String(cString: ipString, encoding: .ascii) {
-              
-              let port = inetAddress6.sin6_port.bigEndian
-              myAddresses.append(MyAddress(ip: ip, port: Int(port), internetProtocol: .v6))
+    /// Returns an array of `InternetAddress` associated with this `NetService`
+    func parseInternetAddresses() -> [InternetAddress] {
+        let addresses = self.addresses ?? []
+        return addresses.compactMap { addressData in
+            let nsData = addressData as NSData
+            var inetAddress = sockaddr_in()
+            nsData.getBytes(&inetAddress, length: MemoryLayout<sockaddr_in>.size)
+            if inetAddress.sin_family == __uint8_t(AF_INET) {
+                
+                // IPv4
+                if let ip = String(cString: inet_ntoa(inetAddress.sin_addr), encoding: .ascii) {
+                    let port = inetAddress.sin_port.bigEndian
+                    return InternetAddress(
+                        ip: ip,
+                        port: Int(port),
+                        protocol: .v4
+                    )
+                }
+                
+            } else if inetAddress.sin_family == __uint8_t(AF_INET6) {
+                
+                // IPv6
+                var inetAddress6 = sockaddr_in6()
+                nsData.getBytes(&inetAddress6, length: MemoryLayout<sockaddr_in6>.size)
+                let ipStringBuffer = UnsafeMutablePointer<Int8>.allocate(capacity: Int(INET6_ADDRSTRLEN))
+                var addr = inetAddress6.sin6_addr
+                if let ipString = inet_ntop(Int32(inetAddress6.sin6_family), &addr, ipStringBuffer, __uint32_t(INET6_ADDRSTRLEN)), let ip = String(cString: ipString, encoding: .ascii) {
+                    let port = inetAddress6.sin6_port.bigEndian
+                    return InternetAddress(
+                        ip: ip,
+                        port: Int(port),
+                        protocol: .v6
+                    )
+                }
             }
-          }
+            return nil
         }
-      }
     }
-    return myAddresses
-  }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19115.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22146" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19107.5"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22122"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -473,8 +473,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="302" height="104"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bluetooth is Unsupported" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nxJ-YM-fpV">
-                                            <rect key="frame" x="49" y="42" width="204" height="20.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bluetooth is unsupported on this device" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nxJ-YM-fpV">
+                                            <rect key="frame" x="0.0" y="0.0" width="302" height="104"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -482,8 +482,10 @@
                                     </subviews>
                                 </view>
                                 <constraints>
-                                    <constraint firstItem="nxJ-YM-fpV" firstAttribute="centerX" secondItem="C9a-Ri-Qam" secondAttribute="centerX" id="2T6-NR-JTN"/>
-                                    <constraint firstItem="nxJ-YM-fpV" firstAttribute="centerY" secondItem="C9a-Ri-Qam" secondAttribute="centerY" id="5nU-Rl-y8P"/>
+                                    <constraint firstAttribute="bottom" secondItem="nxJ-YM-fpV" secondAttribute="bottom" id="Gfy-ei-lN0"/>
+                                    <constraint firstAttribute="trailing" secondItem="nxJ-YM-fpV" secondAttribute="trailing" id="gqP-Wy-QAM"/>
+                                    <constraint firstItem="nxJ-YM-fpV" firstAttribute="leading" secondItem="C9a-Ri-Qam" secondAttribute="leading" id="hzZ-Cd-JTm"/>
+                                    <constraint firstItem="nxJ-YM-fpV" firstAttribute="top" secondItem="C9a-Ri-Qam" secondAttribute="top" id="qJd-TM-v0A"/>
                                 </constraints>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ServicesServiceCell" id="bla-jN-Lrm" customClass="ServicesServiceCell" customModule="KozBon" customModuleProvider="target">
@@ -559,7 +561,7 @@
     <resources>
         <image name="iconChevronRight" width="22" height="22"/>
         <systemColor name="secondarySystemBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

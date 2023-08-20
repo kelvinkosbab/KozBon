@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "core",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kelvinkosbab/Core.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "e0ba349e1cbaee33baffe8991491afb728853912"
+      }
+    }
+  ],
+  "version" : 2
+}

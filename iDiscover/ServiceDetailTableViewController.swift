@@ -311,7 +311,10 @@ class ServiceDetailTableViewController: MyTableViewController {
         let address = service.addresses[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell
         cell.contentView.backgroundColor = .secondarySystemBackground
-        cell.configure(title: address.fullAddress, detail: address.internetProtocol.string)
+        cell.configure(
+            title: address.ipPortString,
+            detail: address.protocol.stringRepresentation
+        )
         return cell
         
       } else if indexPath.section == 2 {
