@@ -56,7 +56,6 @@
 		B6BD8C9020030540009327B2 /* BluetoothCharacteristicDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BD8C8F2003053F009327B2 /* BluetoothCharacteristicDetailViewController.swift */; };
 		B6C4BC521E1CC2CD004409F1 /* TableViewCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C4BC511E1CC2CD004409F1 /* TableViewCells.swift */; };
 		B6C4BC551E1CD30A004409F1 /* CreateServiceTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C4BC541E1CD30A004409F1 /* CreateServiceTypeTableViewController.swift */; };
-		B6CE1D281E1208C1003D4FFA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D271E1208C1003D4FFA /* AppDelegate.swift */; };
 		B6CE1D301E1208C1003D4FFA /* iDiscover.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D2E1E1208C1003D4FFA /* iDiscover.xcdatamodeld */; };
 		B6CE1D321E1208C1003D4FFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6CE1D311E1208C1003D4FFA /* Assets.xcassets */; };
 		B6CE1D351E1208C1003D4FFA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6CE1D331E1208C1003D4FFA /* LaunchScreen.storyboard */; };
@@ -79,6 +78,17 @@
 		F6240E632A915C1700951875 /* CoreStorage in Frameworks */ = {isa = PBXBuildFile; productRef = F6240E622A915C1700951875 /* CoreStorage */; };
 		F6240E652A915C1700951875 /* CoreUI in Frameworks */ = {isa = PBXBuildFile; productRef = F6240E642A915C1700951875 /* CoreUI */; };
 		F6240E672A92B8A100951875 /* RunMode in Frameworks */ = {isa = PBXBuildFile; productRef = F6240E662A92B8A100951875 /* RunMode */; };
+		F6240E692A92CF0600951875 /* AppCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E682A92CF0600951875 /* AppCore.swift */; };
+		F6240E6C2A92D62200951875 /* BonjourView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E6B2A92D62200951875 /* BonjourView.swift */; };
+		F6240E6F2A92D63400951875 /* BluetoothView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E6E2A92D63400951875 /* BluetoothView.swift */; };
+		F6240E722A92D75200951875 /* InformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E712A92D75200951875 /* InformationView.swift */; };
+		F6240E742A92D91800951875 /* AppStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E732A92D91800951875 /* AppStyles.swift */; };
+		F6240E762A93F3A500951875 /* SidebarNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E752A93F3A500951875 /* SidebarNavigationView.swift */; };
+		F6240E782A93F4D500951875 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E772A93F4D500951875 /* TabBar.swift */; };
+		F6240E7C2A94077F00951875 /* BarItemLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E7B2A94077F00951875 /* BarItemLabel.swift */; };
+		F6240E7F2A941BD500951875 /* BarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E7E2A941BD500951875 /* BarItem.swift */; };
+		F6240E812A94206D00951875 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E802A94206D00951875 /* TabBarItem.swift */; };
+		F6240E832A94209100951875 /* SidebarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E822A94209100951875 /* SidebarItem.swift */; };
 		F62EDC66255BAE8B003E5178 /* UIBarButtonItem+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62EDC65255BAE8B003E5178 /* UIBarButtonItem+Util.swift */; };
 		F690B5FB2561E9B600902DAB /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F690B5FA2561E9B600902DAB /* NetworkExtension.framework */; };
 		F69DF275269AB8BF00B97E9D /* EditTxtRecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69DF274269AB8BF00B97E9D /* EditTxtRecordsViewController.swift */; };
@@ -135,7 +145,6 @@
 		B6C4BC511E1CC2CD004409F1 /* TableViewCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCells.swift; sourceTree = "<group>"; };
 		B6C4BC541E1CD30A004409F1 /* CreateServiceTypeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateServiceTypeTableViewController.swift; sourceTree = "<group>"; };
 		B6CE1D241E1208C1003D4FFA /* KozBon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KozBon.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B6CE1D271E1208C1003D4FFA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B6CE1D2F1E1208C1003D4FFA /* iDiscover.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iDiscover.xcdatamodel; sourceTree = "<group>"; };
 		B6CE1D311E1208C1003D4FFA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B6CE1D341E1208C1003D4FFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -155,6 +164,17 @@
 		B6CE1D611E120D10003D4FFA /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		B6CE1D641E120E4D003D4FFA /* CustomServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomServiceType.swift; path = "Managed Objects/CustomServiceType.swift"; sourceTree = "<group>"; };
 		F614628526A1495C00D30CC8 /* TxtRecordsCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TxtRecordsCells.swift; sourceTree = "<group>"; };
+		F6240E682A92CF0600951875 /* AppCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCore.swift; sourceTree = "<group>"; };
+		F6240E6B2A92D62200951875 /* BonjourView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourView.swift; sourceTree = "<group>"; };
+		F6240E6E2A92D63400951875 /* BluetoothView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothView.swift; sourceTree = "<group>"; };
+		F6240E712A92D75200951875 /* InformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationView.swift; sourceTree = "<group>"; };
+		F6240E732A92D91800951875 /* AppStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStyles.swift; sourceTree = "<group>"; };
+		F6240E752A93F3A500951875 /* SidebarNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarNavigationView.swift; sourceTree = "<group>"; };
+		F6240E772A93F4D500951875 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		F6240E7B2A94077F00951875 /* BarItemLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarItemLabel.swift; sourceTree = "<group>"; };
+		F6240E7E2A941BD500951875 /* BarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarItem.swift; sourceTree = "<group>"; };
+		F6240E802A94206D00951875 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
+		F6240E822A94209100951875 /* SidebarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarItem.swift; sourceTree = "<group>"; };
 		F62EDC5E255B9D25003E5178 /* KozBon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KozBon.entitlements; sourceTree = "<group>"; };
 		F62EDC65255BAE8B003E5178 /* UIBarButtonItem+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Util.swift"; sourceTree = "<group>"; };
 		F6781EF72694C5F6009B79F7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -334,7 +354,12 @@
 		B6CE1D261E1208C1003D4FFA /* iDiscover */ = {
 			isa = PBXGroup;
 			children = (
-				B6CE1D271E1208C1003D4FFA /* AppDelegate.swift */,
+				F6240E682A92CF0600951875 /* AppCore.swift */,
+				F6240E7D2A94120B00951875 /* TabBar & Sidebar */,
+				F6240E732A92D91800951875 /* AppStyles.swift */,
+				F6240E6A2A92D5FE00951875 /* Bonjour */,
+				F6240E6D2A92D62500951875 /* Bluetooth */,
+				F6240E702A92D74700951875 /* Information */,
 				B6CE1D3C1E1208D8003D4FFA /* Common */,
 				B6CE1D431E120977003D4FFA /* Controller */,
 				B6CE1D441E12098A003D4FFA /* Supporting Files */,
@@ -448,6 +473,43 @@
 				B6BD8C832002C715009327B2 /* MyBluetoothDevice.swift */,
 			);
 			name = Bluetooth;
+			sourceTree = "<group>";
+		};
+		F6240E6A2A92D5FE00951875 /* Bonjour */ = {
+			isa = PBXGroup;
+			children = (
+				F6240E6B2A92D62200951875 /* BonjourView.swift */,
+			);
+			name = Bonjour;
+			sourceTree = "<group>";
+		};
+		F6240E6D2A92D62500951875 /* Bluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				F6240E6E2A92D63400951875 /* BluetoothView.swift */,
+			);
+			name = Bluetooth;
+			sourceTree = "<group>";
+		};
+		F6240E702A92D74700951875 /* Information */ = {
+			isa = PBXGroup;
+			children = (
+				F6240E712A92D75200951875 /* InformationView.swift */,
+			);
+			name = Information;
+			sourceTree = "<group>";
+		};
+		F6240E7D2A94120B00951875 /* TabBar & Sidebar */ = {
+			isa = PBXGroup;
+			children = (
+				F6240E7E2A941BD500951875 /* BarItem.swift */,
+				F6240E7B2A94077F00951875 /* BarItemLabel.swift */,
+				F6240E822A94209100951875 /* SidebarItem.swift */,
+				F6240E752A93F3A500951875 /* SidebarNavigationView.swift */,
+				F6240E772A93F4D500951875 /* TabBar.swift */,
+				F6240E802A94206D00951875 /* TabBarItem.swift */,
+			);
+			name = "TabBar & Sidebar";
 			sourceTree = "<group>";
 		};
 		F690B5F92561E9B600902DAB /* Frameworks */ = {
@@ -573,6 +635,7 @@
 				B68EEA651E47204E00831CC4 /* SettingsKeyValueCell.swift in Sources */,
 				B679CC0A1E1618840056C7B5 /* MyRootController.swift in Sources */,
 				B6AE53841E17090A00FB57E3 /* PublishDetailCreateViewController.swift in Sources */,
+				F6240E692A92CF0600951875 /* AppCore.swift in Sources */,
 				B6089C9A1E19D76D00C7CF29 /* ServiceDetailTableViewController.swift in Sources */,
 				B6BD8C842002C715009327B2 /* MyBluetoothDevice.swift in Sources */,
 				B68B7DDF2003287100E592D9 /* Data+Util.swift in Sources */,
@@ -584,6 +647,8 @@
 				B63B27BD1E15A9BB003E13F0 /* MyNavigationController.swift in Sources */,
 				B68EEA471E4685E200831CC4 /* ServicesViewController.swift in Sources */,
 				B6CE1D5C1E120CCC003D4FFA /* MyBonjourManager.swift in Sources */,
+				F6240E812A94206D00951875 /* TabBarItem.swift in Sources */,
+				F6240E7F2A941BD500951875 /* BarItem.swift in Sources */,
 				B6AE53861E170A6400FB57E3 /* PublishDetailExistingViewController.swift in Sources */,
 				B6CE1D561E120BF4003D4FFA /* MyDataManager.swift in Sources */,
 				B6BD8C8C2002E0ED009327B2 /* BluetoothDeviceDetailViewController.swift in Sources */,
@@ -592,23 +657,30 @@
 				B691545F1E1317A000382F41 /* InternetAddress.swift in Sources */,
 				B679CC171E1647670056C7B5 /* MyBonjourPublishManager.swift in Sources */,
 				B62E19971E174236008BC91C /* MyLoadingManager.swift in Sources */,
+				F6240E6C2A92D62200951875 /* BonjourView.swift in Sources */,
+				F6240E742A92D91800951875 /* AppStyles.swift in Sources */,
 				B6CE1D501E120B90003D4FFA /* UIViewController+Util.swift in Sources */,
 				B68B212D1E47A55800BE2CA2 /* ServiceDetailSimpleCell.swift in Sources */,
 				B68EC5A01E2F226A00C9D5CC /* BluetoothViewController.swift in Sources */,
+				F6240E7C2A94077F00951875 /* BarItemLabel.swift in Sources */,
 				B68EEA571E47104D00831CC4 /* ServicesServiceCell.swift in Sources */,
 				B68EEA631E471FD000831CC4 /* SettingsItemCell.swift in Sources */,
+				F6240E782A93F4D500951875 /* TabBar.swift in Sources */,
 				B6BD8C7E2002C59F009327B2 /* Log.swift in Sources */,
+				F6240E722A92D75200951875 /* InformationView.swift in Sources */,
 				B68EEA671E472B1B00831CC4 /* SettingsFooterView.swift in Sources */,
 				B69154631E138E4A00382F41 /* MyTableViewController.swift in Sources */,
 				F62EDC66255BAE8B003E5178 /* UIBarButtonItem+Util.swift in Sources */,
 				B6CE1D301E1208C1003D4FFA /* iDiscover.xcdatamodeld in Sources */,
+				F6240E832A94209100951875 /* SidebarItem.swift in Sources */,
 				B679CC131E1624740056C7B5 /* PublishNetServiceSearchViewController.swift in Sources */,
 				B6CE1D521E120B9F003D4FFA /* MyDataManagerObject.swift in Sources */,
-				B6CE1D281E1208C1003D4FFA /* AppDelegate.swift in Sources */,
+				F6240E6F2A92D63400951875 /* BluetoothView.swift in Sources */,
 				B6BD8C9020030540009327B2 /* BluetoothCharacteristicDetailViewController.swift in Sources */,
 				B6CE1D5E1E120CCC003D4FFA /* MyNetService.swift in Sources */,
 				B68EEA611E471F4200831CC4 /* SettingsHeaderView.swift in Sources */,
 				B6AE53801E16E9F600FB57E3 /* UIDevice+Util.swift in Sources */,
+				F6240E762A93F3A500951875 /* SidebarNavigationView.swift in Sources */,
 				B6BD8C802002C6E2009327B2 /* MyBluetoothManager.swift in Sources */,
 				B6833CBD1E3D44F200F56A90 /* BluetoothDeviceCell.swift in Sources */,
 				B67BB3281E18657F00A3228E /* AllServiceTypesTableViewController.swift in Sources */,
@@ -765,7 +837,7 @@
 				INFOPLIST_FILE = iDiscover/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = KozBon;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -792,7 +864,7 @@
 				INFOPLIST_FILE = iDiscover/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = KozBon;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -85,14 +85,15 @@ class MyLoadingManager {
   }
   
   class func showLoading(_ completion: (() -> ())? = nil) {
-    if let window = AppDelegate.shared.window {
-      self.showLoading(view: window, completion: completion)
-    }
+      // KAK TODO
+//    if let window = AppDelegate.shared.window {
+//      self.showLoading(view: window, completion: completion)
+//    }
   }
   
   class func hideLoading(_ completion: (() -> ())? = nil) {
-    if let window = AppDelegate.shared.window {
-      self.hideLoading(view: window, completion: completion)
-    }
+//    if let window = AppDelegate.shared.window {
+//      self.hideLoading(view: window, completion: completion)
+//    }
   }
 }
