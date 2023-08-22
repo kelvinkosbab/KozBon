@@ -72,7 +72,7 @@ enum SidebarItem : BarItem {
         case .bonjourCreateService:
             Image.plusDiamondFill
         case .bluetooth:
-            Image.bluetooth
+            Image.bluetoothCapsuleFill
         case .appInformation:
             Image.infoCircleFill
         }
@@ -96,7 +96,7 @@ enum SidebarItem : BarItem {
     var destination: AnyView? {
         switch self {
         case .bonjourScanForActiveServices:
-            AnyView(BonjourView())
+            AnyView(BonjourScanForServicesView())
         case .bonjourSupportedServices:
             AnyView(Text("supportedServiceTypes"))
         case .bonjourCreateService:

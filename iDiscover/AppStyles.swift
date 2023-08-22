@@ -22,7 +22,8 @@ extension Image {
     // MARK: - Custom Images
     
     static let bonjour = Image("iconBonjour")
-    static let bluetooth = Image("iconBluetooth")
+    static let bluetooth = Image("bluetooth")
+    static let bluetoothCapsuleFill = Image("bluetooth.capsule.fill")
     
     // MARK: - SF Symbols
     

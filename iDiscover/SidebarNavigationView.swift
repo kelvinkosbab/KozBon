@@ -42,7 +42,7 @@ struct Sidebar : View {
                     item.content
                 }
                 .onTapGesture {
-                    if item.id != SidebarItem.appInformation.id {
+                    if item.isSelectable {
                         self.dataSource.selectedItem = item
                     }
                 }
@@ -61,6 +61,10 @@ class SidebarDataSource : ObservableObject {
     
     init(selectedItem: Binding<(any BarItem)?>) {
         self._selectedItem = selectedItem
+        
+        if self.selectedItem == nil {
+            self.selectedItem = self.items.first
+        }
     }
     
     let items: [any BarItem] = [

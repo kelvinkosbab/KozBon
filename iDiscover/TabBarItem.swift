@@ -52,7 +52,7 @@ enum TabBarItem : BarItem {
         case .bonjour:
             Image.bonjour
         case .bluetooth:
-            Image.bluetooth
+            Image.bluetoothCapsuleFill
         case .information:
             Image.infoCircleFill
         }
@@ -65,7 +65,7 @@ enum TabBarItem : BarItem {
     var destination: AnyView? {
         switch self {
         case .bonjour:
-            AnyView(BonjourView())
+            AnyView(BonjourScanForServicesView())
         case .bluetooth:
             AnyView(BluetoothView())
         case .information:

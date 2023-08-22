@@ -27,7 +27,9 @@ struct TabBar : View {
                             .foregroundColor(.kozBonBlue)
                     }
                     .onTapGesture {
-                        self.dataSource.selectedItem = item
+                        if item.isSelectable {
+                            self.dataSource.selectedItem = item
+                        }
                     }
             }
         }
@@ -42,6 +44,10 @@ struct TabBar : View {
         
         init(selectedItem: Binding<(any BarItem)?>) {
             self._selectedItem = selectedItem
+            
+            if self.selectedItem == nil {
+                self.selectedItem = self.items.first
+            }
         }
         
         let items: [any BarItem] = [

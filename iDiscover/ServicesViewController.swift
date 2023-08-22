@@ -28,17 +28,36 @@ class ServicesViewController : MyCollectionViewController {
     super.viewDidLoad()
     
     self.navigationItem.title = "Bonjour Services"
-    self.tabBarItem = UITabBarItem(title: "Bonjour", image: #imageLiteral(resourceName: "iconBonjour"), selectedImage: nil)
+    self.tabBarItem = UITabBarItem(
+        title: "Bonjour",
+        image: #imageLiteral(resourceName: "iconBonjour"),
+        selectedImage: nil
+    )
     
-    let plusBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus.circle.fill"), style: .done, target: self, action: #selector(self.presentAddActionSheet(_:)))
-    let sortBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.up.arrow.down.circle.fill"), style: .done, target: self, action: #selector(self.sortButtonSelected(_:)))
+    let plusBarButtonItem = UIBarButtonItem(
+        image: UIImage(systemName: "plus.circle.fill"),
+        style: .done,
+        target: self,
+        action: #selector(self.presentAddActionSheet(_:))
+    )
+    let sortBarButtonItem = UIBarButtonItem(
+        image: UIImage(systemName: "arrow.up.arrow.down.circle.fill"),
+        style: .done,
+        target: self,
+        action: #selector(self.sortButtonSelected(_:))
+    )
     self.navigationItem.rightBarButtonItems = [plusBarButtonItem, sortBarButtonItem]
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     
-    NotificationCenter.default.addObserver(self, selector: #selector(self.reloadBrowsingServices), name: UIApplication.willEnterForegroundNotification, object: nil)
+    NotificationCenter.default.addObserver(
+        self,
+        selector: #selector(self.reloadBrowsingServices),
+        name: UIApplication.willEnterForegroundNotification,
+        object: nil
+    )
     
     MyBonjourManager.shared.delegate = self
     MyBonjourPublishManager.shared.delegate = self
