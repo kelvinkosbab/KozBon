@@ -59,7 +59,7 @@ class ServicesViewController : MyCollectionViewController {
         object: nil
     )
     
-    MyBonjourManager.shared.delegate = self
+    BonjourServiceScanner.shared.delegate = self
     MyBonjourPublishManager.shared.delegate = self
     self.reloadBrowsingServices()
   }
@@ -96,7 +96,7 @@ class ServicesViewController : MyCollectionViewController {
     self.isBrowsingForServces = true
     
     // Start service discovery
-    MyBonjourManager.shared.startDiscovery { [weak self] services in
+    BonjourServiceScanner.shared.startDiscovery { [weak self] services in
       
       // Update the browsing for services flag
       self?.isBrowsingForServces = false
@@ -109,7 +109,7 @@ class ServicesViewController : MyCollectionViewController {
     
     // Construct sort message
     let message: String?
-    if let sortType = MyBonjourManager.shared.sortType {
+    if let sortType = BonjourServiceScanner.shared.sortType {
       message = "Currently: \(sortType.string)"
     } else {
       message = nil
@@ -119,7 +119,7 @@ class ServicesViewController : MyCollectionViewController {
     let sortMenuController = UIAlertController(title: "Sort By", message: message, preferredStyle: .actionSheet)
     for sortType in MyNetServiceSortType.all {
       sortMenuController.addAction(UIAlertAction(title: sortType.string, style: .default, handler: { (_) in
-        MyBonjourManager.shared.sortType = sortType
+        BonjourServiceScanner.shared.sortType = sortType
       }))
     }
     sortMenuController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -174,11 +174,11 @@ class ServicesViewController : MyCollectionViewController {
   
   // MARK: - UICollectionView Helpers
   
-  var services: [MyNetService] {
-    return MyBonjourManager.shared.services
+  var services: [BonjourService] {
+    return BonjourServiceScanner.shared.services
   }
     
-    var publishedServices: [MyNetService] {
+    var publishedServices: [BonjourService] {
       return MyBonjourPublishManager.shared.publishedServices
     }
   
@@ -203,7 +203,7 @@ class ServicesViewController : MyCollectionViewController {
   
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ServicesServiceCell.name, for: indexPath) as! ServicesServiceCell
-    let service: MyNetService = {
+    let service: BonjourService = {
         if indexPath.section == 0 {
             return self.services[indexPath.row]
         } else {
@@ -227,14 +227,14 @@ class ServicesViewController : MyCollectionViewController {
 
 // MARK: - MyBonjourManagerDelegate
 
-extension ServicesViewController : MyBonjourManagerDelegate, MyBonjourPublishManagerDelegate {
+extension ServicesViewController : BonjourServiceScannerDelegate, MyBonjourPublishManagerDelegate {
     
-    func servicesDidUpdate(_ services: [MyNetService]) {
+    func servicesDidUpdate(_ services: [BonjourService]) {
         self.reloadData()
         self.updateEmptyState()
     }
     
-    func publishedServicesUpdated(_ publishedServices: [MyNetService]) {
+    func publishedServicesUpdated(_ publishedServices: [BonjourService]) {
         self.reloadData()
         self.updateEmptyState()
     }

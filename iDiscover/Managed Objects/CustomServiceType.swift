@@ -30,28 +30,28 @@ extension CustomServiceType: MyDataManagerObject {
     return "_\(self.serviceType)._\(self.transportLayer.string)"
   }
   
-  private var transportLayer: MyTransportLayer {
+  private var transportLayer: TransportLayer {
     get {
-      return MyTransportLayer(rawValue: Int(self.transportLayerValue))!
+      return TransportLayer(rawValue: Int(self.transportLayerValue))!
     }
     set {
       self.transportLayerValue = Int16(newValue.rawValue)
     }
   }
   
-  var myServiceType: MyServiceType {
-    return MyServiceType(name: self.name, type: self.serviceType, transportLayer: self.transportLayer, detail: self.detail)
+  var BonjourServiceType: BonjourServiceType {
+      return KozBon.BonjourServiceType(name: self.name, type: self.serviceType, transportLayer: self.transportLayer, detail: self.detail)
   }
   
   // MARK: - Fetch
   
-  static func fetch(serviceType: String, transportLayer: MyTransportLayer) -> CustomServiceType? {
+  static func fetch(serviceType: String, transportLayer: TransportLayer) -> CustomServiceType? {
     return self.fetchOne(format: "serviceType = %@ AND transportLayerValue = %ld", serviceType, Int16(transportLayer.rawValue))
   }
   
   // MARK: - Create / Update
   
-  static func createOrUpdate(name: String, serviceType: String, transportLayer: MyTransportLayer, detail: String? = nil) -> CustomServiceType {
+  static func createOrUpdate(name: String, serviceType: String, transportLayer: TransportLayer, detail: String? = nil) -> CustomServiceType {
     let object = self.fetch(serviceType: serviceType, transportLayer: transportLayer) ?? self.create()
     object.name = name
     object.serviceType = serviceType

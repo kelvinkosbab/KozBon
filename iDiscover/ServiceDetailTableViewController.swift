@@ -17,7 +17,7 @@ class ServiceDetailTableViewController: MyTableViewController {
     return self.newViewController(fromStoryboard: .services)
   }
   
-  static func newViewController(browsedService service: MyNetService) -> ServiceDetailTableViewController {
+  static func newViewController(browsedService service: BonjourService) -> ServiceDetailTableViewController {
     let viewController = self.newViewController()
     viewController.mode = .browsedService
     viewController.service = service
@@ -25,7 +25,7 @@ class ServiceDetailTableViewController: MyTableViewController {
     return viewController
   }
   
-  static func newViewController(publishedService service: MyNetService) -> ServiceDetailTableViewController {
+  static func newViewController(publishedService service: BonjourService) -> ServiceDetailTableViewController {
     let viewController = self.newViewController()
     viewController.mode = .publishedService
     viewController.service = service
@@ -33,7 +33,7 @@ class ServiceDetailTableViewController: MyTableViewController {
     return viewController
   }
   
-  static func newViewController(serviceType: MyServiceType) -> ServiceDetailTableViewController {
+  static func newViewController(serviceType: BonjourServiceType) -> ServiceDetailTableViewController {
     let viewController = self.newViewController()
     viewController.mode = .serviceType
     viewController.service = nil
@@ -60,8 +60,8 @@ class ServiceDetailTableViewController: MyTableViewController {
   }
   
   var mode: ServiceDetailMode = .browsedService
-  var service: MyNetService? = nil
-  var serviceType: MyServiceType!
+  var service: BonjourService? = nil
+  var serviceType: BonjourServiceType!
   
   // MARK: - Lifecycle
   
@@ -89,8 +89,8 @@ class ServiceDetailTableViewController: MyTableViewController {
     }
     
     if let service = self.service {
-      NotificationCenter.default.addObserver(self, selector: #selector(self.serviceWasRemoved(_:)), name: .bonjourDidRemoveService, object: service)
-      NotificationCenter.default.addObserver(self, selector: #selector(self.serviceWasRemoved(_:)), name: .bonjourDidClearServices, object: nil)
+//      NotificationCenter.default.addObserver(self, selector: #selector(self.serviceWasRemoved(_:)), name: .bonjourDidRemoveService, object: service)
+//      NotificationCenter.default.addObserver(self, selector: #selector(self.serviceWasRemoved(_:)), name: .bonjourDidClearServices, object: nil)
       NotificationCenter.default.addObserver(self, selector: #selector(self.reloadData), name: .netServiceResolveAddressComplete, object: service)
       NotificationCenter.default.addObserver(self, selector: #selector(self.reloadData), name: .netServiceDidPublish, object: service)
       NotificationCenter.default.addObserver(self, selector: #selector(self.reloadData), name: .netServiceDidUnPublish, object: service)

@@ -1,5 +1,5 @@
 //
-//  MyServiceType+CustomServiceType.swift
+//  BonjourServiceType+CustomServiceType.swift
 //  iDiscover
 //
 //  Created by Kelvin Kosbab on 1/1/17.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension MyServiceType {
+extension BonjourServiceType {
   
   // MARK: - Saving / Deleting Persistent Copies
   
@@ -18,7 +18,7 @@ extension MyServiceType {
   
   func savePersistentCopy() {
     // Check if type already exists in the built in library
-    if !MyServiceType.exists(serviceTypes: MyServiceType.serviceTypeLibrary, fullType: self.fullType) {
+    if !BonjourServiceType.exists(serviceTypes: BonjourServiceType.serviceTypeLibrary, fullType: self.fullType) {
       _ = CustomServiceType.createOrUpdate(name: self.name, serviceType: self.type, transportLayer: self.transportLayer, detail: self.detail)
     }
   }
@@ -31,22 +31,22 @@ extension MyServiceType {
   
   // MARK: - Static Helpers
   
-  static func fetchPersistentCopy(type: String, transportLayer: MyTransportLayer) -> MyServiceType? {
+  static func fetchPersistentCopy(type: String, transportLayer: TransportLayer) -> BonjourServiceType? {
     if let persistentCopy = CustomServiceType.fetch(serviceType: type, transportLayer: transportLayer) {
-      return persistentCopy.myServiceType
+      return persistentCopy.BonjourServiceType
     }
     return nil
   }
   
-  static func fetchAllPersistentCopies() -> [MyServiceType] {
-    var copies: [MyServiceType] = []
+  static func fetchAllPersistentCopies() -> [BonjourServiceType] {
+    var copies: [BonjourServiceType] = []
     for serviceType in CustomServiceType.fetchAll() {
-      copies.append(serviceType.myServiceType)
+      copies.append(serviceType.BonjourServiceType)
     }
     return copies
   }
   
-  static func deletePersistentCopy(serviceType: MyServiceType) {
+  static func deletePersistentCopy(serviceType: BonjourServiceType) {
     serviceType.deletePersistentCopy()
   }
   

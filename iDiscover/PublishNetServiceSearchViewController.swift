@@ -24,12 +24,12 @@ class PublishNetServiceSearchViewController: MyTableViewController, UISearchResu
   
   // MARK: - Properties
   
-  var serviceTypes: [MyServiceType] = []
-  var filteredServiceTypes: [MyServiceType] = []
+  var serviceTypes: [BonjourServiceType] = []
+  var filteredServiceTypes: [BonjourServiceType] = []
   let searchController = UISearchController(searchResultsController: nil)
   
   private var isFiltered: Bool {
-    let scope = MyServiceTypeScope.allScopes[self.searchController.searchBar.selectedScopeButtonIndex]
+    let scope = BonjourServiceTypeScope.allScopes[self.searchController.searchBar.selectedScopeButtonIndex]
     if self.searchController.isActive, let text = self.searchController.searchBar.text, !text.isEmpty {
       return true
     } else if !scope.isAll {
@@ -54,11 +54,11 @@ class PublishNetServiceSearchViewController: MyTableViewController, UISearchResu
     self.searchController.searchResultsUpdater = self
     self.searchController.searchBar.delegate = self
     self.definesPresentationContext = true
-    self.searchController.searchBar.scopeButtonTitles = MyServiceTypeScope.allScopeTitles 
+    self.searchController.searchBar.scopeButtonTitles = BonjourServiceTypeScope.allScopeTitles 
     self.tableView.tableHeaderView = self.searchController.searchBar
     
     // Populate existing service types
-    self.serviceTypes = MyServiceType.fetchAll().sorted { (serviceType1: MyServiceType, serviceType2: MyServiceType) -> Bool in
+    self.serviceTypes = BonjourServiceType.fetchAll().sorted { (serviceType1: BonjourServiceType, serviceType2: BonjourServiceType) -> Bool in
       return serviceType1.name < serviceType2.name
     }
   }
@@ -77,9 +77,9 @@ class PublishNetServiceSearchViewController: MyTableViewController, UISearchResu
   
   // MARK: - Search Controller
   
-  func filterContent(searchText: String? = nil, scope: MyServiceTypeScope = .all) {
+  func filterContent(searchText: String? = nil, scope: BonjourServiceTypeScope = .all) {
     
-    self.filteredServiceTypes = self.serviceTypes.filter { (serviceType: MyServiceType) -> Bool in
+    self.filteredServiceTypes = self.serviceTypes.filter { (serviceType: BonjourServiceType) -> Bool in
       
       // Check category match
       let categoryMatch = (scope.isAll) || (scope.isBuiltIn && serviceType.isBuiltIn) || (scope.isCreated && serviceType.hasPersistentCopy)
@@ -107,7 +107,7 @@ class PublishNetServiceSearchViewController: MyTableViewController, UISearchResu
   // MARK: - UISearchResultsUpdating
   
   func updateSearchResults(for searchController: UISearchController) {
-    let scope = MyServiceTypeScope.allScopes[searchController.searchBar.selectedScopeButtonIndex]
+    let scope = BonjourServiceTypeScope.allScopes[searchController.searchBar.selectedScopeButtonIndex]
     self.filterContent(searchText: searchController.searchBar.text, scope: scope)
   }
   
@@ -115,18 +115,18 @@ class PublishNetServiceSearchViewController: MyTableViewController, UISearchResu
   
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
     if searchText.isEmpty {
-      let scope = MyServiceTypeScope.allScopes[searchBar.selectedScopeButtonIndex]
+      let scope = BonjourServiceTypeScope.allScopes[searchBar.selectedScopeButtonIndex]
       self.filterContent(scope: scope)
     }
   }
   
   func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-    let scope = MyServiceTypeScope.allScopes[searchBar.selectedScopeButtonIndex]
+    let scope = BonjourServiceTypeScope.allScopes[searchBar.selectedScopeButtonIndex]
     self.filterContent(scope: scope)
   }
   
   func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-    let scope = MyServiceTypeScope.allScopes[selectedScope]
+    let scope = BonjourServiceTypeScope.allScopes[selectedScope]
     self.filterContent(searchText: searchBar.text, scope: scope)
   }
   

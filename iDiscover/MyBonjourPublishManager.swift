@@ -9,7 +9,7 @@
 import Foundation
 
 protocol MyBonjourPublishManagerDelegate : AnyObject {
-  func publishedServicesUpdated(_ publishedServices: [MyNetService])
+  func publishedServicesUpdated(_ publishedServices: [BonjourService])
 }
 
 class MyBonjourPublishManager: NSObject {
@@ -33,20 +33,20 @@ class MyBonjourPublishManager: NSObject {
   
   // MARK: - Published Services
   
-  var publishedServices: [MyNetService] = [] {
+  var publishedServices: [BonjourService] = [] {
     didSet {
       self.delegate?.publishedServicesUpdated(self.publishedServices)
     }
   }
   
-  private func add(publishedService service: MyNetService) {
+  private func add(publishedService service: BonjourService) {
     if !self.publishedServices.contains(service) {
       self.publishedServices.append(service)
       service.resolve()
     }
   }
   
-  private func remove(publishedService service: MyNetService) {
+  private func remove(publishedService service: BonjourService) {
     if let index = self.publishedServices.firstIndex(of: service) {
       self.publishedServices.remove(at: index)
     }
@@ -55,13 +55,13 @@ class MyBonjourPublishManager: NSObject {
   // MARK: - Notifications
   
   @objc private func serviceDidPublish(_ notification: Notification) {
-    if let service = notification.object as? MyNetService {
+    if let service = notification.object as? BonjourService {
       self.add(publishedService: service)
     }
   }
   
   @objc private func serviceDidUnPublish(_ notification: Notification) {
-    if let service = notification.object as? MyNetService {
+    if let service = notification.object as? BonjourService {
       self.remove(publishedService: service)
     }
   }
@@ -72,17 +72,17 @@ class MyBonjourPublishManager: NSObject {
                type: String,
                port: Int,
                domain: String,
-               transportLayer: MyTransportLayer,
+               transportLayer: TransportLayer,
                detail: String? = nil,
                success: @escaping () -> Void, failure: @escaping () -> Void) {
-    let serviceType = MyServiceType(name: name, type: type, transportLayer: transportLayer, detail: detail)
+    let serviceType = BonjourServiceType(name: name, type: type, transportLayer: transportLayer, detail: detail)
     serviceType.savePersistentCopy()
     let netService = NetService(domain: domain, type: serviceType.fullType, name: name, port: Int32(port))
-    let service = MyNetService(service: netService, serviceType: serviceType)
+    let service = BonjourService(service: netService, serviceType: serviceType)
     self.publish(service: service, success: success, failure: failure)
   }
   
-  func publish(service: MyNetService,
+  func publish(service: BonjourService,
                success: @escaping () -> Void,
                failure: @escaping () -> Void) {
     service.publish(publishServiceSuccess: {
@@ -92,7 +92,7 @@ class MyBonjourPublishManager: NSObject {
     }, publishServiceFailure: failure)
   }
   
-  func unPublish(service: MyNetService, completion: (() -> Void)? = nil) {
+  func unPublish(service: BonjourService, completion: (() -> Void)? = nil) {
     service.unPublish { 
       self.remove(publishedService: service)
       completion?()

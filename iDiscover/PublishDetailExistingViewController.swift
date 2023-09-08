@@ -17,7 +17,7 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
     return self.newViewController(fromStoryboard: .services)
   }
   
-  static func newViewController(serviceType: MyServiceType) -> PublishDetailExistingViewController {
+  static func newViewController(serviceType: BonjourServiceType) -> PublishDetailExistingViewController {
     let viewController = self.newViewController()
     viewController.serviceType = serviceType
     return viewController
@@ -38,7 +38,7 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
   
   weak var delegate: PublishNetServiceDelegate? = nil
   
-    private var serviceType: MyServiceType!
+    private var serviceType: BonjourServiceType!
     private var txtRecords: [String: String] = [:]
   
   // MARK: - Lifecycle

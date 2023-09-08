@@ -54,7 +54,7 @@ class CreateServiceTypeTableViewController: MyTableViewController, UITextFieldDe
   
   func updateTypeHelperLabel() {
     if let type = self.typeTextField.text, !type.isEmpty {
-      self.fullTypeLabel.text = MyServiceType.generateFullType(type: type, transportLayer: self.selectedTransportLayer)
+      self.fullTypeLabel.text = BonjourServiceType.generateFullType(type: type, transportLayer: self.selectedTransportLayer)
     } else {
       self.fullTypeLabel.text = "(REQUIRED)"
     }
@@ -66,7 +66,7 @@ class CreateServiceTypeTableViewController: MyTableViewController, UITextFieldDe
     self.updateTypeHelperLabel()
   }
   
-  var selectedTransportLayer: MyTransportLayer {
+  var selectedTransportLayer: TransportLayer {
     return self.transportLayerSegmentedControl.selectedSegmentIndex == 0 ? .tcp : .udp
   }
   
@@ -128,7 +128,7 @@ class CreateServiceTypeTableViewController: MyTableViewController, UITextFieldDe
     
     // Validate the form
     
-    let transportLayer = MyTransportLayer.tcp
+    let transportLayer = TransportLayer.tcp
     
     guard let name = self.nameTextField.text?.trimmed, !name.isEmpty else {
       self.showDisappearingAlertDialog(title: "Service Name Required")
@@ -141,7 +141,7 @@ class CreateServiceTypeTableViewController: MyTableViewController, UITextFieldDe
     }
     
     // Check that type does not match existing service types
-    if MyServiceType.exists(type: type, transportLayer: transportLayer) {
+    if BonjourServiceType.exists(type: type, transportLayer: transportLayer) {
       self.showDisappearingAlertDialog(title: "Invalid \(transportLayer.string.uppercased()) Type", message: "The entered \(transportLayer.string.uppercased()) service type \(type) is already taken.")
       return
     }
@@ -152,7 +152,7 @@ class CreateServiceTypeTableViewController: MyTableViewController, UITextFieldDe
     }
     
     // Create the service type
-    let serviceType = MyServiceType(name: name, type: type, transportLayer: .tcp, detail: detail)
+    let serviceType = BonjourServiceType(name: name, type: type, transportLayer: .tcp, detail: detail)
     
     // Save a persistent copy of the service type
     serviceType.savePersistentCopy()
@@ -160,7 +160,7 @@ class CreateServiceTypeTableViewController: MyTableViewController, UITextFieldDe
     // Show alert dialog and dismiss
     self.showDisappearingAlertDialog(title: "Service Type Created!", message: "\(name) has been created!") { 
       self.dismissController()
-      NotificationCenter.default.post(name: .myServiceTypeDidCreateAndSave, object: serviceType)
+//      NotificationCenter.default.post(name: .BonjourServiceTypeDidCreateAndSave, object: serviceType)
     }
   }
 }

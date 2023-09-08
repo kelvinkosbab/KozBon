@@ -12,7 +12,9 @@ import SwiftUI
 
 extension Color {
     
-    static let kozBonBlue: Color = Color.blue // KAK TODO
+    static var kozBonBlue: Color {
+        Color.blue // KAK TODO
+    }
 }
 
 // MARK: - Images
@@ -21,13 +23,41 @@ extension Image {
     
     // MARK: - Custom Images
     
-    static let bonjour = Image("iconBonjour")
-    static let bluetooth = Image("bluetooth")
-    static let bluetoothCapsuleFill = Image("bluetooth.capsule.fill")
+    static var bonjour: Image {
+        Image("iconBonjour")
+    }
+    
+    static var bluetooth: Image {
+        Image("bluetooth")
+    }
+    
+    static var bluetoothCapsuleFill: Image {
+        Image("bluetooth.capsule.fill")
+    }
     
     // MARK: - SF Symbols
     
-    static let infoCircleFill = Image(systemName: "info.circle.fill")
-    static let plusDiamondFill = Image(systemName: "plus.diamond.fill")
-    static let listBulletRectanglePortraitFill = Image(systemName: "list.bullet.rectangle.portrait.fill")
+    static var arrowClockwiseCircleFill: Image {
+        Image(systemName: "arrow.clockwise.circle.fill")
+    }
+    
+    static var arrowUpArrowDownCircleFill: Image {
+        Image(systemName: "arrow.up.arrow.down.circle.fill")
+    }
+    
+    static var infoCircleFill: Image {
+        Image(systemName: "info.circle.fill")
+    }
+    
+    static var plusCircleFill: Image {
+        Image(systemName: "plus.circle.fill")
+    }
+    
+    static var plusDiamondFill: Image {
+        Image(systemName: "plus.diamond.fill")
+    }
+    
+    static var listBulletRectanglePortraitFill: Image {
+        Image(systemName: "list.bullet.rectangle.portrait.fill")
+    }
 }

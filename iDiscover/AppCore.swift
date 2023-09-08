@@ -18,18 +18,18 @@ struct AppCore : App {
     let runMode = RunMode.getActive()
     let toastApi = ToastApi()
     
-    @ObservedObject var dataSource = DataSource()
+    @StateObject var viewModel = ViewModel()
     
     var body: some Scene {
         WindowGroup {
             switch self.runMode {
             case .mainApplication, .uiUnitTests:
                 GeometryReader { geometry in
-                    if geometry.size.width < self.dataSource.sidebarCutoffWidth {
-                        TabBar(selectedItem: self.$dataSource.selectedItem)
+                    if geometry.size.width < self.viewModel.sidebarCutoffWidth {
+                        TabBar(selectedItem: self.$viewModel.selectedItem)
                             .toastableContainer(toastApi: self.toastApi)
                     } else {
-                        SidebarNavigationView(selectedItem: self.$dataSource.selectedItem)
+                        SidebarNavigationView(selectedItem: self.$viewModel.selectedItem)
                             .toastableContainer(toastApi: self.toastApi)
                     }
                 }
@@ -42,9 +42,9 @@ struct AppCore : App {
         }
     }
     
-    // MARK: - DataSource
+    // MARK: - ViewModel
     
-    class DataSource : ObservableObject {
+    class ViewModel : ObservableObject {
         
         @Published var selectedItem: (any BarItem)?
         

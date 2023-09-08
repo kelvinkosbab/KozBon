@@ -1,5 +1,5 @@
 //
-//  MyNetService.swift
+//  BonjourService.swift
 //  Test
 //
 //  Created by Kelvin Kosbab on 12/25/16.
@@ -7,25 +7,26 @@
 //
 
 import Foundation
+import Core
 
 extension Notification.Name {
-  static let netServiceResolveAddressComplete = Notification.Name(rawValue: "\(MyNetService.name).netServiceResolveAddressComplete")
-  static let netServiceDidPublish = Notification.Name(rawValue: "\(MyNetService.name).netServiceDidPublish")
-  static let netServiceDidUnPublish = Notification.Name(rawValue: "\(MyNetService.name).netServiceDidUnPublish")
-  static let netServiceDidNotPublish = Notification.Name(rawValue: "\(MyNetService.name).netServiceDidNotPublish")
-  static let netServiceDidStop = Notification.Name(rawValue: "\(MyNetService.name).netServiceDidStop")
+    static let netServiceResolveAddressComplete = Notification.Name(rawValue: "BonjourService).netServiceResolveAddressComplete")
+    static let netServiceDidPublish = Notification.Name(rawValue: "BonjourServicenetServiceDidPublish")
+    static let netServiceDidUnPublish = Notification.Name(rawValue: "BonjourServicenetServiceDidUnPublish")
+    static let netServiceDidNotPublish = Notification.Name(rawValue: "BonjourServicenetServiceDidNotPublish")
+    static let netServiceDidStop = Notification.Name(rawValue: "BonjourServicenetServiceDidStop")
 }
 
 protocol MyNetServiceDelegate : AnyObject {
-  func serviceDidResolveAddress(_ service: MyNetService)
+    func serviceDidResolveAddress(_ service: BonjourService)
 }
 
-class MyNetService: NSObject, NetServiceDelegate {
+class BonjourService: NSObject, NetServiceDelegate {
   
   // MARK: - Init
   
   let service: NetService
-  let serviceType: MyServiceType
+  let serviceType: BonjourServiceType
   var addresses: [InternetAddress] = []
   var dataRecords: [MyDataRecord] = []
   weak var delegate: MyNetServiceDelegate? = nil
@@ -45,7 +46,7 @@ class MyNetService: NSObject, NetServiceDelegate {
     }
   }
   
-  init(service: NetService, serviceType: MyServiceType) {
+  init(service: NetService, serviceType: BonjourServiceType) {
     self.service = service
     self.serviceType = serviceType
   }

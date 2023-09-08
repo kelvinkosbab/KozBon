@@ -66,7 +66,7 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
   
   func updateTypeHelperLabel() {
     if let type = self.typeTextField.text, !type.isEmpty {
-      self.fullTypeLabel.text = MyServiceType.generateFullType(type: type, transportLayer: self.selectedTransportLayer)
+      self.fullTypeLabel.text = BonjourServiceType.generateFullType(type: type, transportLayer: self.selectedTransportLayer)
     } else {
       self.fullTypeLabel.text = "(REQUIRED)"
     }
@@ -78,7 +78,7 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
     self.updateTypeHelperLabel()
   }
   
-  var selectedTransportLayer: MyTransportLayer {
+  var selectedTransportLayer: TransportLayer {
     return self.transportLayerSegmentedControl.selectedSegmentIndex == 0 ? .tcp : .udp
   }
   
@@ -113,7 +113,7 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
     if sender == self.typeTextField {
       // Update the helper label
       if let type = self.typeTextField.text, !type.isEmpty {
-        self.fullTypeLabel.text = "(\(MyServiceType.generateFullType(type: type, transportLayer: self.selectedTransportLayer)))"
+        self.fullTypeLabel.text = "(\(BonjourServiceType.generateFullType(type: type, transportLayer: self.selectedTransportLayer)))"
       } else {
         self.fullTypeLabel.text = "(REQUIRED)"
       }
@@ -164,7 +164,7 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
     }
     
     // Check that type does not match existing service types
-    if MyServiceType.exists(type: type, transportLayer: self.selectedTransportLayer) {
+    if BonjourServiceType.exists(type: type, transportLayer: self.selectedTransportLayer) {
       self.showDisappearingAlertDialog(title: "Invalid \(self.selectedTransportLayer.string.uppercased()) Type", message: "The entered \(self.selectedTransportLayer.string.uppercased()) service type \(type) is already taken.")
       return
     }
