@@ -45,6 +45,10 @@ extension Image {
         Image(systemName: "arrow.up.arrow.down.circle.fill")
     }
     
+    static var chevronRight: Image {
+        Image(systemName: "chevron.right")
+    }
+    
     static var infoCircleFill: Image {
         Image(systemName: "info.circle.fill")
     }

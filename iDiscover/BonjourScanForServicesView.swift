@@ -27,10 +27,7 @@ struct BonjourScanForServicesView : View {
         comment: "Reload services button string"
     )
     
-    let sortButtonString = NSLocalizedString(
-        "Sort",
-        comment: "Sort services button string"
-    )
+    
     
     let noActiveServicesString = NSLocalizedString(
         "No active Bonjour services",
@@ -46,7 +43,10 @@ struct BonjourScanForServicesView : View {
                     .headingStyle()
             } else {
                 ForEach(self.viewModel.activeServices, id: \.self.service.hashValue) { service in
-                    Text("Hi")
+                    TitleDetailChevronView(
+                        title: service.service.name,
+                        detail: service.serviceType.name
+                    )
                 }
             }
         }
@@ -56,9 +56,6 @@ struct BonjourScanForServicesView : View {
         ))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                self.renderLeadingToolbarItems()
-            }
             ToolbarItem(placement: .topBarTrailing) {
                 self.renderTrailingToolbarItems()
             }
@@ -71,45 +68,9 @@ struct BonjourScanForServicesView : View {
         }
     }
     
-    private func renderLeadingToolbarItems() -> some View {
-        HStack {
-//            if self.viewModel.isLoading {
-                Button(action: {}) {
-                    ProgressView()
-                        .progressViewStyle(.circular)
-                }
-                .disabled(true)
-//            } else {
-//                Button(action: self.reloadButtonPressed) {
-//                    Label(
-//                        title: {
-//                            Text(self.reloadButtonString)
-//                        },
-//                        icon: {
-//                            Image.arrowClockwiseCircleFill
-//                                .renderingMode(.template)
-//                                .foregroundColor(.kozBonBlue)
-//                        }
-//                    )
-//                }
-//            }
-        }
-    }
-    
     private func renderTrailingToolbarItems() -> some View {
         HStack {
-            Button(action: self.sortButtonPressed) {
-                Label(
-                    title: {
-                        Text(self.sortButtonString)
-                    },
-                    icon: {
-                        Image.arrowUpArrowDownCircleFill
-                            .renderingMode(.template)
-                            .foregroundColor(.kozBonBlue)
-                    }
-                )
-            }
+            BonjourServiceListSortMenu(sortType: self.$viewModel.sortType)
             
             Button(action: self.addButtonPressed) {
                 Label(
@@ -130,9 +91,5 @@ struct BonjourScanForServicesView : View {
     
     func addButtonPressed() {
         self.viewModel.addButtonPressed()
-    }
-    
-    func sortButtonPressed() {
-        self.viewModel.sortButtonPressed()
     }
 }

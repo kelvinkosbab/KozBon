@@ -53,6 +53,7 @@ class BonjourServiceScanner : BonjourServiceScannerDelegate {
         for browser in self.typeScanners {
             browser.reset()
         }
+        self.didReset()
     }
     
     // MARK: - Start / Stop
@@ -72,10 +73,9 @@ class BonjourServiceScanner : BonjourServiceScannerDelegate {
             serviceBrowser.delegate = self
             self.typeScanners.append(serviceBrowser)
             
-            
-            let serviceBrowser2 = BonjourServiceTypeScanner(serviceType: serviceType, domain: "local.")
-            serviceBrowser2.delegate = self
-            self.typeScanners.append(serviceBrowser2)
+//            let serviceBrowser2 = BonjourServiceTypeScanner(serviceType: serviceType, domain: "local.")
+//            serviceBrowser2.delegate = self
+//            self.typeScanners.append(serviceBrowser2)
         }
         
         // Populate service browsers with user-created service types
@@ -107,13 +107,16 @@ class BonjourServiceScanner : BonjourServiceScannerDelegate {
     
     func didAdd(service: BonjourService) {
         self.services.update(with: service)
+        self.delegate?.didAdd(service: service)
     }
     
     func didRemove(service: BonjourService) {
         self.services.remove(service)
+        self.delegate?.didRemove(service: service)
     }
     
     func didReset() {
         self.services.removeAll()
+        self.delegate?.didReset()
     }
 }

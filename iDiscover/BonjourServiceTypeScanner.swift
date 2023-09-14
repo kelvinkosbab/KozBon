@@ -67,6 +67,7 @@ class BonjourServiceTypeScanner : NSObject, NetServiceBrowserDelegate {
     func reset() {
         self.stopScan()
         self.activeServices.removeAll()
+        self.delegate?.didReset()
     }
     
     // MARK: - NetServiceBrowserDelegate
@@ -95,6 +96,7 @@ class BonjourServiceTypeScanner : NSObject, NetServiceBrowserDelegate {
         self.logger.debug("Did find service \(service.name)")
         let bonjourService = BonjourService(service: service, serviceType: self.serviceType)
         self.activeServices.update(with: bonjourService)
+        self.delegate?.didAdd(service: bonjourService)
         
         if !moreComing {
             browser.stop()
@@ -109,6 +111,7 @@ class BonjourServiceTypeScanner : NSObject, NetServiceBrowserDelegate {
         self.logger.debug("Did remove service \(service.name)")
         let bonjourService = BonjourService(service: service, serviceType: self.serviceType)
         self.activeServices.remove(bonjourService)
+        self.delegate?.didRemove(service: bonjourService)
         
         if !moreComing {
             browser.stop()

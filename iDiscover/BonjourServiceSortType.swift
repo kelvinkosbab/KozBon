@@ -10,12 +10,25 @@ import Foundation
 
 // MARK: - BonjourServiceSortType
 
-enum BonjourServiceSortType : CaseIterable {
+enum BonjourServiceSortType : Identifiable, CaseIterable {
     
     case hostNameAsc
     case hostNameDesc
     case serviceNameAsc
     case serviceNameDesc
+    
+    var id: String {
+        switch self {
+        case .hostNameAsc:
+            "hostNameAsc"
+        case .hostNameDesc:
+            "hostNameDesc"
+        case .serviceNameAsc:
+            "serviceNameAsc"
+        case .serviceNameDesc:
+            "serviceNameDesc"
+        }
+    }
     
     var string: String {
         switch self {
@@ -27,30 +40,6 @@ enum BonjourServiceSortType : CaseIterable {
             NSLocalizedString("Service Name ASC", comment: "Service Name ASC sort title")
         case .serviceNameDesc:
             NSLocalizedString("Service Name DESC", comment: "Service Name DESC sort title")
-        }
-    }
-    
-    func sorted(services: [BonjourService]) -> [BonjourService] {
-        switch self {
-        case .hostNameAsc:
-            return services.sorted { service1, service2 -> Bool in
-                return service1.hostName < service2.hostName
-            }
-        
-        case .hostNameDesc:
-        return services.sorted { service1, service2 -> Bool in
-            return service1.hostName > service2.hostName
-        }
-        
-        case .serviceNameAsc:
-        return services.sorted { service1, service2 -> Bool in
-            return service1.serviceType.name < service2.serviceType.name
-        }
-        
-        case .serviceNameDesc:
-            return services.sorted { service1, service2 -> Bool in
-                return service1.serviceType.name > service2.serviceType.name
-            }
         }
     }
 }

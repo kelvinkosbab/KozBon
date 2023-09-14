@@ -16,12 +16,13 @@ extension BonjourScanForServicesView {
         
         @Published var isLoading: Bool = false
         @Published var activeServices: [BonjourService] = []
+        
         let serviceScanner = BonjourServiceScanner()
         
-        var sortType: BonjourServiceSortType? {
+        @Published var sortType: BonjourServiceSortType? {
             didSet {
                 if let sortType = self.sortType {
-                    self.activeServices = sortType.sorted(services: self.activeServices)
+                    self.sort(sortType: sortType)
                 }
             }
         }
@@ -36,8 +37,28 @@ extension BonjourScanForServicesView {
             print("KAK addButtonPressed")
         }
         
-        func sortButtonPressed() {
-            print("KAK sortButtonPressed")
+        func sort(sortType: BonjourServiceSortType) {
+            switch sortType {
+            case .hostNameAsc:
+                self.activeServices = self.activeServices.sorted { service1, service2 -> Bool in
+                    return service1.service.name < service2.service.name
+                }
+            
+            case .hostNameDesc:
+                self.activeServices = self.activeServices.sorted { service1, service2 -> Bool in
+                return service1.service.name > service2.service.name
+            }
+            
+            case .serviceNameAsc:
+                self.activeServices = self.activeServices.sorted { service1, service2 -> Bool in
+                return service1.serviceType.name < service2.serviceType.name
+            }
+            
+            case .serviceNameDesc:
+                self.activeServices = self.activeServices.sorted { service1, service2 -> Bool in
+                    return service1.serviceType.name > service2.serviceType.name
+                }
+            }
         }
         
         // MARK: - BonjourServiceScannerDelegate
