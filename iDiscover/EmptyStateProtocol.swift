@@ -56,7 +56,7 @@ extension EmptyStateProtocol where Self : UIViewController {
   func hideEmptyState(animated: Bool = true, completion: (() -> Void)? = nil) {
     
     // Find the empty state view
-    var emptyStateView: EmptyStateView? = nil
+    var emptyStateView: EmptyStateView?
     for view in self.view.subviews {
       if let view = view as? EmptyStateView {
         emptyStateView = view
@@ -82,8 +82,8 @@ class EmptyStateView : UIView {
   
   // MARK: - Properties
   
-  var titleLabel: UILabel? = nil
-  var messageLabel: UILabel? = nil
+  var titleLabel: UILabel?
+  var messageLabel: UILabel?
   
   // MARK: - Init
   

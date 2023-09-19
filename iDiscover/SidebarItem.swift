@@ -102,7 +102,7 @@ enum SidebarItem : BarItem {
         case .bonjourCreateService:
             AnyView(Text("createBonjourServiceType"))
         case .bluetooth:
-            AnyView(BluetoothView())
+            AnyView(BluetoothScanForDevicesView())
         case .appInformation:
             nil
         }

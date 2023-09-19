@@ -14,5 +14,5 @@ class MyTabBarController : UITabBarController, PresentableController, MyViewCont
   // MARK: - PresentableController
   
   var presentedMode: PresentationMode = .navStack
-  var transitioningDelegateReference: UIViewControllerTransitioningDelegate? = nil
+  var transitioningDelegateReference: UIViewControllerTransitioningDelegate?
 }

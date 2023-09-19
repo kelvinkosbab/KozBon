@@ -36,7 +36,7 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
     @IBOutlet weak var addTxTRecordButton: UIButton!
     @IBOutlet weak var txtRecordsLabel: UILabel!
   
-  weak var delegate: PublishNetServiceDelegate? = nil
+  weak var delegate: PublishNetServiceDelegate?
   
     private var serviceType: BonjourServiceType!
     private var txtRecords: [String: String] = [:]

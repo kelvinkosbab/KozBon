@@ -14,7 +14,7 @@ class MyTableViewController : UITableViewController, PresentableController, MyVi
   // MARK: - PresentableController
   
   var presentedMode: PresentationMode = .navStack
-  var transitioningDelegateReference: UIViewControllerTransitioningDelegate? = nil
+  var transitioningDelegateReference: UIViewControllerTransitioningDelegate?
   
   // MARK: - Status Bar
   

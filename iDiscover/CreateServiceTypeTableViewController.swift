@@ -146,7 +146,7 @@ class CreateServiceTypeTableViewController: MyTableViewController, UITextFieldDe
       return
     }
     
-    var detail: String? = nil
+    var detail: String?
     if let text = self.detailTextField.text?.trimmed, !text.isEmpty {
       detail = text
     }

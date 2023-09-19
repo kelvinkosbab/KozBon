@@ -14,7 +14,6 @@ extension BonjourScanForServicesView {
     
     class ViewModel : ObservableObject, BonjourServiceScannerDelegate {
         
-        @Published var isLoading: Bool = false
         @Published var activeServices: [BonjourService] = []
         
         let serviceScanner = BonjourServiceScanner()
@@ -30,6 +29,18 @@ extension BonjourScanForServicesView {
         init() {
             self.serviceScanner.delegate = self
         }
+        
+        // MARK: - Strings
+        
+        let createButtonString = NSLocalizedString(
+            "Create",
+            comment: "Create service button string"
+        )
+        
+        let noActiveServicesString = NSLocalizedString(
+            "No active Bonjour services",
+            comment: "No active Bonjour services string"
+        )
         
         // MARK: - Actions
         

@@ -17,7 +17,7 @@ class BluetoothDeviceDetailViewController : MyTableViewController {
     return self.newViewController(fromStoryboard: .bluetooth)
   }
   
-  static func newViewController(device: MyBluetoothDevice) -> BluetoothDeviceDetailViewController {
+  static func newViewController(device: BluetoothDevice) -> BluetoothDeviceDetailViewController {
     let viewController = self.newViewController()
     viewController.device = device
     return viewController
@@ -25,11 +25,9 @@ class BluetoothDeviceDetailViewController : MyTableViewController {
   
   // MARK: - Properties
   
-  var device: MyBluetoothDevice!
+  var device: BluetoothDevice!
   
-  var bluetoothManager: MyBluetoothManager {
-    return MyBluetoothManager.shared
-  }
+  let bluetoothManager = BluetoothDeviceScanner()
   
   var services: [CBService] = []
   var serviceCharacteristics: [CBService : [CBCharacteristic]] = [:]
@@ -250,20 +248,20 @@ class BluetoothDeviceDetailViewController : MyTableViewController {
   }
 }
 
-// MARK: - MyBluetoothDeviceDelegate
+// MARK: - BluetoothDeviceDelegate
 
-extension BluetoothDeviceDetailViewController : MyBluetoothDeviceDelegate {
+extension BluetoothDeviceDetailViewController : BluetoothDeviceDelegate {
   
-  func didUpdate(_ device: MyBluetoothDevice) {
+  func didUpdate(_ device: BluetoothDevice) {
     self.reloadContent()
   }
 }
 
-// MARK: - MyBluetoothDeviceDelegate
+// MARK: - BluetoothDeviceDelegate
 
-extension BluetoothDeviceDetailViewController : MyBluetoothDeviceServicesDelegate {
+extension BluetoothDeviceDetailViewController : BluetoothDeviceServicesDelegate {
   
-  func didUpdateServices(_ device: MyBluetoothDevice) {
+  func didUpdateServices(_ device: BluetoothDevice) {
     self.reloadContent()
   }
 }

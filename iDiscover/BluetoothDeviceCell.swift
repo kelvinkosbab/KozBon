@@ -13,11 +13,11 @@ class BluetoothDeviceCell : UITableViewCell {
   @IBOutlet weak private var titleLabel: UILabel!
   @IBOutlet weak private var detailLabel: UILabel!
   
-  weak var device: MyBluetoothDevice? = nil
+  weak var device: BluetoothDevice?
   
-  func configure(device: MyBluetoothDevice) {
+  func configure(device: BluetoothDevice) {
     self.device = device
-    self.configure(title: device.name, detail: device.uuid)
+      self.configure(title: device.name, detail: device.uuid.uuidString)
   }
   
   func configure(title: String?, detail: String?) {

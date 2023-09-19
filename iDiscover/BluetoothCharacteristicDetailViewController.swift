@@ -17,7 +17,7 @@ class BluetoothCharacteristicDetailViewController : MyTableViewController {
     return self.newViewController(fromStoryboard: .bluetooth)
   }
   
-  static func newViewController(device: MyBluetoothDevice, characteristic: CBCharacteristic) -> BluetoothCharacteristicDetailViewController {
+  static func newViewController(device: BluetoothDevice, characteristic: CBCharacteristic) -> BluetoothCharacteristicDetailViewController {
     let viewController = self.newViewController()
     viewController.device = device
     viewController.characteristic = characteristic
@@ -26,7 +26,7 @@ class BluetoothCharacteristicDetailViewController : MyTableViewController {
   
   // MARK: - Properties
   
-  var device: MyBluetoothDevice!
+  var device: BluetoothDevice!
   var characteristic: CBCharacteristic!
   
   var descriptors: [CBDescriptor] {
@@ -220,7 +220,7 @@ class BluetoothCharacteristicDetailViewController : MyTableViewController {
     switch rowType {
     case .uuid:
       let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell
-      cell.configure(title: rowType.title, detail: self.device.uuid)
+        cell.configure(title: rowType.title, detail: self.device.uuid.uuidString)
       return cell
     case .hexValue:
       let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell

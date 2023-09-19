@@ -29,7 +29,7 @@ class BonjourService: NSObject, NetServiceDelegate {
   let serviceType: BonjourServiceType
   var addresses: [InternetAddress] = []
   var dataRecords: [MyDataRecord] = []
-  weak var delegate: MyNetServiceDelegate? = nil
+  weak var delegate: MyNetServiceDelegate?
   
   class MyDataRecord: Equatable, Comparable {
     static func == (lhs: MyDataRecord, rhs: MyDataRecord) -> Bool {
@@ -68,7 +68,7 @@ class BonjourService: NSObject, NetServiceDelegate {
   // MARK: - Stopping Resolution / Publishing
   
   var isStopping: Bool = false
-  private var didStop: (() -> Void)? = nil
+  private var didStop: (() -> Void)?
   
   func stop(didStop: (() -> Void)? = nil) {
     self.isStopping = true
@@ -94,7 +94,7 @@ class BonjourService: NSObject, NetServiceDelegate {
   // MARK: - Resolving Address
   
   var isResolving: Bool = false
-  private var completedAddressResolution: (() -> Void)? = nil
+  private var completedAddressResolution: (() -> Void)?
   
   func resolve(completedAddressResolution: (() -> Void)? = nil) {
     self.isResolving = true
@@ -128,8 +128,8 @@ class BonjourService: NSObject, NetServiceDelegate {
   // MARK: - Publishing Service
   
   var isPublishing: Bool = false
-  private var publishServiceSuccess: (() -> Void)? = nil
-  private var publishServiceFailure: (() -> Void)? = nil
+  private var publishServiceSuccess: (() -> Void)?
+  private var publishServiceFailure: (() -> Void)?
   
   func publish(publishServiceSuccess: @escaping () -> Void, publishServiceFailure: @escaping () -> Void) {
     self.isPublishing = true

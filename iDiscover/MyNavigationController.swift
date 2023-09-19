@@ -13,7 +13,7 @@ class MyNavigationController : UINavigationController, PresentableController, My
   // MARK: - PresentableController
   
   var presentedMode: PresentationMode = .navStack
-  var transitioningDelegateReference: UIViewControllerTransitioningDelegate? = nil
+  var transitioningDelegateReference: UIViewControllerTransitioningDelegate?
   
   // MARK: - Lifecycle
   

@@ -67,7 +67,7 @@ enum TabBarItem : BarItem {
         case .bonjour:
             AnyView(BonjourScanForServicesView())
         case .bluetooth:
-            AnyView(BluetoothView())
+            AnyView(BluetoothScanForDevicesView())
         case .information:
             AnyView(InformationView())
         }

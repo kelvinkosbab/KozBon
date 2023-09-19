@@ -31,7 +31,7 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
   @IBOutlet weak var domainTextField: UITextField!
   @IBOutlet weak var detailTextField: UITextField!
   
-  weak var delegate: PublishNetServiceDelegate? = nil
+  weak var delegate: PublishNetServiceDelegate?
   
   // MARK: - Lifecycle
   
@@ -175,7 +175,7 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
     }
     
     let domain = self.domainTextField.text ?? ""
-    var detail: String? = nil
+    var detail: String?
     if let text = self.detailTextField.text?.trimmed, !text.isEmpty {
       detail = text.trimmed
     }

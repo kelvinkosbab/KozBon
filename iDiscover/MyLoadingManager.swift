@@ -59,8 +59,8 @@ class MyLoadingManager {
   }
   
   class func hideLoading(view: UIView, completion: (() -> ())? = nil) {
-    var loadingView: MyLoadingView? = nil
-    var activityIndicator: MyActivityIndicator? = nil
+    var loadingView: MyLoadingView?
+    var activityIndicator: MyActivityIndicator?
     
     // Find the loading view and activity indicator
     for subview in view.subviews {

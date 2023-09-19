@@ -13,7 +13,7 @@ class MyBasicCenterLabelCell: UITableViewCell {
 }
 
 class NetServiceButtonCell: UITableViewCell {
-  private var didPressButton: (() -> Void)? = nil
+  private var didPressButton: (() -> Void)?
   @IBOutlet weak var button: UIButton!
   @IBAction private func buttonSelected(_ sender: UIButton) {
     self.didPressButton?()
@@ -59,7 +59,7 @@ class NetServiceAddressCell: UITableViewCell {
 class MyTopLabelBottomButtonCell: UITableViewCell {
   @IBOutlet weak var label: UILabel!
   @IBOutlet weak var button: UIButton!
-  private var didPressButton: (() -> Void)? = nil
+  private var didPressButton: (() -> Void)?
   @IBAction private func buttonSelected(_ sender: UIButton) {
     self.didPressButton?()
   }

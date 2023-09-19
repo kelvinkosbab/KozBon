@@ -60,7 +60,7 @@ class ServiceDetailTableViewController: MyTableViewController {
   }
   
   var mode: ServiceDetailMode = .browsedService
-  var service: BonjourService? = nil
+  var service: BonjourService?
   var serviceType: BonjourServiceType!
   
   // MARK: - Lifecycle

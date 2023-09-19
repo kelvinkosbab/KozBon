@@ -18,7 +18,7 @@ class MyBonjourPublishManager: NSObject {
   
   static let shared = MyBonjourPublishManager()
   
-  weak var delegate: MyBonjourPublishManagerDelegate? = nil
+  weak var delegate: MyBonjourPublishManagerDelegate?
   
   private override init() {
     super.init()

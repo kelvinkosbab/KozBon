@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreBluetooth
 
 class BluetoothViewController : MyCollectionViewController {
   
@@ -18,13 +19,11 @@ class BluetoothViewController : MyCollectionViewController {
   
   // MARK: - Properties
   
-  weak var loadingActivityIndicator: UIActivityIndicatorView? = nil
+  weak var loadingActivityIndicator: UIActivityIndicatorView?
   
-  var bluetoothManager: MyBluetoothManager {
-    return MyBluetoothManager.shared
-  }
+  let bluetoothManager = BluetoothDeviceScanner()
   
-  internal var devices: [MyBluetoothDevice] = [] {
+  internal var devices: [BluetoothDevice] = [] {
     didSet {
       if self.isViewLoaded {
         self.collectionView?.reloadData()
@@ -106,7 +105,7 @@ class BluetoothViewController : MyCollectionViewController {
   // MARK: - RowType
   
   enum RowType {
-    case bluetoothUnsupported, device(MyBluetoothDevice)
+    case bluetoothUnsupported, device(BluetoothDevice)
   }
   
   func getRowType(at indexPath: IndexPath) -> RowType? {
@@ -158,7 +157,7 @@ class BluetoothViewController : MyCollectionViewController {
       return cell
     case .device(let device):
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ServicesServiceCell.name, for: indexPath) as! ServicesServiceCell
-      cell.configure(title: device.name, detail: device.uuid)
+        cell.configure(title: device.name, detail: device.uuid.uuidString)
         if UIDevice.isPad {
             cell.contentView.layer.cornerRadius = 20
             cell.contentView.layer.masksToBounds = true
@@ -201,19 +200,19 @@ class BluetoothViewController : MyCollectionViewController {
 
 // MARK: - MyBluetoothManagerDelegate
 
-extension BluetoothViewController : MyBluetoothManagerDelegate {
-  
-  func didStartScan(_ manager: MyBluetoothManager) {
-    self.updateLoading()
-  }
-  
-  func didUpdateDevices(_ manager: MyBluetoothManager) {
-    self.devices = manager.devices.nameSorted
-  }
-  
-  func didStopScan(_ manager: MyBluetoothManager) {
-    self.updateLoading()
-  }
+extension BluetoothViewController : BluetoothDeviceScannerDelegate {
+    
+    func didAdd(device: BluetoothDevice) {
+        self.devices = self.bluetoothManager.devices.nameSorted
+    }
+    
+    func didRemove(device: BluetoothDevice) {
+        self.devices = self.bluetoothManager.devices.nameSorted
+    }
+    
+    func didUpdate(state: CBManagerState) {
+        // do nothing
+    }
 }
 
 // MARK: - Collection View Cells

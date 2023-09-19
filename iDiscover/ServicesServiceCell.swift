@@ -13,7 +13,7 @@ class ServicesServiceCell : UICollectionViewCell {
     @IBOutlet weak private var containerView: UIView!
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var detailLabel: UILabel!
-    private var service: BonjourService? = nil
+    private var service: BonjourService?
     private var isPublished: Bool = false
     
     func configure(service: BonjourService, isPublished: Bool) {

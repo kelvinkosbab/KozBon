@@ -19,11 +19,11 @@ class MyCollectionViewController : UICollectionViewController, UICollectionViewD
   // MARK: - PresentableController
   
   var presentedMode: PresentationMode = .navStack
-  var transitioningDelegateReference: UIViewControllerTransitioningDelegate? = nil
+  var transitioningDelegateReference: UIViewControllerTransitioningDelegate?
   
   // MARK: - CommonCollectionViewReorderProtocol
   
-  var reorderDelegate: MyCollectionViewReorderProtocol? = nil
+  var reorderDelegate: MyCollectionViewReorderProtocol?
   
   // MARK: - Lifecycle
   
