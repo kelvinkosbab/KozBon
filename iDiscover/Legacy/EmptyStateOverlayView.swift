@@ -26,7 +26,7 @@ struct EmptyStateOverlayView : View {
                     .frame(width: 100, height: 100)
             }
             Text(self.title)
-                .headingBoldStyle()
+                .font(.system(.headline).bold())
                 .foregroundStyle(.primary)
                 .multilineTextAlignment(.center)
         }

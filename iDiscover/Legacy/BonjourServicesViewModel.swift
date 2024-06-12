@@ -8,23 +8,23 @@
 
 import Foundation
 
-// MARK: - BonjourScanForServicesViewModel
+// MARK: - BonjourServicesViewModel
 
-extension BonjourScanForServicesView {
+extension BonjourServicesViewModel {
     
     class ViewModel : ObservableObject, BonjourServiceScannerDelegate {
         
-        @Published var activeServices: [BonjourService] = []
+        @MainActor @Published var activeServices: [BonjourService] = []
         
-        let serviceScanner = BonjourServiceScanner()
-        
-        @Published var sortType: BonjourServiceSortType? {
+        @MainActor @Published var sortType: BonjourServiceSortType? {
             didSet {
                 if let sortType = self.sortType {
                     self.sort(sortType: sortType)
                 }
             }
         }
+        
+        let serviceScanner = BonjourServiceScanner()
         
         init() {
             self.serviceScanner.delegate = self

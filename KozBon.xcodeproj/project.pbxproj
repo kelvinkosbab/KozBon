@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -39,7 +39,6 @@
 		B68EEA631E471FD000831CC4 /* SettingsItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA621E471FD000831CC4 /* SettingsItemCell.swift */; };
 		B68EEA651E47204E00831CC4 /* SettingsKeyValueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA641E47204E00831CC4 /* SettingsKeyValueCell.swift */; };
 		B68EEA671E472B1B00831CC4 /* SettingsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA661E472B1B00831CC4 /* SettingsFooterView.swift */; };
-		B691545F1E1317A000382F41 /* InternetAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = B691545E1E1317A000382F41 /* InternetAddress.swift */; };
 		B69154631E138E4A00382F41 /* MyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69154621E138E4A00382F41 /* MyTableViewController.swift */; };
 		B69154651E13906500382F41 /* String+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69154641E13906500382F41 /* String+Util.swift */; };
 		B6AE537C1E16D45700FB57E3 /* PresentableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AE537B1E16D45700FB57E3 /* PresentableController.swift */; };
@@ -72,17 +71,13 @@
 		B6CE1D621E120D10003D4FFA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6CE1D611E120D10003D4FFA /* Main.storyboard */; };
 		B6CE1D661E120E4D003D4FFA /* CustomServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D641E120E4D003D4FFA /* CustomServiceType.swift */; };
 		F614628626A1495C00D30CC8 /* TxtRecordsCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = F614628526A1495C00D30CC8 /* TxtRecordsCells.swift */; };
-		F6240E612A915C1700951875 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = F6240E602A915C1700951875 /* Core */; };
-		F6240E632A915C1700951875 /* CoreStorage in Frameworks */ = {isa = PBXBuildFile; productRef = F6240E622A915C1700951875 /* CoreStorage */; };
-		F6240E652A915C1700951875 /* CoreUI in Frameworks */ = {isa = PBXBuildFile; productRef = F6240E642A915C1700951875 /* CoreUI */; };
-		F6240E672A92B8A100951875 /* RunMode in Frameworks */ = {isa = PBXBuildFile; productRef = F6240E662A92B8A100951875 /* RunMode */; };
 		F6240E692A92CF0600951875 /* AppCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E682A92CF0600951875 /* AppCore.swift */; };
 		F6240E6C2A92D62200951875 /* BonjourScanForServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E6B2A92D62200951875 /* BonjourScanForServicesView.swift */; };
 		F6240E6F2A92D63400951875 /* BluetoothScanForDevicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E6E2A92D63400951875 /* BluetoothScanForDevicesView.swift */; };
 		F6240E722A92D75200951875 /* InformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E712A92D75200951875 /* InformationView.swift */; };
 		F6240E742A92D91800951875 /* AppStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E732A92D91800951875 /* AppStyles.swift */; };
 		F6240E762A93F3A500951875 /* SidebarNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E752A93F3A500951875 /* SidebarNavigationView.swift */; };
-		F6240E782A93F4D500951875 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E772A93F4D500951875 /* TabBar.swift */; };
+		F6240E782A93F4D500951875 /* LagacyTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E772A93F4D500951875 /* LagacyTabBar.swift */; };
 		F6240E7C2A94077F00951875 /* BarItemLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E7B2A94077F00951875 /* BarItemLabel.swift */; };
 		F6240E7F2A941BD500951875 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		F6240E812A94206D00951875 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E802A94206D00951875 /* TabBarItem.swift */; };
@@ -92,10 +87,17 @@
 		F690B5FB2561E9B600902DAB /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F690B5FA2561E9B600902DAB /* NetworkExtension.framework */; };
 		F69DF275269AB8BF00B97E9D /* EditTxtRecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69DF274269AB8BF00B97E9D /* EditTxtRecordsViewController.swift */; };
 		F69E826C2AAA7DC4006AA4D3 /* BonjourServiceScannerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69E826B2AAA7DC4006AA4D3 /* BonjourServiceScannerDelegate.swift */; };
-		F69E826E2AABA4CA006AA4D3 /* BonjourScanForServicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69E826D2AABA4CA006AA4D3 /* BonjourScanForServicesViewModel.swift */; };
+		F69E826E2AABA4CA006AA4D3 /* BonjourServicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69E826D2AABA4CA006AA4D3 /* BonjourServicesViewModel.swift */; };
 		F69E82702AABA6B4006AA4D3 /* BonjourServiceSortType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69E826F2AABA6B4006AA4D3 /* BonjourServiceSortType.swift */; };
 		F69E82722AABA7E5006AA4D3 /* BonjourServiceBrowserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69E82712AABA7E5006AA4D3 /* BonjourServiceBrowserState.swift */; };
 		F69E82742AABA8A5006AA4D3 /* TransportLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69E82732AABA8A5006AA4D3 /* TransportLayer.swift */; };
+		F6C472F52C1A1EAB00BBB0F9 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = F6C472F42C1A1EAB00BBB0F9 /* Core */; };
+		F6C472F72C1A1EAB00BBB0F9 /* CoreStorage in Frameworks */ = {isa = PBXBuildFile; productRef = F6C472F62C1A1EAB00BBB0F9 /* CoreStorage */; };
+		F6C472F92C1A1EAB00BBB0F9 /* CoreUI in Frameworks */ = {isa = PBXBuildFile; productRef = F6C472F82C1A1EAB00BBB0F9 /* CoreUI */; };
+		F6C472FB2C1A248000BBB0F9 /* TopLevelDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C472FA2C1A248000BBB0F9 /* TopLevelDestination.swift */; };
+		F6C472FF2C1A26FB00BBB0F9 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C472FE2C1A26FB00BBB0F9 /* TabBar.swift */; };
+		F6C473042C1A4EC600BBB0F9 /* Bonjour in Frameworks */ = {isa = PBXBuildFile; productRef = F6C473032C1A4EC600BBB0F9 /* Bonjour */; };
+		F6C473062C1A4EC600BBB0F9 /* KozBonCore in Frameworks */ = {isa = PBXBuildFile; productRef = F6C473052C1A4EC600BBB0F9 /* KozBonCore */; };
 		F6C50D7C2AB3BDD50048DF8C /* TitleDetailChevronView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C50D7B2AB3BDD50048DF8C /* TitleDetailChevronView.swift */; };
 		F6C50D7E2AB3C47D0048DF8C /* BonjourServiceListSortMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C50D7D2AB3C47D0048DF8C /* BonjourServiceListSortMenu.swift */; };
 		F6C50D802AB3F7300048DF8C /* BarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C50D7F2AB3F7300048DF8C /* BarItem.swift */; };
@@ -138,7 +140,6 @@
 		B68EEA621E471FD000831CC4 /* SettingsItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsItemCell.swift; sourceTree = "<group>"; };
 		B68EEA641E47204E00831CC4 /* SettingsKeyValueCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsKeyValueCell.swift; sourceTree = "<group>"; };
 		B68EEA661E472B1B00831CC4 /* SettingsFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsFooterView.swift; sourceTree = "<group>"; };
-		B691545E1E1317A000382F41 /* InternetAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InternetAddress.swift; sourceTree = "<group>"; };
 		B69154621E138E4A00382F41 /* MyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTableViewController.swift; sourceTree = "<group>"; };
 		B69154641E13906500382F41 /* String+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Util.swift"; sourceTree = "<group>"; };
 		B6AE537B1E16D45700FB57E3 /* PresentableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentableController.swift; sourceTree = "<group>"; };
@@ -171,7 +172,7 @@
 		B6CE1D5A1E120CCC003D4FFA /* BonjourServiceTypeScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BonjourServiceTypeScanner.swift; sourceTree = "<group>"; };
 		B6CE1D5B1E120CCC003D4FFA /* BonjourServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BonjourServiceType.swift; sourceTree = "<group>"; };
 		B6CE1D611E120D10003D4FFA /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		B6CE1D641E120E4D003D4FFA /* CustomServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomServiceType.swift; path = "Managed Objects/CustomServiceType.swift"; sourceTree = "<group>"; };
+		B6CE1D641E120E4D003D4FFA /* CustomServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomServiceType.swift; sourceTree = "<group>"; };
 		F614628526A1495C00D30CC8 /* TxtRecordsCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TxtRecordsCells.swift; sourceTree = "<group>"; };
 		F6240E682A92CF0600951875 /* AppCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCore.swift; sourceTree = "<group>"; };
 		F6240E6B2A92D62200951875 /* BonjourScanForServicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourScanForServicesView.swift; sourceTree = "<group>"; };
@@ -179,7 +180,7 @@
 		F6240E712A92D75200951875 /* InformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationView.swift; sourceTree = "<group>"; };
 		F6240E732A92D91800951875 /* AppStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStyles.swift; sourceTree = "<group>"; };
 		F6240E752A93F3A500951875 /* SidebarNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarNavigationView.swift; sourceTree = "<group>"; };
-		F6240E772A93F4D500951875 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		F6240E772A93F4D500951875 /* LagacyTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LagacyTabBar.swift; sourceTree = "<group>"; };
 		F6240E7B2A94077F00951875 /* BarItemLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarItemLabel.swift; sourceTree = "<group>"; };
 		F6240E802A94206D00951875 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		F6240E822A94209100951875 /* SidebarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarItem.swift; sourceTree = "<group>"; };
@@ -190,10 +191,13 @@
 		F690B5FA2561E9B600902DAB /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		F69DF274269AB8BF00B97E9D /* EditTxtRecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTxtRecordsViewController.swift; sourceTree = "<group>"; };
 		F69E826B2AAA7DC4006AA4D3 /* BonjourServiceScannerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServiceScannerDelegate.swift; sourceTree = "<group>"; };
-		F69E826D2AABA4CA006AA4D3 /* BonjourScanForServicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourScanForServicesViewModel.swift; sourceTree = "<group>"; };
+		F69E826D2AABA4CA006AA4D3 /* BonjourServicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServicesViewModel.swift; sourceTree = "<group>"; };
 		F69E826F2AABA6B4006AA4D3 /* BonjourServiceSortType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServiceSortType.swift; sourceTree = "<group>"; };
 		F69E82712AABA7E5006AA4D3 /* BonjourServiceBrowserState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServiceBrowserState.swift; sourceTree = "<group>"; };
 		F69E82732AABA8A5006AA4D3 /* TransportLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportLayer.swift; sourceTree = "<group>"; };
+		F6C472FA2C1A248000BBB0F9 /* TopLevelDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopLevelDestination.swift; sourceTree = "<group>"; };
+		F6C472FE2C1A26FB00BBB0F9 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		F6C473012C1A4DD800BBB0F9 /* Bonjour */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Bonjour; sourceTree = "<group>"; };
 		F6C50D7B2AB3BDD50048DF8C /* TitleDetailChevronView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleDetailChevronView.swift; sourceTree = "<group>"; };
 		F6C50D7D2AB3C47D0048DF8C /* BonjourServiceListSortMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServiceListSortMenu.swift; sourceTree = "<group>"; };
 		F6C50D7F2AB3F7300048DF8C /* BarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarItem.swift; sourceTree = "<group>"; };
@@ -207,11 +211,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6240E632A915C1700951875 /* CoreStorage in Frameworks */,
-				F6240E652A915C1700951875 /* CoreUI in Frameworks */,
-				F6240E672A92B8A100951875 /* RunMode in Frameworks */,
+				F6C472F72C1A1EAB00BBB0F9 /* CoreStorage in Frameworks */,
+				F6C472F92C1A1EAB00BBB0F9 /* CoreUI in Frameworks */,
+				F6C473062C1A4EC600BBB0F9 /* KozBonCore in Frameworks */,
 				F690B5FB2561E9B600902DAB /* NetworkExtension.framework in Frameworks */,
-				F6240E612A915C1700951875 /* Core in Frameworks */,
+				F6C472F52C1A1EAB00BBB0F9 /* Core in Frameworks */,
+				F6C473042C1A4EC600BBB0F9 /* Bonjour in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,7 +325,6 @@
 		B691545D1E12DB0E00382F41 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				B691545E1E1317A000382F41 /* InternetAddress.swift */,
 				B62E19961E174236008BC91C /* MyLoadingManager.swift */,
 				B6BD8C7D2002C59F009327B2 /* Log.swift */,
 			);
@@ -355,6 +359,7 @@
 		B6CE1D1B1E1208C1003D4FFA = {
 			isa = PBXGroup;
 			children = (
+				F6C473012C1A4DD800BBB0F9 /* Bonjour */,
 				F62EDC5E255B9D25003E5178 /* KozBon.entitlements */,
 				F6781EF72694C5F6009B79F7 /* README.md */,
 				B6CE1D261E1208C1003D4FFA /* iDiscover */,
@@ -374,16 +379,14 @@
 		B6CE1D261E1208C1003D4FFA /* iDiscover */ = {
 			isa = PBXGroup;
 			children = (
-				F6C50D5F2AB3B4150048DF8C /* Shared */,
 				F6240E682A92CF0600951875 /* AppCore.swift */,
-				F6240E7D2A94120B00951875 /* TabBar & Sidebar */,
-				F6240E732A92D91800951875 /* AppStyles.swift */,
-				F67FC0F52A97DF9A00AA32BB /* ObjectRegistry.swift */,
-				F6240E6A2A92D5FE00951875 /* Bonjour */,
-				F6240E6D2A92D62500951875 /* Bluetooth */,
-				F6240E702A92D74700951875 /* Information */,
-				B6CE1D3C1E1208D8003D4FFA /* Common */,
-				B6CE1D431E120977003D4FFA /* Controller */,
+				F6C472FA2C1A248000BBB0F9 /* TopLevelDestination.swift */,
+				F6C472FE2C1A26FB00BBB0F9 /* TabBar.swift */,
+				F6C473002C1A4D7400BBB0F9 /* Bonjour */,
+				F6C472FC2C1A267B00BBB0F9 /* Legacy */,
+				B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */,
+				B6CE1D311E1208C1003D4FFA /* Assets.xcassets */,
+				B6CE1D361E1208C1003D4FFA /* Info.plist */,
 			);
 			path = iDiscover;
 			sourceTree = "<group>";
@@ -461,9 +464,6 @@
 		B6CE1D441E12098A003D4FFA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */,
-				B6CE1D311E1208C1003D4FFA /* Assets.xcassets */,
-				B6CE1D361E1208C1003D4FFA /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -483,7 +483,6 @@
 			isa = PBXGroup;
 			children = (
 				F6240E6B2A92D62200951875 /* BonjourScanForServicesView.swift */,
-				F69E826D2AABA4CA006AA4D3 /* BonjourScanForServicesViewModel.swift */,
 				F69E826F2AABA6B4006AA4D3 /* BonjourServiceSortType.swift */,
 				F6C50D7D2AB3C47D0048DF8C /* BonjourServiceListSortMenu.swift */,
 			);
@@ -511,11 +510,9 @@
 			isa = PBXGroup;
 			children = (
 				F6C50D7F2AB3F7300048DF8C /* BarItem.swift */,
-				F6240E822A94209100951875 /* SidebarItem.swift */,
-				F6240E802A94206D00951875 /* TabBarItem.swift */,
 				F6240E7B2A94077F00951875 /* BarItemLabel.swift */,
 				F6240E752A93F3A500951875 /* SidebarNavigationView.swift */,
-				F6240E772A93F4D500951875 /* TabBar.swift */,
+				F6240E772A93F4D500951875 /* LagacyTabBar.swift */,
 			);
 			name = "TabBar & Sidebar";
 			sourceTree = "<group>";
@@ -535,6 +532,32 @@
 				F614628526A1495C00D30CC8 /* TxtRecordsCells.swift */,
 			);
 			name = "TXT Records";
+			sourceTree = "<group>";
+		};
+		F6C472FC2C1A267B00BBB0F9 /* Legacy */ = {
+			isa = PBXGroup;
+			children = (
+				F6240E822A94209100951875 /* SidebarItem.swift */,
+				F6240E802A94206D00951875 /* TabBarItem.swift */,
+				F6240E7D2A94120B00951875 /* TabBar & Sidebar */,
+				F6240E732A92D91800951875 /* AppStyles.swift */,
+				F67FC0F52A97DF9A00AA32BB /* ObjectRegistry.swift */,
+				F6C50D5F2AB3B4150048DF8C /* Shared */,
+				F6240E6A2A92D5FE00951875 /* Bonjour */,
+				F6240E6D2A92D62500951875 /* Bluetooth */,
+				F6240E702A92D74700951875 /* Information */,
+				B6CE1D3C1E1208D8003D4FFA /* Common */,
+				B6CE1D431E120977003D4FFA /* Controller */,
+			);
+			path = Legacy;
+			sourceTree = "<group>";
+		};
+		F6C473002C1A4D7400BBB0F9 /* Bonjour */ = {
+			isa = PBXGroup;
+			children = (
+				F69E826D2AABA4CA006AA4D3 /* BonjourServicesViewModel.swift */,
+			);
+			path = Bonjour;
 			sourceTree = "<group>";
 		};
 		F6C50D5F2AB3B4150048DF8C /* Shared */ = {
@@ -584,10 +607,11 @@
 			);
 			name = KozBon;
 			packageProductDependencies = (
-				F6240E602A915C1700951875 /* Core */,
-				F6240E622A915C1700951875 /* CoreStorage */,
-				F6240E642A915C1700951875 /* CoreUI */,
-				F6240E662A92B8A100951875 /* RunMode */,
+				F6C472F42C1A1EAB00BBB0F9 /* Core */,
+				F6C472F62C1A1EAB00BBB0F9 /* CoreStorage */,
+				F6C472F82C1A1EAB00BBB0F9 /* CoreUI */,
+				F6C473032C1A4EC600BBB0F9 /* Bonjour */,
+				F6C473052C1A4EC600BBB0F9 /* KozBonCore */,
 			);
 			productName = iDiscover;
 			productReference = B6CE1D241E1208C1003D4FFA /* KozBon.app */;
@@ -622,7 +646,8 @@
 			);
 			mainGroup = B6CE1D1B1E1208C1003D4FFA;
 			packageReferences = (
-				F6240E5F2A915C1700951875 /* XCRemoteSwiftPackageReference "Core" */,
+				F6C472F32C1A1EAB00BBB0F9 /* XCRemoteSwiftPackageReference "Core" */,
+				F6C473022C1A4EC600BBB0F9 /* XCLocalSwiftPackageReference "Bonjour" */,
 			);
 			productRefGroup = B6CE1D251E1208C1003D4FFA /* Products */;
 			projectDirPath = "";
@@ -655,7 +680,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B603A6D81E12177700ED333D /* UIImage+Gif.swift in Sources */,
-				F69E826E2AABA4CA006AA4D3 /* BonjourScanForServicesViewModel.swift in Sources */,
+				F69E826E2AABA4CA006AA4D3 /* BonjourServicesViewModel.swift in Sources */,
 				B6CE1D5D1E120CCC003D4FFA /* BonjourServiceTypeScope.swift in Sources */,
 				B68EEA3D1E46706E00831CC4 /* MyCollectionViewController.swift in Sources */,
 				B68EEA451E46800700831CC4 /* MyTabBarController.swift in Sources */,
@@ -673,6 +698,7 @@
 				B6CE1D4F1E120B90003D4FFA /* MyClassProtocol.swift in Sources */,
 				F69DF275269AB8BF00B97E9D /* EditTxtRecordsViewController.swift in Sources */,
 				B68EEA651E47204E00831CC4 /* SettingsKeyValueCell.swift in Sources */,
+				F6C472FB2C1A248000BBB0F9 /* TopLevelDestination.swift in Sources */,
 				B679CC0A1E1618840056C7B5 /* MyRootController.swift in Sources */,
 				B6AE53841E17090A00FB57E3 /* PublishDetailCreateViewController.swift in Sources */,
 				F6240E692A92CF0600951875 /* AppCore.swift in Sources */,
@@ -695,7 +721,6 @@
 				B6BD8C8C2002E0ED009327B2 /* BluetoothDeviceDetailViewController.swift in Sources */,
 				B6C4BC521E1CC2CD004409F1 /* TableViewCells.swift in Sources */,
 				F614628626A1495C00D30CC8 /* TxtRecordsCells.swift in Sources */,
-				B691545F1E1317A000382F41 /* InternetAddress.swift in Sources */,
 				F69E82742AABA8A5006AA4D3 /* TransportLayer.swift in Sources */,
 				F6C50D842AB4FF3E0048DF8C /* CBPeripheralState+Util.swift in Sources */,
 				B679CC171E1647670056C7B5 /* MyBonjourPublishManager.swift in Sources */,
@@ -710,7 +735,7 @@
 				F6240E7C2A94077F00951875 /* BarItemLabel.swift in Sources */,
 				B68EEA571E47104D00831CC4 /* ServicesServiceCell.swift in Sources */,
 				B68EEA631E471FD000831CC4 /* SettingsItemCell.swift in Sources */,
-				F6240E782A93F4D500951875 /* TabBar.swift in Sources */,
+				F6240E782A93F4D500951875 /* LagacyTabBar.swift in Sources */,
 				F69E826C2AAA7DC4006AA4D3 /* BonjourServiceScannerDelegate.swift in Sources */,
 				B6BD8C7E2002C59F009327B2 /* Log.swift in Sources */,
 				F6240E722A92D75200951875 /* InformationView.swift in Sources */,
@@ -725,6 +750,7 @@
 				F6240E6F2A92D63400951875 /* BluetoothScanForDevicesView.swift in Sources */,
 				B6BD8C9020030540009327B2 /* BluetoothCharacteristicDetailViewController.swift in Sources */,
 				B6CE1D5E1E120CCC003D4FFA /* BonjourService.swift in Sources */,
+				F6C472FF2C1A26FB00BBB0F9 /* TabBar.swift in Sources */,
 				B68EEA611E471F4200831CC4 /* SettingsHeaderView.swift in Sources */,
 				F6C50D822AB3F8A70048DF8C /* BluetoothScanForDevicesViewModel.swift in Sources */,
 				B6AE53801E16E9F600FB57E3 /* UIDevice+Util.swift in Sources */,
@@ -941,8 +967,15 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		F6C473022C1A4EC600BBB0F9 /* XCLocalSwiftPackageReference "Bonjour" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Bonjour;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
-		F6240E5F2A915C1700951875 /* XCRemoteSwiftPackageReference "Core" */ = {
+		F6C472F32C1A1EAB00BBB0F9 /* XCRemoteSwiftPackageReference "Core" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kelvinkosbab/Core.git";
 			requirement = {
@@ -953,25 +986,28 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		F6240E602A915C1700951875 /* Core */ = {
+		F6C472F42C1A1EAB00BBB0F9 /* Core */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F6240E5F2A915C1700951875 /* XCRemoteSwiftPackageReference "Core" */;
+			package = F6C472F32C1A1EAB00BBB0F9 /* XCRemoteSwiftPackageReference "Core" */;
 			productName = Core;
 		};
-		F6240E622A915C1700951875 /* CoreStorage */ = {
+		F6C472F62C1A1EAB00BBB0F9 /* CoreStorage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F6240E5F2A915C1700951875 /* XCRemoteSwiftPackageReference "Core" */;
+			package = F6C472F32C1A1EAB00BBB0F9 /* XCRemoteSwiftPackageReference "Core" */;
 			productName = CoreStorage;
 		};
-		F6240E642A915C1700951875 /* CoreUI */ = {
+		F6C472F82C1A1EAB00BBB0F9 /* CoreUI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F6240E5F2A915C1700951875 /* XCRemoteSwiftPackageReference "Core" */;
+			package = F6C472F32C1A1EAB00BBB0F9 /* XCRemoteSwiftPackageReference "Core" */;
 			productName = CoreUI;
 		};
-		F6240E662A92B8A100951875 /* RunMode */ = {
+		F6C473032C1A4EC600BBB0F9 /* Bonjour */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F6240E5F2A915C1700951875 /* XCRemoteSwiftPackageReference "Core" */;
-			productName = RunMode;
+			productName = Bonjour;
+		};
+		F6C473052C1A4EC600BBB0F9 /* KozBonCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = KozBonCore;
 		};
 /* End XCSwiftPackageProductDependency section */
 

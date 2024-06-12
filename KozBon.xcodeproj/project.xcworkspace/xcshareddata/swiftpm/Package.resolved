@@ -1,4 +1,5 @@
 {
+  "originHash" : "60fb47940b6e0119d74e39633fa7935f0cb57bae4d1518b0e11166db5053990d",
   "pins" : [
     {
       "identity" : "core",
@@ -6,9 +7,9 @@
       "location" : "https://github.com/kelvinkosbab/Core.git",
       "state" : {
         "branch" : "main",
-        "revision" : "e7069906944ba23d546e3e43d872c4bcf6e3202c"
+        "revision" : "d1939e2228a7eaa3f34cf8e72f2a9b196db6572f"
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

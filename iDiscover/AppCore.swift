@@ -8,37 +8,27 @@
 
 import SwiftUI
 import CoreUI
-import RunMode
 
 // MARK: - AppCore
 
 @main
 struct AppCore : App {
     
-    let runMode = RunMode.getActive()
-    let toastApi = ToastApi()
-    
     @StateObject var viewModel = ViewModel()
     
     var body: some Scene {
         WindowGroup {
-            switch self.runMode {
-            case .mainApplication, .uiUnitTests:
-                GeometryReader { geometry in
-                    if geometry.size.width < self.viewModel.sidebarCutoffWidth {
-                        TabBar(selectedItem: self.$viewModel.selectedItem)
-                            .toastableContainer(toastApi: self.toastApi)
-                    } else {
-                        SidebarNavigationView(selectedItem: self.$viewModel.selectedItem)
-                            .toastableContainer(toastApi: self.toastApi)
-                    }
-                }
-            case .unitTests:
-                VStack {
-                    Text("Running Unit Tests")
-                    ProgressView()
+            GeometryReader { geometry in
+                if geometry.size.width < self.viewModel.sidebarCutoffWidth {
+                    TabBar(selectedDestination: self.$viewModel.selectedDestination)
+                        .toastableContainer(toastApi: viewModel.toastApi)
+                } else {
+                    Text(verbatim: "TODO: wide view")
+//                    SidebarNavigationView(selectedDestination: self.$viewModel.selectedDestination)
+//                        .toastableContainer(toastApi: self.toastApi)
                 }
             }
+            .tint(.kozBonBlue)
         }
     }
     
@@ -46,8 +36,9 @@ struct AppCore : App {
     
     class ViewModel : ObservableObject {
         
-        @Published var selectedItem: (any BarItem)?
+        @MainActor @Published var selectedDestination: TopLevelDestination = .bonjourScanForActiveServices
         
         let sidebarCutoffWidth: CGFloat = 500
+        let toastApi = ToastApi()
     }
 }

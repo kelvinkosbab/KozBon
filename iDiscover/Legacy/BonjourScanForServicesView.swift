@@ -15,7 +15,7 @@ struct BonjourScanForServicesView : View {
     
     // MARK: - ViewModel
     
-    @StateObject var viewModel = ViewModel()
+    @StateObject var viewModel = BonjourServicesViewModel()
     
     // MARK: - Body
     

@@ -1,9 +1,9 @@
 //
-//  TabBar.swift
+//  CoreTabBar.swift
 //  KozBon
 //
-//  Created by Kelvin Kosbab on 8/21/23.
-//  Copyright © 2023 Kozinga. All rights reserved.
+//  Created by Kelvin Kosbab on 6/12/24.
+//  Copyright © 2024 Kozinga. All rights reserved.
 //
 
 import SwiftUI
@@ -12,48 +12,64 @@ import SwiftUI
 
 struct TabBar : View {
     
-    @ObservedObject var dataSource: DataSource
+    @StateObject var viewModel: ViewModel
     
-    init(selectedItem: Binding<(any BarItem)?>) {
-        self.dataSource = DataSource(selectedItem: selectedItem)
+    init(selectedDestination: Binding<TopLevelDestination>) {
+        self._viewModel = StateObject(wrappedValue: ViewModel(selectedDestination: selectedDestination))
     }
     
     var body: some View {
         TabView {
-            ForEach(self.dataSource.items, id: \.self.id) { item in
-                NavigationView { item.destination }
-                    .tabItem {
-                        item.content
-                            .foregroundColor(.kozBonBlue)
+            ForEach(viewModel.destinations) { item in
+                NavigationView {
+                    switch viewModel.selectedDestination {
+                    case .bonjourScanForActiveServices:
+                        BonjourScanForServicesView()
+                        
+                    case .bonjourSupportedServices:
+                        Text(viewModel.selectedDestination.titleString)
+                        
+                    case .bonjourCreateService:
+                        Text(viewModel.selectedDestination.titleString)
+                        
+                    case .bluetooth:
+                        Text(viewModel.selectedDestination.titleString)
+                        
+                    case .appInformation:
+                        Text(viewModel.selectedDestination.titleString)
                     }
-                    .onTapGesture {
-                        if item.isSelectable {
-                            self.dataSource.selectedItem = item
-                        }
+                }
+                .tabItem {
+                    Label {
+                        Text(verbatim: item.titleString)
+                    } icon: {
+                        item.icon
                     }
+                }
+//                    .onTapGesture {
+//                        if item.isSelectable {
+//                            self.dataSource.selectedItem = item
+//                        }
+//                    }
             }
         }
         .accentColor(.kozBonBlue)
     }
     
-    // MARK: - DataSource
+    // MARK: - ViewModel
     
-    class DataSource : ObservableObject {
+    class ViewModel : ObservableObject {
         
-        @Binding var selectedItem: (any BarItem)?
+        @MainActor @Binding var selectedDestination: TopLevelDestination
         
-        init(selectedItem: Binding<(any BarItem)?>) {
-            self._selectedItem = selectedItem
-            
-            if self.selectedItem == nil {
-                self.selectedItem = self.items.first
-            }
+        init(selectedDestination: Binding<TopLevelDestination>) {
+            self._selectedDestination = selectedDestination
         }
         
-        let items: [any BarItem] = [
-            TabBarItem.bonjour,
-            TabBarItem.bluetooth,
-            TabBarItem.information
+        let destinations: [TopLevelDestination] = [
+            .bonjourScanForActiveServices,
+            .bluetooth,
+            .appInformation
         ]
     }
 }

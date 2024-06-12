@@ -12,8 +12,9 @@ import SwiftUI
 
 extension Color {
     
+    // TODO: Update this to a custom color (lighter than the SwiftUI.blue.
     static var kozBonBlue: Color {
-        Color.blue // KAK TODO
+        Color.blue
     }
 }
 
@@ -25,14 +26,17 @@ extension Image {
     
     static var bonjour: Image {
         Image("iconBonjour")
+            .renderingMode(.template)
     }
     
     static var bluetooth: Image {
         Image("bluetooth")
+            .renderingMode(.template)
     }
     
     static var bluetoothCapsuleFill: Image {
         Image("bluetooth.capsule.fill")
+            .renderingMode(.template)
     }
     
     // MARK: - SF Symbols
