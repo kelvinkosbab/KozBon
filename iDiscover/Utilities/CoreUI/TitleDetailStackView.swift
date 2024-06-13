@@ -1,5 +1,5 @@
 //
-//  TitleDetailChevronView.swift
+//  TitleDetailStackView.swift
 //  KozBon
 //
 //  Created by Kelvin Kosbab on 9/14/23.
@@ -9,16 +9,24 @@
 import SwiftUI
 import CoreUI
 
-// MARK: - TitleDetailChevronView
+// MARK: - TitleDetailStackView
 
-struct TitleDetailChevronView: View {
+struct TitleDetailStackView: View {
 
     let title: String
     let detail: String
+    
+    init(title: String, detail: String) {
+        self.title = title
+        self.detail = detail
+    }
 
     var body: some View {
         HStack(alignment: .center) {
-            VStack(alignment: .leading, spacing: Spacing.base) {
+            VStack(
+                alignment: .leading,
+                spacing: Spacing.small
+            ) {
                 Text(self.title)
                     .font(.body)
                     .foregroundColor(.primary)
@@ -28,9 +36,6 @@ struct TitleDetailChevronView: View {
             }
 
             Spacer()
-
-            Image.chevronRight
-                .foregroundColor(.kozBonBlue)
         }
     }
 }
@@ -40,7 +45,10 @@ struct TitleDetailChevronView: View {
 struct BonjourServiceCardView_Previews: PreviewProvider {
     static var previews: some View {
         List {
-            TitleDetailChevronView(title: "title", detail: "detail")
+            TitleDetailStackView(
+                title: "title",
+                detail: "detail"
+            )
         }
     }
 }

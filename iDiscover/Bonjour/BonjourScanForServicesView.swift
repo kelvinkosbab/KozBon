@@ -22,10 +22,14 @@ struct BonjourScanForServicesView: View {
     var body: some View {
         List {
             ForEach(self.viewModel.activeServices, id: \.self.service.hashValue) { service in
-                TitleDetailChevronView(
-                    title: service.service.name,
-                    detail: service.serviceType.name
-                )
+                NavigationLink {
+                    BonjourServiceDetailView(service: service)
+                } label: {
+                    TitleDetailStackView(
+                        title: service.service.name,
+                        detail: service.serviceType.name
+                    )
+                }
             }
         }
         .overlay {
@@ -42,10 +46,17 @@ struct BonjourScanForServicesView: View {
             }
         }
         .navigationTitle(NSLocalizedString(
-            "Bonjour Services",
-            comment: "Bonjour Services title"
+            "Bonjour services",
+            comment: "Bonjour services page title"
         ))
-        .onAppear {
+        .refreshable {
+            guard !self.viewModel.serviceScanner.isProcessing else {
+                return
+            }
+            
+            self.viewModel.serviceScanner.startScan()
+        }
+        .task {
             self.viewModel.serviceScanner.startScan()
         }
         .onDisappear {

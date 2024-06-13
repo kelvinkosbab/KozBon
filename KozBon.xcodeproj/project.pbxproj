@@ -83,10 +83,10 @@
 		F67B65312C1B4EC300324FFF /* InternetAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B65302C1B4EC300324FFF /* InternetAddress.swift */; };
 		F67B65332C1B54F400324FFF /* NetService+InternetAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B65322C1B54F400324FFF /* NetService+InternetAddress.swift */; };
 		F67B65352C1B556900324FFF /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B65342C1B556900324FFF /* Logger.swift */; };
+		F67B65392C1B5CB700324FFF /* BonjourServiceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B65382C1B5CB700324FFF /* BonjourServiceDetailView.swift */; };
 		F67FC0F62A97DF9A00AA32BB /* ObjectRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67FC0F52A97DF9A00AA32BB /* ObjectRegistry.swift */; };
 		F690B5FB2561E9B600902DAB /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F690B5FA2561E9B600902DAB /* NetworkExtension.framework */; };
 		F69DF275269AB8BF00B97E9D /* EditTxtRecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69DF274269AB8BF00B97E9D /* EditTxtRecordsViewController.swift */; };
-		F69E826C2AAA7DC4006AA4D3 /* BonjourServiceScannerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69E826B2AAA7DC4006AA4D3 /* BonjourServiceScannerDelegate.swift */; };
 		F69E826E2AABA4CA006AA4D3 /* BonjourServicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69E826D2AABA4CA006AA4D3 /* BonjourServicesViewModel.swift */; };
 		F69E82702AABA6B4006AA4D3 /* BonjourServiceSortType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69E826F2AABA6B4006AA4D3 /* BonjourServiceSortType.swift */; };
 		F69E82722AABA7E5006AA4D3 /* BonjourServiceBrowserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69E82712AABA7E5006AA4D3 /* BonjourServiceBrowserState.swift */; };
@@ -96,7 +96,7 @@
 		F6C472F92C1A1EAB00BBB0F9 /* CoreUI in Frameworks */ = {isa = PBXBuildFile; productRef = F6C472F82C1A1EAB00BBB0F9 /* CoreUI */; };
 		F6C472FB2C1A248000BBB0F9 /* TopLevelDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C472FA2C1A248000BBB0F9 /* TopLevelDestination.swift */; };
 		F6C472FF2C1A26FB00BBB0F9 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C472FE2C1A26FB00BBB0F9 /* TabBar.swift */; };
-		F6C50D7C2AB3BDD50048DF8C /* TitleDetailChevronView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C50D7B2AB3BDD50048DF8C /* TitleDetailChevronView.swift */; };
+		F6C50D7C2AB3BDD50048DF8C /* TitleDetailStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C50D7B2AB3BDD50048DF8C /* TitleDetailStackView.swift */; };
 		F6C50D7E2AB3C47D0048DF8C /* BonjourServiceListSortMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C50D7D2AB3C47D0048DF8C /* BonjourServiceListSortMenu.swift */; };
 		F6C50D802AB3F7300048DF8C /* BarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C50D7F2AB3F7300048DF8C /* BarItem.swift */; };
 		F6C50D822AB3F8A70048DF8C /* BluetoothScanForDevicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C50D812AB3F8A70048DF8C /* BluetoothScanForDevicesViewModel.swift */; };
@@ -185,17 +185,17 @@
 		F67B65302C1B4EC300324FFF /* InternetAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetAddress.swift; sourceTree = "<group>"; };
 		F67B65322C1B54F400324FFF /* NetService+InternetAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetService+InternetAddress.swift"; sourceTree = "<group>"; };
 		F67B65342C1B556900324FFF /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		F67B65382C1B5CB700324FFF /* BonjourServiceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServiceDetailView.swift; sourceTree = "<group>"; };
 		F67FC0F52A97DF9A00AA32BB /* ObjectRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectRegistry.swift; sourceTree = "<group>"; };
 		F690B5FA2561E9B600902DAB /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		F69DF274269AB8BF00B97E9D /* EditTxtRecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTxtRecordsViewController.swift; sourceTree = "<group>"; };
-		F69E826B2AAA7DC4006AA4D3 /* BonjourServiceScannerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServiceScannerDelegate.swift; sourceTree = "<group>"; };
 		F69E826D2AABA4CA006AA4D3 /* BonjourServicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServicesViewModel.swift; sourceTree = "<group>"; };
 		F69E826F2AABA6B4006AA4D3 /* BonjourServiceSortType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServiceSortType.swift; sourceTree = "<group>"; };
 		F69E82712AABA7E5006AA4D3 /* BonjourServiceBrowserState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServiceBrowserState.swift; sourceTree = "<group>"; };
 		F69E82732AABA8A5006AA4D3 /* TransportLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportLayer.swift; sourceTree = "<group>"; };
 		F6C472FA2C1A248000BBB0F9 /* TopLevelDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopLevelDestination.swift; sourceTree = "<group>"; };
 		F6C472FE2C1A26FB00BBB0F9 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
-		F6C50D7B2AB3BDD50048DF8C /* TitleDetailChevronView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleDetailChevronView.swift; sourceTree = "<group>"; };
+		F6C50D7B2AB3BDD50048DF8C /* TitleDetailStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleDetailStackView.swift; sourceTree = "<group>"; };
 		F6C50D7D2AB3C47D0048DF8C /* BonjourServiceListSortMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServiceListSortMenu.swift; sourceTree = "<group>"; };
 		F6C50D7F2AB3F7300048DF8C /* BarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarItem.swift; sourceTree = "<group>"; };
 		F6C50D812AB3F8A70048DF8C /* BluetoothScanForDevicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothScanForDevicesViewModel.swift; sourceTree = "<group>"; };
@@ -471,16 +471,6 @@
 			name = Bluetooth;
 			sourceTree = "<group>";
 		};
-		F6240E6A2A92D5FE00951875 /* Bonjour */ = {
-			isa = PBXGroup;
-			children = (
-				F6240E6B2A92D62200951875 /* BonjourScanForServicesView.swift */,
-				F69E826F2AABA6B4006AA4D3 /* BonjourServiceSortType.swift */,
-				F6C50D7D2AB3C47D0048DF8C /* BonjourServiceListSortMenu.swift */,
-			);
-			name = Bonjour;
-			sourceTree = "<group>";
-		};
 		F6240E6D2A92D62500951875 /* Bluetooth */ = {
 			isa = PBXGroup;
 			children = (
@@ -516,8 +506,42 @@
 				F67B65302C1B4EC300324FFF /* InternetAddress.swift */,
 				F67B65322C1B54F400324FFF /* NetService+InternetAddress.swift */,
 				F67B65342C1B556900324FFF /* Logger.swift */,
+				F67B653A2C1B5DA200324FFF /* CoreUI */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		F67B65362C1B5C4E00324FFF /* BonjourServiceBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				B6CE1D591E120CCC003D4FFA /* BonjourService.swift */,
+				F69E82712AABA7E5006AA4D3 /* BonjourServiceBrowserState.swift */,
+				B6CE1D571E120CCC003D4FFA /* BonjourServiceScanner.swift */,
+				B6CE1D5B1E120CCC003D4FFA /* BonjourServiceType.swift */,
+				B6089C9B1E1A2A3900C7CF29 /* BonjourServiceType+CustomServiceType.swift */,
+				B6CE1D5A1E120CCC003D4FFA /* BonjourServiceTypeScanner.swift */,
+				B6CE1D581E120CCC003D4FFA /* BonjourServiceTypeScope.swift */,
+				B679CC161E1647670056C7B5 /* MyBonjourPublishManager.swift */,
+				B64D06251E1A2C55008B3FC8 /* MyServiceType+Library.swift */,
+				F69E82732AABA8A5006AA4D3 /* TransportLayer.swift */,
+			);
+			path = BonjourServiceBrowser;
+			sourceTree = "<group>";
+		};
+		F67B65372C1B5CAE00324FFF /* BonjourServiceDetail */ = {
+			isa = PBXGroup;
+			children = (
+				F67B65382C1B5CB700324FFF /* BonjourServiceDetailView.swift */,
+			);
+			path = BonjourServiceDetail;
+			sourceTree = "<group>";
+		};
+		F67B653A2C1B5DA200324FFF /* CoreUI */ = {
+			isa = PBXGroup;
+			children = (
+				F6C50D7B2AB3BDD50048DF8C /* TitleDetailStackView.swift */,
+			);
+			path = CoreUI;
 			sourceTree = "<group>";
 		};
 		F690B5F92561E9B600902DAB /* Frameworks */ = {
@@ -545,7 +569,6 @@
 				F6240E7D2A94120B00951875 /* TabBar & Sidebar */,
 				F67FC0F52A97DF9A00AA32BB /* ObjectRegistry.swift */,
 				F6C50D5F2AB3B4150048DF8C /* Shared */,
-				F6240E6A2A92D5FE00951875 /* Bonjour */,
 				F6240E6D2A92D62500951875 /* Bluetooth */,
 				F6240E702A92D74700951875 /* Information */,
 				B6CE1D3C1E1208D8003D4FFA /* Common */,
@@ -557,7 +580,12 @@
 		F6C473002C1A4D7400BBB0F9 /* Bonjour */ = {
 			isa = PBXGroup;
 			children = (
+				F6240E6B2A92D62200951875 /* BonjourScanForServicesView.swift */,
 				F69E826D2AABA4CA006AA4D3 /* BonjourServicesViewModel.swift */,
+				F69E826F2AABA6B4006AA4D3 /* BonjourServiceSortType.swift */,
+				F6C50D7D2AB3C47D0048DF8C /* BonjourServiceListSortMenu.swift */,
+				F67B65372C1B5CAE00324FFF /* BonjourServiceDetail */,
+				F67B65362C1B5C4E00324FFF /* BonjourServiceBrowser */,
 			);
 			path = Bonjour;
 			sourceTree = "<group>";
@@ -566,30 +594,10 @@
 			isa = PBXGroup;
 			children = (
 				F6C50D852ABA535E0048DF8C /* EmptyStateOverlayView.swift */,
-				F6C50D7B2AB3BDD50048DF8C /* TitleDetailChevronView.swift */,
 				B6F93AB21E123AB800FE2DC7 /* Bluetooth */,
-				F6C50D602AB3B5830048DF8C /* Bonjour */,
 				B6CE1D441E12098A003D4FFA /* Supporting Files */,
 			);
 			name = Shared;
-			sourceTree = "<group>";
-		};
-		F6C50D602AB3B5830048DF8C /* Bonjour */ = {
-			isa = PBXGroup;
-			children = (
-				B6CE1D591E120CCC003D4FFA /* BonjourService.swift */,
-				F69E82712AABA7E5006AA4D3 /* BonjourServiceBrowserState.swift */,
-				B6CE1D571E120CCC003D4FFA /* BonjourServiceScanner.swift */,
-				F69E826B2AAA7DC4006AA4D3 /* BonjourServiceScannerDelegate.swift */,
-				B6CE1D5B1E120CCC003D4FFA /* BonjourServiceType.swift */,
-				B6089C9B1E1A2A3900C7CF29 /* BonjourServiceType+CustomServiceType.swift */,
-				B6CE1D5A1E120CCC003D4FFA /* BonjourServiceTypeScanner.swift */,
-				B6CE1D581E120CCC003D4FFA /* BonjourServiceTypeScope.swift */,
-				B679CC161E1647670056C7B5 /* MyBonjourPublishManager.swift */,
-				B64D06251E1A2C55008B3FC8 /* MyServiceType+Library.swift */,
-				F69E82732AABA8A5006AA4D3 /* TransportLayer.swift */,
-			);
-			name = Bonjour;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -717,6 +725,7 @@
 				B6CE1D5C1E120CCC003D4FFA /* BonjourServiceScanner.swift in Sources */,
 				F6240E812A94206D00951875 /* TabBarItem.swift in Sources */,
 				F6240E7F2A941BD500951875 /* (null) in Sources */,
+				F67B65392C1B5CB700324FFF /* BonjourServiceDetailView.swift in Sources */,
 				B6AE53861E170A6400FB57E3 /* PublishDetailExistingViewController.swift in Sources */,
 				B6CE1D561E120BF4003D4FFA /* MyDataManager.swift in Sources */,
 				B6BD8C8C2002E0ED009327B2 /* BluetoothDeviceDetailViewController.swift in Sources */,
@@ -731,13 +740,12 @@
 				B6CE1D501E120B90003D4FFA /* UIViewController+Util.swift in Sources */,
 				F67FC0F62A97DF9A00AA32BB /* ObjectRegistry.swift in Sources */,
 				B68B212D1E47A55800BE2CA2 /* ServiceDetailSimpleCell.swift in Sources */,
-				F6C50D7C2AB3BDD50048DF8C /* TitleDetailChevronView.swift in Sources */,
+				F6C50D7C2AB3BDD50048DF8C /* TitleDetailStackView.swift in Sources */,
 				B68EC5A01E2F226A00C9D5CC /* BluetoothViewController.swift in Sources */,
 				F6240E7C2A94077F00951875 /* BarItemLabel.swift in Sources */,
 				B68EEA571E47104D00831CC4 /* ServicesServiceCell.swift in Sources */,
 				B68EEA631E471FD000831CC4 /* SettingsItemCell.swift in Sources */,
 				F6240E782A93F4D500951875 /* LagacyTabBar.swift in Sources */,
-				F69E826C2AAA7DC4006AA4D3 /* BonjourServiceScannerDelegate.swift in Sources */,
 				F6240E722A92D75200951875 /* InformationView.swift in Sources */,
 				B68EEA671E472B1B00831CC4 /* SettingsFooterView.swift in Sources */,
 				B69154631E138E4A00382F41 /* MyTableViewController.swift in Sources */,

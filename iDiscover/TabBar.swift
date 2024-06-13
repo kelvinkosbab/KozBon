@@ -53,7 +53,6 @@ struct TabBar: View {
 //                    }
             }
         }
-        .accentColor(.kozBonBlue)
     }
 
     // MARK: - ViewModel

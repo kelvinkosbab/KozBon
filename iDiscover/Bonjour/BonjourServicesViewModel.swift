@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 // MARK: - BonjourServicesViewModel
 
@@ -74,16 +75,16 @@ class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDelegate 
     // MARK: - BonjourServiceScannerDelegate
 
     func didAdd(service: BonjourService) {
-        Task {
-            await MainActor.run {
+        Task { @MainActor in
+            withAnimation {
                 self.activeServices.append(service)
             }
         }
     }
 
     func didRemove(service: BonjourService) {
-        Task {
-            await MainActor.run {
+        Task { @MainActor in
+            withAnimation {
                 for index in 0..<self.activeServices.count {
                     self.activeServices.remove(at: index)
                 }
@@ -92,8 +93,8 @@ class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDelegate 
     }
 
     func didReset() {
-        Task {
-            await MainActor.run {
+        Task { @MainActor in
+            withAnimation {
                 self.activeServices = []
             }
         }

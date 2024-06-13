@@ -8,6 +8,14 @@
 import Foundation
 import Core
 
+// MARK: - BonjourServiceScannerDelegate
+
+protocol BonjourServiceScannerDelegate: AnyObject {
+    func didAdd(service: BonjourService)
+    func didRemove(service: BonjourService)
+    func didReset()
+}
+
 // MARK: - BonjourServiceScanner
 
 class BonjourServiceScanner: BonjourServiceScannerDelegate {
@@ -69,9 +77,9 @@ class BonjourServiceScanner: BonjourServiceScannerDelegate {
             serviceBrowser.delegate = self
             self.typeScanners.append(serviceBrowser)
 
-//            let serviceBrowser2 = BonjourServiceTypeScanner(serviceType: serviceType, domain: "local.")
-//            serviceBrowser2.delegate = self
-//            self.typeScanners.append(serviceBrowser2)
+            let serviceBrowser2 = BonjourServiceTypeScanner(serviceType: serviceType, domain: "local.")
+            serviceBrowser2.delegate = self
+            self.typeScanners.append(serviceBrowser2)
         }
 
         // Populate service browsers with user-created service types

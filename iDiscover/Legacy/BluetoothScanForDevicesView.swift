@@ -22,7 +22,7 @@ struct BluetoothScanForDevicesView: View {
         List {
             ForEach(self.viewModel.devices, id: \.self.uuid) { device in
                 if let deviceName = device.name {
-                    TitleDetailChevronView(
+                    TitleDetailStackView(
                         title: deviceName,
                         detail: "Last known RSSI: \(device.lastKnownRSSI ?? -1)"
                     )

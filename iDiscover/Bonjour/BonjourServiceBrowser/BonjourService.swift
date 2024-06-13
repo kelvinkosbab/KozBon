@@ -23,13 +23,13 @@ protocol MyNetServiceDelegate: AnyObject {
 
 class BonjourService: NSObject, NetServiceDelegate {
 
-  // MARK: - Init
+    // MARK: - Init
 
-  let service: NetService
-  let serviceType: BonjourServiceType
-  var addresses: [InternetAddress] = []
-  var dataRecords: [MyDataRecord] = []
-  weak var delegate: MyNetServiceDelegate?
+    let service: NetService
+    let serviceType: BonjourServiceType
+    private(set) var addresses: [InternetAddress] = []
+    private(set) var dataRecords: [MyDataRecord] = []
+    weak var delegate: MyNetServiceDelegate?
 
     private let logger: Loggable = Logger(category: "BonjourService")
 
