@@ -50,6 +50,23 @@ struct BonjourServiceType: Hashable, Equatable {
         }
         return false
     }
+    
+    var imageSystemName: String? {
+        switch name.lowercased() {
+        case "airplay":
+            "airplayvideo"
+        case "bonjour sleep proxy":
+            "bonjour"
+        case "remote audio output protocol (raop)":
+            "hifispeaker.fill"
+        case "workgroup manager":
+            "square.on.square"
+        case "apple mobile device protocol v2":
+            "apple.logo"
+        default:
+            nil
+        }
+    }
 
     // MARK: - Static Helpers
 

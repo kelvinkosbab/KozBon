@@ -28,6 +28,7 @@ struct BonjourScanForServicesView: View {
                     } label: {
                         TitleDetailStackView(
                             title: service.service.name,
+                            labelImageSystemName: service.serviceType.imageSystemName,
                             detail: service.serviceType.name
                         )
                     }

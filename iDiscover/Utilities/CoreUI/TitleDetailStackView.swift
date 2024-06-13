@@ -14,10 +14,16 @@ import CoreUI
 struct TitleDetailStackView: View {
 
     let title: String
+    let labelImageSystemName: String?
     let detail: String
     
-    init(title: String, detail: String) {
+    init(
+        title: String,
+        labelImageSystemName: String? = nil,
+        detail: String
+    ) {
         self.title = title
+        self.labelImageSystemName = labelImageSystemName
         self.detail = detail
     }
 
@@ -27,9 +33,16 @@ struct TitleDetailStackView: View {
                 alignment: .leading,
                 spacing: Spacing.small
             ) {
-                Text(self.title)
-                    .font(.body)
-                    .foregroundColor(.primary)
+                Group {
+                    if let labelImageSystemName {
+                        Label(title, systemImage: labelImageSystemName)
+                            .labelStyle(VerticallyCenteredLabelStyle())
+                    } else {
+                        Text(self.title)
+                    }
+                }
+                .font(.body)
+                .foregroundColor(.primary)
                 Text(self.detail)
                     .font(.caption)
                     .foregroundColor(.secondary)

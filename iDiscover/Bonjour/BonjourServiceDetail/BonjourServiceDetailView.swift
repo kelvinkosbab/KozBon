@@ -25,16 +25,21 @@ struct BonjourServiceDetailView: View {
     var body: some View {
         List {
             Section {
-                Text(verbatim: viewModel.service.service.name)
-                    .font(.system(.headline).bold())
-                    .foregroundStyle(.white)
-                    .padding()
-                    .padding(.horizontal)
-                    .background(.secondary)
-                    .clipShape(.capsule)
-                
-                    .listRowBackground(Color(.clear))
-                    .frame(maxWidth: .infinity)
+                Group {
+                    if let serviceTypeSystemName = viewModel.serviceType.imageSystemName {
+                        Label(viewModel.service.service.name, systemImage: serviceTypeSystemName)
+                    } else {
+                        Text(verbatim: viewModel.service.service.name)
+                    }
+                }
+                .font(.system(.headline).bold())
+                .foregroundStyle(.white)
+                .padding()
+                .padding(.horizontal)
+                .background(.secondary)
+                .clipShape(.capsule)
+                .listRowBackground(Color(.clear))
+                .frame(maxWidth: .infinity)
             }
             
             Section("Information") {

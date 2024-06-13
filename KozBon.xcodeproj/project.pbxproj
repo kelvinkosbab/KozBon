@@ -84,6 +84,7 @@
 		F67B65332C1B54F400324FFF /* NetService+InternetAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B65322C1B54F400324FFF /* NetService+InternetAddress.swift */; };
 		F67B65352C1B556900324FFF /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B65342C1B556900324FFF /* Logger.swift */; };
 		F67B65392C1B5CB700324FFF /* BonjourServiceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B65382C1B5CB700324FFF /* BonjourServiceDetailView.swift */; };
+		F67B653D2C1B7B9800324FFF /* VerticallyCenteredLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B653C2C1B7B9800324FFF /* VerticallyCenteredLabelStyle.swift */; };
 		F67FC0F62A97DF9A00AA32BB /* ObjectRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67FC0F52A97DF9A00AA32BB /* ObjectRegistry.swift */; };
 		F690B5FB2561E9B600902DAB /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F690B5FA2561E9B600902DAB /* NetworkExtension.framework */; };
 		F69DF275269AB8BF00B97E9D /* EditTxtRecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69DF274269AB8BF00B97E9D /* EditTxtRecordsViewController.swift */; };
@@ -186,6 +187,7 @@
 		F67B65322C1B54F400324FFF /* NetService+InternetAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetService+InternetAddress.swift"; sourceTree = "<group>"; };
 		F67B65342C1B556900324FFF /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		F67B65382C1B5CB700324FFF /* BonjourServiceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServiceDetailView.swift; sourceTree = "<group>"; };
+		F67B653C2C1B7B9800324FFF /* VerticallyCenteredLabelStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticallyCenteredLabelStyle.swift; sourceTree = "<group>"; };
 		F67FC0F52A97DF9A00AA32BB /* ObjectRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectRegistry.swift; sourceTree = "<group>"; };
 		F690B5FA2561E9B600902DAB /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		F69DF274269AB8BF00B97E9D /* EditTxtRecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTxtRecordsViewController.swift; sourceTree = "<group>"; };
@@ -532,6 +534,7 @@
 			isa = PBXGroup;
 			children = (
 				F6C50D7B2AB3BDD50048DF8C /* TitleDetailStackView.swift */,
+				F67B653C2C1B7B9800324FFF /* VerticallyCenteredLabelStyle.swift */,
 			);
 			path = CoreUI;
 			sourceTree = "<group>";
@@ -697,6 +700,7 @@
 				B6CE1D661E120E4D003D4FFA /* CustomServiceType.swift in Sources */,
 				B6089C9C1E1A2A3900C7CF29 /* BonjourServiceType+CustomServiceType.swift in Sources */,
 				F6C50D802AB3F7300048DF8C /* BarItem.swift in Sources */,
+				F67B653D2C1B7B9800324FFF /* VerticallyCenteredLabelStyle.swift in Sources */,
 				B6CE1D471E120ADC003D4FFA /* Date+Util.swift in Sources */,
 				B68EEA3F1E46709000831CC4 /* EmptyStateProtocol.swift in Sources */,
 				B679CC151E1624A20056C7B5 /* MyViewController.swift in Sources */,
