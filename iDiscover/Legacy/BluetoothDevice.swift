@@ -208,6 +208,14 @@ class BluetoothDevice: NSObject, CBPeripheralDelegate {
     }
 }
 
+// MARK: - Identifiable
+
+extension BluetoothDevice: Identifiable {
+    var id: UUID {
+        uuid
+    }
+}
+
 // MARK: - Sequence
 
 extension Sequence where Iterator.Element: BluetoothDevice {

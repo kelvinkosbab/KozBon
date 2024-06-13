@@ -22,7 +22,7 @@ struct BonjourServiceListSortMenu: View {
     var body: some View {
         Menu {
             ForEach(BonjourServiceSortType.allCases) { sortType in
-                Button(sortType.string) {
+                Button(sortType.hostOrServiceTitle) {
                     self.didSelect(sortType: sortType)
                 }
             }

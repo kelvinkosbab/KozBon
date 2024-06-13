@@ -20,7 +20,7 @@ struct BluetoothScanForDevicesView: View {
 
     var body: some View {
         List {
-            ForEach(self.viewModel.devices, id: \.self.uuid) { device in
+            ForEach(self.viewModel.devices) { device in
                 if let deviceName = device.name {
                     TitleDetailStackView(
                         title: deviceName,
@@ -43,14 +43,18 @@ struct BluetoothScanForDevicesView: View {
             }
         }
         .navigationTitle(NSLocalizedString(
-            "Bluetooth Devices",
-            comment: "Bluetooth Devices title"
+            "Bluetooth devices",
+            comment: "Bluetooth devices page title"
         ))
-        .onAppear {
-            self.viewModel.deviceScanner.startScan()
+        .task {
+            if viewModel.isInitialLoad {
+                viewModel.deviceScanner.startScan()
+                viewModel.isInitialLoad = false
+            }
+            
         }
         .onDisappear {
-            self.viewModel.deviceScanner.stopScan()
+            viewModel.deviceScanner.stopScan()
         }
     }
 }

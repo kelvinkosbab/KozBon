@@ -11,24 +11,14 @@ import SwiftUI
 // MARK: - TopLevelDestination
 
 enum TopLevelDestination: Identifiable {
-    case bonjourScanForActiveServices
-    case bonjourSupportedServices
-    case bonjourCreateService
-
+    case bonjour
     case bluetooth
-
     case appInformation
 
     var id: String {
         switch self {
-        case .bonjourScanForActiveServices:
+        case .bonjour:
             "bonjour"
-
-        case .bonjourSupportedServices:
-            "bonjourSupportedServices"
-
-        case .bonjourCreateService:
-            "bonjourCreateService"
 
         case .bluetooth:
             "bluetooth"
@@ -42,16 +32,11 @@ enum TopLevelDestination: Identifiable {
 
     var titleString: String {
         switch self {
-        case .bonjourScanForActiveServices:
+        case .bonjour:
             NSLocalizedString(
                 "Bonjour",
                 comment: "Bonjour tab title"
             )
-        case .bonjourSupportedServices:
-            ""
-
-        case .bonjourCreateService:
-            ""
 
         case .bluetooth:
             NSLocalizedString(
@@ -69,14 +54,12 @@ enum TopLevelDestination: Identifiable {
 
     var icon: Image {
         switch self {
-        case .bonjourScanForActiveServices:
+        case .bonjour:
             Image.bonjour
-        case .bonjourSupportedServices:
-            Image.bonjour
-        case .bonjourCreateService:
-            Image.bonjour
+        
         case .bluetooth:
             Image.bluetoothCapsuleFill
+            
         case .appInformation:
             Image.infoCircleFill
         }

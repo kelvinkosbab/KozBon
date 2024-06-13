@@ -36,7 +36,7 @@ struct AppCore: App {
 
     class ViewModel: ObservableObject {
 
-        @MainActor @Published var selectedDestination: TopLevelDestination = .bonjourScanForActiveServices
+        @MainActor @Published var selectedDestination: TopLevelDestination = .bonjour
 
         let sidebarCutoffWidth: CGFloat = 500
         let toastApi = ToastApi()

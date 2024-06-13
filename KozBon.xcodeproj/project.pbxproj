@@ -375,6 +375,7 @@
 				F6240E682A92CF0600951875 /* AppCore.swift */,
 				F6C472FA2C1A248000BBB0F9 /* TopLevelDestination.swift */,
 				F6C472FE2C1A26FB00BBB0F9 /* TabBar.swift */,
+				F67B653B2C1B6DAE00324FFF /* Bluetooth */,
 				F6C473002C1A4D7400BBB0F9 /* Bonjour */,
 				F67B652F2C1B4EA500324FFF /* Utilities */,
 				F6C472FC2C1A267B00BBB0F9 /* Legacy */,
@@ -471,15 +472,6 @@
 			name = Bluetooth;
 			sourceTree = "<group>";
 		};
-		F6240E6D2A92D62500951875 /* Bluetooth */ = {
-			isa = PBXGroup;
-			children = (
-				F6240E6E2A92D63400951875 /* BluetoothScanForDevicesView.swift */,
-				F6C50D812AB3F8A70048DF8C /* BluetoothScanForDevicesViewModel.swift */,
-			);
-			name = Bluetooth;
-			sourceTree = "<group>";
-		};
 		F6240E702A92D74700951875 /* Information */ = {
 			isa = PBXGroup;
 			children = (
@@ -544,6 +536,15 @@
 			path = CoreUI;
 			sourceTree = "<group>";
 		};
+		F67B653B2C1B6DAE00324FFF /* Bluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				F6240E6E2A92D63400951875 /* BluetoothScanForDevicesView.swift */,
+				F6C50D812AB3F8A70048DF8C /* BluetoothScanForDevicesViewModel.swift */,
+			);
+			path = Bluetooth;
+			sourceTree = "<group>";
+		};
 		F690B5F92561E9B600902DAB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -569,7 +570,6 @@
 				F6240E7D2A94120B00951875 /* TabBar & Sidebar */,
 				F67FC0F52A97DF9A00AA32BB /* ObjectRegistry.swift */,
 				F6C50D5F2AB3B4150048DF8C /* Shared */,
-				F6240E6D2A92D62500951875 /* Bluetooth */,
 				F6240E702A92D74700951875 /* Information */,
 				B6CE1D3C1E1208D8003D4FFA /* Common */,
 				B6CE1D431E120977003D4FFA /* Controller */,

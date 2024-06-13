@@ -23,6 +23,7 @@ class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDelegate 
         }
     }
 
+    var isInitialLoad = true
     let serviceScanner = BonjourServiceScanner()
 
     init() {
@@ -77,7 +78,12 @@ class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDelegate 
     func didAdd(service: BonjourService) {
         Task { @MainActor in
             withAnimation {
-                self.activeServices.append(service)
+                let index = activeServices.firstIndex { $0.hashValue == service.hashValue}
+                if let index {
+                    self.activeServices[index] = service
+                } else {
+                    self.activeServices.append(service)
+                }
             }
         }
     }
@@ -85,7 +91,8 @@ class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDelegate 
     func didRemove(service: BonjourService) {
         Task { @MainActor in
             withAnimation {
-                for index in 0..<self.activeServices.count {
+                let index = activeServices.firstIndex { $0.hashValue == service.hashValue}
+                if let index {
                     self.activeServices.remove(at: index)
                 }
             }

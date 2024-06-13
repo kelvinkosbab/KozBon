@@ -21,14 +21,16 @@ struct BonjourScanForServicesView: View {
 
     var body: some View {
         List {
-            ForEach(self.viewModel.activeServices, id: \.self.service.hashValue) { service in
-                NavigationLink {
-                    BonjourServiceDetailView(service: service)
-                } label: {
-                    TitleDetailStackView(
-                        title: service.service.name,
-                        detail: service.serviceType.name
-                    )
+            Section(viewModel.sortType?.hostOrServiceTitle ?? "") {
+                ForEach(self.viewModel.activeServices) { service in
+                    NavigationLink {
+                        BonjourServiceDetailView(service: service)
+                    } label: {
+                        TitleDetailStackView(
+                            title: service.service.name,
+                            detail: service.serviceType.name
+                        )
+                    }
                 }
             }
         }
@@ -57,10 +59,13 @@ struct BonjourScanForServicesView: View {
             self.viewModel.serviceScanner.startScan()
         }
         .task {
-            self.viewModel.serviceScanner.startScan()
+            if viewModel.isInitialLoad {
+                viewModel.serviceScanner.startScan()
+                viewModel.isInitialLoad = false
+            }
         }
         .onDisappear {
-            self.viewModel.serviceScanner.stopScan()
+            viewModel.serviceScanner.stopScan()
         }
     }
 

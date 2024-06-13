@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreBluetooth
+import SwiftUI
 
 // MARK: - BluetoothScanForDevicesViewModel
 
@@ -15,10 +16,11 @@ extension BluetoothScanForDevicesView {
 
     class ViewModel: ObservableObject, BluetoothDeviceScannerDelegate {
 
-        @Published var devices: [BluetoothDevice] = []
-        @Published var scannerState: CBManagerState = .unknown
+        @MainActor @Published var devices: [BluetoothDevice] = []
+        @MainActor @Published var scannerState: CBManagerState = .unknown
 
         let deviceScanner: BluetoothDeviceScanner
+        var isInitialLoad = true
 
         init() {
             self.deviceScanner = BluetoothDeviceScanner()
@@ -40,17 +42,33 @@ extension BluetoothScanForDevicesView {
         // MARK: - BluetoothDeviceScannerDelegate
 
         func didAdd(device: BluetoothDevice) {
-            self.devices.append(device)
+            Task { @MainActor in
+                withAnimation {
+                    if let index = self.devices.firstIndex(of: device) {
+                        self.devices[index] = device
+                    } else {
+                        self.devices.append(device)
+                    }
+                }
+            }
         }
 
         func didRemove(device: BluetoothDevice) {
-            if let index = self.devices.firstIndex(of: device) {
-                self.devices.remove(at: index)
+            Task { @MainActor in
+                withAnimation {
+                    if let index = self.devices.firstIndex(of: device) {
+                        self.devices.remove(at: index)
+                    }
+                }
             }
         }
 
         func didUpdate(state: CBManagerState) {
-            self.scannerState = state
+            Task { @MainActor in
+                withAnimation {
+                    scannerState = state
+                }
+            }
         }
     }
 }

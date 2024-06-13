@@ -26,7 +26,13 @@ struct BonjourServiceDetailView: View {
         List {
             Section {
                 Text(verbatim: viewModel.service.service.name)
-                    .font(.system(.title3).bold())
+                    .font(.system(.headline).bold())
+                    .foregroundStyle(.white)
+                    .padding()
+                    .padding(.horizontal)
+                    .background(.secondary)
+                    .clipShape(.capsule)
+                
                     .listRowBackground(Color(.clear))
                     .frame(maxWidth: .infinity)
             }
@@ -57,14 +63,10 @@ struct BonjourServiceDetailView: View {
                     detail: viewModel.service.service.domain
                 )
                 if let detail = viewModel.serviceType.detail {
-                    NavigationLink {
-                        Text(verbatim: "Placeholder")
-                    } label: {
-                        TitleDetailStackView(
-                            title: "Detail",
-                            detail: detail
-                        )
-                    }
+                    TitleDetailStackView(
+                        title: "Protocol information",
+                        detail: detail
+                    )
                 }
             }
             

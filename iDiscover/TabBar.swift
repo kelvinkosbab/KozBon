@@ -17,40 +17,52 @@ struct TabBar: View {
     init(selectedDestination: Binding<TopLevelDestination>) {
         self._viewModel = StateObject(wrappedValue: ViewModel(selectedDestination: selectedDestination))
     }
+    
+    // TODO: Do this 
+//    private var selectedDestinationHandler: Binding<TopLevelDestination> { Binding(
+//        get: { viewModel.selectedDestination },
+//        set: { newValue in
+//            if newValue == viewModel.selectedDestination {
+//                // TODO: Handle tapped twice to pop to root
+//                //viewModel.tappedTwice = true
+//            }
+//            viewModel.selectedDestination = newValue
+//        }
+//    )}
 
     var body: some View {
         TabView {
-            ForEach(viewModel.destinations) { item in
-                NavigationView {
-                    switch viewModel.selectedDestination {
-                    case .bonjourScanForActiveServices:
-                        BonjourScanForServicesView()
-
-                    case .bonjourSupportedServices:
-                        Text(viewModel.selectedDestination.titleString)
-
-                    case .bonjourCreateService:
-                        Text(viewModel.selectedDestination.titleString)
-
-                    case .bluetooth:
-                        Text(viewModel.selectedDestination.titleString)
-
-                    case .appInformation:
-                        Text(viewModel.selectedDestination.titleString)
-                    }
+            NavigationView {
+                BonjourScanForServicesView()
+            }
+            .tabItem {
+                Label {
+                    Text(verbatim: TopLevelDestination.bonjour.titleString)
+                } icon: {
+                    TopLevelDestination.bonjour.icon
                 }
-                .tabItem {
-                    Label {
-                        Text(verbatim: item.titleString)
-                    } icon: {
-                        item.icon
-                    }
+            }
+            
+            NavigationView {
+                BluetoothScanForDevicesView()
+            }
+            .tabItem {
+                Label {
+                    Text(verbatim: TopLevelDestination.bluetooth.titleString)
+                } icon: {
+                    TopLevelDestination.bluetooth.icon
                 }
-//                    .onTapGesture {
-//                        if item.isSelectable {
-//                            self.dataSource.selectedItem = item
-//                        }
-//                    }
+            }
+            
+            NavigationView {
+                Text("Placeholder app information")
+            }
+            .tabItem {
+                Label {
+                    Text(verbatim: TopLevelDestination.appInformation.titleString)
+                } icon: {
+                    TopLevelDestination.appInformation.icon
+                }
             }
         }
     }
@@ -64,11 +76,5 @@ struct TabBar: View {
         init(selectedDestination: Binding<TopLevelDestination>) {
             self._selectedDestination = selectedDestination
         }
-
-        let destinations: [TopLevelDestination] = [
-            .bonjourScanForActiveServices,
-            .bluetooth,
-            .appInformation
-        ]
     }
 }

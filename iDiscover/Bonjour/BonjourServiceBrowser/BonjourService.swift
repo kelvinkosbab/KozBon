@@ -199,3 +199,11 @@ class BonjourService: NSObject, NetServiceDelegate {
     }
   }
 }
+
+// MARK: - Identifiable
+
+extension BonjourService: Identifiable {
+    var id: Int {
+        service.hashValue
+    }
+}
