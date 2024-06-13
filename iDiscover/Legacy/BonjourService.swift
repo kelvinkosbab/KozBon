@@ -8,7 +8,6 @@
 
 import Foundation
 import Core
-import KozBonCore
 
 extension Notification.Name {
     static let netServiceResolveAddressComplete = Notification.Name(rawValue: "BonjourService).netServiceResolveAddressComplete")

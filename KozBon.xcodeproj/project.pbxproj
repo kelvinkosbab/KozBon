@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -83,6 +83,7 @@
 		F6240E812A94206D00951875 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E802A94206D00951875 /* TabBarItem.swift */; };
 		F6240E832A94209100951875 /* SidebarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E822A94209100951875 /* SidebarItem.swift */; };
 		F62EDC66255BAE8B003E5178 /* UIBarButtonItem+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62EDC65255BAE8B003E5178 /* UIBarButtonItem+Util.swift */; };
+		F67B65312C1B4EC300324FFF /* InternetAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B65302C1B4EC300324FFF /* InternetAddress.swift */; };
 		F67FC0F62A97DF9A00AA32BB /* ObjectRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67FC0F52A97DF9A00AA32BB /* ObjectRegistry.swift */; };
 		F690B5FB2561E9B600902DAB /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F690B5FA2561E9B600902DAB /* NetworkExtension.framework */; };
 		F69DF275269AB8BF00B97E9D /* EditTxtRecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69DF274269AB8BF00B97E9D /* EditTxtRecordsViewController.swift */; };
@@ -96,8 +97,6 @@
 		F6C472F92C1A1EAB00BBB0F9 /* CoreUI in Frameworks */ = {isa = PBXBuildFile; productRef = F6C472F82C1A1EAB00BBB0F9 /* CoreUI */; };
 		F6C472FB2C1A248000BBB0F9 /* TopLevelDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C472FA2C1A248000BBB0F9 /* TopLevelDestination.swift */; };
 		F6C472FF2C1A26FB00BBB0F9 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C472FE2C1A26FB00BBB0F9 /* TabBar.swift */; };
-		F6C473042C1A4EC600BBB0F9 /* Bonjour in Frameworks */ = {isa = PBXBuildFile; productRef = F6C473032C1A4EC600BBB0F9 /* Bonjour */; };
-		F6C473062C1A4EC600BBB0F9 /* KozBonCore in Frameworks */ = {isa = PBXBuildFile; productRef = F6C473052C1A4EC600BBB0F9 /* KozBonCore */; };
 		F6C50D7C2AB3BDD50048DF8C /* TitleDetailChevronView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C50D7B2AB3BDD50048DF8C /* TitleDetailChevronView.swift */; };
 		F6C50D7E2AB3C47D0048DF8C /* BonjourServiceListSortMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C50D7D2AB3C47D0048DF8C /* BonjourServiceListSortMenu.swift */; };
 		F6C50D802AB3F7300048DF8C /* BarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C50D7F2AB3F7300048DF8C /* BarItem.swift */; };
@@ -187,6 +186,7 @@
 		F62EDC5E255B9D25003E5178 /* KozBon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KozBon.entitlements; sourceTree = "<group>"; };
 		F62EDC65255BAE8B003E5178 /* UIBarButtonItem+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Util.swift"; sourceTree = "<group>"; };
 		F6781EF72694C5F6009B79F7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		F67B65302C1B4EC300324FFF /* InternetAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetAddress.swift; sourceTree = "<group>"; };
 		F67FC0F52A97DF9A00AA32BB /* ObjectRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectRegistry.swift; sourceTree = "<group>"; };
 		F690B5FA2561E9B600902DAB /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		F69DF274269AB8BF00B97E9D /* EditTxtRecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTxtRecordsViewController.swift; sourceTree = "<group>"; };
@@ -197,7 +197,6 @@
 		F69E82732AABA8A5006AA4D3 /* TransportLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportLayer.swift; sourceTree = "<group>"; };
 		F6C472FA2C1A248000BBB0F9 /* TopLevelDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopLevelDestination.swift; sourceTree = "<group>"; };
 		F6C472FE2C1A26FB00BBB0F9 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
-		F6C473012C1A4DD800BBB0F9 /* Bonjour */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Bonjour; sourceTree = "<group>"; };
 		F6C50D7B2AB3BDD50048DF8C /* TitleDetailChevronView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleDetailChevronView.swift; sourceTree = "<group>"; };
 		F6C50D7D2AB3C47D0048DF8C /* BonjourServiceListSortMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServiceListSortMenu.swift; sourceTree = "<group>"; };
 		F6C50D7F2AB3F7300048DF8C /* BarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarItem.swift; sourceTree = "<group>"; };
@@ -213,10 +212,8 @@
 			files = (
 				F6C472F72C1A1EAB00BBB0F9 /* CoreStorage in Frameworks */,
 				F6C472F92C1A1EAB00BBB0F9 /* CoreUI in Frameworks */,
-				F6C473062C1A4EC600BBB0F9 /* KozBonCore in Frameworks */,
 				F690B5FB2561E9B600902DAB /* NetworkExtension.framework in Frameworks */,
 				F6C472F52C1A1EAB00BBB0F9 /* Core in Frameworks */,
-				F6C473042C1A4EC600BBB0F9 /* Bonjour in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,7 +356,6 @@
 		B6CE1D1B1E1208C1003D4FFA = {
 			isa = PBXGroup;
 			children = (
-				F6C473012C1A4DD800BBB0F9 /* Bonjour */,
 				F62EDC5E255B9D25003E5178 /* KozBon.entitlements */,
 				F6781EF72694C5F6009B79F7 /* README.md */,
 				B6CE1D261E1208C1003D4FFA /* iDiscover */,
@@ -383,6 +379,7 @@
 				F6C472FA2C1A248000BBB0F9 /* TopLevelDestination.swift */,
 				F6C472FE2C1A26FB00BBB0F9 /* TabBar.swift */,
 				F6C473002C1A4D7400BBB0F9 /* Bonjour */,
+				F67B652F2C1B4EA500324FFF /* Utilities */,
 				F6C472FC2C1A267B00BBB0F9 /* Legacy */,
 				B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */,
 				B6CE1D311E1208C1003D4FFA /* Assets.xcassets */,
@@ -517,6 +514,15 @@
 			name = "TabBar & Sidebar";
 			sourceTree = "<group>";
 		};
+		F67B652F2C1B4EA500324FFF /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				F6240E732A92D91800951875 /* AppStyles.swift */,
+				F67B65302C1B4EC300324FFF /* InternetAddress.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		F690B5F92561E9B600902DAB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -540,7 +546,6 @@
 				F6240E822A94209100951875 /* SidebarItem.swift */,
 				F6240E802A94206D00951875 /* TabBarItem.swift */,
 				F6240E7D2A94120B00951875 /* TabBar & Sidebar */,
-				F6240E732A92D91800951875 /* AppStyles.swift */,
 				F67FC0F52A97DF9A00AA32BB /* ObjectRegistry.swift */,
 				F6C50D5F2AB3B4150048DF8C /* Shared */,
 				F6240E6A2A92D5FE00951875 /* Bonjour */,
@@ -610,8 +615,6 @@
 				F6C472F42C1A1EAB00BBB0F9 /* Core */,
 				F6C472F62C1A1EAB00BBB0F9 /* CoreStorage */,
 				F6C472F82C1A1EAB00BBB0F9 /* CoreUI */,
-				F6C473032C1A4EC600BBB0F9 /* Bonjour */,
-				F6C473052C1A4EC600BBB0F9 /* KozBonCore */,
 			);
 			productName = iDiscover;
 			productReference = B6CE1D241E1208C1003D4FFA /* KozBon.app */;
@@ -647,7 +650,6 @@
 			mainGroup = B6CE1D1B1E1208C1003D4FFA;
 			packageReferences = (
 				F6C472F32C1A1EAB00BBB0F9 /* XCRemoteSwiftPackageReference "Core" */,
-				F6C473022C1A4EC600BBB0F9 /* XCLocalSwiftPackageReference "Bonjour" */,
 			);
 			productRefGroup = B6CE1D251E1208C1003D4FFA /* Products */;
 			projectDirPath = "";
@@ -702,6 +704,7 @@
 				B679CC0A1E1618840056C7B5 /* MyRootController.swift in Sources */,
 				B6AE53841E17090A00FB57E3 /* PublishDetailCreateViewController.swift in Sources */,
 				F6240E692A92CF0600951875 /* AppCore.swift in Sources */,
+				F67B65312C1B4EC300324FFF /* InternetAddress.swift in Sources */,
 				B6089C9A1E19D76D00C7CF29 /* ServiceDetailTableViewController.swift in Sources */,
 				B6BD8C842002C715009327B2 /* BluetoothDevice.swift in Sources */,
 				B68B7DDF2003287100E592D9 /* Data+Util.swift in Sources */,
@@ -967,13 +970,6 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		F6C473022C1A4EC600BBB0F9 /* XCLocalSwiftPackageReference "Bonjour" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Bonjour;
-		};
-/* End XCLocalSwiftPackageReference section */
-
 /* Begin XCRemoteSwiftPackageReference section */
 		F6C472F32C1A1EAB00BBB0F9 /* XCRemoteSwiftPackageReference "Core" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -1000,14 +996,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F6C472F32C1A1EAB00BBB0F9 /* XCRemoteSwiftPackageReference "Core" */;
 			productName = CoreUI;
-		};
-		F6C473032C1A4EC600BBB0F9 /* Bonjour */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Bonjour;
-		};
-		F6C473052C1A4EC600BBB0F9 /* KozBonCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = KozBonCore;
 		};
 /* End XCSwiftPackageProductDependency section */
 

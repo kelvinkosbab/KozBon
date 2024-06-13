@@ -25,8 +25,7 @@ extension Image {
     // MARK: - Custom Images
     
     static var bonjour: Image {
-        Image("iconBonjour")
-            .renderingMode(.template)
+        Image(systemName: "bonjour")
     }
     
     static var bluetooth: Image {
