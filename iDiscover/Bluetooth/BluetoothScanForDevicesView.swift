@@ -43,15 +43,15 @@ struct BluetoothScanForDevicesView: View {
             }
         }
         .navigationTitle(NSLocalizedString(
-            "Bluetooth devices",
-            comment: "Bluetooth devices page title"
+            "Bluetooth",
+            comment: "Bluetooth page title"
         ))
         .task {
             if viewModel.isInitialLoad {
                 viewModel.deviceScanner.startScan()
                 viewModel.isInitialLoad = false
             }
-            
+
         }
         .onDisappear {
             viewModel.deviceScanner.stopScan()

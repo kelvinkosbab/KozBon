@@ -11,17 +11,17 @@ import SwiftUI
 // MARK: - BonjourServiceDetailView
 
 struct BonjourServiceDetailView: View {
-    
+
     @StateObject private var viewModel: ViewModel
-    
+
     init(service: BonjourService) {
         self.init(viewModel: ViewModel(service: service))
     }
-    
+
     init(viewModel: ViewModel) {
         self._viewModel = StateObject(wrappedValue: viewModel)
     }
-    
+
     var body: some View {
         List {
             Section {
@@ -41,7 +41,7 @@ struct BonjourServiceDetailView: View {
                 .listRowBackground(Color(.clear))
                 .frame(maxWidth: .infinity)
             }
-            
+
             Section("Information") {
                 TitleDetailStackView(
                     title: "Name",
@@ -74,7 +74,7 @@ struct BonjourServiceDetailView: View {
                     )
                 }
             }
-            
+
             if !viewModel.service.addresses.isEmpty {
                 Section("IP Addresses") {
                     ForEach(viewModel.service.addresses, id: \.ipPortString) { address in
@@ -85,7 +85,7 @@ struct BonjourServiceDetailView: View {
                     }
                 }
             }
-            
+
             if !viewModel.service.dataRecords.isEmpty {
                 Section("TXT Records") {
                     ForEach(viewModel.service.dataRecords, id: \.key) { dataRecord in
@@ -102,21 +102,21 @@ struct BonjourServiceDetailView: View {
             viewModel.service.resolve()
         }
     }
-    
+
     // MARK: - ViewModel
-    
+
     class ViewModel: ObservableObject {
-        
+
         let service: BonjourService
         let serviceType: BonjourServiceType
-        
+
         @MainActor @Published private(set) var addresses: [InternetAddress] = []
         @MainActor @Published private(set) var dataRecords: [BonjourService.MyDataRecord] = []
-        
+
         init(service: BonjourService) {
             self.service = service
             serviceType = service.serviceType
-            
+
             NotificationCenter.default.addObserver(
                 self,
                 selector: #selector(self.reloadAddressesAndTxtRecords),
@@ -124,24 +124,24 @@ struct BonjourServiceDetailView: View {
                 object: service
             )
             NotificationCenter.default.addObserver(
-                self, 
-                selector: #selector(self.reloadAddressesAndTxtRecords), 
+                self,
+                selector: #selector(self.reloadAddressesAndTxtRecords),
                 name: .netServiceDidPublish,
                 object: service
             )
             NotificationCenter.default.addObserver(
                 self,
-                selector: #selector(self.reloadAddressesAndTxtRecords), 
+                selector: #selector(self.reloadAddressesAndTxtRecords),
                 name: .netServiceDidUnPublish,
                 object: service
             )
         }
-        
+
         @objc
         private func reloadAddressesAndTxtRecords() {
             update(addresses: service.addresses, dataRecords: service.dataRecords)
         }
-        
+
         private func update(addresses: [InternetAddress], dataRecords: [BonjourService.MyDataRecord]) {
             Task { @MainActor in
                 withAnimation {

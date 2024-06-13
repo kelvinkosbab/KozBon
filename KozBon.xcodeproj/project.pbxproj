@@ -19,13 +19,11 @@
 		B67BB3281E18657F00A3228E /* AllServiceTypesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67BB3271E18657F00A3228E /* AllServiceTypesTableViewController.swift */; };
 		B68262231E18200D00D0445D /* Info.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B68262221E18200D00D0445D /* Info.storyboard */; };
 		B6833CBD1E3D44F200F56A90 /* BluetoothDeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6833CBC1E3D44F200F56A90 /* BluetoothDeviceCell.swift */; };
-		B6859C501E282915001B8245 /* UIColor+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6859C4F1E282915001B8245 /* UIColor+Util.swift */; };
 		B68B21251E47A0AB00BE2CA2 /* ServiceDetailSimpleHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B21241E47A0AB00BE2CA2 /* ServiceDetailSimpleHeaderCell.swift */; };
 		B68B21271E47A2C700BE2CA2 /* ServiceDetailAddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B21261E47A2C700BE2CA2 /* ServiceDetailAddressCell.swift */; };
 		B68B212B1E47A4F500BE2CA2 /* ServiceDetailLoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B212A1E47A4F500BE2CA2 /* ServiceDetailLoadingCell.swift */; };
 		B68B212D1E47A55800BE2CA2 /* ServiceDetailSimpleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B212C1E47A55800BE2CA2 /* ServiceDetailSimpleCell.swift */; };
 		B68B212F1E47A65C00BE2CA2 /* ServiceDetailDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B212E1E47A65C00BE2CA2 /* ServiceDetailDescriptionCell.swift */; };
-		B68B7DDF2003287100E592D9 /* Data+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B7DDE2003287100E592D9 /* Data+Util.swift */; };
 		B68EC5A01E2F226A00C9D5CC /* BluetoothViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EC59F1E2F226A00C9D5CC /* BluetoothViewController.swift */; };
 		B68EEA3D1E46706E00831CC4 /* MyCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA3C1E46706E00831CC4 /* MyCollectionViewController.swift */; };
 		B68EEA3F1E46709000831CC4 /* EmptyStateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA3E1E46709000831CC4 /* EmptyStateProtocol.swift */; };
@@ -53,7 +51,6 @@
 		B6C4BC551E1CD30A004409F1 /* CreateServiceTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C4BC541E1CD30A004409F1 /* CreateServiceTypeTableViewController.swift */; };
 		B6CE1D301E1208C1003D4FFA /* iDiscover.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D2E1E1208C1003D4FFA /* iDiscover.xcdatamodeld */; };
 		B6CE1D321E1208C1003D4FFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6CE1D311E1208C1003D4FFA /* Assets.xcassets */; };
-		B6CE1D471E120ADC003D4FFA /* Date+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D451E120ADC003D4FFA /* Date+Util.swift */; };
 		B6CE1D4A1E120AF8003D4FFA /* service-names-port-numbers.csv in Resources */ = {isa = PBXBuildFile; fileRef = B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */; };
 		B6CE1D4F1E120B90003D4FFA /* MyClassProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D4D1E120B90003D4FFA /* MyClassProtocol.swift */; };
 		B6CE1D501E120B90003D4FFA /* UIViewController+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D4E1E120B90003D4FFA /* UIViewController+Util.swift */; };
@@ -71,7 +68,6 @@
 		F6240E692A92CF0600951875 /* AppCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E682A92CF0600951875 /* AppCore.swift */; };
 		F6240E6C2A92D62200951875 /* BonjourScanForServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E6B2A92D62200951875 /* BonjourScanForServicesView.swift */; };
 		F6240E6F2A92D63400951875 /* BluetoothScanForDevicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E6E2A92D63400951875 /* BluetoothScanForDevicesView.swift */; };
-		F6240E722A92D75200951875 /* InformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E712A92D75200951875 /* InformationView.swift */; };
 		F6240E742A92D91800951875 /* AppStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E732A92D91800951875 /* AppStyles.swift */; };
 		F6240E762A93F3A500951875 /* SidebarNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E752A93F3A500951875 /* SidebarNavigationView.swift */; };
 		F6240E782A93F4D500951875 /* LagacyTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E772A93F4D500951875 /* LagacyTabBar.swift */; };
@@ -85,7 +81,8 @@
 		F67B65352C1B556900324FFF /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B65342C1B556900324FFF /* Logger.swift */; };
 		F67B65392C1B5CB700324FFF /* BonjourServiceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B65382C1B5CB700324FFF /* BonjourServiceDetailView.swift */; };
 		F67B653D2C1B7B9800324FFF /* VerticallyCenteredLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B653C2C1B7B9800324FFF /* VerticallyCenteredLabelStyle.swift */; };
-		F67FC0F62A97DF9A00AA32BB /* ObjectRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67FC0F52A97DF9A00AA32BB /* ObjectRegistry.swift */; };
+		F67B653F2C1B899B00324FFF /* BonjourServiceType+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B653E2C1B899B00324FFF /* BonjourServiceType+UI.swift */; };
+		F67B65462C1B957200324FFF /* Data+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B65452C1B957200324FFF /* Data+Util.swift */; };
 		F690B5FB2561E9B600902DAB /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F690B5FA2561E9B600902DAB /* NetworkExtension.framework */; };
 		F69DF275269AB8BF00B97E9D /* EditTxtRecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69DF274269AB8BF00B97E9D /* EditTxtRecordsViewController.swift */; };
 		F69E826E2AABA4CA006AA4D3 /* BonjourServicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69E826D2AABA4CA006AA4D3 /* BonjourServicesViewModel.swift */; };
@@ -118,13 +115,11 @@
 		B67BB3271E18657F00A3228E /* AllServiceTypesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllServiceTypesTableViewController.swift; sourceTree = "<group>"; };
 		B68262221E18200D00D0445D /* Info.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Info.storyboard; sourceTree = "<group>"; };
 		B6833CBC1E3D44F200F56A90 /* BluetoothDeviceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothDeviceCell.swift; sourceTree = "<group>"; };
-		B6859C4F1E282915001B8245 /* UIColor+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Util.swift"; sourceTree = "<group>"; };
 		B68B21241E47A0AB00BE2CA2 /* ServiceDetailSimpleHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailSimpleHeaderCell.swift; sourceTree = "<group>"; };
 		B68B21261E47A2C700BE2CA2 /* ServiceDetailAddressCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailAddressCell.swift; sourceTree = "<group>"; };
 		B68B212A1E47A4F500BE2CA2 /* ServiceDetailLoadingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailLoadingCell.swift; sourceTree = "<group>"; };
 		B68B212C1E47A55800BE2CA2 /* ServiceDetailSimpleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailSimpleCell.swift; sourceTree = "<group>"; };
 		B68B212E1E47A65C00BE2CA2 /* ServiceDetailDescriptionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailDescriptionCell.swift; sourceTree = "<group>"; };
-		B68B7DDE2003287100E592D9 /* Data+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Util.swift"; sourceTree = "<group>"; };
 		B68EC59F1E2F226A00C9D5CC /* BluetoothViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothViewController.swift; sourceTree = "<group>"; };
 		B68EEA3C1E46706E00831CC4 /* MyCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCollectionViewController.swift; sourceTree = "<group>"; };
 		B68EEA3E1E46709000831CC4 /* EmptyStateProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyStateProtocol.swift; sourceTree = "<group>"; };
@@ -155,7 +150,6 @@
 		B6CE1D2F1E1208C1003D4FFA /* iDiscover.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iDiscover.xcdatamodel; sourceTree = "<group>"; };
 		B6CE1D311E1208C1003D4FFA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B6CE1D361E1208C1003D4FFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B6CE1D451E120ADC003D4FFA /* Date+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Util.swift"; sourceTree = "<group>"; };
 		B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "service-names-port-numbers.csv"; sourceTree = "<group>"; };
 		B6CE1D4D1E120B90003D4FFA /* MyClassProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyClassProtocol.swift; sourceTree = "<group>"; };
 		B6CE1D4E1E120B90003D4FFA /* UIViewController+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Util.swift"; sourceTree = "<group>"; };
@@ -173,7 +167,6 @@
 		F6240E682A92CF0600951875 /* AppCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCore.swift; sourceTree = "<group>"; };
 		F6240E6B2A92D62200951875 /* BonjourScanForServicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourScanForServicesView.swift; sourceTree = "<group>"; };
 		F6240E6E2A92D63400951875 /* BluetoothScanForDevicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothScanForDevicesView.swift; sourceTree = "<group>"; };
-		F6240E712A92D75200951875 /* InformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationView.swift; sourceTree = "<group>"; };
 		F6240E732A92D91800951875 /* AppStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStyles.swift; sourceTree = "<group>"; };
 		F6240E752A93F3A500951875 /* SidebarNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarNavigationView.swift; sourceTree = "<group>"; };
 		F6240E772A93F4D500951875 /* LagacyTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LagacyTabBar.swift; sourceTree = "<group>"; };
@@ -188,7 +181,8 @@
 		F67B65342C1B556900324FFF /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		F67B65382C1B5CB700324FFF /* BonjourServiceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServiceDetailView.swift; sourceTree = "<group>"; };
 		F67B653C2C1B7B9800324FFF /* VerticallyCenteredLabelStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticallyCenteredLabelStyle.swift; sourceTree = "<group>"; };
-		F67FC0F52A97DF9A00AA32BB /* ObjectRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectRegistry.swift; sourceTree = "<group>"; };
+		F67B653E2C1B899B00324FFF /* BonjourServiceType+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BonjourServiceType+UI.swift"; sourceTree = "<group>"; };
+		F67B65452C1B957200324FFF /* Data+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Util.swift"; sourceTree = "<group>"; };
 		F690B5FA2561E9B600902DAB /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		F69DF274269AB8BF00B97E9D /* EditTxtRecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTxtRecordsViewController.swift; sourceTree = "<group>"; };
 		F69E826D2AABA4CA006AA4D3 /* BonjourServicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServicesViewModel.swift; sourceTree = "<group>"; };
@@ -379,6 +373,7 @@
 				F6C472FE2C1A26FB00BBB0F9 /* TabBar.swift */,
 				F67B653B2C1B6DAE00324FFF /* Bluetooth */,
 				F6C473002C1A4D7400BBB0F9 /* Bonjour */,
+				F67B65442C1B922500324FFF /* Model */,
 				F67B652F2C1B4EA500324FFF /* Utilities */,
 				F6C472FC2C1A267B00BBB0F9 /* Legacy */,
 				B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */,
@@ -413,7 +408,6 @@
 		B6CE1D3F1E1208EE003D4FFA /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				B6CE1D2E1E1208C1003D4FFA /* iDiscover.xcdatamodeld */,
 				B6CE1D531E120BF4003D4FFA /* MyCoreDataStack.swift */,
 				B6CE1D541E120BF4003D4FFA /* MyDataManager.swift */,
 				B6CE1D511E120B9F003D4FFA /* MyDataManagerObject.swift */,
@@ -434,11 +428,9 @@
 			isa = PBXGroup;
 			children = (
 				B6CE1D4E1E120B90003D4FFA /* UIViewController+Util.swift */,
-				B6CE1D451E120ADC003D4FFA /* Date+Util.swift */,
 				B69154641E13906500382F41 /* String+Util.swift */,
 				F62EDC65255BAE8B003E5178 /* UIBarButtonItem+Util.swift */,
-				B6859C4F1E282915001B8245 /* UIColor+Util.swift */,
-				B68B7DDE2003287100E592D9 /* Data+Util.swift */,
+				F67B65452C1B957200324FFF /* Data+Util.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -454,32 +446,6 @@
 				B682621F1E1818B800D0445D /* Info */,
 			);
 			name = Controller;
-			sourceTree = "<group>";
-		};
-		B6CE1D441E12098A003D4FFA /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		B6F93AB21E123AB800FE2DC7 /* Bluetooth */ = {
-			isa = PBXGroup;
-			children = (
-				B6BD8C7F2002C6E2009327B2 /* BluetoothDeviceScanner.swift */,
-				B6BD8C812002C6F9009327B2 /* CBManagerState+Util.swift */,
-				B6BD8C832002C715009327B2 /* BluetoothDevice.swift */,
-				F6C50D832AB4FF3E0048DF8C /* CBPeripheralState+Util.swift */,
-			);
-			name = Bluetooth;
-			sourceTree = "<group>";
-		};
-		F6240E702A92D74700951875 /* Information */ = {
-			isa = PBXGroup;
-			children = (
-				F6240E712A92D75200951875 /* InformationView.swift */,
-			);
-			name = Information;
 			sourceTree = "<group>";
 		};
 		F6240E7D2A94120B00951875 /* TabBar & Sidebar */ = {
@@ -512,6 +478,7 @@
 				F69E82712AABA7E5006AA4D3 /* BonjourServiceBrowserState.swift */,
 				B6CE1D571E120CCC003D4FFA /* BonjourServiceScanner.swift */,
 				B6CE1D5B1E120CCC003D4FFA /* BonjourServiceType.swift */,
+				F67B653E2C1B899B00324FFF /* BonjourServiceType+UI.swift */,
 				B6089C9B1E1A2A3900C7CF29 /* BonjourServiceType+CustomServiceType.swift */,
 				B6CE1D5A1E120CCC003D4FFA /* BonjourServiceTypeScanner.swift */,
 				B6CE1D581E120CCC003D4FFA /* BonjourServiceTypeScope.swift */,
@@ -544,8 +511,28 @@
 			children = (
 				F6240E6E2A92D63400951875 /* BluetoothScanForDevicesView.swift */,
 				F6C50D812AB3F8A70048DF8C /* BluetoothScanForDevicesViewModel.swift */,
+				F67B65432C1B91F300324FFF /* BluetoothScanner */,
 			);
 			path = Bluetooth;
+			sourceTree = "<group>";
+		};
+		F67B65432C1B91F300324FFF /* BluetoothScanner */ = {
+			isa = PBXGroup;
+			children = (
+				B6BD8C7F2002C6E2009327B2 /* BluetoothDeviceScanner.swift */,
+				B6BD8C812002C6F9009327B2 /* CBManagerState+Util.swift */,
+				B6BD8C832002C715009327B2 /* BluetoothDevice.swift */,
+				F6C50D832AB4FF3E0048DF8C /* CBPeripheralState+Util.swift */,
+			);
+			path = BluetoothScanner;
+			sourceTree = "<group>";
+		};
+		F67B65442C1B922500324FFF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B6CE1D2E1E1208C1003D4FFA /* iDiscover.xcdatamodeld */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		F690B5F92561E9B600902DAB /* Frameworks */ = {
@@ -571,9 +558,7 @@
 				F6240E822A94209100951875 /* SidebarItem.swift */,
 				F6240E802A94206D00951875 /* TabBarItem.swift */,
 				F6240E7D2A94120B00951875 /* TabBar & Sidebar */,
-				F67FC0F52A97DF9A00AA32BB /* ObjectRegistry.swift */,
 				F6C50D5F2AB3B4150048DF8C /* Shared */,
-				F6240E702A92D74700951875 /* Information */,
 				B6CE1D3C1E1208D8003D4FFA /* Common */,
 				B6CE1D431E120977003D4FFA /* Controller */,
 			);
@@ -597,8 +582,6 @@
 			isa = PBXGroup;
 			children = (
 				F6C50D852ABA535E0048DF8C /* EmptyStateOverlayView.swift */,
-				B6F93AB21E123AB800FE2DC7 /* Bluetooth */,
-				B6CE1D441E12098A003D4FFA /* Supporting Files */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -701,7 +684,6 @@
 				B6089C9C1E1A2A3900C7CF29 /* BonjourServiceType+CustomServiceType.swift in Sources */,
 				F6C50D802AB3F7300048DF8C /* BarItem.swift in Sources */,
 				F67B653D2C1B7B9800324FFF /* VerticallyCenteredLabelStyle.swift in Sources */,
-				B6CE1D471E120ADC003D4FFA /* Date+Util.swift in Sources */,
 				B68EEA3F1E46709000831CC4 /* EmptyStateProtocol.swift in Sources */,
 				B679CC151E1624A20056C7B5 /* MyViewController.swift in Sources */,
 				B6C4BC551E1CD30A004409F1 /* CreateServiceTypeTableViewController.swift in Sources */,
@@ -716,13 +698,14 @@
 				F67B65312C1B4EC300324FFF /* InternetAddress.swift in Sources */,
 				B6089C9A1E19D76D00C7CF29 /* ServiceDetailTableViewController.swift in Sources */,
 				B6BD8C842002C715009327B2 /* BluetoothDevice.swift in Sources */,
-				B68B7DDF2003287100E592D9 /* Data+Util.swift in Sources */,
 				B6CE1D5F1E120CCC003D4FFA /* BonjourServiceTypeScanner.swift in Sources */,
 				F6C50D7E2AB3C47D0048DF8C /* BonjourServiceListSortMenu.swift in Sources */,
 				B64D06261E1A2C55008B3FC8 /* MyServiceType+Library.swift in Sources */,
 				F69E82702AABA6B4006AA4D3 /* BonjourServiceSortType.swift in Sources */,
 				B6CE1D601E120CCC003D4FFA /* BonjourServiceType.swift in Sources */,
+				F67B653F2C1B899B00324FFF /* BonjourServiceType+UI.swift in Sources */,
 				B68EEA5F1E471E6300831CC4 /* SettingsViewController.swift in Sources */,
+				F67B65462C1B957200324FFF /* Data+Util.swift in Sources */,
 				F67B65352C1B556900324FFF /* Logger.swift in Sources */,
 				B68EEA431E467CD300831CC4 /* MyViewControllerIdentifierProtocol.swift in Sources */,
 				B63B27BD1E15A9BB003E13F0 /* MyNavigationController.swift in Sources */,
@@ -742,7 +725,6 @@
 				F6240E6C2A92D62200951875 /* BonjourScanForServicesView.swift in Sources */,
 				F6240E742A92D91800951875 /* AppStyles.swift in Sources */,
 				B6CE1D501E120B90003D4FFA /* UIViewController+Util.swift in Sources */,
-				F67FC0F62A97DF9A00AA32BB /* ObjectRegistry.swift in Sources */,
 				B68B212D1E47A55800BE2CA2 /* ServiceDetailSimpleCell.swift in Sources */,
 				F6C50D7C2AB3BDD50048DF8C /* TitleDetailStackView.swift in Sources */,
 				B68EC5A01E2F226A00C9D5CC /* BluetoothViewController.swift in Sources */,
@@ -750,7 +732,6 @@
 				B68EEA571E47104D00831CC4 /* ServicesServiceCell.swift in Sources */,
 				B68EEA631E471FD000831CC4 /* SettingsItemCell.swift in Sources */,
 				F6240E782A93F4D500951875 /* LagacyTabBar.swift in Sources */,
-				F6240E722A92D75200951875 /* InformationView.swift in Sources */,
 				B68EEA671E472B1B00831CC4 /* SettingsFooterView.swift in Sources */,
 				B69154631E138E4A00382F41 /* MyTableViewController.swift in Sources */,
 				F62EDC66255BAE8B003E5178 /* UIBarButtonItem+Util.swift in Sources */,
@@ -774,7 +755,6 @@
 				B6BD8C822002C6F9009327B2 /* CBManagerState+Util.swift in Sources */,
 				B6CE1D551E120BF4003D4FFA /* MyCoreDataStack.swift in Sources */,
 				B68B212F1E47A65C00BE2CA2 /* ServiceDetailDescriptionCell.swift in Sources */,
-				B6859C501E282915001B8245 /* UIColor+Util.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

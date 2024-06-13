@@ -48,8 +48,7 @@ struct LagacyTabBar: View {
 
         let items: [any BarItem] = [
             TabBarItem.bonjour,
-            TabBarItem.bluetooth,
-            TabBarItem.information
+            TabBarItem.bluetooth
         ]
     }
 }

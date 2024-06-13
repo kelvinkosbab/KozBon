@@ -52,10 +52,6 @@ extension Image {
         Image(systemName: "chevron.right")
     }
 
-    static var infoCircleFill: Image {
-        Image(systemName: "info.circle.fill")
-    }
-
     static var plusCircleFill: Image {
         Image(systemName: "plus.circle.fill")
     }

@@ -14,7 +14,6 @@ enum TabBarItem: BarItem {
 
     case bonjour
     case bluetooth
-    case information
 
     var id: String {
         switch self {
@@ -22,8 +21,6 @@ enum TabBarItem: BarItem {
             "bonjour"
         case .bluetooth:
             "bluetooth"
-        case .information:
-            "information"
         }
     }
 
@@ -39,11 +36,6 @@ enum TabBarItem: BarItem {
                 "Bluetooth",
                 comment: "Bluetooth tab title"
             )
-        case .information:
-            NSLocalizedString(
-                "Information",
-                comment: "Information tab title"
-            )
         }
     }
 
@@ -53,8 +45,6 @@ enum TabBarItem: BarItem {
             Image.bonjour
         case .bluetooth:
             Image.bluetoothCapsuleFill
-        case .information:
-            Image.infoCircleFill
         }
     }
 
@@ -68,8 +58,6 @@ enum TabBarItem: BarItem {
             AnyView(BonjourScanForServicesView())
         case .bluetooth:
             AnyView(BluetoothScanForDevicesView())
-        case .information:
-            AnyView(InformationView())
         }
     }
 

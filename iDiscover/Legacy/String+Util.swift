@@ -27,57 +27,27 @@ extension String {
 
   // MARK: - Helpers
 
-  var trimmed: String {
-    return self.trimmingCharacters(in: .whitespaces)
-  }
-
-  var urlEncoded: String? {
-    return self.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-  }
-
-  func contains(_ string: String) -> Bool {
-    return self.range(of: string) != nil
-  }
-
-  func containsIgnoreCase(_ string: String) -> Bool {
-    return self.lowercased().range(of: string.lowercased()) != nil
-  }
-
-  var containsWhitespace: Bool {
-    if let _ = self.rangeOfCharacter(from: .whitespacesAndNewlines) {
-      return true
+    var trimmed: String {
+        self.trimmingCharacters(in: .whitespaces)
     }
-    return false
-  }
 
-  var containsAlphanumerics: Bool {
-    if let _ = self.rangeOfCharacter(from: .alphanumerics) {
-      return true
+    func containsIgnoreCase(_ string: String) -> Bool {
+        self.lowercased().range(of: string.lowercased()) != nil
     }
-    return false
-  }
 
-  var containsDecimalDigits: Bool {
-    if let _ = self.rangeOfCharacter(from: .decimalDigits) {
-      return true
+    var containsWhitespace: Bool {
+        self.rangeOfCharacter(from: .whitespacesAndNewlines) != nil
     }
-    return false
+
+    var containsAlphanumerics: Bool {
+        self.rangeOfCharacter(from: .alphanumerics) != nil
   }
 
-  var convertToDouble: Double? {
-    return NumberFormatter().number(from: self)?.doubleValue
-  }
-
-  var convertToInt: Int? {
-    return NumberFormatter().number(from: self)?.intValue
-  }
-
-  // MARK: - Subscript Operations
-
-  subscript (i: Int) -> Character? {
-    if let stringIndex = self.index(self.startIndex, offsetBy: i, limitedBy: self.endIndex) {
-      return self[stringIndex]
+    var containsDecimalDigits: Bool {
+        self.rangeOfCharacter(from: .decimalDigits) != nil
     }
-    return nil
-  }
+    
+    var convertToInt: Int? {
+        NumberFormatter().number(from: self)?.intValue
+    }
 }

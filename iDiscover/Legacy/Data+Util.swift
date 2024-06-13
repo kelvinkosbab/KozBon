@@ -2,8 +2,8 @@
 //  Data+Util.swift
 //  KozBon
 //
-//  Created by Kelvin Kosbab on 1/7/18.
-//  Copyright © 2018 Kozinga. All rights reserved.
+//  Created by Kelvin Kosbab on 6/13/24.
+//  Copyright © 2024 Kozinga. All rights reserved.
 //
 
 import Foundation

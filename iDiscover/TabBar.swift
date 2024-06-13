@@ -17,7 +17,7 @@ struct TabBar: View {
     init(selectedDestination: Binding<TopLevelDestination>) {
         self._viewModel = StateObject(wrappedValue: ViewModel(selectedDestination: selectedDestination))
     }
-    
+
     // TODO: Do this 
 //    private var selectedDestinationHandler: Binding<TopLevelDestination> { Binding(
 //        get: { viewModel.selectedDestination },
@@ -42,7 +42,7 @@ struct TabBar: View {
                     TopLevelDestination.bonjour.icon
                 }
             }
-            
+
             NavigationView {
                 BluetoothScanForDevicesView()
             }
@@ -51,17 +51,6 @@ struct TabBar: View {
                     Text(verbatim: TopLevelDestination.bluetooth.titleString)
                 } icon: {
                     TopLevelDestination.bluetooth.icon
-                }
-            }
-            
-            NavigationView {
-                Text("Placeholder app information")
-            }
-            .tabItem {
-                Label {
-                    Text(verbatim: TopLevelDestination.appInformation.titleString)
-                } icon: {
-                    TopLevelDestination.appInformation.icon
                 }
             }
         }

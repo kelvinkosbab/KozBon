@@ -16,7 +16,6 @@ enum SidebarItem: BarItem {
     case bonjourSupportedServices
     case bonjourCreateService
     case bluetooth
-    case appInformation
 
     var id: String {
         switch self {
@@ -28,8 +27,6 @@ enum SidebarItem: BarItem {
             "bonjourCreateService"
         case .bluetooth:
             "bluetooth"
-        case .appInformation:
-            "appInformation"
         }
     }
 
@@ -55,11 +52,6 @@ enum SidebarItem: BarItem {
                 "Bluetooth",
                 comment: "Bluetooth tab title"
             )
-        case .appInformation:
-            NSLocalizedString(
-                "App Information",
-                comment: "Information tab title"
-            )
         }
     }
 
@@ -73,8 +65,6 @@ enum SidebarItem: BarItem {
             Image.plusDiamondFill
         case .bluetooth:
             Image.bluetoothCapsuleFill
-        case .appInformation:
-            Image.infoCircleFill
         }
     }
 
@@ -88,8 +78,6 @@ enum SidebarItem: BarItem {
             AnyView(BarItemLabel(item: self))
         case .bluetooth:
             AnyView(BarItemLabel(item: self))
-        case .appInformation:
-            AnyView(Text("KAK TODO - appInformation"))
         }
     }
 
@@ -103,17 +91,10 @@ enum SidebarItem: BarItem {
             AnyView(Text("createBonjourServiceType"))
         case .bluetooth:
             AnyView(BluetoothScanForDevicesView())
-        case .appInformation:
-            nil
         }
     }
 
     var isSelectable: Bool {
-        switch self {
-        case .appInformation:
-            return false
-        default:
-            return true
-        }
+        true
     }
 }

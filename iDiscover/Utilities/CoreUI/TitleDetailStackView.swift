@@ -11,45 +11,51 @@ import CoreUI
 
 // MARK: - TitleDetailStackView
 
-struct TitleDetailStackView: View {
+public struct TitleDetailStackView<Trailing>: View where Trailing: View {
 
     let title: String
-    let labelImageSystemName: String?
     let detail: String
-    
-    init(
+    let trailing: (() -> Trailing)?
+
+    public init(
         title: String,
-        labelImageSystemName: String? = nil,
-        detail: String
+        detail: String,
+        trailing: @escaping () -> Trailing
     ) {
         self.title = title
-        self.labelImageSystemName = labelImageSystemName
         self.detail = detail
+        self.trailing = trailing
     }
 
-    var body: some View {
+    public var body: some View {
         HStack(alignment: .center) {
             VStack(
                 alignment: .leading,
                 spacing: Spacing.small
             ) {
-                Group {
-                    if let labelImageSystemName {
-                        Label(title, systemImage: labelImageSystemName)
-                            .labelStyle(VerticallyCenteredLabelStyle())
-                    } else {
-                        Text(self.title)
-                    }
-                }
-                .font(.body)
-                .foregroundColor(.primary)
+                Text(self.title)
+                    .font(.body)
+                    .foregroundColor(.primary)
                 Text(self.detail)
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
 
             Spacer()
+            
+            trailing?()
         }
+    }
+}
+
+public extension TitleDetailStackView where Trailing == EmptyView {
+    init(
+        title: String,
+        detail: String
+    ) {
+        self.title = title
+        self.detail = detail
+        self.trailing = nil
     }
 }
 

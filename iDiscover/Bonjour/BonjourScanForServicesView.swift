@@ -18,21 +18,31 @@ struct BonjourScanForServicesView: View {
     @StateObject var viewModel = BonjourServicesViewModel()
 
     // MARK: - Body
+    
+    @ViewBuilder private var activeServices: some View {
+        ForEach(self.viewModel.activeServices) { service in
+            NavigationLink {
+                BonjourServiceDetailView(service: service)
+            } label: {
+                TitleDetailStackView(
+                    title: service.service.name,
+                    detail: service.serviceType.name
+                ) {
+                    Image(systemName: service.serviceType.imageSystemName ?? "wifi")
+                        .font(.system(.body).bold())
+                }
+            }
+        }
+    }
 
     var body: some View {
         List {
-            Section(viewModel.sortType?.hostOrServiceTitle ?? "") {
-                ForEach(self.viewModel.activeServices) { service in
-                    NavigationLink {
-                        BonjourServiceDetailView(service: service)
-                    } label: {
-                        TitleDetailStackView(
-                            title: service.service.name,
-                            labelImageSystemName: service.serviceType.imageSystemName,
-                            detail: service.serviceType.name
-                        )
-                    }
+            if let hostOrServiceTitle = viewModel.sortType?.hostOrServiceTitle {
+                Section(hostOrServiceTitle) {
+                    activeServices
                 }
+            } else {
+                activeServices
             }
         }
         .overlay {
@@ -49,14 +59,14 @@ struct BonjourScanForServicesView: View {
             }
         }
         .navigationTitle(NSLocalizedString(
-            "Bonjour services",
+            "Bonjour",
             comment: "Bonjour services page title"
         ))
         .refreshable {
             guard !self.viewModel.serviceScanner.isProcessing else {
                 return
             }
-            
+
             self.viewModel.serviceScanner.startScan()
         }
         .task {
