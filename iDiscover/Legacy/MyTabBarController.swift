@@ -9,10 +9,10 @@
 import Foundation
 import UIKit
 
-class MyTabBarController : UITabBarController, PresentableController, MyViewControllerIdentifierProtocol {
-  
+class MyTabBarController: UITabBarController, PresentableController, MyViewControllerIdentifierProtocol {
+
   // MARK: - PresentableController
-  
+
   var presentedMode: PresentationMode = .navStack
   var transitioningDelegateReference: UIViewControllerTransitioningDelegate?
 }

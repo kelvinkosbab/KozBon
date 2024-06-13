@@ -11,14 +11,14 @@ import CoreUI
 
 // MARK: - BonjourScanForServicesView
 
-struct BonjourScanForServicesView : View {
-    
+struct BonjourScanForServicesView: View {
+
     // MARK: - ViewModel
-    
+
     @StateObject var viewModel = BonjourServicesViewModel()
-    
+
     // MARK: - Body
-    
+
     var body: some View {
         List {
             ForEach(self.viewModel.activeServices, id: \.self.service.hashValue) { service in
@@ -52,11 +52,11 @@ struct BonjourScanForServicesView : View {
             self.viewModel.serviceScanner.stopScan()
         }
     }
-    
+
     private func renderTrailingToolbarItems() -> some View {
         HStack {
             BonjourServiceListSortMenu(sortType: self.$viewModel.sortType)
-            
+
             Button(action: self.addButtonPressed) {
                 Label(
                     title: {
@@ -71,9 +71,9 @@ struct BonjourScanForServicesView : View {
             }
         }
     }
-    
+
     // MARK: - Actions
-    
+
     func addButtonPressed() {
         self.viewModel.addButtonPressed()
     }

@@ -10,13 +10,13 @@ import Foundation
 
 // MARK: - BonjourServiceSortType
 
-enum BonjourServiceSortType : Identifiable, CaseIterable {
-    
+enum BonjourServiceSortType: Identifiable, CaseIterable {
+
     case hostNameAsc
     case hostNameDesc
     case serviceNameAsc
     case serviceNameDesc
-    
+
     var id: String {
         switch self {
         case .hostNameAsc:
@@ -29,7 +29,7 @@ enum BonjourServiceSortType : Identifiable, CaseIterable {
             "serviceNameDesc"
         }
     }
-    
+
     var string: String {
         switch self {
         case .hostNameAsc:

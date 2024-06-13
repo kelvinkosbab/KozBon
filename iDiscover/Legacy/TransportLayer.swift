@@ -11,10 +11,10 @@ import Foundation
 // MARK: - TransportLayer
 
 enum TransportLayer: Int {
-    
+
     case udp=0
     case tcp=1
-    
+
     var string: String {
         switch self {
         case .udp:
@@ -23,11 +23,11 @@ enum TransportLayer: Int {
             return "tcp"
         }
     }
-    
+
     var isUdp: Bool {
         return self == .udp
     }
-    
+
     var isTcp: Bool {
         return self == .tcp
     }

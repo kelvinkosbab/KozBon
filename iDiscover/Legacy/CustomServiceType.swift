@@ -19,17 +19,17 @@ public class CustomServiceType: NSManagedObject {
 }
 
 extension CustomServiceType: MyDataManagerObject {
-  
+
   // MARK: - MyDataManagerObject
-  
+
   static let sortDescriptors: [NSSortDescriptor]? = nil
-  
+
   // MARK: - Properties
-  
+
   var fullType: String? {
     return "_\(self.serviceType)._\(self.transportLayer.string)"
   }
-  
+
   private var transportLayer: TransportLayer {
     get {
       return TransportLayer(rawValue: Int(self.transportLayerValue))!
@@ -38,19 +38,19 @@ extension CustomServiceType: MyDataManagerObject {
       self.transportLayerValue = Int16(newValue.rawValue)
     }
   }
-  
+
   var BonjourServiceType: BonjourServiceType {
       return KozBon.BonjourServiceType(name: self.name, type: self.serviceType, transportLayer: self.transportLayer, detail: self.detail)
   }
-  
+
   // MARK: - Fetch
-  
+
   static func fetch(serviceType: String, transportLayer: TransportLayer) -> CustomServiceType? {
     return self.fetchOne(format: "serviceType = %@ AND transportLayerValue = %ld", serviceType, Int16(transportLayer.rawValue))
   }
-  
+
   // MARK: - Create / Update
-  
+
   static func createOrUpdate(name: String, serviceType: String, transportLayer: TransportLayer, detail: String? = nil) -> CustomServiceType {
     let object = self.fetch(serviceType: serviceType, transportLayer: transportLayer) ?? self.create()
     object.name = name

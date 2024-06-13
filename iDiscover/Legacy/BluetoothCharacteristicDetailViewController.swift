@@ -9,53 +9,53 @@
 import UIKit
 import CoreBluetooth
 
-class BluetoothCharacteristicDetailViewController : MyTableViewController {
-  
+class BluetoothCharacteristicDetailViewController: MyTableViewController {
+
   // MARK: - Class Accessors
-  
+
   private static func newViewController() -> BluetoothCharacteristicDetailViewController {
     return self.newViewController(fromStoryboard: .bluetooth)
   }
-  
+
   static func newViewController(device: BluetoothDevice, characteristic: CBCharacteristic) -> BluetoothCharacteristicDetailViewController {
     let viewController = self.newViewController()
     viewController.device = device
     viewController.characteristic = characteristic
     return viewController
   }
-  
+
   // MARK: - Properties
-  
+
   var device: BluetoothDevice!
   var characteristic: CBCharacteristic!
-  
+
   var descriptors: [CBDescriptor] {
     return self.characteristic.descriptors ?? []
   }
-  
+
   // MARK: - Lifecycle
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+
     self.title = self.device?.name
-    
+
     self.device.discoverCharacteristicDescriptors { [weak self] in
       self?.reloadContent()
     }
   }
-  
+
   // MARK: - Content
-  
+
   func reloadContent() {
     self.tableView.reloadData()
   }
-  
+
   // MARK: - SectionType
-  
+
   enum SectionType {
     case general, properties, descriptors
-    
+
     var title: String {
       switch self {
       case .general:
@@ -67,7 +67,7 @@ class BluetoothCharacteristicDetailViewController : MyTableViewController {
       }
     }
   }
-  
+
   private func getSectionType(section: Int) -> SectionType? {
     switch section {
     case 0:
@@ -80,12 +80,12 @@ class BluetoothCharacteristicDetailViewController : MyTableViewController {
       return nil
     }
   }
-  
+
   // MARK: - RowType
-  
+
   enum RowType {
     case uuid, hexValue, isBroadcast, isRead, isWriteWithoutResponse, isWrite, isNotify, isIndicate, isAuthenticatedSignedWrites, isExtendedProperties, isNotifyEncryptionRequired, isIndicateEncryptionRequired, noDescriptors, descriptor(CBDescriptor)
-    
+
     var title: String {
       switch self {
       case .uuid:
@@ -119,13 +119,13 @@ class BluetoothCharacteristicDetailViewController : MyTableViewController {
       }
     }
   }
-  
+
   private func getRowType(at indexPath: IndexPath) -> RowType? {
-    
+
     guard let sectionType = self.getSectionType(section: indexPath.section) else {
       return nil
     }
-    
+
     switch sectionType {
     case .general:
       switch indexPath.row {
@@ -170,30 +170,30 @@ class BluetoothCharacteristicDetailViewController : MyTableViewController {
       }
     }
   }
-  
+
   // MARK: - UITableView
-  
+
   override func numberOfSections(in tableView: UITableView) -> Int {
     return 3
   }
-  
+
   override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    
+
     guard let sectionType = self.getSectionType(section: section) else {
       return nil
     }
-    
+
     let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailSimpleHeaderCell.name) as! ServiceDetailSimpleHeaderCell
     cell.configure(title: sectionType.title)
     return cell.contentView
   }
-  
+
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    
+
     guard let sectionType = self.getSectionType(section: section) else {
       return 0
     }
-    
+
     switch sectionType {
     case .general:
       return 2
@@ -208,15 +208,15 @@ class BluetoothCharacteristicDetailViewController : MyTableViewController {
       }
     }
   }
-  
+
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    
+
     guard let rowType = self.getRowType(at: indexPath) else {
       let cell = UITableViewCell()
       cell.backgroundColor = tableView.backgroundColor
       return cell
     }
-    
+
     switch rowType {
     case .uuid:
       let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell

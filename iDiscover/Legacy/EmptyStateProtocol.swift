@@ -14,13 +14,13 @@ protocol EmptyStateProtocol {
   var emptyStateMessage: String { get }
 }
 
-extension EmptyStateProtocol where Self : UIViewController {
-  
+extension EmptyStateProtocol where Self: UIViewController {
+
   func showEmptyState(animated: Bool = true, completion: (() -> Void)? = nil) {
-    
+
     // Remove if necessary
     self.hideEmptyState(animated: false) {
-      
+
       // Configure the empty view
       let emptyStateView = EmptyStateView(frame: self.view.bounds)
       emptyStateView.titleLabel?.text = self.emptyStateTitle
@@ -32,7 +32,7 @@ extension EmptyStateProtocol where Self : UIViewController {
       } else {
         emptyStateView.backgroundColor = self.view.backgroundColor
       }
-      
+
       // Add the empty view and set constraints
       emptyStateView.translatesAutoresizingMaskIntoConstraints = false
       emptyStateView.alpha = 0
@@ -42,7 +42,7 @@ extension EmptyStateProtocol where Self : UIViewController {
       let emptyLeadingConstraint = NSLayoutConstraint(item: emptyStateView, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 0)
       let emptyTrailingConstraint = NSLayoutConstraint(item: emptyStateView, attribute: .trailing, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1, constant: 0)
       self.view.addConstraints([ emptyTopConstraint, emptyBottomConstraint, emptyLeadingConstraint, emptyTrailingConstraint ])
-      
+
       // Show the view
       UIView.animate(withDuration: animated ? 0.2 : 0, animations: {
         self.view.layoutIfNeeded()
@@ -52,9 +52,9 @@ extension EmptyStateProtocol where Self : UIViewController {
       })
     }
   }
-  
+
   func hideEmptyState(animated: Bool = true, completion: (() -> Void)? = nil) {
-    
+
     // Find the empty state view
     var emptyStateView: EmptyStateView?
     for view in self.view.subviews {
@@ -63,7 +63,7 @@ extension EmptyStateProtocol where Self : UIViewController {
         break
       }
     }
-    
+
     if let emptyStateView = emptyStateView {
       UIView.animate(withDuration: animated ? 0.2 : 0, animations: {
         emptyStateView.alpha = 0
@@ -71,37 +71,37 @@ extension EmptyStateProtocol where Self : UIViewController {
         emptyStateView.removeFromSuperview()
         completion?()
       })
-      
+
     } else {
       completion?()
     }
   }
 }
 
-class EmptyStateView : UIView {
-  
+class EmptyStateView: UIView {
+
   // MARK: - Properties
-  
+
   var titleLabel: UILabel?
   var messageLabel: UILabel?
-  
+
   // MARK: - Init
-  
+
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
-    
+
     self.commonInit()
   }
-  
+
   override init(frame: CGRect) {
     super.init(frame: frame)
-    
+
     self.commonInit()
   }
-  
+
   private func commonInit() {
     self.backgroundColor = .clear
-    
+
     // Add title label
     let titleLabel = UILabel()
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -110,14 +110,14 @@ class EmptyStateView : UIView {
     titleLabel.font = UIFont.systemFont(ofSize: 25)
     titleLabel.textAlignment = .center
     titleLabel.numberOfLines = 0
-    
+
     // Add constraints for title label
     self.addSubview(titleLabel)
     let titleCenterYConstraint = NSLayoutConstraint(item: titleLabel, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0)
     let titleLeadingConstraint = NSLayoutConstraint(item: titleLabel, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 10)
     let titleTrailingConstraint = NSLayoutConstraint(item: titleLabel, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 10)
     self.addConstraints([ titleCenterYConstraint, titleLeadingConstraint, titleTrailingConstraint ])
-    
+
     // Add message label
     let messageLabel = UILabel()
     messageLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -126,7 +126,7 @@ class EmptyStateView : UIView {
     messageLabel.font = UIFont.systemFont(ofSize: 17)
     messageLabel.textAlignment = .center
     messageLabel.numberOfLines = 0
-    
+
     // Add constraints for title label
     self.addSubview(messageLabel)
     let messageTopConstraint = NSLayoutConstraint(item: messageLabel, attribute: .top, relatedBy: .equal, toItem: titleLabel, attribute: .bottom, multiplier: 1, constant: 10)

@@ -12,7 +12,7 @@ import CoreBluetooth
 // MARK: - CBManagerState+Util
 
 extension CBManagerState {
-    
+
     var string: String {
         switch self {
         case .poweredOff:
@@ -31,7 +31,7 @@ extension CBManagerState {
             fatalError("Unsupported bluetooth manager state: \(self)")
         }
     }
-    
+
     var isScanning: Bool {
         return self != .unknown && self != .unsupported && self != .poweredOff
     }

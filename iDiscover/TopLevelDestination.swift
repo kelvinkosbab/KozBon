@@ -14,32 +14,32 @@ enum TopLevelDestination: Identifiable {
     case bonjourScanForActiveServices
     case bonjourSupportedServices
     case bonjourCreateService
-    
+
     case bluetooth
-    
+
     case appInformation
-    
+
     var id: String {
         switch self {
         case .bonjourScanForActiveServices:
             "bonjour"
-            
+
         case .bonjourSupportedServices:
             "bonjourSupportedServices"
-            
+
         case .bonjourCreateService:
             "bonjourCreateService"
-            
+
         case .bluetooth:
             "bluetooth"
-            
+
         case .appInformation:
             "appInformation"
         }
     }
-    
+
     // MARK: - Label
-    
+
     var titleString: String {
         switch self {
         case .bonjourScanForActiveServices:
@@ -49,16 +49,16 @@ enum TopLevelDestination: Identifiable {
             )
         case .bonjourSupportedServices:
             ""
-            
+
         case .bonjourCreateService:
             ""
-            
+
         case .bluetooth:
             NSLocalizedString(
                 "Bluetooth",
                 comment: "Bluetooth tab title"
             )
-            
+
         case .appInformation:
             NSLocalizedString(
                 "App information",
@@ -66,7 +66,7 @@ enum TopLevelDestination: Identifiable {
             )
         }
     }
-    
+
     var icon: Image {
         switch self {
         case .bonjourScanForActiveServices:

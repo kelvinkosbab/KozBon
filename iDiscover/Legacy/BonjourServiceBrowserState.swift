@@ -11,10 +11,10 @@ import Foundation
 // MARK: - BonjourServiceBrowserState
 
 enum BonjourServiceBrowserState {
-        
+
     case stopped
     case searching
-    
+
     var string: String {
         switch self {
         case .stopped:
@@ -23,11 +23,11 @@ enum BonjourServiceBrowserState {
             NSLocalizedString("Searching", comment: "Searching browser state string")
         }
     }
-    
+
     var isStopped: Bool {
         return self == .stopped
     }
-    
+
     var isSearching: Bool {
         return self == .searching
     }

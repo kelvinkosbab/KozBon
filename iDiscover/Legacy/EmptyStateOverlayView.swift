@@ -11,11 +11,11 @@ import CoreUI
 
 // MARK: - EmptyStateOverlayView
 
-struct EmptyStateOverlayView : View {
-    
+struct EmptyStateOverlayView: View {
+
     let image: Image?
     let title: String
-    
+
     var body: some View {
         VStack(spacing: Spacing.base) {
             if let image {
@@ -42,7 +42,7 @@ struct EmptyStateOverlayView_Previews: PreviewProvider {
             image: nil,
             title: "Some title saying something"
         )
-        
+
         EmptyStateOverlayView(
             image: Image.bluetoothCapsuleFill,
             title: "Some title saying something"

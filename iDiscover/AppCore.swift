@@ -12,10 +12,10 @@ import CoreUI
 // MARK: - AppCore
 
 @main
-struct AppCore : App {
-    
+struct AppCore: App {
+
     @StateObject var viewModel = ViewModel()
-    
+
     var body: some Scene {
         WindowGroup {
             GeometryReader { geometry in
@@ -31,13 +31,13 @@ struct AppCore : App {
             .tint(.kozBonBlue)
         }
     }
-    
+
     // MARK: - ViewModel
-    
-    class ViewModel : ObservableObject {
-        
+
+    class ViewModel: ObservableObject {
+
         @MainActor @Published var selectedDestination: TopLevelDestination = .bonjourScanForActiveServices
-        
+
         let sidebarCutoffWidth: CGFloat = 500
         let toastApi = ToastApi()
     }

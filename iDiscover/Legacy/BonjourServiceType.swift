@@ -10,14 +10,14 @@ import Foundation
 
 // MARK: - BonjourServiceType
 
-struct BonjourServiceType : Hashable, Equatable {
-    
+struct BonjourServiceType: Hashable, Equatable {
+
     let name: String
     let type: String
     let transportLayer: TransportLayer
     let detail: String?
     let fullType: String
-    
+
     init(
         name: String,
         type: String,
@@ -33,15 +33,15 @@ struct BonjourServiceType : Hashable, Equatable {
             transportLayer: transportLayer
         )
     }
-    
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(self.fullType)
     }
-    
+
     static func == (lhs: BonjourServiceType, rhs: BonjourServiceType) -> Bool {
         return lhs.name == rhs.name && lhs.fullType == rhs.fullType && lhs.detail == rhs.detail
     }
-    
+
     var isBuiltIn: Bool {
         for serviceType in BonjourServiceType.serviceTypeLibrary {
             if self == serviceType {
@@ -50,16 +50,16 @@ struct BonjourServiceType : Hashable, Equatable {
         }
         return false
     }
-    
+
     // MARK: - Static Helpers
-    
+
     static func generateFullType(
         type: String,
         transportLayer: TransportLayer
     ) -> String {
         return "_\(type)._\(transportLayer.string)"
     }
-    
+
     static func fetchAll() -> [BonjourServiceType] {
         var all = self.serviceTypeLibrary
         for persistentServiceType in self.fetchAllPersistentCopies() {
@@ -69,11 +69,11 @@ struct BonjourServiceType : Hashable, Equatable {
         }
         return all
     }
-    
+
     static var serviceTypeLibrary: [BonjourServiceType] {
         return self.tcpServiceTypes + self.udpServiceTypes
     }
-    
+
     static func fetch(
         serviceTypes: [BonjourServiceType]? = nil,
         type: String,
@@ -85,7 +85,7 @@ struct BonjourServiceType : Hashable, Equatable {
         }
         return filtered.first
     }
-    
+
     static func fetch(
         serviceTypes: [BonjourServiceType]? = nil,
         fullType: String
@@ -96,7 +96,7 @@ struct BonjourServiceType : Hashable, Equatable {
         }
         return filtered.first
     }
-    
+
     static func exists(
         serviceTypes: [BonjourServiceType]? = nil,
         type: String,
@@ -104,7 +104,7 @@ struct BonjourServiceType : Hashable, Equatable {
     ) -> Bool {
         return self.fetch(serviceTypes: serviceTypes, type: type, transportLayer: transportLayer) != nil
     }
-    
+
     static func exists(
         serviceTypes: [BonjourServiceType]? = nil,
         fullType: String

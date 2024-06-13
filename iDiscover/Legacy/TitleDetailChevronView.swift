@@ -11,11 +11,11 @@ import CoreUI
 
 // MARK: - TitleDetailChevronView
 
-struct TitleDetailChevronView : View {
-    
+struct TitleDetailChevronView: View {
+
     let title: String
     let detail: String
-    
+
     var body: some View {
         HStack(alignment: .center) {
             VStack(alignment: .leading, spacing: Spacing.base) {
@@ -26,9 +26,9 @@ struct TitleDetailChevronView : View {
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
-            
+
             Spacer()
-            
+
             Image.chevronRight
                 .foregroundColor(.kozBonBlue)
         }

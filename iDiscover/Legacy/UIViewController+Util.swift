@@ -10,16 +10,16 @@ import Foundation
 import UIKit
 
 extension UIViewController {
-  
+
   // MARK: - Accessing Controllers from Storyboard
-  
+
   static func newStoryboardController(fromStoryboardWithName storyboard: String, withIdentifier identifier: String) -> UIViewController {
     let storyboard = UIStoryboard(name: storyboard, bundle: nil)
     return storyboard.instantiateViewController(withIdentifier: identifier)
   }
-  
+
   // MARK: - Alerts
-  
+
   func showDisappearingAlertDialog(title: String, message: String? = nil, didDismiss: (() -> Void)? = nil) {
     let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
     self.present(alertController, animated: true) {
@@ -28,21 +28,21 @@ extension UIViewController {
       }
     }
   }
-  
+
   // MARK: - Adding child view controller helpers
-  
+
   func addChildViewController(_ childViewController: UIViewController, intoView: UIView) {
-    
+
     guard let childView = childViewController.view else {
         return
     }
-    
+
     childViewController.view.translatesAutoresizingMaskIntoConstraints = false
     self.addChild(childViewController)
     childViewController.view.frame = intoView.frame
     intoView.addSubview(childViewController.view)
     childViewController.didMove(toParent: self)
-    
+
     // Set up constraints for the embedded controller
     let top = NSLayoutConstraint(item: childView, attribute: .top, relatedBy: .equal, toItem: intoView, attribute: .top, multiplier: 1, constant: 0)
     let bottom = NSLayoutConstraint(item: childView, attribute: .bottom, relatedBy: .equal, toItem: intoView, attribute: .bottom, multiplier: 1, constant: 0)
@@ -51,9 +51,9 @@ extension UIViewController {
     intoView.addConstraints([ top, bottom, leading, trailing ])
     self.view.layoutIfNeeded()
   }
-  
+
   // MARK: - Hiding Tab Bar
-  
+
   func showTabBar(completion: (() -> Void)? = nil) {
     if let tabBarController = self.tabBarController {
       let tabBarFrame = tabBarController.tabBar.frame
@@ -67,7 +67,7 @@ extension UIViewController {
       })
     }
   }
-  
+
   func hideTabBar(completion: (() -> Void)? = nil) {
     if let tabBarController = self.tabBarController {
       tabBarController.tabBar.isUserInteractionEnabled = false

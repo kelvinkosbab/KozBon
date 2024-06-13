@@ -15,24 +15,24 @@ protocol EditTxtRecordsDelegate: AnyObject {
 }
 
 class EditTxtRecordsViewController: MyTableViewController {
-    
+
     // MARK: - Static
-    
+
     static func newViewController(txtRecords: [String: String], delegate: EditTxtRecordsDelegate) -> EditTxtRecordsViewController {
         let viewController = self.newStoryboardController(fromStoryboardWithName: "Services", withIdentifier: "EditTxtRecordsViewController") as! EditTxtRecordsViewController
         viewController.dataSource.txtRecords = txtRecords
         viewController.delegate = delegate
         return viewController
     }
-    
+
     // MARK: - Properties
-    
+
     private let dataSource = DataSource()
     weak var delegate: EditTxtRecordsDelegate?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.title = "TXT Records"
 
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel,
@@ -48,14 +48,14 @@ class EditTxtRecordsViewController: MyTableViewController {
     @objc func cancelButtonSelected() {
         self.dismissController()
     }
-    
+
     @objc func doneButtonSelected() {
         self.delegate?.didUpdate(txtRecords: self.dataSource.txtRecords)
         self.dismissController()
     }
-    
+
     // MARK: - TableView
-    
+
     override func numberOfSections(in tableView: UITableView) -> Int {
         if self.dataSource.txtRecords.count > 0 {
             return 2
@@ -63,13 +63,13 @@ class EditTxtRecordsViewController: MyTableViewController {
             return 1
         }
     }
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (self.getTxtSection() ?? 0) + 1
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+
         if indexPath.section == self.getTxtSection() {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TxtRecordCell", for: indexPath) as! TxtRecordCell
             return cell
@@ -77,33 +77,33 @@ class EditTxtRecordsViewController: MyTableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AddTxtRecordCell", for: indexPath) as! AddTxtRecordCell
             return cell
         }
-        
+
         // Invalid section
         fatalError()
     }
-    
+
     private func getTxtSection() -> Int? {
         return self.dataSource.txtRecords.count > 0 ? 0 : nil
     }
-    
+
     private func getAddTxtSection() -> Int {
         return self.dataSource.txtRecords.count > 0 ? 1 : 0
     }
-    
+
     // MARK: - DataSource
-    
+
     private class DataSource {
-        
+
         var txtRecords: [String: String] = [:]
-        
+
         func getCurrentTxtRecords() -> [String: String] {
             return self.txtRecords
         }
-        
+
         func addTxtRecord(value: String, forKey key: String) {
             self.txtRecords[key] = value
         }
-        
+
         func removeTxtRecord(forKey key: String) {
             self.txtRecords.removeValue(forKey: key)
         }

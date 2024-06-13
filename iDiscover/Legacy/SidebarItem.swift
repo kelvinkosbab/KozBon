@@ -10,14 +10,14 @@ import SwiftUI
 
 // MARK: - SidebarItem
 
-enum SidebarItem : BarItem {
-    
+enum SidebarItem: BarItem {
+
     case bonjourScanForActiveServices
     case bonjourSupportedServices
     case bonjourCreateService
     case bluetooth
     case appInformation
-    
+
     var id: String {
         switch self {
         case .bonjourScanForActiveServices:
@@ -32,7 +32,7 @@ enum SidebarItem : BarItem {
             "appInformation"
         }
     }
-    
+
     var titleString: String {
         switch self {
         case .bonjourScanForActiveServices:
@@ -62,7 +62,7 @@ enum SidebarItem : BarItem {
             )
         }
     }
-    
+
     var icon: Image {
         switch self {
         case .bonjourScanForActiveServices:
@@ -107,7 +107,7 @@ enum SidebarItem : BarItem {
             nil
         }
     }
-    
+
     var isSelectable: Bool {
         switch self {
         case .appInformation:

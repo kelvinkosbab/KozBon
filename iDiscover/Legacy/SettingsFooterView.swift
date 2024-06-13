@@ -9,4 +9,4 @@
 import Foundation
 import UIKit
 
-class SettingsFooterView : UICollectionReusableView {}
+class SettingsFooterView: UICollectionReusableView {}

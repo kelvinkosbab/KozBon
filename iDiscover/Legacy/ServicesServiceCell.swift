@@ -9,13 +9,13 @@
 import Foundation
 import UIKit
 
-class ServicesServiceCell : UICollectionViewCell {
+class ServicesServiceCell: UICollectionViewCell {
     @IBOutlet weak private var containerView: UIView!
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var detailLabel: UILabel!
     private var service: BonjourService?
     private var isPublished: Bool = false
-    
+
     func configure(service: BonjourService, isPublished: Bool) {
         self.isPublished = isPublished
         self.service = service
@@ -27,7 +27,7 @@ class ServicesServiceCell : UICollectionViewCell {
         }
         service.delegate = self
     }
-    
+
     func configure(title: String?, detail: String?) {
         self.service = nil
         self.titleLabel.text = title
@@ -37,8 +37,8 @@ class ServicesServiceCell : UICollectionViewCell {
 
 // MARK: - MyNetServiceDelegate
 
-extension ServicesServiceCell : MyNetServiceDelegate {
-    
+extension ServicesServiceCell: MyNetServiceDelegate {
+
     func serviceDidResolveAddress(_ service: BonjourService) {
         self.configure(service: service, isPublished: self.isPublished)
     }

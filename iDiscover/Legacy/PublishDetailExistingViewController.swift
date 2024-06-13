@@ -10,21 +10,21 @@ import Foundation
 import UIKit
 
 class PublishDetailExistingViewController: MyTableViewController, UITextFieldDelegate, EditTxtRecordsDelegate {
-  
+
   // MARK: - Class Accessors
-  
+
   static func newViewController() -> PublishDetailExistingViewController {
     return self.newViewController(fromStoryboard: .services)
   }
-  
+
   static func newViewController(serviceType: BonjourServiceType) -> PublishDetailExistingViewController {
     let viewController = self.newViewController()
     viewController.serviceType = serviceType
     return viewController
   }
-  
+
   // MARK: - Properties
-  
+
   @IBOutlet weak var transportLayerSegmentedControl: UISegmentedControl!
   @IBOutlet weak var nameTextField: UITextField!
   @IBOutlet weak var typeTextField: UITextField!
@@ -32,22 +32,22 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
   @IBOutlet weak var portTextField: UITextField!
   @IBOutlet weak var domainTextField: UITextField!
   @IBOutlet weak var detailTextField: UITextField!
-    
+
     @IBOutlet weak var addTxTRecordButton: UIButton!
     @IBOutlet weak var txtRecordsLabel: UILabel!
-  
+
   weak var delegate: PublishNetServiceDelegate?
-  
+
     private var serviceType: BonjourServiceType!
     private var txtRecords: [String: String] = [:]
-  
+
   // MARK: - Lifecycle
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+
     self.navigationItem.rightBarButtonItem = UIBarButtonItem(text: "Publish", target: self, action: #selector(self.publishButtonSelected))
-    
+
     self.nameTextField.isUserInteractionEnabled = false
     self.nameTextField.textColor = UIColor.darkGray
     self.typeTextField.isUserInteractionEnabled = false
@@ -57,26 +57,26 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
     self.domainTextField.delegate = self
     self.detailTextField.isUserInteractionEnabled = false
     self.detailTextField.textColor = UIColor.darkGray
-    
+
     self.resetForm()
   }
-  
+
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    
+
     self.updateServiceContent()
   }
-  
+
   // MARK: - Content
-  
+
   func resetForm() {
     self.updateServiceContent()
     self.portTextField.text = "3000"
     self.domainTextField.text = ""
   }
-  
+
   // MARK: - Content
-  
+
   func updateServiceContent() {
     self.title = self.serviceType.fullType
     self.transportLayerSegmentedControl.selectedSegmentIndex = self.serviceType.transportLayer.isTcp ? 0 : 1
@@ -90,40 +90,40 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
       self.detailTextField.text = "No additional information"
     }
   }
-  
+
   // MARK: - UITableView
-  
+
   override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
     return 0
   }
-  
+
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
-    
+
     if indexPath.section == 3 {
       self.portTextField.becomeFirstResponder()
     } else if indexPath.section == 4 {
       self.domainTextField.becomeFirstResponder()
-      
+
     } else if indexPath.section == 6 && indexPath.row == 0 {
       self.clearButtonSelected()
     }
   }
-  
+
   // MARK: - UITextFieldDelegate
-  
+
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return true
   }
-  
+
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-    
+
     // Check if delete key
     if string == "" && range.length > 0 {
       return true
     }
-    
+
     // Character validations by text field
     if textField == self.domainTextField && !string.containsWhitespace {
       return false
@@ -132,26 +132,26 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
     }
     return true
   }
-  
+
   // MARK: - Actions
-    
+
     @IBAction func addTxtRecordButtonSelected() {
         let viewController = EditTxtRecordsViewController.newViewController(txtRecords: self.txtRecords, delegate: self)
         viewController.delegate = self
         viewController.presentControllerIn(self, forMode: .modal)
     }
-  
+
   @objc func publishButtonSelected() {
-    
+
     guard let port = self.portTextField.text,
           let portValue = port.convertToInt,
             portValue > 0 else {
       self.showDisappearingAlertDialog(title: "Invalid Port Number")
       return
     }
-    
+
     let domain = self.domainTextField.text ?? ""
-    
+
     // Publish the service
     MyLoadingManager.showLoading()
     MyBonjourPublishManager.shared.publish(name: self.serviceType.name,
@@ -174,13 +174,13 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
                                        message: "Please try again.")
     }
   }
-  
+
   private func clearButtonSelected() {
     self.resetForm()
   }
-    
+
     // MARK: - EditTxtRecordsDelegate
-    
+
     func didUpdate(txtRecords: [String: String]) {
         self.txtRecords = txtRecords
     }

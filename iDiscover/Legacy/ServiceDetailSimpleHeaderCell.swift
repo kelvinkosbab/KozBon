@@ -9,9 +9,9 @@
 import Foundation
 import UIKit
 
-class ServiceDetailSimpleHeaderCell : UITableViewCell {
+class ServiceDetailSimpleHeaderCell: UITableViewCell {
   @IBOutlet weak private var titleLabel: UILabel!
-  
+
   func configure(title: String) {
     self.titleLabel.text = title.uppercased()
   }

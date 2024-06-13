@@ -9,10 +9,10 @@
 import Foundation
 
 final class ObjectRegistry<T: Hashable> {
-    
+
     private var registered: Set<T>
     private let queue: DispatchQueue
-    
+
     init() {
         self.registered = Set()
         self.queue = DispatchQueue(label: "\(UUID().uuidString).ObjectRegistry")
@@ -35,7 +35,7 @@ final class ObjectRegistry<T: Hashable> {
             self.registered
         }
     }
-    
+
     func removeAll() {
         self.queue.sync {
             self.registered = Set()

@@ -10,7 +10,7 @@ import SwiftUI
 
 // MARK: - BarItem
 
-protocol BarItem : Identifiable {
+protocol BarItem: Identifiable {
     var id: String { get }
     var titleString: String { get }
     var icon: Image { get }

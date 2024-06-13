@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - BonjourServiceScannerDelegate
 
-protocol BonjourServiceScannerDelegate : AnyObject {
+protocol BonjourServiceScannerDelegate: AnyObject {
     func didAdd(service: BonjourService)
     func didRemove(service: BonjourService)
     func didReset()

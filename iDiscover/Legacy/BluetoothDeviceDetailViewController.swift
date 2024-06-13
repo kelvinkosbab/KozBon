@@ -9,40 +9,40 @@
 import UIKit
 import CoreBluetooth
 
-class BluetoothDeviceDetailViewController : MyTableViewController {
-  
+class BluetoothDeviceDetailViewController: MyTableViewController {
+
   // MARK: - Class Accessors
-  
+
   private static func newViewController() -> BluetoothDeviceDetailViewController {
     return self.newViewController(fromStoryboard: .bluetooth)
   }
-  
+
   static func newViewController(device: BluetoothDevice) -> BluetoothDeviceDetailViewController {
     let viewController = self.newViewController()
     viewController.device = device
     return viewController
   }
-  
+
   // MARK: - Properties
-  
+
   var device: BluetoothDevice!
-  
+
   let bluetoothManager = BluetoothDeviceScanner()
-  
+
   var services: [CBService] = []
-  var serviceCharacteristics: [CBService : [CBCharacteristic]] = [:]
-  
+  var serviceCharacteristics: [CBService: [CBCharacteristic]] = [:]
+
   // MARK: - Lifecycle
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+
     self.title = self.device.name
-    
+
     if self.navigationController?.viewControllers.first == self {
       self.navigationItem.leftBarButtonItem = UIBarButtonItem(text: "Done", target: self, action: #selector(self.doneButtonSelected(_:)))
     }
-    
+
     // Connect to the device
     self.bluetoothManager.connect(device: self.device) { [weak self] _ in
       self?.reloadContent()
@@ -54,22 +54,22 @@ class BluetoothDeviceDetailViewController : MyTableViewController {
       }
     }
   }
-  
+
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    
+
     self.device.delegate = self
     self.device.servicesDelegate = self
   }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
+
         self.bluetoothManager.disconnect(device: self.device, completion: { _ in })
     }
-  
+
   // MARK: - Content
-  
+
   func reloadContent() {
     self.services = self.device.services
     self.serviceCharacteristics = [:]
@@ -78,19 +78,19 @@ class BluetoothDeviceDetailViewController : MyTableViewController {
     }
     self.tableView.reloadData()
   }
-  
+
   // MARK: - Actions
-  
+
   @objc private func doneButtonSelected(_ sender: UIBarButtonItem) {
     self.dismissController()
   }
-  
+
   // MARK: - SectionType
-  
+
   enum SectionType {
     case info, service(CBService)
   }
-  
+
   private func getSectionType(section: Int) -> SectionType? {
     switch section {
     case 0:
@@ -105,19 +105,19 @@ class BluetoothDeviceDetailViewController : MyTableViewController {
       }
     }
   }
-  
+
   // MARK: - RowType
-  
+
   enum RowType {
     case name, connectionState, lastKnownRssi, totalServices, noCharacteristics, characteristic(CBCharacteristic)
   }
-  
+
   private func getRowType(at indexPath: IndexPath) -> RowType? {
-    
+
     guard let sectionType = self.getSectionType(section: indexPath.section) else {
       return nil
     }
-    
+
     switch sectionType {
     case .info:
       switch indexPath.row {
@@ -132,7 +132,7 @@ class BluetoothDeviceDetailViewController : MyTableViewController {
       default:
         return nil
       }
-        
+
     case .service(let service):
       let characteristics = self.serviceCharacteristics[service] ?? []
       if characteristics.count == 0 {
@@ -143,19 +143,19 @@ class BluetoothDeviceDetailViewController : MyTableViewController {
       }
     }
   }
-  
+
   // MARK: - UITableView
-  
+
   override func numberOfSections(in tableView: UITableView) -> Int {
     return 1 + self.device.services.count
   }
-  
+
   override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    
+
     guard let sectionType = self.getSectionType(section: section) else {
       return nil
     }
-    
+
     let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailSimpleHeaderCell.name) as! ServiceDetailSimpleHeaderCell
     cell.contentView.backgroundColor = .systemBackground
     switch sectionType {
@@ -166,13 +166,13 @@ class BluetoothDeviceDetailViewController : MyTableViewController {
     }
     return cell.contentView
   }
-  
+
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    
+
     guard let sectionType = self.getSectionType(section: section) else {
       return 0
     }
-    
+
     switch sectionType {
     case .info:
       return 4
@@ -185,15 +185,15 @@ class BluetoothDeviceDetailViewController : MyTableViewController {
       }
     }
   }
-  
+
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    
+
     guard let rowType = self.getRowType(at: indexPath) else {
       let cell = UITableViewCell()
       cell.backgroundColor = tableView.backgroundColor
       return cell
     }
-    
+
     switch rowType {
     case .name:
       let cell = tableView.dequeueReusableCell(withIdentifier: ServiceDetailAddressCell.name, for: indexPath) as! ServiceDetailAddressCell
@@ -231,14 +231,14 @@ class BluetoothDeviceDetailViewController : MyTableViewController {
       return cell
     }
   }
-  
+
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
-    
+
     guard let rowType = self.getRowType(at: indexPath) else {
       return
     }
-    
+
     switch rowType {
     case .characteristic(let characteristic):
       let viewController = BluetoothCharacteristicDetailViewController.newViewController(device: self.device, characteristic: characteristic)
@@ -250,8 +250,8 @@ class BluetoothDeviceDetailViewController : MyTableViewController {
 
 // MARK: - BluetoothDeviceDelegate
 
-extension BluetoothDeviceDetailViewController : BluetoothDeviceDelegate {
-  
+extension BluetoothDeviceDetailViewController: BluetoothDeviceDelegate {
+
   func didUpdate(_ device: BluetoothDevice) {
     self.reloadContent()
   }
@@ -259,8 +259,8 @@ extension BluetoothDeviceDetailViewController : BluetoothDeviceDelegate {
 
 // MARK: - BluetoothDeviceDelegate
 
-extension BluetoothDeviceDetailViewController : BluetoothDeviceServicesDelegate {
-  
+extension BluetoothDeviceDetailViewController: BluetoothDeviceServicesDelegate {
+
   func didUpdateServices(_ device: BluetoothDevice) {
     self.reloadContent()
   }

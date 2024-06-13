@@ -10,10 +10,10 @@ import SwiftUI
 
 // MARK: - BarItemLabel
 
-struct BarItemLabel : View {
-    
+struct BarItemLabel: View {
+
     let item: any BarItem
-    
+
     var body: some View {
         Label(
             title: {

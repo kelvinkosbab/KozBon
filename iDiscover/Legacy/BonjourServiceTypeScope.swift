@@ -10,10 +10,10 @@ import Foundation
 
 // MARK: - BonjourServiceTypeScope
 
-enum BonjourServiceTypeScope : CaseIterable {
-    
+enum BonjourServiceTypeScope: CaseIterable {
+
     case all, builtIn, created
-    
+
     var string: String {
         switch self {
         case .all:
@@ -24,21 +24,21 @@ enum BonjourServiceTypeScope : CaseIterable {
             return "Created"
         }
     }
-    
+
     var isAll: Bool {
         return self == .all
     }
-    
+
     var isBuiltIn: Bool {
         return self == .builtIn
     }
-    
+
     var isCreated: Bool {
         return self == .created
     }
-    
+
     static let allScopes: [BonjourServiceTypeScope] = [ .all, .builtIn, .created ]
-    
+
     static var allScopeTitles: [String] {
         var titles: [String] = []
         for scope in self.allScopes {

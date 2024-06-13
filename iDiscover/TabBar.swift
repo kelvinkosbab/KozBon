@@ -10,14 +10,14 @@ import SwiftUI
 
 // MARK: - TabBar
 
-struct TabBar : View {
-    
+struct TabBar: View {
+
     @StateObject var viewModel: ViewModel
-    
+
     init(selectedDestination: Binding<TopLevelDestination>) {
         self._viewModel = StateObject(wrappedValue: ViewModel(selectedDestination: selectedDestination))
     }
-    
+
     var body: some View {
         TabView {
             ForEach(viewModel.destinations) { item in
@@ -25,16 +25,16 @@ struct TabBar : View {
                     switch viewModel.selectedDestination {
                     case .bonjourScanForActiveServices:
                         BonjourScanForServicesView()
-                        
+
                     case .bonjourSupportedServices:
                         Text(viewModel.selectedDestination.titleString)
-                        
+
                     case .bonjourCreateService:
                         Text(viewModel.selectedDestination.titleString)
-                        
+
                     case .bluetooth:
                         Text(viewModel.selectedDestination.titleString)
-                        
+
                     case .appInformation:
                         Text(viewModel.selectedDestination.titleString)
                     }
@@ -55,17 +55,17 @@ struct TabBar : View {
         }
         .accentColor(.kozBonBlue)
     }
-    
+
     // MARK: - ViewModel
-    
-    class ViewModel : ObservableObject {
-        
+
+    class ViewModel: ObservableObject {
+
         @MainActor @Binding var selectedDestination: TopLevelDestination
-        
+
         init(selectedDestination: Binding<TopLevelDestination>) {
             self._selectedDestination = selectedDestination
         }
-        
+
         let destinations: [TopLevelDestination] = [
             .bonjourScanForActiveServices,
             .bluetooth,

@@ -9,6 +9,6 @@
 import Foundation
 import UIKit
 
-class ServiceDetailLoadingCell : UITableViewCell {
+class ServiceDetailLoadingCell: UITableViewCell {
   @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 }

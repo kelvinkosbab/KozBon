@@ -10,14 +10,14 @@ import SwiftUI
 
 // MARK: - LagacyTabBar
 
-struct LagacyTabBar : View {
-    
+struct LagacyTabBar: View {
+
     @ObservedObject var dataSource: DataSource
-    
+
     init(selectedItem: Binding<(any BarItem)>) {
         self.dataSource = DataSource(selectedItem: selectedItem)
     }
-    
+
     var body: some View {
         TabView {
             ForEach(self.dataSource.items, id: \.self.id) { item in
@@ -35,17 +35,17 @@ struct LagacyTabBar : View {
         }
         .accentColor(.kozBonBlue)
     }
-    
+
     // MARK: - DataSource
-    
-    class DataSource : ObservableObject {
-        
+
+    class DataSource: ObservableObject {
+
         @MainActor @Binding var selectedItem: (any BarItem)
-        
+
         init(selectedItem: Binding<(any BarItem)>) {
             self._selectedItem = selectedItem
         }
-        
+
         let items: [any BarItem] = [
             TabBarItem.bonjour,
             TabBarItem.bluetooth,

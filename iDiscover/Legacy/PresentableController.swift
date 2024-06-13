@@ -13,17 +13,17 @@ enum PresentationMode {
   case modal, navStack, splitDetail
 }
 
-protocol PresentableController : AnyObject {
+protocol PresentableController: AnyObject {
   var presentedMode: PresentationMode { get set }
   var transitioningDelegateReference: UIViewControllerTransitioningDelegate? { get set }
 }
 
-extension PresentableController where Self : UIViewController {
-  
+extension PresentableController where Self: UIViewController {
+
   func presentControllerIn(_ parentController: UIViewController, forMode mode: PresentationMode, inNavigationController: Bool = true, phoneModalTransitionStyle modalTransitionStyle: UIModalTransitionStyle? = nil, completion: (() -> Void)? = nil) {
     self.presentedMode = mode
     switch mode {
-      
+
     case .modal:
       let viewController = inNavigationController ? MyNavigationController(rootViewController: self) : self
       viewController.modalPresentationStyle = .formSheet
@@ -31,46 +31,47 @@ extension PresentableController where Self : UIViewController {
         viewController.modalTransitionStyle = modalTransitionStyle
       }
       parentController.present(viewController, animated: true, completion: completion)
-      
+
     case .navStack:
       self.hidesBottomBarWhenPushed = true
       parentController.navigationController?.pushViewController(self, animated: true)
       completion?()
-      
+
     case .splitDetail:
-      
+        break
+
       // Check if on phone vs pad. If phone proceed with default navStack behavior
-      if UIDevice.isPhone {
-        self.presentControllerIn(parentController, forMode: .navStack, completion: completion)
-        
-      } else {
-        // Present in split view detail controller
-        if let splitViewController = parentController.splitViewController {
-          let viewController = inNavigationController ? MyNavigationController(rootViewController: self) : self
-          splitViewController.showDetailViewController(viewController, sender: self)
-        } else {
-          self.presentControllerIn(parentController, forMode: .navStack, completion: completion)
-        }
-      }
+//      if UIDevice.isPhone {
+//        self.presentControllerIn(parentController, forMode: .navStack, completion: completion)
+//        
+//      } else {
+//        // Present in split view detail controller
+//        if let splitViewController = parentController.splitViewController {
+//          let viewController = inNavigationController ? MyNavigationController(rootViewController: self) : self
+//          splitViewController.showDetailViewController(viewController, sender: self)
+//        } else {
+//          self.presentControllerIn(parentController, forMode: .navStack, completion: completion)
+//        }
+//      }
     }
   }
-  
-  func dismissController(completion: (() -> Void)? = nil){
+
+  func dismissController(completion: (() -> Void)? = nil) {
     switch self.presentedMode {
-      
+
     case .modal:
       self.presentingViewController?.dismiss(animated: true, completion: completion)
-      
+
     case .navStack:
       _ = self.navigationController?.popViewController(animated: true)
       completion?()
-      
+
     case .splitDetail:
       if let splitViewController = self.splitViewController {
         if let index = splitViewController.viewControllers.firstIndex(of: self) {
           splitViewController.viewControllers.remove(at: index)
         } else {
-          
+
           // Look for self embedded in a navigation controller
           for controller in splitViewController.viewControllers {
             var found = false
@@ -82,7 +83,7 @@ extension PresentableController where Self : UIViewController {
                 }
               }
             }
-            
+
             if found, let index = splitViewController.viewControllers.firstIndex(of: controller) {
               splitViewController.viewControllers.remove(at: index)
               break

@@ -9,10 +9,10 @@
 import Foundation
 import UIKit
 
-class SettingsItemCell : UICollectionViewCell {
+class SettingsItemCell: UICollectionViewCell {
   @IBOutlet weak private var containerView: UIView!
   @IBOutlet weak private var titleLabel: UILabel!
-  
+
   func configure(title: String) {
     self.titleLabel.text = title
   }

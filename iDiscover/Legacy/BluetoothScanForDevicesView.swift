@@ -10,14 +10,14 @@ import SwiftUI
 
 // MARK: - BluetoothScanForDevicesView
 
-struct BluetoothScanForDevicesView : View {
-    
+struct BluetoothScanForDevicesView: View {
+
     // MARK: - ViewModel
-    
+
     @StateObject var viewModel = ViewModel()
-    
+
     // MARK: - Body
-    
+
     var body: some View {
         List {
             ForEach(self.viewModel.devices, id: \.self.uuid) { device in

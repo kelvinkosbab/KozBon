@@ -9,13 +9,13 @@
 import Foundation
 import UIKit
 
-class ServiceDetailSimpleCell : UITableViewCell {
+class ServiceDetailSimpleCell: UITableViewCell {
   @IBOutlet weak private var titleLabel: UILabel!
-  
+
   func configure(title: String) {
     self.titleLabel.text = title
   }
-  
+
   func configure(textColor: UIColor) {
     self.titleLabel.textColor = textColor
   }

@@ -9,15 +9,15 @@
 import Foundation
 import UIKit
 
-class MyViewController : UIViewController, PresentableController, MyViewControllerIdentifierProtocol {
-  
+class MyViewController: UIViewController, PresentableController, MyViewControllerIdentifierProtocol {
+
   // MARK: - PresentableController
-  
+
   var presentedMode: PresentationMode = .navStack
   var transitioningDelegateReference: UIViewControllerTransitioningDelegate?
-  
+
   // MARK: - Status Bar
-  
+
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
   }

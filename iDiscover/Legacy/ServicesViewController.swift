@@ -8,32 +8,32 @@
 
 import UIKit
 
-class ServicesViewController : MyCollectionViewController {
-  
+class ServicesViewController: MyCollectionViewController {
+
   // MARK: - Class Accessors
-  
+
   static func newViewController() -> ServicesViewController {
     return self.newViewController(fromStoryboard: .services)
   }
-  
+
   // MARK: - Edit Mode Properties
-  
+
   override var defaultViewTitle: String? {
     return "Bonjour"
   }
-    
+
   // MARK: - Lifecycle
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+
     self.navigationItem.title = "Bonjour Services"
     self.tabBarItem = UITabBarItem(
         title: "Bonjour",
         image: #imageLiteral(resourceName: "iconBonjour"),
         selectedImage: nil
     )
-    
+
     let plusBarButtonItem = UIBarButtonItem(
         image: UIImage(systemName: "plus.circle.fill"),
         style: .done,
@@ -48,36 +48,36 @@ class ServicesViewController : MyCollectionViewController {
     )
     self.navigationItem.rightBarButtonItems = [plusBarButtonItem, sortBarButtonItem]
   }
-  
+
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    
+
     NotificationCenter.default.addObserver(
         self,
         selector: #selector(self.reloadBrowsingServices),
         name: UIApplication.willEnterForegroundNotification,
         object: nil
     )
-    
+
     BonjourServiceScanner.shared.delegate = self
     MyBonjourPublishManager.shared.delegate = self
     self.reloadBrowsingServices()
   }
-  
+
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
-    
+
     NotificationCenter.default.removeObserver(self)
   }
-  
+
   // MARK: - Content
-  
+
   var isBrowsingForServces: Bool? {
     didSet {
         guard let isBrowsingForServces = self.isBrowsingForServces else {
             return
         }
-        
+
         if isBrowsingForServces != oldValue {
             if isBrowsingForServces {
                 let spinner = UIActivityIndicatorView()
@@ -89,24 +89,24 @@ class ServicesViewController : MyCollectionViewController {
         }
     }
   }
-  
+
   @objc func reloadBrowsingServices() {
-    
+
     // Update the browsing for services flag
     self.isBrowsingForServces = true
-    
+
     // Start service discovery
-    BonjourServiceScanner.shared.startDiscovery { [weak self] services in
-      
+    BonjourServiceScanner.shared.startDiscovery { [weak self] _ in
+
       // Update the browsing for services flag
       self?.isBrowsingForServces = false
     }
   }
-  
+
   // MARK: - Button Actions
-  
+
   @objc private func sortButtonSelected(_ sender: UIBarButtonItem) {
-    
+
     // Construct sort message
     let message: String?
     if let sortType = BonjourServiceScanner.shared.sortType {
@@ -114,7 +114,7 @@ class ServicesViewController : MyCollectionViewController {
     } else {
       message = nil
     }
-    
+
     // Construct action sheet
     let sortMenuController = UIAlertController(title: "Sort By", message: message, preferredStyle: .actionSheet)
     for sortType in MyNetServiceSortType.all {
@@ -123,10 +123,10 @@ class ServicesViewController : MyCollectionViewController {
       }))
     }
     sortMenuController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-    
+
     if UIDevice.isPhone {
       self.present(sortMenuController, animated: true, completion: nil)
-      
+
     } else {
       sortMenuController.modalPresentationStyle = .popover
       if let popoverPresenter = sortMenuController.popoverPresentationController {
@@ -136,9 +136,9 @@ class ServicesViewController : MyCollectionViewController {
       }
     }
   }
-    
+
     @objc func presentAddActionSheet(_ sender: UIBarButtonItem) {
-        
+
         // Construct action sheet
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         controller.addAction(UIAlertAction(title: "Publish a Service", style: .default, handler: { [weak self] _ in
@@ -148,10 +148,10 @@ class ServicesViewController : MyCollectionViewController {
             self?.presentCreateServiceType()
         }))
         controller.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
+
         if UIDevice.isPhone {
           self.present(controller, animated: true, completion: nil)
-          
+
         } else {
             controller.modalPresentationStyle = .popover
           if let popoverPresenter = controller.popoverPresentationController {
@@ -161,36 +161,36 @@ class ServicesViewController : MyCollectionViewController {
           }
         }
     }
-    
+
     private func presentPublishService() {
         let viewController = PublishNetServiceSearchViewController.newViewController()
         viewController.presentControllerIn(self, forMode: .modal)
     }
-    
+
     private func presentCreateServiceType() {
         let viewController = CreateServiceTypeTableViewController.newViewController()
         viewController.presentControllerIn(self, forMode: .modal)
     }
-  
+
   // MARK: - UICollectionView Helpers
-  
+
   var services: [BonjourService] {
     return BonjourServiceScanner.shared.services
   }
-    
+
     var publishedServices: [BonjourService] {
       return MyBonjourPublishManager.shared.publishedServices
     }
-  
+
   private let availableServicesTableViewSection: Int = 0
   private let publishedServicesTableViewSection: Int = 1
-  
+
   // MARK: - UICollectionView
-  
+
   override func numberOfSections(in collectionView: UICollectionView) -> Int {
     return self.publishedServices.count > 0 ? 2 : 1
   }
-  
+
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     if section == self.availableServicesTableViewSection {
         return self.services.count
@@ -200,7 +200,7 @@ class ServicesViewController : MyCollectionViewController {
         return 0
     }
   }
-  
+
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ServicesServiceCell.name, for: indexPath) as! ServicesServiceCell
     let service: BonjourService = {
@@ -217,7 +217,7 @@ class ServicesViewController : MyCollectionViewController {
     }
     return cell
   }
-  
+
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let service = self.services[indexPath.row]
     let viewController = ServiceDetailTableViewController.newViewController(browsedService: service)
@@ -227,13 +227,13 @@ class ServicesViewController : MyCollectionViewController {
 
 // MARK: - MyBonjourManagerDelegate
 
-extension ServicesViewController : BonjourServiceScannerDelegate, MyBonjourPublishManagerDelegate {
-    
+extension ServicesViewController: BonjourServiceScannerDelegate, MyBonjourPublishManagerDelegate {
+
     func servicesDidUpdate(_ services: [BonjourService]) {
         self.reloadData()
         self.updateEmptyState()
     }
-    
+
     func publishedServicesUpdated(_ publishedServices: [BonjourService]) {
         self.reloadData()
         self.updateEmptyState()

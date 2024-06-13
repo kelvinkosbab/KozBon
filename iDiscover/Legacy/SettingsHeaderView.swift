@@ -9,9 +9,9 @@
 import Foundation
 import UIKit
 
-class SettingsHeaderView : UICollectionReusableView {
+class SettingsHeaderView: UICollectionReusableView {
   @IBOutlet weak private var titleLabel: UILabel!
-  
+
   func configure(title: String) {
     self.titleLabel.text = title.uppercased()
   }

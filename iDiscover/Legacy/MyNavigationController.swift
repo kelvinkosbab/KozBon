@@ -8,18 +8,18 @@
 
 import UIKit
 
-class MyNavigationController : UINavigationController, PresentableController, MyViewControllerIdentifierProtocol {
-  
+class MyNavigationController: UINavigationController, PresentableController, MyViewControllerIdentifierProtocol {
+
   // MARK: - PresentableController
-  
+
   var presentedMode: PresentationMode = .navStack
   var transitioningDelegateReference: UIViewControllerTransitioningDelegate?
-  
+
   // MARK: - Lifecycle
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+
     self.navigationBar.prefersLargeTitles = true
   }
 }

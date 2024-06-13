@@ -9,7 +9,7 @@
 import Foundation
 
 extension Data {
-  
+
   var hexValue: String {
     var str = String()
     let len = self.count

@@ -12,7 +12,7 @@ import CoreBluetooth
 // MARK: - CBPeripheralState
 
 extension CBPeripheralState {
-    
+
     var string: String {
         switch self {
         case .connected:

@@ -9,11 +9,11 @@
 import UIKit
 
 extension UIBarButtonItem {
-  
+
   convenience init(text title: String, target: Any? = nil, action: Selector? = nil) {
     self.init(title: title, style: .plain, target: target, action: action)
   }
-  
+
   convenience init(systemItem barButtonSystemItem: UIBarButtonItem.SystemItem, target: Any? = nil, action: Selector? = nil) {
     self.init(barButtonSystemItem: barButtonSystemItem, target: target, action: action)
   }

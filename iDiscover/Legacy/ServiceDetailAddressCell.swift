@@ -9,10 +9,10 @@
 import Foundation
 import UIKit
 
-class ServiceDetailAddressCell : UITableViewCell {
+class ServiceDetailAddressCell: UITableViewCell {
   @IBOutlet weak private var titleLabel: UILabel!
   @IBOutlet weak private var detailLabel: UILabel!
-  
+
   func configure(title: String, detail: String) {
     self.titleLabel.text = title
     self.detailLabel.text = detail

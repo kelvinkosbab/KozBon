@@ -10,18 +10,18 @@ import SwiftUI
 
 // MARK: - SidebarNavigationView
 
-struct SidebarNavigationView : View {
-    
+struct SidebarNavigationView: View {
+
     @ObservedObject var dataSource: SidebarDataSource
-    
+
     init(selectedItem: Binding<(any BarItem)?>) {
         self.dataSource = SidebarDataSource()
     }
-    
+
     var body: some View {
         NavigationView {
             Sidebar(dataSource: self.dataSource)
-            
+
 //            if let selectedItem = self.dataSource.selectedItem, selectedItem.isSelectable {
 //                selectedItem.destination
 //            }
@@ -31,10 +31,10 @@ struct SidebarNavigationView : View {
 
 // MARK: - Sidebar
 
-struct Sidebar : View {
-    
+struct Sidebar: View {
+
     @ObservedObject var dataSource: SidebarDataSource
-    
+
     var body: some View {
         List {
 //            ForEach(self.dataSource.items, id: \.self.id) { item in
@@ -56,14 +56,14 @@ struct Sidebar : View {
 
 // MARK: - SidebarDataSource
 
-class SidebarDataSource : ObservableObject {
-    
+class SidebarDataSource: ObservableObject {
+
 //    @MainActor @Binding var selectedItem: (any BarItem)
 //    
 //    init(selectedItem: Binding<(any BarItem)>) {
 //        self._selectedItem = selectedItem
 //    }
-    
+
 //    let items: [any BarItem] = [
 //        SidebarItem.bonjourScanForActiveServices,
 //        SidebarItem.bonjourSupportedServices,

@@ -10,12 +10,12 @@ import SwiftUI
 
 // MARK: - TabBarItem
 
-enum TabBarItem : BarItem {
-    
+enum TabBarItem: BarItem {
+
     case bonjour
     case bluetooth
     case information
-    
+
     var id: String {
         switch self {
         case .bonjour:
@@ -26,7 +26,7 @@ enum TabBarItem : BarItem {
             "information"
         }
     }
-    
+
     var titleString: String {
         switch self {
         case .bonjour:
@@ -46,7 +46,7 @@ enum TabBarItem : BarItem {
             )
         }
     }
-    
+
     var icon: Image {
         switch self {
         case .bonjour:
@@ -57,11 +57,11 @@ enum TabBarItem : BarItem {
             Image.infoCircleFill
         }
     }
-    
+
     var content: AnyView {
         AnyView(BarItemLabel(item: self))
     }
-    
+
     var destination: AnyView? {
         switch self {
         case .bonjour:
@@ -72,7 +72,7 @@ enum TabBarItem : BarItem {
             AnyView(InformationView())
         }
     }
-    
+
     var isSelectable: Bool {
         return true
     }

@@ -9,9 +9,9 @@
 import Foundation
 import UIKit
 
-class ServiceDetailDescriptionCell : UITableViewCell {
+class ServiceDetailDescriptionCell: UITableViewCell {
   @IBOutlet weak private var descriptionLabel: UILabel!
-  
+
   func configure(text: String) {
     self.descriptionLabel.text = text
   }

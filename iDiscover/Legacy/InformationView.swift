@@ -10,8 +10,8 @@ import SwiftUI
 
 // MARK: - BluetoothView
 
-struct InformationView : View {
-    
+struct InformationView: View {
+
     var body: some View {
         Text("InformationView")
     }
