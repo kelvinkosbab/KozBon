@@ -21,7 +21,7 @@ extension BonjourServiceType {
             "hifispeaker.fill"
 
         case "workgroup manager":
-            "square.on.square"
+            "squares.leading.rectangle"
 
         case "apple mobile device protocol v2":
             "platter.2.filled.iphone"

@@ -19,30 +19,19 @@ struct BonjourScanForServicesView: View {
 
     // MARK: - Body
 
-    @ViewBuilder private var activeServices: some View {
-        ForEach(self.viewModel.activeServices) { service in
-            NavigationLink {
-                BonjourServiceDetailView(service: service)
-            } label: {
-                TitleDetailStackView(
-                    title: service.service.name,
-                    detail: service.serviceType.name
-                ) {
-                    Image(systemName: service.serviceType.imageSystemName)
-                        .font(.system(.body).bold())
-                }
-            }
-        }
-    }
-
     var body: some View {
         List {
-            if let hostOrServiceTitle = viewModel.sortType?.hostOrServiceTitle {
-                Section(hostOrServiceTitle) {
-                    activeServices
-                }
-            } else {
+            Section {
                 activeServices
+            } header: {
+                HStack {
+                    if let hostOrServiceTitle = viewModel.sortType?.hostOrServiceTitle {
+                        Text(verbatim: hostOrServiceTitle.uppercased())
+                            .font(.system(.caption))
+                    }
+                    Spacer()
+                    BonjourServiceListSortMenu(sortType: self.$viewModel.sortType)
+                }
             }
         }
         .contentMarginsBasedOnSizeClass()
@@ -59,10 +48,7 @@ struct BonjourScanForServicesView: View {
                 self.renderTrailingToolbarItems()
             }
         }
-        .navigationTitle(NSLocalizedString(
-            "Bonjour",
-            comment: "Bonjour services page title"
-        ))
+        .navigationTitle("Bonjour")
         .refreshable {
             guard !self.viewModel.serviceScanner.isProcessing else {
                 return
@@ -79,30 +65,67 @@ struct BonjourScanForServicesView: View {
         .onDisappear {
             viewModel.serviceScanner.stopScan()
         }
+        .sheet(isPresented: $viewModel.isBroadcastBonjourServicePresented) {
+            NavigationStack {
+                BroadcastBonjourServiceView()
+            }
+        }
+        .sheet(isPresented: $viewModel.isCreateCustomServiceTypePresented) {
+            NavigationStack {
+                CreateBonjourServiceTypeView()
+            }
+        }
     }
-
-    private func renderTrailingToolbarItems() -> some View {
-        HStack {
-            BonjourServiceListSortMenu(sortType: self.$viewModel.sortType)
-
-            Button(action: self.addButtonPressed) {
-                Label(
-                    title: {
-                        Text(self.viewModel.createButtonString)
-                    },
-                    icon: {
-                        Image.plusCircleFill
-                            .renderingMode(.template)
-                            .foregroundColor(.kozBonBlue)
-                    }
-                )
+    
+    @ViewBuilder private var activeServices: some View {
+        ForEach(self.viewModel.activeServices) { service in
+            NavigationLink {
+                BonjourServiceDetailView(service: service)
+            } label: {
+                TitleDetailStackView(
+                    title: service.service.name,
+                    detail: service.serviceType.name
+                ) {
+                    Image(systemName: service.serviceType.imageSystemName)
+                        .font(.system(.body).bold())
+                }
             }
         }
     }
 
-    // MARK: - Actions
-
-    func addButtonPressed() {
-        self.viewModel.addButtonPressed()
+    private func renderTrailingToolbarItems() -> some View {
+        Menu {
+            Button {
+                viewModel.isBroadcastBonjourServicePresented = true
+            } label: {
+                Label {
+                    Text("Broadcast Bonjour Service")
+                } icon: {
+                    Image(systemName: "antenna.radiowaves.left.and.right")
+                        .renderingMode(.template)
+                        .foregroundColor(.kozBonBlue)
+                }
+            }
+            
+            Button {
+                viewModel.isCreateCustomServiceTypePresented = true
+            } label: {
+                Label {
+                    Text("Create Custom Service Type")
+                } icon: {
+                    Image(systemName: "badge.plus.radiowaves.forward")
+                        .renderingMode(.template)
+                        .foregroundColor(.kozBonBlue)
+                }
+            }
+        } label: {
+            Label {
+                Text(self.viewModel.createButtonString)
+            } icon: {
+                Image.plusCircleFill
+                    .renderingMode(.template)
+                    .foregroundColor(.kozBonBlue)
+            }
+        }
     }
 }

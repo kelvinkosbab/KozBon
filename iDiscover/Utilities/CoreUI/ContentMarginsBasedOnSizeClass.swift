@@ -11,9 +11,9 @@ import SwiftUI
 // MARK: - ContentMarginsBasedOnSize
 
 private struct ContentMarginsBasedOnSizeClass: ViewModifier {
-    
+
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    
+
     func body(content: Content) -> some View {
         GeometryReader { geometry in
             if #available(iOS 17.0, *), horizontalSizeClass == .regular {

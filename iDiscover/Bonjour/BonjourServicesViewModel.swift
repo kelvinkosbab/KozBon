@@ -22,6 +22,9 @@ class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDelegate 
             }
         }
     }
+    
+    @MainActor @Published var isBroadcastBonjourServicePresented = false
+    @MainActor @Published var isCreateCustomServiceTypePresented = false
 
     var isInitialLoad = true
     let serviceScanner = BonjourServiceScanner()

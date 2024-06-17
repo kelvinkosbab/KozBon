@@ -84,6 +84,8 @@
 		F67B653F2C1B899B00324FFF /* BonjourServiceType+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B653E2C1B899B00324FFF /* BonjourServiceType+UI.swift */; };
 		F67B65462C1B957200324FFF /* Data+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B65452C1B957200324FFF /* Data+Util.swift */; };
 		F67B65572C20CA1F00324FFF /* ContentMarginsBasedOnSizeClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B65562C20CA1F00324FFF /* ContentMarginsBasedOnSizeClass.swift */; };
+		F67B655B2C20D6A600324FFF /* CreateBonjourServiceTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B655A2C20D6A600324FFF /* CreateBonjourServiceTypeView.swift */; };
+		F67B655D2C20D6CA00324FFF /* BroadcastBonjourServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B655C2C20D6CA00324FFF /* BroadcastBonjourServiceView.swift */; };
 		F690B5FB2561E9B600902DAB /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F690B5FA2561E9B600902DAB /* NetworkExtension.framework */; };
 		F69DF275269AB8BF00B97E9D /* EditTxtRecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69DF274269AB8BF00B97E9D /* EditTxtRecordsViewController.swift */; };
 		F69E826E2AABA4CA006AA4D3 /* BonjourServicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69E826D2AABA4CA006AA4D3 /* BonjourServicesViewModel.swift */; };
@@ -185,6 +187,8 @@
 		F67B653E2C1B899B00324FFF /* BonjourServiceType+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BonjourServiceType+UI.swift"; sourceTree = "<group>"; };
 		F67B65452C1B957200324FFF /* Data+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Util.swift"; sourceTree = "<group>"; };
 		F67B65562C20CA1F00324FFF /* ContentMarginsBasedOnSizeClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentMarginsBasedOnSizeClass.swift; sourceTree = "<group>"; };
+		F67B655A2C20D6A600324FFF /* CreateBonjourServiceTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateBonjourServiceTypeView.swift; sourceTree = "<group>"; };
+		F67B655C2C20D6CA00324FFF /* BroadcastBonjourServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastBonjourServiceView.swift; sourceTree = "<group>"; };
 		F690B5FA2561E9B600902DAB /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		F69DF274269AB8BF00B97E9D /* EditTxtRecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTxtRecordsViewController.swift; sourceTree = "<group>"; };
 		F69E826D2AABA4CA006AA4D3 /* BonjourServicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServicesViewModel.swift; sourceTree = "<group>"; };
@@ -530,6 +534,22 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		F67B65582C20D68B00324FFF /* BroadcastBonjourServiceView */ = {
+			isa = PBXGroup;
+			children = (
+				F67B655C2C20D6CA00324FFF /* BroadcastBonjourServiceView.swift */,
+			);
+			path = BroadcastBonjourServiceView;
+			sourceTree = "<group>";
+		};
+		F67B65592C20D69A00324FFF /* CreateBonjourServiceTypeView */ = {
+			isa = PBXGroup;
+			children = (
+				F67B655A2C20D6A600324FFF /* CreateBonjourServiceTypeView.swift */,
+			);
+			path = CreateBonjourServiceTypeView;
+			sourceTree = "<group>";
+		};
 		F690B5F92561E9B600902DAB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -569,6 +589,8 @@
 				F6C50D7D2AB3C47D0048DF8C /* BonjourServiceListSortMenu.swift */,
 				F67B65372C1B5CAE00324FFF /* BonjourServiceDetail */,
 				F67B65362C1B5C4E00324FFF /* BonjourServiceBrowser */,
+				F67B65582C20D68B00324FFF /* BroadcastBonjourServiceView */,
+				F67B65592C20D69A00324FFF /* CreateBonjourServiceTypeView */,
 			);
 			path = Bonjour;
 			sourceTree = "<group>";
@@ -667,6 +689,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F67B655D2C20D6CA00324FFF /* BroadcastBonjourServiceView.swift in Sources */,
 				F69E826E2AABA4CA006AA4D3 /* BonjourServicesViewModel.swift in Sources */,
 				B6CE1D5D1E120CCC003D4FFA /* BonjourServiceTypeScope.swift in Sources */,
 				B68EEA3D1E46706E00831CC4 /* MyCollectionViewController.swift in Sources */,
@@ -745,6 +768,7 @@
 				F6240E762A93F3A500951875 /* SidebarNavigationView.swift in Sources */,
 				B6BD8C802002C6E2009327B2 /* BluetoothDeviceScanner.swift in Sources */,
 				B6833CBD1E3D44F200F56A90 /* BluetoothDeviceCell.swift in Sources */,
+				F67B655B2C20D6A600324FFF /* CreateBonjourServiceTypeView.swift in Sources */,
 				B67BB3281E18657F00A3228E /* AllServiceTypesTableViewController.swift in Sources */,
 				B6AE537C1E16D45700FB57E3 /* PresentableController.swift in Sources */,
 				B68B21251E47A0AB00BE2CA2 /* ServiceDetailSimpleHeaderCell.swift in Sources */,
