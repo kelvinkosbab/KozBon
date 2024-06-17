@@ -9,20 +9,25 @@
 import Foundation
 
 extension BonjourServiceType {
-    var imageSystemName: String? {
+    var imageSystemName: String {
         switch name.lowercased() {
         case "airplay":
             "airplayvideo"
+
         case "bonjour sleep proxy":
             "bonjour"
+
         case "remote audio output protocol (raop)":
             "hifispeaker.fill"
+
         case "workgroup manager":
             "square.on.square"
+
         case "apple mobile device protocol v2":
-            "apple.logo"
+            "platter.2.filled.iphone"
+
         default:
-            nil
+            "wifi"
         }
     }
 }

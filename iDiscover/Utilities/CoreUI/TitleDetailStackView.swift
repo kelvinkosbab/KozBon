@@ -42,7 +42,7 @@ public struct TitleDetailStackView<Trailing>: View where Trailing: View {
             }
 
             Spacer()
-            
+
             trailing?()
         }
     }

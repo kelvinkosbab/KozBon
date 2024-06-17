@@ -29,6 +29,7 @@ struct BluetoothScanForDevicesView: View {
                 }
             }
         }
+        .contentMarginsBasedOnSizeClass()
         .overlay {
             if self.viewModel.scannerState == .unsupported {
                 EmptyStateOverlayView(

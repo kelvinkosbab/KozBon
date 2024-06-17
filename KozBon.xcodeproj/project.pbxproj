@@ -83,6 +83,7 @@
 		F67B653D2C1B7B9800324FFF /* VerticallyCenteredLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B653C2C1B7B9800324FFF /* VerticallyCenteredLabelStyle.swift */; };
 		F67B653F2C1B899B00324FFF /* BonjourServiceType+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B653E2C1B899B00324FFF /* BonjourServiceType+UI.swift */; };
 		F67B65462C1B957200324FFF /* Data+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B65452C1B957200324FFF /* Data+Util.swift */; };
+		F67B65572C20CA1F00324FFF /* ContentMarginsBasedOnSizeClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B65562C20CA1F00324FFF /* ContentMarginsBasedOnSizeClass.swift */; };
 		F690B5FB2561E9B600902DAB /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F690B5FA2561E9B600902DAB /* NetworkExtension.framework */; };
 		F69DF275269AB8BF00B97E9D /* EditTxtRecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69DF274269AB8BF00B97E9D /* EditTxtRecordsViewController.swift */; };
 		F69E826E2AABA4CA006AA4D3 /* BonjourServicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69E826D2AABA4CA006AA4D3 /* BonjourServicesViewModel.swift */; };
@@ -183,6 +184,7 @@
 		F67B653C2C1B7B9800324FFF /* VerticallyCenteredLabelStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticallyCenteredLabelStyle.swift; sourceTree = "<group>"; };
 		F67B653E2C1B899B00324FFF /* BonjourServiceType+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BonjourServiceType+UI.swift"; sourceTree = "<group>"; };
 		F67B65452C1B957200324FFF /* Data+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Util.swift"; sourceTree = "<group>"; };
+		F67B65562C20CA1F00324FFF /* ContentMarginsBasedOnSizeClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentMarginsBasedOnSizeClass.swift; sourceTree = "<group>"; };
 		F690B5FA2561E9B600902DAB /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		F69DF274269AB8BF00B97E9D /* EditTxtRecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTxtRecordsViewController.swift; sourceTree = "<group>"; };
 		F69E826D2AABA4CA006AA4D3 /* BonjourServicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServicesViewModel.swift; sourceTree = "<group>"; };
@@ -388,7 +390,6 @@
 			children = (
 				B691545D1E12DB0E00382F41 /* Helpers */,
 				B6CE1D3D1E1208DC003D4FFA /* Protocols */,
-				B6CE1D3F1E1208EE003D4FFA /* Model */,
 				B6CE1D411E120907003D4FFA /* Extensions */,
 			);
 			name = Common;
@@ -403,17 +404,6 @@
 				B68EEA421E467CD300831CC4 /* MyViewControllerIdentifierProtocol.swift */,
 			);
 			name = Protocols;
-			sourceTree = "<group>";
-		};
-		B6CE1D3F1E1208EE003D4FFA /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				B6CE1D531E120BF4003D4FFA /* MyCoreDataStack.swift */,
-				B6CE1D541E120BF4003D4FFA /* MyDataManager.swift */,
-				B6CE1D511E120B9F003D4FFA /* MyDataManagerObject.swift */,
-				B6CE1D401E1208F6003D4FFA /* Managed Objects */,
-			);
-			name = Model;
 			sourceTree = "<group>";
 		};
 		B6CE1D401E1208F6003D4FFA /* Managed Objects */ = {
@@ -502,6 +492,7 @@
 			children = (
 				F6C50D7B2AB3BDD50048DF8C /* TitleDetailStackView.swift */,
 				F67B653C2C1B7B9800324FFF /* VerticallyCenteredLabelStyle.swift */,
+				F67B65562C20CA1F00324FFF /* ContentMarginsBasedOnSizeClass.swift */,
 			);
 			path = CoreUI;
 			sourceTree = "<group>";
@@ -531,6 +522,10 @@
 			isa = PBXGroup;
 			children = (
 				B6CE1D2E1E1208C1003D4FFA /* iDiscover.xcdatamodeld */,
+				B6CE1D531E120BF4003D4FFA /* MyCoreDataStack.swift */,
+				B6CE1D541E120BF4003D4FFA /* MyDataManager.swift */,
+				B6CE1D511E120B9F003D4FFA /* MyDataManagerObject.swift */,
+				B6CE1D401E1208F6003D4FFA /* Managed Objects */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -701,6 +696,7 @@
 				B6CE1D5F1E120CCC003D4FFA /* BonjourServiceTypeScanner.swift in Sources */,
 				F6C50D7E2AB3C47D0048DF8C /* BonjourServiceListSortMenu.swift in Sources */,
 				B64D06261E1A2C55008B3FC8 /* MyServiceType+Library.swift in Sources */,
+				F67B65572C20CA1F00324FFF /* ContentMarginsBasedOnSizeClass.swift in Sources */,
 				F69E82702AABA6B4006AA4D3 /* BonjourServiceSortType.swift in Sources */,
 				B6CE1D601E120CCC003D4FFA /* BonjourServiceType.swift in Sources */,
 				F67B653F2C1B899B00324FFF /* BonjourServiceType+UI.swift in Sources */,
@@ -886,7 +882,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = KozBon.entitlements;
-				CURRENT_PROJECT_VERSION = 89;
+				CURRENT_PROJECT_VERSION = 90;
 				DEVELOPMENT_TEAM = 6SS93B87P2;
 				INFOPLIST_FILE = iDiscover/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = KozBon;
@@ -896,15 +892,17 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kozinga.KozBon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 1.0;
 			};
 			name = Debug;
 		};
@@ -913,7 +911,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = KozBon.entitlements;
-				CURRENT_PROJECT_VERSION = 89;
+				CURRENT_PROJECT_VERSION = 90;
 				DEVELOPMENT_TEAM = 6SS93B87P2;
 				INFOPLIST_FILE = iDiscover/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = KozBon;
@@ -923,15 +921,17 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kozinga.KozBon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 1.0;
 			};
 			name = Release;
 		};

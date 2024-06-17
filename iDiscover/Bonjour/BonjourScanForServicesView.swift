@@ -18,7 +18,7 @@ struct BonjourScanForServicesView: View {
     @StateObject var viewModel = BonjourServicesViewModel()
 
     // MARK: - Body
-    
+
     @ViewBuilder private var activeServices: some View {
         ForEach(self.viewModel.activeServices) { service in
             NavigationLink {
@@ -28,7 +28,7 @@ struct BonjourScanForServicesView: View {
                     title: service.service.name,
                     detail: service.serviceType.name
                 ) {
-                    Image(systemName: service.serviceType.imageSystemName ?? "wifi")
+                    Image(systemName: service.serviceType.imageSystemName)
                         .font(.system(.body).bold())
                 }
             }
@@ -45,6 +45,7 @@ struct BonjourScanForServicesView: View {
                 activeServices
             }
         }
+        .contentMarginsBasedOnSizeClass()
         .overlay {
             if self.viewModel.activeServices.count == 0 {
                 EmptyStateOverlayView(

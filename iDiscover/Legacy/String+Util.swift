@@ -46,7 +46,7 @@ extension String {
     var containsDecimalDigits: Bool {
         self.rangeOfCharacter(from: .decimalDigits) != nil
     }
-    
+
     var convertToInt: Int? {
         NumberFormatter().number(from: self)?.intValue
     }

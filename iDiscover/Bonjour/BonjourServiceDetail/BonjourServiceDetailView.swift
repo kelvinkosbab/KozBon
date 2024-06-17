@@ -25,13 +25,10 @@ struct BonjourServiceDetailView: View {
     var body: some View {
         List {
             Section {
-                Group {
-                    if let serviceTypeSystemName = viewModel.serviceType.imageSystemName {
-                        Label(viewModel.service.service.name, systemImage: serviceTypeSystemName)
-                    } else {
-                        Text(verbatim: viewModel.service.service.name)
-                    }
-                }
+                Label(
+                    viewModel.service.service.name,
+                    systemImage: viewModel.serviceType.imageSystemName
+                )
                 .font(.system(.headline).bold())
                 .foregroundStyle(.white)
                 .padding()
@@ -97,6 +94,7 @@ struct BonjourServiceDetailView: View {
                 }
             }
         }
+        .contentMarginsBasedOnSizeClass()
         .navigationBarTitleDisplayMode(.inline)
         .task {
             viewModel.service.resolve()
