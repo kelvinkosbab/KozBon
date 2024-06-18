@@ -181,10 +181,10 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
     }
 
     // Publish the service
-    MyLoadingManager.showLoading()
+//    MyLoadingManager.showLoading()
     MyBonjourPublishManager.shared.publish(name: name, type: type, port: portValue, domain: domain, transportLayer: .tcp, detail: detail, success: {
       // Success
-      MyLoadingManager.hideLoading()
+//      MyLoadingManager.hideLoading()
       self.showDisappearingAlertDialog(title: "Service Published!") {
         self.dismissController(completion: {
           self.delegate?.servicePublished()
@@ -192,7 +192,7 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
       }
     }) {
       // Failure
-      MyLoadingManager.hideLoading()
+//      MyLoadingManager.hideLoading()
       self.showDisappearingAlertDialog(title: "☹️ Something Went Wrong ☹️", message: "Please try again.")
     }
   }

@@ -153,7 +153,7 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
     let domain = self.domainTextField.text ?? ""
 
     // Publish the service
-    MyLoadingManager.showLoading()
+//    MyLoadingManager.showLoading()
     MyBonjourPublishManager.shared.publish(name: self.serviceType.name,
                                            type: self.serviceType.type,
                                            port: portValue,
@@ -161,7 +161,7 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
                                            transportLayer: self.serviceType.transportLayer,
                                            detail: self.serviceType.detail, success: {
       // Success
-      MyLoadingManager.hideLoading()
+//      MyLoadingManager.hideLoading()
       self.showDisappearingAlertDialog(title: "Service Published!") { [weak self] in
         self?.dismissController { [weak self] in
           self?.delegate?.servicePublished()
@@ -169,7 +169,7 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
       }
     }) {
       // Failure
-      MyLoadingManager.hideLoading()
+//      MyLoadingManager.hideLoading()
       self.showDisappearingAlertDialog(title: "☹️ Something Went Wrong ☹️",
                                        message: "Please try again.")
     }

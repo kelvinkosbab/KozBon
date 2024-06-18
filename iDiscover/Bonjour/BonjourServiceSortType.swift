@@ -36,16 +36,28 @@ enum BonjourServiceSortType: Identifiable, CaseIterable {
     var hostOrServiceTitle: String {
         switch self {
         case .hostNameAsc:
-            NSLocalizedString("By host name ascending", comment: "By host name ascending section title")
+            NSLocalizedString(
+                "By host name ascending",
+                comment: "By host name ascending section title"
+            )
 
         case .hostNameDesc:
-            NSLocalizedString("By host name descending", comment: "By host name descending section title")
+            NSLocalizedString(
+                "By host name descending", 
+                comment: "By host name descending section title"
+            )
 
         case .serviceNameAsc:
-            NSLocalizedString("By service name ascending", comment: "By service name ascending section title")
+            NSLocalizedString(
+                "By service type ascending",
+                comment: "By service type ascending section title"
+            )
 
         case .serviceNameDesc:
-            NSLocalizedString("By service name descending", comment: "By service name descending section title")
+            NSLocalizedString(
+                "By service type descending",
+                comment: "By service type descending section title"
+            )
         }
     }
 }

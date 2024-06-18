@@ -346,19 +346,19 @@ class ServiceDetailTableViewController: MyTableViewController {
       }
 
       if isCurrentlyPublished {
-        MyLoadingManager.showLoading()
+//        MyLoadingManager.showLoading()
         service.unPublish { [weak self] in
-          MyLoadingManager.hideLoading()
+//          MyLoadingManager.hideLoading()
           self?.tableView.reloadData()
         }
 
       } else {
-        MyLoadingManager.showLoading()
+//        MyLoadingManager.showLoading()
         service.publish(publishServiceSuccess: { [weak self] in
-          MyLoadingManager.hideLoading()
+//          MyLoadingManager.hideLoading()
           self?.tableView.reloadData()
         }, publishServiceFailure: { [weak self] in
-          MyLoadingManager.hideLoading()
+//          MyLoadingManager.hideLoading()
           self?.tableView.reloadData()
         })
       }
