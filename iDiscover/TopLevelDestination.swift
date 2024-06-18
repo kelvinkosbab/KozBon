@@ -12,12 +12,16 @@ import SwiftUI
 
 enum TopLevelDestination: Identifiable {
     case bonjour
+    case bonjourServiceTypes
     case bluetooth
 
     var id: String {
         switch self {
         case .bonjour:
             "bonjour"
+            
+        case .bonjourServiceTypes:
+            "bonjourServiceTypes"
 
         case .bluetooth:
             "bluetooth"
@@ -33,6 +37,12 @@ enum TopLevelDestination: Identifiable {
                 "Bonjour",
                 comment: "Bonjour tab title"
             )
+            
+        case .bonjourServiceTypes:
+            NSLocalizedString(
+                "Supported services",
+                comment: "Bonjour service types tab title"
+            )
 
         case .bluetooth:
             NSLocalizedString(
@@ -46,6 +56,9 @@ enum TopLevelDestination: Identifiable {
         switch self {
         case .bonjour:
             Image.bonjour
+            
+        case .bonjourServiceTypes:
+            Image(systemName: "list.dash")
 
         case .bluetooth:
             Image.bluetoothCapsuleFill

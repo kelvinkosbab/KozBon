@@ -77,6 +77,7 @@
 		F67B655B2C20D6A600324FFF /* CreateBonjourServiceTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B655A2C20D6A600324FFF /* CreateBonjourServiceTypeView.swift */; };
 		F67B655D2C20D6CA00324FFF /* BroadcastBonjourServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B655C2C20D6CA00324FFF /* BroadcastBonjourServiceView.swift */; };
 		F67B655F2C22107500324FFF /* EmptyStateOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B655E2C22107500324FFF /* EmptyStateOverlayView.swift */; };
+		F67B65622C22169800324FFF /* SupportedServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B65612C22169800324FFF /* SupportedServicesView.swift */; };
 		F690B5FB2561E9B600902DAB /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F690B5FA2561E9B600902DAB /* NetworkExtension.framework */; };
 		F69DF275269AB8BF00B97E9D /* EditTxtRecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69DF274269AB8BF00B97E9D /* EditTxtRecordsViewController.swift */; };
 		F69E826E2AABA4CA006AA4D3 /* BonjourServicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69E826D2AABA4CA006AA4D3 /* BonjourServicesViewModel.swift */; };
@@ -169,6 +170,7 @@
 		F67B655A2C20D6A600324FFF /* CreateBonjourServiceTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateBonjourServiceTypeView.swift; sourceTree = "<group>"; };
 		F67B655C2C20D6CA00324FFF /* BroadcastBonjourServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastBonjourServiceView.swift; sourceTree = "<group>"; };
 		F67B655E2C22107500324FFF /* EmptyStateOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateOverlayView.swift; sourceTree = "<group>"; };
+		F67B65612C22169800324FFF /* SupportedServicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedServicesView.swift; sourceTree = "<group>"; };
 		F690B5FA2561E9B600902DAB /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		F69DF274269AB8BF00B97E9D /* EditTxtRecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTxtRecordsViewController.swift; sourceTree = "<group>"; };
 		F69E826D2AABA4CA006AA4D3 /* BonjourServicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServicesViewModel.swift; sourceTree = "<group>"; };
@@ -342,8 +344,8 @@
 			isa = PBXGroup;
 			children = (
 				F6240E682A92CF0600951875 /* AppCore.swift */,
-				F6C472FA2C1A248000BBB0F9 /* TopLevelDestination.swift */,
 				F6C472FE2C1A26FB00BBB0F9 /* TabBar.swift */,
+				F6C472FA2C1A248000BBB0F9 /* TopLevelDestination.swift */,
 				F67B653B2C1B6DAE00324FFF /* Bluetooth */,
 				F6C473002C1A4D7400BBB0F9 /* Bonjour */,
 				F67B65442C1B922500324FFF /* Model */,
@@ -505,6 +507,14 @@
 			path = CreateBonjourServiceTypeView;
 			sourceTree = "<group>";
 		};
+		F67B65602C22169000324FFF /* SupportedServices */ = {
+			isa = PBXGroup;
+			children = (
+				F67B65612C22169800324FFF /* SupportedServicesView.swift */,
+			);
+			path = SupportedServices;
+			sourceTree = "<group>";
+		};
 		F690B5F92561E9B600902DAB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -538,6 +548,7 @@
 				F69E826D2AABA4CA006AA4D3 /* BonjourServicesViewModel.swift */,
 				F69E826F2AABA6B4006AA4D3 /* BonjourServiceSortType.swift */,
 				F6C50D7D2AB3C47D0048DF8C /* BonjourServiceListSortMenu.swift */,
+				F67B65602C22169000324FFF /* SupportedServices */,
 				F67B65372C1B5CAE00324FFF /* BonjourServiceDetail */,
 				F67B65362C1B5C4E00324FFF /* BonjourServiceBrowser */,
 				F67B65582C20D68B00324FFF /* BroadcastBonjourServiceView */,
@@ -639,6 +650,7 @@
 				B6CE1D661E120E4D003D4FFA /* CustomServiceType.swift in Sources */,
 				B6089C9C1E1A2A3900C7CF29 /* BonjourServiceType+CustomServiceType.swift in Sources */,
 				F67B653D2C1B7B9800324FFF /* VerticallyCenteredLabelStyle.swift in Sources */,
+				F67B65622C22169800324FFF /* SupportedServicesView.swift in Sources */,
 				B68EEA3F1E46709000831CC4 /* EmptyStateProtocol.swift in Sources */,
 				B679CC151E1624A20056C7B5 /* MyViewController.swift in Sources */,
 				B6C4BC551E1CD30A004409F1 /* CreateServiceTypeTableViewController.swift in Sources */,

@@ -58,8 +58,7 @@ struct BonjourScanForServicesView: View {
         }
         .task {
             if viewModel.isInitialLoad {
-                viewModel.serviceScanner.startScan()
-                viewModel.isInitialLoad = false
+                viewModel.load()
             }
         }
         .onDisappear {
@@ -78,7 +77,7 @@ struct BonjourScanForServicesView: View {
     }
     
     @ViewBuilder private var activeServices: some View {
-        ForEach(self.viewModel.activeServices) { service in
+        ForEach(viewModel.activeServices) { service in
             NavigationLink {
                 BonjourServiceDetailView(service: service)
             } label: {

@@ -23,6 +23,17 @@ struct TabBar: View {
                     TopLevelDestination.bonjour.icon
                 }
             }
+            
+            NavigationStack {
+                SupportedServicesView()
+            }
+            .tabItem {
+                Label {
+                    Text(verbatim: TopLevelDestination.bonjourServiceTypes.titleString)
+                } icon: {
+                    TopLevelDestination.bonjourServiceTypes.icon
+                }
+            }
 
             NavigationStack {
                 BluetoothScanForDevicesView()

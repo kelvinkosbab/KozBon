@@ -26,7 +26,7 @@ class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDelegate 
     @MainActor @Published var isBroadcastBonjourServicePresented = false
     @MainActor @Published var isCreateCustomServiceTypePresented = false
 
-    var isInitialLoad = true
+    private(set) var isInitialLoad = true
     let serviceScanner = BonjourServiceScanner()
 
     init() {
@@ -49,6 +49,12 @@ class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDelegate 
 
     func addButtonPressed() {
         print("KAK addButtonPressed")
+    }
+    
+    @MainActor
+    func load() {
+        serviceScanner.startScan()
+        isInitialLoad = false
     }
 
     @MainActor
