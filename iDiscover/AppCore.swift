@@ -13,9 +13,6 @@ import CoreUI
 
 @main
 struct AppCore: App {
-
-    private let toastApi = ToastApi()
-
     var body: some Scene {
         WindowGroup {
             TabView {
@@ -52,7 +49,6 @@ struct AppCore: App {
                     }
                 }
             }
-            .toastableContainer(toastApi: toastApi)
             .tint(.kozBonBlue)
         }
     }

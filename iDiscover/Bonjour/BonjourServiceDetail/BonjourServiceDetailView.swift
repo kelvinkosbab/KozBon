@@ -26,6 +26,7 @@ struct BonjourServiceDetailView: View {
         List {
             Section {
                 HStack(spacing: 10) {
+                    Spacer()
                     Image(systemName: viewModel.serviceType.imageSystemName)
                         .font(.system(.title3).bold())
 
@@ -36,12 +37,15 @@ struct BonjourServiceDetailView: View {
                         Text(verbatim: viewModel.serviceType.name)
                             .font(.system(.caption).bold())
                     }
+                    Spacer()
                 }
-                .foregroundStyle(.white)
                 .padding(.vertical, 10)
                 .padding(.horizontal, 25)
-                .background(.secondary)
-                .clipShape(.capsule)
+                .background {
+                    Color.kozBonBlue
+                        .opacity(0.4)
+                        .cornerRadius(10)
+                }
                 .listRowBackground(Color(.clear))
                 .frame(maxWidth: .infinity)
             }

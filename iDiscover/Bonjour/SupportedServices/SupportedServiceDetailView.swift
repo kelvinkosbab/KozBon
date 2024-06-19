@@ -24,6 +24,7 @@ struct SupportedServiceDetailView: View {
         List {
             Section {
                 HStack(spacing: 10) {
+                    Spacer()
                     Image(systemName: serviceType.imageSystemName)
                         .font(.system(.title3).bold())
 
@@ -34,12 +35,15 @@ struct SupportedServiceDetailView: View {
                         Text(verbatim: serviceType.fullType)
                             .font(.system(.caption).bold())
                     }
+                    Spacer()
                 }
-                .foregroundStyle(.white)
                 .padding(.vertical, 10)
                 .padding(.horizontal, 25)
-                .background(.secondary)
-                .clipShape(.capsule)
+                .background {
+                    Color.kozBonBlue
+                        .opacity(0.4)
+                        .cornerRadius(10)
+                }
                 .listRowBackground(Color(.clear))
                 .frame(maxWidth: .infinity)
             }
@@ -67,9 +71,21 @@ struct SupportedServiceDetailView: View {
                 Button(role: .destructive) {
                     showDeleteConfirmation = true
                 } label: {
-                    Label("Delete", systemImage: "minus.circle.fill")
+                    HStack {
+                        Spacer()
+                        Text("Delete")
+                            .font(.system(.headline).bold())
+                            .padding(.vertical)
+                        Spacer()
+                    }
+                    .background {
+                        Color.red
+                            .opacity(0.4)
+                            .cornerRadius(10)
+                    }
                 }
-                .foregroundStyle(.red)
+                .listRowBackground(Color(.clear))
+                .frame(maxWidth: .infinity)
                 .confirmationDialog(
                     "Are you sure you want to delete this service type?",
                     isPresented: $showDeleteConfirmation,
@@ -84,5 +100,6 @@ struct SupportedServiceDetailView: View {
                 }
             }
         }
+        .contentMarginsBasedOnSizeClass()
     }
 }

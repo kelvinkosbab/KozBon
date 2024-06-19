@@ -8,16 +8,6 @@
 
 import SwiftUI
 
-// MARK: - Colors
-
-extension Color {
-
-    // TODO: Update this to a custom color (lighter than the SwiftUI.blue.
-    static var kozBonBlue: Color {
-        Color.blue
-    }
-}
-
 // MARK: - Images
 
 extension Image {

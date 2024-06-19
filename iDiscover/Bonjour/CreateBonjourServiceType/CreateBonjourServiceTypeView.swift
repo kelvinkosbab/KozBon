@@ -12,12 +12,6 @@ import SwiftUI
 // MARK: - CreateBonjourServiceTypeView
 
 struct CreateBonjourServiceTypeView: View {
-    
-    let toastApi = ToastApi(options: ToastOptions(
-        position: .top,
-        shape: .capsule,
-        style: .slide
-    ))
 
     @Binding var isPresented: Bool
     
@@ -26,16 +20,26 @@ struct CreateBonjourServiceTypeView: View {
     }
 
     @State private var name = ""
+    @State private var nameError: String?
     @State private var type = ""
+    @State private var typeError: String?
     @State private var details = ""
+    @State private var detailsError: String?
     
     private let selectedTransportLayer: TransportLayer = .tcp
 
     var body: some View {
         NavigationStack {
             List {
-                Section("Service name") {
+                Section {
                     TextField("Service name", text: $name)
+                } header: {
+                    Text("Service name")
+                } footer: {
+                    if let nameError {
+                        Text(verbatim: nameError)
+                            .foregroundStyle(.red)
+                    }
                 }
 
                 Section {
@@ -48,19 +52,35 @@ struct CreateBonjourServiceTypeView: View {
                 } header: {
                     Text("Bonjour type")
                 } footer: {
-                    if !type.isEmpty {
-                        Text(verbatim: "_\(type)._\(selectedTransportLayer.string)")
+                    if let typeError, type.isEmpty {
+                        Text(verbatim: typeError)
+                            .foregroundStyle(.red)
+                        
+                    } else if let typeError, !type.isEmpty {
+                        Text(verbatim: "\(fullType) · \(typeError)")
+                            .foregroundStyle(.red)
+                        
+                    } else if !type.isEmpty {
+                        Text(verbatim: fullType)
                             .foregroundStyle(Color.kozBonBlue)
                     }
                 }
 
-                Section("Additional details") {
+                Section {
                     TextField("Additional information", text: $details)
                         .onSubmit {
                             createButtonSelected()
                         }
+                } header: {
+                    Text("Additional details")
+                } footer: {
+                    if let detailsError {
+                        Text(verbatim: detailsError)
+                            .foregroundStyle(.red)
+                    }
                 }
             }
+            .contentMarginsBasedOnSizeClass()
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("Create service type")
             .toolbar {
@@ -80,7 +100,10 @@ struct CreateBonjourServiceTypeView: View {
                 }
             }
         }
-        .toastableContainer(toastApi: toastApi)
+    }
+    
+    var fullType: String {
+        "_\(type)._\(selectedTransportLayer.string)"
     }
     
     private func createButtonSelected() {
@@ -90,27 +113,48 @@ struct CreateBonjourServiceTypeView: View {
         let type = type.trimmed
         let details = details.trimmed
         
+        Task { @MainActor in
+            withAnimation {
+                nameError = nil
+                typeError = nil
+                detailsError = nil
+            }
+        }
+        
         guard !name.isEmpty else {
-            toastApi.show(title: "Service Name Required")
+            Task { @MainActor in
+                withAnimation {
+                    nameError = "Name required"
+                }
+            }
             return
         }
         
         guard !type.isEmpty else {
-            toastApi.show(title: "Service Type Required")
+            Task { @MainActor in
+                withAnimation {
+                    typeError = "Type required"
+                }
+            }
             return
         }
         
         guard !details.isEmpty else {
-            toastApi.show(title: "Service Details Required")
+            Task { @MainActor in
+                withAnimation {
+                    detailsError = "Details required"
+                }
+            }
             return
         }
         
         // Check that type does not match existing service types
         guard !BonjourServiceType.exists(type: type, transportLayer: transportLayer) else {
-            toastApi.show(
-                title: "Invalid Type",
-                description: "The entered service type \(type) is already taken."
-            )
+            Task { @MainActor in
+                withAnimation {
+                    typeError = "Already Exists"
+                }
+            }
           return
         }
         
