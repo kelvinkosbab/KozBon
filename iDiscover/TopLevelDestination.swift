@@ -19,7 +19,7 @@ enum TopLevelDestination: Identifiable {
         switch self {
         case .bonjour:
             "bonjour"
-            
+
         case .bonjourServiceTypes:
             "bonjourServiceTypes"
 
@@ -37,7 +37,7 @@ enum TopLevelDestination: Identifiable {
                 "Bonjour",
                 comment: "Bonjour tab title"
             )
-            
+
         case .bonjourServiceTypes:
             NSLocalizedString(
                 "Supported services",
@@ -56,7 +56,7 @@ enum TopLevelDestination: Identifiable {
         switch self {
         case .bonjour:
             Image.bonjour
-            
+
         case .bonjourServiceTypes:
             Image(systemName: "list.dash")
 

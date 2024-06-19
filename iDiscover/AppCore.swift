@@ -18,9 +18,42 @@ struct AppCore: App {
 
     var body: some Scene {
         WindowGroup {
-            TabBar()
-                .toastableContainer(toastApi: toastApi)
-                .tint(.kozBonBlue)
+            TabView {
+                NavigationStack {
+                    BonjourScanForServicesView()
+                }
+                .tabItem {
+                    Label {
+                        Text(verbatim: TopLevelDestination.bonjour.titleString)
+                    } icon: {
+                        TopLevelDestination.bonjour.icon
+                    }
+                }
+
+                NavigationStack {
+                    SupportedServicesView()
+                }
+                .tabItem {
+                    Label {
+                        Text(verbatim: TopLevelDestination.bonjourServiceTypes.titleString)
+                    } icon: {
+                        TopLevelDestination.bonjourServiceTypes.icon
+                    }
+                }
+
+                NavigationStack {
+                    BluetoothScanForDevicesView()
+                }
+                .tabItem {
+                    Label {
+                        Text(verbatim: TopLevelDestination.bluetooth.titleString)
+                    } icon: {
+                        TopLevelDestination.bluetooth.icon
+                    }
+                }
+            }
+            .toastableContainer(toastApi: toastApi)
+            .tint(.kozBonBlue)
         }
     }
 }

@@ -28,11 +28,11 @@ struct BonjourServiceDetailView: View {
                 HStack(spacing: 10) {
                     Image(systemName: viewModel.serviceType.imageSystemName)
                         .font(.system(.title3).bold())
-                    
+
                     VStack(alignment: .leading) {
                         Text(verbatim: viewModel.service.service.name)
                             .font(.system(.headline).bold())
-                        
+
                         Text(verbatim: viewModel.serviceType.name)
                             .font(.system(.caption).bold())
                     }

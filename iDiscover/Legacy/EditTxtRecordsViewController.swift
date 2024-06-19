@@ -19,10 +19,11 @@ class EditTxtRecordsViewController: MyTableViewController {
     // MARK: - Static
 
     static func newViewController(txtRecords: [String: String], delegate: EditTxtRecordsDelegate) -> EditTxtRecordsViewController {
-        let viewController = self.newStoryboardController(fromStoryboardWithName: "Services", withIdentifier: "EditTxtRecordsViewController") as! EditTxtRecordsViewController
-        viewController.dataSource.txtRecords = txtRecords
-        viewController.delegate = delegate
-        return viewController
+//        let viewController = self.newStoryboardController(fromStoryboardWithName: "Services", withIdentifier: "EditTxtRecordsViewController") as! EditTxtRecordsViewController
+//        viewController.dataSource.txtRecords = txtRecords
+//        viewController.delegate = delegate
+//        return viewController
+        EditTxtRecordsViewController()
     }
 
     // MARK: - Properties

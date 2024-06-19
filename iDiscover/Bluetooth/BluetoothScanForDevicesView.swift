@@ -34,16 +34,16 @@ struct BluetoothScanForDevicesView: View {
             if self.viewModel.scannerState == .unsupported {
                 EmptyStateOverlayView(
                     image: nil,
-                    title: self.viewModel.bluetoothUnsupportedString
+                    title: viewModel.bluetoothUnsupportedString
                 )
             } else if self.viewModel.devices.count == 0 {
                 EmptyStateOverlayView(
                     image: nil,
-                    title: self.viewModel.noDevicesString
+                    title: viewModel.noDevicesString
                 )
             }
         }
-        .navigationTitle("Bluetooth")
+        .navigationTitle("Nearby devices")
         .task {
             if viewModel.isInitialLoad {
                 viewModel.deviceScanner.startScan()

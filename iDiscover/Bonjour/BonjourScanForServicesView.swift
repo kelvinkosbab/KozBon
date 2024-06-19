@@ -13,11 +13,7 @@ import CoreUI
 
 struct BonjourScanForServicesView: View {
 
-    // MARK: - ViewModel
-
     @StateObject var viewModel = BonjourServicesViewModel()
-
-    // MARK: - Body
 
     var body: some View {
         List {
@@ -25,11 +21,11 @@ struct BonjourScanForServicesView: View {
                 activeServices
             } header: {
                 HStack {
-                    if let hostOrServiceTitle = viewModel.sortType?.hostOrServiceTitle {
-                        Text(verbatim: hostOrServiceTitle.uppercased())
-                            .font(.system(.caption))
-                    }
+                    Text(verbatim: (viewModel.sortType?.hostOrServiceTitle ?? "Bonjour").uppercased())
+                        .font(.system(.caption))
+
                     Spacer()
+
                     BonjourServiceListSortMenu(sortType: self.$viewModel.sortType)
                 }
             }
@@ -48,7 +44,7 @@ struct BonjourScanForServicesView: View {
                 self.renderTrailingToolbarItems()
             }
         }
-        .navigationTitle("Bonjour")
+        .navigationTitle("Nearby services")
         .refreshable {
             guard !self.viewModel.serviceScanner.isProcessing else {
                 return
@@ -70,12 +66,10 @@ struct BonjourScanForServicesView: View {
             }
         }
         .sheet(isPresented: $viewModel.isCreateCustomServiceTypePresented) {
-            NavigationStack {
-                CreateBonjourServiceTypeView()
-            }
+            CreateBonjourServiceTypeView(isPresented: $viewModel.isCreateCustomServiceTypePresented)
         }
     }
-    
+
     @ViewBuilder private var activeServices: some View {
         ForEach(viewModel.activeServices) { service in
             NavigationLink {
@@ -105,7 +99,7 @@ struct BonjourScanForServicesView: View {
                         .foregroundColor(.kozBonBlue)
                 }
             }
-            
+
             Button {
                 viewModel.isCreateCustomServiceTypePresented = true
             } label: {

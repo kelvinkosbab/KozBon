@@ -22,7 +22,7 @@ class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDelegate 
             }
         }
     }
-    
+
     @MainActor @Published var isBroadcastBonjourServicePresented = false
     @MainActor @Published var isCreateCustomServiceTypePresented = false
 
@@ -50,7 +50,7 @@ class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDelegate 
     func addButtonPressed() {
         print("KAK addButtonPressed")
     }
-    
+
     @MainActor
     func load() {
         serviceScanner.startScan()

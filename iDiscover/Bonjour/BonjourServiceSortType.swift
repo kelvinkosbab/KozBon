@@ -43,7 +43,7 @@ enum BonjourServiceSortType: Identifiable, CaseIterable {
 
         case .hostNameDesc:
             NSLocalizedString(
-                "By host name descending", 
+                "By host name descending",
                 comment: "By host name descending section title"
             )
 

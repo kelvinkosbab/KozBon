@@ -76,10 +76,6 @@ class BonjourServiceScanner: BonjourServiceScannerDelegate {
             let serviceBrowser = BonjourServiceTypeScanner(serviceType: serviceType, domain: "")
             serviceBrowser.delegate = self
             self.typeScanners.append(serviceBrowser)
-
-            let serviceBrowser2 = BonjourServiceTypeScanner(serviceType: serviceType, domain: "local.")
-            serviceBrowser2.delegate = self
-            self.typeScanners.append(serviceBrowser2)
         }
 
         // Populate service browsers with user-created service types

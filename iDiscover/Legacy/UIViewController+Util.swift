@@ -11,13 +11,6 @@ import UIKit
 
 extension UIViewController {
 
-  // MARK: - Accessing Controllers from Storyboard
-
-  static func newStoryboardController(fromStoryboardWithName storyboard: String, withIdentifier identifier: String) -> UIViewController {
-    let storyboard = UIStoryboard(name: storyboard, bundle: nil)
-    return storyboard.instantiateViewController(withIdentifier: identifier)
-  }
-
   // MARK: - Alerts
 
   func showDisappearingAlertDialog(title: String, message: String? = nil, didDismiss: (() -> Void)? = nil) {
