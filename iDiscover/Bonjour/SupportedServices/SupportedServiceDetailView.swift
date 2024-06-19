@@ -17,6 +17,8 @@ struct SupportedServiceDetailView: View {
     init(serviceType: BonjourServiceType) {
         self.serviceType = serviceType
     }
+    
+    @State private var showDeleteConfirmation = false
 
     var body: some View {
         List {
@@ -59,6 +61,27 @@ struct SupportedServiceDetailView: View {
                     title: "Full type",
                     detail: serviceType.fullType
                 )
+            }
+            
+            if !serviceType.isBuiltIn {
+                Button(role: .destructive) {
+                    showDeleteConfirmation = true
+                } label: {
+                    Label("Delete", systemImage: "minus.circle.fill")
+                }
+                .foregroundStyle(.red)
+                .confirmationDialog(
+                    "Are you sure you want to delete this service type?",
+                    isPresented: $showDeleteConfirmation,
+                    titleVisibility: .visible
+                ) {
+                    Button(role: .destructive) {
+                        // TODO: Delete the service and dismiss
+                    } label: {
+                        Label("Delete", systemImage: "minus.circle.fill")
+                    }
+                    .foregroundStyle(.red)
+                }
             }
         }
     }

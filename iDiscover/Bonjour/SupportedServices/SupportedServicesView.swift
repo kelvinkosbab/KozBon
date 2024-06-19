@@ -17,16 +17,38 @@ struct SupportedServicesView: View {
 
     var body: some View {
         List {
-            ForEach(viewModel.filteredServiceTypes, id: \.fullType) { serviceType in
-                NavigationLink {
-                    SupportedServiceDetailView(serviceType: serviceType)
-                } label: {
-                    TitleDetailStackView(
-                        title: serviceType.name,
-                        detail: serviceType.fullType
-                    ) {
-                        Image(systemName: serviceType.imageSystemName)
-                            .font(.system(.body).bold())
+            if !viewModel.filteredCustomServiceTypes.isEmpty {
+                Section("Custom Service Types") {
+                    ForEach(viewModel.filteredCustomServiceTypes, id: \.fullType) { serviceType in
+                        NavigationLink {
+                            SupportedServiceDetailView(serviceType: serviceType)
+                        } label: {
+                            TitleDetailStackView(
+                                title: serviceType.name,
+                                detail: serviceType.fullType
+                            ) {
+                                Image(systemName: serviceType.imageSystemName)
+                                    .font(.system(.body).bold())
+                            }
+                        }
+                    }
+                }
+            }
+            
+            if !viewModel.filteredBuiltInServiceTypes.isEmpty {
+                Section("Built-in Service Types") {
+                    ForEach(viewModel.filteredBuiltInServiceTypes, id: \.fullType) { serviceType in
+                        NavigationLink {
+                            SupportedServiceDetailView(serviceType: serviceType)
+                        } label: {
+                            TitleDetailStackView(
+                                title: serviceType.name,
+                                detail: serviceType.fullType
+                            ) {
+                                Image(systemName: serviceType.imageSystemName)
+                                    .font(.system(.body).bold())
+                            }
+                        }
                     }
                 }
             }
@@ -34,9 +56,7 @@ struct SupportedServicesView: View {
         .contentMarginsBasedOnSizeClass()
         .navigationTitle("Supported services")
         .task {
-            if viewModel.isInitialLoad {
-                await viewModel.load()
-            }
+            await viewModel.load()
         }
         .searchable(text: $viewModel.searchText, prompt: "Search for ...")
         .sheet(isPresented: $viewModel.isCreateCustomServiceTypePresented) {
@@ -63,15 +83,41 @@ struct SupportedServicesView: View {
 
     class ViewModel: ObservableObject {
 
-        @MainActor @Published private var serviceTypes: [BonjourServiceType] = []
+        @MainActor @Published private var builtInServiceTypes: [BonjourServiceType] = []
+        @MainActor @Published private var customServiceTypes: [BonjourServiceType] = []
+        
         @MainActor @Published var searchText: String = ""
-        @MainActor @Published var isCreateCustomServiceTypePresented = false
+        @MainActor @Published var isCreateCustomServiceTypePresented = false {
+            didSet {
+                if !isCreateCustomServiceTypePresented {
+                    Task {
+                        await self.load()
+                    }
+                }
+            }
+        }
 
-        @MainActor var filteredServiceTypes: [BonjourServiceType] {
+        @MainActor var filteredBuiltInServiceTypes: [BonjourServiceType] {
             if searchText.isEmpty {
-                serviceTypes
+                builtInServiceTypes
             } else {
-                serviceTypes.filter { serviceType in
+                builtInServiceTypes.filter { serviceType in
+                    let isInName = serviceType.name.containsIgnoreCase(searchText)
+                    let isInType = serviceType.fullType.containsIgnoreCase(searchText)
+                    var isInDetail = false
+                    if let detail = serviceType.detail {
+                        isInDetail = detail.containsIgnoreCase(searchText)
+                    }
+                    return isInName || isInType || isInDetail
+                }
+            }
+        }
+        
+        @MainActor var filteredCustomServiceTypes: [BonjourServiceType] {
+            if searchText.isEmpty {
+                customServiceTypes
+            } else {
+                customServiceTypes.filter { serviceType in
                     let isInName = serviceType.name.containsIgnoreCase(searchText)
                     let isInType = serviceType.fullType.containsIgnoreCase(searchText)
                     var isInDetail = false
@@ -83,18 +129,26 @@ struct SupportedServicesView: View {
             }
         }
 
-        private(set) var isInitialLoad = true
-
         func load() async {
             let sortedServiceTypes = BonjourServiceType.fetchAll().sorted { lhs, rhs -> Bool in
                 lhs.name < rhs.name
             }
+            let builtInServiceTypes = sortedServiceTypes.filter { $0.isBuiltIn }
+            let customServiceTypes = sortedServiceTypes.filter { !$0.isBuiltIn }
 
             await MainActor.run {
-                self.serviceTypes = sortedServiceTypes
+                if self.builtInServiceTypes != builtInServiceTypes {
+                    withAnimation {
+                        self.builtInServiceTypes = builtInServiceTypes
+                    }
+                }
+                
+                if self.customServiceTypes != customServiceTypes {
+                    withAnimation {
+                        self.customServiceTypes = customServiceTypes
+                    }
+                }
             }
-
-            self.isInitialLoad = false
         }
     }
 }
