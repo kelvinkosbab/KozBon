@@ -26,7 +26,6 @@ struct BonjourServiceDetailView: View {
         List {
             Section {
                 HStack(spacing: 10) {
-                    Spacer()
                     Image(systemName: viewModel.serviceType.imageSystemName)
                         .font(.system(.title3).bold())
 

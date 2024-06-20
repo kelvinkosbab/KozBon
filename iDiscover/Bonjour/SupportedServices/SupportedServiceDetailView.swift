@@ -24,7 +24,6 @@ struct SupportedServiceDetailView: View {
         List {
             Section {
                 HStack(spacing: 10) {
-                    Spacer()
                     Image(systemName: serviceType.imageSystemName)
                         .font(.system(.title3).bold())
 
