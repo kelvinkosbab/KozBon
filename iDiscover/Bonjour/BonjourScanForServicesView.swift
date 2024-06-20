@@ -66,7 +66,7 @@ struct BonjourScanForServicesView: View {
             }
         }
         .sheet(isPresented: $viewModel.isCreateCustomServiceTypePresented) {
-            CreateBonjourServiceTypeView(isPresented: $viewModel.isCreateCustomServiceTypePresented)
+            CreateOrUpdateBonjourServiceTypeView(isPresented: $viewModel.isCreateCustomServiceTypePresented)
         }
     }
 

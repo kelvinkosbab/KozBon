@@ -39,14 +39,10 @@ struct BonjourServiceDetailView: View {
                     Spacer()
                 }
                 .padding(.vertical, 10)
-                .padding(.horizontal, 25)
-                .background {
+                .listRowBackground(
                     Color.kozBonBlue
                         .opacity(0.4)
-                        .cornerRadius(10)
-                }
-                .listRowBackground(Color(.clear))
-                .frame(maxWidth: .infinity)
+                )
             }
 
             Section("Information") {

@@ -20,18 +20,12 @@ extension BonjourServiceType {
   }
 
   func savePersistentCopy() {
-    // Check if type already exists in the built in library
-    if !BonjourServiceType.exists(
-        serviceTypes: BonjourServiceType.serviceTypeLibrary,
-        fullType: self.fullType
-    ) {
       _ = CustomServiceType.createOrUpdate(
-        name: self.name,
-        serviceType: self.type,
-        transportLayer: self.transportLayer,
-        detail: self.detail
+          name: self.name,
+          serviceType: self.type,
+          transportLayer: self.transportLayer,
+          detail: self.detail
       )
-    }
   }
 
   func deletePersistentCopy() {

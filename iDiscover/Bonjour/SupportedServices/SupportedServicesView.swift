@@ -60,7 +60,7 @@ struct SupportedServicesView: View {
         }
         .searchable(text: $viewModel.searchText, prompt: "Search for ...")
         .sheet(isPresented: $viewModel.isCreateCustomServiceTypePresented) {
-            CreateBonjourServiceTypeView(isPresented: $viewModel.isCreateCustomServiceTypePresented)
+            CreateOrUpdateBonjourServiceTypeView(isPresented: $viewModel.isCreateCustomServiceTypePresented)
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {

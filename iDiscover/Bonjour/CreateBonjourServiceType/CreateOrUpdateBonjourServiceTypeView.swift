@@ -1,5 +1,5 @@
 //
-//  CreateBonjourServiceTypeView.swift
+//  CreateOrUpdateBonjourServiceTypeView.swift
 //  KozBon
 //
 //  Created by Kelvin Kosbab on 6/17/24.
@@ -9,14 +9,25 @@
 import CoreUI
 import SwiftUI
 
-// MARK: - CreateBonjourServiceTypeView
+// MARK: - CreateOrUpdateBonjourServiceTypeView
 
-struct CreateBonjourServiceTypeView: View {
+struct CreateOrUpdateBonjourServiceTypeView: View {
 
     @Binding var isPresented: Bool
     
     init(isPresented: Binding<Bool>) {
         self._isPresented = isPresented
+    }
+    
+    init(
+        isPresented: Binding<Bool>,
+        serviceToUpdate: BonjourServiceType
+    ) {
+        self._isPresented = isPresented
+        self.name = serviceToUpdate.name
+        self.type = serviceToUpdate.type
+        self.details = serviceToUpdate.detail ?? ""
+        self.isCreatingBonjourService = false
     }
 
     @State private var name = ""
@@ -26,6 +37,7 @@ struct CreateBonjourServiceTypeView: View {
     @State private var details = ""
     @State private var detailsError: String?
     
+    private var isCreatingBonjourService: Bool = true
     private let selectedTransportLayer: TransportLayer = .tcp
 
     var body: some View {
