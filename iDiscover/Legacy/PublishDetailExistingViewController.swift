@@ -159,7 +159,7 @@ class PublishDetailExistingViewController: MyTableViewController, UITextFieldDel
                                            port: portValue,
                                            domain: domain,
                                            transportLayer: self.serviceType.transportLayer,
-                                           detail: self.serviceType.detail, success: {
+                                           detail: self.serviceType.detail ?? "", success: {
       // Success
 //      MyLoadingManager.hideLoading()
       self.showDisappearingAlertDialog(title: "Service Published!") { [weak self] in

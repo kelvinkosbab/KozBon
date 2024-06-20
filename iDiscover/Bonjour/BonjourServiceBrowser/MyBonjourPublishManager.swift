@@ -68,13 +68,15 @@ class MyBonjourPublishManager: NSObject {
 
   // MARK: - Publishing
 
-  func publish(name: String,
-               type: String,
-               port: Int,
-               domain: String,
-               transportLayer: TransportLayer,
-               detail: String? = nil,
-               success: @escaping () -> Void, failure: @escaping () -> Void) {
+  func publish(
+    name: String,
+    type: String,
+    port: Int,
+    domain: String,
+    transportLayer: TransportLayer,
+    detail: String,
+    success: @escaping () -> Void, failure: @escaping () -> Void
+  ) {
     let serviceType = BonjourServiceType(name: name, type: type, transportLayer: transportLayer, detail: detail)
     serviceType.savePersistentCopy()
     let netService = NetService(domain: domain, type: serviceType.fullType, name: name, port: Int32(port))

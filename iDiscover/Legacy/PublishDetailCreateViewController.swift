@@ -182,7 +182,7 @@ class PublishDetailCreateViewController: MyTableViewController, UITextFieldDeleg
 
     // Publish the service
 //    MyLoadingManager.showLoading()
-    MyBonjourPublishManager.shared.publish(name: name, type: type, port: portValue, domain: domain, transportLayer: .tcp, detail: detail, success: {
+    MyBonjourPublishManager.shared.publish(name: name, type: type, port: portValue, domain: domain, transportLayer: .tcp, detail: detail ?? "", success: {
       // Success
 //      MyLoadingManager.hideLoading()
       self.showDisappearingAlertDialog(title: "Service Published!") {

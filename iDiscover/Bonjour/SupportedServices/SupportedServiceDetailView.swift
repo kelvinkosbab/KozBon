@@ -11,8 +11,10 @@ import SwiftUI
 // MARK: - SupportedServiceDetailView
 
 struct SupportedServiceDetailView: View {
+    
+    @Environment(\.dismiss) var dismiss
 
-    let serviceType: BonjourServiceType
+    @State private var serviceType: BonjourServiceType
 
     init(serviceType: BonjourServiceType) {
         self.serviceType = serviceType
@@ -62,6 +64,12 @@ struct SupportedServiceDetailView: View {
                     title: "Full type",
                     detail: serviceType.fullType
                 )
+                if let detail = serviceType.detail, !detail.isEmpty {
+                    TitleDetailStackView(
+                        title: "Details",
+                        detail: detail
+                    )
+                }
             }
             
             if !serviceType.isBuiltIn {
@@ -81,7 +89,7 @@ struct SupportedServiceDetailView: View {
                     .sheet(isPresented: $showEditConfirmation) {
                         CreateOrUpdateBonjourServiceTypeView(
                             isPresented: $showEditConfirmation,
-                            serviceToUpdate: serviceType
+                            serviceToUpdate: $serviceType
                         )
                     }
                     .listRowBackground(
@@ -108,7 +116,8 @@ struct SupportedServiceDetailView: View {
                         titleVisibility: .visible
                     ) {
                         Button(role: .destructive) {
-                            // TODO: Delete the service and dismiss
+                            serviceType.deletePersistentCopy()
+                            dismiss()
                         } label: {
                             Label("Delete", systemImage: "minus.circle.fill")
                         }

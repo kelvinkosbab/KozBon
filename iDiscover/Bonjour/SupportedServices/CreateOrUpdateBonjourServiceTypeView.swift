@@ -13,24 +13,32 @@ import SwiftUI
 
 struct CreateOrUpdateBonjourServiceTypeView: View {
 
-    @Binding var isPresented: Bool
+    @Binding private var isPresented: Bool
+    @Binding private var serviceTypeToUpdate: BonjourServiceType
     
     init(isPresented: Binding<Bool>) {
         self._isPresented = isPresented
         self.name = ""
         self.type = ""
         self.details = ""
+        self._serviceTypeToUpdate = .constant(BonjourServiceType(
+            name: "",
+            type: "",
+            transportLayer: .tcp,
+            detail: ""
+        ))
         self.isCreatingBonjourService = true
     }
     
     init(
         isPresented: Binding<Bool>,
-        serviceToUpdate: BonjourServiceType
+        serviceToUpdate: Binding<BonjourServiceType>
     ) {
         self._isPresented = isPresented
-        self.name = serviceToUpdate.name
-        self.type = serviceToUpdate.type
-        self.details = serviceToUpdate.detail ?? ""
+        self.name = serviceToUpdate.wrappedValue.name
+        self.type = serviceToUpdate.wrappedValue.name
+        self.details = serviceToUpdate.wrappedValue.name
+        self._serviceTypeToUpdate = serviceToUpdate
         self.isCreatingBonjourService = false
     }
 
@@ -114,7 +122,6 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        // TODO: update content when edit completes
                         doneButtonSelected()
                     } label: {
                         Label("Done", systemImage: "checkmark.circle.fill")
@@ -182,6 +189,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
         }
         
         // Create the service type
+        serviceTypeToUpdate.deletePersistentCopy()
         let serviceType = BonjourServiceType(
             name: name,
             type: type,
@@ -193,6 +201,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
         serviceType.savePersistentCopy()
         
         Task { @MainActor in
+            serviceTypeToUpdate = serviceType
             isPresented = false
         }
     }
