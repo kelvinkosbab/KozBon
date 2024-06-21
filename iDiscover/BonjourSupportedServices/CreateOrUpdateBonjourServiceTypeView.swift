@@ -13,31 +13,43 @@ import SwiftUI
 
 struct CreateOrUpdateBonjourServiceTypeView: View {
 
-    @Binding var isPresented: Bool
-    
+    @Binding private var isPresented: Bool
+    @Binding private var serviceTypeToUpdate: BonjourServiceType
+
     init(isPresented: Binding<Bool>) {
         self._isPresented = isPresented
+        self.name = ""
+        self.type = ""
+        self.details = ""
+        self._serviceTypeToUpdate = .constant(BonjourServiceType(
+            name: "",
+            type: "",
+            transportLayer: .tcp,
+            detail: ""
+        ))
+        self.isCreatingBonjourService = true
     }
-    
+
     init(
         isPresented: Binding<Bool>,
-        serviceToUpdate: BonjourServiceType
+        serviceToUpdate: Binding<BonjourServiceType>
     ) {
         self._isPresented = isPresented
-        self.name = serviceToUpdate.name
-        self.type = serviceToUpdate.type
-        self.details = serviceToUpdate.detail ?? ""
+        self.name = serviceToUpdate.wrappedValue.name
+        self.type = serviceToUpdate.wrappedValue.name
+        self.details = serviceToUpdate.wrappedValue.name
+        self._serviceTypeToUpdate = serviceToUpdate
         self.isCreatingBonjourService = false
     }
 
-    @State private var name = ""
+    @State private var name: String
     @State private var nameError: String?
-    @State private var type = ""
+    @State private var type: String
     @State private var typeError: String?
-    @State private var details = ""
+    @State private var details: String
     @State private var detailsError: String?
-    
-    private var isCreatingBonjourService: Bool = true
+
+    private var isCreatingBonjourService: Bool
     private let selectedTransportLayer: TransportLayer = .tcp
 
     var body: some View {
@@ -56,10 +68,11 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
 
                 Section {
                     TextField("Type definition", text: $type)
+                        .disabled(!isCreatingBonjourService)
                         .disableAutocorrection(true)
                         .autocapitalization(.none)
                         .onSubmit {
-                            createButtonSelected()
+                            doneButtonSelected()
                         }
                 } header: {
                     Text("Bonjour type")
@@ -67,12 +80,16 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                     if let typeError, type.isEmpty {
                         Text(verbatim: typeError)
                             .foregroundStyle(.red)
-                        
+
                     } else if let typeError, !type.isEmpty {
                         Text(verbatim: "\(fullType) · \(typeError)")
                             .foregroundStyle(.red)
-                        
+
                     } else if !type.isEmpty {
+                        Text(verbatim: fullType)
+                            .foregroundStyle(Color.kozBonBlue)
+
+                    } else if !isCreatingBonjourService {
                         Text(verbatim: fullType)
                             .foregroundStyle(Color.kozBonBlue)
                     }
@@ -81,7 +98,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                 Section {
                     TextField("Additional information", text: $details)
                         .onSubmit {
-                            createButtonSelected()
+                            doneButtonSelected()
                         }
                 } header: {
                     Text("Additional details")
@@ -94,7 +111,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
             }
             .contentMarginsBasedOnSizeClass()
             .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle("Create service type")
+            .navigationTitle(isCreatingBonjourService ? "Create service type" : "Edit service type")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button(role: .cancel) {
@@ -105,26 +122,26 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        createButtonSelected()
+                        doneButtonSelected()
                     } label: {
-                        Label("Create", systemImage: "checkmark.circle.fill")
+                        Label("Done", systemImage: "checkmark.circle.fill")
                     }
                 }
             }
         }
     }
-    
+
     var fullType: String {
         "_\(type)._\(selectedTransportLayer.string)"
     }
-    
-    private func createButtonSelected() {
-        
+
+    private func doneButtonSelected() {
+
         let transportLayer = selectedTransportLayer
         let name = name.trimmed
         let type = type.trimmed
         let details = details.trimmed
-        
+
         Task { @MainActor in
             withAnimation {
                 nameError = nil
@@ -132,7 +149,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                 detailsError = nil
             }
         }
-        
+
         guard !name.isEmpty else {
             Task { @MainActor in
                 withAnimation {
@@ -141,7 +158,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
             }
             return
         }
-        
+
         guard !type.isEmpty else {
             Task { @MainActor in
                 withAnimation {
@@ -150,7 +167,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
             }
             return
         }
-        
+
         guard !details.isEmpty else {
             Task { @MainActor in
                 withAnimation {
@@ -159,29 +176,32 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
             }
             return
         }
-        
-        // Check that type does not match existing service types
-        guard !BonjourServiceType.exists(type: type, transportLayer: transportLayer) else {
-            Task { @MainActor in
-                withAnimation {
-                    typeError = "Already Exists"
+
+        if isCreatingBonjourService {
+            guard !BonjourServiceType.exists(type: type, transportLayer: transportLayer) else {
+                Task { @MainActor in
+                    withAnimation {
+                        typeError = "Already Exists"
+                    }
                 }
+                return
             }
-          return
         }
-        
+
         // Create the service type
+        serviceTypeToUpdate.deletePersistentCopy()
         let serviceType = BonjourServiceType(
             name: name,
             type: type,
             transportLayer: transportLayer,
             detail: details
         )
-        
+
         // Save a persistent copy of the service type
         serviceType.savePersistentCopy()
-        
+
         Task { @MainActor in
+            serviceTypeToUpdate = serviceType
             isPresented = false
         }
     }

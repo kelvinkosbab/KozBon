@@ -15,23 +15,16 @@
 		B679CC151E1624A20056C7B5 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B679CC141E1624A20056C7B5 /* MyViewController.swift */; };
 		B679CC171E1647670056C7B5 /* MyBonjourPublishManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B679CC161E1647670056C7B5 /* MyBonjourPublishManager.swift */; };
 		B67BB3281E18657F00A3228E /* AllServiceTypesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67BB3271E18657F00A3228E /* AllServiceTypesTableViewController.swift */; };
-		B6833CBD1E3D44F200F56A90 /* BluetoothDeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6833CBC1E3D44F200F56A90 /* BluetoothDeviceCell.swift */; };
 		B68B21251E47A0AB00BE2CA2 /* ServiceDetailSimpleHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B21241E47A0AB00BE2CA2 /* ServiceDetailSimpleHeaderCell.swift */; };
 		B68B21271E47A2C700BE2CA2 /* ServiceDetailAddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B21261E47A2C700BE2CA2 /* ServiceDetailAddressCell.swift */; };
 		B68B212B1E47A4F500BE2CA2 /* ServiceDetailLoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B212A1E47A4F500BE2CA2 /* ServiceDetailLoadingCell.swift */; };
 		B68B212D1E47A55800BE2CA2 /* ServiceDetailSimpleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B212C1E47A55800BE2CA2 /* ServiceDetailSimpleCell.swift */; };
 		B68B212F1E47A65C00BE2CA2 /* ServiceDetailDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68B212E1E47A65C00BE2CA2 /* ServiceDetailDescriptionCell.swift */; };
-		B68EC5A01E2F226A00C9D5CC /* BluetoothViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EC59F1E2F226A00C9D5CC /* BluetoothViewController.swift */; };
 		B68EEA3D1E46706E00831CC4 /* MyCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA3C1E46706E00831CC4 /* MyCollectionViewController.swift */; };
 		B68EEA3F1E46709000831CC4 /* EmptyStateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA3E1E46709000831CC4 /* EmptyStateProtocol.swift */; };
 		B68EEA431E467CD300831CC4 /* MyViewControllerIdentifierProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA421E467CD300831CC4 /* MyViewControllerIdentifierProtocol.swift */; };
 		B68EEA451E46800700831CC4 /* MyTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA441E46800700831CC4 /* MyTabBarController.swift */; };
 		B68EEA571E47104D00831CC4 /* ServicesServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA561E47104D00831CC4 /* ServicesServiceCell.swift */; };
-		B68EEA5F1E471E6300831CC4 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA5E1E471E6300831CC4 /* SettingsViewController.swift */; };
-		B68EEA611E471F4200831CC4 /* SettingsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA601E471F4200831CC4 /* SettingsHeaderView.swift */; };
-		B68EEA631E471FD000831CC4 /* SettingsItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA621E471FD000831CC4 /* SettingsItemCell.swift */; };
-		B68EEA651E47204E00831CC4 /* SettingsKeyValueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA641E47204E00831CC4 /* SettingsKeyValueCell.swift */; };
-		B68EEA671E472B1B00831CC4 /* SettingsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EEA661E472B1B00831CC4 /* SettingsFooterView.swift */; };
 		B69154631E138E4A00382F41 /* MyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69154621E138E4A00382F41 /* MyTableViewController.swift */; };
 		B69154651E13906500382F41 /* String+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69154641E13906500382F41 /* String+Util.swift */; };
 		B6AE537C1E16D45700FB57E3 /* PresentableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AE537B1E16D45700FB57E3 /* PresentableController.swift */; };
@@ -40,10 +33,7 @@
 		B6BD8C802002C6E2009327B2 /* BluetoothDeviceScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BD8C7F2002C6E2009327B2 /* BluetoothDeviceScanner.swift */; };
 		B6BD8C822002C6F9009327B2 /* CBManagerState+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BD8C812002C6F9009327B2 /* CBManagerState+Util.swift */; };
 		B6BD8C842002C715009327B2 /* BluetoothDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BD8C832002C715009327B2 /* BluetoothDevice.swift */; };
-		B6BD8C8C2002E0ED009327B2 /* BluetoothDeviceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BD8C8B2002E0ED009327B2 /* BluetoothDeviceDetailViewController.swift */; };
-		B6BD8C9020030540009327B2 /* BluetoothCharacteristicDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BD8C8F2003053F009327B2 /* BluetoothCharacteristicDetailViewController.swift */; };
 		B6C4BC521E1CC2CD004409F1 /* TableViewCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C4BC511E1CC2CD004409F1 /* TableViewCells.swift */; };
-		B6C4BC551E1CD30A004409F1 /* CreateServiceTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C4BC541E1CD30A004409F1 /* CreateServiceTypeTableViewController.swift */; };
 		B6CE1D301E1208C1003D4FFA /* iDiscover.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D2E1E1208C1003D4FFA /* iDiscover.xcdatamodeld */; };
 		B6CE1D321E1208C1003D4FFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6CE1D311E1208C1003D4FFA /* Assets.xcassets */; };
 		B6CE1D4A1E120AF8003D4FFA /* service-names-port-numbers.csv in Resources */ = {isa = PBXBuildFile; fileRef = B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */; };
@@ -103,24 +93,17 @@
 		B679CC141E1624A20056C7B5 /* MyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
 		B679CC161E1647670056C7B5 /* MyBonjourPublishManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyBonjourPublishManager.swift; sourceTree = "<group>"; };
 		B67BB3271E18657F00A3228E /* AllServiceTypesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllServiceTypesTableViewController.swift; sourceTree = "<group>"; };
-		B6833CBC1E3D44F200F56A90 /* BluetoothDeviceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothDeviceCell.swift; sourceTree = "<group>"; };
 		B68B21241E47A0AB00BE2CA2 /* ServiceDetailSimpleHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailSimpleHeaderCell.swift; sourceTree = "<group>"; };
 		B68B21261E47A2C700BE2CA2 /* ServiceDetailAddressCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailAddressCell.swift; sourceTree = "<group>"; };
 		B68B212A1E47A4F500BE2CA2 /* ServiceDetailLoadingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailLoadingCell.swift; sourceTree = "<group>"; };
 		B68B212C1E47A55800BE2CA2 /* ServiceDetailSimpleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailSimpleCell.swift; sourceTree = "<group>"; };
 		B68B212E1E47A65C00BE2CA2 /* ServiceDetailDescriptionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailDescriptionCell.swift; sourceTree = "<group>"; };
-		B68EC59F1E2F226A00C9D5CC /* BluetoothViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothViewController.swift; sourceTree = "<group>"; };
 		B68EEA3C1E46706E00831CC4 /* MyCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCollectionViewController.swift; sourceTree = "<group>"; };
 		B68EEA3E1E46709000831CC4 /* EmptyStateProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyStateProtocol.swift; sourceTree = "<group>"; };
 		B68EEA421E467CD300831CC4 /* MyViewControllerIdentifierProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyViewControllerIdentifierProtocol.swift; sourceTree = "<group>"; };
 		B68EEA441E46800700831CC4 /* MyTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTabBarController.swift; sourceTree = "<group>"; };
 		B68EEA461E4685E200831CC4 /* ServicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesViewController.swift; sourceTree = "<group>"; };
 		B68EEA561E47104D00831CC4 /* ServicesServiceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesServiceCell.swift; sourceTree = "<group>"; };
-		B68EEA5E1E471E6300831CC4 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		B68EEA601E471F4200831CC4 /* SettingsHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsHeaderView.swift; sourceTree = "<group>"; };
-		B68EEA621E471FD000831CC4 /* SettingsItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsItemCell.swift; sourceTree = "<group>"; };
-		B68EEA641E47204E00831CC4 /* SettingsKeyValueCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsKeyValueCell.swift; sourceTree = "<group>"; };
-		B68EEA661E472B1B00831CC4 /* SettingsFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsFooterView.swift; sourceTree = "<group>"; };
 		B69154621E138E4A00382F41 /* MyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTableViewController.swift; sourceTree = "<group>"; };
 		B69154641E13906500382F41 /* String+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Util.swift"; sourceTree = "<group>"; };
 		B6AE537B1E16D45700FB57E3 /* PresentableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentableController.swift; sourceTree = "<group>"; };
@@ -129,10 +112,7 @@
 		B6BD8C7F2002C6E2009327B2 /* BluetoothDeviceScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothDeviceScanner.swift; sourceTree = "<group>"; };
 		B6BD8C812002C6F9009327B2 /* CBManagerState+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CBManagerState+Util.swift"; sourceTree = "<group>"; };
 		B6BD8C832002C715009327B2 /* BluetoothDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothDevice.swift; sourceTree = "<group>"; };
-		B6BD8C8B2002E0ED009327B2 /* BluetoothDeviceDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothDeviceDetailViewController.swift; sourceTree = "<group>"; };
-		B6BD8C8F2003053F009327B2 /* BluetoothCharacteristicDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothCharacteristicDetailViewController.swift; sourceTree = "<group>"; };
 		B6C4BC511E1CC2CD004409F1 /* TableViewCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCells.swift; sourceTree = "<group>"; };
-		B6C4BC541E1CD30A004409F1 /* CreateServiceTypeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateServiceTypeTableViewController.swift; sourceTree = "<group>"; };
 		B6CE1D241E1208C1003D4FFA /* KozBon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KozBon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6CE1D2F1E1208C1003D4FFA /* iDiscover.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iDiscover.xcdatamodel; sourceTree = "<group>"; };
 		B6CE1D311E1208C1003D4FFA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -198,26 +178,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B679CC101E16243C0056C7B5 /* Creating a Service Type */ = {
-			isa = PBXGroup;
-			children = (
-				B6C4BC541E1CD30A004409F1 /* CreateServiceTypeTableViewController.swift */,
-			);
-			name = "Creating a Service Type";
-			sourceTree = "<group>";
-		};
-		B682621F1E1818B800D0445D /* Info */ = {
-			isa = PBXGroup;
-			children = (
-				B68EEA5E1E471E6300831CC4 /* SettingsViewController.swift */,
-				B68EEA601E471F4200831CC4 /* SettingsHeaderView.swift */,
-				B68EEA661E472B1B00831CC4 /* SettingsFooterView.swift */,
-				B68EEA621E471FD000831CC4 /* SettingsItemCell.swift */,
-				B68EEA641E47204E00831CC4 /* SettingsKeyValueCell.swift */,
-			);
-			name = Info;
-			sourceTree = "<group>";
-		};
 		B68B21231E47A00800BE2CA2 /* Service Detail */ = {
 			isa = PBXGroup;
 			children = (
@@ -257,19 +217,8 @@
 				B68B21311E47AD4700BE2CA2 /* Publishing a Service */,
 				B68B21231E47A00800BE2CA2 /* Service Detail */,
 				B68B21301E47ACD700BE2CA2 /* Listing / Searching Services */,
-				B679CC101E16243C0056C7B5 /* Creating a Service Type */,
 			);
 			name = "Bonjour Services";
-			sourceTree = "<group>";
-		};
-		B68EC59E1E2F1F1300C9D5CC /* Bluetooth */ = {
-			isa = PBXGroup;
-			children = (
-				B6BD8C892002E0AE009327B2 /* Bluetooth Device List */,
-				B6BD8C8A2002E0CD009327B2 /* Bluetooth Device Detail */,
-				B6BD8C9120030587009327B2 /* Bluetooth Characteristic Detail */,
-			);
-			name = Bluetooth;
 			sourceTree = "<group>";
 		};
 		B68EEA3B1E46704B00831CC4 /* Common */ = {
@@ -292,31 +241,6 @@
 				B68EEA561E47104D00831CC4 /* ServicesServiceCell.swift */,
 			);
 			name = Services;
-			sourceTree = "<group>";
-		};
-		B6BD8C892002E0AE009327B2 /* Bluetooth Device List */ = {
-			isa = PBXGroup;
-			children = (
-				B68EC59F1E2F226A00C9D5CC /* BluetoothViewController.swift */,
-				B6833CBC1E3D44F200F56A90 /* BluetoothDeviceCell.swift */,
-			);
-			name = "Bluetooth Device List";
-			sourceTree = "<group>";
-		};
-		B6BD8C8A2002E0CD009327B2 /* Bluetooth Device Detail */ = {
-			isa = PBXGroup;
-			children = (
-				B6BD8C8B2002E0ED009327B2 /* BluetoothDeviceDetailViewController.swift */,
-			);
-			name = "Bluetooth Device Detail";
-			sourceTree = "<group>";
-		};
-		B6BD8C9120030587009327B2 /* Bluetooth Characteristic Detail */ = {
-			isa = PBXGroup;
-			children = (
-				B6BD8C8F2003053F009327B2 /* BluetoothCharacteristicDetailViewController.swift */,
-			);
-			name = "Bluetooth Characteristic Detail";
 			sourceTree = "<group>";
 		};
 		B6CE1D1B1E1208C1003D4FFA = {
@@ -343,8 +267,9 @@
 			children = (
 				F6240E682A92CF0600951875 /* AppCore.swift */,
 				F6C472FA2C1A248000BBB0F9 /* TopLevelDestination.swift */,
+				F6C473002C1A4D7400BBB0F9 /* BonjourNearbyServices */,
+				F67B65602C22169000324FFF /* BonjourSupportedServices */,
 				F67B653B2C1B6DAE00324FFF /* Bluetooth */,
-				F6C473002C1A4D7400BBB0F9 /* Bonjour */,
 				F67B65442C1B922500324FFF /* Model */,
 				F67B652F2C1B4EA500324FFF /* Utilities */,
 				F6C472FC2C1A267B00BBB0F9 /* Legacy */,
@@ -399,8 +324,6 @@
 			children = (
 				B68EEA3B1E46704B00831CC4 /* Common */,
 				B68B21321E47AF6600BE2CA2 /* Bonjour Services */,
-				B68EC59E1E2F1F1300C9D5CC /* Bluetooth */,
-				B682621F1E1818B800D0445D /* Info */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -495,14 +418,14 @@
 			path = BroadcastBonjourServiceView;
 			sourceTree = "<group>";
 		};
-		F67B65602C22169000324FFF /* SupportedServices */ = {
+		F67B65602C22169000324FFF /* BonjourSupportedServices */ = {
 			isa = PBXGroup;
 			children = (
 				F67B65612C22169800324FFF /* SupportedServicesView.swift */,
 				F67B65632C22270000324FFF /* SupportedServiceDetailView.swift */,
 				F67B655A2C20D6A600324FFF /* CreateOrUpdateBonjourServiceTypeView.swift */,
 			);
-			path = SupportedServices;
+			path = BonjourSupportedServices;
 			sourceTree = "<group>";
 		};
 		F690B5F92561E9B600902DAB /* Frameworks */ = {
@@ -531,19 +454,18 @@
 			path = Legacy;
 			sourceTree = "<group>";
 		};
-		F6C473002C1A4D7400BBB0F9 /* Bonjour */ = {
+		F6C473002C1A4D7400BBB0F9 /* BonjourNearbyServices */ = {
 			isa = PBXGroup;
 			children = (
 				F6240E6B2A92D62200951875 /* BonjourScanForServicesView.swift */,
 				F69E826D2AABA4CA006AA4D3 /* BonjourServicesViewModel.swift */,
 				F69E826F2AABA6B4006AA4D3 /* BonjourServiceSortType.swift */,
 				F6C50D7D2AB3C47D0048DF8C /* BonjourServiceListSortMenu.swift */,
-				F67B65602C22169000324FFF /* SupportedServices */,
 				F67B65372C1B5CAE00324FFF /* BonjourServiceDetail */,
-				F67B65362C1B5C4E00324FFF /* BonjourServiceBrowser */,
 				F67B65582C20D68B00324FFF /* BroadcastBonjourServiceView */,
+				F67B65362C1B5C4E00324FFF /* BonjourServiceBrowser */,
 			);
-			path = Bonjour;
+			path = BonjourNearbyServices;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -643,10 +565,8 @@
 				F67B65622C22169800324FFF /* SupportedServicesView.swift in Sources */,
 				B68EEA3F1E46709000831CC4 /* EmptyStateProtocol.swift in Sources */,
 				B679CC151E1624A20056C7B5 /* MyViewController.swift in Sources */,
-				B6C4BC551E1CD30A004409F1 /* CreateServiceTypeTableViewController.swift in Sources */,
 				B6CE1D4F1E120B90003D4FFA /* MyClassProtocol.swift in Sources */,
 				F69DF275269AB8BF00B97E9D /* EditTxtRecordsViewController.swift in Sources */,
-				B68EEA651E47204E00831CC4 /* SettingsKeyValueCell.swift in Sources */,
 				F6C472FB2C1A248000BBB0F9 /* TopLevelDestination.swift in Sources */,
 				F67B65332C1B54F400324FFF /* NetService+InternetAddress.swift in Sources */,
 				B6AE53841E17090A00FB57E3 /* PublishDetailCreateViewController.swift in Sources */,
@@ -661,7 +581,6 @@
 				F69E82702AABA6B4006AA4D3 /* BonjourServiceSortType.swift in Sources */,
 				B6CE1D601E120CCC003D4FFA /* BonjourServiceType.swift in Sources */,
 				F67B653F2C1B899B00324FFF /* BonjourServiceType+UI.swift in Sources */,
-				B68EEA5F1E471E6300831CC4 /* SettingsViewController.swift in Sources */,
 				F67B65462C1B957200324FFF /* Data+Util.swift in Sources */,
 				F67B65352C1B556900324FFF /* Logger.swift in Sources */,
 				B68EEA431E467CD300831CC4 /* MyViewControllerIdentifierProtocol.swift in Sources */,
@@ -671,7 +590,6 @@
 				F67B65392C1B5CB700324FFF /* BonjourServiceDetailView.swift in Sources */,
 				B6AE53861E170A6400FB57E3 /* PublishDetailExistingViewController.swift in Sources */,
 				B6CE1D561E120BF4003D4FFA /* MyDataManager.swift in Sources */,
-				B6BD8C8C2002E0ED009327B2 /* BluetoothDeviceDetailViewController.swift in Sources */,
 				B6C4BC521E1CC2CD004409F1 /* TableViewCells.swift in Sources */,
 				F614628626A1495C00D30CC8 /* TxtRecordsCells.swift in Sources */,
 				F69E82742AABA8A5006AA4D3 /* TransportLayer.swift in Sources */,
@@ -682,10 +600,7 @@
 				B6CE1D501E120B90003D4FFA /* UIViewController+Util.swift in Sources */,
 				B68B212D1E47A55800BE2CA2 /* ServiceDetailSimpleCell.swift in Sources */,
 				F6C50D7C2AB3BDD50048DF8C /* TitleDetailStackView.swift in Sources */,
-				B68EC5A01E2F226A00C9D5CC /* BluetoothViewController.swift in Sources */,
 				B68EEA571E47104D00831CC4 /* ServicesServiceCell.swift in Sources */,
-				B68EEA631E471FD000831CC4 /* SettingsItemCell.swift in Sources */,
-				B68EEA671E472B1B00831CC4 /* SettingsFooterView.swift in Sources */,
 				B69154631E138E4A00382F41 /* MyTableViewController.swift in Sources */,
 				F62EDC66255BAE8B003E5178 /* UIBarButtonItem+Util.swift in Sources */,
 				B6CE1D301E1208C1003D4FFA /* iDiscover.xcdatamodeld in Sources */,
@@ -693,13 +608,10 @@
 				B679CC131E1624740056C7B5 /* PublishNetServiceSearchViewController.swift in Sources */,
 				B6CE1D521E120B9F003D4FFA /* MyDataManagerObject.swift in Sources */,
 				F6240E6F2A92D63400951875 /* BluetoothScanForDevicesView.swift in Sources */,
-				B6BD8C9020030540009327B2 /* BluetoothCharacteristicDetailViewController.swift in Sources */,
 				B6CE1D5E1E120CCC003D4FFA /* BonjourService.swift in Sources */,
 				F67B655F2C22107500324FFF /* EmptyStateOverlayView.swift in Sources */,
-				B68EEA611E471F4200831CC4 /* SettingsHeaderView.swift in Sources */,
 				F6C50D822AB3F8A70048DF8C /* BluetoothScanForDevicesViewModel.swift in Sources */,
 				B6BD8C802002C6E2009327B2 /* BluetoothDeviceScanner.swift in Sources */,
-				B6833CBD1E3D44F200F56A90 /* BluetoothDeviceCell.swift in Sources */,
 				F67B655B2C20D6A600324FFF /* CreateOrUpdateBonjourServiceTypeView.swift in Sources */,
 				B67BB3281E18657F00A3228E /* AllServiceTypesTableViewController.swift in Sources */,
 				B6AE537C1E16D45700FB57E3 /* PresentableController.swift in Sources */,

@@ -34,7 +34,7 @@ struct SupportedServicesView: View {
                     }
                 }
             }
-            
+
             if !viewModel.filteredBuiltInServiceTypes.isEmpty {
                 Section("Built-in Service Types") {
                     ForEach(viewModel.filteredBuiltInServiceTypes, id: \.fullType) { serviceType in
@@ -85,7 +85,7 @@ struct SupportedServicesView: View {
 
         @MainActor @Published private var builtInServiceTypes: [BonjourServiceType] = []
         @MainActor @Published private var customServiceTypes: [BonjourServiceType] = []
-        
+
         @MainActor @Published var searchText: String = ""
         @MainActor @Published var isCreateCustomServiceTypePresented = false {
             didSet {
@@ -112,7 +112,7 @@ struct SupportedServicesView: View {
                 }
             }
         }
-        
+
         @MainActor var filteredCustomServiceTypes: [BonjourServiceType] {
             if searchText.isEmpty {
                 customServiceTypes
@@ -142,7 +142,7 @@ struct SupportedServicesView: View {
                         self.builtInServiceTypes = builtInServiceTypes
                     }
                 }
-                
+
                 if self.customServiceTypes != customServiceTypes {
                     withAnimation {
                         self.customServiceTypes = customServiceTypes

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Core
 import CoreData
 
 protocol MyDataManagerObject {
@@ -18,6 +19,10 @@ extension MyDataManagerObject where Self: NSManagedObject {
   private static var entityName: String {
     return String(describing: Self.self)
   }
+
+    private static var logger: Loggable {
+        Logger(category: Self.entityName)
+    }
 
   // MARK: - Managed Object Context
 
@@ -76,8 +81,7 @@ extension MyDataManagerObject where Self: NSManagedObject {
     do {
       return try self.mainContext.fetch(request)
     } catch {
-        // TODO: Update this
-      print("Error: \(error.localizedDescription)")
+        logger.error("Error: \(error.localizedDescription)")
     }
     return []
   }

@@ -7,9 +7,12 @@
 //
 
 import Foundation
+import Core
 import CoreData
 
 class MyCoreDataStack: NSObject {
+
+    private let logger = Logger(category: "MyCoreDataStack")
 
   // MARK: - Singleton
 
@@ -39,7 +42,7 @@ class MyCoreDataStack: NSObject {
      error conditions that could cause the creation of the store to fail.
      */
     let container = NSPersistentContainer(name: self.persistentContainerName)
-    container.loadPersistentStores(completionHandler: { (_, error) in
+    container.loadPersistentStores(completionHandler: { [weak self] (_, error) in
       if let error = error as NSError? {
         // Replace this implementation with code to handle the error appropriately.
         // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -53,8 +56,7 @@ class MyCoreDataStack: NSObject {
          Check the error message to determine what the actual problem was.
          */
         // fatalError("Unresolved error \(error), \(error.userInfo)")
-          // TODO: Update this
-        print("Unresolved error \(error), \(error.userInfo)")
+          self?.logger.error("Unresolved error \(error), \(error.userInfo)")
       }
     })
     return container
@@ -63,17 +65,17 @@ class MyCoreDataStack: NSObject {
   // MARK: - Context Notifications
 
   @objc private func contextWillSave(_ notification: Notification) {
-    print("Context will save")
+      logger.debug("Context will save")
   }
 
   @objc private func contextDidSave(_ notification: Notification) {
     if let _ = notification.object as? NSManagedObjectContext {
-        print("Context did save")
+        logger.debug("Context did save")
     }
   }
 
   @objc private func contextObjectsDidChange(_ notification: Notification) {
-      print("Objects did change")
+      logger.debug("Objects did change")
   }
 
   // MARK: - Managed Object Context
@@ -92,7 +94,7 @@ class MyCoreDataStack: NSObject {
         // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
         let nserror = error as NSError
         // fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-          print("Unresolved error \(nserror), \(nserror.userInfo)")
+          logger.error("Unresolved error \(nserror), \(nserror.userInfo)")
       }
     }
   }

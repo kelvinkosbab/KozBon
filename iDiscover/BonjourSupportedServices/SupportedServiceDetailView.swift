@@ -11,7 +11,7 @@ import SwiftUI
 // MARK: - SupportedServiceDetailView
 
 struct SupportedServiceDetailView: View {
-    
+
     @Environment(\.dismiss) var dismiss
 
     @State private var serviceType: BonjourServiceType
@@ -19,7 +19,7 @@ struct SupportedServiceDetailView: View {
     init(serviceType: BonjourServiceType) {
         self.serviceType = serviceType
     }
-    
+
     @State private var showDeleteConfirmation = false
     @State private var showEditConfirmation = false
 
@@ -71,7 +71,7 @@ struct SupportedServiceDetailView: View {
                     )
                 }
             }
-            
+
             if !serviceType.isBuiltIn {
                 Section {
                     Button {
@@ -97,7 +97,7 @@ struct SupportedServiceDetailView: View {
                             .opacity(0.4)
                     )
                 }
-                
+
                 Section {
                     Button(role: .destructive) {
                         showDeleteConfirmation = true
