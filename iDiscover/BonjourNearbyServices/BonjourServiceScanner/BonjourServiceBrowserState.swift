@@ -25,10 +25,10 @@ enum BonjourServiceBrowserState {
     }
 
     var isStopped: Bool {
-        return self == .stopped
+        self == .stopped
     }
 
     var isSearching: Bool {
-        return self == .searching
+        self == .searching
     }
 }

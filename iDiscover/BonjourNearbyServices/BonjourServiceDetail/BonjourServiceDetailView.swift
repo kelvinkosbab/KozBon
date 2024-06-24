@@ -115,7 +115,7 @@ struct BonjourServiceDetailView: View {
         let serviceType: BonjourServiceType
 
         @MainActor @Published private(set) var addresses: [InternetAddress] = []
-        @MainActor @Published private(set) var dataRecords: [BonjourService.MyDataRecord] = []
+        @MainActor @Published private(set) var dataRecords: [BonjourService.TxtDataRecord] = []
 
         init(service: BonjourService) {
             self.service = service
@@ -146,7 +146,7 @@ struct BonjourServiceDetailView: View {
             update(addresses: service.addresses, dataRecords: service.dataRecords)
         }
 
-        private func update(addresses: [InternetAddress], dataRecords: [BonjourService.MyDataRecord]) {
+        private func update(addresses: [InternetAddress], dataRecords: [BonjourService.TxtDataRecord]) {
             Task { @MainActor in
                 withAnimation {
                     self.addresses = addresses
