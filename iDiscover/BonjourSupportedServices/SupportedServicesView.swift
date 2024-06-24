@@ -64,17 +64,31 @@ struct SupportedServicesView: View {
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    viewModel.isCreateCustomServiceTypePresented = true
-                } label: {
-                    Label {
-                        Text("Create Custom Service Type")
-                    } icon: {
-                        Image(systemName: "badge.plus.radiowaves.forward")
-                            .renderingMode(.template)
-                            .foregroundColor(.kozBonBlue)
-                    }
+                self.renderTrailingToolbarItems()
+            }
+        }
+    }
+    
+    private func renderTrailingToolbarItems() -> some View {
+        Menu {
+            Button {
+                viewModel.isCreateCustomServiceTypePresented = true
+            } label: {
+                Label {
+                    Text("Create Custom Service Type")
+                } icon: {
+                    Image(systemName: "badge.plus.radiowaves.forward")
+                        .renderingMode(.template)
+                        .foregroundColor(.kozBonBlue)
                 }
+            }
+        } label: {
+            Label {
+                Text(self.viewModel.createButtonString)
+            } icon: {
+                Image.plusCircleFill
+                    .renderingMode(.template)
+                    .foregroundColor(.kozBonBlue)
             }
         }
     }
@@ -128,6 +142,11 @@ struct SupportedServicesView: View {
                 }
             }
         }
+        
+        let createButtonString = NSLocalizedString(
+            "Create",
+            comment: "Create service button string"
+        )
 
         func load() async {
             let sortedServiceTypes = BonjourServiceType.fetchAll().sorted { lhs, rhs -> Bool in

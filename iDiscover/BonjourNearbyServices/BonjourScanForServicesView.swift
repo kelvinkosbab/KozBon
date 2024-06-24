@@ -65,9 +65,6 @@ struct BonjourScanForServicesView: View {
                 BroadcastBonjourServiceView()
             }
         }
-        .sheet(isPresented: $viewModel.isCreateCustomServiceTypePresented) {
-            CreateOrUpdateBonjourServiceTypeView(isPresented: $viewModel.isCreateCustomServiceTypePresented)
-        }
     }
 
     @ViewBuilder private var activeServices: some View {
@@ -95,18 +92,6 @@ struct BonjourScanForServicesView: View {
                     Text("Broadcast Bonjour Service")
                 } icon: {
                     Image(systemName: "antenna.radiowaves.left.and.right")
-                        .renderingMode(.template)
-                        .foregroundColor(.kozBonBlue)
-                }
-            }
-
-            Button {
-                viewModel.isCreateCustomServiceTypePresented = true
-            } label: {
-                Label {
-                    Text("Create Custom Service Type")
-                } icon: {
-                    Image(systemName: "badge.plus.radiowaves.forward")
                         .renderingMode(.template)
                         .foregroundColor(.kozBonBlue)
                 }
