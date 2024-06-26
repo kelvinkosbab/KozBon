@@ -62,7 +62,7 @@ struct BonjourScanForServicesView: View {
         }
         .sheet(isPresented: $viewModel.isBroadcastBonjourServicePresented) {
             NavigationStack {
-                BroadcastBonjourServiceView()
+                BroadcastBonjourServiceView(isPresented: $viewModel.isBroadcastBonjourServicePresented)
             }
         }
     }

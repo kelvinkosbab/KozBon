@@ -26,24 +26,10 @@ struct SupportedServiceDetailView: View {
     var body: some View {
         List {
             Section {
-                HStack(spacing: 10) {
-                    Image(systemName: serviceType.imageSystemName)
-                        .font(.system(.title3).bold())
-
-                    VStack(alignment: .leading) {
-                        Text(verbatim: serviceType.name)
-                            .font(.system(.headline).bold())
-
-                        Text(verbatim: serviceType.fullType)
-                            .font(.system(.caption).bold())
-                    }
-                    Spacer()
-                }
-                .padding(.vertical, 10)
-                .listRowBackground(
-                    Color.kozBonBlue
-                        .opacity(0.4)
-                        .cornerRadius(10)
+                BlueSectionItemIconTitleDetailView(
+                    imageSystemName: serviceType.imageSystemName,
+                    title: serviceType.name,
+                    detail: serviceType.fullType
                 )
             }
 
@@ -94,7 +80,7 @@ struct SupportedServiceDetailView: View {
                     }
                     .listRowBackground(
                         Color.yellow
-                            .opacity(0.4)
+                            .opacity(0.2)
                     )
                 }
 
@@ -125,7 +111,7 @@ struct SupportedServiceDetailView: View {
                     }
                     .listRowBackground(
                         Color.red
-                            .opacity(0.4)
+                            .opacity(0.2)
                     )
                 }
             }

@@ -15,6 +15,16 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
 
     @Binding private var isPresented: Bool
     @Binding private var serviceTypeToUpdate: BonjourServiceType
+    
+    @State private var name: String
+    @State private var nameError: String?
+    @State private var type: String
+    @State private var typeError: String?
+    @State private var details: String
+    @State private var detailsError: String?
+
+    private var isCreatingBonjourService: Bool
+    private let selectedTransportLayer: TransportLayer = .tcp
 
     init(isPresented: Binding<Bool>) {
         self._isPresented = isPresented
@@ -41,16 +51,6 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
         self._serviceTypeToUpdate = serviceToUpdate
         self.isCreatingBonjourService = false
     }
-
-    @State private var name: String
-    @State private var nameError: String?
-    @State private var type: String
-    @State private var typeError: String?
-    @State private var details: String
-    @State private var detailsError: String?
-
-    private var isCreatingBonjourService: Bool
-    private let selectedTransportLayer: TransportLayer = .tcp
 
     var body: some View {
         NavigationStack {

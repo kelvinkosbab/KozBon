@@ -25,23 +25,10 @@ struct BonjourServiceDetailView: View {
     var body: some View {
         List {
             Section {
-                HStack(spacing: 10) {
-                    Image(systemName: viewModel.serviceType.imageSystemName)
-                        .font(.system(.title3).bold())
-
-                    VStack(alignment: .leading) {
-                        Text(verbatim: viewModel.service.service.name)
-                            .font(.system(.headline).bold())
-
-                        Text(verbatim: viewModel.serviceType.name)
-                            .font(.system(.caption).bold())
-                    }
-                    Spacer()
-                }
-                .padding(.vertical, 10)
-                .listRowBackground(
-                    Color.kozBonBlue
-                        .opacity(0.4)
+                BlueSectionItemIconTitleDetailView(
+                    imageSystemName: viewModel.serviceType.imageSystemName,
+                    title: viewModel.service.service.name,
+                    detail: viewModel.serviceType.name
                 )
             }
 
