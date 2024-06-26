@@ -14,12 +14,12 @@ struct BlueSectionItemIconTitleDetailView: View {
     
     let imageSystemName: String
     let title: String
-    let detail: String
+    let detail: String?
     
     init(
         imageSystemName: String,
         title: String,
-        detail: String
+        detail: String? = nil
     ) {
         self.imageSystemName = imageSystemName
         self.title = title
@@ -35,8 +35,10 @@ struct BlueSectionItemIconTitleDetailView: View {
                 Text(verbatim: title)
                     .font(.system(.headline).bold())
 
-                Text(verbatim: detail)
-                    .font(.system(.caption).bold())
+                if let detail {
+                    Text(verbatim: detail)
+                        .font(.system(.caption).bold())
+                }
             }
             Spacer()
         }

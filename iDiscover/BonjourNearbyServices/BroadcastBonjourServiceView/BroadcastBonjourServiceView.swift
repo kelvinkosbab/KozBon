@@ -16,7 +16,6 @@ struct BroadcastBonjourServiceView: View {
     private var serviceToUpdate: BonjourService
     
     @State private var serviceType: BonjourServiceType?
-    @State private var allServiceTypes: [BonjourServiceType] = []
     @State private var domain: String
     @State private var domainError: String?
     @State private var type: String
@@ -28,6 +27,7 @@ struct BroadcastBonjourServiceView: View {
 
     private var isCreatingBonjourService: Bool
     private let selectedTransportLayer: TransportLayer = .tcp
+    private let servicePublishManger = MyBonjourPublishManager.shared
     
     init(isPresented: Binding<Bool>) {
         self._isPresented = isPresented
@@ -69,24 +69,32 @@ struct BroadcastBonjourServiceView: View {
         NavigationStack {
             List {
                 Section(header: Text("Service Type")) {
-                    Picker("Service Type", selection: $serviceType) {
-                        ForEach(allServiceTypes, id: \.self) { serviceType in
-                            Text(serviceType.name)
+                    if let serviceType {
+                        BlueSectionItemIconTitleDetailView(
+                            imageSystemName: serviceType.imageSystemName,
+                            title: serviceType.name,
+                            detail: serviceType.fullType
+                        )
+                    } else {
+                        NavigationLink {
+                            SelectServiceTypeView(selectedServiceType: $serviceType)
+                        } label: {
+                            BlueSectionItemIconTitleDetailView(
+                                imageSystemName: serviceType?.imageSystemName ?? "",
+                                title: serviceType?.name ?? "Select a service type to broadcast",
+                                detail: serviceType?.fullType
+                            )
                         }
+                        .listRowBackground(
+                            Color.kozBonBlue
+                                .opacity(0.4)
+                        )
                     }
-                    .pickerStyle(SegmentedPickerStyle())
-                    .disabled(!isCreatingBonjourService)
                 }
-                
-//                if serviceToUpdate.is
             }
+            .contentMarginsBasedOnSizeClass()
             .navigationTitle("Broadcast service")
             .navigationBarTitleDisplayMode(.inline)
-            .task {
-                allServiceTypes = BonjourServiceType.fetchAll().sorted { lhs, rhs in
-                    lhs.name < rhs.name
-                }
-            }
         }
     }
 }

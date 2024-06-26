@@ -32,6 +32,7 @@
 		F6240E742A92D91800951875 /* AppStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E732A92D91800951875 /* AppStyles.swift */; };
 		F6240E7F2A941BD500951875 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		F661AD9D2C2CAF9F00779621 /* BlueSectionItemIconTitleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F661AD9C2C2CAF9F00779621 /* BlueSectionItemIconTitleDetailView.swift */; };
+		F661AD9F2C2CD20800779621 /* SelectServiceTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F661AD9E2C2CD20800779621 /* SelectServiceTypeView.swift */; };
 		F67B65312C1B4EC300324FFF /* InternetAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B65302C1B4EC300324FFF /* InternetAddress.swift */; };
 		F67B65332C1B54F400324FFF /* NetService+InternetAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B65322C1B54F400324FFF /* NetService+InternetAddress.swift */; };
 		F67B65352C1B556900324FFF /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B65342C1B556900324FFF /* Logger.swift */; };
@@ -93,6 +94,7 @@
 		F6240E732A92D91800951875 /* AppStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStyles.swift; sourceTree = "<group>"; };
 		F62EDC5E255B9D25003E5178 /* KozBon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KozBon.entitlements; sourceTree = "<group>"; };
 		F661AD9C2C2CAF9F00779621 /* BlueSectionItemIconTitleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueSectionItemIconTitleDetailView.swift; sourceTree = "<group>"; };
+		F661AD9E2C2CD20800779621 /* SelectServiceTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectServiceTypeView.swift; sourceTree = "<group>"; };
 		F6781EF72694C5F6009B79F7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F67B65302C1B4EC300324FFF /* InternetAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetAddress.swift; sourceTree = "<group>"; };
 		F67B65322C1B54F400324FFF /* NetService+InternetAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetService+InternetAddress.swift"; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 			isa = PBXGroup;
 			children = (
 				F67B655C2C20D6CA00324FFF /* BroadcastBonjourServiceView.swift */,
+				F661AD9E2C2CD20800779621 /* SelectServiceTypeView.swift */,
 			);
 			path = BroadcastBonjourServiceView;
 			sourceTree = "<group>";
@@ -432,6 +435,7 @@
 				B6CE1D5C1E120CCC003D4FFA /* BonjourServiceScanner.swift in Sources */,
 				F6240E7F2A941BD500951875 /* (null) in Sources */,
 				F67B65392C1B5CB700324FFF /* BonjourServiceDetailView.swift in Sources */,
+				F661AD9F2C2CD20800779621 /* SelectServiceTypeView.swift in Sources */,
 				B6CE1D561E120BF4003D4FFA /* MyDataManager.swift in Sources */,
 				F67B656A2C29EACA00324FFF /* BonjourService+Notification.swift in Sources */,
 				F69E82742AABA8A5006AA4D3 /* TransportLayer.swift in Sources */,
