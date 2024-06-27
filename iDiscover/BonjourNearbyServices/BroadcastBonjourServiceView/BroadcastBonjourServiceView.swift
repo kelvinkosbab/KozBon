@@ -16,6 +16,7 @@ struct BroadcastBonjourServiceView: View {
     private var serviceToUpdate: BonjourService
     
     @State private var serviceType: BonjourServiceType?
+    @State private var serviceTypeError: String?
     @State private var domain: String
     @State private var domainError: String?
     @State private var type: String
@@ -68,8 +69,8 @@ struct BroadcastBonjourServiceView: View {
     var body: some View {
         NavigationStack {
             List {
-                Section(header: Text("Service Type")) {
-                    if let serviceType {
+                Section {
+                    if let serviceType, !isCreatingBonjourService {
                         BlueSectionItemIconTitleDetailView(
                             imageSystemName: serviceType.imageSystemName,
                             title: serviceType.name,
@@ -90,11 +91,66 @@ struct BroadcastBonjourServiceView: View {
                                 .opacity(0.4)
                         )
                     }
+                } header: {
+                    Text("Service Type")
+                } footer: {
+                    if let serviceTypeError {
+                        Text(verbatim: serviceTypeError)
+                            .foregroundStyle(.red)
+                    }
                 }
             }
             .contentMarginsBasedOnSizeClass()
             .navigationTitle("Broadcast service")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(role: .cancel) {
+                        isPresented = false
+                    } label: {
+                        Label("Cancel", systemImage: "x.circle.fill")
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        doneButtonSelected()
+                    } label: {
+                        Label("Done", systemImage: "checkmark.circle.fill")
+                    }
+                }
+            }
+            .onChange(of: serviceType) { newValue in
+                if serviceType != nil {
+                    serviceTypeError = nil
+                }
+            }
+        }
+    }
+    
+    private func doneButtonSelected() {
+        
+        let transportLayer = selectedTransportLayer
+        let domain = domain.trimmed
+        let type = type.trimmed
+        let name = name.trimmed
+        
+        Task { @MainActor in
+            withAnimation {
+                serviceTypeError = nil
+                domainError = nil
+                typeError = nil
+                nameError = nil
+                portError = nil
+            }
+        }
+        
+        guard let serviceType else {
+            Task { @MainActor in
+                withAnimation {
+                    serviceTypeError = "Service type required"
+                }
+            }
+            return
         }
     }
 }

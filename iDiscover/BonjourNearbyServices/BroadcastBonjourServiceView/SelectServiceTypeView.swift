@@ -21,15 +21,34 @@ struct SelectServiceTypeView: View {
     
     var body: some View {
         List {
+            if let selectedServiceType {
+                Section {
+                    BlueSectionItemIconTitleDetailView(
+                        imageSystemName: selectedServiceType.imageSystemName,
+                        title: selectedServiceType.name,
+                        detail: selectedServiceType.fullType
+                    )
+                }
+            }
+            
             if !viewModel.filteredCustomServiceTypes.isEmpty {
                 Section("Custom Service Types") {
                     ForEach(viewModel.filteredCustomServiceTypes, id: \.fullType) { serviceType in
-                        TitleDetailStackView(
-                            title: serviceType.name,
-                            detail: serviceType.fullType
-                        ) {
-                            Image(systemName: serviceType.imageSystemName)
-                                .font(.system(.body).bold())
+                        Button {
+                            Task { @MainActor in
+                                withAnimation {
+                                    selectedServiceType = serviceType
+                                }
+                            }
+                        } label: {
+                            TitleDetailStackView(
+                                title: serviceType.name,
+                                detail: serviceType.fullType
+                            ) {
+                                Image(systemName: selectedServiceType == serviceType ? "checkmark.circle.fill" : "circle")
+                                    .font(.system(.body).bold())
+                                    .foregroundStyle(selectedServiceType == serviceType ? Color.kozBonBlue : .secondary)
+                            }
                         }
                     }
                 }
@@ -38,12 +57,21 @@ struct SelectServiceTypeView: View {
             if !viewModel.filteredBuiltInServiceTypes.isEmpty {
                 Section("Built-in Service Types") {
                     ForEach(viewModel.filteredBuiltInServiceTypes, id: \.fullType) { serviceType in
-                        TitleDetailStackView(
-                            title: serviceType.name,
-                            detail: serviceType.fullType
-                        ) {
-                            Image(systemName: serviceType.imageSystemName)
-                                .font(.system(.body).bold())
+                        Button {
+                            Task { @MainActor in
+                                withAnimation {
+                                    selectedServiceType = serviceType
+                                }
+                            }
+                        } label: {
+                            TitleDetailStackView(
+                                title: serviceType.name,
+                                detail: serviceType.fullType
+                            ) {
+                                Image(systemName: selectedServiceType == serviceType ? "checkmark.circle.fill" : "circle")
+                                    .font(.system(.body).bold())
+                                    .foregroundStyle(selectedServiceType == serviceType ? Color.kozBonBlue : .secondary)
+                            }
                         }
                     }
                 }
@@ -54,7 +82,10 @@ struct SelectServiceTypeView: View {
         .task {
             await viewModel.load()
         }
-        .searchable(text: $viewModel.searchText, prompt: "Search for ...")
+        .searchable(
+            text: $viewModel.searchText,
+            prompt: "Search for ..."
+        )
     }
     
     // MARK: - ViewModel
