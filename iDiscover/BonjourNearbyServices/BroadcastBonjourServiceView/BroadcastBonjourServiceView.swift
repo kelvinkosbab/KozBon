@@ -17,14 +17,11 @@ struct BroadcastBonjourServiceView: View {
     
     @State private var serviceType: BonjourServiceType?
     @State private var serviceTypeError: String?
+    @State private var port: Int?
+    @State private var portError: String?
     @State private var domain: String
     @State private var domainError: String?
-    @State private var type: String
-    @State private var typeError: String?
-    @State private var name: String
-    @State private var nameError: String?
-    @State private var port: Int
-    @State private var portError: String?
+    @State private var dataRecords: [BonjourService.TxtDataRecord]
 
     private var isCreatingBonjourService: Bool
     private let selectedTransportLayer: TransportLayer = .tcp
@@ -47,9 +44,8 @@ struct BroadcastBonjourServiceView: View {
         isCreatingBonjourService = true
         serviceType = nil
         domain = ""
-        type = ""
-        name = ""
-        port = 0
+        port = nil
+        dataRecords = []
     }
     
     init(
@@ -61,9 +57,8 @@ struct BroadcastBonjourServiceView: View {
         isCreatingBonjourService = false
         self.serviceType = serviceToUpdate.serviceType
         self.domain = serviceToUpdate.service.domain
-        self.type = serviceToUpdate.service.type
-        self.name = serviceToUpdate.service.name
         self.port = serviceToUpdate.service.port
+        self.dataRecords = serviceToUpdate.dataRecords
     }
     
     var body: some View {
@@ -99,6 +94,54 @@ struct BroadcastBonjourServiceView: View {
                             .foregroundStyle(.red)
                     }
                 }
+                
+                Section {
+                    TextField(
+                        "Service port number",
+                        value: $port,
+                        format: .number
+                    )
+                    .onSubmit {
+                        doneButtonSelected()
+                    }
+                    
+                } header: {
+                    Text("Port Number")
+                } footer: {
+                    if let portError {
+                        Text(verbatim: portError)
+                            .foregroundStyle(.red)
+                    }
+                }
+                
+                Section {
+                    TextField("Service domain", text: $domain)
+                        .onSubmit {
+                            doneButtonSelected()
+                        }
+                } header: {
+                    Text("Service Domain")
+                } footer: {
+                    if let domainError {
+                        Text(verbatim: domainError)
+                            .foregroundStyle(.red)
+                    }
+                }
+                
+                Section("TXT Records") {
+                    ForEach(dataRecords, id: \.key) { dataRecord in
+                        TitleDetailStackView(
+                            title: dataRecord.key,
+                            detail: dataRecord.value
+                        )
+                    }
+                    
+                    Button {
+                        // do something
+                    } label: {
+                        Label("Add TXT Record", systemImage: "plus.circle.fill")
+                    }
+                }
             }
             .contentMarginsBasedOnSizeClass()
             .navigationTitle("Broadcast service")
@@ -120,8 +163,21 @@ struct BroadcastBonjourServiceView: View {
                 }
             }
             .onChange(of: serviceType) { newValue in
-                if serviceType != nil {
-                    serviceTypeError = nil
+                Task { @MainActor in
+                    withAnimation {
+                        if serviceType != nil {
+                            serviceTypeError = nil
+                        }
+                    }
+                }
+            }
+            .onChange(of: port) { newValue in
+                Task { @MainActor in
+                    withAnimation {
+                        if port != nil {
+                            portError = nil
+                        }
+                    }
                 }
             }
         }
@@ -131,15 +187,11 @@ struct BroadcastBonjourServiceView: View {
         
         let transportLayer = selectedTransportLayer
         let domain = domain.trimmed
-        let type = type.trimmed
-        let name = name.trimmed
         
         Task { @MainActor in
             withAnimation {
                 serviceTypeError = nil
                 domainError = nil
-                typeError = nil
-                nameError = nil
                 portError = nil
             }
         }
@@ -148,6 +200,33 @@ struct BroadcastBonjourServiceView: View {
             Task { @MainActor in
                 withAnimation {
                     serviceTypeError = "Service type required"
+                }
+            }
+            return
+        }
+        
+        guard let port else {
+            Task { @MainActor in
+                withAnimation {
+                    portError = "Port number required"
+                }
+            }
+            return
+        }
+        
+        guard port > 3000 else {
+            Task { @MainActor in
+                withAnimation {
+                    portError = "Port number must be greater than 3000"
+                }
+            }
+            return
+        }
+        
+        guard let domainError else {
+            Task { @MainActor in
+                withAnimation {
+                    portError = "Port number required"
                 }
             }
             return
