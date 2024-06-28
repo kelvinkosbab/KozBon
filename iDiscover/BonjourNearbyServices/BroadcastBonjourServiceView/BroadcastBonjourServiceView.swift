@@ -77,7 +77,7 @@ struct BroadcastBonjourServiceView: View {
                             SelectServiceTypeView(selectedServiceType: $serviceType)
                         } label: {
                             BlueSectionItemIconTitleDetailView(
-                                imageSystemName: serviceType?.imageSystemName ?? "",
+                                imageSystemName: serviceType?.imageSystemName,
                                 title: serviceType?.name ?? "Select a service type to broadcast",
                                 detail: serviceType?.fullType
                             )
@@ -237,14 +237,14 @@ struct BroadcastBonjourServiceView: View {
             do {
                 try await servicePublishManger.publish(
                     name: serviceType.name,
-                    type: serviceType.fullType,
+                    type: serviceType.type,
                     port: port,
                     domain: domain,
                     transportLayer: selectedTransportLayer,
                     detail: serviceType.detail ?? "N/A"
                 )
             } catch {
-                serviceTypeError = "Something happened. Try again...\n\n\(error)"
+                serviceTypeError = "Something happened. Try again..."
             }
         }
     }

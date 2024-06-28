@@ -73,7 +73,7 @@ class MyBonjourPublishManager: NSObject {
         success: @escaping () -> Void, failure: @escaping (_ error: Error) -> Void
     ) {
         let serviceType = BonjourServiceType(name: name, type: type, transportLayer: transportLayer, detail: detail)
-        serviceType.savePersistentCopy()
+//        serviceType.savePersistentCopy()
         let netService = NetService(domain: domain, type: serviceType.fullType, name: name, port: Int32(port))
         let service = BonjourService(service: netService, serviceType: serviceType)
         self.publish(service: service, success: success, failure: failure)

@@ -100,16 +100,16 @@ class BonjourService: NSObject, NetServiceDelegate {
         completedAddressResolution?()
         completedAddressResolution = nil
         isResolving = false
-  }
+    }
 
-  func netService(_ sender: NetService, didNotResolve errorDict: [String: NSNumber]) {
-      logger.debug("Service did not resolve address", censored: "\(sender) with errorDict \(errorDict)")
-      NotificationCenter.default.post(name: .netServiceResolveAddressComplete, object: self)
-      self.delegate?.serviceDidResolveAddress(self)
-      self.completedAddressResolution?()
-      self.completedAddressResolution = nil
-      self.isResolving = false
-  }
+    func netService(_ sender: NetService, didNotResolve errorDict: [String: NSNumber]) {
+        logger.debug("Service did not resolve address", censored: "\(sender) with errorDict \(errorDict)")
+        NotificationCenter.default.post(name: .netServiceResolveAddressComplete, object: self)
+        self.delegate?.serviceDidResolveAddress(self)
+        self.completedAddressResolution?()
+        self.completedAddressResolution = nil
+        self.isResolving = false
+    }
 
     // MARK: - Publishing Service
 

@@ -12,14 +12,14 @@ import SwiftUI
 
 struct BlueSectionItemIconTitleDetailView: View {
     
-    let imageSystemName: String
+    let imageSystemName: String?
     let title: String
     let detail: String?
     
     init(
-        imageSystemName: String,
+        imageSystemName: String?,
         title: String,
-        detail: String? = nil
+        detail: String?
     ) {
         self.imageSystemName = imageSystemName
         self.title = title
@@ -28,8 +28,10 @@ struct BlueSectionItemIconTitleDetailView: View {
     
     var body: some View {
         HStack(spacing: 10) {
-            Image(systemName: imageSystemName)
-                .font(.system(.title3).bold())
+            if let imageSystemName, !imageSystemName.isEmpty {
+                Image(systemName: imageSystemName)
+                    .font(.system(.title3).bold())
+            }
 
             VStack(alignment: .leading) {
                 Text(verbatim: title)
@@ -46,6 +48,38 @@ struct BlueSectionItemIconTitleDetailView: View {
         .listRowBackground(
             Color.kozBonBlue
                 .opacity(0.4)
+        )
+    }
+}
+
+extension BlueSectionItemIconTitleDetailView {
+    init(
+        imageSystemName: String,
+        title: String
+    ) {
+        self.init(
+            imageSystemName: imageSystemName,
+            title: title,
+            detail: nil
+        )
+    }
+    
+    init(
+        title: String,
+        detail: String
+    ) {
+        self.init(
+            imageSystemName: nil,
+            title: title,
+            detail: detail
+        )
+    }
+    
+    init(title: String) {
+        self.init(
+            imageSystemName: nil,
+            title: title,
+            detail: nil
         )
     }
 }

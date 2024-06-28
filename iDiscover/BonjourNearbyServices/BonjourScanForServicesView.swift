@@ -32,7 +32,7 @@ struct BonjourScanForServicesView: View {
         }
         .contentMarginsBasedOnSizeClass()
         .overlay {
-            if self.viewModel.activeServices.count == 0 {
+            if self.viewModel.sortedActiveServices.count == 0 {
                 EmptyStateOverlayView(
                     image: nil,
                     title: self.viewModel.noActiveServicesString
@@ -68,7 +68,7 @@ struct BonjourScanForServicesView: View {
     }
 
     @ViewBuilder private var activeServices: some View {
-        ForEach(viewModel.activeServices) { service in
+        ForEach(viewModel.sortedActiveServices) { service in
             NavigationLink {
                 BonjourServiceDetailView(service: service)
             } label: {

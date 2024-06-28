@@ -13,17 +13,37 @@ import SwiftUI
 
 class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDelegate {
 
-    @MainActor @Published var activeServices: [BonjourService] = []
-
-    @MainActor @Published var sortType: BonjourServiceSortType? {
-        didSet {
-            if let sortType = self.sortType {
-                self.sort(sortType: sortType)
+    @MainActor @Published private var activeServices: [BonjourService] = []
+    @MainActor @Published private var customPublishedServices: [BonjourService] = []
+    @MainActor @Published var sortType: BonjourServiceSortType?
+    @MainActor @Published var isBroadcastBonjourServicePresented = false
+    
+    @MainActor var sortedActiveServices: [BonjourService] {
+        switch sortType {
+        case .hostNameAsc:
+            activeServices.sorted { service1, service2 -> Bool in
+                service1.service.name < service2.service.name
             }
+
+        case .hostNameDesc:
+            activeServices.sorted { service1, service2 -> Bool in
+                service1.service.name > service2.service.name
+            }
+
+        case .serviceNameAsc:
+            activeServices.sorted { service1, service2 -> Bool in
+                service1.serviceType.name < service2.serviceType.name
+            }
+
+        case .serviceNameDesc:
+            activeServices.sorted { service1, service2 -> Bool in
+                service1.serviceType.name > service2.serviceType.name
+            }
+            
+        default:
+            activeServices
         }
     }
-
-    @MainActor @Published var isBroadcastBonjourServicePresented = false
 
     private(set) var isInitialLoad = true
     let serviceScanner = BonjourServiceScanner()
@@ -58,27 +78,7 @@ class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDelegate 
 
     @MainActor
     func sort(sortType: BonjourServiceSortType) {
-        switch sortType {
-        case .hostNameAsc:
-            self.activeServices = self.activeServices.sorted { service1, service2 -> Bool in
-                return service1.service.name < service2.service.name
-            }
-
-        case .hostNameDesc:
-            self.activeServices = self.activeServices.sorted { service1, service2 -> Bool in
-            return service1.service.name > service2.service.name
-        }
-
-        case .serviceNameAsc:
-            self.activeServices = self.activeServices.sorted { service1, service2 -> Bool in
-            return service1.serviceType.name < service2.serviceType.name
-        }
-
-        case .serviceNameDesc:
-            self.activeServices = self.activeServices.sorted { service1, service2 -> Bool in
-                return service1.serviceType.name > service2.serviceType.name
-            }
-        }
+        self.sortType = sortType
     }
 
     // MARK: - BonjourServiceScannerDelegate
