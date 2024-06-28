@@ -34,7 +34,8 @@ struct BroadcastBonjourServiceView: View {
                 domain: "",
                 type: "",
                 name: "",
-                port: 0),
+                port: 0
+            ),
             serviceType: BonjourServiceType(
                 name: "",
                 type: "",
@@ -223,13 +224,28 @@ struct BroadcastBonjourServiceView: View {
             return
         }
         
-        guard let domainError else {
+        guard !domain.isEmpty else {
             Task { @MainActor in
                 withAnimation {
                     portError = "Port number required"
                 }
             }
             return
+        }
+        
+        Task {
+            do {
+                try await servicePublishManger.publish(
+                    name: serviceType.name,
+                    type: serviceType.fullType,
+                    port: port,
+                    domain: domain,
+                    transportLayer: selectedTransportLayer,
+                    detail: serviceType.detail ?? "N/A"
+                )
+            } catch {
+                serviceTypeError = "Something happened. Try again...\n\n\(error)"
+            }
         }
     }
 }

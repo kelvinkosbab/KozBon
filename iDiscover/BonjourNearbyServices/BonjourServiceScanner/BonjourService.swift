@@ -115,9 +115,12 @@ class BonjourService: NSObject, NetServiceDelegate {
 
     private(set) var isPublishing: Bool = false
     private var publishServiceSuccess: (() -> Void)?
-    private var publishServiceFailure: (() -> Void)?
+    private var publishServiceFailure: ((_ error: Error) -> Void)?
 
-    func publish(publishServiceSuccess: @escaping () -> Void, publishServiceFailure: @escaping () -> Void) {
+    func publish(
+        publishServiceSuccess: @escaping () -> Void,
+        publishServiceFailure: @escaping (_ error: Error) -> Void
+    ) {
         self.isPublishing = true
         self.publishServiceSuccess = publishServiceSuccess
         self.publishServiceFailure = publishServiceFailure
@@ -151,7 +154,7 @@ class BonjourService: NSObject, NetServiceDelegate {
 
     func netService(_ sender: NetService, didNotPublish errorDict: [String: NSNumber]) {
         logger.debug("Service did not publish", censored: "\(sender) with errorDict \(errorDict)")
-        self.publishServiceFailure?()
+        self.publishServiceFailure?(PublishError.didNotPublish)
         self.publishServiceSuccess = nil
         self.publishServiceFailure = nil
         self.isPublishing = false
@@ -182,6 +185,12 @@ class BonjourService: NSObject, NetServiceDelegate {
             r1 < r2
         }
     }
+}
+
+// MARK: - PublishError
+
+enum PublishError: Swift.Error {
+    case didNotPublish
 }
 
 // MARK: - Identifiable
