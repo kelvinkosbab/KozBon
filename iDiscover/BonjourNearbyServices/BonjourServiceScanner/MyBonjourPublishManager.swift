@@ -70,10 +70,9 @@ class MyBonjourPublishManager: NSObject {
         domain: String,
         transportLayer: TransportLayer,
         detail: String,
-        success: @escaping () -> Void, failure: @escaping (_ error: Error) -> Void
+        success: @escaping (_ service: BonjourService) -> Void, failure: @escaping (_ error: Error) -> Void
     ) {
         let serviceType = BonjourServiceType(name: name, type: type, transportLayer: transportLayer, detail: detail)
-//        serviceType.savePersistentCopy()
         let netService = NetService(domain: domain, type: serviceType.fullType, name: name, port: Int32(port))
         let service = BonjourService(service: netService, serviceType: serviceType)
         self.publish(service: service, success: success, failure: failure)
@@ -86,7 +85,7 @@ class MyBonjourPublishManager: NSObject {
         domain: String,
         transportLayer: TransportLayer,
         detail: String
-    ) async throws {
+    ) async throws -> BonjourService {
         try await withCheckedThrowingContinuation { continuation in
             publish(
                 name: name,
@@ -95,8 +94,8 @@ class MyBonjourPublishManager: NSObject {
                 domain: domain,
                 transportLayer: transportLayer,
                 detail: detail
-            ) {
-                continuation.resume()
+            ) { service in
+                continuation.resume(returning: service)
             } failure: { error in
                 continuation.resume(throwing: error)
             }
@@ -107,22 +106,22 @@ class MyBonjourPublishManager: NSObject {
 
     func publish(
         service: BonjourService,
-        success: @escaping () -> Void,
+        success: @escaping (_ service: BonjourService) -> Void,
         failure: @escaping (_ error: Error) -> Void
     ) {
         service.publish(
             publishServiceSuccess: {
                 self.add(publishedService: service)
-                success()
+                success(service)
             },
             publishServiceFailure: failure
         )
     }
     
-    func publish(service: BonjourService) async throws {
+    func publish(service: BonjourService) async throws -> BonjourService {
         try await withCheckedThrowingContinuation { continuation in
-            publish(service: service) {
-                continuation.resume()
+            publish(service: service) { service in
+                continuation.resume(returning: service)
             } failure: { error in
                 continuation.resume(throwing: error)
             }

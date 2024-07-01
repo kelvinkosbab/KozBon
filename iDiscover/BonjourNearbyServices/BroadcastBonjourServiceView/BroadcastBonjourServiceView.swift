@@ -22,6 +22,7 @@ struct BroadcastBonjourServiceView: View {
     @State private var domain: String
     @State private var domainError: String?
     @State private var dataRecords: [BonjourService.TxtDataRecord]
+    @State private var isCreateTxtRecordViewPresented = false
 
     private var isCreatingBonjourService: Bool
     private let selectedTransportLayer: TransportLayer = .tcp
@@ -66,7 +67,7 @@ struct BroadcastBonjourServiceView: View {
         NavigationStack {
             List {
                 Section {
-                    if let serviceType, !isCreatingBonjourService {
+                    if !isCreatingBonjourService, let serviceType {
                         BlueSectionItemIconTitleDetailView(
                             imageSystemName: serviceType.imageSystemName,
                             title: serviceType.name,
@@ -135,10 +136,27 @@ struct BroadcastBonjourServiceView: View {
                             title: dataRecord.key,
                             detail: dataRecord.value
                         )
+                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                            Button(role: .destructive) {
+                                let indexToRemove = dataRecords.firstIndex { record in
+                                    record.key == dataRecord.key
+                                }
+                                if let indexToRemove {
+                                    Task { @MainActor in
+                                        withAnimation {
+                                            dataRecords.remove(at: indexToRemove)
+                                        }
+                                    }
+                                }
+                            } label: {
+                                Label("Remove", systemImage: "minus.circle.fill")
+                            }
+                            .tint(.red)
+                        }
                     }
                     
                     Button {
-                        // do something
+                        isCreateTxtRecordViewPresented = true
                     } label: {
                         Label("Add TXT Record", systemImage: "plus.circle.fill")
                     }
@@ -180,6 +198,12 @@ struct BroadcastBonjourServiceView: View {
                         }
                     }
                 }
+            }
+            .sheet(isPresented: $isCreateTxtRecordViewPresented) {
+                CreateTxtRecordView(
+                    isPresented: $isCreateTxtRecordViewPresented,
+                    txtDataRecords: $dataRecords
+                )
             }
         }
     }
@@ -235,14 +259,21 @@ struct BroadcastBonjourServiceView: View {
         
         Task {
             do {
-                try await servicePublishManger.publish(
+                let publishedService = try await servicePublishManger.publish(
                     name: serviceType.name,
                     type: serviceType.type,
                     port: port,
                     domain: domain,
-                    transportLayer: selectedTransportLayer,
+                    transportLayer: transportLayer,
                     detail: serviceType.detail ?? "N/A"
                 )
+                
+                var txtRecords: [String: Data] = [:]
+                for record in dataRecords {
+                    txtRecords[record.key] = record.value.data(using: String.Encoding.utf8)
+                }
+                let txtRecordData = NetService.data(fromTXTRecord: txtRecords)
+                let result = publishedService.service.setTXTRecord(txtRecordData)
             } catch {
                 serviceTypeError = "Something happened. Try again..."
             }

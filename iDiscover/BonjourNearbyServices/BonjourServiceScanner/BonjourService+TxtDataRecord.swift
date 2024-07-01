@@ -11,7 +11,7 @@ import Foundation
 // MARK: - TxtDataRecord
 
 extension BonjourService {
-    class TxtDataRecord: Equatable, Comparable {
+    struct TxtDataRecord: Equatable, Comparable {
         let key: String
         let value: String
 
