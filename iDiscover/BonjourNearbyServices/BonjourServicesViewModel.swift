@@ -16,8 +16,17 @@ class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDelegate 
     @MainActor @Published private var activeServices: [BonjourService] = []
     @MainActor @Published private var customPublishedServices: [BonjourService] = []
     @MainActor @Published var sortType: BonjourServiceSortType?
-    @MainActor @Published var isBroadcastBonjourServicePresented = false
-    
+
+    @MainActor @Published var isBroadcastBonjourServicePresented = false {
+        didSet {
+            if !isBroadcastBonjourServicePresented {
+                Task {
+                    self.load()
+                }
+            }
+        }
+    }
+
     @MainActor var sortedActiveServices: [BonjourService] {
         switch sortType {
         case .hostNameAsc:
@@ -39,7 +48,7 @@ class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDelegate 
             activeServices.sorted { service1, service2 -> Bool in
                 service1.serviceType.name > service2.serviceType.name
             }
-            
+
         default:
             activeServices
         }
@@ -66,12 +75,13 @@ class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDelegate 
 
     // MARK: - Actions
 
-    func addButtonPressed() {
-        print("KAK addButtonPressed")
-    }
-
     @MainActor
     func load() {
+
+        guard !serviceScanner.isProcessing else {
+            return
+        }
+
         serviceScanner.startScan()
         isInitialLoad = false
     }

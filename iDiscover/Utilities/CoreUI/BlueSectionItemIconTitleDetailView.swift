@@ -11,11 +11,11 @@ import SwiftUI
 // MARK: - BlueSectionItemIconTitleDetailView
 
 struct BlueSectionItemIconTitleDetailView: View {
-    
+
     let imageSystemName: String?
     let title: String
     let detail: String?
-    
+
     init(
         imageSystemName: String?,
         title: String,
@@ -25,7 +25,7 @@ struct BlueSectionItemIconTitleDetailView: View {
         self.title = title
         self.detail = detail
     }
-    
+
     var body: some View {
         HStack(spacing: 10) {
             if let imageSystemName, !imageSystemName.isEmpty {
@@ -63,7 +63,7 @@ extension BlueSectionItemIconTitleDetailView {
             detail: nil
         )
     }
-    
+
     init(
         title: String,
         detail: String
@@ -74,7 +74,7 @@ extension BlueSectionItemIconTitleDetailView {
             detail: detail
         )
     }
-    
+
     init(title: String) {
         self.init(
             imageSystemName: nil,

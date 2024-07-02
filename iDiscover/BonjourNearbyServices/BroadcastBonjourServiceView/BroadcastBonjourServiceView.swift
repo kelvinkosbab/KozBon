@@ -11,28 +11,27 @@ import SwiftUI
 // MARK: - BroadcastBonjourServiceView
 
 struct BroadcastBonjourServiceView: View {
-    
+
     @Binding private var isPresented: Bool
     private var serviceToUpdate: BonjourService
-    
+
     @State private var serviceType: BonjourServiceType?
     @State private var serviceTypeError: String?
     @State private var port: Int?
     @State private var portError: String?
-    @State private var domain: String
-    @State private var domainError: String?
+    @State private var domain: String = "local."
     @State private var dataRecords: [BonjourService.TxtDataRecord]
     @State private var isCreateTxtRecordViewPresented = false
 
     private var isCreatingBonjourService: Bool
     private let selectedTransportLayer: TransportLayer = .tcp
     private let servicePublishManger = MyBonjourPublishManager.shared
-    
+
     init(isPresented: Binding<Bool>) {
         self._isPresented = isPresented
         self.serviceToUpdate = BonjourService(
             service: .init(
-                domain: "",
+                domain: "local.",
                 type: "",
                 name: "",
                 port: 0
@@ -45,11 +44,11 @@ struct BroadcastBonjourServiceView: View {
         )
         isCreatingBonjourService = true
         serviceType = nil
-        domain = ""
+        domain = "local."
         port = nil
         dataRecords = []
     }
-    
+
     init(
         isPresented: Binding<Bool>,
         serviceToUpdate: BonjourService
@@ -62,7 +61,7 @@ struct BroadcastBonjourServiceView: View {
         self.port = serviceToUpdate.service.port
         self.dataRecords = serviceToUpdate.dataRecords
     }
-    
+
     var body: some View {
         NavigationStack {
             List {
@@ -96,7 +95,7 @@ struct BroadcastBonjourServiceView: View {
                             .foregroundStyle(.red)
                     }
                 }
-                
+
                 Section {
                     TextField(
                         "Service port number",
@@ -106,7 +105,7 @@ struct BroadcastBonjourServiceView: View {
                     .onSubmit {
                         doneButtonSelected()
                     }
-                    
+
                 } header: {
                     Text("Port Number")
                 } footer: {
@@ -115,21 +114,15 @@ struct BroadcastBonjourServiceView: View {
                             .foregroundStyle(.red)
                     }
                 }
-                
-                Section {
+
+                Section("Service Domain") {
                     TextField("Service domain", text: $domain)
                         .onSubmit {
                             doneButtonSelected()
                         }
-                } header: {
-                    Text("Service Domain")
-                } footer: {
-                    if let domainError {
-                        Text(verbatim: domainError)
-                            .foregroundStyle(.red)
-                    }
+                        .disabled(false)
                 }
-                
+
                 Section("TXT Records") {
                     ForEach(dataRecords, id: \.key) { dataRecord in
                         TitleDetailStackView(
@@ -154,7 +147,7 @@ struct BroadcastBonjourServiceView: View {
                             .tint(.red)
                         }
                     }
-                    
+
                     Button {
                         isCreateTxtRecordViewPresented = true
                     } label: {
@@ -181,7 +174,7 @@ struct BroadcastBonjourServiceView: View {
                     }
                 }
             }
-            .onChange(of: serviceType) { newValue in
+            .onChange(of: serviceType) { _ in
                 Task { @MainActor in
                     withAnimation {
                         if serviceType != nil {
@@ -190,7 +183,7 @@ struct BroadcastBonjourServiceView: View {
                     }
                 }
             }
-            .onChange(of: port) { newValue in
+            .onChange(of: port) { _ in
                 Task { @MainActor in
                     withAnimation {
                         if port != nil {
@@ -207,20 +200,19 @@ struct BroadcastBonjourServiceView: View {
             }
         }
     }
-    
+
     private func doneButtonSelected() {
-        
+
         let transportLayer = selectedTransportLayer
         let domain = domain.trimmed
-        
+
         Task { @MainActor in
             withAnimation {
                 serviceTypeError = nil
-                domainError = nil
                 portError = nil
             }
         }
-        
+
         guard let serviceType else {
             Task { @MainActor in
                 withAnimation {
@@ -229,7 +221,7 @@ struct BroadcastBonjourServiceView: View {
             }
             return
         }
-        
+
         guard let port else {
             Task { @MainActor in
                 withAnimation {
@@ -238,7 +230,7 @@ struct BroadcastBonjourServiceView: View {
             }
             return
         }
-        
+
         guard port > 3000 else {
             Task { @MainActor in
                 withAnimation {
@@ -247,33 +239,27 @@ struct BroadcastBonjourServiceView: View {
             }
             return
         }
-        
-        guard !domain.isEmpty else {
-            Task { @MainActor in
-                withAnimation {
-                    portError = "Port number required"
-                }
-            }
-            return
-        }
-        
+
         Task {
             do {
                 let publishedService = try await servicePublishManger.publish(
                     name: serviceType.name,
                     type: serviceType.type,
                     port: port,
-                    domain: domain,
+                    domain: domain.trimmed,
                     transportLayer: transportLayer,
                     detail: serviceType.detail ?? "N/A"
                 )
-                
+
                 var txtRecords: [String: Data] = [:]
                 for record in dataRecords {
                     txtRecords[record.key] = record.value.data(using: String.Encoding.utf8)
                 }
                 let txtRecordData = NetService.data(fromTXTRecord: txtRecords)
-                let result = publishedService.service.setTXTRecord(txtRecordData)
+                _ = publishedService.service.setTXTRecord(txtRecordData)
+
+                isPresented = false
+
             } catch {
                 serviceTypeError = "Something happened. Try again..."
             }

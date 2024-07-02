@@ -70,14 +70,15 @@ class MyBonjourPublishManager: NSObject {
         domain: String,
         transportLayer: TransportLayer,
         detail: String,
-        success: @escaping (_ service: BonjourService) -> Void, failure: @escaping (_ error: Error) -> Void
+        success: @escaping (_ service: BonjourService) -> Void,
+        failure: @escaping (_ error: Error) -> Void
     ) {
         let serviceType = BonjourServiceType(name: name, type: type, transportLayer: transportLayer, detail: detail)
         let netService = NetService(domain: domain, type: serviceType.fullType, name: name, port: Int32(port))
         let service = BonjourService(service: netService, serviceType: serviceType)
-        self.publish(service: service, success: success, failure: failure)
+        publish(service: service, success: success, failure: failure)
     }
-    
+
     func publish(
         name: String,
         type: String,
@@ -101,7 +102,7 @@ class MyBonjourPublishManager: NSObject {
             }
         }
     }
-    
+
     // MARK: - Publish
 
     func publish(
@@ -117,7 +118,7 @@ class MyBonjourPublishManager: NSObject {
             publishServiceFailure: failure
         )
     }
-    
+
     func publish(service: BonjourService) async throws -> BonjourService {
         try await withCheckedThrowingContinuation { continuation in
             publish(service: service) { service in
@@ -127,7 +128,7 @@ class MyBonjourPublishManager: NSObject {
             }
         }
     }
-    
+
     // MARK: - Un-Publish
 
     func unPublish(service: BonjourService, completion: (() -> Void)? = nil) {
@@ -136,7 +137,7 @@ class MyBonjourPublishManager: NSObject {
             completion?()
         }
     }
-    
+
     func unPublish(service: BonjourService) async {
         await withCheckedContinuation { continuation in
             unPublish(service: service) {
@@ -157,7 +158,7 @@ class MyBonjourPublishManager: NSObject {
             completion?()
         }
     }
-    
+
     func unPublishAllServices() async {
         await withCheckedContinuation { continuation in
             unPublishAllServices {

@@ -15,7 +15,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
 
     @Binding private var isPresented: Bool
     @Binding private var serviceTypeToUpdate: BonjourServiceType
-    
+
     @State private var name: String
     @State private var nameError: String?
     @State private var type: String
@@ -128,7 +128,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                     }
                 }
             }
-            .onChange(of: name) { newValue in
+            .onChange(of: name) { _ in
                 Task { @MainActor in
                     withAnimation {
                         if !name.trimmed.isEmpty {
@@ -137,7 +137,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                     }
                 }
             }
-            .onChange(of: type) { newValue in
+            .onChange(of: type) { _ in
                 Task { @MainActor in
                     withAnimation {
                         if !type.trimmed.isEmpty {
@@ -146,7 +146,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                     }
                 }
             }
-            .onChange(of: details) { newValue in
+            .onChange(of: details) { _ in
                 Task { @MainActor in
                     withAnimation {
                         if !details.trimmed.isEmpty {

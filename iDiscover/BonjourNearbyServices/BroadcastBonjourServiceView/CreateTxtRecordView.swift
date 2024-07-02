@@ -11,16 +11,16 @@ import SwiftUI
 // MARK: - CreateTxtRecordView
 
 struct CreateTxtRecordView: View {
-    
+
     @Binding private var isPresented: Bool
     @Binding private var txtDataRecords: [BonjourService.TxtDataRecord]
     private let txtRecordToUpdate: BonjourService.TxtDataRecord?
-    
+
     @State private var key: String
     @State private var keyError: String?
     @State private var value: String
     @State private var valueError: String?
-    
+
     init(
         isPresented: Binding<Bool>,
         txtDataRecords: Binding<[BonjourService.TxtDataRecord]>
@@ -31,7 +31,7 @@ struct CreateTxtRecordView: View {
         value = ""
         txtRecordToUpdate = nil
     }
-    
+
     init(
         isPresented: Binding<Bool>,
         txtDataRecords: Binding<[BonjourService.TxtDataRecord]>,
@@ -43,7 +43,7 @@ struct CreateTxtRecordView: View {
         value = txtRecordToUpdate.value
         self.txtRecordToUpdate = txtRecordToUpdate
     }
-    
+
     var body: some View {
         NavigationStack {
             List {
@@ -55,7 +55,7 @@ struct CreateTxtRecordView: View {
                     .onSubmit {
                         doneButtonSelected()
                     }
-                    
+
                 } header: {
                     Text("Record Key")
                 } footer: {
@@ -64,7 +64,7 @@ struct CreateTxtRecordView: View {
                             .foregroundStyle(.red)
                     }
                 }
-                
+
                 Section {
                     TextField(
                         "TXT Record Value",
@@ -73,7 +73,7 @@ struct CreateTxtRecordView: View {
                     .onSubmit {
                         doneButtonSelected()
                     }
-                    
+
                 } header: {
                     Text("Record Value")
                 } footer: {
@@ -102,7 +102,7 @@ struct CreateTxtRecordView: View {
                     }
                 }
             }
-            .onChange(of: key) { newValue in
+            .onChange(of: key) { _ in
                 Task { @MainActor in
                     withAnimation {
                         if keyError != nil {
@@ -111,7 +111,7 @@ struct CreateTxtRecordView: View {
                     }
                 }
             }
-            .onChange(of: value) { newValue in
+            .onChange(of: value) { _ in
                 Task { @MainActor in
                     withAnimation {
                         if valueError != nil {
@@ -122,19 +122,19 @@ struct CreateTxtRecordView: View {
             }
         }
     }
-    
+
     private func doneButtonSelected() {
-        
+
         let key = key.trimmed
         let value = value.trimmed
-        
+
         Task { @MainActor in
             withAnimation {
                 keyError = nil
                 valueError = nil
             }
         }
-        
+
         guard !key.trimmed.isEmpty else {
             Task { @MainActor in
                 withAnimation {
@@ -143,7 +143,7 @@ struct CreateTxtRecordView: View {
             }
             return
         }
-        
+
         guard !value.trimmed.isEmpty else {
             Task { @MainActor in
                 withAnimation {
@@ -152,7 +152,7 @@ struct CreateTxtRecordView: View {
             }
             return
         }
-        
+
         Task { @MainActor in
             withAnimation {
                 let newRecord = BonjourService.TxtDataRecord(key: key, value: value)
@@ -162,7 +162,7 @@ struct CreateTxtRecordView: View {
                 } else {
                     txtDataRecords.append(newRecord)
                 }
-                
+
                 isPresented = false
             }
         }

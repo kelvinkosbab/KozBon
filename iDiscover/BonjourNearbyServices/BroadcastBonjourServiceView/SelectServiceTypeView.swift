@@ -11,14 +11,14 @@ import SwiftUI
 // MARK: - SelectServiceTypeView
 
 struct SelectServiceTypeView: View {
-    
+
     @Binding var selectedServiceType: BonjourServiceType?
     @StateObject private var viewModel = ViewModel()
-    
+
     init(selectedServiceType: Binding<BonjourServiceType?>) {
         self._selectedServiceType = selectedServiceType
     }
-    
+
     var body: some View {
         List {
             if let selectedServiceType {
@@ -30,7 +30,7 @@ struct SelectServiceTypeView: View {
                     )
                 }
             }
-            
+
             if !viewModel.filteredCustomServiceTypes.isEmpty {
                 Section("Custom Service Types") {
                     ForEach(viewModel.filteredCustomServiceTypes, id: \.fullType) { serviceType in
@@ -87,16 +87,16 @@ struct SelectServiceTypeView: View {
             prompt: "Search for ..."
         )
     }
-    
+
     // MARK: - ViewModel
 
     class ViewModel: ObservableObject {
-        
+
         @MainActor @Published private var builtInServiceTypes: [BonjourServiceType] = []
         @MainActor @Published private var customServiceTypes: [BonjourServiceType] = []
-        
+
         @MainActor @Published var searchText: String = ""
-        
+
         @MainActor var filteredBuiltInServiceTypes: [BonjourServiceType] {
             if searchText.isEmpty {
                 builtInServiceTypes
@@ -128,7 +128,7 @@ struct SelectServiceTypeView: View {
                 }
             }
         }
-        
+
         func load() async {
             let sortedServiceTypes = BonjourServiceType.fetchAll().sorted { lhs, rhs -> Bool in
                 lhs.name < rhs.name

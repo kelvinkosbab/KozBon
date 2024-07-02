@@ -32,6 +32,8 @@ class BonjourService: NSObject, NetServiceDelegate {
     init(service: NetService, serviceType: BonjourServiceType) {
         self.service = service
         self.serviceType = serviceType
+        super.init()
+        self.service.delegate = self
     }
 
     var hostName: String {
@@ -53,10 +55,11 @@ class BonjourService: NSObject, NetServiceDelegate {
 
     // MARK: - Stopping Resolution / Publishing
 
-    var isStopping: Bool = false
+    private var isStopping: Bool = false
     private var didStop: (() -> Void)?
 
     func stop(didStop: (() -> Void)? = nil) {
+        logger.debug("Stopping service", censored: "\(self)")
         self.isStopping = true
         self.isResolving = false
         self.isPublishing = false
@@ -70,7 +73,7 @@ class BonjourService: NSObject, NetServiceDelegate {
     // MARK: - NetServiceDelegate - Stopping
 
     func netServiceDidStop(_ sender: NetService) {
-      logger.debug("Service did stop", censored: "\(sender)")
+        logger.debug("Service did stop", censored: "\(sender)")
         NotificationCenter.default.post(name: .netServiceDidStop, object: self)
         self.isStopping = false
         self.didStop?()
@@ -79,13 +82,12 @@ class BonjourService: NSObject, NetServiceDelegate {
 
     // MARK: - Resolving Address
 
-    var isResolving: Bool = false
+    private(set) var isResolving: Bool = false
     private var completedAddressResolution: (() -> Void)?
 
     func resolve(completedAddressResolution: (() -> Void)? = nil) {
         self.isResolving = true
         self.completedAddressResolution = completedAddressResolution
-        self.service.delegate = self
         self.service.resolve(withTimeout: 10.0)
         self.startMonitoring()
     }
@@ -124,12 +126,12 @@ class BonjourService: NSObject, NetServiceDelegate {
         self.isPublishing = true
         self.publishServiceSuccess = publishServiceSuccess
         self.publishServiceFailure = publishServiceFailure
-        self.service.delegate = self
         self.service.publish()
     }
 
     func unPublish(completion: (() -> Void)? = nil) {
         self.stop {
+            // Add delay for some reason? (not sure what 2014 me added this)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
                 NotificationCenter.default.post(name: .netServiceDidUnPublish, object: self)
                 completion?()
@@ -137,10 +139,16 @@ class BonjourService: NSObject, NetServiceDelegate {
         }
     }
 
-    // MARK: - NetServiceDelegate - Publishing Service
+    // MARK: - Publishing Service
 
     func netServiceWillPublish(_ sender: NetService) {
         logger.debug("Service will publish", censored: "\(sender)")
+        
+        // For some reason the `didPublish` callback isn't beeing called. This is a temp hack
+        // to allow for the completion handlers to return after a short delay
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+            self.netServiceDidPublish(sender)
+        }
     }
 
     func netServiceDidPublish(_ sender: NetService) {
@@ -153,7 +161,7 @@ class BonjourService: NSObject, NetServiceDelegate {
     }
 
     func netService(_ sender: NetService, didNotPublish errorDict: [String: NSNumber]) {
-        logger.debug("Service did not publish", censored: "\(sender) with errorDict \(errorDict)")
+        logger.error("Service did not publish", censored: "\(sender) with errorDict \(errorDict)")
         self.publishServiceFailure?(PublishError.didNotPublish)
         self.publishServiceSuccess = nil
         self.publishServiceFailure = nil

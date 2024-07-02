@@ -68,7 +68,7 @@ struct SupportedServicesView: View {
             }
         }
     }
-    
+
     private func renderTrailingToolbarItems() -> some View {
         Menu {
             Button {
@@ -142,7 +142,7 @@ struct SupportedServicesView: View {
                 }
             }
         }
-        
+
         let createButtonString = NSLocalizedString(
             "Create",
             comment: "Create service button string"
