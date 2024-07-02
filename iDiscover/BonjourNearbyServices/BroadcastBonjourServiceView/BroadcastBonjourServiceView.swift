@@ -13,6 +13,7 @@ import SwiftUI
 struct BroadcastBonjourServiceView: View {
 
     @Binding private var isPresented: Bool
+    @Binding private var customPublishedServices: [BonjourService]
     private var serviceToUpdate: BonjourService
 
     @State private var serviceType: BonjourServiceType?
@@ -27,8 +28,12 @@ struct BroadcastBonjourServiceView: View {
     private let selectedTransportLayer: TransportLayer = .tcp
     private let servicePublishManger = MyBonjourPublishManager.shared
 
-    init(isPresented: Binding<Bool>) {
+    init(
+        isPresented: Binding<Bool>,
+        customPublishedServices: Binding<[BonjourService]>
+    ) {
         self._isPresented = isPresented
+        self._customPublishedServices = customPublishedServices
         self.serviceToUpdate = BonjourService(
             service: .init(
                 domain: "local.",
@@ -51,9 +56,11 @@ struct BroadcastBonjourServiceView: View {
 
     init(
         isPresented: Binding<Bool>,
-        serviceToUpdate: BonjourService
+        serviceToUpdate: BonjourService,
+        customPublishedServices: Binding<[BonjourService]>
     ) {
         self._isPresented = isPresented
+        self._customPublishedServices = customPublishedServices
         self.serviceToUpdate = serviceToUpdate
         isCreatingBonjourService = false
         self.serviceType = serviceToUpdate.serviceType
@@ -257,6 +264,19 @@ struct BroadcastBonjourServiceView: View {
                 }
                 let txtRecordData = NetService.data(fromTXTRecord: txtRecords)
                 _ = publishedService.service.setTXTRecord(txtRecordData)
+                
+                let index = customPublishedServices.firstIndex(of: publishedService)
+                await MainActor.run {
+                    if let index {
+                        withAnimation {
+                            customPublishedServices[index] = publishedService
+                        }
+                    } else {
+                        withAnimation {
+                            customPublishedServices.append(publishedService)
+                        }
+                    }
+                }
 
                 isPresented = false
 

@@ -29,7 +29,10 @@ class BonjourService: NSObject, NetServiceDelegate {
 
     private let logger: Loggable = Logger(category: "BonjourService")
 
-    init(service: NetService, serviceType: BonjourServiceType) {
+    init(
+        service: NetService,
+        serviceType: BonjourServiceType
+    ) {
         self.service = service
         self.serviceType = serviceType
         super.init()
@@ -52,7 +55,7 @@ class BonjourService: NSObject, NetServiceDelegate {
         }
         return false
     }
-
+    
     // MARK: - Stopping Resolution / Publishing
 
     private var isStopping: Bool = false

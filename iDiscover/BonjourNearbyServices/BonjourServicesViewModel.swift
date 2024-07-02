@@ -14,7 +14,7 @@ import SwiftUI
 class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDelegate {
 
     @MainActor @Published private var activeServices: [BonjourService] = []
-    @MainActor @Published private var customPublishedServices: [BonjourService] = []
+    @MainActor @Published var customPublishedServices: [BonjourService] = []
     @MainActor @Published var sortType: BonjourServiceSortType?
 
     @MainActor @Published var isBroadcastBonjourServicePresented = false {
@@ -26,36 +26,77 @@ class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDelegate 
             }
         }
     }
-
-    @MainActor var sortedActiveServices: [BonjourService] {
+    
+    @MainActor var sortedPublishedServices: [BonjourService] {
+        let publishedServices = activeServices.filter { service in
+            customPublishedServices.contains { publishedSevice in
+                service.hostName == publishedSevice.hostName &&
+                service.serviceType.fullType == publishedSevice.serviceType.fullType
+            }
+        }
+        
         switch sortType {
         case .hostNameAsc:
-            activeServices.sorted { service1, service2 -> Bool in
+            return publishedServices.sorted { service1, service2 -> Bool in
                 service1.service.name < service2.service.name
             }
 
         case .hostNameDesc:
-            activeServices.sorted { service1, service2 -> Bool in
+            return publishedServices.sorted { service1, service2 -> Bool in
                 service1.service.name > service2.service.name
             }
 
         case .serviceNameAsc:
-            activeServices.sorted { service1, service2 -> Bool in
+            return publishedServices.sorted { service1, service2 -> Bool in
                 service1.serviceType.name < service2.serviceType.name
             }
 
         case .serviceNameDesc:
-            activeServices.sorted { service1, service2 -> Bool in
+            return publishedServices.sorted { service1, service2 -> Bool in
                 service1.serviceType.name > service2.serviceType.name
             }
 
         default:
-            activeServices
+            return publishedServices
+        }
+    }
+
+    @MainActor var sortedActiveServices: [BonjourService] {
+        let nonPublishedServices = activeServices.filter { service in
+            !customPublishedServices.contains { publishedSevice in
+                service.hostName == publishedSevice.hostName &&
+                service.serviceType.fullType == publishedSevice.serviceType.fullType
+            }
+        }
+        
+        switch sortType {
+        case .hostNameAsc:
+            return nonPublishedServices.sorted { service1, service2 -> Bool in
+                service1.service.name < service2.service.name
+            }
+
+        case .hostNameDesc:
+            return nonPublishedServices.sorted { service1, service2 -> Bool in
+                service1.service.name > service2.service.name
+            }
+
+        case .serviceNameAsc:
+            return nonPublishedServices.sorted { service1, service2 -> Bool in
+                service1.serviceType.name < service2.serviceType.name
+            }
+
+        case .serviceNameDesc:
+            return nonPublishedServices.sorted { service1, service2 -> Bool in
+                service1.serviceType.name > service2.serviceType.name
+            }
+
+        default:
+            return nonPublishedServices
         }
     }
 
     private(set) var isInitialLoad = true
-    let serviceScanner = BonjourServiceScanner()
+    let serviceScanner = BonjourServiceScanner.shared
 
     init() {
         self.serviceScanner.delegate = self

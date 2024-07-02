@@ -91,7 +91,7 @@ class BonjourServiceTypeScanner: NSObject, NetServiceBrowserDelegate {
         moreComing: Bool
     ) {
         self.logger.debug("Did find service", censored: "\(service.name)")
-        let bonjourService = BonjourService(service: service, serviceType: self.serviceType)
+        let bonjourService = BonjourService(service: service, serviceType: serviceType)
         self.activeServices.update(with: bonjourService)
         self.delegate?.didAdd(service: bonjourService)
 
@@ -106,7 +106,7 @@ class BonjourServiceTypeScanner: NSObject, NetServiceBrowserDelegate {
         moreComing: Bool
     ) {
         self.logger.debug("Did remove service", censored: "\(service.name)")
-        let bonjourService = BonjourService(service: service, serviceType: self.serviceType)
+        let bonjourService = BonjourService(service: service, serviceType: serviceType)
         self.activeServices.remove(bonjourService)
         self.delegate?.didRemove(service: bonjourService)
 

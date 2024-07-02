@@ -17,16 +17,21 @@ struct BonjourScanForServicesView: View {
 
     var body: some View {
         List {
-            Section {
-                activeServices
-            } header: {
-                HStack {
-                    Text(verbatim: (viewModel.sortType?.hostOrServiceTitle ?? "Bonjour").uppercased())
+            if viewModel.sortedPublishedServices.count > 0 {
+                Section {
+                    forEach(services: viewModel.sortedPublishedServices)
+                } header: {
+                    Text(verbatim: "Published")
                         .font(.system(.caption))
-
-                    Spacer()
-
-                    BonjourServiceListSortMenu(sortType: self.$viewModel.sortType)
+                }
+            }
+            
+            if viewModel.sortedActiveServices.count > 0 {
+                Section {
+                    forEach(services: viewModel.sortedActiveServices)
+                } header: {
+                    Text(verbatim: "Nearby " + (viewModel.sortType?.hostOrServiceTitle ?? "Services"))
+                        .font(.system(.caption))
                 }
             }
         }
@@ -41,7 +46,31 @@ struct BonjourScanForServicesView: View {
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                self.renderTrailingToolbarItems()
+                BonjourServiceListSortMenu(sortType: self.$viewModel.sortType)
+            }
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                Menu {
+                    Button {
+                        viewModel.isBroadcastBonjourServicePresented = true
+                    } label: {
+                        Label {
+                            Text("Broadcast Bonjour Service")
+                        } icon: {
+                            Image(systemName: "antenna.radiowaves.left.and.right")
+                                .renderingMode(.template)
+                                .foregroundColor(.kozBonBlue)
+                        }
+                    }
+                } label: {
+                    Label {
+                        Text(self.viewModel.createButtonString)
+                    } icon: {
+                        Image.plusCircleFill
+                            .renderingMode(.template)
+                            .foregroundColor(.kozBonBlue)
+                    }
+                }
             }
         }
         .navigationTitle("Nearby services")
@@ -62,13 +91,17 @@ struct BonjourScanForServicesView: View {
         }
         .sheet(isPresented: $viewModel.isBroadcastBonjourServicePresented) {
             NavigationStack {
-                BroadcastBonjourServiceView(isPresented: $viewModel.isBroadcastBonjourServicePresented)
+                BroadcastBonjourServiceView(
+                    isPresented: $viewModel.isBroadcastBonjourServicePresented,
+                    customPublishedServices: $viewModel.customPublishedServices
+                )
             }
         }
     }
 
-    @ViewBuilder private var activeServices: some View {
-        ForEach(viewModel.sortedActiveServices) { service in
+    @ViewBuilder
+    private func forEach(services: [BonjourService]) -> some View {
+        ForEach(services) { service in
             NavigationLink {
                 BonjourServiceDetailView(service: service)
             } label: {
@@ -79,30 +112,6 @@ struct BonjourScanForServicesView: View {
                     Image(systemName: service.serviceType.imageSystemName)
                         .font(.system(.body).bold())
                 }
-            }
-        }
-    }
-
-    private func renderTrailingToolbarItems() -> some View {
-        Menu {
-            Button {
-                viewModel.isBroadcastBonjourServicePresented = true
-            } label: {
-                Label {
-                    Text("Broadcast Bonjour Service")
-                } icon: {
-                    Image(systemName: "antenna.radiowaves.left.and.right")
-                        .renderingMode(.template)
-                        .foregroundColor(.kozBonBlue)
-                }
-            }
-        } label: {
-            Label {
-                Text(self.viewModel.createButtonString)
-            } icon: {
-                Image.plusCircleFill
-                    .renderingMode(.template)
-                    .foregroundColor(.kozBonBlue)
             }
         }
     }

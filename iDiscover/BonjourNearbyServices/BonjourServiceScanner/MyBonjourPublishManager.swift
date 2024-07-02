@@ -21,8 +21,8 @@ class MyBonjourPublishManager: NSObject {
     private override init() {
         super.init()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(self.serviceDidPublish(_:)), name: .netServiceDidPublish, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.serviceDidUnPublish(_:)), name: .netServiceDidUnPublish, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(serviceDidPublish(_:)), name: .netServiceDidPublish, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(serviceDidUnPublish(_:)), name: .netServiceDidUnPublish, object: nil)
     }
 
     deinit {
@@ -31,19 +31,17 @@ class MyBonjourPublishManager: NSObject {
 
     // MARK: - Published Services
 
-    private(set) var publishedServices: [BonjourService] = []
+    private(set) var publishedServices: Set<BonjourService> = Set()
 
     private func add(publishedService service: BonjourService) {
-        if !self.publishedServices.contains(service) {
-            self.publishedServices.append(service)
+        if !publishedServices.contains(service) {
+            publishedServices.insert(service)
             service.resolve()
         }
     }
 
     private func remove(publishedService service: BonjourService) {
-        if let index = self.publishedServices.firstIndex(of: service) {
-            self.publishedServices.remove(at: index)
-        }
+        publishedServices.remove(service)
     }
 
     // MARK: - Notifications
@@ -55,7 +53,8 @@ class MyBonjourPublishManager: NSObject {
         }
     }
 
-    @objc private func serviceDidUnPublish(_ notification: Notification) {
+    @objc
+    private func serviceDidUnPublish(_ notification: Notification) {
         if let service = notification.object as? BonjourService {
             self.remove(publishedService: service)
         }
@@ -111,8 +110,8 @@ class MyBonjourPublishManager: NSObject {
         failure: @escaping (_ error: Error) -> Void
     ) {
         service.publish(
-            publishServiceSuccess: {
-                self.add(publishedService: service)
+            publishServiceSuccess: { [weak self] in
+                self?.add(publishedService: service)
                 success(service)
             },
             publishServiceFailure: failure
@@ -148,7 +147,7 @@ class MyBonjourPublishManager: NSObject {
 
     func unPublishAllServices(completion: (() -> Void)? = nil) {
         let dispatchGroup = DispatchGroup()
-        for service in self.publishedServices {
+        for service in publishedServices {
             dispatchGroup.enter()
             self.unPublish(service: service) {
                 dispatchGroup.leave()
