@@ -110,7 +110,9 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                 }
             }
             .contentMarginsBasedOnSizeClass()
+            #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .navigationTitle(isCreatingBonjourService ? "Create service type" : "Edit service type")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -120,6 +122,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                         Label("Cancel", systemImage: "x.circle.fill")
                     }
                 }
+                
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         doneButtonSelected()

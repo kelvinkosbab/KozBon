@@ -20,9 +20,12 @@ struct SupportedServiceDetailView: View {
     }
 
     @State private var serviceType: BonjourServiceType
-    @State private var isNavigationHeaderShown = false
     @State private var showDeleteConfirmation = false
     @State private var showEditConfirmation = false
+    
+    #if !os(macOS)
+    @State private var isNavigationHeaderShown = false
+    #endif
 
     var body: some View {
         List {
@@ -32,6 +35,7 @@ struct SupportedServiceDetailView: View {
                     title: serviceType.name,
                     detail: serviceType.fullType
                 )
+                #if !os(macOS)
                 .onAppear {
                     withAnimation {
                         isNavigationHeaderShown = false
@@ -42,6 +46,7 @@ struct SupportedServiceDetailView: View {
                         isNavigationHeaderShown = true
                     }
                 }
+                #endif
             }
 
             Section {
@@ -128,6 +133,7 @@ struct SupportedServiceDetailView: View {
             }
         }
         .contentMarginsBasedOnSizeClass()
+        #if !os(macOS)
         .toolbar {
             if isNavigationHeaderShown {
                 ToolbarItem(
@@ -146,5 +152,6 @@ struct SupportedServiceDetailView: View {
                 }
             }
         }
+        #endif
     }
 }

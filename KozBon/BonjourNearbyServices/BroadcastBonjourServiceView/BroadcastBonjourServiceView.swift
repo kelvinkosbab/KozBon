@@ -164,16 +164,18 @@ struct BroadcastBonjourServiceView: View {
             }
             .contentMarginsBasedOnSizeClass()
             .navigationTitle("Broadcast service")
+            #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
+                ToolbarItem {
                     Button(role: .cancel) {
                         isPresented = false
                     } label: {
                         Label("Cancel", systemImage: "x.circle.fill")
                     }
                 }
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem {
                     Button {
                         doneButtonSelected()
                     } label: {

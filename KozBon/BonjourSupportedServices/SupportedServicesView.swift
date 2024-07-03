@@ -63,7 +63,7 @@ struct SupportedServicesView: View {
             CreateOrUpdateBonjourServiceTypeView(isPresented: $viewModel.isCreateCustomServiceTypePresented)
         }
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItem {
                 self.renderTrailingToolbarItems()
             }
         }

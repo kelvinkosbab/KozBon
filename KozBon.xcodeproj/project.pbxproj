@@ -63,19 +63,6 @@
 		F6FCADAC2C33487700752B0B /* CreateTxtRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FCADAB2C33487700752B0B /* CreateTxtRecordView.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		F6E087AE2C35B4F400D27B17 /* Embed Watch Content */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
-			dstSubfolderSpec = 16;
-			files = (
-			);
-			name = "Embed Watch Content";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		B6089C9B1E1A2A3900C7CF29 /* BonjourServiceType+CustomServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BonjourServiceType+CustomServiceType.swift"; sourceTree = "<group>"; };
 		B64D06251E1A2C55008B3FC8 /* MyServiceType+Library.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MyServiceType+Library.swift"; sourceTree = "<group>"; };
@@ -153,8 +140,7 @@
 			children = (
 				F62EDC5E255B9D25003E5178 /* KozBon.entitlements */,
 				F6781EF72694C5F6009B79F7 /* README.md */,
-				F6E087972C34ECC800D27B17 /* Shared */,
-				B6CE1D261E1208C1003D4FFA /* KozBoniOS */,
+				B6CE1D261E1208C1003D4FFA /* KozBon */,
 				B6CE1D251E1208C1003D4FFA /* Products */,
 				F690B5F92561E9B600902DAB /* Frameworks */,
 			);
@@ -168,7 +154,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B6CE1D261E1208C1003D4FFA /* KozBoniOS */ = {
+		B6CE1D261E1208C1003D4FFA /* KozBon */ = {
 			isa = PBXGroup;
 			children = (
 				F6240E682A92CF0600951875 /* AppCore.swift */,
@@ -182,7 +168,7 @@
 				B6CE1D311E1208C1003D4FFA /* Assets.xcassets */,
 				B6CE1D361E1208C1003D4FFA /* Info.plist */,
 			);
-			path = KozBoniOS;
+			path = KozBon;
 			sourceTree = "<group>";
 		};
 		B6CE1D401E1208F6003D4FFA /* Managed Objects */ = {
@@ -196,6 +182,11 @@
 		F67B652F2C1B4EA500324FFF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				F6240E732A92D91800951875 /* AppStyles.swift */,
+				F67B65302C1B4EC300324FFF /* InternetAddress.swift */,
+				F67B65322C1B54F400324FFF /* NetService+InternetAddress.swift */,
+				F67B65342C1B556900324FFF /* Logger.swift */,
+				F6E087982C34ED8400D27B17 /* String+Util.swift */,
 				F67B653A2C1B5DA200324FFF /* CoreUI */,
 			);
 			path = Utilities;
@@ -232,6 +223,8 @@
 		F67B653A2C1B5DA200324FFF /* CoreUI */ = {
 			isa = PBXGroup;
 			children = (
+				F6C50D7B2AB3BDD50048DF8C /* TitleDetailStackView.swift */,
+				F67B653C2C1B7B9800324FFF /* VerticallyCenteredLabelStyle.swift */,
 				F67B65562C20CA1F00324FFF /* ContentMarginsBasedOnSizeClass.swift */,
 				F661AD9C2C2CAF9F00779621 /* BlueSectionItemIconTitleDetailView.swift */,
 				F67B655E2C22107500324FFF /* EmptyStateOverlayView.swift */,
@@ -314,44 +307,6 @@
 			path = BonjourNearbyServices;
 			sourceTree = "<group>";
 		};
-		F6E087972C34ECC800D27B17 /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-				F6E087B22C35D27F00D27B17 /* Views */,
-				F6E0879B2C34EF6D00D27B17 /* Utilities */,
-			);
-			path = Shared;
-			sourceTree = "<group>";
-		};
-		F6E0879A2C34EEDA00D27B17 /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				F6C50D7B2AB3BDD50048DF8C /* TitleDetailStackView.swift */,
-				F67B653C2C1B7B9800324FFF /* VerticallyCenteredLabelStyle.swift */,
-			);
-			path = UI;
-			sourceTree = "<group>";
-		};
-		F6E0879B2C34EF6D00D27B17 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				F6240E732A92D91800951875 /* AppStyles.swift */,
-				F67B65302C1B4EC300324FFF /* InternetAddress.swift */,
-				F67B65322C1B54F400324FFF /* NetService+InternetAddress.swift */,
-				F67B65342C1B556900324FFF /* Logger.swift */,
-				F6E087982C34ED8400D27B17 /* String+Util.swift */,
-				F6E0879A2C34EEDA00D27B17 /* UI */,
-			);
-			path = Utilities;
-			sourceTree = "<group>";
-		};
-		F6E087B22C35D27F00D27B17 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -362,7 +317,6 @@
 				B6CE1D201E1208C1003D4FFA /* Sources */,
 				B6CE1D211E1208C1003D4FFA /* Frameworks */,
 				B6CE1D221E1208C1003D4FFA /* Resources */,
-				F6E087AE2C35B4F400D27B17 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
@@ -616,7 +570,7 @@
 				CODE_SIGN_ENTITLEMENTS = KozBon.entitlements;
 				CURRENT_PROJECT_VERSION = 90;
 				DEVELOPMENT_TEAM = 6SS93B87P2;
-				INFOPLIST_FILE = iDiscover/Info.plist;
+				INFOPLIST_FILE = KozBon/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = KozBon;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -645,7 +599,7 @@
 				CODE_SIGN_ENTITLEMENTS = KozBon.entitlements;
 				CURRENT_PROJECT_VERSION = 90;
 				DEVELOPMENT_TEAM = 6SS93B87P2;
-				INFOPLIST_FILE = iDiscover/Info.plist;
+				INFOPLIST_FILE = KozBon/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = KozBon;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;

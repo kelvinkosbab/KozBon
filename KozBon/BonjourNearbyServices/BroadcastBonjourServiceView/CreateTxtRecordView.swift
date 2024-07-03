@@ -85,16 +85,18 @@ struct CreateTxtRecordView: View {
             }
             .contentMarginsBasedOnSizeClass()
             .navigationTitle("Create Txt Record")
+            #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
+                ToolbarItem {
                     Button(role: .cancel) {
                         isPresented = false
                     } label: {
                         Label("Cancel", systemImage: "x.circle.fill")
                     }
                 }
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem {
                     Button {
                         doneButtonSelected()
                     } label: {

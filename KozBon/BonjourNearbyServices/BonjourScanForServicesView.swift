@@ -45,11 +45,11 @@ struct BonjourScanForServicesView: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItem {
                 BonjourServiceListSortMenu(sortType: self.$viewModel.sortType)
             }
 
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItem {
                 Menu {
                     Button {
                         viewModel.isBroadcastBonjourServicePresented = true
