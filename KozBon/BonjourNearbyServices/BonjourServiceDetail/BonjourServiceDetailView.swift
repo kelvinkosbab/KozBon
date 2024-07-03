@@ -32,7 +32,6 @@ struct BonjourServiceDetailView: View {
                     title: viewModel.service.service.name,
                     detail: viewModel.serviceType.name
                 )
-                #if !os(macOS)
                 .onAppear {
                     withAnimation {
                         viewModel.isNavigationHeaderShown = false
@@ -43,7 +42,6 @@ struct BonjourServiceDetailView: View {
                         viewModel.isNavigationHeaderShown = true
                     }
                 }
-                #endif
             }
 
             Section("Information") {
@@ -137,10 +135,7 @@ struct BonjourServiceDetailView: View {
 
         @MainActor @Published private(set) var addresses: [InternetAddress] = []
         @MainActor @Published private(set) var dataRecords: [BonjourService.TxtDataRecord] = []
-        
-        #if !os(macOS)
         @MainActor @Published var isNavigationHeaderShown = false
-        #endif
 
         init(service: BonjourService) {
             self.service = service
