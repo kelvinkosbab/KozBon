@@ -60,32 +60,32 @@
 		F6C50D822AB3F8A70048DF8C /* BluetoothScanForDevicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C50D812AB3F8A70048DF8C /* BluetoothScanForDevicesViewModel.swift */; };
 		F6C50D842AB4FF3E0048DF8C /* CBPeripheralState+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C50D832AB4FF3E0048DF8C /* CBPeripheralState+Util.swift */; };
 		F6E087992C34ED8400D27B17 /* String+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E087982C34ED8400D27B17 /* String+Util.swift */; };
-		F6FCAD962C333D3E00752B0B /* KozBonWatchOS Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = F6FCAD952C333D3E00752B0B /* KozBonWatchOS Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		F6FCAD9B2C333D3E00752B0B /* KozBonWatchOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FCAD9A2C333D3E00752B0B /* KozBonWatchOSApp.swift */; };
-		F6FCAD9D2C333D3E00752B0B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FCAD9C2C333D3E00752B0B /* ContentView.swift */; };
-		F6FCAD9F2C333D4000752B0B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6FCAD9E2C333D4000752B0B /* Assets.xcassets */; };
-		F6FCADA22C333D4000752B0B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6FCADA12C333D4000752B0B /* Preview Assets.xcassets */; };
+		F6E087A32C35B4F300D27B17 /* KozBonWatchOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E087A22C35B4F300D27B17 /* KozBonWatchOSApp.swift */; };
+		F6E087A52C35B4F300D27B17 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E087A42C35B4F300D27B17 /* ContentView.swift */; };
+		F6E087A72C35B4F400D27B17 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6E087A62C35B4F400D27B17 /* Assets.xcassets */; };
+		F6E087AA2C35B4F400D27B17 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6E087A92C35B4F400D27B17 /* Preview Assets.xcassets */; };
+		F6E087AD2C35B4F400D27B17 /* KozBonWatchOS Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = F6E087A02C35B4F300D27B17 /* KozBonWatchOS Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F6FCADAC2C33487700752B0B /* CreateTxtRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FCADAB2C33487700752B0B /* CreateTxtRecordView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		F6FCAD972C333D3E00752B0B /* PBXContainerItemProxy */ = {
+		F6E087AB2C35B4F400D27B17 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B6CE1D1C1E1208C1003D4FFA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = F6FCAD942C333D3E00752B0B;
+			remoteGlobalIDString = F6E0879F2C35B4F300D27B17;
 			remoteInfo = "KozBonWatchOS Watch App";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		F6FCADA52C333D4000752B0B /* Embed Watch Content */ = {
+		F6E087AE2C35B4F400D27B17 /* Embed Watch Content */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
-				F6FCAD962C333D3E00752B0B /* KozBonWatchOS Watch App.app in Embed Watch Content */,
+				F6E087AD2C35B4F400D27B17 /* KozBonWatchOS Watch App.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -146,13 +146,11 @@
 		F6C50D812AB3F8A70048DF8C /* BluetoothScanForDevicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothScanForDevicesViewModel.swift; sourceTree = "<group>"; };
 		F6C50D832AB4FF3E0048DF8C /* CBPeripheralState+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CBPeripheralState+Util.swift"; sourceTree = "<group>"; };
 		F6E087982C34ED8400D27B17 /* String+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Util.swift"; sourceTree = "<group>"; };
-		F6FCAD902C333D3E00752B0B /* KozBonWatchOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KozBonWatchOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		F6FCAD952C333D3E00752B0B /* KozBonWatchOS Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "KozBonWatchOS Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F6FCAD9A2C333D3E00752B0B /* KozBonWatchOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KozBonWatchOSApp.swift; sourceTree = "<group>"; };
-		F6FCAD9C2C333D3E00752B0B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		F6FCAD9E2C333D4000752B0B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		F6FCADA12C333D4000752B0B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		F6FCADAA2C333DAA00752B0B /* KozBonWatchOS-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "KozBonWatchOS-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
+		F6E087A02C35B4F300D27B17 /* KozBonWatchOS Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "KozBonWatchOS Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6E087A22C35B4F300D27B17 /* KozBonWatchOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KozBonWatchOSApp.swift; sourceTree = "<group>"; };
+		F6E087A42C35B4F300D27B17 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F6E087A62C35B4F400D27B17 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F6E087A92C35B4F400D27B17 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F6FCADAB2C33487700752B0B /* CreateTxtRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTxtRecordView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -168,7 +166,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F6FCAD922C333D3E00752B0B /* Frameworks */ = {
+		F6E0879D2C35B4F300D27B17 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -185,7 +183,7 @@
 				F6781EF72694C5F6009B79F7 /* README.md */,
 				F6E087972C34ECC800D27B17 /* Shared */,
 				B6CE1D261E1208C1003D4FFA /* iDiscover */,
-				F6FCAD992C333D3E00752B0B /* KozBonWatchOS Watch App */,
+				F6E087A12C35B4F300D27B17 /* KozBonWatchOS Watch App */,
 				B6CE1D251E1208C1003D4FFA /* Products */,
 				F690B5F92561E9B600902DAB /* Frameworks */,
 			);
@@ -195,8 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				B6CE1D241E1208C1003D4FFA /* KozBon.app */,
-				F6FCAD902C333D3E00752B0B /* KozBonWatchOS.app */,
-				F6FCAD952C333D3E00752B0B /* KozBonWatchOS Watch App.app */,
+				F6E087A02C35B4F300D27B17 /* KozBonWatchOS Watch App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -229,10 +226,6 @@
 		F67B652F2C1B4EA500324FFF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				F6240E732A92D91800951875 /* AppStyles.swift */,
-				F67B65302C1B4EC300324FFF /* InternetAddress.swift */,
-				F67B65322C1B54F400324FFF /* NetService+InternetAddress.swift */,
-				F67B65342C1B556900324FFF /* Logger.swift */,
 				F67B653A2C1B5DA200324FFF /* CoreUI */,
 			);
 			path = Utilities;
@@ -272,8 +265,6 @@
 				F67B65562C20CA1F00324FFF /* ContentMarginsBasedOnSizeClass.swift */,
 				F661AD9C2C2CAF9F00779621 /* BlueSectionItemIconTitleDetailView.swift */,
 				F67B655E2C22107500324FFF /* EmptyStateOverlayView.swift */,
-				F6C50D7B2AB3BDD50048DF8C /* TitleDetailStackView.swift */,
-				F67B653C2C1B7B9800324FFF /* VerticallyCenteredLabelStyle.swift */,
 			);
 			path = CoreUI;
 			sourceTree = "<group>";
@@ -356,27 +347,48 @@
 		F6E087972C34ECC800D27B17 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				F6E087982C34ED8400D27B17 /* String+Util.swift */,
+				F6E0879B2C34EF6D00D27B17 /* Utilities */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
 		};
-		F6FCAD992C333D3E00752B0B /* KozBonWatchOS Watch App */ = {
+		F6E0879A2C34EEDA00D27B17 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				F6FCADAA2C333DAA00752B0B /* KozBonWatchOS-Watch-App-Info.plist */,
-				F6FCAD9A2C333D3E00752B0B /* KozBonWatchOSApp.swift */,
-				F6FCAD9C2C333D3E00752B0B /* ContentView.swift */,
-				F6FCAD9E2C333D4000752B0B /* Assets.xcassets */,
-				F6FCADA02C333D4000752B0B /* Preview Content */,
+				F6C50D7B2AB3BDD50048DF8C /* TitleDetailStackView.swift */,
+				F67B653C2C1B7B9800324FFF /* VerticallyCenteredLabelStyle.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		F6E0879B2C34EF6D00D27B17 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				F6240E732A92D91800951875 /* AppStyles.swift */,
+				F67B65302C1B4EC300324FFF /* InternetAddress.swift */,
+				F67B65322C1B54F400324FFF /* NetService+InternetAddress.swift */,
+				F67B65342C1B556900324FFF /* Logger.swift */,
+				F6E087982C34ED8400D27B17 /* String+Util.swift */,
+				F6E0879A2C34EEDA00D27B17 /* UI */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		F6E087A12C35B4F300D27B17 /* KozBonWatchOS Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				F6E087A22C35B4F300D27B17 /* KozBonWatchOSApp.swift */,
+				F6E087A42C35B4F300D27B17 /* ContentView.swift */,
+				F6E087A62C35B4F400D27B17 /* Assets.xcassets */,
+				F6E087A82C35B4F400D27B17 /* Preview Content */,
 			);
 			path = "KozBonWatchOS Watch App";
 			sourceTree = "<group>";
 		};
-		F6FCADA02C333D4000752B0B /* Preview Content */ = {
+		F6E087A82C35B4F400D27B17 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				F6FCADA12C333D4000752B0B /* Preview Assets.xcassets */,
+				F6E087A92C35B4F400D27B17 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -391,10 +403,12 @@
 				B6CE1D201E1208C1003D4FFA /* Sources */,
 				B6CE1D211E1208C1003D4FFA /* Frameworks */,
 				B6CE1D221E1208C1003D4FFA /* Resources */,
+				F6E087AE2C35B4F400D27B17 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F6E087AC2C35B4F400D27B17 /* PBXTargetDependency */,
 			);
 			name = KozBon;
 			packageProductDependencies = (
@@ -406,30 +420,13 @@
 			productReference = B6CE1D241E1208C1003D4FFA /* KozBon.app */;
 			productType = "com.apple.product-type.application";
 		};
-		F6FCAD8F2C333D3E00752B0B /* KozBonWatchOS */ = {
+		F6E0879F2C35B4F300D27B17 /* KozBonWatchOS Watch App */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F6FCADA92C333D4000752B0B /* Build configuration list for PBXNativeTarget "KozBonWatchOS" */;
+			buildConfigurationList = F6E087B12C35B4F400D27B17 /* Build configuration list for PBXNativeTarget "KozBonWatchOS Watch App" */;
 			buildPhases = (
-				F6FCAD8E2C333D3E00752B0B /* Resources */,
-				F6FCADA52C333D4000752B0B /* Embed Watch Content */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				F6FCAD982C333D3E00752B0B /* PBXTargetDependency */,
-			);
-			name = KozBonWatchOS;
-			productName = KozBonWatchOS;
-			productReference = F6FCAD902C333D3E00752B0B /* KozBonWatchOS.app */;
-			productType = "com.apple.product-type.application.watchapp2-container";
-		};
-		F6FCAD942C333D3E00752B0B /* KozBonWatchOS Watch App */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F6FCADA82C333D4000752B0B /* Build configuration list for PBXNativeTarget "KozBonWatchOS Watch App" */;
-			buildPhases = (
-				F6FCAD912C333D3E00752B0B /* Sources */,
-				F6FCAD922C333D3E00752B0B /* Frameworks */,
-				F6FCAD932C333D3E00752B0B /* Resources */,
+				F6E0879C2C35B4F300D27B17 /* Sources */,
+				F6E0879D2C35B4F300D27B17 /* Frameworks */,
+				F6E0879E2C35B4F300D27B17 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -437,7 +434,7 @@
 			);
 			name = "KozBonWatchOS Watch App";
 			productName = "KozBonWatchOS Watch App";
-			productReference = F6FCAD952C333D3E00752B0B /* KozBonWatchOS Watch App.app */;
+			productReference = F6E087A02C35B4F300D27B17 /* KozBonWatchOS Watch App.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -457,10 +454,7 @@
 						LastSwiftMigration = 1220;
 						ProvisioningStyle = Automatic;
 					};
-					F6FCAD8F2C333D3E00752B0B = {
-						CreatedOnToolsVersion = 16.0;
-					};
-					F6FCAD942C333D3E00752B0B = {
+					F6E0879F2C35B4F300D27B17 = {
 						CreatedOnToolsVersion = 16.0;
 					};
 				};
@@ -482,8 +476,7 @@
 			projectRoot = "";
 			targets = (
 				B6CE1D231E1208C1003D4FFA /* KozBon */,
-				F6FCAD8F2C333D3E00752B0B /* KozBonWatchOS */,
-				F6FCAD942C333D3E00752B0B /* KozBonWatchOS Watch App */,
+				F6E0879F2C35B4F300D27B17 /* KozBonWatchOS Watch App */,
 			);
 		};
 /* End PBXProject section */
@@ -498,19 +491,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F6FCAD8E2C333D3E00752B0B /* Resources */ = {
+		F6E0879E2C35B4F300D27B17 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F6FCAD932C333D3E00752B0B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F6FCADA22C333D4000752B0B /* Preview Assets.xcassets in Resources */,
-				F6FCAD9F2C333D4000752B0B /* Assets.xcassets in Resources */,
+				F6E087AA2C35B4F400D27B17 /* Preview Assets.xcassets in Resources */,
+				F6E087A72C35B4F400D27B17 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -572,22 +558,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F6FCAD912C333D3E00752B0B /* Sources */ = {
+		F6E0879C2C35B4F300D27B17 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6FCAD9D2C333D3E00752B0B /* ContentView.swift in Sources */,
-				F6FCAD9B2C333D3E00752B0B /* KozBonWatchOSApp.swift in Sources */,
+				F6E087A52C35B4F300D27B17 /* ContentView.swift in Sources */,
+				F6E087A32C35B4F300D27B17 /* KozBonWatchOSApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		F6FCAD982C333D3E00752B0B /* PBXTargetDependency */ = {
+		F6E087AC2C35B4F400D27B17 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = F6FCAD942C333D3E00752B0B /* KozBonWatchOS Watch App */;
-			targetProxy = F6FCAD972C333D3E00752B0B /* PBXContainerItemProxy */;
+			target = F6E0879F2C35B4F300D27B17 /* KozBonWatchOS Watch App */;
+			targetProxy = F6E087AB2C35B4F400D27B17 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -770,51 +756,7 @@
 			};
 			name = Release;
 		};
-		F6FCADA32C333D4000752B0B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6SS93B87P2;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				INFOPLIST_KEY_CFBundleDisplayName = KozBonWatchOS;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.kozinga.KozBonWatchOS;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		F6FCADA42C333D4000752B0B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6SS93B87P2;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				INFOPLIST_KEY_CFBundleDisplayName = KozBonWatchOS;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.kozinga.KozBonWatchOS;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
-		F6FCADA62C333D4000752B0B /* Debug */ = {
+		F6E087AF2C35B4F400D27B17 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -830,10 +772,9 @@
 				ENABLE_PREVIEWS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "KozBonWatchOS-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = KozBonWatchOS;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKWatchOnly = YES;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.kozinga.KozBon;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -842,7 +783,7 @@
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.kozinga.KozBonWatchOS.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kozinga.KozBon.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -850,11 +791,11 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 11.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
 		};
-		F6FCADA72C333D4000752B0B /* Release */ = {
+		F6E087B02C35B4F400D27B17 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -870,10 +811,9 @@
 				ENABLE_PREVIEWS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "KozBonWatchOS-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = KozBonWatchOS;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKWatchOnly = YES;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.kozinga.KozBon;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -881,14 +821,14 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.kozinga.KozBonWatchOS.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kozinga.KozBon.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 11.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
 		};
@@ -913,20 +853,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F6FCADA82C333D4000752B0B /* Build configuration list for PBXNativeTarget "KozBonWatchOS Watch App" */ = {
+		F6E087B12C35B4F400D27B17 /* Build configuration list for PBXNativeTarget "KozBonWatchOS Watch App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F6FCADA62C333D4000752B0B /* Debug */,
-				F6FCADA72C333D4000752B0B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F6FCADA92C333D4000752B0B /* Build configuration list for PBXNativeTarget "KozBonWatchOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F6FCADA32C333D4000752B0B /* Debug */,
-				F6FCADA42C333D4000752B0B /* Release */,
+				F6E087AF2C35B4F400D27B17 /* Debug */,
+				F6E087B02C35B4F400D27B17 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
