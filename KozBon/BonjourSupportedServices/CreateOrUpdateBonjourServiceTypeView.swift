@@ -70,7 +70,9 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                     TextField("Type definition", text: $type)
                         .disabled(!isCreatingBonjourService)
                         .disableAutocorrection(true)
+                        #if !os(macOS)
                         .autocapitalization(.none)
+                        #endif
                         .onSubmit {
                             doneButtonSelected()
                         }
@@ -115,7 +117,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
             #endif
             .navigationTitle(isCreatingBonjourService ? "Create service type" : "Edit service type")
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
+                ToolbarItem(placement: .cancellationAction) {
                     Button(role: .cancel) {
                         isPresented = false
                     } label: {
@@ -123,7 +125,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                     }
                 }
                 
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem(placement: .confirmationAction) {
                     Button {
                         doneButtonSelected()
                     } label: {
@@ -131,27 +133,17 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                     }
                 }
             }
-            .onChange(of: name) { _ in
+            .onChange(of: [name, type, details]) { _ in
                 Task { @MainActor in
                     withAnimation {
                         if !name.trimmed.isEmpty {
                             nameError = nil
                         }
-                    }
-                }
-            }
-            .onChange(of: type) { _ in
-                Task { @MainActor in
-                    withAnimation {
+                        
                         if !type.trimmed.isEmpty {
                             typeError = nil
                         }
-                    }
-                }
-            }
-            .onChange(of: details) { _ in
-                Task { @MainActor in
-                    withAnimation {
+                        
                         if !details.trimmed.isEmpty {
                             detailsError = nil
                         }

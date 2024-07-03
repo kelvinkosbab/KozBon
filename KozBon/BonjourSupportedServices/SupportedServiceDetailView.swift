@@ -133,11 +133,10 @@ struct SupportedServiceDetailView: View {
             }
         }
         .contentMarginsBasedOnSizeClass()
-        #if !os(macOS)
         .toolbar {
             if isNavigationHeaderShown {
                 ToolbarItem(
-                    placement: horizontalSizeClass == .compact ? .principal : .topBarTrailing
+                    placement: horizontalSizeClass == .compact ? .principal : .confirmationAction
                 ) {
                     HStack {
                         Label(serviceType.name, systemImage: serviceType.imageSystemName)
@@ -152,6 +151,5 @@ struct SupportedServiceDetailView: View {
                 }
             }
         }
-        #endif
     }
 }

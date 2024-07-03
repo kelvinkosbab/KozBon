@@ -108,11 +108,10 @@ struct BonjourServiceDetailView: View {
         .task {
             viewModel.service.resolve()
         }
-        #if !os(macOS)
         .toolbar {
             if viewModel.isNavigationHeaderShown {
                 ToolbarItem(
-                    placement: horizontalSizeClass == .compact ? .principal : .topBarTrailing
+                    placement: horizontalSizeClass == .compact ? .principal : .confirmationAction
                 ) {
                     HStack {
                         Label(viewModel.serviceType.name, systemImage: viewModel.serviceType.imageSystemName)
@@ -127,7 +126,6 @@ struct BonjourServiceDetailView: View {
                 }
             }
         }
-        #endif
     }
 
     // MARK: - ViewModel

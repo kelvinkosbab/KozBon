@@ -89,14 +89,14 @@ struct CreateTxtRecordView: View {
             .navigationBarTitleDisplayMode(.inline)
             #endif
             .toolbar {
-                ToolbarItem {
+                ToolbarItem(placement: .cancellationAction) {
                     Button(role: .cancel) {
                         isPresented = false
                     } label: {
                         Label("Cancel", systemImage: "x.circle.fill")
                     }
                 }
-                ToolbarItem {
+                ToolbarItem(placement: .confirmationAction) {
                     Button {
                         doneButtonSelected()
                     } label: {
@@ -104,18 +104,13 @@ struct CreateTxtRecordView: View {
                     }
                 }
             }
-            .onChange(of: key) { _ in
+            .onChange(of: [key, value]) { _ in
                 Task { @MainActor in
                     withAnimation {
                         if keyError != nil {
                             keyError = nil
                         }
-                    }
-                }
-            }
-            .onChange(of: value) { _ in
-                Task { @MainActor in
-                    withAnimation {
+                        
                         if valueError != nil {
                             valueError = nil
                         }

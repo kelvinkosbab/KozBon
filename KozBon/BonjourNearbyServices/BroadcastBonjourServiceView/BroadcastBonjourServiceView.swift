@@ -72,95 +72,13 @@ struct BroadcastBonjourServiceView: View {
     var body: some View {
         NavigationStack {
             List {
-                Section {
-                    if !isCreatingBonjourService, let serviceType {
-                        BlueSectionItemIconTitleDetailView(
-                            imageSystemName: serviceType.imageSystemName,
-                            title: serviceType.name,
-                            detail: serviceType.fullType
-                        )
-                    } else {
-                        NavigationLink {
-                            SelectServiceTypeView(selectedServiceType: $serviceType)
-                        } label: {
-                            BlueSectionItemIconTitleDetailView(
-                                imageSystemName: serviceType?.imageSystemName,
-                                title: serviceType?.name ?? "Select a service type to broadcast",
-                                detail: serviceType?.fullType
-                            )
-                        }
-                        .listRowBackground(
-                            Color.kozBonBlue
-                                .opacity(0.4)
-                        )
-                    }
-                } header: {
-                    Text("Service Type")
-                } footer: {
-                    if let serviceTypeError {
-                        Text(verbatim: serviceTypeError)
-                            .foregroundStyle(.red)
-                    }
-                }
+                serviceTypeSection()
 
-                Section {
-                    TextField(
-                        "Service port number",
-                        value: $port,
-                        format: .number
-                    )
-                    .onSubmit {
-                        doneButtonSelected()
-                    }
+                portNumberSection()
 
-                } header: {
-                    Text("Port Number")
-                } footer: {
-                    if let portError {
-                        Text(verbatim: portError)
-                            .foregroundStyle(.red)
-                    }
-                }
+                serviceDomainSection()
 
-                Section("Service Domain") {
-                    TextField("Service domain", text: $domain)
-                        .onSubmit {
-                            doneButtonSelected()
-                        }
-                        .disabled(false)
-                }
-
-                Section("TXT Records") {
-                    ForEach(dataRecords, id: \.key) { dataRecord in
-                        TitleDetailStackView(
-                            title: dataRecord.key,
-                            detail: dataRecord.value
-                        )
-                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                            Button(role: .destructive) {
-                                let indexToRemove = dataRecords.firstIndex { record in
-                                    record.key == dataRecord.key
-                                }
-                                if let indexToRemove {
-                                    Task { @MainActor in
-                                        withAnimation {
-                                            dataRecords.remove(at: indexToRemove)
-                                        }
-                                    }
-                                }
-                            } label: {
-                                Label("Remove", systemImage: "minus.circle.fill")
-                            }
-                            .tint(.red)
-                        }
-                    }
-
-                    Button {
-                        isCreateTxtRecordViewPresented = true
-                    } label: {
-                        Label("Add TXT Record", systemImage: "plus.circle.fill")
-                    }
-                }
+                txtRecordsSection()
             }
             .contentMarginsBasedOnSizeClass()
             .navigationTitle("Broadcast service")
@@ -168,36 +86,19 @@ struct BroadcastBonjourServiceView: View {
             .navigationBarTitleDisplayMode(.inline)
             #endif
             .toolbar {
-                ToolbarItem {
+                ToolbarItem(placement: .cancellationAction) {
                     Button(role: .cancel) {
                         isPresented = false
                     } label: {
                         Label("Cancel", systemImage: "x.circle.fill")
                     }
                 }
-                ToolbarItem {
+                
+                ToolbarItem(placement: .confirmationAction) {
                     Button {
                         doneButtonSelected()
                     } label: {
                         Label("Done", systemImage: "checkmark.circle.fill")
-                    }
-                }
-            }
-            .onChange(of: serviceType) { _ in
-                Task { @MainActor in
-                    withAnimation {
-                        if serviceType != nil {
-                            serviceTypeError = nil
-                        }
-                    }
-                }
-            }
-            .onChange(of: port) { _ in
-                Task { @MainActor in
-                    withAnimation {
-                        if port != nil {
-                            portError = nil
-                        }
                     }
                 }
             }
@@ -209,6 +110,132 @@ struct BroadcastBonjourServiceView: View {
             }
         }
     }
+    
+    // MARK: - Service Type Section
+    
+    private func serviceTypeSection() -> some View {
+        Section {
+            if !isCreatingBonjourService, let serviceType {
+                BlueSectionItemIconTitleDetailView(
+                    imageSystemName: serviceType.imageSystemName,
+                    title: serviceType.name,
+                    detail: serviceType.fullType
+                )
+            } else {
+                NavigationLink {
+                    SelectServiceTypeView(selectedServiceType: $serviceType)
+                } label: {
+                    BlueSectionItemIconTitleDetailView(
+                        imageSystemName: serviceType?.imageSystemName,
+                        title: serviceType?.name ?? "Select a service type to broadcast",
+                        detail: serviceType?.fullType
+                    )
+                }
+                .listRowBackground(
+                    Color.kozBonBlue
+                        .opacity(0.4)
+                )
+            }
+        } header: {
+            Text("Service Type")
+        } footer: {
+            if let serviceTypeError {
+                Text(verbatim: serviceTypeError)
+                    .foregroundStyle(.red)
+            }
+        }
+        .onChange(of: [serviceType]) { _ in
+            Task { @MainActor in
+                withAnimation {
+                    if serviceType != nil {
+                        serviceTypeError = nil
+                    }
+                }
+            }
+        }
+    }
+    
+    // MARK: - Port Number Section
+    
+    private func portNumberSection() -> some View {
+        Section {
+            TextField(
+                "Service port number",
+                value: $port,
+                format: .number
+            )
+            .onSubmit {
+                doneButtonSelected()
+            }
+
+        } header: {
+            Text("Port Number")
+        } footer: {
+            if let portError {
+                Text(verbatim: portError)
+                    .foregroundStyle(.red)
+            }
+        }
+        .onChange(of: [port]) { _ in
+            Task { @MainActor in
+                withAnimation {
+                    if port != nil {
+                        portError = nil
+                    }
+                }
+            }
+        }
+    }
+    
+    // MARK: - Service Domain Section
+    
+    private func serviceDomainSection() -> some View {
+        Section("Service Domain") {
+            TextField("Service domain", text: $domain)
+                .onSubmit {
+                    doneButtonSelected()
+                }
+                .disabled(false)
+        }
+    }
+    
+    // MARK: - TXT Records Section
+    
+    private func txtRecordsSection() -> some View {
+        Section("TXT Records") {
+            ForEach(dataRecords, id: \.key) { dataRecord in
+                TitleDetailStackView(
+                    title: dataRecord.key,
+                    detail: dataRecord.value
+                )
+                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                    Button(role: .destructive) {
+                        let indexToRemove = dataRecords.firstIndex { record in
+                            record.key == dataRecord.key
+                        }
+                        if let indexToRemove {
+                            Task { @MainActor in
+                                withAnimation {
+                                    dataRecords.remove(at: indexToRemove)
+                                }
+                            }
+                        }
+                    } label: {
+                        Label("Remove", systemImage: "minus.circle.fill")
+                    }
+                    .tint(.red)
+                }
+            }
+
+            Button {
+                isCreateTxtRecordViewPresented = true
+            } label: {
+                Label("Add TXT Record", systemImage: "plus.circle.fill")
+            }
+        }
+    }
+    
+    // MARK: - Done Action
 
     private func doneButtonSelected() {
 
