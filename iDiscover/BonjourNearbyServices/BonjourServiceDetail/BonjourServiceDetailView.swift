@@ -11,6 +11,8 @@ import SwiftUI
 // MARK: - BonjourServiceDetailView
 
 struct BonjourServiceDetailView: View {
+    
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
     @StateObject private var viewModel: ViewModel
 
@@ -30,6 +32,16 @@ struct BonjourServiceDetailView: View {
                     title: viewModel.service.service.name,
                     detail: viewModel.serviceType.name
                 )
+                .onAppear {
+                    withAnimation {
+                        viewModel.isNavigationHeaderShown = false
+                    }
+                }
+                .onDisappear {
+                    withAnimation {
+                        viewModel.isNavigationHeaderShown = true
+                    }
+                }
             }
 
             Section("Information") {
@@ -92,6 +104,24 @@ struct BonjourServiceDetailView: View {
         .task {
             viewModel.service.resolve()
         }
+        .toolbar {
+            if viewModel.isNavigationHeaderShown {
+                ToolbarItem(
+                    placement: horizontalSizeClass == .compact ? .principal : .topBarTrailing
+                ) {
+                    HStack {
+                        Label(viewModel.serviceType.name, systemImage: viewModel.serviceType.imageSystemName)
+                            .padding(.vertical, 5)
+                            .padding(.horizontal)
+                    }
+                    .background(
+                        Color.kozBonBlue
+                            .opacity(0.4)
+                    )
+                    .clipShape(.capsule)
+                }
+            }
+        }
     }
 
     // MARK: - ViewModel
@@ -101,6 +131,7 @@ struct BonjourServiceDetailView: View {
         let service: BonjourService
         let serviceType: BonjourServiceType
 
+        @MainActor @Published var isNavigationHeaderShown = false
         @MainActor @Published private(set) var addresses: [InternetAddress] = []
         @MainActor @Published private(set) var dataRecords: [BonjourService.TxtDataRecord] = []
 

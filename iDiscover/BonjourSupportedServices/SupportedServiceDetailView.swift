@@ -13,13 +13,14 @@ import SwiftUI
 struct SupportedServiceDetailView: View {
 
     @Environment(\.dismiss) var dismiss
-
-    @State private var serviceType: BonjourServiceType
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
     init(serviceType: BonjourServiceType) {
         self.serviceType = serviceType
     }
 
+    @State private var serviceType: BonjourServiceType
+    @State private var isNavigationHeaderShown = false
     @State private var showDeleteConfirmation = false
     @State private var showEditConfirmation = false
 
@@ -31,6 +32,16 @@ struct SupportedServiceDetailView: View {
                     title: serviceType.name,
                     detail: serviceType.fullType
                 )
+                .onAppear {
+                    withAnimation {
+                        isNavigationHeaderShown = false
+                    }
+                }
+                .onDisappear {
+                    withAnimation {
+                        isNavigationHeaderShown = true
+                    }
+                }
             }
 
             Section {
@@ -117,5 +128,23 @@ struct SupportedServiceDetailView: View {
             }
         }
         .contentMarginsBasedOnSizeClass()
+        .toolbar {
+            if isNavigationHeaderShown {
+                ToolbarItem(
+                    placement: horizontalSizeClass == .compact ? .principal : .topBarTrailing 
+                ) {
+                    HStack {
+                        Label(serviceType.name, systemImage: serviceType.imageSystemName)
+                            .padding(.vertical, 5)
+                            .padding(.horizontal)
+                    }
+                    .background(
+                        Color.kozBonBlue
+                            .opacity(0.4)
+                    )
+                    .clipShape(.capsule)
+                }
+            }
+        }
     }
 }
