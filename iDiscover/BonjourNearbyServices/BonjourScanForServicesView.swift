@@ -25,7 +25,7 @@ struct BonjourScanForServicesView: View {
                         .font(.system(.caption))
                 }
             }
-            
+
             if viewModel.sortedActiveServices.count > 0 {
                 Section {
                     forEach(services: viewModel.sortedActiveServices)
@@ -48,7 +48,7 @@ struct BonjourScanForServicesView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 BonjourServiceListSortMenu(sortType: self.$viewModel.sortType)
             }
-            
+
             ToolbarItem(placement: .topBarTrailing) {
                 Menu {
                     Button {

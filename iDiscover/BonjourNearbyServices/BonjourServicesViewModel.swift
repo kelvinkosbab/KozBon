@@ -26,7 +26,7 @@ class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDelegate 
             }
         }
     }
-    
+
     @MainActor var sortedPublishedServices: [BonjourService] {
         let publishedServices = activeServices.filter { service in
             customPublishedServices.contains { publishedSevice in
@@ -34,7 +34,7 @@ class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDelegate 
                 service.serviceType.fullType == publishedSevice.serviceType.fullType
             }
         }
-        
+
         switch sortType {
         case .hostNameAsc:
             return publishedServices.sorted { service1, service2 -> Bool in
@@ -68,7 +68,7 @@ class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDelegate 
                 service.serviceType.fullType == publishedSevice.serviceType.fullType
             }
         }
-        
+
         switch sortType {
         case .hostNameAsc:
             return nonPublishedServices.sorted { service1, service2 -> Bool in

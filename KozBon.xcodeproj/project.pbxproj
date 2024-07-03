@@ -59,6 +59,7 @@
 		F6C50D7E2AB3C47D0048DF8C /* BonjourServiceListSortMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C50D7D2AB3C47D0048DF8C /* BonjourServiceListSortMenu.swift */; };
 		F6C50D822AB3F8A70048DF8C /* BluetoothScanForDevicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C50D812AB3F8A70048DF8C /* BluetoothScanForDevicesViewModel.swift */; };
 		F6C50D842AB4FF3E0048DF8C /* CBPeripheralState+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C50D832AB4FF3E0048DF8C /* CBPeripheralState+Util.swift */; };
+		F6E087992C34ED8400D27B17 /* String+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E087982C34ED8400D27B17 /* String+Util.swift */; };
 		F6FCAD962C333D3E00752B0B /* KozBonWatchOS Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = F6FCAD952C333D3E00752B0B /* KozBonWatchOS Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F6FCAD9B2C333D3E00752B0B /* KozBonWatchOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FCAD9A2C333D3E00752B0B /* KozBonWatchOSApp.swift */; };
 		F6FCAD9D2C333D3E00752B0B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FCAD9C2C333D3E00752B0B /* ContentView.swift */; };
@@ -144,6 +145,7 @@
 		F6C50D7D2AB3C47D0048DF8C /* BonjourServiceListSortMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServiceListSortMenu.swift; sourceTree = "<group>"; };
 		F6C50D812AB3F8A70048DF8C /* BluetoothScanForDevicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothScanForDevicesViewModel.swift; sourceTree = "<group>"; };
 		F6C50D832AB4FF3E0048DF8C /* CBPeripheralState+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CBPeripheralState+Util.swift"; sourceTree = "<group>"; };
+		F6E087982C34ED8400D27B17 /* String+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Util.swift"; sourceTree = "<group>"; };
 		F6FCAD902C333D3E00752B0B /* KozBonWatchOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KozBonWatchOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6FCAD952C333D3E00752B0B /* KozBonWatchOS Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "KozBonWatchOS Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6FCAD9A2C333D3E00752B0B /* KozBonWatchOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KozBonWatchOSApp.swift; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 			children = (
 				F62EDC5E255B9D25003E5178 /* KozBon.entitlements */,
 				F6781EF72694C5F6009B79F7 /* README.md */,
+				F6E087972C34ECC800D27B17 /* Shared */,
 				B6CE1D261E1208C1003D4FFA /* iDiscover */,
 				F6FCAD992C333D3E00752B0B /* KozBonWatchOS Watch App */,
 				B6CE1D251E1208C1003D4FFA /* Products */,
@@ -348,6 +351,14 @@
 				F67B65362C1B5C4E00324FFF /* BonjourServiceScanner */,
 			);
 			path = BonjourNearbyServices;
+			sourceTree = "<group>";
+		};
+		F6E087972C34ECC800D27B17 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				F6E087982C34ED8400D27B17 /* String+Util.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		F6FCAD992C333D3E00752B0B /* KozBonWatchOS Watch App */ = {
@@ -522,6 +533,7 @@
 				F67B65332C1B54F400324FFF /* NetService+InternetAddress.swift in Sources */,
 				F6240E692A92CF0600951875 /* AppCore.swift in Sources */,
 				F67B65312C1B4EC300324FFF /* InternetAddress.swift in Sources */,
+				F6E087992C34ED8400D27B17 /* String+Util.swift in Sources */,
 				B6BD8C842002C715009327B2 /* BluetoothDevice.swift in Sources */,
 				B6CE1D5F1E120CCC003D4FFA /* BonjourServiceTypeScanner.swift in Sources */,
 				F6C50D7E2AB3C47D0048DF8C /* BonjourServiceListSortMenu.swift in Sources */,

@@ -11,7 +11,7 @@ import SwiftUI
 // MARK: - BonjourServiceDetailView
 
 struct BonjourServiceDetailView: View {
-    
+
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
     @StateObject private var viewModel: ViewModel

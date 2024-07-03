@@ -55,7 +55,7 @@ class BonjourService: NSObject, NetServiceDelegate {
         }
         return false
     }
-    
+
     // MARK: - Stopping Resolution / Publishing
 
     private var isStopping: Bool = false
@@ -146,7 +146,7 @@ class BonjourService: NSObject, NetServiceDelegate {
 
     func netServiceWillPublish(_ sender: NetService) {
         logger.debug("Service will publish", censored: "\(sender)")
-        
+
         // For some reason the `didPublish` callback isn't beeing called. This is a temp hack
         // to allow for the completion handlers to return after a short delay
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {

@@ -19,9 +19,9 @@ protocol BonjourServiceScannerDelegate: AnyObject {
 // MARK: - BonjourServiceScanner
 
 class BonjourServiceScanner: BonjourServiceScannerDelegate {
-    
+
     static let shared = BonjourServiceScanner()
-    
+
     private init() {}
 
     // MARK: - Properties

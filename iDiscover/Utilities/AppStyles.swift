@@ -14,10 +14,6 @@ extension Image {
 
     // MARK: - Custom Images
 
-    static var bonjour: Image {
-        Image(systemName: "bonjour")
-    }
-
     static var bluetooth: Image {
         Image("bluetooth")
             .renderingMode(.template)
@@ -30,27 +26,15 @@ extension Image {
 
     // MARK: - SF Symbols
 
-    static var arrowClockwiseCircleFill: Image {
-        Image(systemName: "arrow.clockwise.circle.fill")
+    static var bonjour: Image {
+        Image(systemName: "bonjour")
     }
 
     static var arrowUpArrowDownCircleFill: Image {
         Image(systemName: "arrow.up.arrow.down.circle.fill")
     }
 
-    static var chevronRight: Image {
-        Image(systemName: "chevron.right")
-    }
-
     static var plusCircleFill: Image {
         Image(systemName: "plus.circle.fill")
-    }
-
-    static var plusDiamondFill: Image {
-        Image(systemName: "plus.diamond.fill")
-    }
-
-    static var listBulletRectanglePortraitFill: Image {
-        Image(systemName: "list.bullet.rectangle.portrait.fill")
     }
 }

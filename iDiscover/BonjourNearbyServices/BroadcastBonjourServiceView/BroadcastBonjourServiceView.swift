@@ -264,7 +264,7 @@ struct BroadcastBonjourServiceView: View {
                 }
                 let txtRecordData = NetService.data(fromTXTRecord: txtRecords)
                 _ = publishedService.service.setTXTRecord(txtRecordData)
-                
+
                 let index = customPublishedServices.firstIndex(of: publishedService)
                 await MainActor.run {
                     if let index {

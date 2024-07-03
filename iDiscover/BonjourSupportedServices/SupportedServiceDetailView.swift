@@ -131,7 +131,7 @@ struct SupportedServiceDetailView: View {
         .toolbar {
             if isNavigationHeaderShown {
                 ToolbarItem(
-                    placement: horizontalSizeClass == .compact ? .principal : .topBarTrailing 
+                    placement: horizontalSizeClass == .compact ? .principal : .topBarTrailing
                 ) {
                     HStack {
                         Label(serviceType.name, systemImage: serviceType.imageSystemName)
