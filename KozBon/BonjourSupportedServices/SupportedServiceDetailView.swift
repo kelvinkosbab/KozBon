@@ -133,16 +133,7 @@ struct SupportedServiceDetailView: View {
                 ToolbarItem(
                     placement: horizontalSizeClass == .compact ? .principal : .confirmationAction
                 ) {
-                    HStack {
-                        Label(serviceType.name, systemImage: serviceType.imageSystemName)
-                            .padding(.vertical, 5)
-                            .padding(.horizontal)
-                    }
-                    .background(
-                        Color.kozBonBlue
-                            .opacity(0.4)
-                    )
-                    .clipShape(.capsule)
+                    ServiceTypeBadge(serviceType: serviceType, style: .basedOnSizeClass)
                 }
             }
         }

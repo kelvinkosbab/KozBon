@@ -27,8 +27,7 @@ struct SupportedServicesView: View {
                                 title: serviceType.name,
                                 detail: serviceType.fullType
                             ) {
-                                Image(systemName: serviceType.imageSystemName)
-                                    .font(.system(.body).bold())
+                                ServiceTypeBadge(serviceType: serviceType, style: .iconOnly)
                             }
                         }
                     }
@@ -45,8 +44,7 @@ struct SupportedServicesView: View {
                                 title: serviceType.name,
                                 detail: serviceType.fullType
                             ) {
-                                Image(systemName: serviceType.imageSystemName)
-                                    .font(.system(.body).bold())
+                                ServiceTypeBadge(serviceType: serviceType, style: .iconOnly)
                             }
                         }
                     }

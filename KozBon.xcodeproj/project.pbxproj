@@ -25,6 +25,7 @@
 		B6CE1D5F1E120CCC003D4FFA /* BonjourServiceTypeScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D5A1E120CCC003D4FFA /* BonjourServiceTypeScanner.swift */; };
 		B6CE1D601E120CCC003D4FFA /* BonjourServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D5B1E120CCC003D4FFA /* BonjourServiceType.swift */; };
 		B6CE1D661E120E4D003D4FFA /* CustomServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D641E120E4D003D4FFA /* CustomServiceType.swift */; };
+		F60088752C3CEFD2006EA857 /* ServiceTypeBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60088742C3CEFD2006EA857 /* ServiceTypeBadge.swift */; };
 		F6240E692A92CF0600951875 /* AppCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E682A92CF0600951875 /* AppCore.swift */; };
 		F6240E6C2A92D62200951875 /* BonjourScanForServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E6B2A92D62200951875 /* BonjourScanForServicesView.swift */; };
 		F6240E6F2A92D63400951875 /* BluetoothScanForDevicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E6E2A92D63400951875 /* BluetoothScanForDevicesView.swift */; };
@@ -84,6 +85,7 @@
 		B6CE1D5A1E120CCC003D4FFA /* BonjourServiceTypeScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BonjourServiceTypeScanner.swift; sourceTree = "<group>"; };
 		B6CE1D5B1E120CCC003D4FFA /* BonjourServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BonjourServiceType.swift; sourceTree = "<group>"; };
 		B6CE1D641E120E4D003D4FFA /* CustomServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomServiceType.swift; sourceTree = "<group>"; };
+		F60088742C3CEFD2006EA857 /* ServiceTypeBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceTypeBadge.swift; sourceTree = "<group>"; };
 		F6240E682A92CF0600951875 /* AppCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCore.swift; sourceTree = "<group>"; };
 		F6240E6B2A92D62200951875 /* BonjourScanForServicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourScanForServicesView.swift; sourceTree = "<group>"; };
 		F6240E6E2A92D63400951875 /* BluetoothScanForDevicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothScanForDevicesView.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 				F67B65562C20CA1F00324FFF /* ContentMarginsBasedOnSizeClass.swift */,
 				F661AD9C2C2CAF9F00779621 /* BlueSectionItemIconTitleDetailView.swift */,
 				F67B655E2C22107500324FFF /* EmptyStateOverlayView.swift */,
+				F60088742C3CEFD2006EA857 /* ServiceTypeBadge.swift */,
 			);
 			path = CoreUI;
 			sourceTree = "<group>";
@@ -412,6 +415,7 @@
 				F67B653F2C1B899B00324FFF /* BonjourServiceType+UI.swift in Sources */,
 				F67B65352C1B556900324FFF /* Logger.swift in Sources */,
 				B6CE1D5C1E120CCC003D4FFA /* BonjourServiceScanner.swift in Sources */,
+				F60088752C3CEFD2006EA857 /* ServiceTypeBadge.swift in Sources */,
 				F6240E7F2A941BD500951875 /* (null) in Sources */,
 				F67B65392C1B5CB700324FFF /* BonjourServiceDetailView.swift in Sources */,
 				F661AD9F2C2CD20800779621 /* SelectServiceTypeView.swift in Sources */,

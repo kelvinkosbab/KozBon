@@ -111,16 +111,7 @@ struct BonjourServiceDetailView: View {
                 ToolbarItem(
                     placement: horizontalSizeClass == .compact ? .principal : .confirmationAction
                 ) {
-                    HStack {
-                        Label(viewModel.serviceType.name, systemImage: viewModel.serviceType.imageSystemName)
-                            .padding(.vertical, 5)
-                            .padding(.horizontal)
-                    }
-                    .background(
-                        Color.kozBonBlue
-                            .opacity(0.4)
-                    )
-                    .clipShape(.capsule)
+                    ServiceTypeBadge(serviceType: viewModel.serviceType, style: .basedOnSizeClass)
                 }
             }
         }

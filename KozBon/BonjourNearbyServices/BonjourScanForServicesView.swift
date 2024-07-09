@@ -109,8 +109,7 @@ struct BonjourScanForServicesView: View {
                     title: service.service.name,
                     detail: service.serviceType.name
                 ) {
-                    Image(systemName: service.serviceType.imageSystemName)
-                        .font(.system(.body).bold())
+                    ServiceTypeBadge(serviceType: service.serviceType, style: .iconOnly)
                 }
             }
         }
