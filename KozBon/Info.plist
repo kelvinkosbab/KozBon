@@ -118,7 +118,7 @@
 		<string>_spotify-connect._tcp</string>
 	</array>
 	<key>NSLocalNetworkUsageDescription</key>
-	<string>Looking for local tcp Bonjour service</string>
+	<string>KozBon needs permission to scan for nearby Bonjour services.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
