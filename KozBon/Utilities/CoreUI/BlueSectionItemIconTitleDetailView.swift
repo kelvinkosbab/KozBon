@@ -48,6 +48,7 @@ struct BlueSectionItemIconTitleDetailView: View {
         .listRowBackground(
             Color.kozBonBlue
                 .opacity(0.4)
+                .clipShape(.capsule)
         )
     }
 }
