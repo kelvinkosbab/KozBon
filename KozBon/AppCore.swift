@@ -18,7 +18,9 @@ struct AppCore: App {
             if #available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *) {
                 TabView {
                     Tab {
-                        BonjourScanForServicesView()
+                        NavigationStack {
+                            BonjourScanForServicesView()
+                        }
                     } label: {
                         Label {
                             Text(verbatim: TopLevelDestination.bonjour.titleString)
@@ -28,7 +30,9 @@ struct AppCore: App {
                     }
 
                     Tab {
-                        SupportedServicesView()
+                        NavigationStack {
+                            SupportedServicesView()
+                        }
                     } label: {
                         Label {
                             Text(verbatim: TopLevelDestination.bonjourServiceTypes.titleString)
