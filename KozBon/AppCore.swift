@@ -15,41 +15,55 @@ import CoreUI
 struct AppCore: App {
     var body: some Scene {
         WindowGroup {
-            TabView {
-                NavigationStack {
-                    BonjourScanForServicesView()
-                }
-                .tabItem {
-                    Label {
-                        Text(verbatim: TopLevelDestination.bonjour.titleString)
-                    } icon: {
-                        TopLevelDestination.bonjour.icon
+            if #available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *) {
+                TabView {
+                    Tab {
+                        BonjourScanForServicesView()
+                    } label: {
+                        Label {
+                            Text(verbatim: TopLevelDestination.bonjour.titleString)
+                        } icon: {
+                            TopLevelDestination.bonjour.icon
+                        }
                     }
-                }
 
-                NavigationStack {
-                    SupportedServicesView()
-                }
-                .tabItem {
-                    Label {
-                        Text(verbatim: TopLevelDestination.bonjourServiceTypes.titleString)
-                    } icon: {
-                        TopLevelDestination.bonjourServiceTypes.icon
+                    Tab {
+                        SupportedServicesView()
+                    } label: {
+                        Label {
+                            Text(verbatim: TopLevelDestination.bonjourServiceTypes.titleString)
+                        } icon: {
+                            TopLevelDestination.bonjourServiceTypes.icon
+                        }
                     }
                 }
-
-                NavigationStack {
-                    BluetoothScanForDevicesView()
-                }
-                .tabItem {
-                    Label {
-                        Text(verbatim: TopLevelDestination.bluetooth.titleString)
-                    } icon: {
-                        TopLevelDestination.bluetooth.icon
+                .tint(.kozBonBlue)
+            } else {
+                TabView {
+                    NavigationStack {
+                        BonjourScanForServicesView()
+                    }
+                    .tabItem {
+                        Label {
+                            Text(verbatim: TopLevelDestination.bonjour.titleString)
+                        } icon: {
+                            TopLevelDestination.bonjour.icon
+                        }
+                    }
+                    
+                    NavigationStack {
+                        SupportedServicesView()
+                    }
+                    .tabItem {
+                        Label {
+                            Text(verbatim: TopLevelDestination.bonjourServiceTypes.titleString)
+                        } icon: {
+                            TopLevelDestination.bonjourServiceTypes.icon
+                        }
                     }
                 }
+                .tint(.kozBonBlue)
             }
-            .tint(.kozBonBlue)
         }
     }
 }
