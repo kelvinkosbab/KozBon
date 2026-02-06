@@ -54,6 +54,16 @@
 		F6C472FB2C1A248000BBB0F9 /* TopLevelDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C472FA2C1A248000BBB0F9 /* TopLevelDestination.swift */; };
 		F6C50D7C2AB3BDD50048DF8C /* TitleDetailStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C50D7B2AB3BDD50048DF8C /* TitleDetailStackView.swift */; };
 		F6C50D7E2AB3C47D0048DF8C /* BonjourServiceListSortMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C50D7D2AB3C47D0048DF8C /* BonjourServiceListSortMenu.swift */; };
+		F6CA765A2F3690A60036BE3B /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CA76592F3690A60036BE3B /* DependencyContainer.swift */; };
+		F6CA765C2F3690AB0036BE3B /* BonjourServiceScannerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CA765B2F3690AB0036BE3B /* BonjourServiceScannerProtocol.swift */; };
+		F6CA765E2F3690AF0036BE3B /* BonjourPublishManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CA765D2F3690AF0036BE3B /* BonjourPublishManagerProtocol.swift */; };
+		F6CA76602F3690EF0036BE3B /* DependencyInjectionExamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CA765F2F3690EF0036BE3B /* DependencyInjectionExamples.swift */; };
+		F6CA76622F3690FE0036BE3B /* MockDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CA76612F3690FE0036BE3B /* MockDependencies.swift */; };
+		F6CA76662F36913E0036BE3B /* DEPENDENCY_INJECTION_GUIDE.md in Resources */ = {isa = PBXBuildFile; fileRef = F6CA76652F36913E0036BE3B /* DEPENDENCY_INJECTION_GUIDE.md */; };
+		F6CA76682F36915C0036BE3B /* PreviewDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CA76672F36915C0036BE3B /* PreviewDependencies.swift */; };
+		F6CA766A2F3691820036BE3B /* QUICK_START.md in Resources */ = {isa = PBXBuildFile; fileRef = F6CA76692F3691820036BE3B /* QUICK_START.md */; };
+		F6CA766C2F3691BD0036BE3B /* ARCHITECTURE.md in Resources */ = {isa = PBXBuildFile; fileRef = F6CA766B2F3691BD0036BE3B /* ARCHITECTURE.md */; };
+		F6CA766E2F3693AE0036BE3B /* BUILD_FIX_SUMMARY.md in Resources */ = {isa = PBXBuildFile; fileRef = F6CA766D2F3693AE0036BE3B /* BUILD_FIX_SUMMARY.md */; };
 		F6E087992C34ED8400D27B17 /* String+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E087982C34ED8400D27B17 /* String+Util.swift */; };
 		F6FCADAC2C33487700752B0B /* CreateTxtRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FCADAB2C33487700752B0B /* CreateTxtRecordView.swift */; };
 /* End PBXBuildFile section */
@@ -106,6 +116,16 @@
 		F6C472FA2C1A248000BBB0F9 /* TopLevelDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopLevelDestination.swift; sourceTree = "<group>"; };
 		F6C50D7B2AB3BDD50048DF8C /* TitleDetailStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleDetailStackView.swift; sourceTree = "<group>"; };
 		F6C50D7D2AB3C47D0048DF8C /* BonjourServiceListSortMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServiceListSortMenu.swift; sourceTree = "<group>"; };
+		F6CA76592F3690A60036BE3B /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
+		F6CA765B2F3690AB0036BE3B /* BonjourServiceScannerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServiceScannerProtocol.swift; sourceTree = "<group>"; };
+		F6CA765D2F3690AF0036BE3B /* BonjourPublishManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourPublishManagerProtocol.swift; sourceTree = "<group>"; };
+		F6CA765F2F3690EF0036BE3B /* DependencyInjectionExamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjectionExamples.swift; sourceTree = "<group>"; };
+		F6CA76612F3690FE0036BE3B /* MockDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDependencies.swift; sourceTree = "<group>"; };
+		F6CA76652F36913E0036BE3B /* DEPENDENCY_INJECTION_GUIDE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DEPENDENCY_INJECTION_GUIDE.md; sourceTree = "<group>"; };
+		F6CA76672F36915C0036BE3B /* PreviewDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewDependencies.swift; sourceTree = "<group>"; };
+		F6CA76692F3691820036BE3B /* QUICK_START.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = QUICK_START.md; sourceTree = "<group>"; };
+		F6CA766B2F3691BD0036BE3B /* ARCHITECTURE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ARCHITECTURE.md; sourceTree = "<group>"; };
+		F6CA766D2F3693AE0036BE3B /* BUILD_FIX_SUMMARY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = BUILD_FIX_SUMMARY.md; sourceTree = "<group>"; };
 		F6E087982C34ED8400D27B17 /* String+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Util.swift"; sourceTree = "<group>"; };
 		F6FCADAB2C33487700752B0B /* CreateTxtRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTxtRecordView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -156,6 +176,9 @@
 				B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */,
 				B6CE1D311E1208C1003D4FFA /* Assets.xcassets */,
 				B6CE1D361E1208C1003D4FFA /* Info.plist */,
+				F6CA76592F3690A60036BE3B /* DependencyContainer.swift */,
+				F6CA765B2F3690AB0036BE3B /* BonjourServiceScannerProtocol.swift */,
+				F6CA765D2F3690AF0036BE3B /* BonjourPublishManagerProtocol.swift */,
 			);
 			path = KozBon;
 			sourceTree = "<group>";
@@ -272,6 +295,13 @@
 				F67B65372C1B5CAE00324FFF /* BonjourServiceDetail */,
 				F67B65582C20D68B00324FFF /* BroadcastBonjourServiceView */,
 				F67B65362C1B5C4E00324FFF /* BonjourServiceScanner */,
+				F6CA765F2F3690EF0036BE3B /* DependencyInjectionExamples.swift */,
+				F6CA76612F3690FE0036BE3B /* MockDependencies.swift */,
+				F6CA76652F36913E0036BE3B /* DEPENDENCY_INJECTION_GUIDE.md */,
+				F6CA76672F36915C0036BE3B /* PreviewDependencies.swift */,
+				F6CA76692F3691820036BE3B /* QUICK_START.md */,
+				F6CA766B2F3691BD0036BE3B /* ARCHITECTURE.md */,
+				F6CA766D2F3693AE0036BE3B /* BUILD_FIX_SUMMARY.md */,
 			);
 			path = BonjourNearbyServices;
 			sourceTree = "<group>";
@@ -309,7 +339,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1600;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 2630;
 				ORGANIZATIONNAME = Kozinga;
 				TargetAttributes = {
 					B6CE1D231E1208C1003D4FFA = {
@@ -346,8 +376,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6CA76662F36913E0036BE3B /* DEPENDENCY_INJECTION_GUIDE.md in Resources */,
 				B6CE1D4A1E120AF8003D4FFA /* service-names-port-numbers.csv in Resources */,
+				F6CA766E2F3693AE0036BE3B /* BUILD_FIX_SUMMARY.md in Resources */,
+				F6CA766C2F3691BD0036BE3B /* ARCHITECTURE.md in Resources */,
 				B6CE1D321E1208C1003D4FFA /* Assets.xcassets in Resources */,
+				F6CA766A2F3691820036BE3B /* QUICK_START.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -376,10 +410,13 @@
 				B64D06261E1A2C55008B3FC8 /* MyServiceType+Library.swift in Sources */,
 				F67B65572C20CA1F00324FFF /* ContentMarginsBasedOnSizeClass.swift in Sources */,
 				F69E82702AABA6B4006AA4D3 /* BonjourServiceSortType.swift in Sources */,
+				F6CA76622F3690FE0036BE3B /* MockDependencies.swift in Sources */,
 				B6CE1D601E120CCC003D4FFA /* BonjourServiceType.swift in Sources */,
 				F67B653F2C1B899B00324FFF /* BonjourServiceType+UI.swift in Sources */,
 				F67B65352C1B556900324FFF /* Logger.swift in Sources */,
 				B6CE1D5C1E120CCC003D4FFA /* BonjourServiceScanner.swift in Sources */,
+				F6CA765C2F3690AB0036BE3B /* BonjourServiceScannerProtocol.swift in Sources */,
+				F6CA765E2F3690AF0036BE3B /* BonjourPublishManagerProtocol.swift in Sources */,
 				F60088752C3CEFD2006EA857 /* ServiceTypeBadge.swift in Sources */,
 				F6240E7F2A941BD500951875 /* (null) in Sources */,
 				F67B65392C1B5CB700324FFF /* BonjourServiceDetailView.swift in Sources */,
@@ -387,6 +424,7 @@
 				B6CE1D561E120BF4003D4FFA /* MyDataManager.swift in Sources */,
 				F67B656A2C29EACA00324FFF /* BonjourService+Notification.swift in Sources */,
 				F69E82742AABA8A5006AA4D3 /* TransportLayer.swift in Sources */,
+				F6CA76602F3690EF0036BE3B /* DependencyInjectionExamples.swift in Sources */,
 				B679CC171E1647670056C7B5 /* MyBonjourPublishManager.swift in Sources */,
 				F6240E6C2A92D62200951875 /* BonjourScanForServicesView.swift in Sources */,
 				F6240E742A92D91800951875 /* AppStyles.swift in Sources */,
@@ -394,8 +432,10 @@
 				F6FCADAC2C33487700752B0B /* CreateTxtRecordView.swift in Sources */,
 				B6CE1D301E1208C1003D4FFA /* iDiscover.xcdatamodeld in Sources */,
 				F661AD9D2C2CAF9F00779621 /* BlueSectionItemIconTitleDetailView.swift in Sources */,
+				F6CA76682F36915C0036BE3B /* PreviewDependencies.swift in Sources */,
 				F69E82722AABA7E5006AA4D3 /* BonjourServiceBrowserState.swift in Sources */,
 				B6CE1D521E120B9F003D4FFA /* MyDataManagerObject.swift in Sources */,
+				F6CA765A2F3690A60036BE3B /* DependencyContainer.swift in Sources */,
 				B6CE1D5E1E120CCC003D4FFA /* BonjourService.swift in Sources */,
 				F67B655F2C22107500324FFF /* EmptyStateOverlayView.swift in Sources */,
 				F67B655B2C20D6A600324FFF /* CreateOrUpdateBonjourServiceTypeView.swift in Sources */,
@@ -443,6 +483,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 6SS93B87P2;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -464,6 +505,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -506,6 +548,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 6SS93B87P2;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -520,6 +563,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -532,17 +576,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = KozBon.entitlements;
-				CURRENT_PROJECT_VERSION = 91;
-				DEVELOPMENT_TEAM = 6SS93B87P2;
+				CURRENT_PROJECT_VERSION = 92;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = YES;
 				INFOPLIST_FILE = KozBon/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = KozBon;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
+				MACOSX_DEPLOYMENT_TARGET = 15.6;
 				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kozinga.KozBon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -553,7 +599,7 @@
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				XROS_DEPLOYMENT_TARGET = 1.0;
+				XROS_DEPLOYMENT_TARGET = 26.0;
 			};
 			name = Debug;
 		};
@@ -562,17 +608,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = KozBon.entitlements;
-				CURRENT_PROJECT_VERSION = 91;
-				DEVELOPMENT_TEAM = 6SS93B87P2;
+				CURRENT_PROJECT_VERSION = 92;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = YES;
 				INFOPLIST_FILE = KozBon/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = KozBon;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
+				MACOSX_DEPLOYMENT_TARGET = 15.6;
 				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kozinga.KozBon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -583,7 +631,7 @@
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				XROS_DEPLOYMENT_TARGET = 1.0;
+				XROS_DEPLOYMENT_TARGET = 26.0;
 			};
 			name = Release;
 		};

@@ -13,7 +13,13 @@ import CoreUI
 
 struct BonjourScanForServicesView: View {
 
-    @StateObject var viewModel = BonjourServicesViewModel()
+    @StateObject private var viewModel: BonjourServicesViewModel
+    
+    init(scanner: BonjourServiceScannerProtocol? = nil) {
+        _viewModel = StateObject(wrappedValue: BonjourServicesViewModel(
+            serviceScanner: scanner ?? BonjourServiceScanner.shared
+        ))
+    }
 
     var body: some View {
         List {

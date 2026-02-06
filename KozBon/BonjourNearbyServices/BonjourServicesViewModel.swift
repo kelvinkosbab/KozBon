@@ -96,9 +96,10 @@ class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDelegate 
     }
 
     private(set) var isInitialLoad = true
-    let serviceScanner = BonjourServiceScanner.shared
+    let serviceScanner: BonjourServiceScannerProtocol
 
-    init() {
+    init(serviceScanner: BonjourServiceScannerProtocol = BonjourServiceScanner.shared) {
+        self.serviceScanner = serviceScanner
         self.serviceScanner.delegate = self
     }
 
