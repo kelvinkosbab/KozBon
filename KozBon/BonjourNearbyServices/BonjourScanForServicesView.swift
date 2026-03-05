@@ -13,9 +13,11 @@ import CoreUI
 
 struct BonjourScanForServicesView: View {
 
+    @Environment(\.scenePhase) private var scenePhase
     @StateObject private var viewModel: BonjourServicesViewModel
     
-    init(scanner: BonjourServiceScannerProtocol? = nil) {
+    @MainActor
+    init(scanner: (any BonjourServiceScannerProtocol)? = nil) {
         _viewModel = StateObject(wrappedValue: BonjourServicesViewModel(
             serviceScanner: scanner ?? BonjourServiceScanner.shared
         ))
@@ -94,6 +96,18 @@ struct BonjourScanForServicesView: View {
         }
         .onDisappear {
             viewModel.serviceScanner.stopScan()
+        }
+        .onChange(of: scenePhase) { _, newPhase in
+            switch newPhase {
+            case .active:
+                if viewModel.shouldRefreshOnForeground() {
+                    viewModel.load()
+                }
+            case .background:
+                viewModel.serviceScanner.stopScan()
+            default:
+                break
+            }
         }
         .sheet(isPresented: $viewModel.isBroadcastBonjourServicePresented) {
             NavigationStack {

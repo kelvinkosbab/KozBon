@@ -11,7 +11,8 @@ import Foundation
 // MARK: - BonjourServiceScannerProtocol
 
 /// Protocol defining the interface for scanning Bonjour services
-protocol BonjourServiceScannerProtocol: AnyObject {
+@MainActor
+protocol BonjourServiceScannerProtocol: AnyObject, Sendable {
     var delegate: BonjourServiceScannerDelegate? { get set }
     var isProcessing: Bool { get }
     

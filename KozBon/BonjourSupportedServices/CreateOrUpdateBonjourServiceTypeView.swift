@@ -133,20 +133,18 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                     }
                 }
             }
-            .onChange(of: [name, type, details]) { _ in
-                Task { @MainActor in
-                    withAnimation {
-                        if !name.trimmed.isEmpty {
-                            nameError = nil
-                        }
-                        
-                        if !type.trimmed.isEmpty {
-                            typeError = nil
-                        }
-                        
-                        if !details.trimmed.isEmpty {
-                            detailsError = nil
-                        }
+            .onChange(of: [name, type, details]) {
+                withAnimation {
+                    if !name.trimmed.isEmpty {
+                        nameError = nil
+                    }
+
+                    if !type.trimmed.isEmpty {
+                        typeError = nil
+                    }
+
+                    if !details.trimmed.isEmpty {
+                        detailsError = nil
                     }
                 }
             }

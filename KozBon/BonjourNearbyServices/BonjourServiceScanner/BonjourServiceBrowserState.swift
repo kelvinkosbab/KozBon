@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - BonjourServiceBrowserState
 
-enum BonjourServiceBrowserState {
+enum BonjourServiceBrowserState: Sendable {
 
     case stopped
     case searching

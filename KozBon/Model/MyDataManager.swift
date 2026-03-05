@@ -9,7 +9,8 @@
 import Foundation
 import CoreData
 
-class MyDataManager: NSObject {
+@MainActor
+final class MyDataManager: NSObject {
 
   // MARK: - Singleton
 

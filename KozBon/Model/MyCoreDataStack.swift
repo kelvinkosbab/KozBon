@@ -10,7 +10,8 @@ import Foundation
 import Core
 import CoreData
 
-class MyCoreDataStack: NSObject {
+@MainActor
+final class MyCoreDataStack: NSObject {
 
     private let logger = Logger(category: "MyCoreDataStack")
 

@@ -54,7 +54,7 @@ struct SupportedServicesView: View {
         .contentMarginsBasedOnSizeClass()
         .navigationTitle("Supported services")
         .task {
-            await viewModel.load()
+            viewModel.load()
         }
         .searchable(text: $viewModel.searchText, prompt: "Search for ...")
         .sheet(isPresented: $viewModel.isCreateCustomServiceTypePresented) {
@@ -93,23 +93,22 @@ struct SupportedServicesView: View {
 
     // MARK: - ViewModel
 
-    class ViewModel: ObservableObject {
+    @MainActor
+    final class ViewModel: ObservableObject {
 
-        @MainActor @Published private var builtInServiceTypes: [BonjourServiceType] = []
-        @MainActor @Published private var customServiceTypes: [BonjourServiceType] = []
+        @Published private var builtInServiceTypes: [BonjourServiceType] = []
+        @Published private var customServiceTypes: [BonjourServiceType] = []
 
-        @MainActor @Published var searchText: String = ""
-        @MainActor @Published var isCreateCustomServiceTypePresented = false {
+        @Published var searchText: String = ""
+        @Published var isCreateCustomServiceTypePresented = false {
             didSet {
                 if !isCreateCustomServiceTypePresented {
-                    Task {
-                        await self.load()
-                    }
+                    self.load()
                 }
             }
         }
 
-        @MainActor var filteredBuiltInServiceTypes: [BonjourServiceType] {
+        var filteredBuiltInServiceTypes: [BonjourServiceType] {
             if searchText.isEmpty {
                 builtInServiceTypes
             } else {
@@ -125,7 +124,7 @@ struct SupportedServicesView: View {
             }
         }
 
-        @MainActor var filteredCustomServiceTypes: [BonjourServiceType] {
+        var filteredCustomServiceTypes: [BonjourServiceType] {
             if searchText.isEmpty {
                 customServiceTypes
             } else {
@@ -146,24 +145,22 @@ struct SupportedServicesView: View {
             comment: "Create service button string"
         )
 
-        func load() async {
+        func load() {
             let sortedServiceTypes = BonjourServiceType.fetchAll().sorted { lhs, rhs -> Bool in
                 lhs.name < rhs.name
             }
             let builtInServiceTypes = sortedServiceTypes.filter { $0.isBuiltIn }
             let customServiceTypes = sortedServiceTypes.filter { !$0.isBuiltIn }
 
-            await MainActor.run {
-                if self.builtInServiceTypes != builtInServiceTypes {
-                    withAnimation {
-                        self.builtInServiceTypes = builtInServiceTypes
-                    }
+            if self.builtInServiceTypes != builtInServiceTypes {
+                withAnimation {
+                    self.builtInServiceTypes = builtInServiceTypes
                 }
+            }
 
-                if self.customServiceTypes != customServiceTypes {
-                    withAnimation {
-                        self.customServiceTypes = customServiceTypes
-                    }
+            if self.customServiceTypes != customServiceTypes {
+                withAnimation {
+                    self.customServiceTypes = customServiceTypes
                 }
             }
         }

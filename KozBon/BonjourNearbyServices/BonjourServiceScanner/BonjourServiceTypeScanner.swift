@@ -12,7 +12,8 @@ import Core
 // MARK: - BonjourServiceBrowser
 
 /// Scans for services of a given service type (``BonjourServiceType``).
-class BonjourServiceTypeScanner: NSObject, NetServiceBrowserDelegate {
+@MainActor
+final class BonjourServiceTypeScanner: NSObject, @preconcurrency NetServiceBrowserDelegate {
 
     // MARK: - Properties
 

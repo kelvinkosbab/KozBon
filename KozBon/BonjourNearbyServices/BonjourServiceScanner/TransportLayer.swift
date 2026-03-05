@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - TransportLayer
 
-enum TransportLayer: Int, CaseIterable {
+enum TransportLayer: Int, CaseIterable, Sendable {
 
     case udp=0
     case tcp=1

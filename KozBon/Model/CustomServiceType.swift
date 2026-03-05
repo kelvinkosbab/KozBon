@@ -11,6 +11,7 @@ import Foundation
 import CoreData
 
 @objc(CustomServiceType)
+@MainActor
 public class CustomServiceType: NSManagedObject {
   @NSManaged public var detail: String?
   @NSManaged public var name: String
@@ -22,7 +23,7 @@ extension CustomServiceType: MyDataManagerObject {
 
   // MARK: - MyDataManagerObject
 
-  static let sortDescriptors: [NSSortDescriptor]? = nil
+  nonisolated(unsafe) static let sortDescriptors: [NSSortDescriptor]? = nil
 
   // MARK: - Properties
 

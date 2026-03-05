@@ -104,16 +104,14 @@ struct CreateTxtRecordView: View {
                     }
                 }
             }
-            .onChange(of: [key, value]) { _ in
-                Task { @MainActor in
-                    withAnimation {
-                        if keyError != nil {
-                            keyError = nil
-                        }
-                        
-                        if valueError != nil {
-                            valueError = nil
-                        }
+            .onChange(of: [key, value]) {
+                withAnimation {
+                    if keyError != nil {
+                        keyError = nil
+                    }
+
+                    if valueError != nil {
+                        valueError = nil
                     }
                 }
             }

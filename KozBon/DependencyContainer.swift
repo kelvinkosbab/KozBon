@@ -11,25 +11,26 @@ import SwiftUI
 // MARK: - DependencyContainer
 
 /// Central container for managing application dependencies
-class DependencyContainer {
-    
+final class DependencyContainer: Sendable {
+
     // MARK: - Services
-    
-    let bonjourServiceScanner: BonjourServiceScannerProtocol
-    let bonjourPublishManager: BonjourPublishManagerProtocol
-    
+
+    let bonjourServiceScanner: any BonjourServiceScannerProtocol
+    let bonjourPublishManager: any BonjourPublishManagerProtocol
+
     // MARK: - Initialization
-    
+
     /// Creates a dependency container with real production services
+    @MainActor
     init() {
         self.bonjourServiceScanner = BonjourServiceScanner.shared
         self.bonjourPublishManager = MyBonjourPublishManager.shared
     }
-    
+
     /// Creates a dependency container with custom services (useful for testing or previews)
     init(
-        bonjourServiceScanner: BonjourServiceScannerProtocol,
-        bonjourPublishManager: BonjourPublishManagerProtocol
+        bonjourServiceScanner: any BonjourServiceScannerProtocol,
+        bonjourPublishManager: any BonjourPublishManagerProtocol
     ) {
         self.bonjourServiceScanner = bonjourServiceScanner
         self.bonjourPublishManager = bonjourPublishManager
@@ -38,8 +39,8 @@ class DependencyContainer {
 
 // MARK: - Environment Key
 
-private struct DependencyContainerKey: EnvironmentKey {
-    static let defaultValue = DependencyContainer()
+private struct DependencyContainerKey: @preconcurrency EnvironmentKey {
+    @MainActor static let defaultValue = DependencyContainer()
 }
 
 extension EnvironmentValues {

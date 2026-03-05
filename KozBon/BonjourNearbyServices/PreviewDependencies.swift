@@ -14,6 +14,7 @@ extension DependencyContainer {
     
     /// Creates a dependency container configured for SwiftUI previews
     /// with sensible defaults and mock data
+    @MainActor
     static func preview(
         withMockData: Bool = true,
         simulateScanning: Bool = false
@@ -198,7 +199,7 @@ struct InteractivePreviewContainer: View {
         .padding()
     }
     
-    private func createDependencies() -> DependencyContainer {
+    @MainActor private func createDependencies() -> DependencyContainer {
         let mockScanner = MockBonjourServiceScanner()
         mockScanner.isProcessing = isScanning
         

@@ -212,15 +212,16 @@ struct ExampleDirectInjectionView: View {
 
 // MARK: - Example ViewModel with Injection
 
-class ExampleViewModel: ObservableObject {
+@MainActor
+final class ExampleViewModel: ObservableObject {
     @Published var isScanning = false
-    
-    private let scanner: BonjourServiceScannerProtocol
-    private let publishManager: BonjourPublishManagerProtocol
-    
+
+    private let scanner: any BonjourServiceScannerProtocol
+    private let publishManager: any BonjourPublishManagerProtocol
+
     init(
-        scanner: BonjourServiceScannerProtocol = BonjourServiceScanner.shared,
-        publishManager: BonjourPublishManagerProtocol = MyBonjourPublishManager.shared
+        scanner: any BonjourServiceScannerProtocol = BonjourServiceScanner.shared,
+        publishManager: any BonjourPublishManagerProtocol = MyBonjourPublishManager.shared
     ) {
         self.scanner = scanner
         self.publishManager = publishManager

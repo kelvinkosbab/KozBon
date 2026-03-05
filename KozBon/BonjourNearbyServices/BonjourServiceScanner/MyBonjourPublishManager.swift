@@ -8,11 +8,13 @@
 
 import Foundation
 
-protocol MyBonjourPublishManagerDelegate: AnyObject {
+@MainActor
+protocol MyBonjourPublishManagerDelegate: AnyObject, Sendable {
     func publishedServicesUpdated(_ publishedServices: [BonjourService])
 }
 
-class MyBonjourPublishManager: NSObject {
+@MainActor
+final class MyBonjourPublishManager: NSObject {
 
     // MARK: - Singleton
 
@@ -146,22 +148,24 @@ class MyBonjourPublishManager: NSObject {
     }
 
     func unPublishAllServices(completion: (() -> Void)? = nil) {
-        let dispatchGroup = DispatchGroup()
-        for service in publishedServices {
-            dispatchGroup.enter()
-            self.unPublish(service: service) {
-                dispatchGroup.leave()
+        Task {
+            for service in publishedServices {
+                await withCheckedContinuation { continuation in
+                    self.unPublish(service: service) {
+                        continuation.resume()
+                    }
+                }
             }
-        }
-        dispatchGroup.notify(queue: DispatchQueue.main) {
             completion?()
         }
     }
 
     func unPublishAllServices() async {
-        await withCheckedContinuation { continuation in
-            unPublishAllServices {
-                continuation.resume()
+        for service in publishedServices {
+            await withCheckedContinuation { continuation in
+                self.unPublish(service: service) {
+                    continuation.resume()
+                }
             }
         }
     }

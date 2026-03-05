@@ -11,7 +11,8 @@ import Foundation
 // MARK: - Mock Bonjour Service Scanner
 
 /// Mock implementation of BonjourServiceScannerProtocol for testing
-class MockBonjourServiceScanner: BonjourServiceScannerProtocol {
+@MainActor
+final class MockBonjourServiceScanner: BonjourServiceScannerProtocol {
     
     weak var delegate: BonjourServiceScannerDelegate?
     
@@ -54,7 +55,8 @@ class MockBonjourServiceScanner: BonjourServiceScannerProtocol {
 // MARK: - Mock Bonjour Publish Manager
 
 /// Mock implementation of BonjourPublishManagerProtocol for testing
-class MockBonjourPublishManager: BonjourPublishManagerProtocol {
+@MainActor
+final class MockBonjourPublishManager: BonjourPublishManagerProtocol {
     
     var publishedServices: Set<BonjourService> = []
     

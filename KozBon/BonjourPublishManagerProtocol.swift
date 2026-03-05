@@ -11,7 +11,8 @@ import Foundation
 // MARK: - BonjourPublishManagerProtocol
 
 /// Protocol defining the interface for publishing Bonjour services
-protocol BonjourPublishManagerProtocol: AnyObject {
+@MainActor
+protocol BonjourPublishManagerProtocol: AnyObject, Sendable {
     var publishedServices: Set<BonjourService> { get }
     
     func publish(

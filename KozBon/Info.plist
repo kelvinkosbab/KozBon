@@ -50,12 +50,10 @@
 		<string>_bcbonjour._tcp</string>
 		<string>_sketchmirror._tcp</string>
 		<string>_atc._tcp</string>
-		<string>_amzn-wplay._tcp</string>
 		<string>_airdroid._tcp</string>
 		<string>_adisk._tcp</string>
 		<string>_airplay._udp</string>
 		<string>_rtsp._udp</string>
-		<string>_ssdp._udp</string>
 		<string>_ssdp._udp</string>
 		<string>_net-assistant._udp</string>
 		<string>_sleep-proxy._udp</string>

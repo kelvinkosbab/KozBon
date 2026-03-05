@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - BonjourServiceType
 
-struct BonjourServiceType: Hashable, Equatable {
+struct BonjourServiceType: Hashable, Equatable, Sendable {
 
     let name: String
     let type: String
@@ -60,6 +60,7 @@ struct BonjourServiceType: Hashable, Equatable {
         return "_\(type)._\(transportLayer.string)"
     }
 
+    @MainActor
     static func fetchAll() -> [BonjourServiceType] {
         var all = self.serviceTypeLibrary
         for persistentServiceType in self.fetchAllPersistentCopies() {
@@ -74,6 +75,7 @@ struct BonjourServiceType: Hashable, Equatable {
         return self.tcpServiceTypes + self.udpServiceTypes
     }
 
+    @MainActor
     static func fetch(
         serviceTypes: [BonjourServiceType]? = nil,
         type: String,
@@ -86,6 +88,7 @@ struct BonjourServiceType: Hashable, Equatable {
         return filtered.first
     }
 
+    @MainActor
     static func fetch(
         serviceTypes: [BonjourServiceType]? = nil,
         fullType: String
@@ -97,6 +100,7 @@ struct BonjourServiceType: Hashable, Equatable {
         return filtered.first
     }
 
+    @MainActor
     static func exists(
         serviceTypes: [BonjourServiceType]? = nil,
         type: String,
@@ -105,6 +109,7 @@ struct BonjourServiceType: Hashable, Equatable {
         return self.fetch(serviceTypes: serviceTypes, type: type, transportLayer: transportLayer) != nil
     }
 
+    @MainActor
     static func exists(
         serviceTypes: [BonjourServiceType]? = nil,
         fullType: String

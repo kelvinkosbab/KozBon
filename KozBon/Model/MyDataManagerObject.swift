@@ -10,6 +10,7 @@ import Foundation
 import Core
 import CoreData
 
+@MainActor
 protocol MyDataManagerObject {
   static var sortDescriptors: [NSSortDescriptor]? { get }
 }

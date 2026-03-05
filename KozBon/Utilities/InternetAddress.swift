@@ -11,7 +11,7 @@ import Foundation
 // MARK: - InternetAddress
 
 /// Defines an internet address endpoint.
-public struct InternetAddress: Equatable {
+public struct InternetAddress: Equatable, Sendable {
 
     // MARK: - InternetAddress Properties and Init
 
@@ -68,7 +68,7 @@ public struct InternetAddress: Equatable {
 public extension InternetAddress {
 
     /// Determines the version supported for sending data over the internet or other network.
-    enum `Protocol` {
+    enum `Protocol`: Sendable {
 
         /// IP (version 4) addresses are 32-bit integers that can be expressed in hexadecimal notation. The
         /// more common format, known as dotted quad or dotted decimal, is x.x.x.x, where each x can be any

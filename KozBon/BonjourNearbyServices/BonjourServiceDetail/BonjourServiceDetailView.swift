@@ -119,14 +119,15 @@ struct BonjourServiceDetailView: View {
 
     // MARK: - ViewModel
 
-    class ViewModel: ObservableObject {
+    @MainActor
+    final class ViewModel: ObservableObject {
 
         let service: BonjourService
         let serviceType: BonjourServiceType
 
-        @MainActor @Published private(set) var addresses: [InternetAddress] = []
-        @MainActor @Published private(set) var dataRecords: [BonjourService.TxtDataRecord] = []
-        @MainActor @Published var isNavigationHeaderShown = false
+        @Published private(set) var addresses: [InternetAddress] = []
+        @Published private(set) var dataRecords: [BonjourService.TxtDataRecord] = []
+        @Published var isNavigationHeaderShown = false
 
         init(service: BonjourService) {
             self.service = service
@@ -154,15 +155,9 @@ struct BonjourServiceDetailView: View {
 
         @objc
         private func reloadAddressesAndTxtRecords() {
-            update(addresses: service.addresses, dataRecords: service.dataRecords)
-        }
-
-        private func update(addresses: [InternetAddress], dataRecords: [BonjourService.TxtDataRecord]) {
-            Task { @MainActor in
-                withAnimation {
-                    self.addresses = addresses
-                    self.dataRecords = dataRecords
-                }
+            withAnimation {
+                self.addresses = service.addresses
+                self.dataRecords = service.dataRecords
             }
         }
     }

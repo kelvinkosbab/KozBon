@@ -10,7 +10,8 @@ import Core
 
 // MARK: - BonjourServiceScannerDelegate
 
-protocol BonjourServiceScannerDelegate: AnyObject {
+@MainActor
+protocol BonjourServiceScannerDelegate: AnyObject, Sendable {
     func didAdd(service: BonjourService)
     func didRemove(service: BonjourService)
     func didReset()
@@ -18,7 +19,8 @@ protocol BonjourServiceScannerDelegate: AnyObject {
 
 // MARK: - BonjourServiceScanner
 
-class BonjourServiceScanner: BonjourServiceScannerDelegate {
+@MainActor
+final class BonjourServiceScanner: BonjourServiceScannerDelegate {
 
     static let shared = BonjourServiceScanner()
 

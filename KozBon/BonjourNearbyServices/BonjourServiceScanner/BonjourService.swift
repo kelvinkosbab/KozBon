@@ -11,18 +11,21 @@ import Core
 
 // MARK: - MyNetServiceDelegate
 
-protocol MyNetServiceDelegate: AnyObject {
+@MainActor
+protocol MyNetServiceDelegate: AnyObject, Sendable {
     func serviceDidResolveAddress(_ service: BonjourService)
 }
 
 // MARK: - BonjourService
 
-class BonjourService: NSObject, NetServiceDelegate {
+@MainActor
+final class BonjourService: NSObject, @preconcurrency NetServiceDelegate {
 
     // MARK: - Init
 
     let service: NetService
     let serviceType: BonjourServiceType
+    nonisolated let serviceIdentifier: Int
     private(set) var addresses: [InternetAddress] = []
     private(set) var dataRecords: [TxtDataRecord] = []
     weak var delegate: MyNetServiceDelegate?
@@ -35,6 +38,7 @@ class BonjourService: NSObject, NetServiceDelegate {
     ) {
         self.service = service
         self.serviceType = serviceType
+        self.serviceIdentifier = service.hashValue
         super.init()
         self.service.delegate = self
     }
@@ -133,9 +137,9 @@ class BonjourService: NSObject, NetServiceDelegate {
     }
 
     func unPublish(completion: (() -> Void)? = nil) {
-        self.stop {
-            // Add delay for some reason? (not sure what 2014 me added this)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+        self.stop { [weak self] in
+            Task { @MainActor in
+                try? await Task.sleep(for: .milliseconds(500))
                 NotificationCenter.default.post(name: .netServiceDidUnPublish, object: self)
                 completion?()
             }
@@ -147,10 +151,11 @@ class BonjourService: NSObject, NetServiceDelegate {
     func netServiceWillPublish(_ sender: NetService) {
         logger.debug("Service will publish", censored: "\(sender)")
 
-        // For some reason the `didPublish` callback isn't beeing called. This is a temp hack
+        // For some reason the `didPublish` callback isn't being called. This is a temp hack
         // to allow for the completion handlers to return after a short delay
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
-            self.netServiceDidPublish(sender)
+        Task { @MainActor [weak self] in
+            try? await Task.sleep(for: .milliseconds(500))
+            self?.netServiceDidPublish(sender)
         }
     }
 
@@ -207,7 +212,7 @@ enum PublishError: Swift.Error {
 // MARK: - Identifiable
 
 extension BonjourService: Identifiable {
-    var id: Int {
-        service.hashValue
+    nonisolated var id: Int {
+        serviceIdentifier
     }
 }

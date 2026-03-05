@@ -26,7 +26,6 @@ struct BroadcastBonjourServiceView: View {
 
     private var isCreatingBonjourService: Bool
     private let selectedTransportLayer: TransportLayer = .tcp
-    private let servicePublishManger = MyBonjourPublishManager.shared
 
     init(
         isPresented: Binding<Bool>,
@@ -144,12 +143,10 @@ struct BroadcastBonjourServiceView: View {
                     .foregroundStyle(.red)
             }
         }
-        .onChange(of: [serviceType]) { _ in
-            Task { @MainActor in
-                withAnimation {
-                    if serviceType != nil {
-                        serviceTypeError = nil
-                    }
+        .onChange(of: [serviceType]) {
+            withAnimation {
+                if serviceType != nil {
+                    serviceTypeError = nil
                 }
             }
         }
@@ -176,12 +173,10 @@ struct BroadcastBonjourServiceView: View {
                     .foregroundStyle(.red)
             }
         }
-        .onChange(of: [port]) { _ in
-            Task { @MainActor in
-                withAnimation {
-                    if port != nil {
-                        portError = nil
-                    }
+        .onChange(of: [port]) {
+            withAnimation {
+                if port != nil {
+                    portError = nil
                 }
             }
         }
@@ -214,10 +209,8 @@ struct BroadcastBonjourServiceView: View {
                             record.key == dataRecord.key
                         }
                         if let indexToRemove {
-                            Task { @MainActor in
-                                withAnimation {
-                                    dataRecords.remove(at: indexToRemove)
-                                }
+                            _ = withAnimation {
+                                dataRecords.remove(at: indexToRemove)
                             }
                         }
                     } label: {
@@ -242,43 +235,35 @@ struct BroadcastBonjourServiceView: View {
         let transportLayer = selectedTransportLayer
         let domain = domain.trimmed
 
-        Task { @MainActor in
-            withAnimation {
-                serviceTypeError = nil
-                portError = nil
-            }
+        withAnimation {
+            serviceTypeError = nil
+            portError = nil
         }
 
         guard let serviceType else {
-            Task { @MainActor in
-                withAnimation {
-                    serviceTypeError = "Service type required"
-                }
+            withAnimation {
+                serviceTypeError = "Service type required"
             }
             return
         }
 
         guard let port else {
-            Task { @MainActor in
-                withAnimation {
-                    portError = "Port number required"
-                }
+            withAnimation {
+                portError = "Port number required"
             }
             return
         }
 
         guard port > 3000 else {
-            Task { @MainActor in
-                withAnimation {
-                    portError = "Port number must be greater than 3000"
-                }
+            withAnimation {
+                portError = "Port number must be greater than 3000"
             }
             return
         }
 
         Task {
             do {
-                let publishedService = try await servicePublishManger.publish(
+                let publishedService = try await MyBonjourPublishManager.shared.publish(
                     name: serviceType.name,
                     type: serviceType.type,
                     port: port,
@@ -295,15 +280,13 @@ struct BroadcastBonjourServiceView: View {
                 _ = publishedService.service.setTXTRecord(txtRecordData)
 
                 let index = customPublishedServices.firstIndex(of: publishedService)
-                await MainActor.run {
-                    if let index {
-                        withAnimation {
-                            customPublishedServices[index] = publishedService
-                        }
-                    } else {
-                        withAnimation {
-                            customPublishedServices.append(publishedService)
-                        }
+                if let index {
+                    withAnimation {
+                        customPublishedServices[index] = publishedService
+                    }
+                } else {
+                    withAnimation {
+                        customPublishedServices.append(publishedService)
                     }
                 }
 

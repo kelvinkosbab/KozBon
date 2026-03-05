@@ -80,7 +80,7 @@ struct SelectServiceTypeView: View {
         .contentMarginsBasedOnSizeClass()
         .navigationTitle("Supported services")
         .task {
-            await viewModel.load()
+            viewModel.load()
         }
         .searchable(
             text: $viewModel.searchText,
@@ -90,14 +90,15 @@ struct SelectServiceTypeView: View {
 
     // MARK: - ViewModel
 
-    class ViewModel: ObservableObject {
+    @MainActor
+    final class ViewModel: ObservableObject {
 
-        @MainActor @Published private var builtInServiceTypes: [BonjourServiceType] = []
-        @MainActor @Published private var customServiceTypes: [BonjourServiceType] = []
+        @Published private var builtInServiceTypes: [BonjourServiceType] = []
+        @Published private var customServiceTypes: [BonjourServiceType] = []
 
-        @MainActor @Published var searchText: String = ""
+        @Published var searchText: String = ""
 
-        @MainActor var filteredBuiltInServiceTypes: [BonjourServiceType] {
+        var filteredBuiltInServiceTypes: [BonjourServiceType] {
             if searchText.isEmpty {
                 builtInServiceTypes
             } else {
@@ -113,7 +114,7 @@ struct SelectServiceTypeView: View {
             }
         }
 
-        @MainActor var filteredCustomServiceTypes: [BonjourServiceType] {
+        var filteredCustomServiceTypes: [BonjourServiceType] {
             if searchText.isEmpty {
                 customServiceTypes
             } else {
@@ -129,24 +130,22 @@ struct SelectServiceTypeView: View {
             }
         }
 
-        func load() async {
+        func load() {
             let sortedServiceTypes = BonjourServiceType.fetchAll().sorted { lhs, rhs -> Bool in
                 lhs.name < rhs.name
             }
             let builtInServiceTypes = sortedServiceTypes.filter { $0.isBuiltIn }
             let customServiceTypes = sortedServiceTypes.filter { !$0.isBuiltIn }
 
-            await MainActor.run {
-                if self.builtInServiceTypes != builtInServiceTypes {
-                    withAnimation {
-                        self.builtInServiceTypes = builtInServiceTypes
-                    }
+            if self.builtInServiceTypes != builtInServiceTypes {
+                withAnimation {
+                    self.builtInServiceTypes = builtInServiceTypes
                 }
+            }
 
-                if self.customServiceTypes != customServiceTypes {
-                    withAnimation {
-                        self.customServiceTypes = customServiceTypes
-                    }
+            if self.customServiceTypes != customServiceTypes {
+                withAnimation {
+                    self.customServiceTypes = customServiceTypes
                 }
             }
         }
