@@ -38,6 +38,7 @@ extension MyDataManagerObject where Self: NSManagedObject {
   // MARK: - Create
 
   static func create() -> Self {
+    // swiftlint:disable:next force_cast
     return NSEntityDescription.insertNewObject(forEntityName: self.entityName, into: self.mainContext) as! Self
   }
 

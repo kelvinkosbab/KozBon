@@ -85,15 +85,14 @@ final class BonjourServiceScanner: BonjourServiceScannerDelegate {
         }
 
         // Populate service browsers with user-created service types
-        for publishedService in MyBonjourPublishManager.shared.publishedServices {
-            if !BonjourServiceType.exists(serviceTypes: allServiceTypes, fullType: publishedService.serviceType.fullType) {
-                let serviceBrowser = BonjourServiceTypeScanner(
-                    serviceType: publishedService.serviceType,
-                    domain: publishedService.service.domain
-                )
-                serviceBrowser.delegate = self
-                self.typeScanners.append(serviceBrowser)
-            }
+        for publishedService in MyBonjourPublishManager.shared.publishedServices where
+            !BonjourServiceType.exists(serviceTypes: allServiceTypes, fullType: publishedService.serviceType.fullType) {
+            let serviceBrowser = BonjourServiceTypeScanner(
+                serviceType: publishedService.serviceType,
+                domain: publishedService.service.domain
+            )
+            serviceBrowser.delegate = self
+            self.typeScanners.append(serviceBrowser)
         }
 
         self.logger.info("Starting scan with \(self.typeScanners.count) type scanners")

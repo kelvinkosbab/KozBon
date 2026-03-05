@@ -27,6 +27,7 @@
 		F6240E6C2A92D62200951875 /* BonjourScanForServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E6B2A92D62200951875 /* BonjourScanForServicesView.swift */; };
 		F6240E742A92D91800951875 /* AppStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E732A92D91800951875 /* AppStyles.swift */; };
 		F6240E7F2A941BD500951875 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		F63938602F598159004C19AF /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = F639385F2F598159004C19AF /* .gitignore */; };
 		F661AD9D2C2CAF9F00779621 /* BlueSectionItemIconTitleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F661AD9C2C2CAF9F00779621 /* BlueSectionItemIconTitleDetailView.swift */; };
 		F661AD9F2C2CD20800779621 /* SelectServiceTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F661AD9E2C2CD20800779621 /* SelectServiceTypeView.swift */; };
 		F67B65312C1B4EC300324FFF /* InternetAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B65302C1B4EC300324FFF /* InternetAddress.swift */; };
@@ -87,6 +88,7 @@
 		F6240E6B2A92D62200951875 /* BonjourScanForServicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourScanForServicesView.swift; sourceTree = "<group>"; };
 		F6240E732A92D91800951875 /* AppStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStyles.swift; sourceTree = "<group>"; };
 		F62EDC5E255B9D25003E5178 /* KozBon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KozBon.entitlements; sourceTree = "<group>"; };
+		F639385F2F598159004C19AF /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		F661AD9C2C2CAF9F00779621 /* BlueSectionItemIconTitleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueSectionItemIconTitleDetailView.swift; sourceTree = "<group>"; };
 		F661AD9E2C2CD20800779621 /* SelectServiceTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectServiceTypeView.swift; sourceTree = "<group>"; };
 		F6781EF72694C5F6009B79F7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 				F6CA765F2F3690EF0036BE3B /* DependencyInjectionExamples.swift */,
 				F6CA76612F3690FE0036BE3B /* MockDependencies.swift */,
 				F6CA76672F36915C0036BE3B /* PreviewDependencies.swift */,
+				F639385F2F598159004C19AF /* .gitignore */,
 			);
 			path = BonjourNearbyServices;
 			sourceTree = "<group>";
@@ -301,6 +304,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B6CE1D391E1208C1003D4FFA /* Build configuration list for PBXNativeTarget "KozBon" */;
 			buildPhases = (
+				F6SWIFTLINT000000000001 /* SwiftLint */,
 				B6CE1D201E1208C1003D4FFA /* Sources */,
 				B6CE1D211E1208C1003D4FFA /* Frameworks */,
 				B6CE1D221E1208C1003D4FFA /* Resources */,
@@ -365,11 +369,33 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6CE1D4A1E120AF8003D4FFA /* service-names-port-numbers.csv in Resources */,
+				F63938602F598159004C19AF /* .gitignore in Resources */,
 				B6CE1D321E1208C1003D4FFA /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		F6SWIFTLINT000000000001 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ -f \"$SRCROOT/.swiftlint.yml\" ]; then\n  if command -v swiftlint >/dev/null 2>&1; then\n    swiftlint lint --config \"$SRCROOT/.swiftlint.yml\" 2>/dev/null || echo \"warning: SwiftLint failed to run\"\n  else\n    echo \"warning: SwiftLint not installed\"\n  fi\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B6CE1D201E1208C1003D4FFA /* Sources */ = {

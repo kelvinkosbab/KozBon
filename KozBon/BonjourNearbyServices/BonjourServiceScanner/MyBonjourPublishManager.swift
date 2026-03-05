@@ -24,7 +24,9 @@ final class MyBonjourPublishManager: NSObject {
         super.init()
 
         NotificationCenter.default.addObserver(self, selector: #selector(serviceDidPublish(_:)), name: .netServiceDidPublish, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(serviceDidUnPublish(_:)), name: .netServiceDidUnPublish, object: nil)
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(serviceDidUnPublish(_:)),
+            name: .netServiceDidUnPublish, object: nil)
     }
 
     deinit {

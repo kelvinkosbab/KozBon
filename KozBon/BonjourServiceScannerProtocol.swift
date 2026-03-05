@@ -15,7 +15,7 @@ import Foundation
 protocol BonjourServiceScannerProtocol: AnyObject, Sendable {
     var delegate: BonjourServiceScannerDelegate? { get set }
     var isProcessing: Bool { get }
-    
+
     func startScan()
     func stopScan()
 }

@@ -15,7 +15,7 @@ struct BonjourScanForServicesView: View {
 
     @Environment(\.scenePhase) private var scenePhase
     @StateObject private var viewModel: BonjourServicesViewModel
-    
+
     @MainActor
     init(scanner: (any BonjourServiceScannerProtocol)? = nil) {
         _viewModel = StateObject(wrappedValue: BonjourServicesViewModel(
@@ -25,7 +25,7 @@ struct BonjourScanForServicesView: View {
 
     var body: some View {
         List {
-            if viewModel.sortedPublishedServices.count > 0 {
+            if !viewModel.sortedPublishedServices.isEmpty {
                 Section {
                     forEach(services: viewModel.sortedPublishedServices)
                 } header: {
@@ -34,7 +34,7 @@ struct BonjourScanForServicesView: View {
                 }
             }
 
-            if viewModel.sortedActiveServices.count > 0 {
+            if !viewModel.sortedActiveServices.isEmpty {
                 Section {
                     forEach(services: viewModel.sortedActiveServices)
                 } header: {
@@ -45,7 +45,7 @@ struct BonjourScanForServicesView: View {
         }
         .contentMarginsBasedOnSizeClass()
         .overlay {
-            if self.viewModel.sortedActiveServices.count == 0 {
+            if self.viewModel.sortedActiveServices.isEmpty {
                 EmptyStateOverlayView(
                     image: nil,
                     title: self.viewModel.noActiveServicesString

@@ -38,7 +38,8 @@ public extension NetService {
                 nsData.getBytes(&inetAddress6, length: MemoryLayout<sockaddr_in6>.size)
                 let ipStringBuffer = UnsafeMutablePointer<Int8>.allocate(capacity: Int(INET6_ADDRSTRLEN))
                 var addr = inetAddress6.sin6_addr
-                if let ipString = inet_ntop(Int32(inetAddress6.sin6_family), &addr, ipStringBuffer, __uint32_t(INET6_ADDRSTRLEN)), let ip = String(cString: ipString, encoding: .ascii) {
+                if let ipString = inet_ntop(Int32(inetAddress6.sin6_family), &addr, ipStringBuffer, __uint32_t(INET6_ADDRSTRLEN)),
+                   let ip = String(cString: ipString, encoding: .ascii) {
                     let port = inetAddress6.sin6_port.bigEndian
                     return InternetAddress(
                         ip: ip,

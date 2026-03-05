@@ -8,6 +8,9 @@
 
 import Foundation
 
+// Service type library — long detail strings are expected
+// swiftlint:disable line_length file_length
+
 extension BonjourServiceType {
 
     // MARK: - TCP Service Types

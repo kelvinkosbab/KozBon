@@ -14,7 +14,7 @@ import Foundation
 @MainActor
 protocol BonjourPublishManagerProtocol: AnyObject, Sendable {
     var publishedServices: Set<BonjourService> { get }
-    
+
     func publish(
         name: String,
         type: String,
@@ -23,11 +23,11 @@ protocol BonjourPublishManagerProtocol: AnyObject, Sendable {
         transportLayer: TransportLayer,
         detail: String
     ) async throws -> BonjourService
-    
+
     func publish(service: BonjourService) async throws -> BonjourService
-    
+
     func unPublish(service: BonjourService) async
-    
+
     func unPublishAllServices() async
 }
 

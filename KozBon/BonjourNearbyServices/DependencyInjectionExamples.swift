@@ -202,7 +202,7 @@ import SwiftUI
 
 struct ExampleDirectInjectionView: View {
     @Environment(\.dependencies) private var dependencies
-    
+
     var body: some View {
         Button("Start Scan") {
             dependencies.bonjourServiceScanner.startScan()
@@ -226,12 +226,12 @@ final class ExampleViewModel: ObservableObject {
         self.scanner = scanner
         self.publishManager = publishManager
     }
-    
+
     func startScanning() {
         isScanning = true
         scanner.startScan()
     }
-    
+
     func stopScanning() {
         isScanning = false
         scanner.stopScan()
@@ -242,12 +242,12 @@ final class ExampleViewModel: ObservableObject {
 
 struct ExampleViewModelInjectionView: View {
     @StateObject private var viewModel: ExampleViewModel
-    
+
     // Default initializer
     init() {
         _viewModel = StateObject(wrappedValue: ExampleViewModel())
     }
-    
+
     // Injection initializer for testing/customization
     init(scanner: BonjourServiceScannerProtocol, publishManager: BonjourPublishManagerProtocol) {
         _viewModel = StateObject(wrappedValue: ExampleViewModel(
@@ -255,11 +255,11 @@ struct ExampleViewModelInjectionView: View {
             publishManager: publishManager
         ))
     }
-    
+
     var body: some View {
         VStack {
             Text(viewModel.isScanning ? "Scanning..." : "Not scanning")
-            
+
             Button("Toggle Scan") {
                 if viewModel.isScanning {
                     viewModel.stopScanning()

@@ -54,10 +54,7 @@ final class BonjourService: NSObject, @preconcurrency NetServiceDelegate {
     }
 
     var hasResolvedAddresses: Bool {
-        if let _ = self.service.addresses {
-            return true
-        }
-        return false
+        self.service.addresses != nil
     }
 
     // MARK: - Stopping Resolution / Publishing

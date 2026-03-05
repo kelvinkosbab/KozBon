@@ -43,12 +43,7 @@ struct BonjourServiceType: Hashable, Equatable, Sendable {
     }
 
     var isBuiltIn: Bool {
-        for serviceType in BonjourServiceType.serviceTypeLibrary {
-            if self == serviceType {
-                return true
-            }
-        }
-        return false
+        BonjourServiceType.serviceTypeLibrary.contains(self)
     }
 
     // MARK: - Static Helpers
@@ -63,10 +58,9 @@ struct BonjourServiceType: Hashable, Equatable, Sendable {
     @MainActor
     static func fetchAll() -> [BonjourServiceType] {
         var all = self.serviceTypeLibrary
-        for persistentServiceType in self.fetchAllPersistentCopies() {
-            if self.fetch(serviceTypes: all, type: persistentServiceType.type, transportLayer: persistentServiceType.transportLayer) == nil {
-                all.append(persistentServiceType)
-            }
+        for persistentServiceType in self.fetchAllPersistentCopies() where
+            self.fetch(serviceTypes: all, type: persistentServiceType.type, transportLayer: persistentServiceType.transportLayer) == nil {
+            all.append(persistentServiceType)
         }
         return all
     }

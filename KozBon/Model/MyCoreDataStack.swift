@@ -22,9 +22,15 @@ final class MyCoreDataStack: NSObject {
   private override init() {
     super.init()
 
-    NotificationCenter.default.addObserver(self, selector: #selector(self.contextWillSave(_:)), name: .NSManagedObjectContextWillSave, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(self.contextDidSave(_:)), name: .NSManagedObjectContextDidSave, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(self.contextObjectsDidChange(_:)), name: .NSManagedObjectContextObjectsDidChange, object: nil)
+    NotificationCenter.default.addObserver(
+        self, selector: #selector(self.contextWillSave(_:)),
+        name: .NSManagedObjectContextWillSave, object: nil)
+    NotificationCenter.default.addObserver(
+        self, selector: #selector(self.contextDidSave(_:)),
+        name: .NSManagedObjectContextDidSave, object: nil)
+    NotificationCenter.default.addObserver(
+        self, selector: #selector(self.contextObjectsDidChange(_:)),
+        name: .NSManagedObjectContextObjectsDidChange, object: nil)
   }
 
   deinit {
@@ -70,7 +76,7 @@ final class MyCoreDataStack: NSObject {
   }
 
   @objc private func contextDidSave(_ notification: Notification) {
-    if let _ = notification.object as? NSManagedObjectContext {
+    if notification.object is NSManagedObjectContext {
         logger.debug("Context did save")
     }
   }

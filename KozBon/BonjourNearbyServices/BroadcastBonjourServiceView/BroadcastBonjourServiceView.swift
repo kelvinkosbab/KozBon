@@ -92,7 +92,7 @@ struct BroadcastBonjourServiceView: View {
                         Label("Cancel", systemImage: "x.circle.fill")
                     }
                 }
-                
+
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
                         doneButtonSelected()
@@ -109,9 +109,9 @@ struct BroadcastBonjourServiceView: View {
             }
         }
     }
-    
+
     // MARK: - Service Type Section
-    
+
     private func serviceTypeSection() -> some View {
         Section {
             if !isCreatingBonjourService, let serviceType {
@@ -151,9 +151,9 @@ struct BroadcastBonjourServiceView: View {
             }
         }
     }
-    
+
     // MARK: - Port Number Section
-    
+
     private func portNumberSection() -> some View {
         Section {
             TextField(
@@ -181,9 +181,9 @@ struct BroadcastBonjourServiceView: View {
             }
         }
     }
-    
+
     // MARK: - Service Domain Section
-    
+
     private func serviceDomainSection() -> some View {
         Section("Service Domain") {
             TextField("Service domain", text: $domain)
@@ -193,9 +193,9 @@ struct BroadcastBonjourServiceView: View {
                 .disabled(false)
         }
     }
-    
+
     // MARK: - TXT Records Section
-    
+
     private func txtRecordsSection() -> some View {
         Section("TXT Records") {
             ForEach(dataRecords, id: \.key) { dataRecord in
@@ -227,7 +227,7 @@ struct BroadcastBonjourServiceView: View {
             }
         }
     }
-    
+
     // MARK: - Done Action
 
     private func doneButtonSelected() {

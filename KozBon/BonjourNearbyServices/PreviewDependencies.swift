@@ -11,7 +11,7 @@ import SwiftUI
 // MARK: - Preview Helpers
 
 extension DependencyContainer {
-    
+
     /// Creates a dependency container configured for SwiftUI previews
     /// with sensible defaults and mock data
     @MainActor
@@ -21,12 +21,12 @@ extension DependencyContainer {
     ) -> DependencyContainer {
         let scanner = MockBonjourServiceScanner()
         let publishManager = MockBonjourPublishManager()
-        
+
         // Configure mock behavior for previews
         if simulateScanning {
             scanner.isProcessing = true
         }
-        
+
         if withMockData {
             // Add some sample services for preview
             Task { @MainActor in
@@ -48,7 +48,7 @@ extension DependencyContainer {
                 try? await publishManager.publish(service: sampleService)
             }
         }
-        
+
         return DependencyContainer(
             bonjourServiceScanner: scanner,
             bonjourPublishManager: publishManager
@@ -62,7 +62,7 @@ extension DependencyContainer {
 #Preview("Basic View with Mocks") {
     let mockScanner = MockBonjourServiceScanner()
     let dependencies = DependencyContainer.mock(scanner: mockScanner)
-    
+
     return ExampleDirectInjectionView()
         .environment(\.dependencies, dependencies)
 }
@@ -70,7 +70,7 @@ extension DependencyContainer {
 // Example 2: Preview with simulated scanning
 #Preview("Scanning State") {
     let dependencies = DependencyContainer.preview(simulateScanning: true)
-    
+
     return ExampleViewModelInjectionView()
         .environment(\.dependencies, dependencies)
 }
@@ -78,7 +78,7 @@ extension DependencyContainer {
 // Example 3: Preview with mock data
 #Preview("With Mock Services") {
     let dependencies = DependencyContainer.preview(withMockData: true)
-    
+
     return ExampleViewModelInjectionView()
         .environment(\.dependencies, dependencies)
 }
@@ -92,18 +92,18 @@ extension DependencyContainer {
             ExampleDirectInjectionView()
                 .environment(\.dependencies, emptyDeps)
         }
-        
+
         Divider()
-        
+
         // Scanning state
         Group {
             let scanningDeps = DependencyContainer.preview(simulateScanning: true)
             ExampleDirectInjectionView()
                 .environment(\.dependencies, scanningDeps)
         }
-        
+
         Divider()
-        
+
         // With data
         Group {
             let dataDeps = DependencyContainer.preview(withMockData: true)
@@ -120,17 +120,17 @@ extension DependencyContainer {
     // Create custom mocks with specific behavior
     let mockScanner = MockBonjourServiceScanner()
     let mockPublishManager = MockBonjourPublishManager()
-    
+
     // Configure custom behavior
     mockScanner.isProcessing = true
     mockPublishManager.shouldSucceed = false
     mockPublishManager.errorToThrow = MockError.networkError
-    
+
     let dependencies = DependencyContainer(
         bonjourServiceScanner: mockScanner,
         bonjourPublishManager: mockPublishManager
     )
-    
+
     return ExampleViewModelInjectionView()
         .environment(\.dependencies, dependencies)
 }
@@ -140,12 +140,12 @@ extension DependencyContainer {
 #Preview("View Model Based View") {
     // Create mock dependencies
     let mockScanner = MockBonjourServiceScanner()
-    
+
     // Configure mock to simulate finding services
     Task {
         // Simulate delay
         try? await Task.sleep(nanoseconds: 1_000_000_000)
-        
+
         let serviceType = BonjourServiceType(
             name: "Test Service",
             type: "test",
@@ -156,10 +156,10 @@ extension DependencyContainer {
             service: NetService(domain: "", type: serviceType.fullType, name: "Preview Device", port: 9999),
             serviceType: serviceType
         )
-        
+
         mockScanner.simulateServiceFound(service)
     }
-    
+
     return ExampleViewModelInjectionView(
         scanner: mockScanner,
         publishManager: MockBonjourPublishManager()
@@ -177,7 +177,7 @@ extension DependencyContainer {
 struct InteractivePreviewContainer: View {
     @State private var isScanning = false
     @State private var hasServices = false
-    
+
     var body: some View {
         VStack {
             // Controls
@@ -188,9 +188,9 @@ struct InteractivePreviewContainer: View {
             .padding()
             .background(Color.gray.opacity(0.1))
             .cornerRadius(8)
-            
+
             Divider()
-            
+
             // Preview content
             let dependencies = createDependencies()
             ExampleViewModelInjectionView()
@@ -198,13 +198,13 @@ struct InteractivePreviewContainer: View {
         }
         .padding()
     }
-    
+
     @MainActor private func createDependencies() -> DependencyContainer {
         let mockScanner = MockBonjourServiceScanner()
         mockScanner.isProcessing = isScanning
-        
+
         let mockPublishManager = MockBonjourPublishManager()
-        
+
         if hasServices {
             // Add sample services
             Task {
@@ -221,7 +221,7 @@ struct InteractivePreviewContainer: View {
                 try? await mockPublishManager.publish(service: service)
             }
         }
-        
+
         return DependencyContainer(
             bonjourServiceScanner: mockScanner,
             bonjourPublishManager: mockPublishManager
@@ -242,7 +242,7 @@ struct InteractivePreviewContainer: View {
 #Preview("Bonjour Scan View - Scanning") {
     let mockScanner = MockBonjourServiceScanner()
     mockScanner.isProcessing = true
-    
+
     return NavigationStack {
         BonjourScanForServicesView(scanner: mockScanner)
     }
@@ -250,7 +250,7 @@ struct InteractivePreviewContainer: View {
 
 #Preview("Bonjour Scan View - With Services") {
     let mockScanner = MockBonjourServiceScanner()
-    
+
     // Simulate some discovered services
     Task {
         let serviceTypes = [
@@ -258,7 +258,7 @@ struct InteractivePreviewContainer: View {
             BonjourServiceType(name: "SSH", type: "ssh", transportLayer: .tcp, detail: "SSH Server"),
             BonjourServiceType(name: "AFP", type: "afpovertcp", transportLayer: .tcp, detail: "Apple File Server")
         ]
-        
+
         for (index, serviceType) in serviceTypes.enumerated() {
             let service = BonjourService(
                 service: NetService(
@@ -272,7 +272,7 @@ struct InteractivePreviewContainer: View {
             mockScanner.simulateServiceFound(service)
         }
     }
-    
+
     return NavigationStack {
         BonjourScanForServicesView(scanner: mockScanner)
     }

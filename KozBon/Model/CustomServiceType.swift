@@ -33,6 +33,7 @@ extension CustomServiceType: MyDataManagerObject {
 
   private var transportLayer: TransportLayer {
     get {
+      // swiftlint:disable:next force_unwrapping
       return TransportLayer(rawValue: Int(self.transportLayerValue))!
     }
     set {
@@ -40,6 +41,7 @@ extension CustomServiceType: MyDataManagerObject {
     }
   }
 
+  // swiftlint:disable:next identifier_name
   var BonjourServiceType: BonjourServiceType {
       return KozBon.BonjourServiceType(name: self.name, type: self.serviceType, transportLayer: self.transportLayer, detail: self.detail)
   }
@@ -52,7 +54,10 @@ extension CustomServiceType: MyDataManagerObject {
 
   // MARK: - Create / Update
 
-  static func createOrUpdate(name: String, serviceType: String, transportLayer: TransportLayer, detail: String? = nil) -> CustomServiceType {
+  static func createOrUpdate(
+    name: String, serviceType: String,
+    transportLayer: TransportLayer, detail: String? = nil
+  ) -> CustomServiceType {
     let object = self.fetch(serviceType: serviceType, transportLayer: transportLayer) ?? self.create()
     object.name = name
     object.serviceType = serviceType

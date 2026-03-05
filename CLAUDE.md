@@ -71,6 +71,16 @@ xcodebuild -scheme KozBon -destination 'platform=iOS Simulator,name=iPhone 17 Pr
 - `nonisolated(unsafe)` only for truly safe statics that can't satisfy the compiler (e.g., `static let sortDescriptors: [NSSortDescriptor]? = nil`)
 - `@preconcurrency` on ObjC protocol conformances and `EnvironmentKey` where the protocol predates concurrency
 
+## SwiftLint
+
+- **Config**: `.swiftlint.yml` in project root
+- **Integration**: Runs as an Xcode Build Phase (lint only, no auto-correct)
+- **Run manually**: `swiftlint lint` from project root
+- **Key settings**: line length warns at 140, identifier min length 2, `todo` rule disabled
+- **Excluded**: `KozBon/Legacy/`
+- **Inline disables**: Use `// swiftlint:disable:next <rule>` for intentional violations (e.g., `force_unwrapping` in Core Data, `force_cast` in `MyDataManagerObject`)
+- **File-level disables**: `// swiftlint:disable <rule>` at file top for files with many intentional violations (e.g., `MyServiceType+Library.swift`)
+
 ## Important Gotchas
 
 - **No duplicate service types**: Each `(type, transportLayer)` pair must be unique in the library arrays. Duplicates cause redundant scanners and duplicate discovered services.

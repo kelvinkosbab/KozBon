@@ -124,7 +124,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                         Label("Cancel", systemImage: "x.circle.fill")
                     }
                 }
-                
+
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
                         doneButtonSelected()
