@@ -96,7 +96,34 @@ extension BonjourServiceType {
             self.netgearReadyNAS,
             self.physicalWeb,
             self.scanners,
-            self.ubuntuRaspberryPiAdvertisement
+            self.ubuntuRaspberryPiAdvertisement,
+            self.smbFileSharing,
+            self.ippSecure,
+            self.companionLink,
+            self.remoteDesktopProtocol,
+            self.sftpSSH,
+            self.httpAlternate,
+            self.networkScanner,
+            self.networkScannerSecure,
+            self.carPlayControl,
+            self.matterSmartHome,
+            self.sonosSpeaker,
+            self.remoteManagement,
+            self.pictureTransferProtocol,
+            self.chromecast,
+            self.mqttProtocol,
+            self.appleContinuity,
+            self.smbWindowsSharing,
+            self.subversion,
+            self.gitProtocol,
+            self.domainNameService,
+            self.xmppClient,
+            self.ldapDirectory,
+            self.postgreSQLDatabase,
+            self.mySQLDatabase,
+            self.homeAssistant,
+            self.vncRemoteAccess,
+            self.prometheusMonitoring
         ]
     }
 
@@ -537,6 +564,169 @@ extension BonjourServiceType {
         detail: "Also known as AirTunes. The AirPort Express Base Station advertises this service. iTunes browses for this service starting in iTunes 4.6."
     )
 
+    static private let smbFileSharing: BonjourServiceType = BonjourServiceType(
+        name: "SMB/CIFS File Sharing",
+        type: "smb",
+        transportLayer: .tcp,
+        detail: "Server Message Block (SMB) is the default file sharing protocol on macOS since OS X 10.9 Mavericks, replacing AFP. Also used by Windows and Linux/Samba for network file sharing."
+    )
+    static private let ippSecure: BonjourServiceType = BonjourServiceType(
+        name: "Internet Printing Protocol Secure (IPPS)",
+        type: "ipps",
+        transportLayer: .tcp,
+        detail: "IPP over HTTPS for secure network printing. Most modern network printers advertise this service alongside standard IPP."
+    )
+    static private let companionLink: BonjourServiceType = BonjourServiceType(
+        name: "Apple Companion Link",
+        type: "companion-link",
+        transportLayer: .tcp,
+        detail: "Used by Apple devices for Continuity features including Handoff, Universal Clipboard, and Auto Unlock between iPhone, iPad, Mac, and Apple Watch."
+    )
+    static private let remoteDesktopProtocol: BonjourServiceType = BonjourServiceType(
+        name: "Remote Desktop Protocol (RDP)",
+        type: "rdp",
+        transportLayer: .tcp,
+        detail: "Microsoft Remote Desktop Protocol for remote access to Windows desktops and servers."
+    )
+    static private let sftpSSH: BonjourServiceType = BonjourServiceType(
+        name: "Secure File Transfer Protocol (SFTP)",
+        type: "sftp-ssh",
+        transportLayer: .tcp,
+        detail: "SSH File Transfer Protocol for secure file transfers over an SSH connection."
+    )
+    static private let httpAlternate: BonjourServiceType = BonjourServiceType(
+        name: "HTTP Alternate",
+        type: "http-alt",
+        transportLayer: .tcp,
+        detail: "HTTP service running on an alternate port (commonly 8080). Used by many web applications, development servers, and IoT devices."
+    )
+    static private let networkScanner: BonjourServiceType = BonjourServiceType(
+        name: "Network Scanner (eSCL)",
+        type: "uscan",
+        transportLayer: .tcp,
+        detail: "eSCL (AirScan) scanner protocol for driverless network scanning. Supported by most modern network-attached scanners and multifunction printers."
+    )
+    static private let networkScannerSecure: BonjourServiceType = BonjourServiceType(
+        name: "Network Scanner Secure (eSCL over HTTPS)",
+        type: "uscans",
+        transportLayer: .tcp,
+        detail: "Secure eSCL (AirScan) scanner protocol over HTTPS for driverless network scanning."
+    )
+    static private let carPlayControl: BonjourServiceType = BonjourServiceType(
+        name: "CarPlay Control",
+        type: "carplay_ctrl",
+        transportLayer: .tcp,
+        detail: "Apple CarPlay control protocol for wireless CarPlay connections between iPhone and compatible vehicle head units."
+    )
+    static private let matterSmartHome: BonjourServiceType = BonjourServiceType(
+        name: "Matter Smart Home",
+        type: "matter",
+        transportLayer: .tcp,
+        detail: "Matter (formerly Project CHIP) is a unified smart home connectivity standard supported by Apple, Google, Amazon, and Samsung for interoperable IoT devices."
+    )
+    static private let sonosSpeaker: BonjourServiceType = BonjourServiceType(
+        name: "Sonos Speaker",
+        type: "sonos",
+        transportLayer: .tcp,
+        detail: "Sonos wireless speaker discovery and control protocol."
+    )
+    static private let remoteManagement: BonjourServiceType = BonjourServiceType(
+        name: "Remote Management (ARD)",
+        type: "net-assistant",
+        transportLayer: .tcp,
+        detail: "Apple Remote Desktop management service for remote control and administration of Mac computers."
+    )
+    static private let pictureTransferProtocol: BonjourServiceType = BonjourServiceType(
+        name: "Picture Transfer Protocol (PTP)",
+        type: "ptp",
+        transportLayer: .tcp,
+        detail: "Picture Transfer Protocol for transferring images from digital cameras and other imaging devices over a network."
+    )
+    static private let chromecast: BonjourServiceType = BonjourServiceType(
+        name: "Chromecast",
+        type: "googlezone",
+        transportLayer: .tcp,
+        detail: "Google Chromecast device discovery for setup and configuration."
+    )
+    static private let mqttProtocol: BonjourServiceType = BonjourServiceType(
+        name: "MQTT Protocol",
+        type: "mqtt",
+        transportLayer: .tcp,
+        detail: "Message Queuing Telemetry Transport (MQTT) is a lightweight messaging protocol widely used in IoT and home automation systems."
+    )
+    static private let appleContinuity: BonjourServiceType = BonjourServiceType(
+        name: "Apple Continuity",
+        type: "continuity",
+        transportLayer: .tcp,
+        detail: "Apple Continuity service for seamless transitions between Apple devices, including Handoff and Universal Control."
+    )
+    static private let smbWindowsSharing: BonjourServiceType = BonjourServiceType(
+        name: "Microsoft Windows Network (SMB2)",
+        type: "smb2",
+        transportLayer: .tcp,
+        detail: "SMB2/SMB3 file sharing protocol used by modern Windows systems for improved performance and security over the original SMB protocol."
+    )
+    static private let subversion: BonjourServiceType = BonjourServiceType(
+        name: "Subversion (SVN)",
+        type: "svn",
+        transportLayer: .tcp,
+        detail: "Apache Subversion version control system for tracking changes in files and directories."
+    )
+    static private let gitProtocol: BonjourServiceType = BonjourServiceType(
+        name: "Git Version Control",
+        type: "git",
+        transportLayer: .tcp,
+        detail: "Git protocol for distributed version control repository access."
+    )
+    static private let domainNameService: BonjourServiceType = BonjourServiceType(
+        name: "Domain Name Service (DNS)",
+        type: "domain",
+        transportLayer: .tcp,
+        detail: "Domain Name System service for resolving hostnames to IP addresses."
+    )
+    static private let xmppClient: BonjourServiceType = BonjourServiceType(
+        name: "XMPP Client (Jabber)",
+        type: "xmpp-client",
+        transportLayer: .tcp,
+        detail: "Extensible Messaging and Presence Protocol (XMPP) for instant messaging and presence information. Formerly known as Jabber."
+    )
+    static private let ldapDirectory: BonjourServiceType = BonjourServiceType(
+        name: "LDAP Directory Service",
+        type: "ldap",
+        transportLayer: .tcp,
+        detail: "Lightweight Directory Access Protocol for accessing and maintaining distributed directory information services over a network."
+    )
+    static private let postgreSQLDatabase: BonjourServiceType = BonjourServiceType(
+        name: "PostgreSQL Database",
+        type: "postgresql",
+        transportLayer: .tcp,
+        detail: "PostgreSQL relational database server. PostgreSQL supports Bonjour-based service discovery when configured with bonjour = on."
+    )
+    static private let mySQLDatabase: BonjourServiceType = BonjourServiceType(
+        name: "MySQL Database",
+        type: "mysql",
+        transportLayer: .tcp,
+        detail: "MySQL relational database server for network-accessible database services."
+    )
+    static private let homeAssistant: BonjourServiceType = BonjourServiceType(
+        name: "Home Assistant",
+        type: "home-assistant",
+        transportLayer: .tcp,
+        detail: "Home Assistant open-source home automation platform for local smart home control and monitoring."
+    )
+    static private let vncRemoteAccess: BonjourServiceType = BonjourServiceType(
+        name: "Virtual Network Computing (VNC)",
+        type: "vnc",
+        transportLayer: .tcp,
+        detail: "VNC remote desktop access protocol. An alternative service type to RFB, commonly advertised by VNC server implementations."
+    )
+    static private let prometheusMonitoring: BonjourServiceType = BonjourServiceType(
+        name: "Prometheus Monitoring",
+        type: "prometheus",
+        transportLayer: .tcp,
+        detail: "Prometheus systems monitoring and alerting toolkit for collecting and querying metrics from configured targets."
+    )
+
     // MARK: - UDP Services (Unused)
 
     static var udpServiceTypes: [BonjourServiceType] {
@@ -551,7 +741,9 @@ extension BonjourServiceType {
             self.netAssistant,
             self.ssdp,
             self.wifiCalling,
-            self.rtspUdp
+            self.rtspUdp,
+            self.mdnsServiceDiscovery,
+            self.coapProtocol
         ]
     }
 
@@ -616,5 +808,17 @@ extension BonjourServiceType {
         type: "rtsp",
         transportLayer: .udp,
         detail: "AirPlay, QuickTime Streaming Server (QTSS), streaming media players"
+    )
+    static private let mdnsServiceDiscovery: BonjourServiceType = BonjourServiceType(
+        name: "DNS Service Discovery",
+        type: "dns-sd",
+        transportLayer: .udp,
+        detail: "DNS-based Service Discovery (DNS-SD) is the meta-query protocol used to enumerate available Bonjour service types on the network."
+    )
+    static private let coapProtocol: BonjourServiceType = BonjourServiceType(
+        name: "Constrained Application Protocol (CoAP)",
+        type: "coap",
+        transportLayer: .udp,
+        detail: "CoAP is a lightweight protocol designed for constrained IoT devices and low-power networks, similar to HTTP but optimized for machine-to-machine communication."
     )
 }

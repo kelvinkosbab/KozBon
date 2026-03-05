@@ -59,11 +59,7 @@
 		F6CA765E2F3690AF0036BE3B /* BonjourPublishManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CA765D2F3690AF0036BE3B /* BonjourPublishManagerProtocol.swift */; };
 		F6CA76602F3690EF0036BE3B /* DependencyInjectionExamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CA765F2F3690EF0036BE3B /* DependencyInjectionExamples.swift */; };
 		F6CA76622F3690FE0036BE3B /* MockDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CA76612F3690FE0036BE3B /* MockDependencies.swift */; };
-		F6CA76662F36913E0036BE3B /* DEPENDENCY_INJECTION_GUIDE.md in Resources */ = {isa = PBXBuildFile; fileRef = F6CA76652F36913E0036BE3B /* DEPENDENCY_INJECTION_GUIDE.md */; };
 		F6CA76682F36915C0036BE3B /* PreviewDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CA76672F36915C0036BE3B /* PreviewDependencies.swift */; };
-		F6CA766A2F3691820036BE3B /* QUICK_START.md in Resources */ = {isa = PBXBuildFile; fileRef = F6CA76692F3691820036BE3B /* QUICK_START.md */; };
-		F6CA766C2F3691BD0036BE3B /* ARCHITECTURE.md in Resources */ = {isa = PBXBuildFile; fileRef = F6CA766B2F3691BD0036BE3B /* ARCHITECTURE.md */; };
-		F6CA766E2F3693AE0036BE3B /* BUILD_FIX_SUMMARY.md in Resources */ = {isa = PBXBuildFile; fileRef = F6CA766D2F3693AE0036BE3B /* BUILD_FIX_SUMMARY.md */; };
 		F6E087992C34ED8400D27B17 /* String+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E087982C34ED8400D27B17 /* String+Util.swift */; };
 		F6FCADAC2C33487700752B0B /* CreateTxtRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FCADAB2C33487700752B0B /* CreateTxtRecordView.swift */; };
 /* End PBXBuildFile section */
@@ -121,11 +117,7 @@
 		F6CA765D2F3690AF0036BE3B /* BonjourPublishManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourPublishManagerProtocol.swift; sourceTree = "<group>"; };
 		F6CA765F2F3690EF0036BE3B /* DependencyInjectionExamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjectionExamples.swift; sourceTree = "<group>"; };
 		F6CA76612F3690FE0036BE3B /* MockDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDependencies.swift; sourceTree = "<group>"; };
-		F6CA76652F36913E0036BE3B /* DEPENDENCY_INJECTION_GUIDE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DEPENDENCY_INJECTION_GUIDE.md; sourceTree = "<group>"; };
 		F6CA76672F36915C0036BE3B /* PreviewDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewDependencies.swift; sourceTree = "<group>"; };
-		F6CA76692F3691820036BE3B /* QUICK_START.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = QUICK_START.md; sourceTree = "<group>"; };
-		F6CA766B2F3691BD0036BE3B /* ARCHITECTURE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ARCHITECTURE.md; sourceTree = "<group>"; };
-		F6CA766D2F3693AE0036BE3B /* BUILD_FIX_SUMMARY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = BUILD_FIX_SUMMARY.md; sourceTree = "<group>"; };
 		F6E087982C34ED8400D27B17 /* String+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Util.swift"; sourceTree = "<group>"; };
 		F6FCADAB2C33487700752B0B /* CreateTxtRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTxtRecordView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -297,11 +289,7 @@
 				F67B65362C1B5C4E00324FFF /* BonjourServiceScanner */,
 				F6CA765F2F3690EF0036BE3B /* DependencyInjectionExamples.swift */,
 				F6CA76612F3690FE0036BE3B /* MockDependencies.swift */,
-				F6CA76652F36913E0036BE3B /* DEPENDENCY_INJECTION_GUIDE.md */,
 				F6CA76672F36915C0036BE3B /* PreviewDependencies.swift */,
-				F6CA76692F3691820036BE3B /* QUICK_START.md */,
-				F6CA766B2F3691BD0036BE3B /* ARCHITECTURE.md */,
-				F6CA766D2F3693AE0036BE3B /* BUILD_FIX_SUMMARY.md */,
 			);
 			path = BonjourNearbyServices;
 			sourceTree = "<group>";
@@ -376,12 +364,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6CA76662F36913E0036BE3B /* DEPENDENCY_INJECTION_GUIDE.md in Resources */,
 				B6CE1D4A1E120AF8003D4FFA /* service-names-port-numbers.csv in Resources */,
-				F6CA766E2F3693AE0036BE3B /* BUILD_FIX_SUMMARY.md in Resources */,
-				F6CA766C2F3691BD0036BE3B /* ARCHITECTURE.md in Resources */,
 				B6CE1D321E1208C1003D4FFA /* Assets.xcassets in Resources */,
-				F6CA766A2F3691820036BE3B /* QUICK_START.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

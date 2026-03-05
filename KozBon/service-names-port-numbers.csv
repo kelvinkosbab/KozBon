@@ -14754,3 +14754,18 @@ zigbee-bridge,,tcp,ZigBee Bridge device,[ZigBee_Alliances_Network_Device_working
 zigbee-bridge,,udp,ZigBee Bridge device,[ZigBee_Alliances_Network_Device_working_group],[Leslie_Mulder],2013-05-28,,,,,Defined TXT keys: see: http://www.zigbee.org/Standards/ZigBeeNetworkDevices
 zigbee-gateway,,tcp,ZigBee IP Gateway,[ZigBee_Alliances_Network_Device_working_group],[Leslie_Mulder],2013-05-28,,,,,Defined TXT keys: see: http://www.zigbee.org/Standards/ZigBeeNetworkDevices
 zigbee-gateway,,udp,ZigBee IP Gateway,[ZigBee_Alliances_Network_Device_working_group],[Leslie_Mulder],2013-05-28,,,,,Defined TXT keys: see: http://www.zigbee.org/Standards/ZigBeeNetworkDevices
+smb2,,tcp,SMB2/SMB3 File Sharing,,,,,,,,
+ipps,,tcp,Internet Printing Protocol over HTTPS,,,,,,,,
+companion-link,,tcp,Apple Companion Link for Continuity,,,,,,,,
+uscan,,tcp,eSCL (AirScan) Network Scanner Protocol,,,,,,,,
+uscans,,tcp,eSCL (AirScan) Network Scanner Protocol over HTTPS,,,,,,,,
+carplay_ctrl,,tcp,Apple CarPlay Control Protocol,,,,,,,,
+matter,,tcp,Matter Smart Home Protocol,,,,,,,,
+sonos,,tcp,Sonos Speaker Discovery and Control,,,,,,,,
+googlezone,,tcp,Google Chromecast Device Discovery,,,,,,,,
+continuity,,tcp,Apple Continuity Service,,,,,,,,
+vnc,,tcp,Virtual Network Computing Remote Access,,,,,,,,
+prometheus,,tcp,Prometheus Monitoring and Alerting,,,,,,,,
+home-assistant,,tcp,Home Assistant Home Automation Platform,,,,,,,,
+svn,,tcp,Apache Subversion Version Control,,,,,,,,
+samba,,tcp,Samba File Sharing,,,,,,,,

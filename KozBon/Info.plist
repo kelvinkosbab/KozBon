@@ -116,6 +116,34 @@
 		<string>_netbios-ssn._tcp</string>
 		<string>_powerview._tcp</string>
 		<string>_spotify-connect._tcp</string>
+		<string>_smb._tcp</string>
+		<string>_smb2._tcp</string>
+		<string>_ipps._tcp</string>
+		<string>_companion-link._tcp</string>
+		<string>_rdp._tcp</string>
+		<string>_sftp-ssh._tcp</string>
+		<string>_http-alt._tcp</string>
+		<string>_uscan._tcp</string>
+		<string>_uscans._tcp</string>
+		<string>_matter._tcp</string>
+		<string>_sonos._tcp</string>
+		<string>_net-assistant._tcp</string>
+		<string>_ptp._tcp</string>
+		<string>_googlezone._tcp</string>
+		<string>_mqtt._tcp</string>
+		<string>_continuity._tcp</string>
+		<string>_dns-sd._udp</string>
+		<string>_coap._udp</string>
+		<string>_svn._tcp</string>
+		<string>_git._tcp</string>
+		<string>_domain._tcp</string>
+		<string>_xmpp-client._tcp</string>
+		<string>_ldap._tcp</string>
+		<string>_postgresql._tcp</string>
+		<string>_mysql._tcp</string>
+		<string>_home-assistant._tcp</string>
+		<string>_vnc._tcp</string>
+		<string>_prometheus._tcp</string>
 	</array>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>KozBon needs permission to scan for nearby Bonjour services.</string>
