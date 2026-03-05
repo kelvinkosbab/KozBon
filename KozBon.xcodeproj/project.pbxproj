@@ -63,7 +63,24 @@
 		F6CA76682F36915C0036BE3B /* PreviewDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CA76672F36915C0036BE3B /* PreviewDependencies.swift */; };
 		F6E087992C34ED8400D27B17 /* String+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E087982C34ED8400D27B17 /* String+Util.swift */; };
 		F6FCADAC2C33487700752B0B /* CreateTxtRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FCADAB2C33487700752B0B /* CreateTxtRecordView.swift */; };
+		F6TESTS0BF0001 /* TransportLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6TESTS0FR0001 /* TransportLayerTests.swift */; };
+		F6TESTS0BF0002 /* InternetAddressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6TESTS0FR0002 /* InternetAddressTests.swift */; };
+		F6TESTS0BF0003 /* StringUtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6TESTS0FR0003 /* StringUtilTests.swift */; };
+		F6TESTS0BF0004 /* BonjourServiceBrowserStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6TESTS0FR0004 /* BonjourServiceBrowserStateTests.swift */; };
+		F6TESTS0BF0005 /* BonjourServiceTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6TESTS0FR0005 /* BonjourServiceTypeTests.swift */; };
+		F6TESTS0BF0006 /* BonjourServiceSortTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6TESTS0FR0006 /* BonjourServiceSortTypeTests.swift */; };
+		F6TESTS0BF0007 /* TxtDataRecordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6TESTS0FR0007 /* TxtDataRecordTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F6TESTS0CI0001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B6CE1D1C1E1208C1003D4FFA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B6CE1D231E1208C1003D4FFA;
+			remoteInfo = KozBon;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		B6089C9B1E1A2A3900C7CF29 /* BonjourServiceType+CustomServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BonjourServiceType+CustomServiceType.swift"; sourceTree = "<group>"; };
@@ -122,6 +139,14 @@
 		F6CA76672F36915C0036BE3B /* PreviewDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewDependencies.swift; sourceTree = "<group>"; };
 		F6E087982C34ED8400D27B17 /* String+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Util.swift"; sourceTree = "<group>"; };
 		F6FCADAB2C33487700752B0B /* CreateTxtRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTxtRecordView.swift; sourceTree = "<group>"; };
+		F6TESTS0FR0001 /* TransportLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportLayerTests.swift; sourceTree = "<group>"; };
+		F6TESTS0FR0002 /* InternetAddressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetAddressTests.swift; sourceTree = "<group>"; };
+		F6TESTS0FR0003 /* StringUtilTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtilTests.swift; sourceTree = "<group>"; };
+		F6TESTS0FR0004 /* BonjourServiceBrowserStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServiceBrowserStateTests.swift; sourceTree = "<group>"; };
+		F6TESTS0FR0005 /* BonjourServiceTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServiceTypeTests.swift; sourceTree = "<group>"; };
+		F6TESTS0FR0006 /* BonjourServiceSortTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServiceSortTypeTests.swift; sourceTree = "<group>"; };
+		F6TESTS0FR0007 /* TxtDataRecordTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TxtDataRecordTests.swift; sourceTree = "<group>"; };
+		F6TESTS0FR0008 /* KozBonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KozBonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,15 +161,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F6TESTS0FP0001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B6CE1D1B1E1208C1003D4FFA = {
+			B6CE1D1B1E1208C1003D4FFA = {
 			isa = PBXGroup;
 			children = (
 				F62EDC5E255B9D25003E5178 /* KozBon.entitlements */,
 				F6781EF72694C5F6009B79F7 /* README.md */,
 				B6CE1D261E1208C1003D4FFA /* KozBon */,
+				F6TESTS0GR0001 /* KozBonTests */,
 				B6CE1D251E1208C1003D4FFA /* Products */,
 				F690B5F92561E9B600902DAB /* Frameworks */,
 			);
@@ -154,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				B6CE1D241E1208C1003D4FFA /* KozBon.app */,
+				F6TESTS0FR0008 /* KozBonTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -297,6 +331,20 @@
 			path = BonjourNearbyServices;
 			sourceTree = "<group>";
 		};
+		F6TESTS0GR0001 /* KozBonTests */ = {
+			isa = PBXGroup;
+			children = (
+				F6TESTS0FR0001 /* TransportLayerTests.swift */,
+				F6TESTS0FR0002 /* InternetAddressTests.swift */,
+				F6TESTS0FR0003 /* StringUtilTests.swift */,
+				F6TESTS0FR0004 /* BonjourServiceBrowserStateTests.swift */,
+				F6TESTS0FR0005 /* BonjourServiceTypeTests.swift */,
+				F6TESTS0FR0006 /* BonjourServiceSortTypeTests.swift */,
+				F6TESTS0FR0007 /* TxtDataRecordTests.swift */,
+			);
+			path = KozBonTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -323,6 +371,23 @@
 			productReference = B6CE1D241E1208C1003D4FFA /* KozBon.app */;
 			productType = "com.apple.product-type.application";
 		};
+		F6TESTS0NT0001 /* KozBonTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F6TESTS0CL0001 /* Build configuration list for PBXNativeTarget "KozBonTests" */;
+			buildPhases = (
+				F6TESTS0SP0001 /* Sources */,
+				F6TESTS0FP0001 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F6TESTS0TD0001 /* PBXTargetDependency */,
+			);
+			name = KozBonTests;
+			productName = KozBonTests;
+			productReference = F6TESTS0FR0008 /* KozBonTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -339,6 +404,12 @@
 						DevelopmentTeam = 6SS93B87P2;
 						LastSwiftMigration = 1220;
 						ProvisioningStyle = Automatic;
+					};
+					F6TESTS0NT0001 = {
+						CreatedOnToolsVersion = 16.0;
+						DevelopmentTeam = 6SS93B87P2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = B6CE1D231E1208C1003D4FFA;
 					};
 				};
 			};
@@ -359,6 +430,7 @@
 			projectRoot = "";
 			targets = (
 				B6CE1D231E1208C1003D4FFA /* KozBon */,
+				F6TESTS0NT0001 /* KozBonTests */,
 			);
 		};
 /* End PBXProject section */
@@ -454,7 +526,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F6TESTS0SP0001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F6TESTS0BF0001 /* TransportLayerTests.swift in Sources */,
+				F6TESTS0BF0002 /* InternetAddressTests.swift in Sources */,
+				F6TESTS0BF0003 /* StringUtilTests.swift in Sources */,
+				F6TESTS0BF0004 /* BonjourServiceBrowserStateTests.swift in Sources */,
+				F6TESTS0BF0005 /* BonjourServiceTypeTests.swift in Sources */,
+				F6TESTS0BF0006 /* BonjourServiceSortTypeTests.swift in Sources */,
+				F6TESTS0BF0007 /* TxtDataRecordTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F6TESTS0TD0001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B6CE1D231E1208C1003D4FFA /* KozBon */;
+			targetProxy = F6TESTS0CI0001 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		B6CE1D371E1208C1003D4FFA /* Debug */ = {
@@ -645,6 +739,54 @@
 			};
 			name = Release;
 		};
+		F6TESTS0BC0001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6SS93B87P2;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				MACOSX_DEPLOYMENT_TARGET = 15.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kozinga.KozBonTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KozBon.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/KozBon";
+				XROS_DEPLOYMENT_TARGET = 26.0;
+			};
+			name = Debug;
+		};
+		F6TESTS0BC0002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6SS93B87P2;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				MACOSX_DEPLOYMENT_TARGET = 15.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kozinga.KozBonTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KozBon.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/KozBon";
+				XROS_DEPLOYMENT_TARGET = 26.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -662,6 +804,15 @@
 			buildConfigurations = (
 				B6CE1D3A1E1208C1003D4FFA /* Debug */,
 				B6CE1D3B1E1208C1003D4FFA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F6TESTS0CL0001 /* Build configuration list for PBXNativeTarget "KozBonTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F6TESTS0BC0001 /* Debug */,
+				F6TESTS0BC0002 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -10,7 +10,8 @@ KozBon is a multi-platform Apple app for discovering and managing Bonjour (mDNS)
 # Build for iOS Simulator
 xcodebuild -scheme KozBon -destination 'platform=iOS Simulator,name=iPhone 17 Pro,OS=26.2' build
 
-# The project has no test targets currently
+# Run unit tests
+xcodebuild test -scheme KozBon -destination 'platform=iOS Simulator,name=iPhone 17 Pro,OS=26.2'
 ```
 
 ## Architecture
@@ -80,6 +81,14 @@ xcodebuild -scheme KozBon -destination 'platform=iOS Simulator,name=iPhone 17 Pr
 - **Excluded**: `KozBon/Legacy/`
 - **Inline disables**: Use `// swiftlint:disable:next <rule>` for intentional violations (e.g., `force_unwrapping` in Core Data, `force_cast` in `MyDataManagerObject`)
 - **File-level disables**: `// swiftlint:disable <rule>` at file top for files with many intentional violations (e.g., `MyServiceType+Library.swift`)
+
+## Testing
+
+- **Framework**: Swift Testing (`@Test`, `@Suite`, `#expect`)
+- **Test target**: `KozBonTests/` — unit tests for logic only, no view tests
+- **Naming**: `<TypeName>Tests.swift` (e.g., `TransportLayerTests.swift`)
+- **`@MainActor` tests**: Use `@MainActor` on the suite when testing `@MainActor`-isolated methods (e.g., `BonjourServiceType.fetch()`)
+- **Test host**: Tests run inside the app (`KozBon.app`) via `@testable import KozBon`
 
 ## Important Gotchas
 
