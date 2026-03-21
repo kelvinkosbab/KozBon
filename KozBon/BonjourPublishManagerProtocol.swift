@@ -2,8 +2,7 @@
 //  BonjourPublishManagerProtocol.swift
 //  KozBon
 //
-//  Created by Dependency Injection Implementation
-//  Copyright © 2024 Kozinga. All rights reserved.
+//  Copyright © 2016-present Kozinga. All rights reserved.
 //
 
 import Foundation

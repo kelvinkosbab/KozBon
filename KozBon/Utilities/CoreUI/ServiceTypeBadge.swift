@@ -2,8 +2,7 @@
 //  ServiceTypeBadge.swift
 //  KozBon
 //
-//  Created by Kelvin Kosbab on 7/8/24.
-//  Copyright © 2024 Kozinga. All rights reserved.
+//  Copyright © 2016-present Kozinga. All rights reserved.
 //
 
 import SwiftUI

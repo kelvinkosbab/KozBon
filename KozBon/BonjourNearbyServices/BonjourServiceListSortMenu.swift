@@ -2,8 +2,7 @@
 //  BonjourServiceListSortMenu.swift
 //  KozBon
 //
-//  Created by Kelvin Kosbab on 9/14/23.
-//  Copyright © 2023 Kozinga. All rights reserved.
+//  Copyright © 2016-present Kozinga. All rights reserved.
 //
 
 /// A SwiftUI menu that lets users choose how to sort Bonjour services.

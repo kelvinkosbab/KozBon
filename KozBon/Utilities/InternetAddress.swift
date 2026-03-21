@@ -1,9 +1,8 @@
 //
 //  InternetAddress.swift
-//  iDiscover
+//  KozBon
 //
-//  Created by Kelvin Kosbab on 12/27/16.
-//  Copyright © 2016 Kozinga. All rights reserved.
+//  Copyright © 2016-present Kozinga. All rights reserved.
 //
 
 import Foundation

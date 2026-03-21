@@ -1,10 +1,8 @@
 //
 //  CustomServiceType.swift
-//  iDiscover
+//  KozBon
 //
-//  Created by Kelvin Kosbab on 12/26/16.
-//  Copyright © 2016 Kozinga. All rights reserved.
-//  This file was automatically generated and should not be edited.
+//  Copyright © 2016-present Kozinga. All rights reserved.
 //
 
 import Foundation

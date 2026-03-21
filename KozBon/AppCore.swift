@@ -2,8 +2,7 @@
 //  AppCore.swift
 //  KozBon
 //
-//  Created by Kelvin Kosbab on 8/20/23.
-//  Copyright © 2023 Kozinga. All rights reserved.
+//  Copyright © 2016-present Kozinga. All rights reserved.
 //
 
 import SwiftUI

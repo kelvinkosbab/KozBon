@@ -1,9 +1,8 @@
 //
-//  BonjourServiceType+Library.swift
-//  iDiscover
+//  MyServiceType+Library.swift
+//  KozBon
 //
-//  Created by Kelvin Kosbab on 1/1/17.
-//  Copyright © 2017 Kozinga. All rights reserved.
+//  Copyright © 2016-present Kozinga. All rights reserved.
 //
 
 import Foundation

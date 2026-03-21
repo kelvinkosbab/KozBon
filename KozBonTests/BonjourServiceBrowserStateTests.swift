@@ -1,9 +1,8 @@
 //
 //  BonjourServiceBrowserStateTests.swift
-//  KozBonTests
+//  KozBon
 //
-//  Created by Kelvin Kosbab on 3/5/26.
-//  Copyright © 2026 Kozinga. All rights reserved.
+//  Copyright © 2016-present Kozinga. All rights reserved.
 //
 
 import Testing

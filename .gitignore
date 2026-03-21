@@ -9,3 +9,17 @@ Podfile.lock
 
 # Ignore Carthage installed files
 Carthage/*
+
+# Xcode build artifacts
+DerivedData/
+
+# Xcode user-specific and temporary files
+*.xcscmblueprint
+*.xccheckout
+*.moved-aside
+*.hmap
+
+# Archive and debug symbol files
+*.ipa
+*.dSYM.zip
+*.dSYM

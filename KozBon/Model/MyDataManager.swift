@@ -1,9 +1,8 @@
 //
 //  MyDataManager.swift
-//  Test
+//  KozBon
 //
-//  Created by Kelvin Kosbab on 12/23/16.
-//  Copyright © 2016 Kozinga. All rights reserved.
+//  Copyright © 2016-present Kozinga. All rights reserved.
 //
 
 import Foundation

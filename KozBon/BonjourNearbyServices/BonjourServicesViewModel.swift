@@ -1,9 +1,8 @@
 //
-//  BonjourScanForServicesViewModel.swift
+//  BonjourServicesViewModel.swift
 //  KozBon
 //
-//  Created by Kelvin Kosbab on 9/8/23.
-//  Copyright © 2023 Kozinga. All rights reserved.
+//  Copyright © 2016-present Kozinga. All rights reserved.
 //
 
 import Foundation

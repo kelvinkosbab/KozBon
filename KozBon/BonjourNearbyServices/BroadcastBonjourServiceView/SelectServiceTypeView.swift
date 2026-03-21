@@ -2,8 +2,7 @@
 //  SelectServiceTypeView.swift
 //  KozBon
 //
-//  Created by Kelvin Kosbab on 6/26/24.
-//  Copyright © 2024 Kozinga. All rights reserved.
+//  Copyright © 2016-present Kozinga. All rights reserved.
 //
 
 import SwiftUI
