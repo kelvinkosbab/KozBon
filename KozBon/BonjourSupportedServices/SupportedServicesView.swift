@@ -30,6 +30,9 @@ struct SupportedServicesView: View {
                                 ServiceTypeBadge(serviceType: serviceType, style: .iconOnly)
                             }
                         }
+                        .contextMenu {
+                            serviceTypeContextMenu(serviceType: serviceType)
+                        }
                     }
                 }
             }
@@ -47,6 +50,9 @@ struct SupportedServicesView: View {
                                 ServiceTypeBadge(serviceType: serviceType, style: .iconOnly)
                             }
                         }
+                        .contextMenu {
+                            serviceTypeContextMenu(serviceType: serviceType)
+                        }
                     }
                 }
             }
@@ -63,6 +69,30 @@ struct SupportedServicesView: View {
         .toolbar {
             ToolbarItem {
                 self.renderTrailingToolbarItems()
+            }
+        }
+        .focusedSceneValue(\.isCreateServiceTypePresented, $viewModel.isCreateCustomServiceTypePresented)
+    }
+
+    @ViewBuilder
+    private func serviceTypeContextMenu(serviceType: BonjourServiceType) -> some View {
+        Button {
+            Clipboard.copy(serviceType.fullType)
+        } label: {
+            Label("Copy Full Type", systemImage: "doc.on.doc")
+        }
+
+        Button {
+            Clipboard.copy(serviceType.name)
+        } label: {
+            Label("Copy Name", systemImage: "doc.on.clipboard")
+        }
+
+        if let detail = serviceType.detail {
+            Button {
+                Clipboard.copy(detail)
+            } label: {
+                Label("Copy Details", systemImage: "info.circle")
             }
         }
     }

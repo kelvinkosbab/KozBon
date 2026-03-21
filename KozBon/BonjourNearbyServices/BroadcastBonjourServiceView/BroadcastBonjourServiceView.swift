@@ -91,6 +91,7 @@ struct BroadcastBonjourServiceView: View {
                     } label: {
                         Label("Cancel", systemImage: "x.circle.fill")
                     }
+                    .keyboardShortcut(.cancelAction)
                 }
 
                 ToolbarItem(placement: .confirmationAction) {
@@ -99,6 +100,7 @@ struct BroadcastBonjourServiceView: View {
                     } label: {
                         Label("Done", systemImage: "checkmark.circle.fill")
                     }
+                    .keyboardShortcut(.defaultAction)
                 }
             }
             .sheet(isPresented: $isCreateTxtRecordViewPresented) {

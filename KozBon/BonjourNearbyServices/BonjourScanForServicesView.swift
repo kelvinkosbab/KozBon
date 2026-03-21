@@ -117,6 +117,7 @@ struct BonjourScanForServicesView: View {
                 )
             }
         }
+        .focusedSceneValue(\.isBroadcastServicePresented, $viewModel.isBroadcastBonjourServicePresented)
     }
 
     @ViewBuilder
@@ -132,6 +133,28 @@ struct BonjourScanForServicesView: View {
                     ServiceTypeBadge(serviceType: service.serviceType, style: .iconOnly)
                 }
             }
+            .contextMenu {
+                Button {
+                    Clipboard.copy(service.hostName)
+                } label: {
+                    Label("Copy Hostname", systemImage: "doc.on.doc")
+                }
+
+                if let firstAddress = service.addresses.first {
+                    Button {
+                        Clipboard.copy(firstAddress.ipPortString)
+                    } label: {
+                        Label("Copy IP Address", systemImage: "network")
+                    }
+                }
+
+                Button {
+                    Clipboard.copy(service.serviceType.fullType)
+                } label: {
+                    Label("Copy Service Type", systemImage: "doc.on.clipboard")
+                }
+            }
         }
     }
+
 }

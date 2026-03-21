@@ -49,10 +49,24 @@ struct SupportedServiceDetailView: View {
                     title: "Name",
                     detail: serviceType.name
                 )
+                .contextMenu {
+                    Button {
+                        Clipboard.copy(serviceType.name)
+                    } label: {
+                        Label("Copy Name", systemImage: "doc.on.doc")
+                    }
+                }
                 TitleDetailStackView(
                     title: "Type",
                     detail: serviceType.type
                 )
+                .contextMenu {
+                    Button {
+                        Clipboard.copy(serviceType.type)
+                    } label: {
+                        Label("Copy Type", systemImage: "doc.on.doc")
+                    }
+                }
                 TitleDetailStackView(
                     title: "Transport layer",
                     detail: serviceType.transportLayer.string
@@ -61,11 +75,25 @@ struct SupportedServiceDetailView: View {
                     title: "Full type",
                     detail: serviceType.fullType
                 )
+                .contextMenu {
+                    Button {
+                        Clipboard.copy(serviceType.fullType)
+                    } label: {
+                        Label("Copy Full Type", systemImage: "doc.on.doc")
+                    }
+                }
                 if let detail = serviceType.detail, !detail.isEmpty {
                     TitleDetailStackView(
                         title: "Details",
                         detail: detail
                     )
+                    .contextMenu {
+                        Button {
+                            Clipboard.copy(detail)
+                        } label: {
+                            Label("Copy Details", systemImage: "doc.on.doc")
+                        }
+                    }
                 }
             }
 
@@ -128,6 +156,9 @@ struct SupportedServiceDetailView: View {
             }
         }
         .contentMarginsBasedOnSizeClass()
+        #if !os(macOS)
+        .navigationBarTitleDisplayMode(.inline)
+        #endif
         .toolbar {
             if isNavigationHeaderShown {
                 ToolbarItem(
@@ -138,4 +169,5 @@ struct SupportedServiceDetailView: View {
             }
         }
     }
+
 }

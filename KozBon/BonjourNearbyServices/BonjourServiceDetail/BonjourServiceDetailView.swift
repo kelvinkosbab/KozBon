@@ -84,6 +84,19 @@ struct BonjourServiceDetailView: View {
                             title: address.ipPortString,
                             detail: address.protocol.stringRepresentation
                         )
+                        .contextMenu {
+                            Button {
+                                Clipboard.copy(address.ipPortString)
+                            } label: {
+                                Label("Copy Address", systemImage: "doc.on.doc")
+                            }
+
+                            Button {
+                                Clipboard.copy(address.ip)
+                            } label: {
+                                Label("Copy IP Only", systemImage: "network")
+                            }
+                        }
                     }
                 }
             }
@@ -95,6 +108,19 @@ struct BonjourServiceDetailView: View {
                             title: dataRecord.key,
                             detail: dataRecord.value
                         )
+                        .contextMenu {
+                            Button {
+                                Clipboard.copy("\(dataRecord.key)=\(dataRecord.value)")
+                            } label: {
+                                Label("Copy Record", systemImage: "doc.on.doc")
+                            }
+
+                            Button {
+                                Clipboard.copy(dataRecord.value)
+                            } label: {
+                                Label("Copy Value", systemImage: "doc.on.clipboard")
+                            }
+                        }
                     }
                 }
             }

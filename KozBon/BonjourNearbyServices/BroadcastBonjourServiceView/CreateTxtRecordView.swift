@@ -95,6 +95,7 @@ struct CreateTxtRecordView: View {
                     } label: {
                         Label("Cancel", systemImage: "x.circle.fill")
                     }
+                    .keyboardShortcut(.cancelAction)
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
@@ -102,6 +103,7 @@ struct CreateTxtRecordView: View {
                     } label: {
                         Label("Done", systemImage: "checkmark.circle.fill")
                     }
+                    .keyboardShortcut(.defaultAction)
                 }
             }
             .onChange(of: [key, value]) {

@@ -46,6 +46,7 @@ struct AppCore: App {
                         }
                     }
                 }
+                .tabViewStyle(.sidebarAdaptable)
                 .tint(.kozBonBlue)
                 .environment(\.dependencies, dependencies)
             } else {
@@ -76,5 +77,38 @@ struct AppCore: App {
                 .environment(\.dependencies, dependencies)
             }
         }
+        #if os(macOS)
+        .defaultSize(width: 900, height: 650)
+        .windowResizability(.contentSize)
+        .commands {
+            AppCommands()
+        }
+        #endif
     }
 }
+
+// MARK: - AppCommands
+
+#if os(macOS)
+private struct AppCommands: Commands {
+
+    @FocusedBinding(\.isBroadcastServicePresented) private var isBroadcastServicePresented
+    @FocusedBinding(\.isCreateServiceTypePresented) private var isCreateServiceTypePresented
+
+    var body: some Commands {
+        CommandGroup(after: .newItem) {
+            Button("Broadcast Service") {
+                isBroadcastServicePresented = true
+            }
+            .disabled(isBroadcastServicePresented == nil)
+            .keyboardShortcut("n", modifiers: [.command, .shift])
+
+            Button("Create Custom Service Type") {
+                isCreateServiceTypePresented = true
+            }
+            .disabled(isCreateServiceTypePresented == nil)
+            .keyboardShortcut("t", modifiers: [.command, .shift])
+        }
+    }
+}
+#endif

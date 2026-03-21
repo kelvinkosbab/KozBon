@@ -123,6 +123,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                     } label: {
                         Label("Cancel", systemImage: "x.circle.fill")
                     }
+                    .keyboardShortcut(.cancelAction)
                 }
 
                 ToolbarItem(placement: .confirmationAction) {
@@ -131,6 +132,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                     } label: {
                         Label("Done", systemImage: "checkmark.circle.fill")
                     }
+                    .keyboardShortcut(.defaultAction)
                 }
             }
             .onChange(of: [name, type, details]) {
