@@ -24,6 +24,7 @@ struct EmptyStateOverlayView: View {
                     .renderingMode(.template)
                     .foregroundStyle(.secondary)
                     .frame(width: 100, height: 100)
+                    .accessibilityHidden(true)
             }
             Text(self.title)
                 .font(.system(.headline).bold())

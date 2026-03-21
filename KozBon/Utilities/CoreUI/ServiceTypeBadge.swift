@@ -27,6 +27,8 @@ struct ServiceTypeBadge: View {
                 .opacity(0.4)
         )
         .clipShape(.capsule)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(serviceType.name)
     }
 
     // MARK: - Style

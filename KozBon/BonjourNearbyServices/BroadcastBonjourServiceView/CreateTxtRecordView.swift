@@ -52,6 +52,8 @@ struct CreateTxtRecordView: View {
                         "TXT Record Key",
                         text: $key
                     )
+                    .accessibilityLabel("TXT record key")
+                    .accessibilityHint("Enter the key for this TXT record")
                     .onSubmit {
                         doneButtonSelected()
                     }
@@ -62,6 +64,7 @@ struct CreateTxtRecordView: View {
                     if let keyError {
                         Text(verbatim: keyError)
                             .foregroundStyle(.red)
+                            .accessibilityLabel("Error: \(keyError)")
                     }
                 }
 
@@ -70,6 +73,8 @@ struct CreateTxtRecordView: View {
                         "TXT Record Value",
                         text: $value
                     )
+                    .accessibilityLabel("TXT record value")
+                    .accessibilityHint("Enter the value for this TXT record")
                     .onSubmit {
                         doneButtonSelected()
                     }
@@ -80,6 +85,7 @@ struct CreateTxtRecordView: View {
                     if let valueError {
                         Text(verbatim: valueError)
                             .foregroundStyle(.red)
+                            .accessibilityLabel("Error: \(valueError)")
                     }
                 }
             }

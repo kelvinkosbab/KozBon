@@ -79,6 +79,8 @@ struct BonjourScanForServicesView: View {
                             .foregroundColor(.kozBonBlue)
                     }
                 }
+                .accessibilityLabel("Create")
+                .accessibilityHint("Create or broadcast a new service")
             }
         }
         .navigationTitle("Nearby services")
@@ -133,6 +135,7 @@ struct BonjourScanForServicesView: View {
                     ServiceTypeBadge(serviceType: service.serviceType, style: .iconOnly)
                 }
             }
+            .accessibilityHint("View details for \(service.service.name)")
             .contextMenu {
                 Button {
                     Clipboard.copy(service.hostName)

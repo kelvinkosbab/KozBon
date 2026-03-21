@@ -143,6 +143,7 @@ struct BroadcastBonjourServiceView: View {
             if let serviceTypeError {
                 Text(verbatim: serviceTypeError)
                     .foregroundStyle(.red)
+                    .accessibilityLabel("Error: \(serviceTypeError)")
             }
         }
         .onChange(of: [serviceType]) {
@@ -163,6 +164,8 @@ struct BroadcastBonjourServiceView: View {
                 value: $port,
                 format: .number
             )
+            .accessibilityLabel("Port number")
+            .accessibilityHint("Enter the service port number, must be greater than 3000")
             .onSubmit {
                 doneButtonSelected()
             }
@@ -173,6 +176,7 @@ struct BroadcastBonjourServiceView: View {
             if let portError {
                 Text(verbatim: portError)
                     .foregroundStyle(.red)
+                    .accessibilityLabel("Error: \(portError)")
             }
         }
         .onChange(of: [port]) {
@@ -189,6 +193,8 @@ struct BroadcastBonjourServiceView: View {
     private func serviceDomainSection() -> some View {
         Section("Service Domain") {
             TextField("Service domain", text: $domain)
+                .accessibilityLabel("Service domain")
+                .accessibilityHint("Enter the domain for the service, defaults to local")
                 .onSubmit {
                     doneButtonSelected()
                 }
@@ -218,6 +224,7 @@ struct BroadcastBonjourServiceView: View {
                     } label: {
                         Label("Remove", systemImage: "minus.circle.fill")
                     }
+                    .accessibilityLabel("Remove \(dataRecord.key)")
                     .tint(.red)
                 }
             }
@@ -227,6 +234,7 @@ struct BroadcastBonjourServiceView: View {
             } label: {
                 Label("Add TXT Record", systemImage: "plus.circle.fill")
             }
+            .accessibilityHint("Double tap to add a new TXT record")
         }
     }
 

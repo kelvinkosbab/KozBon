@@ -48,8 +48,12 @@ struct SelectServiceTypeView: View {
                                 Image(systemName: selectedServiceType == serviceType ? "checkmark.circle.fill" : "circle")
                                     .font(.system(.body).bold())
                                     .foregroundStyle(selectedServiceType == serviceType ? Color.kozBonBlue : .secondary)
+                                    .accessibilityHidden(true)
                             }
                         }
+                        .accessibilityLabel(serviceType.name)
+                        .accessibilityValue(selectedServiceType == serviceType ? "Selected" : "Not selected")
+                        .accessibilityHint("Double tap to select this service type")
                     }
                 }
             }
@@ -71,8 +75,12 @@ struct SelectServiceTypeView: View {
                                 Image(systemName: selectedServiceType == serviceType ? "checkmark.circle.fill" : "circle")
                                     .font(.system(.body).bold())
                                     .foregroundStyle(selectedServiceType == serviceType ? Color.kozBonBlue : .secondary)
+                                    .accessibilityHidden(true)
                             }
                         }
+                        .accessibilityLabel(serviceType.name)
+                        .accessibilityValue(selectedServiceType == serviceType ? "Selected" : "Not selected")
+                        .accessibilityHint("Double tap to select this service type")
                     }
                 }
             }

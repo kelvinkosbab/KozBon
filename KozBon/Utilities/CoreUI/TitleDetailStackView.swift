@@ -45,6 +45,7 @@ public struct TitleDetailStackView<Trailing>: View where Trailing: View {
 
             trailing?()
         }
+        .accessibilityElement(children: .combine)
     }
 }
 

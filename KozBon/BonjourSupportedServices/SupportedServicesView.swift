@@ -30,6 +30,7 @@ struct SupportedServicesView: View {
                                 ServiceTypeBadge(serviceType: serviceType, style: .iconOnly)
                             }
                         }
+                        .accessibilityHint("View details for \(serviceType.name)")
                         .contextMenu {
                             serviceTypeContextMenu(serviceType: serviceType)
                         }
@@ -50,6 +51,7 @@ struct SupportedServicesView: View {
                                 ServiceTypeBadge(serviceType: serviceType, style: .iconOnly)
                             }
                         }
+                        .accessibilityHint("View details for \(serviceType.name)")
                         .contextMenu {
                             serviceTypeContextMenu(serviceType: serviceType)
                         }
@@ -119,6 +121,8 @@ struct SupportedServicesView: View {
                     .foregroundColor(.kozBonBlue)
             }
         }
+        .accessibilityLabel("Create")
+        .accessibilityHint("Create a custom service type")
     }
 
     // MARK: - ViewModel

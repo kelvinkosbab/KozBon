@@ -31,6 +31,7 @@ struct BlueSectionItemIconTitleDetailView: View {
             if let imageSystemName, !imageSystemName.isEmpty {
                 Image(systemName: imageSystemName)
                     .font(.system(.title3).bold())
+                    .accessibilityHidden(true)
             }
 
             VStack(alignment: .leading) {
@@ -44,6 +45,7 @@ struct BlueSectionItemIconTitleDetailView: View {
             }
             Spacer()
         }
+        .accessibilityElement(children: .combine)
         .padding(.vertical, 10)
         .listRowBackground(
             Color.kozBonBlue

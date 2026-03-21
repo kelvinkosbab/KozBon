@@ -49,6 +49,7 @@ struct SupportedServiceDetailView: View {
                     title: "Name",
                     detail: serviceType.name
                 )
+                .accessibilityHint("Long press to copy name")
                 .contextMenu {
                     Button {
                         Clipboard.copy(serviceType.name)
@@ -60,6 +61,7 @@ struct SupportedServiceDetailView: View {
                     title: "Type",
                     detail: serviceType.type
                 )
+                .accessibilityHint("Long press to copy type")
                 .contextMenu {
                     Button {
                         Clipboard.copy(serviceType.type)
@@ -75,6 +77,7 @@ struct SupportedServiceDetailView: View {
                     title: "Full type",
                     detail: serviceType.fullType
                 )
+                .accessibilityHint("Long press to copy full type")
                 .contextMenu {
                     Button {
                         Clipboard.copy(serviceType.fullType)
@@ -87,6 +90,7 @@ struct SupportedServiceDetailView: View {
                         title: "Details",
                         detail: detail
                     )
+                    .accessibilityHint("Long press to copy details")
                     .contextMenu {
                         Button {
                             Clipboard.copy(detail)
@@ -110,6 +114,8 @@ struct SupportedServiceDetailView: View {
                             Spacer()
                         }
                     }
+                    .accessibilityLabel("Edit \(serviceType.name)")
+                    .accessibilityHint("Double tap to edit this service type")
                     .foregroundStyle(.yellow)
                     .sheet(isPresented: $showEditConfirmation) {
                         CreateOrUpdateBonjourServiceTypeView(
@@ -135,6 +141,8 @@ struct SupportedServiceDetailView: View {
                             Spacer()
                         }
                     }
+                    .accessibilityLabel("Delete \(serviceType.name)")
+                    .accessibilityHint("Double tap to delete this service type")
                     .confirmationDialog(
                         "Are you sure you want to delete this service type?",
                         isPresented: $showDeleteConfirmation,
