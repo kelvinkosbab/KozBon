@@ -25,10 +25,6 @@
 		F60088752C3CEFD2006EA857 /* ServiceTypeBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60088742C3CEFD2006EA857 /* ServiceTypeBadge.swift */; };
 		F6A1B0012F5D8A0000C1A2B3 /* Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A1B0002F5D8A0000C1A2B3 /* Clipboard.swift */; };
 		F6B2C0022F5D9A0000D2B3C4 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B2C0012F5D9A0000D2B3C4 /* SettingsView.swift */; };
-		F6V1S0022F5DA00000E1F2G3 /* ServiceEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6V1S0012F5DA00000E1F2G3 /* ServiceEntity.swift */; };
-		F6V1S0042F5DA00000E1F2G3 /* NetworkTopologyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6V1S0032F5DA00000E1F2G3 /* NetworkTopologyView.swift */; };
-		F6V1S0062F5DA00000E1F2G3 /* ImmersiveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6V1S0052F5DA00000E1F2G3 /* ImmersiveViewModel.swift */; };
-		F6V1S0082F5DA00000E1F2G3 /* ImmersiveNetworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6V1S0072F5DA00000E1F2G3 /* ImmersiveNetworkView.swift */; };
 		F6A1B0032F5D8A0000C1A2B4 /* AppFocusedValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A1B0022F5D8A0000C1A2B4 /* AppFocusedValues.swift */; };
 		F6240E692A92CF0600951875 /* AppCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E682A92CF0600951875 /* AppCore.swift */; };
 		F6240E6C2A92D62200951875 /* BonjourScanForServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E6B2A92D62200951875 /* BonjourScanForServicesView.swift */; };
@@ -112,10 +108,6 @@
 		F6240E682A92CF0600951875 /* AppCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCore.swift; sourceTree = "<group>"; };
 		F6A1B0002F5D8A0000C1A2B3 /* Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clipboard.swift; sourceTree = "<group>"; };
 		F6B2C0012F5D9A0000D2B3C4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		F6V1S0012F5DA00000E1F2G3 /* ServiceEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceEntity.swift; sourceTree = "<group>"; };
-		F6V1S0032F5DA00000E1F2G3 /* NetworkTopologyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTopologyView.swift; sourceTree = "<group>"; };
-		F6V1S0052F5DA00000E1F2G3 /* ImmersiveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmersiveViewModel.swift; sourceTree = "<group>"; };
-		F6V1S0072F5DA00000E1F2G3 /* ImmersiveNetworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmersiveNetworkView.swift; sourceTree = "<group>"; };
 		F6A1B0022F5D8A0000C1A2B4 /* AppFocusedValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFocusedValues.swift; sourceTree = "<group>"; };
 		F6240E6B2A92D62200951875 /* BonjourScanForServicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourScanForServicesView.swift; sourceTree = "<group>"; };
 		F6240E732A92D91800951875 /* AppStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStyles.swift; sourceTree = "<group>"; };
@@ -218,7 +210,6 @@
 				F67B65442C1B922500324FFF /* Model */,
 				F67B652F2C1B4EA500324FFF /* Utilities */,
 				F6B2C0032F5D9A0000D2B3C4 /* Settings */,
-				F6V1S0092F5DA00000E1F2G3 /* VisionOS */,
 				B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */,
 				B6CE1D311E1208C1003D4FFA /* Assets.xcassets */,
 				B6CE1D361E1208C1003D4FFA /* Info.plist */,
@@ -372,17 +363,6 @@
 				F6B2C0012F5D9A0000D2B3C4 /* SettingsView.swift */,
 			);
 			path = Settings;
-			sourceTree = "<group>";
-		};
-		F6V1S0092F5DA00000E1F2G3 /* VisionOS */ = {
-			isa = PBXGroup;
-			children = (
-				F6V1S0012F5DA00000E1F2G3 /* ServiceEntity.swift */,
-				F6V1S0032F5DA00000E1F2G3 /* NetworkTopologyView.swift */,
-				F6V1S0052F5DA00000E1F2G3 /* ImmersiveViewModel.swift */,
-				F6V1S0072F5DA00000E1F2G3 /* ImmersiveNetworkView.swift */,
-			);
-			path = VisionOS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -552,10 +532,6 @@
 				F6240E742A92D91800951875 /* AppStyles.swift in Sources */,
 				F6A1B0012F5D8A0000C1A2B3 /* Clipboard.swift in Sources */,
 				F6B2C0022F5D9A0000D2B3C4 /* SettingsView.swift in Sources */,
-				F6V1S0022F5DA00000E1F2G3 /* ServiceEntity.swift in Sources */,
-				F6V1S0042F5DA00000E1F2G3 /* NetworkTopologyView.swift in Sources */,
-				F6V1S0062F5DA00000E1F2G3 /* ImmersiveViewModel.swift in Sources */,
-				F6V1S0082F5DA00000E1F2G3 /* ImmersiveNetworkView.swift in Sources */,
 				F6A1B0032F5D8A0000C1A2B4 /* AppFocusedValues.swift in Sources */,
 				F6C50D7C2AB3BDD50048DF8C /* TitleDetailStackView.swift in Sources */,
 				F6FCADAC2C33487700752B0B /* CreateTxtRecordView.swift in Sources */,
