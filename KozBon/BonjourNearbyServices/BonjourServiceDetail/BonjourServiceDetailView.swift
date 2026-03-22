@@ -83,6 +83,7 @@ struct BonjourServiceDetailView: View {
                             title: address.ipPortString,
                             detail: address.protocol.stringRepresentation
                         )
+                        .draggable(address.ipPortString)
                         .accessibilityHint("Long press to copy address")
                         .contextMenu {
                             Button {
@@ -108,6 +109,7 @@ struct BonjourServiceDetailView: View {
                             title: dataRecord.key,
                             detail: dataRecord.value
                         )
+                        .draggable("\(dataRecord.key)=\(dataRecord.value)")
                         .accessibilityHint("Long press to copy record")
                         .contextMenu {
                             Button {

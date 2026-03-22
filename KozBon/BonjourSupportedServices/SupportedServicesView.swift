@@ -14,63 +14,90 @@ struct SupportedServicesView: View {
 
     @StateObject private var viewModel = ViewModel()
 
+    #if os(macOS)
+    @Environment(\.openWindow) private var openWindow
+    #endif
+
     var body: some View {
-        List {
-            if !viewModel.filteredCustomServiceTypes.isEmpty {
-                Section("Custom Service Types") {
-                    ForEach(viewModel.filteredCustomServiceTypes, id: \.fullType) { serviceType in
-                        NavigationLink {
-                            SupportedServiceDetailView(serviceType: serviceType)
-                        } label: {
-                            TitleDetailStackView(
-                                title: serviceType.name,
-                                detail: serviceType.fullType
-                            ) {
-                                ServiceTypeBadge(serviceType: serviceType, style: .iconOnly)
+        NavigationSplitView {
+            List(selection: $viewModel.selectedServiceType) {
+                if !viewModel.filteredCustomServiceTypes.isEmpty {
+                    Section("Custom Service Types") {
+                        ForEach(viewModel.filteredCustomServiceTypes, id: \.fullType) { serviceType in
+                            NavigationLink(value: serviceType) {
+                                TitleDetailStackView(
+                                    title: serviceType.name,
+                                    detail: serviceType.fullType
+                                ) {
+                                    ServiceTypeBadge(serviceType: serviceType, style: .iconOnly)
+                                }
+                            }
+                            .draggable(serviceType.fullType)
+                            .accessibilityHint("View details for \(serviceType.name)")
+                            .contextMenu {
+                                serviceTypeContextMenu(serviceType: serviceType)
                             }
                         }
-                        .accessibilityHint("View details for \(serviceType.name)")
-                        .contextMenu {
-                            serviceTypeContextMenu(serviceType: serviceType)
+                    }
+                }
+
+                if !viewModel.filteredBuiltInServiceTypes.isEmpty {
+                    Section("Built-in Service Types") {
+                        ForEach(viewModel.filteredBuiltInServiceTypes, id: \.fullType) { serviceType in
+                            NavigationLink(value: serviceType) {
+                                TitleDetailStackView(
+                                    title: serviceType.name,
+                                    detail: serviceType.fullType
+                                ) {
+                                    ServiceTypeBadge(serviceType: serviceType, style: .iconOnly)
+                                }
+                            }
+                            .draggable(serviceType.fullType)
+                            .accessibilityHint("View details for \(serviceType.name)")
+                            .contextMenu {
+                                serviceTypeContextMenu(serviceType: serviceType)
+                            }
                         }
                     }
                 }
             }
-
-            if !viewModel.filteredBuiltInServiceTypes.isEmpty {
-                Section("Built-in Service Types") {
-                    ForEach(viewModel.filteredBuiltInServiceTypes, id: \.fullType) { serviceType in
-                        NavigationLink {
-                            SupportedServiceDetailView(serviceType: serviceType)
-                        } label: {
-                            TitleDetailStackView(
-                                title: serviceType.name,
-                                detail: serviceType.fullType
-                            ) {
-                                ServiceTypeBadge(serviceType: serviceType, style: .iconOnly)
-                            }
-                        }
-                        .accessibilityHint("View details for \(serviceType.name)")
-                        .contextMenu {
-                            serviceTypeContextMenu(serviceType: serviceType)
-                        }
+            .contentMarginsBasedOnSizeClass()
+            .navigationTitle("Supported services")
+            .searchable(text: $viewModel.searchText, prompt: "Search for ...")
+            .toolbar {
+                ToolbarItem {
+                    self.renderTrailingToolbarItems()
+                }
+            }
+            #if os(visionOS)
+            .ornament(attachmentAnchor: .scene(.bottom)) {
+                HStack(spacing: 16) {
+                    Button {
+                        viewModel.isCreateCustomServiceTypePresented = true
+                    } label: {
+                        Label("Create Service Type", systemImage: "badge.plus.radiowaves.forward")
                     }
                 }
+                .padding(12)
+                .glassBackgroundEffect()
+            }
+            #endif
+        } detail: {
+            if let selectedServiceType = viewModel.selectedServiceType {
+                SupportedServiceDetailView(serviceType: selectedServiceType)
+            } else {
+                ContentUnavailableView(
+                    "Select a Service Type",
+                    systemImage: "list.dash",
+                    description: Text("Choose a service type to view its details.")
+                )
             }
         }
-        .contentMarginsBasedOnSizeClass()
-        .navigationTitle("Supported services")
         .task {
             viewModel.load()
         }
-        .searchable(text: $viewModel.searchText, prompt: "Search for ...")
         .sheet(isPresented: $viewModel.isCreateCustomServiceTypePresented) {
             CreateOrUpdateBonjourServiceTypeView(isPresented: $viewModel.isCreateCustomServiceTypePresented)
-        }
-        .toolbar {
-            ToolbarItem {
-                self.renderTrailingToolbarItems()
-            }
         }
         .focusedSceneValue(\.isCreateServiceTypePresented, $viewModel.isCreateCustomServiceTypePresented)
     }
@@ -96,6 +123,16 @@ struct SupportedServicesView: View {
                 Label("Copy Details", systemImage: "info.circle")
             }
         }
+
+        #if os(macOS)
+        Divider()
+
+        Button {
+            openWindow(value: serviceType)
+        } label: {
+            Label("Open in New Window", systemImage: "macwindow.badge.plus")
+        }
+        #endif
     }
 
     private func renderTrailingToolbarItems() -> some View {
@@ -132,6 +169,7 @@ struct SupportedServicesView: View {
         @Published private var builtInServiceTypes: [BonjourServiceType] = []
         @Published private var customServiceTypes: [BonjourServiceType] = []
 
+        @Published var selectedServiceType: BonjourServiceType?
         @Published var searchText: String = ""
         @Published var isCreateCustomServiceTypePresented = false {
             didSet {

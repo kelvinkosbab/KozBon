@@ -45,6 +45,9 @@ public struct TitleDetailStackView<Trailing>: View where Trailing: View {
             trailing?()
         }
         .accessibilityElement(children: .combine)
+        #if os(iOS) || os(visionOS)
+        .hoverEffect(.highlight)
+        #endif
     }
 }
 

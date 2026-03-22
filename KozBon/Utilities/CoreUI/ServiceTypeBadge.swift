@@ -21,13 +21,21 @@ struct ServiceTypeBadge: View {
                 .padding(.vertical, 6)
                 .padding(.horizontal)
         }
+        #if os(visionOS)
+        .glassBackgroundEffect()
+        .clipShape(.capsule)
+        #else
         .background(
             Color.kozBonBlue
                 .opacity(0.4)
         )
         .clipShape(.capsule)
+        #endif
         .accessibilityElement(children: .combine)
         .accessibilityLabel(serviceType.name)
+        #if os(iOS) || os(visionOS)
+        .hoverEffect(.lift)
+        #endif
     }
 
     // MARK: - Style

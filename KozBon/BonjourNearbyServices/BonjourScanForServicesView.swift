@@ -23,72 +23,98 @@ struct BonjourScanForServicesView: View {
     }
 
     var body: some View {
-        List {
-            if !viewModel.sortedPublishedServices.isEmpty {
-                Section {
-                    forEach(services: viewModel.sortedPublishedServices)
-                } header: {
-                    Text(verbatim: "Published")
-                        .font(.system(.caption))
+        NavigationSplitView {
+            List(selection: $viewModel.selectedService) {
+                if !viewModel.sortedPublishedServices.isEmpty {
+                    Section {
+                        forEach(services: viewModel.sortedPublishedServices)
+                    } header: {
+                        Text(verbatim: "Published")
+                            .font(.system(.caption))
+                    }
+                }
+
+                if !viewModel.sortedActiveServices.isEmpty {
+                    Section {
+                        forEach(services: viewModel.sortedActiveServices)
+                    } header: {
+                        Text(verbatim: "Nearby " + (viewModel.sortType?.hostOrServiceTitle ?? "Services"))
+                            .font(.system(.caption))
+                    }
                 }
             }
-
-            if !viewModel.sortedActiveServices.isEmpty {
-                Section {
-                    forEach(services: viewModel.sortedActiveServices)
-                } header: {
-                    Text(verbatim: "Nearby " + (viewModel.sortType?.hostOrServiceTitle ?? "Services"))
-                        .font(.system(.caption))
+            .contentMarginsBasedOnSizeClass()
+            .overlay {
+                if self.viewModel.sortedActiveServices.isEmpty {
+                    EmptyStateOverlayView(
+                        image: nil,
+                        title: self.viewModel.noActiveServicesString
+                    )
                 }
             }
-        }
-        .contentMarginsBasedOnSizeClass()
-        .overlay {
-            if self.viewModel.sortedActiveServices.isEmpty {
-                EmptyStateOverlayView(
-                    image: nil,
-                    title: self.viewModel.noActiveServicesString
-                )
-            }
-        }
-        .toolbar {
-            ToolbarItem {
-                BonjourServiceListSortMenu(sortType: self.$viewModel.sortType)
-            }
+            .toolbar {
+                ToolbarItem {
+                    BonjourServiceListSortMenu(sortType: self.$viewModel.sortType)
+                }
 
-            ToolbarItem {
-                Menu {
-                    Button {
-                        viewModel.isBroadcastBonjourServicePresented = true
+                ToolbarItem {
+                    Menu {
+                        Button {
+                            viewModel.isBroadcastBonjourServicePresented = true
+                        } label: {
+                            Label {
+                                Text("Broadcast Bonjour Service")
+                            } icon: {
+                                Image(systemName: "antenna.radiowaves.left.and.right")
+                                    .renderingMode(.template)
+                                    .foregroundColor(.kozBonBlue)
+                            }
+                        }
                     } label: {
                         Label {
-                            Text("Broadcast Bonjour Service")
+                            Text(self.viewModel.createButtonString)
                         } icon: {
-                            Image(systemName: "antenna.radiowaves.left.and.right")
+                            Image.plusCircleFill
                                 .renderingMode(.template)
                                 .foregroundColor(.kozBonBlue)
                         }
                     }
-                } label: {
-                    Label {
-                        Text(self.viewModel.createButtonString)
-                    } icon: {
-                        Image.plusCircleFill
-                            .renderingMode(.template)
-                            .foregroundColor(.kozBonBlue)
+                    .accessibilityLabel("Create")
+                    .accessibilityHint("Create or broadcast a new service")
+                }
+            }
+            #if os(visionOS)
+            .ornament(attachmentAnchor: .scene(.bottom)) {
+                HStack(spacing: 16) {
+                    BonjourServiceListSortMenu(sortType: self.$viewModel.sortType)
+                    Button {
+                        viewModel.isBroadcastBonjourServicePresented = true
+                    } label: {
+                        Label("Broadcast", systemImage: "antenna.radiowaves.left.and.right")
                     }
                 }
-                .accessibilityLabel("Create")
-                .accessibilityHint("Create or broadcast a new service")
+                .padding(12)
+                .glassBackgroundEffect()
             }
-        }
-        .navigationTitle("Nearby services")
-        .refreshable {
-            guard !self.viewModel.serviceScanner.isProcessing else {
-                return
-            }
+            #endif
+            .navigationTitle("Nearby services")
+            .refreshable {
+                guard !self.viewModel.serviceScanner.isProcessing else {
+                    return
+                }
 
-            self.viewModel.serviceScanner.startScan()
+                self.viewModel.serviceScanner.startScan()
+            }
+        } detail: {
+            if let selectedService = viewModel.selectedService {
+                BonjourServiceDetailView(service: selectedService)
+            } else {
+                ContentUnavailableView(
+                    "Select a Service",
+                    systemImage: "antenna.radiowaves.left.and.right",
+                    description: Text("Choose a nearby service to view its details.")
+                )
+            }
         }
         .task {
             if viewModel.isInitialLoad {
@@ -124,9 +150,7 @@ struct BonjourScanForServicesView: View {
     @ViewBuilder
     private func forEach(services: [BonjourService]) -> some View {
         ForEach(services) { service in
-            NavigationLink {
-                BonjourServiceDetailView(service: service)
-            } label: {
+            NavigationLink(value: service) {
                 TitleDetailStackView(
                     title: service.service.name,
                     detail: service.serviceType.name
@@ -134,6 +158,7 @@ struct BonjourScanForServicesView: View {
                     ServiceTypeBadge(serviceType: service.serviceType, style: .iconOnly)
                 }
             }
+            .draggable(service.hostName)
             .accessibilityHint("View details for \(service.service.name)")
             .contextMenu {
                 Button {

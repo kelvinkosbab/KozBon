@@ -46,11 +46,19 @@ struct BlueSectionItemIconTitleDetailView: View {
         }
         .accessibilityElement(children: .combine)
         .padding(.vertical, 10)
+        #if os(visionOS)
+        .listRowBackground(
+            EmptyView()
+                .glassBackgroundEffect()
+                .clipShape(.capsule)
+        )
+        #else
         .listRowBackground(
             Color.kozBonBlue
                 .opacity(0.4)
                 .clipShape(.capsule)
         )
+        #endif
     }
 }
 

@@ -25,6 +25,9 @@ final class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDel
     /// Services that the user has published (broadcast) from this device.
     @Published var customPublishedServices: [BonjourService] = []
 
+    /// The currently selected service in the navigation split view.
+    @Published var selectedService: BonjourService?
+
     /// The current sort order applied to service lists.
     @Published var sortType: BonjourServiceSortType?
 

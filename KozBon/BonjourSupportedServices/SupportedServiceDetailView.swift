@@ -48,6 +48,7 @@ struct SupportedServiceDetailView: View {
                     title: "Name",
                     detail: serviceType.name
                 )
+                .draggable(serviceType.name)
                 .accessibilityHint("Long press to copy name")
                 .contextMenu {
                     Button {
@@ -60,6 +61,7 @@ struct SupportedServiceDetailView: View {
                     title: "Type",
                     detail: serviceType.type
                 )
+                .draggable(serviceType.type)
                 .accessibilityHint("Long press to copy type")
                 .contextMenu {
                     Button {
@@ -76,6 +78,7 @@ struct SupportedServiceDetailView: View {
                     title: "Full type",
                     detail: serviceType.fullType
                 )
+                .draggable(serviceType.fullType)
                 .accessibilityHint("Long press to copy full type")
                 .contextMenu {
                     Button {

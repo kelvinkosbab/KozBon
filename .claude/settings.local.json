@@ -44,7 +44,13 @@
       "Bash(git -C /Users/kelvinkosbab/Projects/Kozinga/KozBon log --oneline -5)",
       "Bash(git add:*)",
       "Bash(git -C /Users/kelvinkosbab/Projects/Kozinga/KozBon status --short)",
-      "Bash(git -C:*)"
+      "Bash(git -C:*)",
+      "Bash(grep -E \"View\\\\.swift$\")",
+      "Bash(xcodebuild -showBuildSettings -scheme KozBon)",
+      "Bash(xcodebuild -scheme KozBon -destination 'platform=macOS' build)",
+      "Bash(xcodebuild -showdestinations -scheme KozBon)",
+      "Bash(xcodebuild -scheme KozBon -destination 'platform=visionOS Simulator,name=Apple Vision Pro' build)",
+      "Bash(gh repo:*)"
     ]
   }
 }

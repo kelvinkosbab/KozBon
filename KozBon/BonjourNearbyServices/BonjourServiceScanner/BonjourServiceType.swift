@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - BonjourServiceType
 
-struct BonjourServiceType: Hashable, Equatable, Sendable {
+struct BonjourServiceType: Hashable, Equatable, Sendable, Codable {
 
     let name: String
     let type: String
