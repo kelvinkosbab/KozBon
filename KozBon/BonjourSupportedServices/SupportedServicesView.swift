@@ -12,7 +12,7 @@ import SwiftUI
 
 struct SupportedServicesView: View {
 
-    @StateObject private var viewModel = ViewModel()
+    @State private var viewModel = ViewModel()
 
     #if os(macOS)
     @Environment(\.openWindow) private var openWindow
@@ -150,14 +150,15 @@ struct SupportedServicesView: View {
     // MARK: - ViewModel
 
     @MainActor
-    final class ViewModel: ObservableObject {
+    @Observable
+    final class ViewModel {
 
-        @Published private var builtInServiceTypes: [BonjourServiceType] = []
-        @Published private var customServiceTypes: [BonjourServiceType] = []
+        private var builtInServiceTypes: [BonjourServiceType] = []
+        private var customServiceTypes: [BonjourServiceType] = []
 
-        @Published var selectedServiceType: BonjourServiceType?
-        @Published var searchText: String = ""
-        @Published var isCreateCustomServiceTypePresented = false {
+        var selectedServiceType: BonjourServiceType?
+        var searchText: String = ""
+        var isCreateCustomServiceTypePresented = false {
             didSet {
                 if !isCreateCustomServiceTypePresented {
                     self.load()

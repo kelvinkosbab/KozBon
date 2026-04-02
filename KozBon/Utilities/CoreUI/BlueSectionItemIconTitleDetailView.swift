@@ -29,17 +29,17 @@ struct BlueSectionItemIconTitleDetailView: View {
         HStack(spacing: 10) {
             if let imageSystemName, !imageSystemName.isEmpty {
                 Image(systemName: imageSystemName)
-                    .font(.system(.title3).bold())
+                    .font(.title3).bold()
                     .accessibilityHidden(true)
             }
 
             VStack(alignment: .leading) {
                 Text(verbatim: title)
-                    .font(.system(.headline).bold())
+                    .font(.headline).bold()
 
                 if let detail {
                     Text(verbatim: detail)
-                        .font(.system(.caption).bold())
+                        .font(.caption).bold()
                 }
             }
             Spacer()

@@ -13,11 +13,11 @@ import CoreUI
 struct BonjourScanForServicesView: View {
 
     @Environment(\.scenePhase) private var scenePhase
-    @StateObject private var viewModel: BonjourServicesViewModel
+    @State private var viewModel: BonjourServicesViewModel
 
     @MainActor
     init(scanner: (any BonjourServiceScannerProtocol)? = nil) {
-        _viewModel = StateObject(wrappedValue: BonjourServicesViewModel(
+        _viewModel = State(initialValue: BonjourServicesViewModel(
             serviceScanner: scanner ?? BonjourServiceScanner.shared
         ))
     }
@@ -30,7 +30,7 @@ struct BonjourScanForServicesView: View {
                         forEach(services: viewModel.sortedPublishedServices)
                     } header: {
                         Text(verbatim: "Published")
-                            .font(.system(.caption))
+                            .font(.caption)
                     }
                 }
 
@@ -39,7 +39,7 @@ struct BonjourScanForServicesView: View {
                         forEach(services: viewModel.sortedActiveServices)
                     } header: {
                         Text(verbatim: "Nearby " + (viewModel.sortType?.hostOrServiceTitle ?? "Services"))
-                            .font(.system(.caption))
+                            .font(.caption)
                     }
                 }
             }

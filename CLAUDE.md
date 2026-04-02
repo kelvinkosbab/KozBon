@@ -16,7 +16,7 @@ xcodebuild test -scheme KozBon -destination 'platform=iOS Simulator,name=iPhone 
 
 ## Architecture
 
-- **Swift 6** with strict concurrency checking (`SWIFT_STRICT_CONCURRENCY = complete`)
+- **Swift 6.2** with strict concurrency checking (`SWIFT_STRICT_CONCURRENCY = complete`)
 - **SwiftUI** with MVVM pattern, targeting iOS 18.6+, macOS 15.6+, tvOS 18.0+, watchOS 11.0+, visionOS 2.0+
 - **Dependency Injection** via `DependencyContainer` using SwiftUI environment (`@Environment(\.dependencies)`)
 - **Core Data** for persistence (`iDiscover.xcdatamodeld`) — all Core Data access is `@MainActor` via `viewContext`
@@ -39,7 +39,7 @@ xcodebuild test -scheme KozBon -destination 'platform=iOS Simulator,name=iPhone 
 - In SwiftUI View body code, do not wrap `@State` mutations in `Task { @MainActor in }` — Views already run on the main actor
 - Use `[weak self]` in `Task` closures that capture `self` with a delay (e.g., `Task.sleep`), to avoid retaining objects past their lifetime
 
-## Swift 6 Strict Concurrency
+## Swift 6.2 Strict Concurrency
 
 ### Core Rules
 
@@ -51,7 +51,7 @@ xcodebuild test -scheme KozBon -destination 'platform=iOS Simulator,name=iPhone 
 
 ### Classes
 
-- **View models**: `@MainActor final class` conforming to `ObservableObject`
+- **View models**: `@MainActor @Observable final class`
 - **Service classes** (scanners, publishers): `@MainActor final class` — implicitly `Sendable`
 - **Core Data** (`MyCoreDataStack`, `MyDataManager`, `CustomServiceType`): `@MainActor` since all access goes through `viewContext`
 - `DependencyContainer`: `final class: Sendable` with `@MainActor init()` for production, nonisolated init for testing

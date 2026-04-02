@@ -11,6 +11,8 @@ import SwiftUI
 
 struct BroadcastBonjourServiceView: View {
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     @Binding private var isPresented: Bool
     @Binding private var customPublishedServices: [BonjourService]
     private var serviceToUpdate: BonjourService
@@ -147,7 +149,7 @@ struct BroadcastBonjourServiceView: View {
             }
         }
         .onChange(of: [serviceType]) {
-            withAnimation {
+            withAnimation(reduceMotion ? nil : .default) {
                 if serviceType != nil {
                     serviceTypeError = nil
                 }
@@ -180,7 +182,7 @@ struct BroadcastBonjourServiceView: View {
             }
         }
         .onChange(of: [port]) {
-            withAnimation {
+            withAnimation(reduceMotion ? nil : .default) {
                 if port != nil {
                     portError = nil
                 }
@@ -209,7 +211,7 @@ struct BroadcastBonjourServiceView: View {
             }
         }
         .onChange(of: [domain]) {
-            withAnimation {
+            withAnimation(reduceMotion ? nil : .default) {
                 if !domain.isEmpty {
                     domainError = nil
                 }
@@ -232,7 +234,7 @@ struct BroadcastBonjourServiceView: View {
                             record.key == dataRecord.key
                         }
                         if let indexToRemove {
-                            _ = withAnimation {
+                            _ = withAnimation(reduceMotion ? nil : .default) {
                                 dataRecords.remove(at: indexToRemove)
                             }
                         }
@@ -260,42 +262,42 @@ struct BroadcastBonjourServiceView: View {
         let transportLayer = selectedTransportLayer
         let domain = domain.trimmed
 
-        withAnimation {
+        withAnimation(reduceMotion ? nil : .default) {
             serviceTypeError = nil
             portError = nil
             domainError = nil
         }
 
         guard let serviceType else {
-            withAnimation {
+            withAnimation(reduceMotion ? nil : .default) {
                 serviceTypeError = "Service type required"
             }
             return
         }
 
         guard let port else {
-            withAnimation {
+            withAnimation(reduceMotion ? nil : .default) {
                 portError = "Port number required"
             }
             return
         }
 
         guard port >= Constants.Network.minimumPort else {
-            withAnimation {
+            withAnimation(reduceMotion ? nil : .default) {
                 portError = "Port number must be at least \(Constants.Network.minimumPort)"
             }
             return
         }
 
         guard port <= Constants.Network.maximumPort else {
-            withAnimation {
+            withAnimation(reduceMotion ? nil : .default) {
                 portError = "Port number must be \(Constants.Network.maximumPort) or less"
             }
             return
         }
 
         guard !domain.isEmpty else {
-            withAnimation {
+            withAnimation(reduceMotion ? nil : .default) {
                 domainError = "Domain is required"
             }
             return
@@ -321,11 +323,11 @@ struct BroadcastBonjourServiceView: View {
 
                 let index = customPublishedServices.firstIndex(of: publishedService)
                 if let index {
-                    withAnimation {
+                    withAnimation(reduceMotion ? nil : .default) {
                         customPublishedServices[index] = publishedService
                     }
                 } else {
-                    withAnimation {
+                    withAnimation(reduceMotion ? nil : .default) {
                         customPublishedServices.append(publishedService)
                     }
                 }

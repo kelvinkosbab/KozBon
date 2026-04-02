@@ -15,27 +15,28 @@ import SwiftUI
 /// Handles starting and stopping scans, tracking discovered services, managing user-published
 /// services, and determining when a foreground refresh is needed based on elapsed time.
 @MainActor
-final class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDelegate {
+@Observable
+final class BonjourServicesViewModel: BonjourServiceScannerDelegate {
 
-    // MARK: - Published Properties
+    // MARK: - Properties
 
     /// All services currently discovered by the scanner.
-    @Published private var activeServices: [BonjourService] = []
+    private var activeServices: [BonjourService] = []
 
     /// Services that the user has published (broadcast) from this device.
-    @Published var customPublishedServices: [BonjourService] = []
+    var customPublishedServices: [BonjourService] = []
 
     /// The currently selected service in the navigation split view.
-    @Published var selectedService: BonjourService?
+    var selectedService: BonjourService?
 
     /// The current sort order applied to service lists.
-    @Published var sortType: BonjourServiceSortType?
+    var sortType: BonjourServiceSortType?
 
     /// An error message to display when a scan operation fails.
-    @Published var scanError: String?
+    var scanError: String?
 
     /// Whether the broadcast service sheet is currently presented.
-    @Published var isBroadcastBonjourServicePresented = false {
+    var isBroadcastBonjourServicePresented = false {
         didSet {
             if !isBroadcastBonjourServicePresented {
                 Task {

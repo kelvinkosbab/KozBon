@@ -12,7 +12,7 @@ import SwiftUI
 struct SelectServiceTypeView: View {
 
     @Binding var selectedServiceType: BonjourServiceType?
-    @StateObject private var viewModel = ViewModel()
+    @State private var viewModel = ViewModel()
 
     init(selectedServiceType: Binding<BonjourServiceType?>) {
         self._selectedServiceType = selectedServiceType
@@ -45,7 +45,7 @@ struct SelectServiceTypeView: View {
                                 detail: serviceType.fullType
                             ) {
                                 Image(systemName: selectedServiceType == serviceType ? "checkmark.circle.fill" : "circle")
-                                    .font(.system(.body).bold())
+                                    .font(.body).bold()
                                     .foregroundStyle(selectedServiceType == serviceType ? Color.kozBonBlue : .secondary)
                                     .accessibilityHidden(true)
                             }
@@ -72,7 +72,7 @@ struct SelectServiceTypeView: View {
                                 detail: serviceType.fullType
                             ) {
                                 Image(systemName: selectedServiceType == serviceType ? "checkmark.circle.fill" : "circle")
-                                    .font(.system(.body).bold())
+                                    .font(.body).bold()
                                     .foregroundStyle(selectedServiceType == serviceType ? Color.kozBonBlue : .secondary)
                                     .accessibilityHidden(true)
                             }
@@ -98,12 +98,13 @@ struct SelectServiceTypeView: View {
     // MARK: - ViewModel
 
     @MainActor
-    final class ViewModel: ObservableObject {
+    @Observable
+    final class ViewModel {
 
-        @Published private var builtInServiceTypes: [BonjourServiceType] = []
-        @Published private var customServiceTypes: [BonjourServiceType] = []
+        private var builtInServiceTypes: [BonjourServiceType] = []
+        private var customServiceTypes: [BonjourServiceType] = []
 
-        @Published var searchText: String = ""
+        var searchText: String = ""
 
         var filteredBuiltInServiceTypes: [BonjourServiceType] {
             if searchText.isEmpty {

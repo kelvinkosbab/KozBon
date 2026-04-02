@@ -12,15 +12,16 @@ import SwiftUI
 struct BonjourServiceDetailView: View {
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    @StateObject private var viewModel: ViewModel
+    @State private var viewModel: ViewModel
 
     init(service: BonjourService) {
         self.init(viewModel: ViewModel(service: service))
     }
 
     init(viewModel: ViewModel) {
-        self._viewModel = StateObject(wrappedValue: viewModel)
+        self._viewModel = State(initialValue: viewModel)
     }
 
     var body: some View {
@@ -32,12 +33,12 @@ struct BonjourServiceDetailView: View {
                     detail: viewModel.serviceType.name
                 )
                 .onAppear {
-                    withAnimation {
+                    withAnimation(reduceMotion ? nil : .default) {
                         viewModel.isNavigationHeaderShown = false
                     }
                 }
                 .onDisappear {
-                    withAnimation {
+                    withAnimation(reduceMotion ? nil : .default) {
                         viewModel.isNavigationHeaderShown = true
                     }
                 }
@@ -149,14 +150,15 @@ struct BonjourServiceDetailView: View {
     // MARK: - ViewModel
 
     @MainActor
-    final class ViewModel: ObservableObject, MyNetServiceDelegate {
+    @Observable
+    final class ViewModel: MyNetServiceDelegate {
 
         let service: BonjourService
         let serviceType: BonjourServiceType
 
-        @Published private(set) var addresses: [InternetAddress] = []
-        @Published private(set) var dataRecords: [BonjourService.TxtDataRecord] = []
-        @Published var isNavigationHeaderShown = false
+        private(set) var addresses: [InternetAddress] = []
+        private(set) var dataRecords: [BonjourService.TxtDataRecord] = []
+        var isNavigationHeaderShown = false
 
         init(service: BonjourService) {
             self.service = service

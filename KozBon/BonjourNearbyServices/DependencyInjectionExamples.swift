@@ -212,8 +212,9 @@ struct ExampleDirectInjectionView: View {
 // MARK: - Example ViewModel with Injection
 
 @MainActor
-final class ExampleViewModel: ObservableObject {
-    @Published var isScanning = false
+@Observable
+final class ExampleViewModel {
+    var isScanning = false
 
     private let scanner: any BonjourServiceScannerProtocol
     private let publishManager: any BonjourPublishManagerProtocol
@@ -240,16 +241,16 @@ final class ExampleViewModel: ObservableObject {
 // MARK: - Example View with ViewModel Injection
 
 struct ExampleViewModelInjectionView: View {
-    @StateObject private var viewModel: ExampleViewModel
+    @State private var viewModel: ExampleViewModel
 
     // Default initializer
     init() {
-        _viewModel = StateObject(wrappedValue: ExampleViewModel())
+        _viewModel = State(initialValue: ExampleViewModel())
     }
 
     // Injection initializer for testing/customization
     init(scanner: BonjourServiceScannerProtocol, publishManager: BonjourPublishManagerProtocol) {
-        _viewModel = StateObject(wrappedValue: ExampleViewModel(
+        _viewModel = State(initialValue: ExampleViewModel(
             scanner: scanner,
             publishManager: publishManager
         ))

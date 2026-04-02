@@ -12,6 +12,8 @@ import SwiftUI
 
 struct CreateOrUpdateBonjourServiceTypeView: View {
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     @Binding private var isPresented: Bool
     @Binding private var serviceTypeToUpdate: BonjourServiceType
 
@@ -45,8 +47,8 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
     ) {
         self._isPresented = isPresented
         self.name = serviceToUpdate.wrappedValue.name
-        self.type = serviceToUpdate.wrappedValue.name
-        self.details = serviceToUpdate.wrappedValue.name
+        self.type = serviceToUpdate.wrappedValue.type
+        self.details = serviceToUpdate.wrappedValue.detail ?? ""
         self._serviceTypeToUpdate = serviceToUpdate
         self.isCreatingBonjourService = false
     }
@@ -56,17 +58,22 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
             List {
                 Section {
                     TextField("Service name", text: $name)
+                        .accessibilityLabel("Service name")
+                        .accessibilityHint("Enter a display name for this service type")
                 } header: {
                     Text("Service name")
                 } footer: {
                     if let nameError {
                         Text(verbatim: nameError)
                             .foregroundStyle(.red)
+                            .accessibilityLabel("Error: \(nameError)")
                     }
                 }
 
                 Section {
                     TextField("Type definition", text: $type)
+                        .accessibilityLabel("Bonjour type")
+                        .accessibilityHint("Enter the Bonjour type identifier, for example http or ssh")
                         .disabled(!isCreatingBonjourService)
                         .disableAutocorrection(true)
                         #if !os(macOS)
@@ -81,10 +88,12 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                     if let typeError, type.isEmpty {
                         Text(verbatim: typeError)
                             .foregroundStyle(.red)
+                            .accessibilityLabel("Error: \(typeError)")
 
                     } else if let typeError, !type.isEmpty {
                         Text(verbatim: "\(fullType) · \(typeError)")
                             .foregroundStyle(.red)
+                            .accessibilityLabel("Error: \(typeError) for \(fullType)")
 
                     } else if !type.isEmpty {
                         Text(verbatim: fullType)
@@ -98,6 +107,8 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
 
                 Section {
                     TextField("Additional information", text: $details)
+                        .accessibilityLabel("Additional details")
+                        .accessibilityHint("Enter a description of this service type")
                         .onSubmit {
                             doneButtonSelected()
                         }
@@ -107,6 +118,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                     if let detailsError {
                         Text(verbatim: detailsError)
                             .foregroundStyle(.red)
+                            .accessibilityLabel("Error: \(detailsError)")
                     }
                 }
             }
@@ -135,7 +147,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                 }
             }
             .onChange(of: [name, type, details]) {
-                withAnimation {
+                withAnimation(reduceMotion ? nil : .default) {
                     if !name.trimmed.isEmpty {
                         nameError = nil
                     }
@@ -163,47 +175,37 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
         let type = type.trimmed
         let details = details.trimmed
 
-        Task { @MainActor in
-            withAnimation {
-                nameError = nil
-                typeError = nil
-                detailsError = nil
-            }
+        withAnimation(reduceMotion ? nil : .default) {
+            nameError = nil
+            typeError = nil
+            detailsError = nil
         }
 
         guard !name.isEmpty else {
-            Task { @MainActor in
-                withAnimation {
-                    nameError = "Name required"
-                }
+            withAnimation(reduceMotion ? nil : .default) {
+                nameError = "Name required"
             }
             return
         }
 
         guard !type.isEmpty else {
-            Task { @MainActor in
-                withAnimation {
-                    typeError = "Type required"
-                }
+            withAnimation(reduceMotion ? nil : .default) {
+                typeError = "Type required"
             }
             return
         }
 
         guard !details.isEmpty else {
-            Task { @MainActor in
-                withAnimation {
-                    detailsError = "Details required"
-                }
+            withAnimation(reduceMotion ? nil : .default) {
+                detailsError = "Details required"
             }
             return
         }
 
         if isCreatingBonjourService {
             guard !BonjourServiceType.exists(type: type, transportLayer: transportLayer) else {
-                Task { @MainActor in
-                    withAnimation {
-                        typeError = "Already Exists"
-                    }
+                withAnimation(reduceMotion ? nil : .default) {
+                    typeError = "Already Exists"
                 }
                 return
             }
@@ -221,9 +223,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
         // Save a persistent copy of the service type
         serviceType.savePersistentCopy()
 
-        Task { @MainActor in
-            serviceTypeToUpdate = serviceType
-            isPresented = false
-        }
+        serviceTypeToUpdate = serviceType
+        isPresented = false
     }
 }

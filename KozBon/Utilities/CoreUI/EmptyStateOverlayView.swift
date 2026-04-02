@@ -26,7 +26,7 @@ struct EmptyStateOverlayView: View {
                     .accessibilityHidden(true)
             }
             Text(self.title)
-                .font(.system(.headline).bold())
+                .font(.headline).bold()
                 .foregroundStyle(.primary)
                 .multilineTextAlignment(.center)
         }

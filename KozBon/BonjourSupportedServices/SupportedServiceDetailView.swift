@@ -13,6 +13,7 @@ struct SupportedServiceDetailView: View {
 
     @Environment(\.dismiss) var dismiss
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     init(serviceType: BonjourServiceType) {
         self.serviceType = serviceType
@@ -32,12 +33,12 @@ struct SupportedServiceDetailView: View {
                     detail: serviceType.fullType
                 )
                 .onAppear {
-                    withAnimation {
+                    withAnimation(reduceMotion ? nil : .default) {
                         isNavigationHeaderShown = false
                     }
                 }
                 .onDisappear {
-                    withAnimation {
+                    withAnimation(reduceMotion ? nil : .default) {
                         isNavigationHeaderShown = true
                     }
                 }
@@ -64,7 +65,7 @@ struct SupportedServiceDetailView: View {
                         HStack {
                             Spacer()
                             Text("Edit")
-                                .font(.system(.headline).bold())
+                                .font(.headline).bold()
                                 .padding(.vertical)
                             Spacer()
                         }
@@ -91,7 +92,7 @@ struct SupportedServiceDetailView: View {
                         HStack {
                             Spacer()
                             Text("Delete")
-                                .font(.system(.headline).bold())
+                                .font(.headline).bold()
                                 .padding(.vertical)
                             Spacer()
                         }

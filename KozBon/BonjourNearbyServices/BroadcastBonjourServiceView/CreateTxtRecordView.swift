@@ -11,6 +11,8 @@ import SwiftUI
 
 struct CreateTxtRecordView: View {
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     @Binding private var isPresented: Bool
     @Binding private var txtDataRecords: [BonjourService.TxtDataRecord]
     private let txtRecordToUpdate: BonjourService.TxtDataRecord?
@@ -112,7 +114,7 @@ struct CreateTxtRecordView: View {
                 }
             }
             .onChange(of: [key, value]) {
-                withAnimation {
+                withAnimation(reduceMotion ? nil : .default) {
                     if keyError != nil {
                         keyError = nil
                     }
@@ -130,20 +132,20 @@ struct CreateTxtRecordView: View {
         let key = key.trimmed
         let value = value.trimmed
 
-        withAnimation {
+        withAnimation(reduceMotion ? nil : .default) {
             keyError = nil
             valueError = nil
         }
 
         guard !key.isEmpty else {
-            withAnimation {
+            withAnimation(reduceMotion ? nil : .default) {
                 keyError = "TXT record key required"
             }
             return
         }
 
         guard !value.isEmpty else {
-            withAnimation {
+            withAnimation(reduceMotion ? nil : .default) {
                 valueError = "TXT record value required"
             }
             return
@@ -152,13 +154,13 @@ struct CreateTxtRecordView: View {
         // Check for duplicate key (unless we're updating the same record)
         let isDuplicate = txtDataRecords.contains { $0.key == key }
         guard txtRecordToUpdate != nil || !isDuplicate else {
-            withAnimation {
+            withAnimation(reduceMotion ? nil : .default) {
                 keyError = "A record with this key already exists"
             }
             return
         }
 
-        withAnimation {
+        withAnimation(reduceMotion ? nil : .default) {
             let newRecord = BonjourService.TxtDataRecord(key: key, value: value)
             let oldIndex = txtDataRecords.firstIndex { $0.key == txtRecordToUpdate?.key }
             if let oldIndex {
