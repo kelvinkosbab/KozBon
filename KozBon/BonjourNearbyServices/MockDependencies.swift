@@ -44,6 +44,10 @@ final class MockBonjourServiceScanner: BonjourServiceScannerProtocol {
         delegate?.didReset()
     }
 
+    func simulateError(_ description: String) {
+        delegate?.didFailWithError(description: description)
+    }
+
     func reset() {
         startScanCallCount = 0
         stopScanCallCount = 0

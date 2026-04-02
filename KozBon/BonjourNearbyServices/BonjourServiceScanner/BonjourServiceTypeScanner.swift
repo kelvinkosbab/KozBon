@@ -83,6 +83,7 @@ final class BonjourServiceTypeScanner: NSObject, @preconcurrency NetServiceBrows
     ) {
         self.logger.error("Did not search", censored: "type=\(serviceType.fullType) and domain='\(domain)' with error=\(errorDict)")
         self.state = .stopped
+        self.delegate?.didFailWithError(description: "Failed to search for \(serviceType.name) services")
     }
 
     func netServiceBrowser(

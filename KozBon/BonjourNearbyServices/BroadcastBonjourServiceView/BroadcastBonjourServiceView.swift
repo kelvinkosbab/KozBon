@@ -302,7 +302,7 @@ struct BroadcastBonjourServiceView: View {
                 isPresented = false
 
             } catch {
-                serviceTypeError = "Something happened. Try again..."
+                serviceTypeError = "Failed to publish service: \(error.localizedDescription)"
             }
         }
     }

@@ -10,7 +10,7 @@ import Core
 import CoreData
 
 @MainActor
-final class MyCoreDataStack: NSObject {
+final class MyCoreDataStack {
 
     private let logger = Logger(category: "MyCoreDataStack")
 
@@ -18,23 +18,7 @@ final class MyCoreDataStack: NSObject {
 
   static let shared = MyCoreDataStack()
 
-  private override init() {
-    super.init()
-
-    NotificationCenter.default.addObserver(
-        self, selector: #selector(self.contextWillSave(_:)),
-        name: .NSManagedObjectContextWillSave, object: nil)
-    NotificationCenter.default.addObserver(
-        self, selector: #selector(self.contextDidSave(_:)),
-        name: .NSManagedObjectContextDidSave, object: nil)
-    NotificationCenter.default.addObserver(
-        self, selector: #selector(self.contextObjectsDidChange(_:)),
-        name: .NSManagedObjectContextObjectsDidChange, object: nil)
-  }
-
-  deinit {
-    NotificationCenter.default.removeObserver(self)
-  }
+  private init() {}
 
   // MARK: - Store Properties
 
@@ -67,22 +51,6 @@ final class MyCoreDataStack: NSObject {
     })
     return container
   }()
-
-  // MARK: - Context Notifications
-
-  @objc private func contextWillSave(_ notification: Notification) {
-      logger.debug("Context will save")
-  }
-
-  @objc private func contextDidSave(_ notification: Notification) {
-    if notification.object is NSManagedObjectContext {
-        logger.debug("Context did save")
-    }
-  }
-
-  @objc private func contextObjectsDidChange(_ notification: Notification) {
-      logger.debug("Objects did change")
-  }
 
   // MARK: - Managed Object Context
 

@@ -31,6 +31,9 @@ final class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDel
     /// The current sort order applied to service lists.
     @Published var sortType: BonjourServiceSortType?
 
+    /// An error message to display when a scan operation fails.
+    @Published var scanError: String?
+
     /// Whether the broadcast service sheet is currently presented.
     @Published var isBroadcastBonjourServicePresented = false {
         didSet {
@@ -52,31 +55,8 @@ final class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDel
                 service.serviceType.fullType == publishedSevice.serviceType.fullType
             }
         }
-
-        switch sortType {
-        case .hostNameAsc:
-            return publishedServices.sorted { service1, service2 -> Bool in
-                service1.service.name < service2.service.name
-            }
-
-        case .hostNameDesc:
-            return publishedServices.sorted { service1, service2 -> Bool in
-                service1.service.name > service2.service.name
-            }
-
-        case .serviceNameAsc:
-            return publishedServices.sorted { service1, service2 -> Bool in
-                service1.serviceType.name < service2.serviceType.name
-            }
-
-        case .serviceNameDesc:
-            return publishedServices.sorted { service1, service2 -> Bool in
-                service1.serviceType.name > service2.serviceType.name
-            }
-
-        default:
-            return publishedServices
-        }
+        guard let sortType else { return publishedServices }
+        return sortType.sorted(publishedServices)
     }
 
     /// Active services excluding user-published ones, sorted by the current `sortType`.
@@ -87,31 +67,8 @@ final class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDel
                 service.serviceType.fullType == publishedSevice.serviceType.fullType
             }
         }
-
-        switch sortType {
-        case .hostNameAsc:
-            return nonPublishedServices.sorted { service1, service2 -> Bool in
-                service1.service.name < service2.service.name
-            }
-
-        case .hostNameDesc:
-            return nonPublishedServices.sorted { service1, service2 -> Bool in
-                service1.service.name > service2.service.name
-            }
-
-        case .serviceNameAsc:
-            return nonPublishedServices.sorted { service1, service2 -> Bool in
-                service1.serviceType.name < service2.serviceType.name
-            }
-
-        case .serviceNameDesc:
-            return nonPublishedServices.sorted { service1, service2 -> Bool in
-                service1.serviceType.name > service2.serviceType.name
-            }
-
-        default:
-            return nonPublishedServices
-        }
+        guard let sortType else { return nonPublishedServices }
+        return sortType.sorted(nonPublishedServices)
     }
 
     // MARK: - State
@@ -214,6 +171,13 @@ final class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDel
     func didReset() {
         withAnimation {
             self.activeServices = []
+        }
+    }
+
+    /// Called when the scanner encounters an error during service discovery.
+    func didFailWithError(description: String) {
+        withAnimation {
+            self.scanError = description
         }
     }
 }

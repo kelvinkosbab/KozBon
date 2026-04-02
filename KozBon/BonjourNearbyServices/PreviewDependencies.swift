@@ -143,7 +143,7 @@ extension DependencyContainer {
     // Configure mock to simulate finding services
     Task {
         // Simulate delay
-        try? await Task.sleep(nanoseconds: 1_000_000_000)
+        try? await Task.sleep(for: .seconds(1))
 
         let serviceType = BonjourServiceType(
             name: "Test Service",

@@ -46,7 +46,7 @@
 		F67B65622C22169800324FFF /* SupportedServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B65612C22169800324FFF /* SupportedServicesView.swift */; };
 		F67B65642C22270000324FFF /* SupportedServiceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B65632C22270000324FFF /* SupportedServiceDetailView.swift */; };
 		F67B65682C29E52B00324FFF /* BonjourService+TxtDataRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B65672C29E52B00324FFF /* BonjourService+TxtDataRecord.swift */; };
-		F67B656A2C29EACA00324FFF /* BonjourService+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67B65692C29EACA00324FFF /* BonjourService+Notification.swift */; };
+
 		F690B5FB2561E9B600902DAB /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F690B5FA2561E9B600902DAB /* NetworkExtension.framework */; };
 		F69E826E2AABA4CA006AA4D3 /* BonjourServicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69E826D2AABA4CA006AA4D3 /* BonjourServicesViewModel.swift */; };
 		F69E82702AABA6B4006AA4D3 /* BonjourServiceSortType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69E826F2AABA6B4006AA4D3 /* BonjourServiceSortType.swift */; };
@@ -129,7 +129,7 @@
 		F67B65612C22169800324FFF /* SupportedServicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedServicesView.swift; sourceTree = "<group>"; };
 		F67B65632C22270000324FFF /* SupportedServiceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedServiceDetailView.swift; sourceTree = "<group>"; };
 		F67B65672C29E52B00324FFF /* BonjourService+TxtDataRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BonjourService+TxtDataRecord.swift"; sourceTree = "<group>"; };
-		F67B65692C29EACA00324FFF /* BonjourService+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BonjourService+Notification.swift"; sourceTree = "<group>"; };
+
 		F690B5FA2561E9B600902DAB /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		F69E826D2AABA4CA006AA4D3 /* BonjourServicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServicesViewModel.swift; sourceTree = "<group>"; };
 		F69E826F2AABA6B4006AA4D3 /* BonjourServiceSortType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServiceSortType.swift; sourceTree = "<group>"; };
@@ -248,7 +248,7 @@
 			children = (
 				B6CE1D591E120CCC003D4FFA /* BonjourService.swift */,
 				F67B65672C29E52B00324FFF /* BonjourService+TxtDataRecord.swift */,
-				F67B65692C29EACA00324FFF /* BonjourService+Notification.swift */,
+
 				F69E82712AABA7E5006AA4D3 /* BonjourServiceBrowserState.swift */,
 				B6CE1D571E120CCC003D4FFA /* BonjourServiceScanner.swift */,
 				B6CE1D5B1E120CCC003D4FFA /* BonjourServiceType.swift */,
@@ -524,7 +524,7 @@
 				F67B65392C1B5CB700324FFF /* BonjourServiceDetailView.swift in Sources */,
 				F661AD9F2C2CD20800779621 /* SelectServiceTypeView.swift in Sources */,
 				B6CE1D561E120BF4003D4FFA /* MyDataManager.swift in Sources */,
-				F67B656A2C29EACA00324FFF /* BonjourService+Notification.swift in Sources */,
+
 				F69E82742AABA8A5006AA4D3 /* TransportLayer.swift in Sources */,
 				F6CA76602F3690EF0036BE3B /* DependencyInjectionExamples.swift in Sources */,
 				B679CC171E1647670056C7B5 /* MyBonjourPublishManager.swift in Sources */,

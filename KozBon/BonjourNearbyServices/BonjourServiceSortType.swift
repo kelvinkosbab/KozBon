@@ -94,6 +94,26 @@ enum BonjourServiceSortType: Identifiable, CaseIterable {
         }
     }
 
+    // MARK: - Sorting
+
+    /// Sorts the given array of Bonjour services according to this sort option.
+    ///
+    /// - Parameter services: The services to sort.
+    /// - Returns: A new array sorted by this option's criteria.
+    @MainActor
+    func sorted(_ services: [BonjourService]) -> [BonjourService] {
+        switch self {
+        case .hostNameAsc:
+            services.sorted { $0.service.name < $1.service.name }
+        case .hostNameDesc:
+            services.sorted { $0.service.name > $1.service.name }
+        case .serviceNameAsc:
+            services.sorted { $0.serviceType.name < $1.serviceType.name }
+        case .serviceNameDesc:
+            services.sorted { $0.serviceType.name > $1.serviceType.name }
+        }
+    }
+
     /// A localized, user-facing title describing the sort option, suitable for menus and section headers.
     ///
     /// These strings are intended for direct presentation in the UI, such as in

@@ -15,6 +15,7 @@ protocol BonjourServiceScannerDelegate: AnyObject, Sendable {
     func didAdd(service: BonjourService)
     func didRemove(service: BonjourService)
     func didReset()
+    func didFailWithError(description: String)
 }
 
 // MARK: - BonjourServiceScanner
@@ -123,5 +124,9 @@ final class BonjourServiceScanner: BonjourServiceScannerDelegate {
     func didReset() {
         self.services.removeAll()
         self.delegate?.didReset()
+    }
+
+    func didFailWithError(description: String) {
+        self.delegate?.didFailWithError(description: description)
     }
 }

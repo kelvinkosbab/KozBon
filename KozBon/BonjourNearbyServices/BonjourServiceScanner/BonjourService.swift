@@ -67,9 +67,8 @@ final class BonjourService: NSObject, @preconcurrency NetServiceDelegate {
         self.isResolving = false
         self.isPublishing = false
         self.didStop = didStop
-        self.completedAddressResolution = nil
-        self.publishServiceSuccess = nil
-        self.publishServiceFailure = nil
+        self.resolveAddressContinuation = nil
+        self.publishContinuation = nil
         self.service.stop()
     }
 
@@ -77,7 +76,6 @@ final class BonjourService: NSObject, @preconcurrency NetServiceDelegate {
 
     func netServiceDidStop(_ sender: NetService) {
         logger.debug("Service did stop", censored: "\(sender)")
-        NotificationCenter.default.post(name: .netServiceDidStop, object: self)
         self.isStopping = false
         self.didStop?()
         self.didStop = nil
@@ -86,13 +84,21 @@ final class BonjourService: NSObject, @preconcurrency NetServiceDelegate {
     // MARK: - Resolving Address
 
     private(set) var isResolving: Bool = false
-    private var completedAddressResolution: (() -> Void)?
+    private var resolveAddressContinuation: CheckedContinuation<Void, Never>?
 
-    func resolve(completedAddressResolution: (() -> Void)? = nil) {
+    func resolve() {
         self.isResolving = true
-        self.completedAddressResolution = completedAddressResolution
         self.service.resolve(withTimeout: 10.0)
         self.startMonitoring()
+    }
+
+    func resolveAddresses() async {
+        await withCheckedContinuation { continuation in
+            self.resolveAddressContinuation = continuation
+            self.isResolving = true
+            self.service.resolve(withTimeout: 10.0)
+            self.startMonitoring()
+        }
     }
 
     // MARK: - NetServiceDelegate - Resolving Address
@@ -100,55 +106,51 @@ final class BonjourService: NSObject, @preconcurrency NetServiceDelegate {
     func netServiceDidResolveAddress(_ sender: NetService) {
         logger.debug("Service did resolve address", censored: "\(sender) with hostname \(self.hostName)")
         self.addresses = sender.parseInternetAddresses()
-        NotificationCenter.default.post(name: .netServiceResolveAddressComplete, object: self)
         delegate?.serviceDidResolveAddress(self)
-        completedAddressResolution?()
-        completedAddressResolution = nil
         isResolving = false
+        resolveAddressContinuation?.resume()
+        resolveAddressContinuation = nil
     }
 
     func netService(_ sender: NetService, didNotResolve errorDict: [String: NSNumber]) {
         logger.debug("Service did not resolve address", censored: "\(sender) with errorDict \(errorDict)")
-        NotificationCenter.default.post(name: .netServiceResolveAddressComplete, object: self)
         self.delegate?.serviceDidResolveAddress(self)
-        self.completedAddressResolution?()
-        self.completedAddressResolution = nil
         self.isResolving = false
+        self.resolveAddressContinuation?.resume()
+        self.resolveAddressContinuation = nil
     }
 
     // MARK: - Publishing Service
 
     private(set) var isPublishing: Bool = false
-    private var publishServiceSuccess: (() -> Void)?
-    private var publishServiceFailure: ((_ error: Error) -> Void)?
+    private var publishContinuation: CheckedContinuation<Void, any Error>?
 
-    func publish(
-        publishServiceSuccess: @escaping () -> Void,
-        publishServiceFailure: @escaping (_ error: Error) -> Void
-    ) {
-        self.isPublishing = true
-        self.publishServiceSuccess = publishServiceSuccess
-        self.publishServiceFailure = publishServiceFailure
-        self.service.publish()
+    func publishService() async throws {
+        try await withCheckedThrowingContinuation { continuation in
+            self.publishContinuation = continuation
+            self.isPublishing = true
+            self.service.publish()
+        }
     }
 
-    func unPublish(completion: (() -> Void)? = nil) {
-        self.stop { [weak self] in
-            Task { @MainActor in
-                try? await Task.sleep(for: .milliseconds(500))
-                NotificationCenter.default.post(name: .netServiceDidUnPublish, object: self)
-                completion?()
+    func unPublish() async {
+        await withCheckedContinuation { continuation in
+            self.stop {
+                Task { @MainActor in
+                    try? await Task.sleep(for: .milliseconds(500))
+                    continuation.resume()
+                }
             }
         }
     }
 
-    // MARK: - Publishing Service
+    // MARK: - NetServiceDelegate - Publishing
 
     func netServiceWillPublish(_ sender: NetService) {
         logger.debug("Service will publish", censored: "\(sender)")
 
         // For some reason the `didPublish` callback isn't being called. This is a temp hack
-        // to allow for the completion handlers to return after a short delay
+        // to allow for the continuation to resume after a short delay
         Task { @MainActor [weak self] in
             try? await Task.sleep(for: .milliseconds(500))
             self?.netServiceDidPublish(sender)
@@ -157,20 +159,16 @@ final class BonjourService: NSObject, @preconcurrency NetServiceDelegate {
 
     func netServiceDidPublish(_ sender: NetService) {
         logger.debug("Service did publish", censored: "\(sender)")
-        self.publishServiceSuccess?()
-        self.publishServiceSuccess = nil
-        self.publishServiceFailure = nil
         self.isPublishing = false
-        NotificationCenter.default.post(name: .netServiceDidPublish, object: self)
+        self.publishContinuation?.resume()
+        self.publishContinuation = nil
     }
 
     func netService(_ sender: NetService, didNotPublish errorDict: [String: NSNumber]) {
         logger.error("Service did not publish", censored: "\(sender) with errorDict \(errorDict)")
-        self.publishServiceFailure?(PublishError.didNotPublish)
-        self.publishServiceSuccess = nil
-        self.publishServiceFailure = nil
         self.isPublishing = false
-        NotificationCenter.default.post(name: .netServiceDidNotPublish, object: self)
+        self.publishContinuation?.resume(throwing: PublishError.didNotPublish)
+        self.publishContinuation = nil
     }
 
     // MARK: - NetServiceDelegate - TXT Records

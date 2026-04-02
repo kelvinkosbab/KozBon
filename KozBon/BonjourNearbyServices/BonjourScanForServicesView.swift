@@ -136,6 +136,17 @@ struct BonjourScanForServicesView: View {
                 break
             }
         }
+        .alert(
+            "Scan Error",
+            isPresented: Binding(
+                get: { viewModel.scanError != nil },
+                set: { if !$0 { viewModel.scanError = nil } }
+            )
+        ) {
+            Button("OK") { viewModel.scanError = nil }
+        } message: {
+            Text(viewModel.scanError ?? "")
+        }
         .sheet(isPresented: $viewModel.isBroadcastBonjourServicePresented) {
             NavigationStack {
                 BroadcastBonjourServiceView(

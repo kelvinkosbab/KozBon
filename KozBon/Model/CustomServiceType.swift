@@ -21,6 +21,7 @@ extension CustomServiceType: MyDataManagerObject {
 
   // MARK: - MyDataManagerObject
 
+  // NSSortDescriptor is not Sendable, but this static is always nil and immutable
   nonisolated(unsafe) static let sortDescriptors: [NSSortDescriptor]? = nil
 
   // MARK: - Properties

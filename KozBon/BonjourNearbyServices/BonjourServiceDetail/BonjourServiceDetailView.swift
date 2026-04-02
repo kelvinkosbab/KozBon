@@ -149,7 +149,7 @@ struct BonjourServiceDetailView: View {
     // MARK: - ViewModel
 
     @MainActor
-    final class ViewModel: ObservableObject {
+    final class ViewModel: ObservableObject, MyNetServiceDelegate {
 
         let service: BonjourService
         let serviceType: BonjourServiceType
@@ -161,29 +161,12 @@ struct BonjourServiceDetailView: View {
         init(service: BonjourService) {
             self.service = service
             serviceType = service.serviceType
-
-            NotificationCenter.default.addObserver(
-                self,
-                selector: #selector(self.reloadAddressesAndTxtRecords),
-                name: .netServiceResolveAddressComplete,
-                object: service
-            )
-            NotificationCenter.default.addObserver(
-                self,
-                selector: #selector(self.reloadAddressesAndTxtRecords),
-                name: .netServiceDidPublish,
-                object: service
-            )
-            NotificationCenter.default.addObserver(
-                self,
-                selector: #selector(self.reloadAddressesAndTxtRecords),
-                name: .netServiceDidUnPublish,
-                object: service
-            )
+            service.delegate = self
         }
 
-        @objc
-        private func reloadAddressesAndTxtRecords() {
+        // MARK: - MyNetServiceDelegate
+
+        func serviceDidResolveAddress(_ service: BonjourService) {
             withAnimation {
                 self.addresses = service.addresses
                 self.dataRecords = service.dataRecords
