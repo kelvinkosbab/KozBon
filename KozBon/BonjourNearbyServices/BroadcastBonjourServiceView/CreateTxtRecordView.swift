@@ -130,43 +130,44 @@ struct CreateTxtRecordView: View {
         let key = key.trimmed
         let value = value.trimmed
 
-        Task { @MainActor in
-            withAnimation {
-                keyError = nil
-                valueError = nil
-            }
+        withAnimation {
+            keyError = nil
+            valueError = nil
         }
 
-        guard !key.trimmed.isEmpty else {
-            Task { @MainActor in
-                withAnimation {
-                    keyError = "TXT record key required"
-                }
+        guard !key.isEmpty else {
+            withAnimation {
+                keyError = "TXT record key required"
             }
             return
         }
 
-        guard !value.trimmed.isEmpty else {
-            Task { @MainActor in
-                withAnimation {
-                    valueError = "TXT record value required"
-                }
+        guard !value.isEmpty else {
+            withAnimation {
+                valueError = "TXT record value required"
             }
             return
         }
 
-        Task { @MainActor in
+        // Check for duplicate key (unless we're updating the same record)
+        let isDuplicate = txtDataRecords.contains { $0.key == key }
+        guard txtRecordToUpdate != nil || !isDuplicate else {
             withAnimation {
-                let newRecord = BonjourService.TxtDataRecord(key: key, value: value)
-                let oldIndex = txtDataRecords.firstIndex { $0.key == txtRecordToUpdate?.key }
-                if let oldIndex {
-                    txtDataRecords[oldIndex] = newRecord
-                } else {
-                    txtDataRecords.append(newRecord)
-                }
-
-                isPresented = false
+                keyError = "A record with this key already exists"
             }
+            return
+        }
+
+        withAnimation {
+            let newRecord = BonjourService.TxtDataRecord(key: key, value: value)
+            let oldIndex = txtDataRecords.firstIndex { $0.key == txtRecordToUpdate?.key }
+            if let oldIndex {
+                txtDataRecords[oldIndex] = newRecord
+            } else {
+                txtDataRecords.append(newRecord)
+            }
+
+            isPresented = false
         }
     }
 }

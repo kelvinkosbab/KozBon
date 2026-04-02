@@ -44,62 +44,15 @@ struct SupportedServiceDetailView: View {
             }
 
             Section {
-                TitleDetailStackView(
-                    title: "Name",
-                    detail: serviceType.name
-                )
-                .draggable(serviceType.name)
-                .accessibilityHint("Long press to copy name")
-                .contextMenu {
-                    Button {
-                        Clipboard.copy(serviceType.name)
-                    } label: {
-                        Label("Copy Name", systemImage: "doc.on.doc")
-                    }
-                }
-                TitleDetailStackView(
-                    title: "Type",
-                    detail: serviceType.type
-                )
-                .draggable(serviceType.type)
-                .accessibilityHint("Long press to copy type")
-                .contextMenu {
-                    Button {
-                        Clipboard.copy(serviceType.type)
-                    } label: {
-                        Label("Copy Type", systemImage: "doc.on.doc")
-                    }
-                }
+                copyableDetailRow(title: "Name", detail: serviceType.name)
+                copyableDetailRow(title: "Type", detail: serviceType.type)
                 TitleDetailStackView(
                     title: "Transport layer",
                     detail: serviceType.transportLayer.string
                 )
-                TitleDetailStackView(
-                    title: "Full type",
-                    detail: serviceType.fullType
-                )
-                .draggable(serviceType.fullType)
-                .accessibilityHint("Long press to copy full type")
-                .contextMenu {
-                    Button {
-                        Clipboard.copy(serviceType.fullType)
-                    } label: {
-                        Label("Copy Full Type", systemImage: "doc.on.doc")
-                    }
-                }
+                copyableDetailRow(title: "Full type", detail: serviceType.fullType)
                 if let detail = serviceType.detail, !detail.isEmpty {
-                    TitleDetailStackView(
-                        title: "Details",
-                        detail: detail
-                    )
-                    .accessibilityHint("Long press to copy details")
-                    .contextMenu {
-                        Button {
-                            Clipboard.copy(detail)
-                        } label: {
-                            Label("Copy Details", systemImage: "doc.on.doc")
-                        }
-                    }
+                    copyableDetailRow(title: "Details", detail: detail)
                 }
             }
 
@@ -180,4 +133,19 @@ struct SupportedServiceDetailView: View {
         }
     }
 
+    // MARK: - Copyable Detail Row
+
+    @ViewBuilder
+    private func copyableDetailRow(title: String, detail: String) -> some View {
+        TitleDetailStackView(title: title, detail: detail)
+            .draggable(detail)
+            .accessibilityHint("Long press to copy \(title.lowercased())")
+            .contextMenu {
+                Button {
+                    Clipboard.copy(detail)
+                } label: {
+                    Label("Copy \(title)", systemImage: "doc.on.doc")
+                }
+            }
+    }
 }

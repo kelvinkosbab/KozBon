@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A1B2C3D40001000000000001 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40001000000000002 /* Constants.swift */; };
 		B6089C9C1E1A2A3900C7CF29 /* BonjourServiceType+CustomServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6089C9B1E1A2A3900C7CF29 /* BonjourServiceType+CustomServiceType.swift */; };
 		B64D06261E1A2C55008B3FC8 /* MyServiceType+Library.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64D06251E1A2C55008B3FC8 /* MyServiceType+Library.swift */; };
 		B679CC171E1647670056C7B5 /* MyBonjourPublishManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B679CC161E1647670056C7B5 /* MyBonjourPublishManager.swift */; };
@@ -74,6 +75,9 @@
 		F6TESTS0BF0006 /* BonjourServiceSortTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6TESTS0FR0006 /* BonjourServiceSortTypeTests.swift */; };
 		F6TESTS0BF0007 /* TxtDataRecordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6TESTS0FR0007 /* TxtDataRecordTests.swift */; };
 		F6TESTS0BF0008 /* TopLevelDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6TESTS0FR0009 /* TopLevelDestinationTests.swift */; };
+		F6TESTS0BF0009 /* BonjourServicesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6TESTS0FR0010 /* BonjourServicesViewModelTests.swift */; };
+		F6TESTS0BF0010 /* BonjourServiceSortTypeSortedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6TESTS0FR0011 /* BonjourServiceSortTypeSortedTests.swift */; };
+		F6TESTS0BF0011 /* ConstantsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6TESTS0FR0012 /* ConstantsTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +91,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A1B2C3D40001000000000002 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants.swift"; sourceTree = "<group>"; };
 		B6089C9B1E1A2A3900C7CF29 /* BonjourServiceType+CustomServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BonjourServiceType+CustomServiceType.swift"; sourceTree = "<group>"; };
 		B64D06251E1A2C55008B3FC8 /* MyServiceType+Library.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MyServiceType+Library.swift"; sourceTree = "<group>"; };
 		B679CC161E1647670056C7B5 /* MyBonjourPublishManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyBonjourPublishManager.swift; sourceTree = "<group>"; };
@@ -154,6 +159,9 @@
 		F6TESTS0FR0006 /* BonjourServiceSortTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServiceSortTypeTests.swift; sourceTree = "<group>"; };
 		F6TESTS0FR0007 /* TxtDataRecordTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TxtDataRecordTests.swift; sourceTree = "<group>"; };
 		F6TESTS0FR0009 /* TopLevelDestinationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopLevelDestinationTests.swift; sourceTree = "<group>"; };
+		F6TESTS0FR0010 /* BonjourServicesViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServicesViewModelTests.swift; sourceTree = "<group>"; };
+		F6TESTS0FR0011 /* BonjourServiceSortTypeSortedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServiceSortTypeSortedTests.swift; sourceTree = "<group>"; };
+		F6TESTS0FR0012 /* ConstantsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantsTests.swift; sourceTree = "<group>"; };
 		F6TESTS0FR0008 /* KozBonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KozBonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -234,6 +242,7 @@
 				F6A1B0022F5D8A0000C1A2B4 /* AppFocusedValues.swift */,
 				F6240E732A92D91800951875 /* AppStyles.swift */,
 				F6A1B0002F5D8A0000C1A2B3 /* Clipboard.swift */,
+				A1B2C3D40001000000000002 /* Constants.swift */,
 				F67B65302C1B4EC300324FFF /* InternetAddress.swift */,
 				F67B65342C1B556900324FFF /* Logger.swift */,
 				F67B65322C1B54F400324FFF /* NetService+InternetAddress.swift */,
@@ -353,6 +362,9 @@
 				F6TESTS0FR0006 /* BonjourServiceSortTypeTests.swift */,
 				F6TESTS0FR0007 /* TxtDataRecordTests.swift */,
 				F6TESTS0FR0009 /* TopLevelDestinationTests.swift */,
+				F6TESTS0FR0010 /* BonjourServicesViewModelTests.swift */,
+				F6TESTS0FR0011 /* BonjourServiceSortTypeSortedTests.swift */,
+				F6TESTS0FR0012 /* ConstantsTests.swift */,
 			);
 			path = KozBonTests;
 			sourceTree = "<group>";
@@ -531,6 +543,7 @@
 				F6240E6C2A92D62200951875 /* BonjourScanForServicesView.swift in Sources */,
 				F6240E742A92D91800951875 /* AppStyles.swift in Sources */,
 				F6A1B0012F5D8A0000C1A2B3 /* Clipboard.swift in Sources */,
+				A1B2C3D40001000000000001 /* Constants.swift in Sources */,
 				F6B2C0022F5D9A0000D2B3C4 /* SettingsView.swift in Sources */,
 				F6A1B0032F5D8A0000C1A2B4 /* AppFocusedValues.swift in Sources */,
 				F6C50D7C2AB3BDD50048DF8C /* TitleDetailStackView.swift in Sources */,
@@ -561,6 +574,9 @@
 				F6TESTS0BF0006 /* BonjourServiceSortTypeTests.swift in Sources */,
 				F6TESTS0BF0007 /* TxtDataRecordTests.swift in Sources */,
 				F6TESTS0BF0008 /* TopLevelDestinationTests.swift in Sources */,
+				F6TESTS0BF0009 /* BonjourServicesViewModelTests.swift in Sources */,
+				F6TESTS0BF0010 /* BonjourServiceSortTypeSortedTests.swift in Sources */,
+				F6TESTS0BF0011 /* ConstantsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

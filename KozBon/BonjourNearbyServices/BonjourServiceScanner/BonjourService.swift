@@ -10,23 +10,38 @@ import Core
 
 // MARK: - MyNetServiceDelegate
 
+/// Delegate protocol for receiving Bonjour service address resolution updates.
 @MainActor
 protocol MyNetServiceDelegate: AnyObject, Sendable {
+    /// Called when a service finishes resolving its addresses (whether successful or not).
     func serviceDidResolveAddress(_ service: BonjourService)
 }
 
 // MARK: - BonjourService
 
+/// Wraps a `NetService` with additional state tracking for address resolution,
+/// publishing, and TXT record monitoring.
 @MainActor
 final class BonjourService: NSObject, @preconcurrency NetServiceDelegate {
 
-    // MARK: - Init
+    // MARK: - Properties
 
+    /// The underlying Foundation `NetService` instance.
     let service: NetService
+
+    /// The service type metadata (name, type string, transport layer).
     let serviceType: BonjourServiceType
+
+    /// A stable identifier derived from the `NetService` hash at initialization time.
     nonisolated let serviceIdentifier: Int
+
+    /// Resolved IP addresses for this service. Empty until `resolve()` or `resolveAddresses()` completes.
     private(set) var addresses: [InternetAddress] = []
+
+    /// TXT record key-value pairs published by this service.
     private(set) var dataRecords: [TxtDataRecord] = []
+
+    /// Delegate notified when address resolution completes.
     weak var delegate: MyNetServiceDelegate?
 
     private let logger: Loggable = Logger(category: "BonjourService")
@@ -42,6 +57,7 @@ final class BonjourService: NSObject, @preconcurrency NetServiceDelegate {
         self.service.delegate = self
     }
 
+    /// The human-readable hostname derived from the service's advertised host, with domain and punctuation stripped.
     var hostName: String {
         if let hostName = self.service.hostName {
             return hostName
@@ -52,6 +68,7 @@ final class BonjourService: NSObject, @preconcurrency NetServiceDelegate {
         return "NA"
     }
 
+    /// Whether the underlying `NetService` has resolved at least one address.
     var hasResolvedAddresses: Bool {
         self.service.addresses != nil
     }
@@ -61,6 +78,7 @@ final class BonjourService: NSObject, @preconcurrency NetServiceDelegate {
     private var isStopping: Bool = false
     private var didStop: (() -> Void)?
 
+    /// Stops all active resolution and publishing operations, then invokes the callback when stopped.
     func stop(didStop: (() -> Void)? = nil) {
         logger.debug("Stopping service", censored: "\(self)")
         self.isStopping = true
@@ -83,20 +101,23 @@ final class BonjourService: NSObject, @preconcurrency NetServiceDelegate {
 
     // MARK: - Resolving Address
 
+    /// Whether a resolve operation is currently in progress.
     private(set) var isResolving: Bool = false
     private var resolveAddressContinuation: CheckedContinuation<Void, Never>?
 
+    /// Begins resolving addresses and starts TXT record monitoring. Returns immediately (fire-and-forget).
     func resolve() {
         self.isResolving = true
-        self.service.resolve(withTimeout: 10.0)
+        self.service.resolve(withTimeout: Constants.Network.resolveTimeout)
         self.startMonitoring()
     }
 
+    /// Resolves the service's addresses asynchronously. Suspends until resolution completes or fails.
     func resolveAddresses() async {
         await withCheckedContinuation { continuation in
             self.resolveAddressContinuation = continuation
             self.isResolving = true
-            self.service.resolve(withTimeout: 10.0)
+            self.service.resolve(withTimeout: Constants.Network.resolveTimeout)
             self.startMonitoring()
         }
     }
@@ -122,9 +143,11 @@ final class BonjourService: NSObject, @preconcurrency NetServiceDelegate {
 
     // MARK: - Publishing Service
 
+    /// Whether a publish operation is currently in progress.
     private(set) var isPublishing: Bool = false
     private var publishContinuation: CheckedContinuation<Void, any Error>?
 
+    /// Publishes this service on the network. Throws ``PublishError/didNotPublish`` on failure.
     func publishService() async throws {
         try await withCheckedThrowingContinuation { continuation in
             self.publishContinuation = continuation
@@ -133,11 +156,12 @@ final class BonjourService: NSObject, @preconcurrency NetServiceDelegate {
         }
     }
 
+    /// Stops and un-publishes this service from the network.
     func unPublish() async {
         await withCheckedContinuation { continuation in
             self.stop {
                 Task { @MainActor in
-                    try? await Task.sleep(for: .milliseconds(500))
+                    try? await Task.sleep(for: .milliseconds(Constants.Network.publishDelayMilliseconds))
                     continuation.resume()
                 }
             }
@@ -152,7 +176,7 @@ final class BonjourService: NSObject, @preconcurrency NetServiceDelegate {
         // For some reason the `didPublish` callback isn't being called. This is a temp hack
         // to allow for the continuation to resume after a short delay
         Task { @MainActor [weak self] in
-            try? await Task.sleep(for: .milliseconds(500))
+            try? await Task.sleep(for: .milliseconds(Constants.Network.publishDelayMilliseconds))
             self?.netServiceDidPublish(sender)
         }
     }

@@ -9,13 +9,23 @@ import Foundation
 
 // MARK: - BonjourServiceScannerProtocol
 
-/// Protocol defining the interface for scanning Bonjour services
+/// Protocol defining the interface for discovering Bonjour services on the local network.
+///
+/// Conforming types manage the discovery lifecycle — starting and stopping scans — and
+/// report results through a ``BonjourServiceScannerDelegate``.
 @MainActor
 protocol BonjourServiceScannerProtocol: AnyObject, Sendable {
+
+    /// Delegate that receives service discovery updates and errors.
     var delegate: BonjourServiceScannerDelegate? { get set }
+
+    /// Whether the scanner is currently searching for services or resolving addresses.
     var isProcessing: Bool { get }
 
+    /// Begins scanning for all configured Bonjour service types.
     func startScan()
+
+    /// Stops all active scanning operations.
     func stopScan()
 }
 

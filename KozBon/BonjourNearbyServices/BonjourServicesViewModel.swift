@@ -47,28 +47,28 @@ final class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDel
 
     // MARK: - Computed Properties
 
+    /// Set of keys identifying published services for O(1) lookup.
+    private var publishedServiceKeys: Set<String> {
+        Set(customPublishedServices.map { "\($0.hostName)|\($0.serviceType.fullType)" })
+    }
+
+    /// Returns whether the given service matches a user-published service.
+    private func isPublishedService(_ service: BonjourService) -> Bool {
+        publishedServiceKeys.contains("\(service.hostName)|\(service.serviceType.fullType)")
+    }
+
     /// Active services that match a user-published service, sorted by the current `sortType`.
     var sortedPublishedServices: [BonjourService] {
-        let publishedServices = activeServices.filter { service in
-            customPublishedServices.contains { publishedSevice in
-                service.hostName == publishedSevice.hostName &&
-                service.serviceType.fullType == publishedSevice.serviceType.fullType
-            }
-        }
-        guard let sortType else { return publishedServices }
-        return sortType.sorted(publishedServices)
+        let filtered = activeServices.filter { isPublishedService($0) }
+        guard let sortType else { return filtered }
+        return sortType.sorted(filtered)
     }
 
     /// Active services excluding user-published ones, sorted by the current `sortType`.
     var sortedActiveServices: [BonjourService] {
-        let nonPublishedServices = activeServices.filter { service in
-            !customPublishedServices.contains { publishedSevice in
-                service.hostName == publishedSevice.hostName &&
-                service.serviceType.fullType == publishedSevice.serviceType.fullType
-            }
-        }
-        guard let sortType else { return nonPublishedServices }
-        return sortType.sorted(nonPublishedServices)
+        let filtered = activeServices.filter { !isPublishedService($0) }
+        guard let sortType else { return filtered }
+        return sortType.sorted(filtered)
     }
 
     // MARK: - State
@@ -130,7 +130,7 @@ final class BonjourServicesViewModel: ObservableObject, BonjourServiceScannerDel
         guard let lastScanTime else {
             return true
         }
-        return Date().timeIntervalSince(lastScanTime) > 300
+        return Date().timeIntervalSince(lastScanTime) > Constants.Refresh.foregroundRefreshInterval
     }
 
     /// Updates the sort order for service lists.

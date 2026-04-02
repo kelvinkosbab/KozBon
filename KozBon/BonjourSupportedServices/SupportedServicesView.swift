@@ -21,45 +21,8 @@ struct SupportedServicesView: View {
     var body: some View {
         NavigationSplitView {
             List(selection: $viewModel.selectedServiceType) {
-                if !viewModel.filteredCustomServiceTypes.isEmpty {
-                    Section("Custom Service Types") {
-                        ForEach(viewModel.filteredCustomServiceTypes, id: \.fullType) { serviceType in
-                            NavigationLink(value: serviceType) {
-                                TitleDetailStackView(
-                                    title: serviceType.name,
-                                    detail: serviceType.fullType
-                                ) {
-                                    ServiceTypeBadge(serviceType: serviceType, style: .iconOnly)
-                                }
-                            }
-                            .draggable(serviceType.fullType)
-                            .accessibilityHint("View details for \(serviceType.name)")
-                            .contextMenu {
-                                serviceTypeContextMenu(serviceType: serviceType)
-                            }
-                        }
-                    }
-                }
-
-                if !viewModel.filteredBuiltInServiceTypes.isEmpty {
-                    Section("Built-in Service Types") {
-                        ForEach(viewModel.filteredBuiltInServiceTypes, id: \.fullType) { serviceType in
-                            NavigationLink(value: serviceType) {
-                                TitleDetailStackView(
-                                    title: serviceType.name,
-                                    detail: serviceType.fullType
-                                ) {
-                                    ServiceTypeBadge(serviceType: serviceType, style: .iconOnly)
-                                }
-                            }
-                            .draggable(serviceType.fullType)
-                            .accessibilityHint("View details for \(serviceType.name)")
-                            .contextMenu {
-                                serviceTypeContextMenu(serviceType: serviceType)
-                            }
-                        }
-                    }
-                }
+                serviceTypeSection(title: "Custom Service Types", serviceTypes: viewModel.filteredCustomServiceTypes)
+                serviceTypeSection(title: "Built-in Service Types", serviceTypes: viewModel.filteredBuiltInServiceTypes)
             }
             .contentMarginsBasedOnSizeClass()
             .navigationTitle("Supported services")
@@ -100,6 +63,29 @@ struct SupportedServicesView: View {
             CreateOrUpdateBonjourServiceTypeView(isPresented: $viewModel.isCreateCustomServiceTypePresented)
         }
         .focusedSceneValue(\.isCreateServiceTypePresented, $viewModel.isCreateCustomServiceTypePresented)
+    }
+
+    @ViewBuilder
+    private func serviceTypeSection(title: String, serviceTypes: [BonjourServiceType]) -> some View {
+        if !serviceTypes.isEmpty {
+            Section(title) {
+                ForEach(serviceTypes, id: \.fullType) { serviceType in
+                    NavigationLink(value: serviceType) {
+                        TitleDetailStackView(
+                            title: serviceType.name,
+                            detail: serviceType.fullType
+                        ) {
+                            ServiceTypeBadge(serviceType: serviceType, style: .iconOnly)
+                        }
+                    }
+                    .draggable(serviceType.fullType)
+                    .accessibilityHint("View details for \(serviceType.name)")
+                    .contextMenu {
+                        serviceTypeContextMenu(serviceType: serviceType)
+                    }
+                }
+            }
+        }
     }
 
     @ViewBuilder
@@ -180,34 +166,19 @@ struct SupportedServicesView: View {
         }
 
         var filteredBuiltInServiceTypes: [BonjourServiceType] {
-            if searchText.isEmpty {
-                builtInServiceTypes
-            } else {
-                builtInServiceTypes.filter { serviceType in
-                    let isInName = serviceType.name.containsIgnoreCase(searchText)
-                    let isInType = serviceType.fullType.containsIgnoreCase(searchText)
-                    var isInDetail = false
-                    if let detail = serviceType.detail {
-                        isInDetail = detail.containsIgnoreCase(searchText)
-                    }
-                    return isInName || isInType || isInDetail
-                }
-            }
+            filterServiceTypes(builtInServiceTypes)
         }
 
         var filteredCustomServiceTypes: [BonjourServiceType] {
-            if searchText.isEmpty {
-                customServiceTypes
-            } else {
-                customServiceTypes.filter { serviceType in
-                    let isInName = serviceType.name.containsIgnoreCase(searchText)
-                    let isInType = serviceType.fullType.containsIgnoreCase(searchText)
-                    var isInDetail = false
-                    if let detail = serviceType.detail {
-                        isInDetail = detail.containsIgnoreCase(searchText)
-                    }
-                    return isInName || isInType || isInDetail
-                }
+            filterServiceTypes(customServiceTypes)
+        }
+
+        private func filterServiceTypes(_ types: [BonjourServiceType]) -> [BonjourServiceType] {
+            guard !searchText.isEmpty else { return types }
+            return types.filter { serviceType in
+                serviceType.name.containsIgnoreCase(searchText) ||
+                serviceType.fullType.containsIgnoreCase(searchText) ||
+                (serviceType.detail?.containsIgnoreCase(searchText) ?? false)
             }
         }
 

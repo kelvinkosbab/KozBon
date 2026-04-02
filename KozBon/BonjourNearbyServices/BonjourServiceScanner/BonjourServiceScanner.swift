@@ -10,11 +10,16 @@ import Core
 
 // MARK: - BonjourServiceScannerDelegate
 
+/// Delegate protocol for receiving Bonjour service scanner lifecycle events.
 @MainActor
 protocol BonjourServiceScannerDelegate: AnyObject, Sendable {
+    /// Called when a new service is discovered on the network.
     func didAdd(service: BonjourService)
+    /// Called when a previously discovered service is no longer available.
     func didRemove(service: BonjourService)
+    /// Called when the scanner resets, indicating all previous results are invalidated.
     func didReset()
+    /// Called when a scan operation fails for a particular service type.
     func didFailWithError(description: String)
 }
 

@@ -19,8 +19,9 @@ struct BroadcastBonjourServiceView: View {
     @State private var serviceTypeError: String?
     @State private var port: Int?
     @State private var portError: String?
-    @State private var domain: String = "local."
+    @State private var domain: String = Constants.Network.defaultDomain
     @State private var dataRecords: [BonjourService.TxtDataRecord]
+    @State private var domainError: String?
     @State private var isCreateTxtRecordViewPresented = false
 
     private var isCreatingBonjourService: Bool
@@ -34,7 +35,7 @@ struct BroadcastBonjourServiceView: View {
         self._customPublishedServices = customPublishedServices
         self.serviceToUpdate = BonjourService(
             service: .init(
-                domain: "local.",
+                domain: Constants.Network.defaultDomain,
                 type: "",
                 name: "",
                 port: 0
@@ -47,7 +48,7 @@ struct BroadcastBonjourServiceView: View {
         )
         isCreatingBonjourService = true
         serviceType = nil
-        domain = "local."
+        domain = Constants.Network.defaultDomain
         port = nil
         dataRecords = []
     }
@@ -164,7 +165,7 @@ struct BroadcastBonjourServiceView: View {
                 format: .number
             )
             .accessibilityLabel("Port number")
-            .accessibilityHint("Enter the service port number, must be greater than 3000")
+            .accessibilityHint("Enter the service port number, between \(Constants.Network.minimumPort) and \(Constants.Network.maximumPort)")
             .onSubmit {
                 doneButtonSelected()
             }
@@ -190,7 +191,7 @@ struct BroadcastBonjourServiceView: View {
     // MARK: - Service Domain Section
 
     private func serviceDomainSection() -> some View {
-        Section("Service Domain") {
+        Section {
             TextField("Service domain", text: $domain)
                 .accessibilityLabel("Service domain")
                 .accessibilityHint("Enter the domain for the service, defaults to local")
@@ -198,6 +199,21 @@ struct BroadcastBonjourServiceView: View {
                     doneButtonSelected()
                 }
                 .disabled(false)
+        } header: {
+            Text("Service Domain")
+        } footer: {
+            if let domainError {
+                Text(verbatim: domainError)
+                    .foregroundStyle(.red)
+                    .accessibilityLabel("Error: \(domainError)")
+            }
+        }
+        .onChange(of: [domain]) {
+            withAnimation {
+                if !domain.isEmpty {
+                    domainError = nil
+                }
+            }
         }
     }
 
@@ -247,6 +263,7 @@ struct BroadcastBonjourServiceView: View {
         withAnimation {
             serviceTypeError = nil
             portError = nil
+            domainError = nil
         }
 
         guard let serviceType else {
@@ -263,9 +280,23 @@ struct BroadcastBonjourServiceView: View {
             return
         }
 
-        guard port > 3000 else {
+        guard port >= Constants.Network.minimumPort else {
             withAnimation {
-                portError = "Port number must be greater than 3000"
+                portError = "Port number must be at least \(Constants.Network.minimumPort)"
+            }
+            return
+        }
+
+        guard port <= Constants.Network.maximumPort else {
+            withAnimation {
+                portError = "Port number must be \(Constants.Network.maximumPort) or less"
+            }
+            return
+        }
+
+        guard !domain.isEmpty else {
+            withAnimation {
+                domainError = "Domain is required"
             }
             return
         }
