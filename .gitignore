@@ -1,19 +1,10 @@
 *.DS_Store
-Pods/*
-Pods
+
+# Xcode user-specific files
 *xcuserdata*
-Podfile.lock
-
-# Ignore AppCode user-related files
-.idea
-
-# Ignore Carthage installed files
-Carthage/*
 
 # Xcode build artifacts
 DerivedData/
-
-# Xcode user-specific and temporary files
 *.xcscmblueprint
 *.xccheckout
 *.moved-aside
@@ -23,3 +14,14 @@ DerivedData/
 *.ipa
 *.dSYM.zip
 *.dSYM
+
+# IDE files
+.idea
+
+# Claude Code local settings and plans
+.claude/settings.local.json
+.claude/plans/
+
+# Editor temp files
+*.swp
+*~
