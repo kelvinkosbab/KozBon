@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import BonjourScanning
+import BonjourUI
 
 /*
  

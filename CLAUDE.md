@@ -8,10 +8,10 @@ KozBon is a multi-platform Apple app for discovering and managing Bonjour (mDNS)
 
 ```bash
 # Build for iOS Simulator
-xcodebuild -scheme KozBon -destination 'platform=iOS Simulator,name=iPhone 17 Pro,OS=26.2' build
+xcodebuild -workspace KozBon.xcworkspace -scheme KozBon -destination 'platform=iOS Simulator,name=iPhone 17 Pro,OS=26.2' build
 
 # Run unit tests
-xcodebuild test -scheme KozBon -destination 'platform=iOS Simulator,name=iPhone 17 Pro,OS=26.2'
+xcodebuild test -workspace KozBon.xcworkspace -scheme KozBon -destination 'platform=iOS Simulator,name=iPhone 17 Pro,OS=26.2'
 ```
 
 ## Architecture

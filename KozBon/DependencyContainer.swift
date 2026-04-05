@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import BonjourScanning
 
 // MARK: - DependencyContainer
 
@@ -33,6 +34,23 @@ final class DependencyContainer: Sendable {
     ) {
         self.bonjourServiceScanner = bonjourServiceScanner
         self.bonjourPublishManager = bonjourPublishManager
+    }
+}
+
+// MARK: - Mock Factory
+
+extension DependencyContainer {
+
+    /// Creates a dependency container with mock services for testing
+    @MainActor
+    static func mock(
+        scanner: MockBonjourServiceScanner = MockBonjourServiceScanner(),
+        publishManager: MockBonjourPublishManager = MockBonjourPublishManager()
+    ) -> DependencyContainer {
+        return DependencyContainer(
+            bonjourServiceScanner: scanner,
+            bonjourPublishManager: publishManager
+        )
     }
 }
 

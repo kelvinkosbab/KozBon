@@ -33,11 +33,12 @@ jobs:
             ${{ runner.os }}-spm-
 
       - name: Resolve Dependencies
-        run: xcodebuild -resolvePackageDependencies -scheme KozBon
+        run: xcodebuild -resolvePackageDependencies -workspace KozBon.xcworkspace -scheme KozBon
 
       - name: Build
         run: |
           xcodebuild build-for-testing \
+            -workspace KozBon.xcworkspace \
             -scheme KozBon \
             -destination 'platform=iOS Simulator,name=iPhone 16 Pro' \
             -skipPackagePluginValidation \
@@ -46,6 +47,7 @@ jobs:
       - name: Test
         run: |
           xcodebuild test-without-building \
+            -workspace KozBon.xcworkspace \
             -scheme KozBon \
             -destination 'platform=iOS Simulator,name=iPhone 16 Pro' \
             | xcpretty --color || exit ${PIPESTATUS[0]}

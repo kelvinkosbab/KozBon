@@ -7,6 +7,8 @@
 
 import SwiftUI
 import CoreUI
+import BonjourUI
+import BonjourModels
 
 // MARK: - AppCore
 
