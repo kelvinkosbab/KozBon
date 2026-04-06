@@ -9,6 +9,7 @@ import SwiftUI
 import CoreUI
 import BonjourUI
 import BonjourModels
+import BonjourScanning
 
 // MARK: - AppCore
 

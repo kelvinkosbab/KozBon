@@ -27,7 +27,7 @@ import BonjourUI
      
      var body: some View {
          Button("Start Scan") {
-             dependencies.bonjourServiceScanner.startScan()
+             dependencies.bonjourServiceScanner.startScan(publishedServices: [])
          }
      }
  }
@@ -206,7 +206,7 @@ struct ExampleDirectInjectionView: View {
 
     var body: some View {
         Button("Start Scan") {
-            dependencies.bonjourServiceScanner.startScan()
+            dependencies.bonjourServiceScanner.startScan(publishedServices: [])
         }
     }
 }
@@ -231,7 +231,7 @@ final class ExampleViewModel {
 
     func startScanning() {
         isScanning = true
-        scanner.startScan()
+        scanner.startScan(publishedServices: [])
     }
 
     func stopScanning() {

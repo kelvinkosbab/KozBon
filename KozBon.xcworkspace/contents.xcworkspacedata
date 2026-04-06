@@ -7,4 +7,7 @@
    <FileRef
       location = "group:KozBon.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:../KozBon.xctestplan">
+   </FileRef>
 </Workspace>
