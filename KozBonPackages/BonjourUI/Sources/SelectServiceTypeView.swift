@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import BonjourLocalization
 import BonjourModels
 
 // MARK: - SelectServiceTypeView
@@ -32,7 +33,7 @@ struct SelectServiceTypeView: View {
             }
 
             if !viewModel.filteredCustomServiceTypes.isEmpty {
-                Section("Custom Service Types") {
+                Section(String(localized: Strings.Sections.customServiceTypes)) {
                     ForEach(viewModel.filteredCustomServiceTypes, id: \.fullType) { serviceType in
                         Button {
                             Task { @MainActor in
@@ -52,14 +53,14 @@ struct SelectServiceTypeView: View {
                             }
                         }
                         .accessibilityLabel(serviceType.name)
-                        .accessibilityValue(selectedServiceType == serviceType ? "Selected" : "Not selected")
-                        .accessibilityHint("Double tap to select this service type")
+                        .accessibilityValue(selectedServiceType == serviceType ? String(localized: Strings.Accessibility.selected) : String(localized: Strings.Accessibility.notSelected))
+                        .accessibilityHint(String(localized: Strings.Accessibility.selectServiceTypeHint))
                     }
                 }
             }
 
             if !viewModel.filteredBuiltInServiceTypes.isEmpty {
-                Section("Built-in Service Types") {
+                Section(String(localized: Strings.Sections.builtinServiceTypes)) {
                     ForEach(viewModel.filteredBuiltInServiceTypes, id: \.fullType) { serviceType in
                         Button {
                             Task { @MainActor in
@@ -79,20 +80,20 @@ struct SelectServiceTypeView: View {
                             }
                         }
                         .accessibilityLabel(serviceType.name)
-                        .accessibilityValue(selectedServiceType == serviceType ? "Selected" : "Not selected")
-                        .accessibilityHint("Double tap to select this service type")
+                        .accessibilityValue(selectedServiceType == serviceType ? String(localized: Strings.Accessibility.selected) : String(localized: Strings.Accessibility.notSelected))
+                        .accessibilityHint(String(localized: Strings.Accessibility.selectServiceTypeHint))
                     }
                 }
             }
         }
         .contentMarginsBasedOnSizeClass()
-        .navigationTitle("Supported services")
+        .navigationTitle(String(localized: Strings.NavigationTitles.supportedServices))
         .task {
             viewModel.load()
         }
         .searchable(
             text: $viewModel.searchText,
-            prompt: "Search for ..."
+            prompt: String(localized: Strings.Placeholders.search)
         )
     }
 

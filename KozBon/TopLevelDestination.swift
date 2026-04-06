@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import BonjourLocalization
 
 // MARK: - TopLevelDestination
 
@@ -32,22 +33,13 @@ enum TopLevelDestination: Identifiable {
     var titleString: String {
         switch self {
         case .bonjour:
-            NSLocalizedString(
-                "Bonjour",
-                comment: "Bonjour tab title"
-            )
+            String(localized: Strings.Tabs.bonjour)
 
         case .bonjourServiceTypes:
-            NSLocalizedString(
-                "Supported services",
-                comment: "Bonjour service types tab title"
-            )
+            String(localized: Strings.Tabs.supportedServices)
 
         case .bluetooth:
-            NSLocalizedString(
-                "Bluetooth",
-                comment: "Bluetooth tab title"
-            )
+            String(localized: Strings.Tabs.bluetooth)
         }
     }
 

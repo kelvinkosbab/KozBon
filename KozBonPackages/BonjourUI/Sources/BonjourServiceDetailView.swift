@@ -7,6 +7,7 @@
 
 import SwiftUI
 import BonjourCore
+import BonjourLocalization
 import BonjourModels
 
 // MARK: - BonjourServiceDetailView
@@ -46,59 +47,59 @@ public struct BonjourServiceDetailView: View {
                 }
             }
 
-            Section("Information") {
+            Section(String(localized: Strings.Sections.information)) {
                 TitleDetailStackView(
-                    title: "Name",
+                    title: String(localized: Strings.DetailRows.name),
                     detail: viewModel.serviceType.name
                 )
                 TitleDetailStackView(
-                    title: "Hostname",
+                    title: String(localized: Strings.DetailRows.hostname),
                     detail: viewModel.service.hostName
                 )
                 TitleDetailStackView(
-                    title: "Full type",
+                    title: String(localized: Strings.DetailRows.fullType),
                     detail: viewModel.serviceType.fullType
                 )
                 TitleDetailStackView(
-                    title: "Type",
+                    title: String(localized: Strings.DetailRows.type),
                     detail: viewModel.serviceType.type
                 )
                 TitleDetailStackView(
-                    title: "Transport layer",
+                    title: String(localized: Strings.DetailRows.transportLayer),
                     detail: viewModel.serviceType.transportLayer.string
                 )
                 TitleDetailStackView(
-                    title: "Domain",
+                    title: String(localized: Strings.DetailRows.domain),
                     detail: viewModel.service.service.domain
                 )
                 if let detail = viewModel.serviceType.detail {
                     TitleDetailStackView(
-                        title: "Protocol information",
+                        title: String(localized: Strings.DetailRows.protocolInformation),
                         detail: detail
                     )
                 }
             }
 
             if !viewModel.service.addresses.isEmpty {
-                Section("IP Addresses") {
+                Section(String(localized: Strings.Sections.ipAddresses)) {
                     ForEach(viewModel.service.addresses, id: \.ipPortString) { address in
                         TitleDetailStackView(
                             title: address.ipPortString,
                             detail: address.protocol.stringRepresentation
                         )
                         .draggable(address.ipPortString)
-                        .accessibilityHint("Long press to copy address")
+                        .accessibilityHint(String(localized: Strings.Accessibility.longPressCopyAddress))
                         .contextMenu {
                             Button {
                                 Clipboard.copy(address.ipPortString)
                             } label: {
-                                Label("Copy Address", systemImage: "doc.on.doc")
+                                Label(String(localized: Strings.Actions.copyAddress), systemImage: "doc.on.doc")
                             }
 
                             Button {
                                 Clipboard.copy(address.ip)
                             } label: {
-                                Label("Copy IP Only", systemImage: "network")
+                                Label(String(localized: Strings.Actions.copyIpOnly), systemImage: "network")
                             }
                         }
                     }
@@ -138,7 +139,7 @@ public struct BonjourServiceDetailView: View {
     @ViewBuilder
     private func txtRecordsSection() -> some View {
         if viewModel.isPublished {
-            Section("TXT Records") {
+            Section(String(localized: Strings.Sections.txtRecords)) {
                 ForEach(viewModel.dataRecords, id: \.key) { dataRecord in
                     Button {
                         viewModel.txtRecordToEdit = dataRecord
@@ -150,27 +151,27 @@ public struct BonjourServiceDetailView: View {
                         )
                     }
                     .draggable("\(dataRecord.key)=\(dataRecord.value)")
-                    .accessibilityHint("Double tap to edit this record")
+                    .accessibilityHint(String(localized: Strings.Accessibility.editRecordHint))
                     .contextMenu {
                         Button {
                             Clipboard.copy("\(dataRecord.key)=\(dataRecord.value)")
                         } label: {
-                            Label("Copy Record", systemImage: "doc.on.doc")
+                            Label(String(localized: Strings.Actions.copyRecord), systemImage: "doc.on.doc")
                         }
 
                         Button {
                             Clipboard.copy(dataRecord.value)
                         } label: {
-                            Label("Copy Value", systemImage: "doc.on.clipboard")
+                            Label(String(localized: Strings.Actions.copyValue), systemImage: "doc.on.clipboard")
                         }
                     }
                     .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                         Button(role: .destructive) {
                             viewModel.deleteTxtRecord(dataRecord)
                         } label: {
-                            Label("Remove", systemImage: "minus.circle.fill")
+                            Label(String(localized: Strings.Buttons.remove), systemImage: "minus.circle.fill")
                         }
-                        .accessibilityLabel("Remove \(dataRecord.key)")
+                        .accessibilityLabel(Strings.Accessibility.remove(dataRecord.key))
                         .tint(.red)
                     }
                 }
@@ -179,30 +180,30 @@ public struct BonjourServiceDetailView: View {
                     viewModel.txtRecordToEdit = nil
                     viewModel.isCreateTxtRecordPresented = true
                 } label: {
-                    Label("Add TXT Record", systemImage: "plus.circle.fill")
+                    Label(String(localized: Strings.Buttons.addTxtRecord), systemImage: "plus.circle.fill")
                 }
-                .accessibilityHint("Double tap to add a new TXT record")
+                .accessibilityHint(String(localized: Strings.Accessibility.addTxtRecordHint))
             }
         } else if !viewModel.dataRecords.isEmpty {
-            Section("TXT Records") {
+            Section(String(localized: Strings.Sections.txtRecords)) {
                 ForEach(viewModel.dataRecords, id: \.key) { dataRecord in
                     TitleDetailStackView(
                         title: dataRecord.key,
                         detail: dataRecord.value
                     )
                     .draggable("\(dataRecord.key)=\(dataRecord.value)")
-                    .accessibilityHint("Long press to copy record")
+                    .accessibilityHint(String(localized: Strings.Accessibility.longPressCopyRecord))
                     .contextMenu {
                         Button {
                             Clipboard.copy("\(dataRecord.key)=\(dataRecord.value)")
                         } label: {
-                            Label("Copy Record", systemImage: "doc.on.doc")
+                            Label(String(localized: Strings.Actions.copyRecord), systemImage: "doc.on.doc")
                         }
 
                         Button {
                             Clipboard.copy(dataRecord.value)
                         } label: {
-                            Label("Copy Value", systemImage: "doc.on.clipboard")
+                            Label(String(localized: Strings.Actions.copyValue), systemImage: "doc.on.clipboard")
                         }
                     }
                 }

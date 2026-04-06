@@ -8,6 +8,7 @@
 import CoreUI
 import SwiftUI
 import BonjourCore
+import BonjourLocalization
 import BonjourModels
 
 // MARK: - CreateOrUpdateBonjourServiceTypeView_Edit
@@ -59,23 +60,23 @@ struct CreateOrUpdateBonjourServiceTypeView_Edit: View {
         NavigationStack {
             List {
                 Section {
-                    TextField("Service name", text: $name)
-                        .accessibilityLabel("Service name")
-                        .accessibilityHint("Enter a display name for this service type")
+                    TextField(String(localized: Strings.Placeholders.serviceName), text: $name)
+                        .accessibilityLabel(String(localized: Strings.Accessibility.serviceName))
+                        .accessibilityHint(String(localized: Strings.Accessibility.serviceNameHint))
                 } header: {
-                    Text("Service name")
+                    Text(Strings.Sections.serviceName)
                 } footer: {
                     if let nameError {
                         Text(verbatim: nameError)
                             .foregroundStyle(.red)
-                            .accessibilityLabel("Error: \(nameError)")
+                            .accessibilityLabel(Strings.Accessibility.error(nameError))
                     }
                 }
 
                 Section {
-                    TextField("Type definition", text: $type)
-                        .accessibilityLabel("Bonjour type")
-                        .accessibilityHint("Enter the Bonjour type identifier, for example http or ssh")
+                    TextField(String(localized: Strings.Placeholders.typeDefinition), text: $type)
+                        .accessibilityLabel(String(localized: Strings.Accessibility.bonjourType))
+                        .accessibilityHint(String(localized: Strings.Accessibility.bonjourTypeHint))
                         .disabled(!isCreatingBonjourService)
                         .disableAutocorrection(true)
                         #if !os(macOS)
@@ -85,17 +86,17 @@ struct CreateOrUpdateBonjourServiceTypeView_Edit: View {
                             doneButtonSelected()
                         }
                 } header: {
-                    Text("Bonjour type")
+                    Text(Strings.Sections.bonjourType)
                 } footer: {
                     if let typeError, type.isEmpty {
                         Text(verbatim: typeError)
                             .foregroundStyle(.red)
-                            .accessibilityLabel("Error: \(typeError)")
+                            .accessibilityLabel(Strings.Accessibility.error(typeError))
 
                     } else if let typeError, !type.isEmpty {
                         Text(verbatim: "\(fullType) · \(typeError)")
                             .foregroundStyle(.red)
-                            .accessibilityLabel("Error: \(typeError) for \(fullType)")
+                            .accessibilityLabel(Strings.Accessibility.error("\(typeError) for \(fullType)"))
 
                     } else if !type.isEmpty {
                         Text(verbatim: fullType)
@@ -108,19 +109,19 @@ struct CreateOrUpdateBonjourServiceTypeView_Edit: View {
                 }
 
                 Section {
-                    TextField("Additional information", text: $details)
-                        .accessibilityLabel("Additional details")
-                        .accessibilityHint("Enter a description of this service type")
+                    TextField(String(localized: Strings.Placeholders.additionalInformation), text: $details)
+                        .accessibilityLabel(String(localized: Strings.Accessibility.additionalDetails))
+                        .accessibilityHint(String(localized: Strings.Accessibility.additionalDetailsHint))
                         .onSubmit {
                             doneButtonSelected()
                         }
                 } header: {
-                    Text("Additional details")
+                    Text(Strings.Sections.additionalDetails)
                 } footer: {
                     if let detailsError {
                         Text(verbatim: detailsError)
                             .foregroundStyle(.red)
-                            .accessibilityLabel("Error: \(detailsError)")
+                            .accessibilityLabel(Strings.Accessibility.error(detailsError))
                     }
                 }
             }
@@ -128,13 +129,13 @@ struct CreateOrUpdateBonjourServiceTypeView_Edit: View {
             #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
-            .navigationTitle(isCreatingBonjourService ? "Create service type" : "Edit service type")
+            .navigationTitle(isCreatingBonjourService ? String(localized: Strings.NavigationTitles.createServiceType) : String(localized: Strings.NavigationTitles.editServiceType))
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(role: .cancel) {
                         isPresented = false
                     } label: {
-                        Label("Cancel", systemImage: "x.circle.fill")
+                        Label(String(localized: Strings.Buttons.cancel), systemImage: "x.circle.fill")
                     }
                     .keyboardShortcut(.cancelAction)
                 }
@@ -143,7 +144,7 @@ struct CreateOrUpdateBonjourServiceTypeView_Edit: View {
                     Button {
                         doneButtonSelected()
                     } label: {
-                        Label("Done", systemImage: "checkmark.circle.fill")
+                        Label(String(localized: Strings.Buttons.done), systemImage: "checkmark.circle.fill")
                     }
                     .keyboardShortcut(.defaultAction)
                 }
@@ -185,21 +186,21 @@ struct CreateOrUpdateBonjourServiceTypeView_Edit: View {
 
         guard !name.isEmpty else {
             withAnimation(reduceMotion ? nil : .default) {
-                nameError = "Name required"
+                nameError = String(localized: Strings.Errors.nameRequired)
             }
             return
         }
 
         guard !type.isEmpty else {
             withAnimation(reduceMotion ? nil : .default) {
-                typeError = "Type required"
+                typeError = String(localized: Strings.Errors.typeRequired)
             }
             return
         }
 
         guard !details.isEmpty else {
             withAnimation(reduceMotion ? nil : .default) {
-                detailsError = "Details required"
+                detailsError = String(localized: Strings.Errors.detailsRequired)
             }
             return
         }
@@ -207,7 +208,7 @@ struct CreateOrUpdateBonjourServiceTypeView_Edit: View {
         if isCreatingBonjourService {
             guard !BonjourServiceType.exists(type: type, transportLayer: transportLayer) else {
                 withAnimation(reduceMotion ? nil : .default) {
-                    typeError = "Already Exists"
+                    typeError = String(localized: Strings.Errors.alreadyExists)
                 }
                 return
             }

@@ -11,6 +11,7 @@
 /// writes the selected case back through a binding. The label uses a localized
 /// "Sort" title and a tinted system icon.
 import SwiftUI
+import BonjourLocalization
 import BonjourModels
 
 /// A menu used to select a sorting strategy for a list of Bonjour services.
@@ -28,10 +29,7 @@ struct BonjourServiceListSortMenu: View {
     @Binding var sortType: BonjourServiceSortType?
 
     /// Localized title used for the menu's label.
-    let sortButtonString = NSLocalizedString(
-        "Sort",
-        comment: "Sort services button string"
-    )
+    let sortButtonString = String(localized: Strings.Buttons.sort)
 
     /// The view hierarchy for the sort menu.
     ///

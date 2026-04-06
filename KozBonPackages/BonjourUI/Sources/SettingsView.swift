@@ -8,6 +8,7 @@
 #if os(macOS)
 
 import SwiftUI
+import BonjourLocalization
 
 // MARK: - SettingsView
 
@@ -20,12 +21,12 @@ public struct SettingsView: View {
 
     public var body: some View {
         Form {
-            Section("Scanning") {
-                Toggle("Scan for services on launch", isOn: $autoScanOnLaunch)
+            Section(String(localized: Strings.Settings.scanning)) {
+                Toggle(String(localized: Strings.Settings.scanOnLaunch), isOn: $autoScanOnLaunch)
             }
 
-            Section("Display") {
-                Picker("Default sort order", selection: $defaultSortOrder) {
+            Section(String(localized: Strings.Settings.display)) {
+                Picker(String(localized: Strings.Settings.defaultSortOrder), selection: $defaultSortOrder) {
                     ForEach(DefaultSortOrder.allCases) { sortOrder in
                         Text(sortOrder.displayName)
                             .tag(sortOrder)
@@ -35,7 +36,7 @@ public struct SettingsView: View {
         }
         .formStyle(.grouped)
         .frame(width: 400)
-        .navigationTitle("Settings")
+        .navigationTitle(String(localized: Strings.NavigationTitles.settings))
     }
 
     // MARK: - DefaultSortOrder
@@ -52,15 +53,15 @@ public struct SettingsView: View {
         var displayName: String {
             switch self {
             case .none:
-                "None"
+                String(localized: Strings.Settings.sortNone)
             case .hostNameAsc:
-                "Hostname (A \u{2192} Z)"
+                String(localized: Strings.Settings.sortHostnameAsc)
             case .hostNameDesc:
-                "Hostname (Z \u{2192} A)"
+                String(localized: Strings.Settings.sortHostnameDesc)
             case .serviceNameAsc:
-                "Service Name (A \u{2192} Z)"
+                String(localized: Strings.Settings.sortServiceNameAsc)
             case .serviceNameDesc:
-                "Service Name (Z \u{2192} A)"
+                String(localized: Strings.Settings.sortServiceNameDesc)
             }
         }
     }

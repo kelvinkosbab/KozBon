@@ -7,6 +7,7 @@
 
 import SwiftUI
 import BonjourCore
+import BonjourLocalization
 import BonjourModels
 import BonjourScanning
 
@@ -86,7 +87,7 @@ struct BroadcastBonjourServiceView: View {
                 txtRecordsSection()
             }
             .contentMarginsBasedOnSizeClass()
-            .navigationTitle("Broadcast service")
+            .navigationTitle(String(localized: Strings.NavigationTitles.broadcastService))
             #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
@@ -95,7 +96,7 @@ struct BroadcastBonjourServiceView: View {
                     Button(role: .cancel) {
                         isPresented = false
                     } label: {
-                        Label("Cancel", systemImage: "x.circle.fill")
+                        Label(String(localized: Strings.Buttons.cancel), systemImage: "x.circle.fill")
                     }
                     .keyboardShortcut(.cancelAction)
                 }
@@ -104,7 +105,7 @@ struct BroadcastBonjourServiceView: View {
                     Button {
                         doneButtonSelected()
                     } label: {
-                        Label("Done", systemImage: "checkmark.circle.fill")
+                        Label(String(localized: Strings.Buttons.done), systemImage: "checkmark.circle.fill")
                     }
                     .keyboardShortcut(.defaultAction)
                 }
@@ -134,7 +135,7 @@ struct BroadcastBonjourServiceView: View {
                 } label: {
                     BlueSectionItemIconTitleDetailView(
                         imageSystemName: serviceType?.imageSystemName,
-                        title: serviceType?.name ?? "Select a service type to broadcast",
+                        title: serviceType?.name ?? String(localized: Strings.Placeholders.selectServiceType),
                         detail: serviceType?.fullType
                     )
                 }
@@ -144,12 +145,12 @@ struct BroadcastBonjourServiceView: View {
                 )
             }
         } header: {
-            Text("Service Type")
+            Text(Strings.Sections.serviceType)
         } footer: {
             if let serviceTypeError {
                 Text(verbatim: serviceTypeError)
                     .foregroundStyle(.red)
-                    .accessibilityLabel("Error: \(serviceTypeError)")
+                    .accessibilityLabel(Strings.Accessibility.error(serviceTypeError))
             }
         }
         .onChange(of: [serviceType]) {
@@ -166,23 +167,23 @@ struct BroadcastBonjourServiceView: View {
     private func portNumberSection() -> some View {
         Section {
             TextField(
-                "Service port number",
+                String(localized: Strings.Placeholders.servicePortNumber),
                 value: $port,
                 format: .number
             )
-            .accessibilityLabel("Port number")
-            .accessibilityHint("Enter the service port number, between \(Constants.Network.minimumPort) and \(Constants.Network.maximumPort)")
+            .accessibilityLabel(String(localized: Strings.Accessibility.portNumber))
+            .accessibilityHint(Strings.Accessibility.portHint(min: Constants.Network.minimumPort, max: Constants.Network.maximumPort))
             .onSubmit {
                 doneButtonSelected()
             }
 
         } header: {
-            Text("Port Number")
+            Text(Strings.Sections.portNumber)
         } footer: {
             if let portError {
                 Text(verbatim: portError)
                     .foregroundStyle(.red)
-                    .accessibilityLabel("Error: \(portError)")
+                    .accessibilityLabel(Strings.Accessibility.error(portError))
             }
         }
         .onChange(of: [port]) {
@@ -198,20 +199,20 @@ struct BroadcastBonjourServiceView: View {
 
     private func serviceDomainSection() -> some View {
         Section {
-            TextField("Service domain", text: $domain)
-                .accessibilityLabel("Service domain")
-                .accessibilityHint("Enter the domain for the service, defaults to local")
+            TextField(String(localized: Strings.Placeholders.serviceDomain), text: $domain)
+                .accessibilityLabel(String(localized: Strings.Accessibility.serviceDomain))
+                .accessibilityHint(String(localized: Strings.Accessibility.serviceDomainHint))
                 .onSubmit {
                     doneButtonSelected()
                 }
                 .disabled(false)
         } header: {
-            Text("Service Domain")
+            Text(Strings.Sections.serviceDomain)
         } footer: {
             if let domainError {
                 Text(verbatim: domainError)
                     .foregroundStyle(.red)
-                    .accessibilityLabel("Error: \(domainError)")
+                    .accessibilityLabel(Strings.Accessibility.error(domainError))
             }
         }
         .onChange(of: [domain]) {
@@ -226,7 +227,7 @@ struct BroadcastBonjourServiceView: View {
     // MARK: - TXT Records Section
 
     private func txtRecordsSection() -> some View {
-        Section("TXT Records") {
+        Section(String(localized: Strings.Sections.txtRecords)) {
             ForEach(dataRecords, id: \.key) { dataRecord in
                 TitleDetailStackView(
                     title: dataRecord.key,
@@ -243,9 +244,9 @@ struct BroadcastBonjourServiceView: View {
                             }
                         }
                     } label: {
-                        Label("Remove", systemImage: "minus.circle.fill")
+                        Label(String(localized: Strings.Buttons.remove), systemImage: "minus.circle.fill")
                     }
-                    .accessibilityLabel("Remove \(dataRecord.key)")
+                    .accessibilityLabel(Strings.Accessibility.remove(dataRecord.key))
                     .tint(.red)
                 }
             }
@@ -253,9 +254,9 @@ struct BroadcastBonjourServiceView: View {
             Button {
                 isCreateTxtRecordViewPresented = true
             } label: {
-                Label("Add TXT Record", systemImage: "plus.circle.fill")
+                Label(String(localized: Strings.Buttons.addTxtRecord), systemImage: "plus.circle.fill")
             }
-            .accessibilityHint("Double tap to add a new TXT record")
+            .accessibilityHint(String(localized: Strings.Accessibility.addTxtRecordHint))
         }
     }
 
@@ -274,35 +275,35 @@ struct BroadcastBonjourServiceView: View {
 
         guard let serviceType else {
             withAnimation(reduceMotion ? nil : .default) {
-                serviceTypeError = "Service type required"
+                serviceTypeError = String(localized: Strings.Errors.serviceTypeRequired)
             }
             return
         }
 
         guard let port else {
             withAnimation(reduceMotion ? nil : .default) {
-                portError = "Port number required"
+                portError = String(localized: Strings.Errors.portNumberRequired)
             }
             return
         }
 
         guard port >= Constants.Network.minimumPort else {
             withAnimation(reduceMotion ? nil : .default) {
-                portError = "Port number must be at least \(Constants.Network.minimumPort)"
+                portError = Strings.Errors.portMin(Constants.Network.minimumPort)
             }
             return
         }
 
         guard port <= Constants.Network.maximumPort else {
             withAnimation(reduceMotion ? nil : .default) {
-                portError = "Port number must be \(Constants.Network.maximumPort) or less"
+                portError = Strings.Errors.portMax(Constants.Network.maximumPort)
             }
             return
         }
 
         guard !domain.isEmpty else {
             withAnimation(reduceMotion ? nil : .default) {
-                domainError = "Domain is required"
+                domainError = String(localized: Strings.Errors.domainRequired)
             }
             return
         }
@@ -334,7 +335,7 @@ struct BroadcastBonjourServiceView: View {
                 isPresented = false
 
             } catch {
-                serviceTypeError = "Failed to publish service: \(error.localizedDescription)"
+                serviceTypeError = Strings.Errors.publishFailed(error.localizedDescription)
             }
         }
     }

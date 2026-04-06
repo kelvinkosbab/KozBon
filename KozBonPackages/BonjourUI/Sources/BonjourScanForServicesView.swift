@@ -7,6 +7,7 @@
 
 import SwiftUI
 import BonjourCore
+import BonjourLocalization
 import BonjourModels
 import BonjourScanning
 
@@ -35,7 +36,7 @@ public struct BonjourScanForServicesView: View {
                     Section {
                         forEach(services: viewModel.sortedPublishedServices)
                     } header: {
-                        Text(verbatim: "Published")
+                        Text(Strings.Sections.published)
                             .font(.caption)
                     }
                 }
@@ -44,7 +45,7 @@ public struct BonjourScanForServicesView: View {
                     Section {
                         forEach(services: viewModel.sortedActiveServices)
                     } header: {
-                        Text(verbatim: "Nearby " + (viewModel.sortType?.hostOrServiceTitle ?? "Services"))
+                        Text(verbatim: Strings.NearbySection.title(viewModel.sortType?.hostOrServiceTitle ?? String(localized: Strings.NearbySection.services)))
                             .font(.caption)
                     }
                 }
@@ -69,7 +70,7 @@ public struct BonjourScanForServicesView: View {
                             viewModel.isBroadcastBonjourServicePresented = true
                         } label: {
                             Label {
-                                Text("Broadcast Bonjour Service")
+                                Text(Strings.Buttons.broadcastBonjourService)
                             } icon: {
                                 Image(systemName: "antenna.radiowaves.left.and.right")
                                     .renderingMode(.template)
@@ -85,8 +86,8 @@ public struct BonjourScanForServicesView: View {
                                 .foregroundColor(.kozBonBlue)
                         }
                     }
-                    .accessibilityLabel("Create")
-                    .accessibilityHint("Create or broadcast a new service")
+                    .accessibilityLabel(String(localized: Strings.Accessibility.create))
+                    .accessibilityHint(String(localized: Strings.Accessibility.createHint))
                 }
             }
             #if os(visionOS)
@@ -96,14 +97,14 @@ public struct BonjourScanForServicesView: View {
                     Button {
                         viewModel.isBroadcastBonjourServicePresented = true
                     } label: {
-                        Label("Broadcast", systemImage: "antenna.radiowaves.left.and.right")
+                        Label(String(localized: Strings.Buttons.broadcast), systemImage: "antenna.radiowaves.left.and.right")
                     }
                 }
                 .padding(12)
                 .glassBackgroundEffect()
             }
             #endif
-            .navigationTitle("Nearby services")
+            .navigationTitle(String(localized: Strings.NavigationTitles.nearbyServices))
             .refreshable {
                 guard !self.viewModel.serviceScanner.isProcessing else {
                     return
@@ -119,9 +120,9 @@ public struct BonjourScanForServicesView: View {
                 )
             } else {
                 ContentUnavailableView(
-                    "Select a Service",
+                    String(localized: Strings.EmptyStates.selectService),
                     systemImage: "antenna.radiowaves.left.and.right",
-                    description: Text("Choose a nearby service to view its details.")
+                    description: Text(Strings.EmptyStates.selectServiceDescription)
                 )
             }
         }
@@ -146,13 +147,13 @@ public struct BonjourScanForServicesView: View {
             }
         }
         .alert(
-            "Scan Error",
+            String(localized: Strings.Alerts.scanError),
             isPresented: Binding(
                 get: { viewModel.scanError != nil },
                 set: { if !$0 { viewModel.scanError = nil } }
             )
         ) {
-            Button("OK") { viewModel.scanError = nil }
+            Button(String(localized: Strings.Buttons.ok)) { viewModel.scanError = nil }
         } message: {
             Text(viewModel.scanError ?? "")
         }
@@ -179,26 +180,26 @@ public struct BonjourScanForServicesView: View {
                 }
             }
             .draggable(service.hostName)
-            .accessibilityHint("View details for \(service.service.name)")
+            .accessibilityHint(Strings.Accessibility.viewDetails(service.service.name))
             .contextMenu {
                 Button {
                     Clipboard.copy(service.hostName)
                 } label: {
-                    Label("Copy Hostname", systemImage: "doc.on.doc")
+                    Label(String(localized: Strings.Actions.copyHostname), systemImage: "doc.on.doc")
                 }
 
                 if let firstAddress = service.addresses.first {
                     Button {
                         Clipboard.copy(firstAddress.ipPortString)
                     } label: {
-                        Label("Copy IP Address", systemImage: "network")
+                        Label(String(localized: Strings.Actions.copyIpAddress), systemImage: "network")
                     }
                 }
 
                 Button {
                     Clipboard.copy(service.serviceType.fullType)
                 } label: {
-                    Label("Copy Service Type", systemImage: "doc.on.clipboard")
+                    Label(String(localized: Strings.Actions.copyServiceType), systemImage: "doc.on.clipboard")
                 }
             }
         }

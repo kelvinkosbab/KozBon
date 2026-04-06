@@ -7,6 +7,7 @@
 
 import SwiftUI
 import BonjourCore
+import BonjourLocalization
 import BonjourModels
 
 // MARK: - SupportedServiceDetailView
@@ -47,15 +48,31 @@ public struct SupportedServiceDetailView: View {
             }
 
             Section {
-                copyableDetailRow(title: "Name", detail: serviceType.name)
-                copyableDetailRow(title: "Type", detail: serviceType.type)
+                copyableDetailRow(
+                    title: String(localized: Strings.DetailRows.name),
+                    detail: serviceType.name,
+                    copyLabel: String(localized: Strings.Actions.copyName)
+                )
+                copyableDetailRow(
+                    title: String(localized: Strings.DetailRows.type),
+                    detail: serviceType.type,
+                    copyLabel: String(localized: Strings.Actions.copyType)
+                )
                 TitleDetailStackView(
-                    title: "Transport layer",
+                    title: String(localized: Strings.DetailRows.transportLayer),
                     detail: serviceType.transportLayer.string
                 )
-                copyableDetailRow(title: "Full type", detail: serviceType.fullType)
+                copyableDetailRow(
+                    title: String(localized: Strings.DetailRows.fullType),
+                    detail: serviceType.fullType,
+                    copyLabel: String(localized: Strings.Actions.copyFullType)
+                )
                 if let detail = serviceType.detail, !detail.isEmpty {
-                    copyableDetailRow(title: "Details", detail: detail)
+                    copyableDetailRow(
+                        title: String(localized: Strings.DetailRows.details),
+                        detail: detail,
+                        copyLabel: String(localized: Strings.Actions.copyDetails)
+                    )
                 }
             }
 
@@ -66,14 +83,14 @@ public struct SupportedServiceDetailView: View {
                     } label: {
                         HStack {
                             Spacer()
-                            Text("Edit")
+                            Text(Strings.Buttons.edit)
                                 .font(.headline).bold()
                                 .padding(.vertical)
                             Spacer()
                         }
                     }
-                    .accessibilityLabel("Edit \(serviceType.name)")
-                    .accessibilityHint("Double tap to edit this service type")
+                    .accessibilityLabel(Strings.Accessibility.edit(serviceType.name))
+                    .accessibilityHint(String(localized: Strings.Accessibility.editHint))
                     .foregroundStyle(.yellow)
                     .sheet(isPresented: $showEditConfirmation) {
                         CreateOrUpdateBonjourServiceTypeView_Edit(
@@ -93,16 +110,16 @@ public struct SupportedServiceDetailView: View {
                     } label: {
                         HStack {
                             Spacer()
-                            Text("Delete")
+                            Text(Strings.Buttons.delete)
                                 .font(.headline).bold()
                                 .padding(.vertical)
                             Spacer()
                         }
                     }
-                    .accessibilityLabel("Delete \(serviceType.name)")
-                    .accessibilityHint("Double tap to delete this service type")
+                    .accessibilityLabel(Strings.Accessibility.delete(serviceType.name))
+                    .accessibilityHint(String(localized: Strings.Accessibility.deleteHint))
                     .confirmationDialog(
-                        "Are you sure you want to delete this service type?",
+                        String(localized: Strings.Alerts.deleteServiceType),
                         isPresented: $showDeleteConfirmation,
                         titleVisibility: .visible
                     ) {
@@ -110,7 +127,7 @@ public struct SupportedServiceDetailView: View {
                             serviceType.deletePersistentCopy()
                             dismiss()
                         } label: {
-                            Label("Delete", systemImage: "minus.circle.fill")
+                            Label(String(localized: Strings.Buttons.delete), systemImage: "minus.circle.fill")
                         }
                         .foregroundStyle(.red)
                     }
@@ -139,15 +156,15 @@ public struct SupportedServiceDetailView: View {
     // MARK: - Copyable Detail Row
 
     @ViewBuilder
-    private func copyableDetailRow(title: String, detail: String) -> some View {
+    private func copyableDetailRow(title: String, detail: String, copyLabel: String) -> some View {
         TitleDetailStackView(title: title, detail: detail)
             .draggable(detail)
-            .accessibilityHint("Long press to copy \(title.lowercased())")
+            .accessibilityHint(Strings.Accessibility.longPressToCopy(title.lowercased()))
             .contextMenu {
                 Button {
                     Clipboard.copy(detail)
                 } label: {
-                    Label("Copy \(title)", systemImage: "doc.on.doc")
+                    Label(copyLabel, systemImage: "doc.on.doc")
                 }
             }
     }

@@ -8,6 +8,7 @@
 import CoreUI
 import SwiftUI
 import BonjourCore
+import BonjourLocalization
 import BonjourModels
 
 // MARK: - SupportedServicesView
@@ -25,12 +26,12 @@ public struct SupportedServicesView: View {
     public var body: some View {
         NavigationSplitView {
             List(selection: $viewModel.selectedServiceType) {
-                serviceTypeSection(title: "Custom Service Types", serviceTypes: viewModel.filteredCustomServiceTypes)
-                serviceTypeSection(title: "Built-in Service Types", serviceTypes: viewModel.filteredBuiltInServiceTypes)
+                serviceTypeSection(title: String(localized: Strings.Sections.customServiceTypes), serviceTypes: viewModel.filteredCustomServiceTypes)
+                serviceTypeSection(title: String(localized: Strings.Sections.builtinServiceTypes), serviceTypes: viewModel.filteredBuiltInServiceTypes)
             }
             .contentMarginsBasedOnSizeClass()
-            .navigationTitle("Supported services")
-            .searchable(text: $viewModel.searchText, prompt: "Search for ...")
+            .navigationTitle(String(localized: Strings.NavigationTitles.supportedServices))
+            .searchable(text: $viewModel.searchText, prompt: String(localized: Strings.Placeholders.search))
             .toolbar {
                 ToolbarItem {
                     self.renderTrailingToolbarItems()
@@ -42,7 +43,7 @@ public struct SupportedServicesView: View {
                     Button {
                         viewModel.isCreateCustomServiceTypePresented = true
                     } label: {
-                        Label("Create Service Type", systemImage: "badge.plus.radiowaves.forward")
+                        Label(String(localized: Strings.Buttons.createServiceType), systemImage: "badge.plus.radiowaves.forward")
                     }
                 }
                 .padding(12)
@@ -54,9 +55,9 @@ public struct SupportedServicesView: View {
                 SupportedServiceDetailView(serviceType: selectedServiceType)
             } else {
                 ContentUnavailableView(
-                    "Select a Service Type",
+                    String(localized: Strings.EmptyStates.selectServiceType),
                     systemImage: "list.dash",
-                    description: Text("Choose a service type to view its details.")
+                    description: Text(Strings.EmptyStates.selectServiceTypeDescription)
                 )
             }
         }
@@ -83,7 +84,7 @@ public struct SupportedServicesView: View {
                         }
                     }
                     .draggable(serviceType.fullType)
-                    .accessibilityHint("View details for \(serviceType.name)")
+                    .accessibilityHint(Strings.Accessibility.viewDetails(serviceType.name))
                     .contextMenu {
                         serviceTypeContextMenu(serviceType: serviceType)
                     }
@@ -97,20 +98,20 @@ public struct SupportedServicesView: View {
         Button {
             Clipboard.copy(serviceType.fullType)
         } label: {
-            Label("Copy Full Type", systemImage: "doc.on.doc")
+            Label(String(localized: Strings.Actions.copyFullType), systemImage: "doc.on.doc")
         }
 
         Button {
             Clipboard.copy(serviceType.name)
         } label: {
-            Label("Copy Name", systemImage: "doc.on.clipboard")
+            Label(String(localized: Strings.Actions.copyName), systemImage: "doc.on.clipboard")
         }
 
         if let detail = serviceType.detail {
             Button {
                 Clipboard.copy(detail)
             } label: {
-                Label("Copy Details", systemImage: "info.circle")
+                Label(String(localized: Strings.Actions.copyDetails), systemImage: "info.circle")
             }
         }
 
@@ -120,7 +121,7 @@ public struct SupportedServicesView: View {
         Button {
             openWindow(value: serviceType)
         } label: {
-            Label("Open in New Window", systemImage: "macwindow.badge.plus")
+            Label(String(localized: Strings.Actions.openNewWindow), systemImage: "macwindow.badge.plus")
         }
         #endif
     }
@@ -131,7 +132,7 @@ public struct SupportedServicesView: View {
                 viewModel.isCreateCustomServiceTypePresented = true
             } label: {
                 Label {
-                    Text("Create Custom Service Type")
+                    Text(Strings.Buttons.createCustomServiceType)
                 } icon: {
                     Image(systemName: "badge.plus.radiowaves.forward")
                         .renderingMode(.template)
@@ -147,8 +148,8 @@ public struct SupportedServicesView: View {
                     .foregroundColor(.kozBonBlue)
             }
         }
-        .accessibilityLabel("Create")
-        .accessibilityHint("Create a custom service type")
+        .accessibilityLabel(String(localized: Strings.Accessibility.create))
+        .accessibilityHint(String(localized: Strings.Accessibility.createServiceTypeHint))
     }
 
     // MARK: - ViewModel
@@ -187,10 +188,7 @@ public struct SupportedServicesView: View {
             }
         }
 
-        let createButtonString = NSLocalizedString(
-            "Create",
-            comment: "Create service button string"
-        )
+        let createButtonString = String(localized: Strings.Buttons.create)
 
         func load() {
             let sortedServiceTypes = BonjourServiceType.fetchAll().sorted { lhs, rhs -> Bool in

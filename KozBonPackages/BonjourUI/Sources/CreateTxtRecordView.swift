@@ -7,6 +7,7 @@
 
 import SwiftUI
 import BonjourCore
+import BonjourLocalization
 import BonjourModels
 
 // MARK: - CreateTxtRecordView
@@ -52,48 +53,48 @@ struct CreateTxtRecordView: View {
             List {
                 Section {
                     TextField(
-                        "TXT Record Key",
+                        String(localized: Strings.Placeholders.txtRecordKey),
                         text: $key
                     )
-                    .accessibilityLabel("TXT record key")
-                    .accessibilityHint("Enter the key for this TXT record")
+                    .accessibilityLabel(String(localized: Strings.Accessibility.txtRecordKey))
+                    .accessibilityHint(String(localized: Strings.Accessibility.txtRecordKeyHint))
                     .onSubmit {
                         doneButtonSelected()
                     }
 
                 } header: {
-                    Text("Record Key")
+                    Text(Strings.Sections.recordKey)
                 } footer: {
                     if let keyError {
                         Text(verbatim: keyError)
                             .foregroundStyle(.red)
-                            .accessibilityLabel("Error: \(keyError)")
+                            .accessibilityLabel(Strings.Accessibility.error(keyError))
                     }
                 }
 
                 Section {
                     TextField(
-                        "TXT Record Value",
+                        String(localized: Strings.Placeholders.txtRecordValue),
                         text: $value
                     )
-                    .accessibilityLabel("TXT record value")
-                    .accessibilityHint("Enter the value for this TXT record")
+                    .accessibilityLabel(String(localized: Strings.Accessibility.txtRecordValue))
+                    .accessibilityHint(String(localized: Strings.Accessibility.txtRecordValueHint))
                     .onSubmit {
                         doneButtonSelected()
                     }
 
                 } header: {
-                    Text("Record Value")
+                    Text(Strings.Sections.recordValue)
                 } footer: {
                     if let valueError {
                         Text(verbatim: valueError)
                             .foregroundStyle(.red)
-                            .accessibilityLabel("Error: \(valueError)")
+                            .accessibilityLabel(Strings.Accessibility.error(valueError))
                     }
                 }
             }
             .contentMarginsBasedOnSizeClass()
-            .navigationTitle("Create Txt Record")
+            .navigationTitle(String(localized: Strings.NavigationTitles.createTxtRecord))
             #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
@@ -102,7 +103,7 @@ struct CreateTxtRecordView: View {
                     Button(role: .cancel) {
                         isPresented = false
                     } label: {
-                        Label("Cancel", systemImage: "x.circle.fill")
+                        Label(String(localized: Strings.Buttons.cancel), systemImage: "x.circle.fill")
                     }
                     .keyboardShortcut(.cancelAction)
                 }
@@ -110,7 +111,7 @@ struct CreateTxtRecordView: View {
                     Button {
                         doneButtonSelected()
                     } label: {
-                        Label("Done", systemImage: "checkmark.circle.fill")
+                        Label(String(localized: Strings.Buttons.done), systemImage: "checkmark.circle.fill")
                     }
                     .keyboardShortcut(.defaultAction)
                 }
@@ -141,14 +142,14 @@ struct CreateTxtRecordView: View {
 
         guard !key.isEmpty else {
             withAnimation(reduceMotion ? nil : .default) {
-                keyError = "TXT record key required"
+                keyError = String(localized: Strings.Errors.txtKeyRequired)
             }
             return
         }
 
         guard !value.isEmpty else {
             withAnimation(reduceMotion ? nil : .default) {
-                valueError = "TXT record value required"
+                valueError = String(localized: Strings.Errors.txtValueRequired)
             }
             return
         }
@@ -157,7 +158,7 @@ struct CreateTxtRecordView: View {
         let isDuplicate = txtDataRecords.contains { $0.key == key }
         guard txtRecordToUpdate != nil || !isDuplicate else {
             withAnimation(reduceMotion ? nil : .default) {
-                keyError = "A record with this key already exists"
+                keyError = String(localized: Strings.Errors.txtKeyDuplicate)
             }
             return
         }

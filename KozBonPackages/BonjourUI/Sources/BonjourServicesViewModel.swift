@@ -7,6 +7,7 @@
 
 import SwiftUI
 import BonjourCore
+import BonjourLocalization
 import BonjourModels
 import BonjourScanning
 
@@ -106,16 +107,10 @@ final class BonjourServicesViewModel: BonjourServiceScannerDelegate {
     // MARK: - Strings
 
     /// Localized title for the create/broadcast button.
-    let createButtonString = NSLocalizedString(
-        "Create",
-        comment: "Create service button string"
-    )
+    let createButtonString = String(localized: Strings.Buttons.create)
 
     /// Localized empty state message when no services are found.
-    let noActiveServicesString = NSLocalizedString(
-        "No active Bonjour services",
-        comment: "No active Bonjour services string"
-    )
+    let noActiveServicesString = String(localized: Strings.EmptyStates.noActiveServices)
 
     // MARK: - Actions
 

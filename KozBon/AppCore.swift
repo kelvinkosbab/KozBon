@@ -10,6 +10,7 @@ import CoreUI
 import BonjourUI
 import BonjourModels
 import BonjourScanning
+import BonjourLocalization
 
 // MARK: - AppCore
 
@@ -108,13 +109,13 @@ private struct AppCommands: Commands {
 
     var body: some Commands {
         CommandGroup(after: .newItem) {
-            Button("Broadcast Service") {
+            Button(String(localized: Strings.Buttons.broadcastService)) {
                 isBroadcastServicePresented = true
             }
             .disabled(isBroadcastServicePresented == nil)
             .keyboardShortcut("n", modifiers: [.command, .shift])
 
-            Button("Create Custom Service Type") {
+            Button(String(localized: Strings.Buttons.createCustomServiceType)) {
                 isCreateServiceTypePresented = true
             }
             .disabled(isCreateServiceTypePresented == nil)
