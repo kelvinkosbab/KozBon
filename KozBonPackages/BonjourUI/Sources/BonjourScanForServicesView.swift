@@ -113,7 +113,10 @@ public struct BonjourScanForServicesView: View {
             }
         } detail: {
             if let selectedService = viewModel.selectedService {
-                BonjourServiceDetailView(service: selectedService)
+                BonjourServiceDetailView(
+                    service: selectedService,
+                    isPublished: viewModel.isPublishedService(selectedService)
+                )
             } else {
                 ContentUnavailableView(
                     "Select a Service",

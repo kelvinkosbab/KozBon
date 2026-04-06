@@ -56,7 +56,7 @@ final class BonjourServicesViewModel: BonjourServiceScannerDelegate {
     }
 
     /// Returns whether the given service matches a user-published service.
-    private func isPublishedService(_ service: BonjourService) -> Bool {
+    func isPublishedService(_ service: BonjourService) -> Bool {
         publishedServiceKeys.contains("\(service.hostName)|\(service.serviceType.fullType)")
     }
 

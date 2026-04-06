@@ -205,6 +205,22 @@ public final class BonjourService: NSObject, @preconcurrency NetServiceDelegate 
         self.service.stopMonitoring()
     }
 
+    /// Updates the TXT records on the live published service and refreshes the local `dataRecords`.
+    ///
+    /// Calls `NetService.setTXTRecord()` to apply changes immediately on the network.
+    /// - Parameter records: The complete set of TXT records to publish.
+    public func updateTXTRecords(_ records: [TxtDataRecord]) {
+        var txtRecords: [String: Data] = [:]
+        for record in records {
+            if let data = record.value.data(using: .utf8) {
+                txtRecords[record.key] = data
+            }
+        }
+        let data = NetService.data(fromTXTRecord: txtRecords)
+        _ = service.setTXTRecord(data)
+        self.dataRecords = records.sorted { $0 < $1 }
+    }
+
     public func netService(_ sender: NetService, didUpdateTXTRecord data: Data) {
         logger.debug("Did update TXT record", censored: "\(data)")
 

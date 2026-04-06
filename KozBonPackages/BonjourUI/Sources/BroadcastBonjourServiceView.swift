@@ -318,12 +318,7 @@ struct BroadcastBonjourServiceView: View {
                     detail: serviceType.detail ?? "N/A"
                 )
 
-                var txtRecords: [String: Data] = [:]
-                for record in dataRecords {
-                    txtRecords[record.key] = record.value.data(using: String.Encoding.utf8)
-                }
-                let txtRecordData = NetService.data(fromTXTRecord: txtRecords)
-                _ = publishedService.service.setTXTRecord(txtRecordData)
+                publishedService.updateTXTRecords(dataRecords)
 
                 let index = customPublishedServices.firstIndex(of: publishedService)
                 if let index {
