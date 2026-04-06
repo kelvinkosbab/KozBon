@@ -1,0 +1,53 @@
+name: Multi-platform Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build ${{ matrix.platform }}
+    runs-on: macos-16
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: macOS
+            destination: 'platform=macOS'
+          - platform: visionOS
+            destination: 'platform=visionOS Simulator,name=Apple Vision Pro'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show Xcode Version
+        run: xcodebuild -version
+
+      - name: Cache SPM Dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/Library/Caches/org.swift.swiftpm
+            ~/Library/Developer/Xcode/DerivedData/**/SourcePackages
+          key: ${{ runner.os }}-spm-${{ matrix.platform }}-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-spm-${{ matrix.platform }}-
+
+      - name: Resolve Dependencies
+        run: xcodebuild -resolvePackageDependencies -workspace KozBon.xcworkspace -scheme KozBon
+
+      - name: Build
+        run: |
+          xcodebuild build \
+            -workspace KozBon.xcworkspace \
+            -scheme KozBon \
+            -destination '${{ matrix.destination }}' \
+            -skipPackagePluginValidation \
+            | xcpretty --color || exit ${PIPESTATUS[0]}

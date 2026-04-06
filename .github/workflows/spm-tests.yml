@@ -1,0 +1,35 @@
+name: SPM Package Tests
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'KozBonPackages/**'
+      - '.github/workflows/spm-tests.yml'
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'KozBonPackages/**'
+      - '.github/workflows/spm-tests.yml'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Swift Package Tests
+    runs-on: macos-16
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show Swift Version
+        run: swift --version
+
+      - name: Build Package
+        run: swift build --package-path KozBonPackages
+
+      - name: Run Tests
+        run: swift test --package-path KozBonPackages
