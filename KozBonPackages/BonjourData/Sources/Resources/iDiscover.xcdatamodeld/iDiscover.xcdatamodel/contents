@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16C67" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CustomServiceType" representedClassName="CustomServiceType" syncable="YES">
+        <attribute name="detail" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" attributeType="String" minValueString="0" syncable="YES"/>
+        <attribute name="serviceType" attributeType="String" minValueString="0" defaultValueString=" " syncable="YES"/>
+        <attribute name="transportLayerValue" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="CustomServiceType" positionX="-63" positionY="-18" width="128" height="105"/>
+    </elements>
+</model>

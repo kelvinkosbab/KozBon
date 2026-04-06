@@ -2,12 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "absolute:/Users/kelvinkosbab/Desktop/KozBonPackages">
+      location = "group:KozBonPackages">
    </FileRef>
    <FileRef
       location = "group:KozBon.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:../KozBon.xctestplan">
    </FileRef>
 </Workspace>

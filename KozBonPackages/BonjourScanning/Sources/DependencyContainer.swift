@@ -1,0 +1,80 @@
+//
+//  DependencyContainer.swift
+//  BonjourScanning
+//
+//  Copyright © 2016-present Kozinga. All rights reserved.
+//
+
+import SwiftUI
+import BonjourModels
+
+// MARK: - DependencyContainer
+
+/// Central container for managing application dependencies.
+///
+/// Provides protocol-based access to the scanner and publish manager,
+/// enabling mock substitution in tests and previews.
+public final class DependencyContainer: Sendable {
+
+    // MARK: - Services
+
+    public let bonjourServiceScanner: any BonjourServiceScannerProtocol
+    public let bonjourPublishManager: any BonjourPublishManagerProtocol
+
+    // MARK: - Initialization
+
+    /// Creates a dependency container with real production services.
+    @MainActor
+    public init() {
+        self.bonjourServiceScanner = BonjourServiceScanner.shared
+        self.bonjourPublishManager = MyBonjourPublishManager.shared
+    }
+
+    /// Creates a dependency container with custom services (useful for testing or previews).
+    public init(
+        bonjourServiceScanner: any BonjourServiceScannerProtocol,
+        bonjourPublishManager: any BonjourPublishManagerProtocol
+    ) {
+        self.bonjourServiceScanner = bonjourServiceScanner
+        self.bonjourPublishManager = bonjourPublishManager
+    }
+}
+
+// MARK: - Mock Factory
+
+extension DependencyContainer {
+
+    /// Creates a dependency container with mock services for testing.
+    @MainActor
+    public static func mock(
+        scanner: MockBonjourServiceScanner = MockBonjourServiceScanner(),
+        publishManager: MockBonjourPublishManager = MockBonjourPublishManager()
+    ) -> DependencyContainer {
+        return DependencyContainer(
+            bonjourServiceScanner: scanner,
+            bonjourPublishManager: publishManager
+        )
+    }
+}
+
+// MARK: - Environment Key
+
+private struct DependencyContainerKey: @preconcurrency EnvironmentKey {
+    @MainActor static let defaultValue = DependencyContainer()
+}
+
+public extension EnvironmentValues {
+    var dependencies: DependencyContainer {
+        get { self[DependencyContainerKey.self] }
+        set { self[DependencyContainerKey.self] = newValue }
+    }
+}
+
+// MARK: - View Extension
+
+public extension View {
+    /// Inject a custom dependency container into the view hierarchy.
+    func dependencies(_ container: DependencyContainer) -> some View {
+        self.environment(\.dependencies, container)
+    }
+}
