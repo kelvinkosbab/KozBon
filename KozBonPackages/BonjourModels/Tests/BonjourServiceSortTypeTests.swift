@@ -47,7 +47,7 @@ struct BonjourServiceSortTypeTests {
 
     @Test func allTitlesAreNonEmpty() {
         for sortType in BonjourServiceSortType.allCases {
-            #expect(!sortType.hostOrServiceTitle.isEmpty)
+            #expect(!sortType.title.isEmpty)
         }
     }
 }

@@ -61,18 +61,37 @@ final class BonjourServicesViewModel: BonjourServiceScannerDelegate {
         publishedServiceKeys.contains("\(service.hostName)|\(service.serviceType.fullType)")
     }
 
-    /// Active services that match a user-published service, sorted by the current `sortType`.
+    /// Active services that match a user-published service.
     var sortedPublishedServices: [BonjourService] {
-        let filtered = activeServices.filter { isPublishedService($0) }
-        guard let sortType else { return filtered }
-        return sortType.sorted(filtered)
+        activeServices.filter { isPublishedService($0) }
     }
 
     /// Active services excluding user-published ones, sorted by the current `sortType`.
-    var sortedActiveServices: [BonjourService] {
-        let filtered = activeServices.filter { !isPublishedService($0) }
-        guard let sortType else { return filtered }
-        return sortType.sorted(filtered)
+    ///
+    /// - Host name sorts cluster services from the same device together.
+    /// - Service type sorts cluster services of the same protocol together.
+    /// - Defaults to host name A→Z when no sort type is set.
+    var flatActiveServices: [BonjourService] {
+        let nonPublished = activeServices.filter { !isPublishedService($0) }
+
+        switch sortType {
+        case .hostNameAsc, nil:
+            return nonPublished.sorted {
+                ($0.service.name, $0.serviceType.name) < ($1.service.name, $1.serviceType.name)
+            }
+        case .hostNameDesc:
+            return nonPublished.sorted {
+                ($1.service.name, $0.serviceType.name) < ($0.service.name, $1.serviceType.name)
+            }
+        case .serviceNameAsc:
+            return nonPublished.sorted {
+                ($0.serviceType.name, $0.service.name) < ($1.serviceType.name, $1.service.name)
+            }
+        case .serviceNameDesc:
+            return nonPublished.sorted {
+                ($1.serviceType.name, $0.service.name) < ($0.serviceType.name, $1.service.name)
+            }
+        }
     }
 
     // MARK: - State

@@ -40,7 +40,7 @@ struct BonjourServicesViewModelTests {
         let (viewModel, _) = makeViewModel()
         #expect(viewModel.isInitialLoad)
         #expect(viewModel.lastScanTime == nil)
-        #expect(viewModel.sortedActiveServices.isEmpty)
+        #expect(viewModel.flatActiveServices.isEmpty)
         #expect(viewModel.sortedPublishedServices.isEmpty)
         #expect(viewModel.scanError == nil)
     }
@@ -81,7 +81,7 @@ struct BonjourServicesViewModelTests {
         let (viewModel, _) = makeViewModel()
         let service = makeService(name: "Test Device")
         viewModel.didAdd(service: service)
-        #expect(viewModel.sortedActiveServices.count == 1)
+        #expect(viewModel.flatActiveServices.count == 1)
     }
 
     @Test func didRemoveRemovesService() {
@@ -89,7 +89,7 @@ struct BonjourServicesViewModelTests {
         let service = makeService(name: "Test Device")
         viewModel.didAdd(service: service)
         viewModel.didRemove(service: service)
-        #expect(viewModel.sortedActiveServices.isEmpty)
+        #expect(viewModel.flatActiveServices.isEmpty)
     }
 
     @Test func didResetClearsAllServices() {
@@ -97,7 +97,7 @@ struct BonjourServicesViewModelTests {
         viewModel.didAdd(service: makeService(name: "Device 1"))
         viewModel.didAdd(service: makeService(name: "Device 2"))
         viewModel.didReset()
-        #expect(viewModel.sortedActiveServices.isEmpty)
+        #expect(viewModel.flatActiveServices.isEmpty)
     }
 
     @Test func didFailWithErrorSetsScanError() {
@@ -108,24 +108,44 @@ struct BonjourServicesViewModelTests {
 
     // MARK: - Sorting
 
-    @Test func sortedActiveServicesRespectsSortType() {
+    @Test func flatActiveServicesHostNameAsc() {
         let (viewModel, _) = makeViewModel()
         viewModel.didAdd(service: makeService(name: "Zebra"))
         viewModel.didAdd(service: makeService(name: "Alpha", type: "ssh"))
         viewModel.sort(sortType: .hostNameAsc)
 
-        let names = viewModel.sortedActiveServices.map(\.service.name)
+        let names = viewModel.flatActiveServices.map(\.service.name)
         #expect(names == ["Alpha", "Zebra"])
     }
 
-    @Test func sortedActiveServicesDescending() {
+    @Test func flatActiveServicesHostNameDesc() {
         let (viewModel, _) = makeViewModel()
         viewModel.didAdd(service: makeService(name: "Alpha"))
         viewModel.didAdd(service: makeService(name: "Zebra", type: "ssh"))
         viewModel.sort(sortType: .hostNameDesc)
 
-        let names = viewModel.sortedActiveServices.map(\.service.name)
+        let names = viewModel.flatActiveServices.map(\.service.name)
         #expect(names == ["Zebra", "Alpha"])
+    }
+
+    @Test func flatActiveServicesServiceNameAsc() {
+        let (viewModel, _) = makeViewModel()
+        viewModel.didAdd(service: makeService(name: "DeviceA", type: "ssh"))
+        viewModel.didAdd(service: makeService(name: "DeviceB", type: "http"))
+        viewModel.sort(sortType: .serviceNameAsc)
+
+        let typeNames = viewModel.flatActiveServices.map(\.serviceType.name)
+        #expect(typeNames.first! <= typeNames.last!)
+    }
+
+    @Test func flatActiveServicesServiceNameDesc() {
+        let (viewModel, _) = makeViewModel()
+        viewModel.didAdd(service: makeService(name: "DeviceA", type: "http"))
+        viewModel.didAdd(service: makeService(name: "DeviceB", type: "ssh"))
+        viewModel.sort(sortType: .serviceNameDesc)
+
+        let typeNames = viewModel.flatActiveServices.map(\.serviceType.name)
+        #expect(typeNames.first! >= typeNames.last!)
     }
 
     // MARK: - Published vs Active Filtering
@@ -137,7 +157,7 @@ struct BonjourServicesViewModelTests {
         viewModel.didAdd(service: service)
 
         #expect(viewModel.sortedPublishedServices.count == 1)
-        #expect(viewModel.sortedActiveServices.isEmpty)
+        #expect(viewModel.flatActiveServices.isEmpty)
     }
 
     // MARK: - Edge Cases
@@ -146,25 +166,23 @@ struct BonjourServicesViewModelTests {
         let (viewModel, _) = makeViewModel()
         let service = makeService(name: "Device")
         viewModel.didAdd(service: service)
-        // Add same service again (same id) — should update, not duplicate
         viewModel.didAdd(service: service)
-        #expect(viewModel.sortedActiveServices.count == 1)
+        #expect(viewModel.flatActiveServices.count == 1)
     }
 
     @Test func didRemoveNonExistentServiceIsNoOp() {
         let (viewModel, _) = makeViewModel()
         let service = makeService(name: "Ghost")
         viewModel.didRemove(service: service)
-        #expect(viewModel.sortedActiveServices.isEmpty)
+        #expect(viewModel.flatActiveServices.isEmpty)
     }
 
-    @Test func sortedActiveServicesWithNilSortTypeReturnsUnsorted() {
+    @Test func flatActiveServicesWithNilSortTypeDefaultsToAsc() {
         let (viewModel, _) = makeViewModel()
         viewModel.didAdd(service: makeService(name: "Zebra"))
         viewModel.didAdd(service: makeService(name: "Alpha", type: "ssh"))
-        // sortType is nil by default
         #expect(viewModel.sortType == nil)
-        #expect(viewModel.sortedActiveServices.count == 2)
+        #expect(viewModel.flatActiveServices.count == 2)
     }
 
     @Test func multipleDidResetCallsAreIdempotent() {
@@ -172,7 +190,7 @@ struct BonjourServicesViewModelTests {
         viewModel.didAdd(service: makeService(name: "Device"))
         viewModel.didReset()
         viewModel.didReset()
-        #expect(viewModel.sortedActiveServices.isEmpty)
+        #expect(viewModel.flatActiveServices.isEmpty)
     }
 
     @Test func scanErrorClearsWhenSetToNil() {
@@ -181,18 +199,5 @@ struct BonjourServicesViewModelTests {
         #expect(viewModel.scanError == "Error")
         viewModel.scanError = nil
         #expect(viewModel.scanError == nil)
-    }
-
-    @Test func sortedPublishedServicesWithSortType() {
-        let (viewModel, _) = makeViewModel()
-        let service1 = makeService(name: "Zebra")
-        let service2 = makeService(name: "Alpha", type: "ssh")
-        viewModel.customPublishedServices = [service1, service2]
-        viewModel.didAdd(service: service1)
-        viewModel.didAdd(service: service2)
-        viewModel.sort(sortType: .hostNameAsc)
-
-        let names = viewModel.sortedPublishedServices.map(\.service.name)
-        #expect(names == ["Alpha", "Zebra"])
     }
 }

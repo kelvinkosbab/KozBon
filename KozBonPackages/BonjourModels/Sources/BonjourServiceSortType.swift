@@ -10,131 +10,47 @@ import BonjourLocalization
 
 // MARK: - BonjourServiceSortType
 
-/// A sort option describing how Bonjour services should be ordered in lists.
+/// A sort option describing how nearby services should be ordered in lists.
 ///
-/// This enum centralizes all supported sort behaviors used by the UI when
-/// presenting discovered services. By collecting the options in one place,
-/// views and view models can iterate over the full set of choices and
-/// present consistent labels and behaviors across the app.
-///
-/// The cases cover ascending and descending ordering by either the host name
-/// (service instance name) or by the service type's display name. This type
-/// conforms to Identifiable for easy use in SwiftUI Lists and Menus, and
-/// CaseIterable to enumerate all available sort options. You can persist the
-/// selected value using its `id`, or display a localized title via
-/// `hostOrServiceTitle`.
+/// Host name options cluster services from the same device together.
+/// Service type options cluster services of the same protocol together.
 public enum BonjourServiceSortType: Identifiable, CaseIterable {
 
-    /// Sort by host name in ascending (A -> Z) order.
-    ///
-    /// Use this option when you want service instances to be listed in a
-    /// predictable, alphabetical order based on their advertised names. This is
-    /// often the most familiar ordering for users scanning a list.
-    ///
-    /// In this project, the "host name" corresponds to the Bonjour service's
-    /// instance name (e.g., the value surfaced as `service.name`). Selecting
-    /// this option will place names earlier in the alphabet nearer the top.
+    /// Sort by host name in ascending (A → Z) order.
     case hostNameAsc
 
-    /// Sort by host name in descending (Z -> A) order.
-    ///
-    /// Choose this option when you want to reverse the typical alphabetical
-    /// ordering of service instance names. This can be useful when recent or
-    /// higher-sorted names naturally fall later in the alphabet and should be
-    /// surfaced first.
-    ///
-    /// As with the ascending variant, the "host name" is the Bonjour service's
-    /// instance name. Selecting this option will place names later in the
-    /// alphabet nearer the top.
+    /// Sort by host name in descending (Z → A) order.
     case hostNameDesc
 
-    /// Sort by service type name in ascending (A -> Z) order.
-    ///
-    /// This option groups and orders services by their human-readable service
-    /// type name, making it easier to compare devices or apps that share the
-    /// same underlying protocol. It is helpful when the type is more relevant
-    /// than the instance name.
-    ///
-    /// The "service type name" here corresponds to the display name associated
-    /// with a Bonjour service type (for example, "AirPlay" or "SSH"). Selecting
-    /// this option will place type names earlier in the alphabet nearer the top.
+    /// Sort by service type name in ascending (A → Z) order.
     case serviceNameAsc
 
-    /// Sort by service type name in descending (Z -> A) order.
-    ///
-    /// Choose this option to reverse the alphabetical ordering of service type
-    /// names. This can be useful when you want certain types that sort later in
-    /// the alphabet to appear first for quick access.
-    ///
-    /// As with the ascending variant, the "service type name" corresponds to
-    /// the user-facing label for the Bonjour service type. Selecting this option
-    /// will place type names later in the alphabet nearer the top.
+    /// Sort by service type name in descending (Z → A) order.
     case serviceNameDesc
 
-    /// A stable identifier for the sort option, useful for SwiftUI's Identifiable conformance.
-    ///
-    /// The returned string is stable and can be used for persistence (e.g.,
-    /// storing a selected sort type in UserDefaults) or for diffing in SwiftUI
-    /// lists. This avoids relying on enum ordinal values, which are not stable.
-    ///
-    /// When you need to recreate a sort option from persisted state, you can
-    /// compare the stored identifier to the `id` of each `allCases` element.
+    /// A stable identifier for the sort option.
     public var id: String {
         switch self {
         case .hostNameAsc:
             "hostNameAsc"
-
         case .hostNameDesc:
             "hostNameDesc"
-
         case .serviceNameAsc:
             "serviceNameAsc"
-
         case .serviceNameDesc:
             "serviceNameDesc"
         }
     }
 
-    // MARK: - Sorting
-
-    /// Sorts the given array of Bonjour services according to this sort option.
-    ///
-    /// - Parameter services: The services to sort.
-    /// - Returns: A new array sorted by this option's criteria.
-    @MainActor
-    public func sorted(_ services: [BonjourService]) -> [BonjourService] {
-        switch self {
-        case .hostNameAsc:
-            services.sorted { $0.service.name < $1.service.name }
-        case .hostNameDesc:
-            services.sorted { $0.service.name > $1.service.name }
-        case .serviceNameAsc:
-            services.sorted { $0.serviceType.name < $1.serviceType.name }
-        case .serviceNameDesc:
-            services.sorted { $0.serviceType.name > $1.serviceType.name }
-        }
-    }
-
-    /// A localized, user-facing title describing the sort option, suitable for menus and section headers.
-    ///
-    /// These strings are intended for direct presentation in the UI, such as in
-    /// a sort menu or in section headers that reflect the current sort mode.
-    /// They are localized using `NSLocalizedString` to support internationalization.
-    ///
-    /// If you introduce new sort cases, add corresponding localized strings so
-    /// the UI remains consistent across languages. The comments supplied here
-    /// help translators understand the usage context.
-    public var hostOrServiceTitle: String {
+    /// A localized, user-facing title describing the sort option.
+    public var title: String {
         switch self {
         case .hostNameAsc:
             String(localized: Strings.SortOptions.hostNameAsc)
-
         case .hostNameDesc:
             String(localized: Strings.SortOptions.hostNameDesc)
-
         case .serviceNameAsc:
             String(localized: Strings.SortOptions.serviceTypeAsc)
-
         case .serviceNameDesc:
             String(localized: Strings.SortOptions.serviceTypeDesc)
         }

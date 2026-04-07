@@ -39,7 +39,7 @@ struct BonjourServiceListSortMenu: View {
     var body: some View {
         Menu {
             ForEach(BonjourServiceSortType.allCases) { sortType in
-                Button(sortType.hostOrServiceTitle) {
+                Button(sortType.title) {
                     self.didSelect(sortType: sortType)
                 }
             }

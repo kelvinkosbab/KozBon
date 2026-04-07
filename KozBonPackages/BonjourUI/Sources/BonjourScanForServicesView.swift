@@ -41,18 +41,15 @@ public struct BonjourScanForServicesView: View {
                     }
                 }
 
-                if !viewModel.sortedActiveServices.isEmpty {
+                if !viewModel.flatActiveServices.isEmpty {
                     Section {
-                        forEach(services: viewModel.sortedActiveServices)
-                    } header: {
-                        Text(verbatim: Strings.NearbySection.title(viewModel.sortType?.hostOrServiceTitle ?? String(localized: Strings.NearbySection.services)))
-                            .font(.caption)
+                        forEach(services: viewModel.flatActiveServices)
                     }
                 }
             }
             .contentMarginsBasedOnSizeClass()
             .overlay {
-                if self.viewModel.sortedActiveServices.isEmpty {
+                if self.viewModel.flatActiveServices.isEmpty {
                     EmptyStateOverlayView(
                         image: nil,
                         title: self.viewModel.noActiveServicesString
