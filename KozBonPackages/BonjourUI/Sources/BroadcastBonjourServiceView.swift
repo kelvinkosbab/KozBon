@@ -316,7 +316,7 @@ struct BroadcastBonjourServiceView: View {
                     port: port,
                     domain: domain.trimmed,
                     transportLayer: transportLayer,
-                    detail: serviceType.detail ?? "N/A"
+                    detail: serviceType.localizedDetail ?? "N/A"
                 )
 
                 publishedService.updateTXTRecords(dataRecords)

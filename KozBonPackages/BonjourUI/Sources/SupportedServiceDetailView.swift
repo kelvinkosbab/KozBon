@@ -67,7 +67,7 @@ public struct SupportedServiceDetailView: View {
                     detail: serviceType.fullType,
                     copyLabel: String(localized: Strings.Actions.copyFullType)
                 )
-                if let detail = serviceType.detail, !detail.isEmpty {
+                if let detail = serviceType.localizedDetail, !detail.isEmpty {
                     copyableDetailRow(
                         title: String(localized: Strings.DetailRows.details),
                         detail: detail,

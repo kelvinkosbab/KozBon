@@ -107,7 +107,7 @@ public struct SupportedServicesView: View {
             Label(String(localized: Strings.Actions.copyName), systemImage: "doc.on.clipboard")
         }
 
-        if let detail = serviceType.detail {
+        if let detail = serviceType.localizedDetail {
             Button {
                 Clipboard.copy(detail)
             } label: {
@@ -184,7 +184,7 @@ public struct SupportedServicesView: View {
             return types.filter { serviceType in
                 serviceType.name.containsIgnoreCase(searchText) ||
                 serviceType.fullType.containsIgnoreCase(searchText) ||
-                (serviceType.detail?.containsIgnoreCase(searchText) ?? false)
+                (serviceType.localizedDetail?.containsIgnoreCase(searchText) ?? false)
             }
         }
 

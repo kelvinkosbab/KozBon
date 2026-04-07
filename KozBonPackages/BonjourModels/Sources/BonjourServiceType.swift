@@ -7,6 +7,7 @@
 
 import Foundation
 import BonjourCore
+import BonjourLocalization
 
 // MARK: - BonjourServiceType
 
@@ -17,6 +18,14 @@ public struct BonjourServiceType: Hashable, Equatable, Sendable, Codable {
     public let transportLayer: TransportLayer
     public let detail: String?
     public let fullType: String
+
+    /// Returns the localized version of `detail`, looking up the English string
+    /// as a key in the BonjourLocalization String Catalog. Falls back to the
+    /// English `detail` if no translation is found.
+    public var localizedDetail: String? {
+        guard let detail else { return nil }
+        return String(localized: String.LocalizationValue(detail), bundle: BonjourLocalization.bundle)
+    }
 
     public init(
         name: String,

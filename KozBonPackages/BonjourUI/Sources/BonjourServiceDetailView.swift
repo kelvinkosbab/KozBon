@@ -72,7 +72,7 @@ public struct BonjourServiceDetailView: View {
                     title: String(localized: Strings.DetailRows.domain),
                     detail: viewModel.service.service.domain
                 )
-                if let detail = viewModel.serviceType.detail {
+                if let detail = viewModel.serviceType.localizedDetail {
                     TitleDetailStackView(
                         title: String(localized: Strings.DetailRows.protocolInformation),
                         detail: detail

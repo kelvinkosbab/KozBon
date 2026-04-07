@@ -116,7 +116,7 @@ struct SelectServiceTypeView: View {
                     let isInName = serviceType.name.containsIgnoreCase(searchText)
                     let isInType = serviceType.fullType.containsIgnoreCase(searchText)
                     var isInDetail = false
-                    if let detail = serviceType.detail {
+                    if let detail = serviceType.localizedDetail {
                         isInDetail = detail.containsIgnoreCase(searchText)
                     }
                     return isInName || isInType || isInDetail
@@ -132,7 +132,7 @@ struct SelectServiceTypeView: View {
                     let isInName = serviceType.name.containsIgnoreCase(searchText)
                     let isInType = serviceType.fullType.containsIgnoreCase(searchText)
                     var isInDetail = false
-                    if let detail = serviceType.detail {
+                    if let detail = serviceType.localizedDetail {
                         isInDetail = detail.containsIgnoreCase(searchText)
                     }
                     return isInName || isInType || isInDetail

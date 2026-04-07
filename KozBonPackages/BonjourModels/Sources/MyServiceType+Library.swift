@@ -127,42 +127,50 @@ extension BonjourServiceType {
     static private let timeCapsuleBackups: BonjourServiceType = BonjourServiceType(
         name: "Time Capsule Backups",
         type: "adisk",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Apple Time Capsule network backup appliance for wireless Time Machine backups."
     )
     static private let airDroidApp: BonjourServiceType = BonjourServiceType(
         name: "AirDroid App",
         type: "airdroid",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "AirDroid wireless device management app for file transfer and remote access between mobile devices and computers."
     )
     static private let amazonDevices: BonjourServiceType = BonjourServiceType(
         name: "Amazon Devices",
         type: "amzn-wplay",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Amazon wireless playback service for discovering and streaming to Amazon Echo, Fire TV, and other Alexa-enabled devices."
     )
     static private let osxWiFiSync: BonjourServiceType = BonjourServiceType(
         name: "OSX Wi-Fi Sync",
         type: "apple-mobdev2",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Apple Wi-Fi Sync for wirelessly syncing iOS devices with iTunes or Finder on macOS."
     )
     static private let appleSharediTunesLibrary: BonjourServiceType = BonjourServiceType(
         name: "Apple Shared iTunes Library",
         type: "atc",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Apple shared iTunes/Music library for discovering shared media libraries on the local network."
     )
     static private let sketchApp: BonjourServiceType = BonjourServiceType(
         name: "Sketch App",
         type: "sketchmirror",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Sketch design app mirror service for previewing designs on iOS devices in real time."
     )
     static private let sketchApp2: BonjourServiceType = BonjourServiceType(
         name: "Sketch App",
         type: "bcbonjour",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Sketch design app mirror service for previewing designs on iOS devices in real time."
     )
     static private let airplay2Undocumented: BonjourServiceType = BonjourServiceType(
         name: "AirPlay 2 Undocumented",
         type: "cloud",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Undocumented AirPlay 2 service type used by Apple devices for enhanced audio streaming and multi-room playback."
     )
     static private let cloudByDapile: BonjourServiceType = BonjourServiceType(
         name: "Cloud by Dapile",
@@ -172,37 +180,44 @@ extension BonjourServiceType {
     static private let osxDeviceInfo: BonjourServiceType = BonjourServiceType(
         name: "OSX Device Info",
         type: "device-info",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "macOS device information broadcast for identifying Mac computers on the local network."
     )
     static private let esFileShareApp: BonjourServiceType = BonjourServiceType(
         name: "ES File Share App",
         type: "esdevice",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "ES File Explorer file sharing service for wireless file transfer between mobile devices and computers."
     )
     static private let esFileShareApp2: BonjourServiceType = BonjourServiceType(
         name: "ES File Share App",
         type: "esfileshare",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "ES File Explorer file sharing service for wireless file transfer between mobile devices and computers."
     )
     static private let appleHomeKit: BonjourServiceType = BonjourServiceType(
         name: "Apple HomeKit",
         type: "homekit",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Apple HomeKit service for discovering and controlling smart home accessories on the local network."
     )
     static private let iTunesHomeSharing: BonjourServiceType = BonjourServiceType(
         name: "iTunes Home Sharing",
         type: "home-sharing",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "iTunes Home Sharing for streaming music, movies, and TV shows between authorized computers and Apple devices on the same network."
     )
     static private let jenkinsApp: BonjourServiceType = BonjourServiceType(
         name: "Jenkins App",
         type: "hudson",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Jenkins CI/CD automation server for continuous integration and continuous delivery of software projects."
     )
     static private let jenkinsApp2: BonjourServiceType = BonjourServiceType(
         name: "Jenkins App",
         type: "jenkins",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Jenkins CI/CD automation server for continuous integration and continuous delivery of software projects."
     )
     static private let iChatInstantMessagingProtocol: BonjourServiceType = BonjourServiceType(
         name: "iChat Instant Messaging Protocol",
@@ -212,88 +227,104 @@ extension BonjourServiceType {
     static private let osxKeynote: BonjourServiceType = BonjourServiceType(
         name: "OSX Keynote",
         type: "KeynoteControl",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Apple Keynote presentation sharing and remote control service."
     )
     static private let osxKeynote2: BonjourServiceType = BonjourServiceType(
         name: "OSX Keynote",
         type: "keynotepair",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Apple Keynote presentation sharing and remote control service."
     )
     static private let appleTVMediaRemote: BonjourServiceType = BonjourServiceType(
         name: "Apple TV Media Remote",
         type: "mediaremotetv",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Apple TV Media Remote protocol for controlling Apple TV playback, navigation, and input from iOS devices and Macs."
     )
     static private let nVIDIAShieldGameStreaming: BonjourServiceType = BonjourServiceType(
         name: "NVIDIA Shield Game Streaming",
         type: "nvstream",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "NVIDIA Shield GameStream service for streaming PC games to NVIDIA Shield devices over the local network."
     )
     static private let nvidiaShieldAndroidTV: BonjourServiceType = BonjourServiceType(
         name: "Nvidia Shield / Android TV",
         type: "androidtvremote",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "NVIDIA Shield Android TV discovery service for identifying Shield TV devices on the local network."
     )
     static private let omniGroupOmniGraffleAndOtherApps: BonjourServiceType = BonjourServiceType(
         name: "OmniGroup (OmniGraffle and other apps)",
         type: "omnistate",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "OmniGroup app sync service used by OmniGraffle, OmniOutliner, and other OmniGroup productivity apps."
     )
     static private let adobePhotoshopNav: BonjourServiceType = BonjourServiceType(
         name: "Adobe Photoshop Nav",
         type: "photoshopserver",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Adobe Photoshop remote navigation service for controlling Photoshop from a tablet or mobile device."
     )
     static private let netgearReadyNAS: BonjourServiceType = BonjourServiceType(
         name: "Netgear ReadyNAS",
         type: "readynas",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Netgear ReadyNAS network-attached storage device discovery and management."
     )
     static private let physicalWeb: BonjourServiceType = BonjourServiceType(
         name: "Physical Web",
         type: "physicalweb",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Physical Web (Eddystone) beacon discovery service for interacting with nearby Bluetooth LE beacons broadcasting URLs."
     )
     static private let scanners: BonjourServiceType = BonjourServiceType(
         name: "Scanners",
         type: "scanner",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Network scanner discovery service for locating scanners and multifunction devices on the local network."
     )
     static private let ubuntuRaspberryPiAdvertisement: BonjourServiceType = BonjourServiceType(
         name: "Ubuntu / Raspberry Pi Advertisement",
         type: "udisks-ssh",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Linux device advertisement service commonly used by Ubuntu and Raspberry Pi devices to announce their presence on the network."
     )
     static private let powerViewHubV2: BonjourServiceType = BonjourServiceType(
         name: "PowerView Hub 2.0",
         type: "powerview",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Hunter Douglas PowerView Hub 2.0 for controlling motorized window blinds and shades over the local network."
     )
     static private let spotifyConnect: BonjourServiceType = BonjourServiceType(
         name: "Spotify Connect",
         type: "spotify-connect",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Spotify Connect service for discovering and streaming music to Spotify-enabled speakers, TVs, and other devices."
     )
     static private let netBIOSSessionService: BonjourServiceType = BonjourServiceType(
         name: "NetBIOS Session Service",
         type: "netbios-ssn",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "NetBIOS Session Service for legacy Windows file and printer sharing over TCP/IP networks."
     )
     static private let rokuControlProtocol: BonjourServiceType = BonjourServiceType(
         name: "ROKU Control Protocol",
         type: "roku-rcp",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Roku External Control Protocol (ECP) for discovering and controlling Roku streaming devices on the local network."
     )
     static private let beatsTransferProtocol: BonjourServiceType = BonjourServiceType(
         name: "Beats Transfer Protocol",
         type: "btp",
         transportLayer: .tcp,
-        detail: "Beats Transfer Protocol allows for the discovery and control of devices"
+        detail: "Beats Transfer Protocol for discovering and configuring Beats audio products including headphones, earbuds, and speakers."
     )
     static private let androidTvRemote: BonjourServiceType = BonjourServiceType(
         name: "Android TV Remote",
         type: "androidtvremote",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Android TV Remote Service for discovering and controlling Android TV devices from mobile phones and tablets."
     )
     static private let googleXpeditionsTcp: BonjourServiceType = BonjourServiceType(
         name: "Google Expeditions",
@@ -323,57 +354,67 @@ extension BonjourServiceType {
         name: "Airdrop",
         type: "airdrop",
         transportLayer: .tcp,
-        detail: "airdrop"
+        detail: "Apple AirDrop peer-to-peer file sharing service for wirelessly transferring files, photos, and links between nearby Apple devices."
     )
     static private let appleMobileDeviceProtocol: BonjourServiceType = BonjourServiceType(
         name: "Apple Mobile Device Protocol",
         type: "apple-mobdev",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Apple Mobile Device Protocol for communication between iOS devices and macOS for syncing, debugging, and management."
     )
     static private let appleMobileDeviceProtocolV2: BonjourServiceType = BonjourServiceType(
         name: "Apple Mobile Device Protocol V2",
         type: "apple-mobdev2",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Apple Mobile Device Protocol version 2 for enhanced communication between iOS devices and macOS."
     )
     static private let appleMIDI: BonjourServiceType = BonjourServiceType(
         name: "Apple MIDI",
         type: "apple-midi",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Apple MIDI Network Session protocol for sending MIDI messages between devices over a local network, used by music production apps and instruments."
     )
     static private let appleRemoteDebugServices: BonjourServiceType = BonjourServiceType(
         name: "Apple Remote Debug Services (OpenGL Profiler)",
         type: "applerdbg",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Apple Remote Debug Services including OpenGL Profiler for remote GPU debugging and performance analysis of graphics applications."
     )
     static private let appleTV: BonjourServiceType = BonjourServiceType(
         name: "Apple TV",
         type: "appletv",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Original Apple TV discovery service for identifying first-generation Apple TV devices on the local network."
     )
     static private let appleTVv2: BonjourServiceType = BonjourServiceType(
         name: "Apple TV (2nd Generation)",
         type: "appletv-v2",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Apple TV (2nd generation) discovery service with support for AirPlay and Netflix streaming."
     )
     static private let appleTVv3: BonjourServiceType = BonjourServiceType(
         name: "Apple TV (3rd Generation)",
         type: "appletv-v3",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Apple TV (3rd generation) discovery service with 1080p video support."
     )
     static private let appleTVv4: BonjourServiceType = BonjourServiceType(
         name: "Apple TV (4th Generation)",
         type: "appletv-v4",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Apple TV (4th generation) discovery service with tvOS app support and Siri Remote."
     )
     static private let appleTViTunes: BonjourServiceType = BonjourServiceType(
         name: "Apple TV Discovery of iTunes",
         type: "appletv-itunes",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Apple TV iTunes Store discovery for browsing and purchasing content directly on Apple TV."
     )
     static private let appleTVPairing: BonjourServiceType = BonjourServiceType(
         name: "Apple TV Pairing",
         type: "appletv-pair",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Apple TV pairing service for establishing secure connections between Apple TV and remote control devices."
     )
     static private let keynoteAccess: BonjourServiceType = BonjourServiceType(
         name: "KeynoteAccess",
@@ -396,7 +437,8 @@ extension BonjourServiceType {
     static private let touchAble: BonjourServiceType = BonjourServiceType(
         name: "Touchable",
         type: "touch-able",
-        transportLayer: .tcp
+        transportLayer: .tcp,
+        detail: "Touchable app service for using an iOS device as a remote control for music production software like Ableton Live."
     )
     static private let remoteFrameBuffer: BonjourServiceType = BonjourServiceType(
         name: "Remote Frame Buffer",
@@ -456,7 +498,7 @@ extension BonjourServiceType {
         name: "Secure Sockets Layer (SSL, or HTTPS)",
         type: "https",
         transportLayer: .tcp,
-        detail: "TLS websites, iTunes Store, Software Update (OS X Mountain Lion and later), Spotlight Suggestions, Mac App Store, Maps, FaceTime, Game Center, iCloud authentication and DAV Services (Contacts, Calendars, Bookmarks), iCloud backup and apps (Calendars, Contacts, Find My iPhone, Find My Friends, Mail,  Documents & Photo Stream, iCloud Key Value Store (KVS), iPhoto Journals, AirPlay, macOS Internet Recovery, Profile Manager, Back to My Mac, Dictation, Siri (iOS), Xcode Server (hosted and remote Git HTTPS, remote SVN HTTPS, Apple Developer registration)"
+        detail: "HTTPS (HTTP over TLS) for secure web communication. Used by web browsers, App Store, iCloud, FaceTime, and most Apple services requiring encrypted connections."
     )
     static private let remoteLogin: BonjourServiceType = BonjourServiceType(
         name: "Remote Login",
@@ -746,12 +788,14 @@ extension BonjourServiceType {
     static private let netBIOSNameService: BonjourServiceType = BonjourServiceType(
         name: "NetBIOS Name Service",
         type: "netbios-ns",
-        transportLayer: .udp
+        transportLayer: .udp,
+        detail: "NetBIOS Name Service for resolving NetBIOS names to IP addresses on local networks."
     )
     static private let netBIOSDatagramService: BonjourServiceType = BonjourServiceType(
         name: "NETBIOS Datagram Service",
         type: "netbios-dgm",
-        transportLayer: .udp
+        transportLayer: .udp,
+        detail: "NetBIOS Datagram Service for connectionless messaging between devices on local networks."
     )
     static private let googleXpeditionsUdp: BonjourServiceType = BonjourServiceType(
         name: "Google Expeditions",
@@ -769,7 +813,7 @@ extension BonjourServiceType {
         name: "GoPro Web",
         type: "gopro-web",
         transportLayer: .udp,
-        detail: "GoPro proprietary protocol for devices"
+        detail: "GoPro proprietary web protocol for device configuration, firmware updates, and media management over the local network."
     )
     static private let airplayUdp: BonjourServiceType = BonjourServiceType(
         name: "Airplay",
@@ -792,12 +836,14 @@ extension BonjourServiceType {
     static private let ssdp: BonjourServiceType = BonjourServiceType(
         name: "SSDP",
         type: "ssdp",
-        transportLayer: .udp
+        transportLayer: .udp,
+        detail: "Simple Service Discovery Protocol used by UPnP devices to announce and discover services on the local network."
     )
     static private let wifiCalling: BonjourServiceType = BonjourServiceType(
         name: "Wi-Fi Calling",
         type: "ssdp",
-        transportLayer: .udp
+        transportLayer: .udp,
+        detail: "Wi-Fi Calling service for making and receiving phone calls over a Wi-Fi network instead of cellular."
     )
     static private let rtspUdp: BonjourServiceType = BonjourServiceType(
         name: "Real Time Streaming Protocol (RTSP)",
