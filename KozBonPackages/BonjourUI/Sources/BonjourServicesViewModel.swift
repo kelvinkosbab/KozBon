@@ -97,7 +97,7 @@ final class BonjourServicesViewModel: BonjourServiceScannerDelegate {
     /// - Parameter publishManager: The publish manager to use. Defaults to the shared singleton.
     init(
         serviceScanner: BonjourServiceScannerProtocol = BonjourServiceScanner.shared,
-        publishManager: BonjourPublishManagerProtocol = MyBonjourPublishManager.shared
+        publishManager: BonjourPublishManagerProtocol = BonjourPublishManager.shared
     ) {
         self.serviceScanner = serviceScanner
         self.publishManager = publishManager

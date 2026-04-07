@@ -25,7 +25,7 @@ public struct BonjourScanForServicesView: View {
     ) {
         _viewModel = State(initialValue: BonjourServicesViewModel(
             serviceScanner: scanner ?? BonjourServiceScanner.shared,
-            publishManager: publishManager ?? MyBonjourPublishManager.shared
+            publishManager: publishManager ?? BonjourPublishManager.shared
         ))
     }
 

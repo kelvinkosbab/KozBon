@@ -27,7 +27,7 @@ public final class DependencyContainer: Sendable {
     @MainActor
     public init() {
         self.bonjourServiceScanner = BonjourServiceScanner.shared
-        self.bonjourPublishManager = MyBonjourPublishManager.shared
+        self.bonjourPublishManager = BonjourPublishManager.shared
     }
 
     /// Creates a dependency container with custom services (useful for testing or previews).

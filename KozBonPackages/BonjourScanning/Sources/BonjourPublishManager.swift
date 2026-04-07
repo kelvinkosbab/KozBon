@@ -1,5 +1,5 @@
 //
-//  MyBonjourPublishManager.swift
+//  BonjourPublishManager.swift
 //  KozBon
 //
 //  Copyright © 2016-present Kozinga. All rights reserved.
@@ -10,16 +10,16 @@ import BonjourCore
 import BonjourModels
 
 @MainActor
-public protocol MyBonjourPublishManagerDelegate: AnyObject, Sendable {
+public protocol BonjourPublishManagerDelegate: AnyObject, Sendable {
     func publishedServicesUpdated(_ publishedServices: [BonjourService])
 }
 
 @MainActor
-public final class MyBonjourPublishManager {
+public final class BonjourPublishManager {
 
     // MARK: - Singleton
 
-    public static let shared = MyBonjourPublishManager()
+    public static let shared = BonjourPublishManager()
 
     private init() {}
 

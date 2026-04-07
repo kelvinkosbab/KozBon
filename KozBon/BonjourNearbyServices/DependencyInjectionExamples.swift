@@ -223,7 +223,7 @@ final class ExampleViewModel {
 
     init(
         scanner: any BonjourServiceScannerProtocol = BonjourServiceScanner.shared,
-        publishManager: any BonjourPublishManagerProtocol = MyBonjourPublishManager.shared
+        publishManager: any BonjourPublishManagerProtocol = BonjourPublishManager.shared
     ) {
         self.scanner = scanner
         self.publishManager = publishManager

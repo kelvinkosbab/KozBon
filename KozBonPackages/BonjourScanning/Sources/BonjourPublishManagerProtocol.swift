@@ -41,6 +41,6 @@ public protocol BonjourPublishManagerProtocol: AnyObject, Sendable {
     func unPublishAllServices() async
 }
 
-// MARK: - MyBonjourPublishManager + Protocol Conformance
+// MARK: - BonjourPublishManager + Protocol Conformance
 
-extension MyBonjourPublishManager: BonjourPublishManagerProtocol {}
+extension BonjourPublishManager: BonjourPublishManagerProtocol {}
