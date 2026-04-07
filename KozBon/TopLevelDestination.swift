@@ -10,11 +10,19 @@ import BonjourLocalization
 
 // MARK: - TopLevelDestination
 
+/// The top-level tab destinations for the app's main TabView.
+///
+/// Each case represents a primary navigation tab with an associated
+/// title string (localized) and SF Symbol icon.
 enum TopLevelDestination: Identifiable {
-    case bonjour
-    case bonjourServiceTypes
-    case bluetooth
 
+    /// The nearby Bonjour services scanner tab.
+    case bonjour
+
+    /// The supported service type library and custom service type management tab.
+    case bonjourServiceTypes
+
+    /// A stable identifier for each destination, used by SwiftUI for tab identity.
     var id: String {
         switch self {
         case .bonjour:
@@ -22,14 +30,12 @@ enum TopLevelDestination: Identifiable {
 
         case .bonjourServiceTypes:
             "bonjourServiceTypes"
-
-        case .bluetooth:
-            "bluetooth"
         }
     }
 
     // MARK: - Label
 
+    /// The localized display title for this tab.
     var titleString: String {
         switch self {
         case .bonjour:
@@ -37,22 +43,17 @@ enum TopLevelDestination: Identifiable {
 
         case .bonjourServiceTypes:
             String(localized: Strings.Tabs.supportedServices)
-
-        case .bluetooth:
-            String(localized: Strings.Tabs.bluetooth)
         }
     }
 
+    /// The SF Symbol icon for this tab.
     var icon: Image {
         switch self {
         case .bonjour:
             Image.bonjour
 
         case .bonjourServiceTypes:
-            Image(systemName: "list.dash")
-
-        case .bluetooth:
-            Image.bluetoothCapsuleFill
+            Image(systemName: "books.vertical")
         }
     }
 }

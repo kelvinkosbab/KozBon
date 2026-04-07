@@ -58,10 +58,6 @@ public enum Strings {
         public static var supportedServices: LocalizedStringResource {
             .init("tab_supported_services", bundle: .atURL(Bundle.module.bundleURL))
         }
-
-        public static var bluetooth: LocalizedStringResource {
-            .init("tab_bluetooth", bundle: .atURL(Bundle.module.bundleURL))
-        }
     }
 
     // MARK: - Sections

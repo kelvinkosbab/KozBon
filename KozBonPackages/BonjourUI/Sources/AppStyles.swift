@@ -67,18 +67,6 @@ extension NSColor {
 
 public extension Image {
 
-    // MARK: - Custom Images
-
-    static var bluetooth: Image {
-        Image("bluetooth")
-            .renderingMode(.template)
-    }
-
-    static var bluetoothCapsuleFill: Image {
-        Image("bluetooth.capsule.fill")
-            .renderingMode(.template)
-    }
-
     // MARK: - SF Symbols
 
     static var bonjour: Image {

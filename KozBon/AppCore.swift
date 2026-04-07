@@ -45,7 +45,11 @@ struct AppCore: App {
                         }
                     }
                 }
+                #if os(macOS)
+                .tabViewStyle(.automatic)
+                #else
                 .tabViewStyle(.sidebarAdaptable)
+                #endif
                 .tint(.kozBonBlue)
                 .environment(\.dependencies, dependencies)
             } else {

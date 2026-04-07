@@ -23,15 +23,10 @@ struct TopLevelDestinationTests {
         #expect(TopLevelDestination.bonjourServiceTypes.id == "bonjourServiceTypes")
     }
 
-    @Test func bluetoothIdIsBluetooth() {
-        #expect(TopLevelDestination.bluetooth.id == "bluetooth")
-    }
-
     @Test func allIdsAreUnique() {
         let ids = [
             TopLevelDestination.bonjour.id,
             TopLevelDestination.bonjourServiceTypes.id,
-            TopLevelDestination.bluetooth.id,
         ]
         #expect(Set(ids).count == ids.count)
     }
@@ -46,12 +41,8 @@ struct TopLevelDestinationTests {
         #expect(TopLevelDestination.bonjourServiceTypes.titleString == "Supported services")
     }
 
-    @Test func bluetoothTitleIsBluetooth() {
-        #expect(TopLevelDestination.bluetooth.titleString == "Bluetooth")
-    }
-
     @Test func allTitlesAreNonEmpty() {
-        let destinations: [TopLevelDestination] = [.bonjour, .bonjourServiceTypes, .bluetooth]
+        let destinations: [TopLevelDestination] = [.bonjour, .bonjourServiceTypes]
         for destination in destinations {
             #expect(!destination.titleString.isEmpty)
         }

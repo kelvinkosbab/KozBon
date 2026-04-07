@@ -52,7 +52,7 @@ struct EmptyStateOverlayView_Previews: PreviewProvider {
         )
 
         EmptyStateOverlayView(
-            image: Image.bluetoothCapsuleFill,
+            image: Image(systemName: "antenna.radiowaves.left.and.right"),
             title: "Some title saying something"
         )
     }
