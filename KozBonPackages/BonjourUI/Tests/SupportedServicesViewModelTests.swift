@@ -12,7 +12,7 @@ import BonjourModels
 
 // MARK: - SupportedServicesViewModelTests
 
-@Suite("SupportedServicesView.ViewModel")
+@Suite("SupportedServicesViewModel")
 @MainActor
 struct SupportedServicesViewModelTests {
 
@@ -33,61 +33,61 @@ struct SupportedServicesViewModelTests {
     // MARK: - Initial State
 
     @Test func searchTextIsEmptyInitially() {
-        let vm = SupportedServicesView.ViewModel()
+        let vm = SupportedServicesViewModel()
         #expect(vm.searchText.isEmpty)
     }
 
     @Test func selectedServiceTypeIsNilInitially() {
-        let vm = SupportedServicesView.ViewModel()
+        let vm = SupportedServicesViewModel()
         #expect(vm.selectedServiceType == nil)
     }
 
     @Test func isCreateCustomServiceTypePresentedIsFalseInitially() {
-        let vm = SupportedServicesView.ViewModel()
+        let vm = SupportedServicesViewModel()
         #expect(!vm.isCreateCustomServiceTypePresented)
     }
 
     // MARK: - Filtering Built-in Service Types (without Core Data)
 
     @Test func filteredBuiltInServiceTypesIsEmptyBeforeLoad() {
-        let vm = SupportedServicesView.ViewModel()
+        let vm = SupportedServicesViewModel()
         // Before load() is called, no data is populated
         #expect(vm.filteredBuiltInServiceTypes.isEmpty)
     }
 
     @Test func filteredCustomServiceTypesIsEmptyBeforeLoad() {
-        let vm = SupportedServicesView.ViewModel()
+        let vm = SupportedServicesViewModel()
         #expect(vm.filteredCustomServiceTypes.isEmpty)
     }
 
     @Test func filteredBuiltInServiceTypesReturnsEmptyForNoMatchBeforeLoad() {
-        let vm = SupportedServicesView.ViewModel()
+        let vm = SupportedServicesViewModel()
         vm.searchText = "XYZNONEXISTENT"
         #expect(vm.filteredBuiltInServiceTypes.isEmpty)
     }
 
     @Test func searchTextCanBeSetAndRead() {
-        let vm = SupportedServicesView.ViewModel()
+        let vm = SupportedServicesViewModel()
         vm.searchText = "HTTP"
         #expect(vm.searchText == "HTTP")
     }
 
     @Test func selectedServiceTypeCanBeSetAndRead() {
-        let vm = SupportedServicesView.ViewModel()
+        let vm = SupportedServicesViewModel()
         let serviceType = BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp)
         vm.selectedServiceType = serviceType
         #expect(vm.selectedServiceType == serviceType)
     }
 
     @Test func isCreateCustomServiceTypePresentedCanBeToggled() {
-        let vm = SupportedServicesView.ViewModel()
+        let vm = SupportedServicesViewModel()
         #expect(!vm.isCreateCustomServiceTypePresented)
         vm.isCreateCustomServiceTypePresented = true
         #expect(vm.isCreateCustomServiceTypePresented)
     }
 
     @Test func createButtonStringIsNotEmpty() {
-        let vm = SupportedServicesView.ViewModel()
+        let vm = SupportedServicesViewModel()
         #expect(!vm.createButtonString.isEmpty)
     }
 }

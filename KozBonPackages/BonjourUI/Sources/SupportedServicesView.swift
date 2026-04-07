@@ -15,7 +15,7 @@ import BonjourModels
 
 public struct SupportedServicesView: View {
 
-    @State private var viewModel = ViewModel()
+    @State private var viewModel = SupportedServicesViewModel()
 
     #if os(macOS)
     @Environment(\.openWindow) private var openWindow
@@ -150,64 +150,5 @@ public struct SupportedServicesView: View {
         }
         .accessibilityLabel(String(localized: Strings.Accessibility.create))
         .accessibilityHint(String(localized: Strings.Accessibility.createServiceTypeHint))
-    }
-
-    // MARK: - ViewModel
-
-    @MainActor
-    @Observable
-    final class ViewModel {
-
-        private var builtInServiceTypes: [BonjourServiceType] = []
-        private var customServiceTypes: [BonjourServiceType] = []
-
-        var selectedServiceType: BonjourServiceType?
-        var searchText: String = ""
-        var isCreateCustomServiceTypePresented = false {
-            didSet {
-                if !isCreateCustomServiceTypePresented {
-                    self.load()
-                }
-            }
-        }
-
-        var filteredBuiltInServiceTypes: [BonjourServiceType] {
-            filterServiceTypes(builtInServiceTypes)
-        }
-
-        var filteredCustomServiceTypes: [BonjourServiceType] {
-            filterServiceTypes(customServiceTypes)
-        }
-
-        private func filterServiceTypes(_ types: [BonjourServiceType]) -> [BonjourServiceType] {
-            guard !searchText.isEmpty else { return types }
-            return types.filter { serviceType in
-                serviceType.name.containsIgnoreCase(searchText) ||
-                serviceType.fullType.containsIgnoreCase(searchText) ||
-                (serviceType.localizedDetail?.containsIgnoreCase(searchText) ?? false)
-            }
-        }
-
-        let createButtonString = String(localized: Strings.Buttons.create)
-
-        func load() {
-            let sortedServiceTypes = BonjourServiceType.fetchAll().sorted { lhs, rhs -> Bool in
-                lhs.name < rhs.name
-            }
-            let builtInServiceTypes = sortedServiceTypes.filter { $0.isBuiltIn }
-            let customServiceTypes = sortedServiceTypes.filter { !$0.isBuiltIn }
-
-            if self.builtInServiceTypes != builtInServiceTypes {
-                withAnimation {
-                    self.builtInServiceTypes = builtInServiceTypes
-                }
-            }
-
-            if self.customServiceTypes != customServiceTypes {
-                withAnimation {
-                    self.customServiceTypes = customServiceTypes
-                }
-            }
-        }
     }
 }
