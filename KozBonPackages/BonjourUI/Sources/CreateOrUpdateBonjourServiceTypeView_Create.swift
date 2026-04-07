@@ -106,7 +106,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                     Button(role: .cancel) {
                         isPresented = false
                     } label: {
-                        Label(String(localized: Strings.Buttons.cancel), systemImage: "x.circle.fill")
+                        Label(String(localized: Strings.Buttons.cancel), systemImage: Iconography.cancel)
                     }
                     .keyboardShortcut(.cancelAction)
                 }
@@ -114,7 +114,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                     Button {
                         createButtonSelected()
                     } label: {
-                        Label(String(localized: Strings.Buttons.create), systemImage: "checkmark.circle.fill")
+                        Label(String(localized: Strings.Buttons.create), systemImage: Iconography.confirm)
                     }
                     .keyboardShortcut(.defaultAction)
                 }

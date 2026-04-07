@@ -96,7 +96,7 @@ struct BroadcastBonjourServiceView: View {
                     Button(role: .cancel) {
                         isPresented = false
                     } label: {
-                        Label(String(localized: Strings.Buttons.cancel), systemImage: "x.circle.fill")
+                        Label(String(localized: Strings.Buttons.cancel), systemImage: Iconography.cancel)
                     }
                     .keyboardShortcut(.cancelAction)
                 }
@@ -105,7 +105,7 @@ struct BroadcastBonjourServiceView: View {
                     Button {
                         doneButtonSelected()
                     } label: {
-                        Label(String(localized: Strings.Buttons.done), systemImage: "checkmark.circle.fill")
+                        Label(String(localized: Strings.Buttons.done), systemImage: Iconography.confirm)
                     }
                     .keyboardShortcut(.defaultAction)
                 }
@@ -244,7 +244,7 @@ struct BroadcastBonjourServiceView: View {
                             }
                         }
                     } label: {
-                        Label(String(localized: Strings.Buttons.remove), systemImage: "minus.circle.fill")
+                        Label(String(localized: Strings.Buttons.remove), systemImage: Iconography.remove)
                     }
                     .accessibilityLabel(Strings.Accessibility.remove(dataRecord.key))
                     .tint(.red)
@@ -254,7 +254,7 @@ struct BroadcastBonjourServiceView: View {
             Button {
                 isCreateTxtRecordViewPresented = true
             } label: {
-                Label(String(localized: Strings.Buttons.addTxtRecord), systemImage: "plus.circle.fill")
+                Label(String(localized: Strings.Buttons.addTxtRecord), systemImage: Iconography.add)
             }
             .accessibilityHint(String(localized: Strings.Accessibility.addTxtRecordHint))
         }

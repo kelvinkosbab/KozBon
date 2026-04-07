@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import BonjourCore
 import BonjourLocalization
 
 // MARK: - TopLevelDestination
@@ -53,7 +54,7 @@ enum TopLevelDestination: Identifiable {
             Image.bonjour
 
         case .bonjourServiceTypes:
-            Image(systemName: "books.vertical")
+            Image(systemName: Iconography.serviceLibrary)
         }
     }
 }

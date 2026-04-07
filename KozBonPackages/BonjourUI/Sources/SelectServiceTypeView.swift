@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import BonjourCore
 import BonjourLocalization
 import BonjourModels
 
@@ -46,7 +47,7 @@ struct SelectServiceTypeView: View {
                                 title: serviceType.name,
                                 detail: serviceType.fullType
                             ) {
-                                Image(systemName: selectedServiceType == serviceType ? "checkmark.circle.fill" : "circle")
+                                Image(systemName: selectedServiceType == serviceType ? Iconography.selected : Iconography.unselected)
                                     .font(.body).bold()
                                     .foregroundStyle(selectedServiceType == serviceType ? Color.kozBonBlue : .secondary)
                                     .accessibilityHidden(true)
@@ -73,7 +74,7 @@ struct SelectServiceTypeView: View {
                                 title: serviceType.name,
                                 detail: serviceType.fullType
                             ) {
-                                Image(systemName: selectedServiceType == serviceType ? "checkmark.circle.fill" : "circle")
+                                Image(systemName: selectedServiceType == serviceType ? Iconography.selected : Iconography.unselected)
                                     .font(.body).bold()
                                     .foregroundStyle(selectedServiceType == serviceType ? Color.kozBonBlue : .secondary)
                                     .accessibilityHidden(true)

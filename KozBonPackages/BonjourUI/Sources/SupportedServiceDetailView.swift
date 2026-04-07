@@ -127,7 +127,7 @@ public struct SupportedServiceDetailView: View {
                             serviceType.deletePersistentCopy()
                             dismiss()
                         } label: {
-                            Label(String(localized: Strings.Buttons.delete), systemImage: "minus.circle.fill")
+                            Label(String(localized: Strings.Buttons.delete), systemImage: Iconography.remove)
                         }
                         .foregroundStyle(.red)
                     }
@@ -164,7 +164,7 @@ public struct SupportedServiceDetailView: View {
                 Button {
                     Clipboard.copy(detail)
                 } label: {
-                    Label(copyLabel, systemImage: "doc.on.doc")
+                    Label(copyLabel, systemImage: Iconography.copy)
                 }
             }
     }

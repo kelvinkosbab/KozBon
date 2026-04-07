@@ -43,7 +43,7 @@ public struct SupportedServicesView: View {
                     Button {
                         viewModel.isCreateCustomServiceTypePresented = true
                     } label: {
-                        Label(String(localized: Strings.Buttons.createServiceType), systemImage: "badge.plus.radiowaves.forward")
+                        Label(String(localized: Strings.Buttons.createServiceType), systemImage: Iconography.createServiceType)
                     }
                 }
                 .padding(12)
@@ -56,7 +56,7 @@ public struct SupportedServicesView: View {
             } else {
                 ContentUnavailableView(
                     String(localized: Strings.EmptyStates.selectServiceType),
-                    systemImage: "list.dash",
+                    systemImage: Iconography.list,
                     description: Text(Strings.EmptyStates.selectServiceTypeDescription)
                 )
             }
@@ -98,20 +98,20 @@ public struct SupportedServicesView: View {
         Button {
             Clipboard.copy(serviceType.fullType)
         } label: {
-            Label(String(localized: Strings.Actions.copyFullType), systemImage: "doc.on.doc")
+            Label(String(localized: Strings.Actions.copyFullType), systemImage: Iconography.copy)
         }
 
         Button {
             Clipboard.copy(serviceType.name)
         } label: {
-            Label(String(localized: Strings.Actions.copyName), systemImage: "doc.on.clipboard")
+            Label(String(localized: Strings.Actions.copyName), systemImage: Iconography.copyAlternate)
         }
 
         if let detail = serviceType.localizedDetail {
             Button {
                 Clipboard.copy(detail)
             } label: {
-                Label(String(localized: Strings.Actions.copyDetails), systemImage: "info.circle")
+                Label(String(localized: Strings.Actions.copyDetails), systemImage: Iconography.info)
             }
         }
 
@@ -121,7 +121,7 @@ public struct SupportedServicesView: View {
         Button {
             openWindow(value: serviceType)
         } label: {
-            Label(String(localized: Strings.Actions.openNewWindow), systemImage: "macwindow.badge.plus")
+            Label(String(localized: Strings.Actions.openNewWindow), systemImage: Iconography.openInNewWindow)
         }
         #endif
     }
@@ -134,7 +134,7 @@ public struct SupportedServicesView: View {
                 Label {
                     Text(Strings.Buttons.createCustomServiceType)
                 } icon: {
-                    Image(systemName: "badge.plus.radiowaves.forward")
+                    Image(systemName: Iconography.createServiceType)
                         .renderingMode(.template)
                         .foregroundColor(.kozBonBlue)
                 }

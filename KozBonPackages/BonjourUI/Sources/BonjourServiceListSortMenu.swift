@@ -11,6 +11,7 @@
 /// writes the selected case back through a binding. The label uses a localized
 /// "Sort" title and a tinted system icon.
 import SwiftUI
+import BonjourCore
 import BonjourLocalization
 import BonjourModels
 

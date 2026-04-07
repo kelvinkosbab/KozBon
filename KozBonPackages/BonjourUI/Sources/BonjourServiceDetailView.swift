@@ -93,13 +93,13 @@ public struct BonjourServiceDetailView: View {
                             Button {
                                 Clipboard.copy(address.ipPortString)
                             } label: {
-                                Label(String(localized: Strings.Actions.copyAddress), systemImage: "doc.on.doc")
+                                Label(String(localized: Strings.Actions.copyAddress), systemImage: Iconography.copy)
                             }
 
                             Button {
                                 Clipboard.copy(address.ip)
                             } label: {
-                                Label(String(localized: Strings.Actions.copyIpOnly), systemImage: "network")
+                                Label(String(localized: Strings.Actions.copyIpOnly), systemImage: Iconography.network)
                             }
                         }
                     }
@@ -156,20 +156,20 @@ public struct BonjourServiceDetailView: View {
                         Button {
                             Clipboard.copy("\(dataRecord.key)=\(dataRecord.value)")
                         } label: {
-                            Label(String(localized: Strings.Actions.copyRecord), systemImage: "doc.on.doc")
+                            Label(String(localized: Strings.Actions.copyRecord), systemImage: Iconography.copy)
                         }
 
                         Button {
                             Clipboard.copy(dataRecord.value)
                         } label: {
-                            Label(String(localized: Strings.Actions.copyValue), systemImage: "doc.on.clipboard")
+                            Label(String(localized: Strings.Actions.copyValue), systemImage: Iconography.copyAlternate)
                         }
                     }
                     .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                         Button(role: .destructive) {
                             viewModel.deleteTxtRecord(dataRecord)
                         } label: {
-                            Label(String(localized: Strings.Buttons.remove), systemImage: "minus.circle.fill")
+                            Label(String(localized: Strings.Buttons.remove), systemImage: Iconography.remove)
                         }
                         .accessibilityLabel(Strings.Accessibility.remove(dataRecord.key))
                         .tint(.red)
@@ -180,7 +180,7 @@ public struct BonjourServiceDetailView: View {
                     viewModel.txtRecordToEdit = nil
                     viewModel.isCreateTxtRecordPresented = true
                 } label: {
-                    Label(String(localized: Strings.Buttons.addTxtRecord), systemImage: "plus.circle.fill")
+                    Label(String(localized: Strings.Buttons.addTxtRecord), systemImage: Iconography.add)
                 }
                 .accessibilityHint(String(localized: Strings.Accessibility.addTxtRecordHint))
             }
@@ -197,13 +197,13 @@ public struct BonjourServiceDetailView: View {
                         Button {
                             Clipboard.copy("\(dataRecord.key)=\(dataRecord.value)")
                         } label: {
-                            Label(String(localized: Strings.Actions.copyRecord), systemImage: "doc.on.doc")
+                            Label(String(localized: Strings.Actions.copyRecord), systemImage: Iconography.copy)
                         }
 
                         Button {
                             Clipboard.copy(dataRecord.value)
                         } label: {
-                            Label(String(localized: Strings.Actions.copyValue), systemImage: "doc.on.clipboard")
+                            Label(String(localized: Strings.Actions.copyValue), systemImage: Iconography.copyAlternate)
                         }
                     }
                 }

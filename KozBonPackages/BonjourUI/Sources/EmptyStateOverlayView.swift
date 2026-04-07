@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import BonjourCore
 import CoreUI
 
 // MARK: - EmptyStateOverlayView
@@ -52,7 +53,7 @@ struct EmptyStateOverlayView_Previews: PreviewProvider {
         )
 
         EmptyStateOverlayView(
-            image: Image(systemName: "antenna.radiowaves.left.and.right"),
+            image: Image(systemName: Iconography.antenna),
             title: "Some title saying something"
         )
     }

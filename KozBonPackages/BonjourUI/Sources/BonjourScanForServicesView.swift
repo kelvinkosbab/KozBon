@@ -72,7 +72,7 @@ public struct BonjourScanForServicesView: View {
                             Label {
                                 Text(Strings.Buttons.broadcastBonjourService)
                             } icon: {
-                                Image(systemName: "antenna.radiowaves.left.and.right")
+                                Image(systemName: Iconography.antenna)
                                     .renderingMode(.template)
                                     .foregroundColor(.kozBonBlue)
                             }
@@ -97,7 +97,7 @@ public struct BonjourScanForServicesView: View {
                     Button {
                         viewModel.isBroadcastBonjourServicePresented = true
                     } label: {
-                        Label(String(localized: Strings.Buttons.broadcast), systemImage: "antenna.radiowaves.left.and.right")
+                        Label(String(localized: Strings.Buttons.broadcast), systemImage: Iconography.antenna)
                     }
                 }
                 .padding(12)
@@ -121,7 +121,7 @@ public struct BonjourScanForServicesView: View {
             } else {
                 ContentUnavailableView(
                     String(localized: Strings.EmptyStates.selectService),
-                    systemImage: "antenna.radiowaves.left.and.right",
+                    systemImage: Iconography.antenna,
                     description: Text(Strings.EmptyStates.selectServiceDescription)
                 )
             }
@@ -185,21 +185,21 @@ public struct BonjourScanForServicesView: View {
                 Button {
                     Clipboard.copy(service.hostName)
                 } label: {
-                    Label(String(localized: Strings.Actions.copyHostname), systemImage: "doc.on.doc")
+                    Label(String(localized: Strings.Actions.copyHostname), systemImage: Iconography.copy)
                 }
 
                 if let firstAddress = service.addresses.first {
                     Button {
                         Clipboard.copy(firstAddress.ipPortString)
                     } label: {
-                        Label(String(localized: Strings.Actions.copyIpAddress), systemImage: "network")
+                        Label(String(localized: Strings.Actions.copyIpAddress), systemImage: Iconography.network)
                     }
                 }
 
                 Button {
                     Clipboard.copy(service.serviceType.fullType)
                 } label: {
-                    Label(String(localized: Strings.Actions.copyServiceType), systemImage: "doc.on.clipboard")
+                    Label(String(localized: Strings.Actions.copyServiceType), systemImage: Iconography.copyAlternate)
                 }
             }
         }

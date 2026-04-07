@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import BonjourCore
 
 // MARK: - Colors
 
@@ -70,14 +71,14 @@ public extension Image {
     // MARK: - SF Symbols
 
     static var bonjour: Image {
-        Image(systemName: "bonjour")
+        Image(systemName: Iconography.bonjour)
     }
 
     static var arrowUpArrowDownCircleFill: Image {
-        Image(systemName: "arrow.up.arrow.down.circle.fill")
+        Image(systemName: Iconography.sort)
     }
 
     static var plusCircleFill: Image {
-        Image(systemName: "plus.circle.fill")
+        Image(systemName: Iconography.add)
     }
 }

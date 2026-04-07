@@ -6,13 +6,14 @@
 //
 
 import Foundation
+import BonjourCore
 
 extension BonjourServiceType {
 
     /// An SF Symbols system image name representing this service type.
     ///
     /// Returns a contextually appropriate symbol based on the service's display name.
-    /// Falls back to `"wifi"` for unrecognized service types.
+    /// Falls back to `Iconography.wifi` for unrecognized service types.
     ///
     /// Mappings are matched case-insensitively against the service type's `name` property.
     /// When adding new service types to the library, consider adding a corresponding
@@ -40,347 +41,347 @@ extension BonjourServiceType {
         // MARK: - AirPlay & Streaming
         // Audio/video streaming protocols and music sharing services.
 
-        /// AirPlay video/audio streaming — `airplayvideo`
+        /// AirPlay video/audio streaming
         case "airplay",
             "airplay 2 undocumented":
-            "airplayvideo"
+            Iconography.airplayVideo
 
-        /// Remote Audio Output Protocol — `hifispeaker.fill`
+        /// Remote Audio Output Protocol
         case "remote audio output protocol (raop)":
-            "hifispeaker.fill"
+            Iconography.speaker
 
-        /// Spotify wireless speaker streaming — `hifispeaker.fill`
+        /// Spotify wireless speaker streaming
         case "spotify connect":
-            "hifispeaker.fill"
+            Iconography.speaker
 
-        /// Sonos multi-room speaker system — `hifispeaker.2.fill`
+        /// Sonos multi-room speaker system
         case "sonos speaker":
-            "hifispeaker.2.fill"
+            Iconography.multiSpeaker
 
-        /// iTunes/DAAP music library sharing — `music.note`
+        /// iTunes/DAAP music library sharing
         case "digital audio access protocol (daap)":
-            "music.note"
+            Iconography.musicNote
 
-        /// Shared iTunes/Apple Music libraries — `music.note.list`
+        /// Shared iTunes/Apple Music libraries
         case "apple shared itunes library",
             "itunes home sharing":
-            "music.note.list"
+            Iconography.musicNoteList
 
-        /// Real-time media streaming — `play.tv`
+        /// Real-time media streaming
         case "real time streaming protocol (rtsp)":
-            "play.tv"
+            Iconography.playTV
 
         // MARK: - Apple TV & Remotes
         // Apple TV devices, media remotes, and third-party streaming boxes.
 
-        /// Apple TV set-top box (all generations) — `appletv`
+        /// Apple TV set-top box (all generations)
         case "apple tv",
             "apple tv (2nd generation)",
             "apple tv (3rd generation)",
             "apple tv (4th generation)",
             "apple tv pairing",
             "apple tv discovery of itunes":
-            "appletv"
+            Iconography.appleTV
 
-        /// Apple TV Siri Remote control protocol — `appletvremote.gen4.fill`
+        /// Apple TV Siri Remote control protocol
         case "apple tv media remote":
-            "appletvremote.gen4.fill"
+            Iconography.appleTVRemote
 
-        /// Media Remote TV protocol — `av.remote`
+        /// Media Remote TV protocol
         case "mediaremotetv":
-            "av.remote"
+            Iconography.avRemote
 
-        /// TouchAble remote control app — `appletvremote.gen4.fill`
+        /// TouchAble remote control app
         case "touchable":
-            "appletvremote.gen4.fill"
+            Iconography.appleTVRemote
 
-        /// Google Cast / Chromecast streaming — `tv`
+        /// Google Cast / Chromecast streaming
         case "google cast",
             "chromecast":
-            "tv"
+            Iconography.tv
 
-        /// Roku streaming device control — `tv`
+        /// Roku streaming device control
         case "roku control protocol":
-            "tv"
+            Iconography.tv
 
-        /// Android TV remote control — `tv`
+        /// Android TV remote control
         case "android tv remote":
-            "tv"
+            Iconography.tv
 
         // MARK: - Apple Devices
         // Apple mobile devices, desktop sync, and cross-device features.
 
-        /// Apple mobile device sync and management — `platter.2.filled.iphone`
+        /// Apple mobile device sync and management
         case "apple mobile device protocol",
             "apple mobile device protocol v2",
             "osx wi-fi sync":
-            "platter.2.filled.iphone"
+            Iconography.mobileDevice
 
-        /// Apple Continuity (Handoff, Universal Clipboard) — `macbook.and.iphone`
+        /// Apple Continuity (Handoff, Universal Clipboard)
         case "apple continuity":
-            "macbook.and.iphone"
+            Iconography.macAndIphone
 
-        /// macOS device information broadcast — `desktopcomputer`
+        /// macOS device information broadcast
         case "osx device info":
-            "desktopcomputer"
+            Iconography.desktop
 
-        /// CarPlay vehicle integration — `car.fill`
+        /// CarPlay vehicle integration
         case "carplay control":
-            "car.fill"
+            Iconography.car
 
         // MARK: - HomeKit & Smart Home
         // Home automation protocols and smart home platforms.
 
-        /// Apple HomeKit accessory control — `homekit`
+        /// Apple HomeKit accessory control
         case "apple homekit",
             "homekit accessory protocol (hap)":
-            "homekit"
+            Iconography.homeKit
 
-        /// Matter smart home interoperability protocol — `homekit`
+        /// Matter smart home interoperability protocol
         case "matter smart home protocol":
-            "homekit"
+            Iconography.homeKit
 
-        /// Home Assistant open-source home automation — `house.fill`
+        /// Home Assistant open-source home automation
         case "home assistant":
-            "house.fill"
+            Iconography.house
 
         // MARK: - Networking & Infrastructure
         // Network protocols, DNS, IoT, and wireless infrastructure.
 
-        /// Bonjour sleep proxy for Wake-on-Demand — `bonjour`
+        /// Bonjour sleep proxy for Wake-on-Demand
         case "bonjour sleep proxy":
-            "bonjour"
+            Iconography.bonjour
 
-        /// Apple AirPort Wi-Fi base station — `airport.extreme`
+        /// Apple AirPort Wi-Fi base station
         case "airport base station":
-            "airport.extreme"
+            Iconography.airportExtreme
 
-        /// Domain Name System resolution — `network`
+        /// Domain Name System resolution
         case "domain name service (dns)":
-            "network"
+            Iconography.network
 
-        /// Multicast DNS service discovery — `network`
+        /// Multicast DNS service discovery
         case "mdns service discovery (dns-sd)":
-            "network"
+            Iconography.network
 
-        /// Constrained Application Protocol (IoT) — `network`
+        /// Constrained Application Protocol (IoT)
         case "coap protocol":
-            "network"
+            Iconography.network
 
-        /// MQTT message broker protocol (IoT) — `network`
+        /// MQTT message broker protocol (IoT)
         case "mqtt protocol":
-            "network"
+            Iconography.network
 
-        /// Simple Service Discovery Protocol (UPnP) — `network`
+        /// Simple Service Discovery Protocol (UPnP)
         case "ssdp (upnp)":
-            "network"
+            Iconography.network
 
-        /// Wi-Fi Calling voice over Wi-Fi — `phone.fill`
+        /// Wi-Fi Calling voice over Wi-Fi
         case "wi-fi calling":
-            "phone.fill"
+            Iconography.phone
 
         // MARK: - Terminal & Remote Access
         // Secure shell, remote desktop, and server management protocols.
 
-        /// SSH, SFTP, and secure login protocols — `greaterthan.square`
+        /// SSH, SFTP, and secure login protocols
         case "remote login",
             "secure shell (ssh)",
             "secure sockets layer (ssl, or https)",
             "sftp (ssh file transfer)":
-            "greaterthan.square"
+            Iconography.terminal
 
-        /// Remote desktop and screen sharing — `desktopcomputer`
+        /// Remote desktop and screen sharing
         case "remote desktop protocol (rdp)",
             "vnc remote access",
             "remote frame buffer (rfb)",
             "remote management":
-            "desktopcomputer"
+            Iconography.desktop
 
         // MARK: - File Sharing & Storage
         // Network file systems, file transfer, and storage devices.
 
-        /// Network file sharing protocols (SMB, AFP, NFS, WebDAV) — `folder.fill`
+        /// Network file sharing protocols (SMB, AFP, NFS, WebDAV)
         case "smb file sharing",
             "smb windows sharing",
             "appletalk filing protocol (afp)",
             "network file system (nfs)",
             "webdav file system":
-            "folder.fill"
+            Iconography.folder
 
-        /// FTP file upload/download — `arrow.up.arrow.down.square`
+        /// FTP file upload/download
         case "file transfer protocol (ftp)":
-            "arrow.up.arrow.down.square"
+            Iconography.fileTransfer
 
-        /// Time Capsule network backup storage — `externaldrive.fill`
+        /// Time Capsule network backup storage
         case "time capsule backups":
-            "externaldrive.fill"
+            Iconography.externalDrive
 
-        /// AirDrop peer-to-peer file transfer — `antenna.radiowaves.left.and.right`
+        /// AirDrop peer-to-peer file transfer
         case "airdrop":
-            "antenna.radiowaves.left.and.right"
+            Iconography.antenna
 
-        /// Third-party NAS and file sharing apps — `externaldrive.fill`
+        /// Third-party NAS and file sharing apps
         case "es file share app",
             "es file share app 2",
             "netgear readynas":
-            "externaldrive.fill"
+            Iconography.externalDrive
 
         // MARK: - Printers & Scanners
         // Network printing and scanning protocols.
 
-        /// Network printing protocols (LPD, IPP, PDL, USB) — `printer.fill`
+        /// Network printing protocols (LPD, IPP, PDL, USB)
         case "line printer daemon (lpd)",
             "internet printing protocol (ipp)",
             "pdl data stream (port 9100)",
             "remote io usb printer protocol",
             "ipp secure (ipps)":
-            "printer.fill"
+            Iconography.printer
 
-        /// Network document scanners — `scanner.fill`
+        /// Network document scanners
         case "scanners",
             "network scanner",
             "network scanner (secure)":
-            "scanner.fill"
+            Iconography.scanner
 
         // MARK: - Web & HTTP
         // Web server protocols.
 
-        /// HTTP/HTTPS web servers — `globe`
+        /// HTTP/HTTPS web servers
         case "http",
             "https (secure http)",
             "http alternate (port 8080)":
-            "globe"
+            Iconography.globe
 
         // MARK: - Development & CI
         // Developer tools, build systems, and version control.
 
-        /// Jenkins CI/CD automation server — `hammer.fill`
+        /// Jenkins CI/CD automation server
         case "jenkins app",
             "jenkins app 2":
-            "hammer.fill"
+            Iconography.build
 
-        /// Distributed C/C++ compiler — `gearshape.2.fill`
+        /// Distributed C/C++ compiler
         case "distributed compiler (distcc)":
-            "gearshape.2.fill"
+            Iconography.gears
 
-        /// Version control protocols (SVN, Git) — `chevron.left.forwardslash.chevron.right`
+        /// Version control protocols (SVN, Git)
         case "subversion (svn)",
             "git protocol":
-            "chevron.left.forwardslash.chevron.right"
+            Iconography.sourceControl
 
         // MARK: - Databases
         // Database server protocols.
 
-        /// SQL database servers (PostgreSQL, MySQL) — `cylinder.split.1x2.fill`
+        /// SQL database servers (PostgreSQL, MySQL)
         case "postgresql database",
             "mysql database":
-            "cylinder.split.1x2.fill"
+            Iconography.database
 
         // MARK: - Messaging & Chat
         // Instant messaging and chat protocols.
 
-        /// Instant messaging protocols (iChat, XMPP/Jabber) — `bubble.left.fill`
+        /// Instant messaging protocols (iChat, XMPP/Jabber)
         case "ichat instant messaging protocol",
             "ichat instant messaging (deprecated)",
             "xmpp client (jabber)":
-            "bubble.left.fill"
+            Iconography.chat
 
         // MARK: - Presentations
         // Keynote and presentation sharing.
 
-        /// Apple Keynote presentation sharing — `play.rectangle.fill`
+        /// Apple Keynote presentation sharing
         case "osx keynote",
             "osx keynote 2",
             "keynote access",
             "keynote pairing":
-            "play.rectangle.fill"
+            Iconography.playRectangle
 
         // MARK: - Camera & Photo
         // Photo sharing, image capture, and action cameras.
 
-        /// Photo sharing and image capture protocols — `camera.fill`
+        /// Photo sharing and image capture protocols
         case "digital photo access protocol (dpap)",
             "image capture sharing",
             "picture transfer protocol":
-            "camera.fill"
+            Iconography.camera
 
-        /// GoPro action camera control — `camera.fill`
+        /// GoPro action camera control
         case "gopro wake",
             "gopro web":
-            "camera.fill"
+            Iconography.camera
 
         // MARK: - Gaming
         // Game streaming and gaming device protocols.
 
-        /// NVIDIA Shield game streaming — `gamecontroller.fill`
+        /// NVIDIA Shield game streaming
         case "nvidia shield game streaming",
             "nvidia shield android tv":
-            "gamecontroller.fill"
+            Iconography.gameController
 
         // MARK: - Monitoring
         // Server and infrastructure monitoring.
 
-        /// Prometheus metrics and alerting — `chart.line.uptrend.xyaxis`
+        /// Prometheus metrics and alerting
         case "prometheus monitoring":
-            "chart.line.uptrend.xyaxis"
+            Iconography.chart
 
         // MARK: - Other Apple Services
         // Server administration, MIDI, debugging, and legacy Apple services.
 
-        /// macOS Server administration tools — `squares.leading.rectangle`
+        /// macOS Server administration tools
         case "workgroup manager",
             "server admin":
-            "squares.leading.rectangle"
+            Iconography.adminPanels
 
-        /// Apple password and authentication server — `lock.fill`
+        /// Apple password and authentication server
         case "apple password server":
-            "lock.fill"
+            Iconography.lock
 
-        /// Apple MIDI network session protocol — `pianokeys`
+        /// Apple MIDI network session protocol
         case "apple midi":
-            "pianokeys"
+            Iconography.pianoKeys
 
-        /// Apple remote debugging services — `ant.fill`
+        /// Apple remote debugging services
         case "apple remote debug services":
-            "ant.fill"
+            Iconography.debug
 
-        /// Xserve RAID storage array — `xserve`
+        /// Xserve RAID storage array
         case "xserve raid":
-            "xserve"
+            Iconography.xserve
 
         // MARK: - Third Party
         // Third-party apps and services.
 
-        /// Sketch design app mirroring — `paintbrush.fill`
+        /// Sketch design app mirroring
         case "sketch app",
             "sketch app 2":
-            "paintbrush.fill"
+            Iconography.paintbrush
 
-        /// Adobe Photoshop remote navigation — `paintbrush.pointed.fill`
+        /// Adobe Photoshop remote navigation
         case "adobe photoshop nav":
-            "paintbrush.pointed.fill"
+            Iconography.paintbrushPointed
 
-        /// Amazon wireless playback devices — `dot.radiowaves.right`
+        /// Amazon wireless playback devices
         case "amazon devices":
-            "dot.radiowaves.right"
+            Iconography.radioWaves
 
-        /// AirDroid wireless device management — `antenna.radiowaves.left.and.right`
+        /// AirDroid wireless device management
         case "airdroid app":
-            "antenna.radiowaves.left.and.right"
+            Iconography.antenna
 
-        /// Physical Web Eddystone beacons — `link`
+        /// Physical Web Eddystone beacons
         case "physical web":
-            "link"
+            Iconography.link
 
-        /// LDAP directory service — `person.2.fill`
+        /// LDAP directory service
         case "ldap directory":
-            "person.2.fill"
+            Iconography.people
 
         // MARK: - Default
 
-        /// Fallback for unrecognized service types — `wifi`
+        /// Fallback for unrecognized service types
         default:
-            "wifi"
+            Iconography.wifi
         }
     }
 }
