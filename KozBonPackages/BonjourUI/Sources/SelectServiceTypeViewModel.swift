@@ -10,6 +10,8 @@ import BonjourModels
 
 // MARK: - SelectServiceTypeViewModel
 
+/// View model for the service type selection screen, providing searchable lists of
+/// built-in and custom Bonjour service types.
 @MainActor
 @Observable
 final class SelectServiceTypeViewModel {

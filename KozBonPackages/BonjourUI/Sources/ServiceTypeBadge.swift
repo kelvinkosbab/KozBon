@@ -10,11 +10,20 @@ import BonjourModels
 
 // MARK: - ServiceTypeBadge
 
+/// A capsule-shaped badge displaying a Bonjour service type's icon and optionally its name.
+///
+/// Used in toolbars and list rows to visually identify a service type. Adapts its label
+/// style based on the provided ``Style``.
 public struct ServiceTypeBadge: View {
 
     let serviceType: BonjourServiceType
     let style: Style
 
+    /// Creates a service type badge.
+    ///
+    /// - Parameters:
+    ///   - serviceType: The service type whose icon and name to display.
+    ///   - style: Controls whether the badge shows the icon only, title and icon, or adapts based on size class.
     public init(serviceType: BonjourServiceType, style: Style) {
         self.serviceType = serviceType
         self.style = style
@@ -46,9 +55,13 @@ public struct ServiceTypeBadge: View {
 
     // MARK: - Style
 
+    /// Controls the label presentation style of the badge.
     public enum Style {
+        /// Displays both the service type name and icon.
         case titleAndIcon
+        /// Displays only the icon.
         case iconOnly
+        /// Displays the title and icon on regular size class, icon only on compact.
         case basedOnSizeClass
     }
 

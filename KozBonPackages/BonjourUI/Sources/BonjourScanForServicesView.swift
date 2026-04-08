@@ -13,6 +13,15 @@ import BonjourScanning
 
 // MARK: - BonjourScanForServicesView
 
+/// The main view for discovering and listing nearby Bonjour services on the local network.
+///
+/// Displays a navigation split view with discovered services on the leading side and
+/// service details on the trailing side. Supports pull-to-refresh, sorting, and broadcasting
+/// new services.
+///
+/// - Parameters:
+///   - scanner: An optional custom scanner (defaults to the shared singleton).
+///   - publishManager: An optional custom publish manager (defaults to the shared singleton).
 public struct BonjourScanForServicesView: View {
 
     @Environment(\.scenePhase) private var scenePhase

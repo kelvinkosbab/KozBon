@@ -11,6 +11,8 @@ import BonjourLocalization
 
 // MARK: - SupportedServicesViewModel
 
+/// View model for ``SupportedServicesView``, managing the list of built-in and custom
+/// Bonjour service types with search filtering.
 @MainActor
 @Observable
 final class SupportedServicesViewModel {

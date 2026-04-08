@@ -12,6 +12,10 @@ import BonjourModels
 
 // MARK: - BonjourServiceDetailView
 
+/// Detail view displaying information about a single discovered or published Bonjour service.
+///
+/// Shows the service name, hostname, type, transport layer, domain, IP addresses,
+/// and TXT records. Published services support editing and adding TXT records.
 public struct BonjourServiceDetailView: View {
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
@@ -19,6 +23,11 @@ public struct BonjourServiceDetailView: View {
 
     @State private var viewModel: BonjourServiceDetailViewModel
 
+    /// Creates a detail view for the given Bonjour service.
+    ///
+    /// - Parameters:
+    ///   - service: The Bonjour service to display.
+    ///   - isPublished: Whether the service was published by the current user.
     public init(service: BonjourService, isPublished: Bool = false) {
         self._viewModel = State(initialValue: BonjourServiceDetailViewModel(service: service, isPublished: isPublished))
     }

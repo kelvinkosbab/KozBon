@@ -18,7 +18,10 @@ public final class DependencyContainer: Sendable {
 
     // MARK: - Services
 
+    /// The service scanner used for discovering Bonjour services on the network.
     public let bonjourServiceScanner: any BonjourServiceScannerProtocol
+
+    /// The publish manager used for broadcasting Bonjour services.
     public let bonjourPublishManager: any BonjourPublishManagerProtocol
 
     // MARK: - Initialization
@@ -64,6 +67,7 @@ private struct DependencyContainerKey: @preconcurrency EnvironmentKey {
 }
 
 public extension EnvironmentValues {
+    /// The application's dependency container, accessible via `@Environment(\.dependencies)`.
     var dependencies: DependencyContainer {
         get { self[DependencyContainerKey.self] }
         set { self[DependencyContainerKey.self] = newValue }

@@ -46,6 +46,14 @@ public final class BonjourService: NSObject, @preconcurrency NetServiceDelegate 
 
     private let logger: Loggable = Logger(category: "BonjourService")
 
+    /// Creates a new Bonjour service wrapper.
+    ///
+    /// Sets up the delegate chain so this object receives `NetService` callbacks for
+    /// resolution, publishing, and TXT record updates.
+    ///
+    /// - Parameters:
+    ///   - service: The underlying `NetService` instance to wrap.
+    ///   - serviceType: The service type metadata describing this service.
     public init(
         service: NetService,
         serviceType: BonjourServiceType
@@ -197,10 +205,12 @@ public final class BonjourService: NSObject, @preconcurrency NetServiceDelegate 
 
     // MARK: - NetServiceDelegate - TXT Records
 
+    /// Begins monitoring the service for TXT record changes.
     public func startMonitoring() {
         self.service.startMonitoring()
     }
 
+    /// Stops monitoring the service for TXT record changes.
     public func stopMonitoring() {
         self.service.stopMonitoring()
     }
@@ -239,7 +249,9 @@ public final class BonjourService: NSObject, @preconcurrency NetServiceDelegate 
 
 // MARK: - PublishError
 
+/// Errors that can occur when publishing a Bonjour service on the network.
 public enum PublishError: Swift.Error {
+    /// The service failed to publish. The underlying `NetService` reported a publish error.
     case didNotPublish
 }
 

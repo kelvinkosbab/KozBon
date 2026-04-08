@@ -10,12 +10,21 @@ import CoreUI
 
 // MARK: - TitleDetailStackView
 
+/// A list row displaying a title and detail in a vertical stack, with an optional trailing view.
+///
+/// Commonly used throughout the app for key-value style rows (e.g., hostname, type, IP address).
 public struct TitleDetailStackView<Trailing>: View where Trailing: View {
 
     let title: String
     let detail: String
     let trailing: (() -> Trailing)?
 
+    /// Creates a title-detail row with a trailing view.
+    ///
+    /// - Parameters:
+    ///   - title: The primary text displayed in body font.
+    ///   - detail: The secondary text displayed in caption font.
+    ///   - trailing: A view builder for content displayed on the trailing edge.
     public init(
         title: String,
         detail: String,

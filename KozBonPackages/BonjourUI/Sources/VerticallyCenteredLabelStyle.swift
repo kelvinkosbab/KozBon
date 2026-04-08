@@ -9,6 +9,7 @@ import SwiftUI
 
 // MARK: - VerticallyCenteredLabelStyle
 
+/// A label style that arranges the icon and title horizontally with vertical center alignment.
 public struct VerticallyCenteredLabelStyle: LabelStyle {
     public init() {}
 

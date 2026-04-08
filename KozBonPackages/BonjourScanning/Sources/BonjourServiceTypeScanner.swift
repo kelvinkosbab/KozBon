@@ -21,14 +21,22 @@ public final class BonjourServiceTypeScanner: NSObject, @preconcurrency NetServi
     private let serviceType: BonjourServiceType
     private let domain: String
     private let logger: Loggable
+    /// The set of services currently discovered for this service type.
     public private(set) var activeServices = Set<BonjourService>()
+
+    /// The current scanning state (searching or stopped).
     public private(set) var state: BonjourServiceBrowserState = .stopped
 
+    /// The delegate that receives discovery events for this service type.
     public weak var delegate: BonjourServiceScannerDelegate?
 
     // MARK: - Init
 
-    /// Constructs a ``BonjourServiceBrowserByType``.
+    /// Creates a scanner for the given Bonjour service type and domain.
+    ///
+    /// - Parameters:
+    ///   - serviceType: The Bonjour service type to scan for.
+    ///   - domain: The domain to search in. Pass `""` for the default local domain.
     public init(
         serviceType: BonjourServiceType,
         domain: String
@@ -45,6 +53,9 @@ public final class BonjourServiceTypeScanner: NSObject, @preconcurrency NetServi
 
     // MARK: - Start / Stop
 
+    /// Begins scanning for services of this scanner's service type.
+    ///
+    /// If a scan is already in progress, this method does nothing.
     public func startScan() {
 
         guard self.state != .searching else {
@@ -58,10 +69,12 @@ public final class BonjourServiceTypeScanner: NSObject, @preconcurrency NetServi
         )
     }
 
+    /// Stops the current scan.
     public func stopScan() {
         self.serviceBrowser.stop()
     }
 
+    /// Stops scanning and clears all discovered services, notifying the delegate of the reset.
     public func reset() {
         self.stopScan()
         self.activeServices.removeAll()

@@ -9,6 +9,10 @@ import Foundation
 import BonjourCore
 import CoreData
 
+/// Manages the Core Data persistent container and provides access to the main-thread managed object context.
+///
+/// Use the ``shared`` singleton to access the stack. All access is confined to the main actor
+/// because the underlying `viewContext` must only be used from the main thread.
 @MainActor
 public final class MyCoreDataStack {
 
@@ -16,6 +20,7 @@ public final class MyCoreDataStack {
 
     // MARK: - Singleton
 
+    /// The shared singleton instance of the Core Data stack.
     public static let shared = MyCoreDataStack()
 
     private init() {}
@@ -58,10 +63,15 @@ public final class MyCoreDataStack {
 
     // MARK: - Managed Object Context
 
+    /// The main-thread managed object context (`viewContext`) used for all Core Data operations.
     public var mainContext: NSManagedObjectContext {
         return self.persistentContainer.viewContext
     }
 
+    /// Saves any pending changes in the main context to the persistent store.
+    ///
+    /// If the context has no unsaved changes this method does nothing. Errors during
+    /// save are logged rather than causing a fatal error.
     public func saveMainContext() {
         let context = self.mainContext
         if context.hasChanges {

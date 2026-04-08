@@ -26,9 +26,16 @@ public protocol BonjourServiceScannerDelegate: AnyObject, Sendable {
 
 // MARK: - BonjourServiceScanner
 
+/// Aggregates discovery results from multiple ``BonjourServiceTypeScanner`` instances,
+/// one per registered service type.
+///
+/// The scanner creates a ``BonjourServiceTypeScanner`` for every known ``BonjourServiceType``
+/// and forwards discovery events through its ``delegate``. Use the ``shared`` singleton
+/// for production scanning.
 @MainActor
 public final class BonjourServiceScanner: BonjourServiceScannerDelegate {
 
+    /// The shared singleton instance used for discovering Bonjour services.
     public static let shared = BonjourServiceScanner()
 
     private init() {}
@@ -39,6 +46,7 @@ public final class BonjourServiceScanner: BonjourServiceScannerDelegate {
     private var services: Set<BonjourService> = Set()
     private let logger: Loggable = Logger(category: "BonjourServiceScanner")
 
+    /// The delegate that receives service discovery lifecycle events.
     public weak var delegate: BonjourServiceScannerDelegate?
 
     // MARK: - Service Browser State
@@ -61,6 +69,7 @@ public final class BonjourServiceScanner: BonjourServiceScannerDelegate {
 
     // MARK: - Completed Discovery Process
 
+    /// Whether any type scanner is actively searching or any discovered service is still resolving its address.
     public var isProcessing: Bool {
         return self.browserState.isSearching || self.isResolvingFoundServiceAddresses
     }
@@ -76,6 +85,14 @@ public final class BonjourServiceScanner: BonjourServiceScannerDelegate {
 
     // MARK: - Start / Stop
 
+    /// Starts scanning for all known Bonjour service types on the local network.
+    ///
+    /// Resets any previous scan state, creates a ``BonjourServiceTypeScanner`` for each
+    /// registered service type, and additionally creates scanners for any user-published
+    /// service types not already in the library.
+    ///
+    /// - Parameter publishedServices: Services published by the user, used to ensure their
+    ///   types are also scanned even if not in the built-in library.
     public func startScan(publishedServices: Set<BonjourService> = []) {
         self.logger.debug("Starting scan")
 
@@ -109,6 +126,7 @@ public final class BonjourServiceScanner: BonjourServiceScannerDelegate {
         }
     }
 
+    /// Stops all active type scanners.
     public func stopScan() {
         for typeScanner in self.typeScanners {
             typeScanner.stopScan()

@@ -13,6 +13,10 @@ import BonjourModels
 
 // MARK: - SupportedServicesView
 
+/// Browsable list of all supported Bonjour service types (built-in and user-created).
+///
+/// Displays service types in a searchable navigation split view with detail on the trailing side.
+/// Supports creating custom service types via a sheet.
 public struct SupportedServicesView: View {
 
     @State private var viewModel = SupportedServicesViewModel()

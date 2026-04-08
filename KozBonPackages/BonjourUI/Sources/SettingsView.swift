@@ -12,6 +12,7 @@ import BonjourLocalization
 
 // MARK: - SettingsView
 
+/// macOS settings view providing preferences for auto-scan on launch and default sort order.
 public struct SettingsView: View {
 
     @AppStorage("autoScanOnLaunch") private var autoScanOnLaunch = true

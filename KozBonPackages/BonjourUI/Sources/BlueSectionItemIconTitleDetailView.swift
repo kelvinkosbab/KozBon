@@ -9,12 +9,22 @@ import SwiftUI
 
 // MARK: - BlueSectionItemIconTitleDetailView
 
+/// A prominent list row with an SF Symbol icon, title, and optional detail text
+/// displayed on a tinted capsule background.
+///
+/// Used as a hero header in detail views to identify a service or service type.
 public struct BlueSectionItemIconTitleDetailView: View {
 
     let imageSystemName: String?
     let title: String
     let detail: String?
 
+    /// Creates a header row with an optional icon, title, and optional detail.
+    ///
+    /// - Parameters:
+    ///   - imageSystemName: The SF Symbol name for the icon, or `nil` to omit.
+    ///   - title: The primary text.
+    ///   - detail: The secondary text displayed below the title, or `nil` to omit.
     public init(
         imageSystemName: String?,
         title: String,

@@ -32,12 +32,19 @@ struct TxtRecordEditSheet: View {
 
 // MARK: - BonjourServiceDetailViewModel
 
+/// View model for ``BonjourServiceDetailView``, managing resolved addresses, TXT records, and
+/// editing state for a single Bonjour service.
 @MainActor
 @Observable
 final class BonjourServiceDetailViewModel: MyNetServiceDelegate {
 
+    /// The Bonjour service being displayed.
     let service: BonjourService
+
+    /// The service type metadata for the displayed service.
     let serviceType: BonjourServiceType
+
+    /// Whether the service was published by the current user (enables TXT record editing).
     let isPublished: Bool
 
     private(set) var addresses: [InternetAddress] = []
@@ -56,11 +63,13 @@ final class BonjourServiceDetailViewModel: MyNetServiceDelegate {
 
     // MARK: - TXT Record Editing
 
+    /// Deletes a TXT record and updates the underlying service.
     func deleteTxtRecord(_ record: BonjourService.TxtDataRecord) {
         dataRecords.removeAll { $0.key == record.key }
         service.updateTXTRecords(dataRecords)
     }
 
+    /// Commits any pending TXT record changes to the underlying service.
     func didFinishEditingTxtRecords() {
         service.updateTXTRecords(dataRecords)
     }

@@ -13,7 +13,14 @@ import UIKit
 
 // MARK: - Clipboard
 
+/// A platform-agnostic clipboard utility for copying text to the system pasteboard.
+///
+/// On macOS this uses `NSPasteboard`; on iOS, tvOS, and visionOS it uses `UIPasteboard`.
 public enum Clipboard {
+
+    /// Copies the given string to the system pasteboard.
+    ///
+    /// - Parameter string: The text to place on the clipboard.
     public static func copy(_ string: String) {
         #if os(macOS)
         NSPasteboard.general.clearContents()

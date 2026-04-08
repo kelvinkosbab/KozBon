@@ -11,11 +11,17 @@ import CoreUI
 
 // MARK: - EmptyStateOverlayView
 
+/// An overlay view shown when a list has no content, displaying an optional image and a title message.
 public struct EmptyStateOverlayView: View {
 
     let image: Image?
     let title: String
 
+    /// Creates an empty state overlay.
+    ///
+    /// - Parameters:
+    ///   - image: An optional image displayed above the title, or `nil` to show text only.
+    ///   - title: The message explaining why the list is empty.
     public init(
         image: Image?,
         title: String

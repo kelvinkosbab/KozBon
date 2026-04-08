@@ -12,12 +12,17 @@ import BonjourModels
 
 // MARK: - SupportedServiceDetailView
 
+/// Detail view for a supported Bonjour service type, showing its name, type string,
+/// transport layer, and description. Custom (non-built-in) types can be edited or deleted.
 public struct SupportedServiceDetailView: View {
 
     @Environment(\.dismiss) var dismiss
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
+    /// Creates a detail view for the given service type.
+    ///
+    /// - Parameter serviceType: The Bonjour service type to display.
     public init(serviceType: BonjourServiceType) {
         self.serviceType = serviceType
     }
