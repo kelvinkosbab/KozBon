@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Pre-commit hook: lint GitHub Actions workflows if any were changed
+#
+# Install: git config core.hooksPath .githooks
+# Requires: brew install actionlint
+
+CHANGED_WORKFLOWS=$(git diff --cached --name-only -- '.github/workflows/*.yml')
+
+if [ -n "$CHANGED_WORKFLOWS" ]; then
+    echo "Linting GitHub Actions workflows..."
+    if command -v actionlint &> /dev/null; then
+        actionlint $CHANGED_WORKFLOWS
+        if [ $? -ne 0 ]; then
+            echo ""
+            echo "❌ Workflow lint failed. Fix the issues above before committing."
+            exit 1
+        fi
+        echo "✅ Workflows pass lint."
+    else
+        echo "⚠️  actionlint not found. Install with: brew install actionlint"
+    fi
+fi

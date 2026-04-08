@@ -50,4 +50,4 @@ jobs:
             -scheme KozBon \
             -destination '${{ matrix.destination }}' \
             -skipPackagePluginValidation \
-            | xcpretty --color || exit ${PIPESTATUS[0]}
+            | xcpretty --color || exit "${PIPESTATUS[0]}"

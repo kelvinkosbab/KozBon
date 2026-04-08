@@ -42,7 +42,7 @@ jobs:
             -scheme KozBon \
             -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
             -skipPackagePluginValidation \
-            | xcpretty --color || exit ${PIPESTATUS[0]}
+            | xcpretty --color || exit "${PIPESTATUS[0]}"
 
       - name: Test
         run: |
@@ -50,4 +50,4 @@ jobs:
             -workspace KozBon.xcworkspace \
             -scheme KozBon \
             -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
-            | xcpretty --color || exit ${PIPESTATUS[0]}
+            | xcpretty --color || exit "${PIPESTATUS[0]}"
