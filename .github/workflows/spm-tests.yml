@@ -19,7 +19,7 @@ concurrency:
 jobs:
   test:
     name: Swift Package Tests
-    runs-on: macos-16
+    runs-on: macos-26
 
     steps:
       - name: Checkout
