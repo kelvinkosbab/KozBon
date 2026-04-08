@@ -64,21 +64,3 @@ extension NSColor {
 }
 #endif
 
-// MARK: - Images
-
-public extension Image {
-
-    // MARK: - SF Symbols
-
-    static var bonjour: Image {
-        Image(systemName: Iconography.bonjour)
-    }
-
-    static var arrowUpArrowDownCircleFill: Image {
-        Image(systemName: Iconography.sort)
-    }
-
-    static var plusCircleFill: Image {
-        Image(systemName: Iconography.add)
-    }
-}

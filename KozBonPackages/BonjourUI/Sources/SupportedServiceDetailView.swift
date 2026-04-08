@@ -98,7 +98,7 @@ public struct SupportedServiceDetailView: View {
                     .accessibilityHint(String(localized: Strings.Accessibility.editHint))
                     .foregroundStyle(.yellow)
                     .sheet(isPresented: $showEditConfirmation) {
-                        CreateOrUpdateBonjourServiceTypeView_Edit(
+                        CreateOrUpdateBonjourServiceTypeView(
                             isPresented: $showEditConfirmation,
                             serviceToUpdate: $serviceType
                         )

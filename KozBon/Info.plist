@@ -27,11 +27,7 @@
 		<key>CFBundlePrimaryIcon</key>
 		<string>AppIcon</string>
 	</dict>
-	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>Bluetooth is used to scan for nearby devices.</string>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>This app scans for peripherals and fetches data and records associated with that peripheral.</string>
-	<key>NSBonjourServices</key>
+<key>NSBonjourServices</key>
 	<array>
 		<string>_carplay_ctrl._tcp</string>
 		<string>_udisks-ssh._tcp</string>

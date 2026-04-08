@@ -9,6 +9,7 @@
 
 import SwiftUI
 import BonjourLocalization
+import BonjourModels
 
 // MARK: - SettingsView
 
@@ -16,7 +17,7 @@ import BonjourLocalization
 public struct SettingsView: View {
 
     @AppStorage("autoScanOnLaunch") private var autoScanOnLaunch = true
-    @AppStorage("defaultSortOrder") private var defaultSortOrder = DefaultSortOrder.none
+    @AppStorage("defaultSortOrder") private var defaultSortOrder = ""
 
     public init() {}
 
@@ -28,9 +29,9 @@ public struct SettingsView: View {
 
             Section(String(localized: Strings.Settings.display)) {
                 Picker(String(localized: Strings.Settings.defaultSortOrder), selection: $defaultSortOrder) {
-                    ForEach(DefaultSortOrder.allCases) { sortOrder in
-                        Text(sortOrder.displayName)
-                            .tag(sortOrder)
+                    Text(Strings.Settings.sortNone).tag("")
+                    ForEach(BonjourServiceSortType.allCases) { sortType in
+                        Text(sortType.title).tag(sortType.id)
                     }
                 }
             }
@@ -38,33 +39,6 @@ public struct SettingsView: View {
         .formStyle(.grouped)
         .frame(width: 400)
         .navigationTitle(String(localized: Strings.NavigationTitles.settings))
-    }
-
-    // MARK: - DefaultSortOrder
-
-    enum DefaultSortOrder: String, CaseIterable, Identifiable {
-        case none
-        case hostNameAsc
-        case hostNameDesc
-        case serviceNameAsc
-        case serviceNameDesc
-
-        var id: String { rawValue }
-
-        var displayName: String {
-            switch self {
-            case .none:
-                String(localized: Strings.Settings.sortNone)
-            case .hostNameAsc:
-                String(localized: Strings.Settings.sortHostnameAsc)
-            case .hostNameDesc:
-                String(localized: Strings.Settings.sortHostnameDesc)
-            case .serviceNameAsc:
-                String(localized: Strings.Settings.sortServiceNameAsc)
-            case .serviceNameDesc:
-                String(localized: Strings.Settings.sortServiceNameDesc)
-            }
-        }
     }
 }
 

@@ -51,7 +51,7 @@ enum TopLevelDestination: Identifiable {
     var icon: Image {
         switch self {
         case .bonjour:
-            Image.bonjour
+            Iconography.bonjourImage
 
         case .bonjourServiceTypes:
             Image(systemName: Iconography.serviceLibrary)

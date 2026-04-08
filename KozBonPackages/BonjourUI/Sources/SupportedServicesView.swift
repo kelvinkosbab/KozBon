@@ -147,7 +147,7 @@ public struct SupportedServicesView: View {
             Label {
                 Text(self.viewModel.createButtonString)
             } icon: {
-                Image.plusCircleFill
+                Iconography.addImage
                     .renderingMode(.template)
                     .foregroundColor(.kozBonBlue)
             }

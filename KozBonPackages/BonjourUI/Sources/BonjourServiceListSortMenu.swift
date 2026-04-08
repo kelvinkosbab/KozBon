@@ -49,7 +49,7 @@ struct BonjourServiceListSortMenu: View {
                     Text(self.sortButtonString)
                 },
                 icon: {
-                    Image.arrowUpArrowDownCircleFill
+                    Iconography.sortImage
                         .renderingMode(.template)
                         .foregroundColor(.kozBonBlue)
                 }

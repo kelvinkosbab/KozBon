@@ -453,7 +453,6 @@
 				CURRENT_PROJECT_VERSION = 98;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
-				ENABLE_RESOURCE_ACCESS_BLUETOOTH = YES;
 				INFOPLIST_FILE = KozBon/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = KozBon;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -485,7 +484,6 @@
 				CURRENT_PROJECT_VERSION = 98;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
-				ENABLE_RESOURCE_ACCESS_BLUETOOTH = YES;
 				INFOPLIST_FILE = KozBon/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = KozBon;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
