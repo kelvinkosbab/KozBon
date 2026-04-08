@@ -1,4 +1,11 @@
-# swift-concurrency-pro
+---
+name: swift-concurrency-pro
+description: Reviews Swift code for concurrency correctness, modern API usage, and common async/await pitfalls. Use when reading, writing, or reviewing Swift concurrency code.
+license: MIT
+metadata:
+  author: Paul Hudson
+  version: "1.0"
+---
 
 This is a code review agent specification for Swift concurrency. Here's the essential summary:
 
