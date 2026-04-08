@@ -41,8 +41,15 @@ public extension MyDataManagerObject where Self: NSManagedObject {
     }
 
     /// Saves any pending changes in the main context to the persistent store.
+    ///
+    /// Catches and logs any save errors so that callers (delete, create, update)
+    /// don't need to handle throws individually.
     static func saveMainContext() {
-        MyCoreDataStack.shared.saveMainContext()
+        do {
+            try MyCoreDataStack.shared.saveMainContext()
+        } catch {
+            logger.error("Failed to save context: \(error.localizedDescription)")
+        }
     }
 
     // MARK: - Create
@@ -123,9 +130,9 @@ public extension MyDataManagerObject where Self: NSManagedObject {
         do {
             return try self.mainContext.fetch(request)
         } catch {
-            logger.error("Error: \(error.localizedDescription)")
+            logger.error("Fetch failed for \(Self.entityName): \(error.localizedDescription)")
+            return []
         }
-        return []
     }
 
     // MARK: - Deleting
@@ -188,6 +195,7 @@ public extension MyDataManagerObject where Self: NSManagedObject {
         do {
             return try self.mainContext.count(for: request)
         } catch {
+            logger.error("Count failed for \(Self.entityName): \(error.localizedDescription)")
             return 0
         }
     }

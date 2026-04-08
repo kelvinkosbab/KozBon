@@ -29,8 +29,10 @@ public final class MyDataManager: NSObject {
     // MARK: - Managed Object Context
 
     /// Saves any pending changes in the main context to the persistent store.
-    public func saveMainContext() {
-        self.coreDataStack.saveMainContext()
+    ///
+    /// - Throws: An error if the context fails to save.
+    public func saveMainContext() throws {
+        try self.coreDataStack.saveMainContext()
     }
 
     /// The main-thread managed object context used for all Core Data operations.

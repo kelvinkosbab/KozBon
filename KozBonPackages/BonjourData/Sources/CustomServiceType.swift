@@ -57,7 +57,10 @@ extension CustomServiceType: MyDataManagerObject {
     ///   - serviceType: The Bonjour service type identifier to search for.
     ///   - transportLayerValue: The raw transport layer value (TCP or UDP).
     /// - Returns: The matching ``CustomServiceType``, or `nil` if none exists.
-    public static func fetch(serviceType: String, transportLayerValue: Int16) -> CustomServiceType? {
+    public static func fetch(
+        serviceType: String,
+        transportLayerValue: Int16
+    ) -> CustomServiceType? {
         return self.fetchOne(format: "serviceType = %@ AND transportLayerValue = %ld", serviceType, transportLayerValue)
     }
 
@@ -75,8 +78,10 @@ extension CustomServiceType: MyDataManagerObject {
     ///   - detail: An optional human-readable description.
     /// - Returns: The created or updated ``CustomServiceType`` instance.
     public static func createOrUpdate(
-        name: String, serviceType: String,
-        transportLayerValue: Int16, detail: String? = nil
+        name: String,
+        serviceType: String,
+        transportLayerValue: Int16,
+        detail: String? = nil
     ) -> CustomServiceType {
         let object = self.fetch(serviceType: serviceType, transportLayerValue: transportLayerValue) ?? self.create()
         object.name = name
