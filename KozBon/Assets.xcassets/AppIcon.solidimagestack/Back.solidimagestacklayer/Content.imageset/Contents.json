@@ -1,0 +1,13 @@
+{
+  "images" : [
+    {
+      "filename" : "AppIcon-back.png",
+      "idiom" : "reality",
+      "scale" : "2x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
