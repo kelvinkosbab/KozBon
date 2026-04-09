@@ -45,20 +45,20 @@ public enum Iconography {
 
     // MARK: - Actions
 
-    /// Add/create item icon (filled circle with plus).
-    public static let add = "plus.circle.fill"
+    /// Add/create item icon.
+    public static let add = "plus"
 
     /// Remove/delete item icon (filled circle with minus).
     public static let remove = "minus.circle.fill"
 
-    /// Cancel/close icon (filled circle with X).
-    public static let cancel = "x.circle.fill"
+    /// Cancel/close icon.
+    public static let cancel = "xmark"
 
-    /// Confirm/done icon (filled circle with checkmark).
-    public static let confirm = "checkmark.circle.fill"
+    /// Confirm/done icon.
+    public static let confirm = "checkmark"
 
-    /// Sort icon (arrows in circle).
-    public static let sort = "arrow.up.arrow.down.circle.fill"
+    /// Sort icon.
+    public static let sort = "line.3.horizontal.decrease"
 
     // MARK: - Clipboard & Copy
 
