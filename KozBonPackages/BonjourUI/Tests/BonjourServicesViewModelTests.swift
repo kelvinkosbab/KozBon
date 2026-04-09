@@ -22,7 +22,11 @@ struct BonjourServicesViewModelTests {
 
     private func makeViewModel() -> (BonjourServicesViewModel, MockBonjourServiceScanner) {
         let scanner = MockBonjourServiceScanner()
-        let viewModel = BonjourServicesViewModel(serviceScanner: scanner)
+        let publishManager = MockBonjourPublishManager()
+        let viewModel = BonjourServicesViewModel(
+            serviceScanner: scanner,
+            publishManager: publishManager
+        )
         return (viewModel, scanner)
     }
 

@@ -34,7 +34,7 @@ struct BonjourServiceScannerDelegateFlowTests {
     // MARK: - didAdd
 
     @Test func didAddForwardsToDelegateAndTracksService() {
-        let scanner = BonjourServiceScanner.shared
+        let scanner = BonjourServiceScanner()
         let delegate = makeDelegate()
         scanner.delegate = delegate
 
@@ -52,7 +52,7 @@ struct BonjourServiceScannerDelegateFlowTests {
     // MARK: - didRemove
 
     @Test func didRemoveForwardsToDelegateAndRemovesService() {
-        let scanner = BonjourServiceScanner.shared
+        let scanner = BonjourServiceScanner()
         let delegate = makeDelegate()
         scanner.delegate = delegate
 
@@ -72,7 +72,7 @@ struct BonjourServiceScannerDelegateFlowTests {
     // MARK: - didReset
 
     @Test func didResetForwardsToDelegateAndClearsServices() {
-        let scanner = BonjourServiceScanner.shared
+        let scanner = BonjourServiceScanner()
         let delegate = makeDelegate()
         scanner.delegate = delegate
 
@@ -89,7 +89,7 @@ struct BonjourServiceScannerDelegateFlowTests {
     // MARK: - didFailWithError
 
     @Test func didFailWithErrorForwardsToDelegate() {
-        let scanner = BonjourServiceScanner.shared
+        let scanner = BonjourServiceScanner()
         let delegate = makeDelegate()
         scanner.delegate = delegate
 
@@ -105,7 +105,7 @@ struct BonjourServiceScannerDelegateFlowTests {
     // MARK: - isProcessing
 
     @Test func isProcessingIsFalseWhenNoScanners() {
-        let scanner = BonjourServiceScanner.shared
+        let scanner = BonjourServiceScanner()
         // When idle with no type scanners running, isProcessing should be false
         #expect(!scanner.isProcessing)
     }
@@ -113,7 +113,7 @@ struct BonjourServiceScannerDelegateFlowTests {
     // MARK: - Weak Delegate
 
     @Test func delegateIsWeak() {
-        let scanner = BonjourServiceScanner.shared
+        let scanner = BonjourServiceScanner()
         var delegate: TypeScannerTestDelegate? = makeDelegate()
         scanner.delegate = delegate
         #expect(scanner.delegate != nil)

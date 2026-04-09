@@ -18,9 +18,12 @@ public final class MyCoreDataStack {
 
     private let logger = Logger(category: "MyCoreDataStack")
 
-    // MARK: - Singleton
+    // MARK: - Shared Instance
 
-    /// The shared singleton instance of the Core Data stack.
+    /// The shared Core Data stack instance used by `MyDataManagerObject` protocol extensions.
+    ///
+    /// This is a singleton because the protocol extension pattern uses static methods
+    /// that cannot receive injected dependencies through initializers.
     public static let shared = MyCoreDataStack()
 
     private init() {}

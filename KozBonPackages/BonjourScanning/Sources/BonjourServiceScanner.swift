@@ -35,10 +35,7 @@ public protocol BonjourServiceScannerDelegate: AnyObject, Sendable {
 @MainActor
 public final class BonjourServiceScanner: BonjourServiceScannerDelegate {
 
-    /// The shared singleton instance used for discovering Bonjour services.
-    public static let shared = BonjourServiceScanner()
-
-    private init() {}
+    public init() {}
 
     // MARK: - Properties
 

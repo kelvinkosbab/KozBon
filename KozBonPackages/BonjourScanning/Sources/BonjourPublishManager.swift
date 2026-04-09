@@ -25,12 +25,9 @@ public protocol BonjourPublishManagerDelegate: AnyObject, Sendable {
 @MainActor
 public final class BonjourPublishManager {
 
-    // MARK: - Singleton
+    // MARK: - Init
 
-    /// The shared singleton instance used for publishing Bonjour services.
-    public static let shared = BonjourPublishManager()
-
-    private init() {}
+    public init() {}
 
     // MARK: - Published Services
 

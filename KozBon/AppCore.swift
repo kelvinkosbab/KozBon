@@ -26,7 +26,7 @@ struct AppCore: App {
             if #available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *) {
                 TabView {
                     Tab {
-                        BonjourScanForServicesView()
+                        BonjourScanForServicesView(dependencies: dependencies)
                     } label: {
                         Label {
                             Text(verbatim: TopLevelDestination.bonjour.titleString)
@@ -54,7 +54,7 @@ struct AppCore: App {
                 .environment(\.dependencies, dependencies)
             } else {
                 TabView {
-                    BonjourScanForServicesView()
+                    BonjourScanForServicesView(dependencies: dependencies)
                         .tabItem {
                             Label {
                                 Text(verbatim: TopLevelDestination.bonjour.titleString)

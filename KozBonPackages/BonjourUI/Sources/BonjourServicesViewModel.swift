@@ -112,11 +112,11 @@ final class BonjourServicesViewModel: BonjourServiceScannerDelegate {
 
     /// Creates a new view model with the given service scanner and publish manager.
     ///
-    /// - Parameter serviceScanner: The scanner to use for discovering services. Defaults to the shared singleton.
-    /// - Parameter publishManager: The publish manager to use. Defaults to the shared singleton.
+    /// - Parameter serviceScanner: The scanner to use for discovering services.
+    /// - Parameter publishManager: The publish manager to use.
     init(
-        serviceScanner: BonjourServiceScannerProtocol = BonjourServiceScanner.shared,
-        publishManager: BonjourPublishManagerProtocol = BonjourPublishManager.shared
+        serviceScanner: BonjourServiceScannerProtocol,
+        publishManager: BonjourPublishManagerProtocol
     ) {
         self.serviceScanner = serviceScanner
         self.publishManager = publishManager

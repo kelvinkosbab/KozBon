@@ -19,22 +19,17 @@ import BonjourScanning
 /// service details on the trailing side. Supports pull-to-refresh, sorting, and broadcasting
 /// new services.
 ///
-/// - Parameters:
-///   - scanner: An optional custom scanner (defaults to the shared singleton).
-///   - publishManager: An optional custom publish manager (defaults to the shared singleton).
+/// - Parameter dependencies: The dependency container providing scanner and publish manager.
 public struct BonjourScanForServicesView: View {
 
     @Environment(\.scenePhase) private var scenePhase
     @State private var viewModel: BonjourServicesViewModel
 
     @MainActor
-    public init(
-        scanner: (any BonjourServiceScannerProtocol)? = nil,
-        publishManager: (any BonjourPublishManagerProtocol)? = nil
-    ) {
+    public init(dependencies: DependencyContainer) {
         _viewModel = State(initialValue: BonjourServicesViewModel(
-            serviceScanner: scanner ?? BonjourServiceScanner.shared,
-            publishManager: publishManager ?? BonjourPublishManager.shared
+            serviceScanner: dependencies.bonjourServiceScanner,
+            publishManager: dependencies.bonjourPublishManager
         ))
     }
 

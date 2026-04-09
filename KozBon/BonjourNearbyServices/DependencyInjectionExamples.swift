@@ -41,7 +41,7 @@ import BonjourUI
  class MyViewModel: ObservableObject {
      private let scanner: BonjourServiceScannerProtocol
      
-     init(scanner: BonjourServiceScannerProtocol = BonjourServiceScanner.shared) {
+     init(scanner: BonjourServiceScannerProtocol = dependencies.bonjourServiceScanner) {
          self.scanner = scanner
      }
  }
@@ -101,7 +101,7 @@ import BonjourUI
      
      init(scanner: BonjourServiceScannerProtocol? = nil) {
          _viewModel = StateObject(wrappedValue: MyViewModel(
-             scanner: scanner ?? BonjourServiceScanner.shared
+             scanner: scanner ?? dependencies.bonjourServiceScanner
          ))
      }
      
@@ -222,8 +222,8 @@ final class ExampleViewModel {
     private let publishManager: any BonjourPublishManagerProtocol
 
     init(
-        scanner: any BonjourServiceScannerProtocol = BonjourServiceScanner.shared,
-        publishManager: any BonjourPublishManagerProtocol = BonjourPublishManager.shared
+        scanner: any BonjourServiceScannerProtocol,
+        publishManager: any BonjourPublishManagerProtocol
     ) {
         self.scanner = scanner
         self.publishManager = publishManager
@@ -245,12 +245,7 @@ final class ExampleViewModel {
 struct ExampleViewModelInjectionView: View {
     @State private var viewModel: ExampleViewModel
 
-    // Default initializer
-    init() {
-        _viewModel = State(initialValue: ExampleViewModel())
-    }
-
-    // Injection initializer for testing/customization
+    // Injection initializer — dependencies are always explicit
     init(scanner: BonjourServiceScannerProtocol, publishManager: BonjourPublishManagerProtocol) {
         _viewModel = State(initialValue: ExampleViewModel(
             scanner: scanner,

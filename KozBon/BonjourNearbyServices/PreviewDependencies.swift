@@ -15,10 +15,9 @@ import BonjourUI
 
 extension DependencyContainer {
 
-    /// Creates a dependency container configured for SwiftUI previews
+    /// Creates a dependency container configured for SwiftUI previews.
     @MainActor
     static func preview(
-        withMockData: Bool = true,
         simulateScanning: Bool = false
     ) -> DependencyContainer {
         let scanner = MockBonjourServiceScanner()
@@ -38,21 +37,15 @@ extension DependencyContainer {
 // MARK: - Preview Examples
 
 #Preview("Bonjour Scan View - Empty") {
+    let deps = DependencyContainer.preview()
     NavigationStack {
-        BonjourScanForServicesView(
-            scanner: MockBonjourServiceScanner()
-        )
+        BonjourScanForServicesView(dependencies: deps)
     }
 }
 
 #Preview("Bonjour Scan View - Scanning") {
+    let deps = DependencyContainer.preview(simulateScanning: true)
     NavigationStack {
-        BonjourScanForServicesView(
-            scanner: {
-                let scanner = MockBonjourServiceScanner()
-                scanner.isProcessing = true
-                return scanner
-            }()
-        )
+        BonjourScanForServicesView(dependencies: deps)
     }
 }

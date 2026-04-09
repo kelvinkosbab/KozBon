@@ -12,8 +12,9 @@ import BonjourModels
 
 /// Central container for managing application dependencies.
 ///
-/// Provides protocol-based access to the scanner and publish manager,
-/// enabling mock substitution in tests and previews.
+/// Provides protocol-based access to the scanner and publish manager.
+/// The production `init()` creates fresh instances. Tests and previews
+/// use the custom `init(bonjourServiceScanner:bonjourPublishManager:)` with mock implementations.
 public final class DependencyContainer: Sendable {
 
     // MARK: - Services
@@ -26,11 +27,11 @@ public final class DependencyContainer: Sendable {
 
     // MARK: - Initialization
 
-    /// Creates a dependency container with real production services.
+    /// Creates a dependency container with production services.
     @MainActor
     public init() {
-        self.bonjourServiceScanner = BonjourServiceScanner.shared
-        self.bonjourPublishManager = BonjourPublishManager.shared
+        self.bonjourServiceScanner = BonjourServiceScanner()
+        self.bonjourPublishManager = BonjourPublishManager()
     }
 
     /// Creates a dependency container with custom services (useful for testing or previews).
