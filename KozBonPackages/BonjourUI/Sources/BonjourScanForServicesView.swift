@@ -80,9 +80,9 @@ public struct BonjourScanForServicesView: View {
                         }
                     } label: {
                         Label {
-                            Text(self.viewModel.createButtonString)
+                            Text(Strings.Buttons.broadcastBonjourService)
                         } icon: {
-                            Iconography.addImage
+                            Iconography.antennaImage
                                 .renderingMode(.template)
                                 .foregroundColor(.kozBonBlue)
                         }

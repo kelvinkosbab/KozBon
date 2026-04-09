@@ -55,4 +55,14 @@ public enum BonjourServiceSortType: Identifiable, CaseIterable {
             String(localized: Strings.SortOptions.serviceTypeDesc)
         }
     }
+
+    /// The SF Symbol name for this sort option's menu icon.
+    public var iconName: String {
+        switch self {
+        case .hostNameAsc, .serviceNameAsc:
+            "arrow.up"
+        case .hostNameDesc, .serviceNameDesc:
+            "arrow.down"
+        }
+    }
 }

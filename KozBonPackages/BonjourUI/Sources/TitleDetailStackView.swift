@@ -45,7 +45,7 @@ public struct TitleDetailStackView<Trailing>: View where Trailing: View {
                     .font(.body)
                     .foregroundColor(.primary)
                 Text(self.detail)
-                    .font(.caption)
+                    .font(.subheadline)
                     .foregroundColor(.secondary)
             }
 
