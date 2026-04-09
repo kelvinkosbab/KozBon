@@ -12,4 +12,5 @@ import SwiftUI
 public extension FocusedValues {
     @Entry var isBroadcastServicePresented: Binding<Bool>?
     @Entry var isCreateServiceTypePresented: Binding<Bool>?
+    @Entry var refreshScan: (() -> Void)?
 }

@@ -11,23 +11,30 @@ import CoreUI
 
 // MARK: - EmptyStateOverlayView
 
-/// An overlay view shown when a list has no content, displaying an optional image and a title message.
+/// A centered overlay view for empty states, displaying an optional image, title, and action button.
+///
+/// - Parameters:
+///   - image: An optional decorative image shown above the title.
+///   - title: The primary message describing the empty state.
+///   - actionTitle: Optional title for an action button shown below the title.
+///   - action: Optional closure invoked when the action button is tapped.
 public struct EmptyStateOverlayView: View {
 
     let image: Image?
     let title: String
+    let actionTitle: String?
+    let action: (() -> Void)?
 
-    /// Creates an empty state overlay.
-    ///
-    /// - Parameters:
-    ///   - image: An optional image displayed above the title, or `nil` to show text only.
-    ///   - title: The message explaining why the list is empty.
     public init(
-        image: Image?,
-        title: String
+        image: Image? = nil,
+        title: String,
+        actionTitle: String? = nil,
+        action: (() -> Void)? = nil
     ) {
         self.image = image
         self.title = title
+        self.actionTitle = actionTitle
+        self.action = action
     }
 
     public var body: some View {
@@ -44,6 +51,16 @@ public struct EmptyStateOverlayView: View {
                 .font(.headline).bold()
                 .foregroundStyle(.primary)
                 .multilineTextAlignment(.center)
+
+            if let actionTitle, let action {
+                Button {
+                    action()
+                } label: {
+                    Text(actionTitle)
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.kozBonBlue)
+            }
         }
         .padding()
     }
@@ -60,7 +77,9 @@ struct EmptyStateOverlayView_Previews: PreviewProvider {
 
         EmptyStateOverlayView(
             image: Image(systemName: Iconography.antenna),
-            title: "Some title saying something"
+            title: "Some title saying something",
+            actionTitle: "Start Scanning",
+            action: {}
         )
     }
 }

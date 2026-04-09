@@ -52,11 +52,16 @@ public struct BonjourScanForServicesView: View {
                 }
             }
             .contentMarginsBasedOnSizeClass()
+            #if os(macOS)
+            .navigationSplitViewColumnWidth(min: 280, ideal: 320)
+            #endif
             .overlay {
                 if self.viewModel.flatActiveServices.isEmpty {
                     EmptyStateOverlayView(
                         image: nil,
-                        title: self.viewModel.noActiveServicesString
+                        title: self.viewModel.noActiveServicesString,
+                        actionTitle: String(localized: Strings.Buttons.startScanning),
+                        action: { viewModel.load() }
                     )
                 }
             }
@@ -64,6 +69,17 @@ public struct BonjourScanForServicesView: View {
                 ToolbarItem {
                     BonjourServiceListSortMenu(sortType: self.$viewModel.sortType)
                 }
+
+                #if os(macOS)
+                ToolbarItem {
+                    Button {
+                        viewModel.load()
+                    } label: {
+                        Label(String(localized: Strings.Buttons.refresh), systemImage: Iconography.refresh)
+                    }
+                    .keyboardShortcut("r", modifiers: .command)
+                }
+                #endif
 
                 ToolbarItem {
                     Menu {
@@ -167,6 +183,7 @@ public struct BonjourScanForServicesView: View {
             }
         }
         .focusedSceneValue(\.isBroadcastServicePresented, $viewModel.isBroadcastBonjourServicePresented)
+        .focusedSceneValue(\.refreshScan, { [viewModel] in viewModel.load() })
     }
 
     @ViewBuilder

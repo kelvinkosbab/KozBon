@@ -35,6 +35,14 @@ public struct SettingsView: View {
                     }
                 }
             }
+
+            Section {
+                Button(role: .destructive) {
+                    BonjourServiceType.deleteAllPersistentCopies()
+                } label: {
+                    Text(Strings.Settings.clearCustomServiceTypes)
+                }
+            }
         }
         .formStyle(.grouped)
         .frame(width: 400)

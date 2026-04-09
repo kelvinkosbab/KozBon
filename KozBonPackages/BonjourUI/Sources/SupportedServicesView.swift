@@ -34,6 +34,9 @@ public struct SupportedServicesView: View {
                 serviceTypeSection(title: String(localized: Strings.Sections.builtinServiceTypes), serviceTypes: viewModel.filteredBuiltInServiceTypes)
             }
             .contentMarginsBasedOnSizeClass()
+            #if os(macOS)
+            .navigationSplitViewColumnWidth(min: 280, ideal: 320)
+            #endif
             .navigationTitle(String(localized: Strings.NavigationTitles.supportedServices))
             .searchable(text: $viewModel.searchText, prompt: String(localized: Strings.Placeholders.search))
             .toolbar {

@@ -202,6 +202,14 @@ public enum Strings {
             .init("button_broadcast_bonjour_service", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        public static var startScanning: LocalizedStringResource {
+            .init("button_start_scanning", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var refresh: LocalizedStringResource {
+            .init("button_refresh", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var broadcast: LocalizedStringResource {
             .init("button_broadcast", bundle: .atURL(Bundle.module.bundleURL))
         }
@@ -602,6 +610,10 @@ public enum Strings {
 
         public static var sortServiceNameDesc: LocalizedStringResource {
             .init("settings_sort_service_name_desc", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var clearCustomServiceTypes: LocalizedStringResource {
+            .init("settings_clear_custom_service_types", bundle: .atURL(Bundle.module.bundleURL))
         }
     }
 

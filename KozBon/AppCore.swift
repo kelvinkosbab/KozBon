@@ -77,7 +77,7 @@ struct AppCore: App {
             }
         }
         #if os(macOS)
-        .defaultSize(width: 900, height: 650)
+        .defaultSize(width: 1100, height: 700)
         .windowResizability(.contentSize)
         .commands {
             AppCommands()
@@ -110,6 +110,7 @@ private struct AppCommands: Commands {
 
     @FocusedBinding(\.isBroadcastServicePresented) private var isBroadcastServicePresented
     @FocusedBinding(\.isCreateServiceTypePresented) private var isCreateServiceTypePresented
+    @FocusedValue(\.refreshScan) private var refreshScan
 
     var body: some Commands {
         CommandGroup(after: .newItem) {
@@ -124,6 +125,14 @@ private struct AppCommands: Commands {
             }
             .disabled(isCreateServiceTypePresented == nil)
             .keyboardShortcut("t", modifiers: [.command, .shift])
+
+            Divider()
+
+            Button(String(localized: Strings.Buttons.refresh)) {
+                refreshScan?()
+            }
+            .disabled(refreshScan == nil)
+            .keyboardShortcut("r", modifiers: .command)
         }
     }
 }

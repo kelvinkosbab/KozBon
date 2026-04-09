@@ -57,6 +57,9 @@ public extension Iconography {
     /// Sort icon image.
     static var sortImage: Image { Image(systemName: sort) }
 
+    /// Refresh icon image.
+    static var refreshImage: Image { Image(systemName: refresh) }
+
     // MARK: - Clipboard & Copy
 
     /// Copy to clipboard icon image.

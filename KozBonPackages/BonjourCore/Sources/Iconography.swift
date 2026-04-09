@@ -60,6 +60,9 @@ public enum Iconography {
     /// Sort icon.
     public static let sort = "line.3.horizontal.decrease"
 
+    /// Refresh icon.
+    public static let refresh = "arrow.clockwise"
+
     // MARK: - Clipboard & Copy
 
     /// Copy to clipboard icon.
