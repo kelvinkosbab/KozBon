@@ -27,6 +27,11 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
     @State private var details: String
     @State private var detailsError: String?
 
+    /// Whether the form has valid inputs for creating or updating a service type.
+    private var isFormValid: Bool {
+        !name.trimmed.isEmpty && !type.trimmed.isEmpty && !details.trimmed.isEmpty
+    }
+
     private var isCreatingBonjourService: Bool
     private let selectedTransportLayer: TransportLayer = .tcp
 
@@ -146,6 +151,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                     } label: {
                         Label(String(localized: Strings.Buttons.done), systemImage: Iconography.confirm)
                     }
+                    .disabled(!isFormValid)
                     .keyboardShortcut(.defaultAction)
                 }
             }

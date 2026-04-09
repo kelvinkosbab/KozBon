@@ -31,6 +31,15 @@ struct BroadcastBonjourServiceView: View {
     @State private var domainError: String?
     @State private var isCreateTxtRecordViewPresented = false
 
+    /// Whether the form has valid inputs for broadcasting a service.
+    private var isFormValid: Bool {
+        serviceType != nil &&
+        port != nil &&
+        (port ?? 0) >= Constants.Network.minimumPort &&
+        (port ?? 0) <= Constants.Network.maximumPort &&
+        !domain.trimmed.isEmpty
+    }
+
     private var isCreatingBonjourService: Bool
     private let selectedTransportLayer: TransportLayer = .tcp
 
@@ -107,6 +116,7 @@ struct BroadcastBonjourServiceView: View {
                     } label: {
                         Label(String(localized: Strings.Buttons.done), systemImage: Iconography.confirm)
                     }
+                    .disabled(!isFormValid)
                     .keyboardShortcut(.defaultAction)
                 }
             }
