@@ -9,10 +9,6 @@ import Foundation
 import BonjourCore
 import BonjourModels
 
-#if canImport(UIKit)
-import UIKit
-#endif
-
 #if canImport(FoundationModels)
 import FoundationModels
 
@@ -50,26 +46,16 @@ public final class BonjourServiceExplainer {
     ///
     /// - Parameter service: The discovered Bonjour service to explain.
     public func explain(service: BonjourService) async {
-        let serviceType = service.serviceType
-
         explanation = ""
         error = nil
         isGenerating = true
 
-        let instructions = """
-            You are a friendly networking expert helping everyday users understand \
-            Bonjour (mDNS/DNS-SD) services discovered on their local network. \
-            Explain what this service does, why it is likely running on the device, \
-            and how the user might interact with it. Keep your explanation clear, \
-            concise, and approachable — avoid deep technical jargon. \
-            Use 2-4 short paragraphs. If the service has TXT records, mention what \
-            they reveal about the service's configuration.
-            """
-
-        let prompt = buildPrompt(service: service, serviceType: serviceType)
+        let prompt = BonjourServicePromptBuilder.buildPrompt(service: service)
 
         do {
-            let session = LanguageModelSession(instructions: instructions)
+            let session = LanguageModelSession(
+                instructions: BonjourServicePromptBuilder.systemInstructions
+            )
             self.session = session
 
             let stream = session.streamResponse(to: prompt)
@@ -81,70 +67,6 @@ public final class BonjourServiceExplainer {
         }
 
         isGenerating = false
-    }
-
-    // MARK: - Device Context
-
-    private var deviceContext: String {
-        #if os(iOS)
-        let device = UIDevice.current
-        return "I am using an \(device.model) running \(device.systemName) \(device.systemVersion) (device name: \(device.name))"
-        #elseif os(macOS)
-        let osVersion = ProcessInfo.processInfo.operatingSystemVersionString
-        return "I am using a Mac running macOS \(osVersion) (hostname: \(ProcessInfo.processInfo.hostName))"
-        #elseif os(visionOS)
-        return "I am using an Apple Vision Pro running visionOS"
-        #else
-        return "I am using an Apple device"
-        #endif
-    }
-
-    private var currentDeviceShortName: String {
-        #if os(iOS)
-        UIDevice.current.model
-        #elseif os(macOS)
-        "Mac"
-        #elseif os(visionOS)
-        "Apple Vision Pro"
-        #else
-        "device"
-        #endif
-    }
-
-    // MARK: - Prompt Builder
-
-    private func buildPrompt(service: BonjourService, serviceType: BonjourServiceType) -> String {
-        var parts: [String] = []
-
-        parts.append(deviceContext)
-        parts.append("")
-        parts.append("I discovered this Bonjour service on my local network and would like to understand it:")
-        parts.append("")
-        parts.append("Service name: \(serviceType.name)")
-        parts.append("Full type: \(serviceType.fullType)")
-        parts.append("Transport layer: \(serviceType.transportLayer.string.uppercased())")
-        parts.append("Host name: \(service.hostName)")
-        parts.append("Device advertising the service: \(service.service.name)")
-        parts.append("Domain: \(service.service.domain)")
-
-        if !service.addresses.isEmpty {
-            let addressStrings = service.addresses.map(\.ipPortString)
-            parts.append("IP addresses: \(addressStrings.joined(separator: ", "))")
-        }
-
-        if let detail = serviceType.detail {
-            parts.append("Protocol description: \(detail)")
-        }
-
-        if !service.dataRecords.isEmpty {
-            let records = service.dataRecords.map { "\($0.key)=\($0.value)" }
-            parts.append("TXT records: \(records.joined(separator: ", "))")
-        }
-
-        parts.append("")
-        parts.append("What does this service do, why is it running on that device, and how can I interact with it from my \(currentDeviceShortName)?")
-
-        return parts.joined(separator: "\n")
     }
 }
 

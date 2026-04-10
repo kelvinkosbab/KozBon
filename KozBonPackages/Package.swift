@@ -108,7 +108,12 @@ let package = Package(
         )
         + makeTargets(
             name: "BonjourAI",
-            dependencies: ["BonjourCore", "BonjourModels", "BonjourLocalization"]
+            dependencies: ["BonjourCore", "BonjourModels", "BonjourLocalization"],
+            hasTests: true,
+            testDependencies: [
+                .byName(name: "BonjourCore"),
+                .byName(name: "BonjourModels")
+            ]
         )
         + makeTargets(
             name: "BonjourUI",
