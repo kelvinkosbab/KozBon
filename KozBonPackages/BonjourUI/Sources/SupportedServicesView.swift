@@ -30,8 +30,14 @@ public struct SupportedServicesView: View {
     public var body: some View {
         NavigationSplitView {
             List(selection: $viewModel.selectedServiceType) {
-                serviceTypeSection(title: String(localized: Strings.Sections.customServiceTypes), serviceTypes: viewModel.filteredCustomServiceTypes)
-                serviceTypeSection(title: String(localized: Strings.Sections.builtinServiceTypes), serviceTypes: viewModel.filteredBuiltInServiceTypes)
+                serviceTypeSection(
+                    title: String(localized: Strings.Sections.customServiceTypes),
+                    serviceTypes: viewModel.filteredCustomServiceTypes
+                )
+                serviceTypeSection(
+                    title: String(localized: Strings.Sections.builtinServiceTypes),
+                    serviceTypes: viewModel.filteredBuiltInServiceTypes
+                )
             }
             .contentMarginsBasedOnSizeClass()
             #if os(macOS)

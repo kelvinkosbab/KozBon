@@ -18,17 +18,17 @@ struct SupportedServicesViewModelTests {
 
     // MARK: - Helpers
 
-    /// Creates a ViewModel and populates it using the static service type library
-    /// (no Core Data dependency). We call `loadFromLibrary()` which sets
-    /// `builtInServiceTypes` via `@testable` access to the `load()` method.
-    /// Since `load()` calls `fetchAll()` which requires Core Data for persistent
-    /// copies, we instead verify the filtering logic through the computed properties
-    /// after the ViewModel is loaded with library data.
-    ///
-    /// The `load()` method fetches `BonjourServiceType.fetchAll()` which includes
-    /// both the static library and Core Data persistent copies. Since Core Data
-    /// is not available in SPM tests, we test the initial state and filtering
-    /// behavior through the public API that does not require loaded data.
+    // Creates a ViewModel and populates it using the static service type library
+    // (no Core Data dependency). We call `loadFromLibrary()` which sets
+    // `builtInServiceTypes` via `@testable` access to the `load()` method.
+    // Since `load()` calls `fetchAll()` which requires Core Data for persistent
+    // copies, we instead verify the filtering logic through the computed properties
+    // after the ViewModel is loaded with library data.
+    //
+    // The `load()` method fetches `BonjourServiceType.fetchAll()` which includes
+    // both the static library and Core Data persistent copies. Since Core Data
+    // is not available in SPM tests, we test the initial state and filtering
+    // behavior through the public API that does not require loaded data.
 
     // MARK: - Initial State
 

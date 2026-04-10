@@ -54,7 +54,11 @@ struct SelectServiceTypeView: View {
                             }
                         }
                         .accessibilityLabel(serviceType.name)
-                        .accessibilityValue(selectedServiceType == serviceType ? String(localized: Strings.Accessibility.selected) : String(localized: Strings.Accessibility.notSelected))
+                        .accessibilityValue(
+                            selectedServiceType == serviceType
+                                ? String(localized: Strings.Accessibility.selected)
+                                : String(localized: Strings.Accessibility.notSelected)
+                        )
                         .accessibilityHint(String(localized: Strings.Accessibility.selectServiceTypeHint))
                     }
                 }
@@ -81,7 +85,11 @@ struct SelectServiceTypeView: View {
                             }
                         }
                         .accessibilityLabel(serviceType.name)
-                        .accessibilityValue(selectedServiceType == serviceType ? String(localized: Strings.Accessibility.selected) : String(localized: Strings.Accessibility.notSelected))
+                        .accessibilityValue(
+                            selectedServiceType == serviceType
+                                ? String(localized: Strings.Accessibility.selected)
+                                : String(localized: Strings.Accessibility.notSelected)
+                        )
                         .accessibilityHint(String(localized: Strings.Accessibility.selectServiceTypeHint))
                     }
                 }

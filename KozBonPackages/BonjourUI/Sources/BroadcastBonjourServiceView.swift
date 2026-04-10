@@ -272,6 +272,7 @@ struct BroadcastBonjourServiceView: View {
 
     // MARK: - Done Action
 
+    // swiftlint:disable:next function_body_length
     private func doneButtonSelected() {
 
         let transportLayer = selectedTransportLayer

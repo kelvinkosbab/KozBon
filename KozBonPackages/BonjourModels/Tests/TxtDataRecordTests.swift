@@ -40,7 +40,7 @@ struct TxtDataRecordTests {
         let records = [
             BonjourService.TxtDataRecord(key: "charlie", value: "3"),
             BonjourService.TxtDataRecord(key: "alpha", value: "1"),
-            BonjourService.TxtDataRecord(key: "bravo", value: "2"),
+            BonjourService.TxtDataRecord(key: "bravo", value: "2")
         ]
         let sorted = records.sorted()
         #expect(sorted[0].key == "alpha")

@@ -21,7 +21,7 @@ import FoundationModels
 @available(iOS 26, macOS 26, visionOS 26, *)
 @MainActor
 @Observable
-public final class BonjourServiceExplainer {
+public final class BonjourServiceExplainer: BonjourServiceExplainerProtocol {
 
     // MARK: - Properties
 
@@ -33,6 +33,11 @@ public final class BonjourServiceExplainer {
 
     /// An error message if generation fails.
     public var error: String?
+
+    /// Whether the on-device language model is available.
+    public var isAvailable: Bool {
+        SystemLanguageModel.default.isAvailable
+    }
 
     private var session: LanguageModelSession?
 

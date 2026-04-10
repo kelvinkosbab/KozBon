@@ -134,7 +134,11 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
             #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
-            .navigationTitle(isCreatingBonjourService ? String(localized: Strings.NavigationTitles.createServiceType) : String(localized: Strings.NavigationTitles.editServiceType))
+            .navigationTitle(
+                isCreatingBonjourService
+                    ? String(localized: Strings.NavigationTitles.createServiceType)
+                    : String(localized: Strings.NavigationTitles.editServiceType)
+            )
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(role: .cancel) {

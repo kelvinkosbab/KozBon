@@ -23,9 +23,15 @@ import FoundationModels
 public struct ServiceExplanationSheet: View {
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.serviceExplainer) private var injectedExplainer
 
     private let service: BonjourService
-    @State private var explainer = BonjourServiceExplainer()
+    @State private var localExplainer = BonjourServiceExplainer()
+
+    /// The active explainer — uses the injected one if available, otherwise the local instance.
+    private var explainer: any BonjourServiceExplainerProtocol {
+        injectedExplainer ?? localExplainer
+    }
 
     public init(service: BonjourService) {
         self.service = service
@@ -57,7 +63,7 @@ public struct ServiceExplanationSheet: View {
                     } else if explainer.explanation.isEmpty && explainer.isGenerating {
                         HStack(spacing: 8) {
                             ProgressView()
-                            Text(Strings.AI.generating)
+                            Text(Strings.AIInsights.generating)
                                 .foregroundStyle(.secondary)
                         }
                     } else {
@@ -71,7 +77,7 @@ public struct ServiceExplanationSheet: View {
                 }
                 .padding()
             }
-            .navigationTitle(String(localized: Strings.AI.insightsTitle))
+            .navigationTitle(String(localized: Strings.AIInsights.insightsTitle))
             #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif

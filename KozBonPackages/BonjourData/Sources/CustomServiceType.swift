@@ -37,7 +37,8 @@ extension CustomServiceType: MyDataManagerObject {
     // MARK: - MyDataManagerObject
 
     /// Sort descriptors used when fetching custom service types. Always `nil` (no specific ordering).
-    // NSSortDescriptor is not Sendable, but this static is always nil and immutable
+    ///
+    /// NSSortDescriptor is not Sendable, but this static is always nil and immutable.
     nonisolated(unsafe) public static let sortDescriptors: [NSSortDescriptor]? = nil
 
     // MARK: - Properties

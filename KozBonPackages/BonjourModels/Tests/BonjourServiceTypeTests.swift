@@ -105,7 +105,7 @@ struct BonjourServiceTypeTests {
     @Test func fetchByTypeAndTransportLayer() {
         let types = [
             BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp),
-            BonjourServiceType(name: "DNS", type: "dns", transportLayer: .udp),
+            BonjourServiceType(name: "DNS", type: "dns", transportLayer: .udp)
         ]
         let result = BonjourServiceType.fetch(serviceTypes: types, type: "http", transportLayer: .tcp)
         #expect(result != nil)
@@ -114,7 +114,7 @@ struct BonjourServiceTypeTests {
 
     @Test func fetchByTypeAndTransportLayerNotFound() {
         let types = [
-            BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp),
+            BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp)
         ]
         let result = BonjourServiceType.fetch(serviceTypes: types, type: "ssh", transportLayer: .tcp)
         #expect(result == nil)
@@ -123,7 +123,7 @@ struct BonjourServiceTypeTests {
     @Test func fetchByFullType() {
         let types = [
             BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp),
-            BonjourServiceType(name: "DNS", type: "dns", transportLayer: .udp),
+            BonjourServiceType(name: "DNS", type: "dns", transportLayer: .udp)
         ]
         let result = BonjourServiceType.fetch(serviceTypes: types, fullType: "_dns._udp")
         #expect(result != nil)
@@ -132,7 +132,7 @@ struct BonjourServiceTypeTests {
 
     @Test func fetchByFullTypeNotFound() {
         let types = [
-            BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp),
+            BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp)
         ]
         let result = BonjourServiceType.fetch(serviceTypes: types, fullType: "_ssh._tcp")
         #expect(result == nil)
@@ -142,21 +142,21 @@ struct BonjourServiceTypeTests {
 
     @Test func existsReturnsTrueWhenFound() {
         let types = [
-            BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp),
+            BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp)
         ]
         #expect(BonjourServiceType.exists(serviceTypes: types, type: "http", transportLayer: .tcp))
     }
 
     @Test func existsReturnsFalseWhenNotFound() {
         let types = [
-            BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp),
+            BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp)
         ]
         #expect(!BonjourServiceType.exists(serviceTypes: types, type: "ssh", transportLayer: .tcp))
     }
 
     @Test func existsByFullType() {
         let types = [
-            BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp),
+            BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp)
         ]
         #expect(BonjourServiceType.exists(serviceTypes: types, fullType: "_http._tcp"))
     }

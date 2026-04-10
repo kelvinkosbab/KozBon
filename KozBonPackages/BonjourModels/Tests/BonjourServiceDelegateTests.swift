@@ -140,10 +140,9 @@ struct BonjourServiceDelegateTests {
     @Test func netServiceDidUpdateTXTRecordParsesRecords() {
         let service = makeService()
 
-        // swiftlint:disable:next force_unwrapping
         let txtData = NetService.data(fromTXTRecord: [
-            "key1": "value1".data(using: .utf8)!,
-            "key2": "value2".data(using: .utf8)!
+            "key1": Data("value1".utf8),
+            "key2": Data("value2".utf8)
         ])
 
         service.netService(service.service, didUpdateTXTRecord: txtData)

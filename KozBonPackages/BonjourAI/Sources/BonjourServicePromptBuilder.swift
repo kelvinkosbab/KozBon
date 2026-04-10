@@ -24,15 +24,36 @@ public enum BonjourServicePromptBuilder {
     // MARK: - System Instructions
 
     /// The system prompt instructing the model how to explain Bonjour services.
-    public static let systemInstructions = """
-        You are a friendly networking expert helping everyday users understand \
-        Bonjour (mDNS/DNS-SD) services discovered on their local network. \
-        Explain what this service does, why it is likely running on the device, \
-        and how the user might interact with it. Keep your explanation clear, \
-        concise, and approachable — avoid deep technical jargon. \
-        Use 2-4 short paragraphs. If the service has TXT records, mention what \
-        they reveal about the service's configuration.
-        """
+    ///
+    /// Dynamically includes the user's preferred language so the AI responds
+    /// in the correct locale.
+    public static var systemInstructions: String {
+        let languageName = preferredLanguageName
+        return """
+            You are a friendly networking expert helping everyday users understand \
+            Bonjour (mDNS/DNS-SD) services discovered on their local network. \
+            Explain what this service does, why it is likely running on the device, \
+            and how the user might interact with it. Keep your explanation clear, \
+            concise, and approachable — avoid deep technical jargon. \
+            Use 2-4 short paragraphs. If the service has TXT records, mention what \
+            they reveal about the service's configuration. \
+            IMPORTANT: Always respond in \(languageName).
+            """
+    }
+
+    // MARK: - Language Detection
+
+    /// The user's preferred language name for AI response localization.
+    ///
+    /// Uses the device's preferred language setting to determine the display name,
+    /// falling back to "English" if detection fails.
+    public static var preferredLanguageName: String {
+        guard let languageCode = Locale.preferredLanguages.first else {
+            return "English"
+        }
+        let locale = Locale(identifier: languageCode)
+        return locale.localizedString(forLanguageCode: languageCode) ?? "English"
+    }
 
     // MARK: - Device Context
 
@@ -102,7 +123,11 @@ public enum BonjourServicePromptBuilder {
         }
 
         parts.append("")
-        parts.append("What does this service do, why is it running on that device, and how can I interact with it from my \(currentDeviceShortName)?")
+        parts.append(
+            "What does this service do, why is it running on that device, " +
+            "and how can I interact with it from my \(currentDeviceShortName)? " +
+            "Please respond in \(preferredLanguageName)."
+        )
 
         return parts.joined(separator: "\n")
     }

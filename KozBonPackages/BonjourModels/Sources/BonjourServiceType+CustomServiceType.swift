@@ -14,7 +14,6 @@ import BonjourData
 public extension CustomServiceType {
 
     /// Converts a Core Data `CustomServiceType` entity to a `BonjourServiceType` value type.
-    // swiftlint:disable:next identifier_name
     var bonjourServiceType: BonjourServiceType {
         let transportLayer = TransportLayer(rawValue: Int(self.transportLayerValue)) ?? .tcp
         return BonjourServiceType(

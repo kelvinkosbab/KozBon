@@ -11,6 +11,11 @@ import BonjourUI
 import BonjourModels
 import BonjourScanning
 import BonjourLocalization
+import BonjourAI
+
+#if canImport(FoundationModels)
+import FoundationModels
+#endif
 
 // MARK: - AppCore
 
@@ -20,6 +25,17 @@ struct AppCore: App {
     // MARK: - Dependencies
 
     @State private var dependencies = DependencyContainer()
+    @State private var explainer: (any BonjourServiceExplainerProtocol)? = Self.makeExplainer()
+
+    /// Creates an AI explainer if the on-device model is available.
+    private static func makeExplainer() -> (any BonjourServiceExplainerProtocol)? {
+        #if canImport(FoundationModels)
+        if #available(iOS 26, macOS 26, visionOS 26, *) {
+            return BonjourServiceExplainer()
+        }
+        #endif
+        return nil
+    }
 
     var body: some Scene {
         WindowGroup {
@@ -52,6 +68,7 @@ struct AppCore: App {
                 #endif
                 .tint(.kozBonBlue)
                 .environment(\.dependencies, dependencies)
+                .environment(\.serviceExplainer, explainer)
             } else {
                 TabView {
                     BonjourScanForServicesView(dependencies: dependencies)
@@ -74,6 +91,7 @@ struct AppCore: App {
                 }
                 .tint(.kozBonBlue)
                 .environment(\.dependencies, dependencies)
+                .environment(\.serviceExplainer, explainer)
             }
         }
         #if os(macOS)

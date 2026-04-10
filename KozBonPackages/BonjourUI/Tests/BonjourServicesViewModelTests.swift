@@ -132,24 +132,28 @@ struct BonjourServicesViewModelTests {
         #expect(names == ["Zebra", "Alpha"])
     }
 
-    @Test func flatActiveServicesServiceNameAsc() {
+    @Test func flatActiveServicesServiceNameAsc() throws {
         let (viewModel, _) = makeViewModel()
         viewModel.didAdd(service: makeService(name: "DeviceA", type: "ssh"))
         viewModel.didAdd(service: makeService(name: "DeviceB", type: "http"))
         viewModel.sort(sortType: .serviceNameAsc)
 
         let typeNames = viewModel.flatActiveServices.map(\.serviceType.name)
-        #expect(typeNames.first! <= typeNames.last!)
+        let first = try #require(typeNames.first)
+        let last = try #require(typeNames.last)
+        #expect(first <= last)
     }
 
-    @Test func flatActiveServicesServiceNameDesc() {
+    @Test func flatActiveServicesServiceNameDesc() throws {
         let (viewModel, _) = makeViewModel()
         viewModel.didAdd(service: makeService(name: "DeviceA", type: "http"))
         viewModel.didAdd(service: makeService(name: "DeviceB", type: "ssh"))
         viewModel.sort(sortType: .serviceNameDesc)
 
         let typeNames = viewModel.flatActiveServices.map(\.serviceType.name)
-        #expect(typeNames.first! >= typeNames.last!)
+        let first = try #require(typeNames.first)
+        let last = try #require(typeNames.last)
+        #expect(first >= last)
     }
 
     // MARK: - Published vs Active Filtering

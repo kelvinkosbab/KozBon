@@ -11,6 +11,10 @@ import BonjourLocalization
 import BonjourModels
 import BonjourAI
 
+#if canImport(FoundationModels)
+import FoundationModels
+#endif
+
 // MARK: - BonjourServiceDetailView
 
 /// Detail view displaying information about a single discovered or published Bonjour service.
@@ -122,11 +126,12 @@ public struct BonjourServiceDetailView: View {
                     )
                     .contextMenu {
                         #if canImport(FoundationModels)
-                        if #available(iOS 26, macOS 26, visionOS 26, *) {
+                        if #available(iOS 26, macOS 26, visionOS 26, *),
+                           SystemLanguageModel.default.isAvailable {
                             Button {
                                 viewModel.isAIExplanationPresented = true
                             } label: {
-                                Label(String(localized: Strings.AI.explainWithAI), systemImage: Iconography.appleIntelligence)
+                                Label(String(localized: Strings.AIInsights.explainWithAI), systemImage: Iconography.appleIntelligence)
                             }
                         }
                         #endif
@@ -180,14 +185,18 @@ public struct BonjourServiceDetailView: View {
                 }
             }
         }
-        .sheet(isPresented: Binding(
-            get: { viewModel.isCreateTxtRecordPresented },
-            set: { viewModel.isCreateTxtRecordPresented = $0 }
-        ), onDismiss: {
-            viewModel.didFinishEditingTxtRecords()
-        }) {
-            TxtRecordEditSheet(viewModel: viewModel)
-        }
+        .sheet(
+            isPresented: Binding(
+                get: { viewModel.isCreateTxtRecordPresented },
+                set: { viewModel.isCreateTxtRecordPresented = $0 }
+            ),
+            onDismiss: {
+                viewModel.didFinishEditingTxtRecords()
+            },
+            content: {
+                TxtRecordEditSheet(viewModel: viewModel)
+            }
+        )
         #if canImport(FoundationModels)
         .modifier(AIExplanationSheetModifier(viewModel: viewModel))
         #endif
@@ -196,6 +205,7 @@ public struct BonjourServiceDetailView: View {
     // MARK: - TXT Records Section
 
     @ViewBuilder
+    // swiftlint:disable:next function_body_length
     private func txtRecordsSection() -> some View {
         if viewModel.isPublished {
             Section(String(localized: Strings.Sections.txtRecords)) {
@@ -274,7 +284,6 @@ public struct BonjourServiceDetailView: View {
 // MARK: - AI Explanation Sheet Modifier
 
 #if canImport(FoundationModels)
-import FoundationModels
 
 @available(iOS 26, macOS 26, visionOS 26, *)
 private struct AIExplanationSheetAvailable: ViewModifier {

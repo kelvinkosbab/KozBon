@@ -55,6 +55,24 @@ struct BonjourServicePromptBuilderTests {
         #expect(instructions.contains("mDNS"))
     }
 
+    @Test func systemInstructionsContainsLanguageDirective() {
+        let instructions = BonjourServicePromptBuilder.systemInstructions
+        let languageName = BonjourServicePromptBuilder.preferredLanguageName
+        #expect(instructions.contains("respond in \(languageName)"))
+    }
+
+    // MARK: - Language Detection
+
+    @Test func preferredLanguageNameIsNotEmpty() {
+        #expect(!BonjourServicePromptBuilder.preferredLanguageName.isEmpty)
+    }
+
+    @Test func preferredLanguageNameIsHumanReadable() {
+        let name = BonjourServicePromptBuilder.preferredLanguageName
+        // Should be a display name like "English", "Español", etc., not a code like "en"
+        #expect(name.count > 2)
+    }
+
     // MARK: - Device Context
 
     @Test func deviceContextIsNotEmpty() {
@@ -126,6 +144,13 @@ struct BonjourServicePromptBuilderTests {
         let prompt = BonjourServicePromptBuilder.buildPrompt(service: service)
         let deviceName = BonjourServicePromptBuilder.currentDeviceShortName
         #expect(prompt.contains("how can I interact with it from my \(deviceName)?"))
+    }
+
+    @Test func promptContainsLanguageRequest() {
+        let service = makeService()
+        let prompt = BonjourServicePromptBuilder.buildPrompt(service: service)
+        let languageName = BonjourServicePromptBuilder.preferredLanguageName
+        #expect(prompt.contains("Please respond in \(languageName)."))
     }
 
     @Test func promptOmitsAddressesWhenEmpty() {

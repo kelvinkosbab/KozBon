@@ -12,6 +12,10 @@ import BonjourModels
 import BonjourAI
 import BonjourScanning
 
+#if canImport(FoundationModels)
+import FoundationModels
+#endif
+
 // MARK: - BonjourScanForServicesView
 
 /// The main view for discovering and listing nearby Bonjour services on the local network.
@@ -193,13 +197,14 @@ public struct BonjourScanForServicesView: View {
                 }
 
                 #if canImport(FoundationModels)
-                if #available(iOS 26, macOS 26, visionOS 26, *) {
+                if #available(iOS 26, macOS 26, visionOS 26, *),
+                   SystemLanguageModel.default.isAvailable {
                     Divider()
 
                     Button {
                         serviceToExplain = service
                     } label: {
-                        Label(String(localized: Strings.AI.explainWithAI), systemImage: Iconography.appleIntelligence)
+                        Label(String(localized: Strings.AIInsights.explainWithAI), systemImage: Iconography.appleIntelligence)
                     }
                 }
                 #endif
@@ -212,7 +217,6 @@ public struct BonjourScanForServicesView: View {
 // MARK: - AI Service Explanation Sheet Modifier
 
 #if canImport(FoundationModels)
-import FoundationModels
 
 @available(iOS 26, macOS 26, visionOS 26, *)
 private struct AIServiceExplanationSheetAvailable: ViewModifier {

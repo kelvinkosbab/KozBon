@@ -9,9 +9,9 @@
 
 import Foundation
 
-/// Type-safe localized string constants for the KozBon app.
-///
-/// Access strings via nested enums, e.g. `Strings.NavigationTitles.nearbyServices`.
+// Type-safe localized string constants for the KozBon app.
+// Access strings via nested enums, e.g. `Strings.NavigationTitles.nearbyServices`.
+// swiftlint:disable:next type_body_length
 public enum Strings {
 
     // MARK: - Navigation Titles
@@ -439,7 +439,6 @@ public enum Strings {
 
     // MARK: - Accessibility
 
-    // swiftlint:disable type_body_length
     public enum Accessibility {
 
         public static var create: LocalizedStringResource {
@@ -570,7 +569,6 @@ public enum Strings {
             String(format: NSLocalizedString("a11y_long_press_copy_format", bundle: Bundle.module, comment: ""), field)
         }
     }
-    // swiftlint:enable type_body_length
 
     // MARK: - Settings
 
@@ -619,7 +617,7 @@ public enum Strings {
 
     // MARK: - AI
 
-    public enum AI {
+    public enum AIInsights {
 
         public static var explainWithAI: LocalizedStringResource {
             .init("button_explain_with_ai", bundle: .atURL(Bundle.module.bundleURL))

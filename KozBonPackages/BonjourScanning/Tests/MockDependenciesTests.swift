@@ -36,7 +36,10 @@ struct MockDependenciesTests {
 
     private func makeService(name: String = "Test", type: String = "http") -> BonjourService {
         let serviceType = BonjourServiceType(name: name, type: type, transportLayer: .tcp)
-        return BonjourService(service: NetService(domain: "local.", type: serviceType.fullType, name: name, port: 8080), serviceType: serviceType)
+        return BonjourService(
+            service: NetService(domain: "local.", type: serviceType.fullType, name: name, port: 8080),
+            serviceType: serviceType
+        )
     }
 
     // MARK: - MockBonjourServiceScanner Tests
