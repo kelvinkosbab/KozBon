@@ -72,7 +72,8 @@ let package = Package(
         .library(name: "BonjourUI", targets: ["BonjourUI"])
     ],
     dependencies: [
-        .package(url: "https://github.com/kelvinkosbab/Core.git", branch: "main")
+        .package(url: "https://github.com/kelvinkosbab/Core.git", branch: "main"),
+        .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", from: "0.63.2")
     ],
     targets: makeTargets(
             name: "BonjourCore",

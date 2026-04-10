@@ -1,7 +1,7 @@
 # SwiftLint Configuration for KozBon
 
 excluded:
-  - KozBon/Legacy
+  - .build
 
 disabled_rules:
   - todo
