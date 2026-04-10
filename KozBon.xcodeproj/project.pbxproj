@@ -161,7 +161,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B6CE1D391E1208C1003D4FFA /* Build configuration list for PBXNativeTarget "KozBon" */;
 			buildPhases = (
-				F6SWIFTLINT000000000001 /* SwiftLint */,
 				B6CE1D201E1208C1003D4FFA /* Sources */,
 				B6CE1D211E1208C1003D4FFA /* Frameworks */,
 				B6CE1D221E1208C1003D4FFA /* Resources */,
@@ -266,27 +265,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		F6SWIFTLINT000000000001 /* SwiftLint */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = SwiftLint;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ -f \"$SRCROOT/.swiftlint.yml\" ]; then\n  if command -v swiftlint >/dev/null 2>&1; then\n    swiftlint lint --config \"$SRCROOT/.swiftlint.yml\" 2>/dev/null || echo \"warning: SwiftLint failed to run\"\n  else\n    echo \"warning: SwiftLint not installed\"\n  fi\nfi\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B6CE1D201E1208C1003D4FFA /* Sources */ = {
@@ -450,7 +428,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = KozBon.entitlements;
-				CURRENT_PROJECT_VERSION = 104;
+				CURRENT_PROJECT_VERSION = 105;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				INFOPLIST_FILE = KozBon/Info.plist;
@@ -481,7 +459,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = KozBon.entitlements;
-				CURRENT_PROJECT_VERSION = 104;
+				CURRENT_PROJECT_VERSION = 105;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				INFOPLIST_FILE = KozBon/Info.plist;
