@@ -10,15 +10,29 @@ import BonjourCore
 import BonjourLocalization
 import BonjourModels
 
+#if canImport(UIKit)
+import UIKit
+#endif
+
 // MARK: - SelectServiceTypeView
 
 struct SelectServiceTypeView: View {
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Binding var selectedServiceType: BonjourServiceType?
     @State private var viewModel = SelectServiceTypeViewModel()
 
     init(selectedServiceType: Binding<BonjourServiceType?>) {
         self._selectedServiceType = selectedServiceType
+    }
+
+    private func select(_ serviceType: BonjourServiceType) {
+        withAnimation(reduceMotion ? nil : .default) {
+            selectedServiceType = serviceType
+        }
+        #if os(iOS)
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        #endif
     }
 
     var body: some View {
@@ -37,11 +51,7 @@ struct SelectServiceTypeView: View {
                 Section(String(localized: Strings.Sections.customServiceTypes)) {
                     ForEach(viewModel.filteredCustomServiceTypes, id: \.fullType) { serviceType in
                         Button {
-                            Task { @MainActor in
-                                withAnimation {
-                                    selectedServiceType = serviceType
-                                }
-                            }
+                            select(serviceType)
                         } label: {
                             TitleDetailStackView(
                                 title: serviceType.name,
@@ -68,11 +78,7 @@ struct SelectServiceTypeView: View {
                 Section(String(localized: Strings.Sections.builtinServiceTypes)) {
                     ForEach(viewModel.filteredBuiltInServiceTypes, id: \.fullType) { serviceType in
                         Button {
-                            Task { @MainActor in
-                                withAnimation {
-                                    selectedServiceType = serviceType
-                                }
-                            }
+                            select(serviceType)
                         } label: {
                             TitleDetailStackView(
                                 title: serviceType.name,
