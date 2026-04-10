@@ -118,6 +118,7 @@ public struct BonjourServiceDetailView: View {
             txtRecordsSection()
         }
         .contentMarginsBasedOnSizeClass()
+        .navigationTitle(viewModel.service.service.name)
         #if !os(macOS)
         .navigationBarTitleDisplayMode(.inline)
         #endif

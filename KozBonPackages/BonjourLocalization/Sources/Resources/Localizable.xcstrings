@@ -7,37 +7,37 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nearby services"
+            "value": "Nearby"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Servicios cercanos"
+            "value": "Cercanos"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Services à proximité"
+            "value": "À proximité"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dienste in der Nähe"
+            "value": "In der Nähe"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "近くのサービス"
+            "value": "近く"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "附近的服务"
+            "value": "附近"
           }
         }
       }
@@ -89,37 +89,37 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Supported services"
+            "value": "Library"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Servicios compatibles"
+            "value": "Biblioteca"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Services pris en charge"
+            "value": "Bibliothèque"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Unterstützte Dienste"
+            "value": "Bibliothek"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "対応サービス"
+            "value": "ライブラリ"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "支持的服务"
+            "value": "资料库"
           }
         }
       }
@@ -294,37 +294,37 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Bonjour"
+            "value": "Discover"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Bonjour"
+            "value": "Descubrir"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Bonjour"
+            "value": "Découvrir"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Bonjour"
+            "value": "Entdecken"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Bonjour"
+            "value": "検出"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Bonjour"
+            "value": "发现"
           }
         }
       }
@@ -335,37 +335,37 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Supported services"
+            "value": "Library"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Servicios compatibles"
+            "value": "Biblioteca"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Services pris en charge"
+            "value": "Bibliothèque"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Unterstützte Dienste"
+            "value": "Bibliothek"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "対応サービス"
+            "value": "ライブラリ"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "支持的服务"
+            "value": "资料库"
           }
         }
       }

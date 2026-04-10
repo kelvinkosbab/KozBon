@@ -66,61 +66,18 @@ public struct BonjourScanForServicesView: View {
                 }
             }
             .toolbar {
-                ToolbarItem {
+                ToolbarItemGroup(placement: .primaryAction) {
                     BonjourServiceListSortMenu(sortType: self.$viewModel.sortType)
-                }
 
-                #if os(macOS)
-                ToolbarItem {
-                    Button {
-                        viewModel.load()
-                    } label: {
-                        Label(String(localized: Strings.Buttons.refresh), systemImage: Iconography.refresh)
-                    }
-                    .keyboardShortcut("r", modifiers: .command)
-                }
-                #endif
-
-                ToolbarItem {
-                    Menu {
-                        Button {
-                            viewModel.isBroadcastBonjourServicePresented = true
-                        } label: {
-                            Label {
-                                Text(Strings.Buttons.broadcastBonjourService)
-                            } icon: {
-                                Image(systemName: Iconography.antenna)
-                                    .renderingMode(.template)
-                                    .foregroundColor(.kozBonBlue)
-                            }
-                        }
-                    } label: {
-                        Label {
-                            Text(Strings.Buttons.broadcastBonjourService)
-                        } icon: {
-                            Iconography.antennaImage
-                                .renderingMode(.template)
-                                .foregroundColor(.kozBonBlue)
-                        }
-                    }
-                    .accessibilityLabel(String(localized: Strings.Accessibility.create))
-                    .accessibilityHint(String(localized: Strings.Accessibility.createHint))
-                }
-            }
-            #if os(visionOS)
-            .ornament(attachmentAnchor: .scene(.bottom)) {
-                HStack(spacing: 16) {
-                    BonjourServiceListSortMenu(sortType: self.$viewModel.sortType)
                     Button {
                         viewModel.isBroadcastBonjourServicePresented = true
                     } label: {
                         Label(String(localized: Strings.Buttons.broadcast), systemImage: Iconography.antenna)
                     }
+                    .accessibilityLabel(String(localized: Strings.Accessibility.create))
+                    .accessibilityHint(String(localized: Strings.Accessibility.createHint))
                 }
-                .padding(12)
-                .glassBackgroundEffect()
             }
-            #endif
             .navigationTitle(String(localized: Strings.NavigationTitles.nearbyServices))
             .refreshable {
                 guard !self.viewModel.serviceScanner.isProcessing else {
@@ -135,6 +92,7 @@ public struct BonjourScanForServicesView: View {
                     service: selectedService,
                     isPublished: viewModel.isPublishedService(selectedService)
                 )
+                .id(selectedService.id)
             } else {
                 ContentUnavailableView(
                     String(localized: Strings.EmptyStates.selectService),
@@ -189,14 +147,13 @@ public struct BonjourScanForServicesView: View {
     @ViewBuilder
     private func forEach(services: [BonjourService]) -> some View {
         ForEach(services) { service in
-            NavigationLink(value: service) {
-                TitleDetailStackView(
-                    title: service.service.name,
-                    detail: service.serviceType.name
-                ) {
-                    ServiceTypeBadge(serviceType: service.serviceType, style: .iconOnly)
-                }
+            TitleDetailStackView(
+                title: service.service.name,
+                detail: service.serviceType.name
+            ) {
+                ServiceTypeBadge(serviceType: service.serviceType, style: .iconOnly)
             }
+            .tag(service)
             .draggable(service.hostName)
             .accessibilityHint(Strings.Accessibility.viewDetails(service.service.name))
             .contextMenu {

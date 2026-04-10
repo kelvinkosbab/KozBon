@@ -44,22 +44,10 @@ public struct SupportedServicesView: View {
                     self.renderTrailingToolbarItems()
                 }
             }
-            #if os(visionOS)
-            .ornament(attachmentAnchor: .scene(.bottom)) {
-                HStack(spacing: 16) {
-                    Button {
-                        viewModel.isCreateCustomServiceTypePresented = true
-                    } label: {
-                        Label(String(localized: Strings.Buttons.createServiceType), systemImage: Iconography.createServiceType)
-                    }
-                }
-                .padding(12)
-                .glassBackgroundEffect()
-            }
-            #endif
         } detail: {
             if let selectedServiceType = viewModel.selectedServiceType {
                 SupportedServiceDetailView(serviceType: selectedServiceType)
+                    .id(selectedServiceType.fullType)
             } else {
                 ContentUnavailableView(
                     String(localized: Strings.EmptyStates.selectServiceType),
@@ -138,22 +126,11 @@ public struct SupportedServicesView: View {
             Button {
                 viewModel.isCreateCustomServiceTypePresented = true
             } label: {
-                Label {
-                    Text(Strings.Buttons.createCustomServiceType)
-                } icon: {
-                    Image(systemName: Iconography.createServiceType)
-                        .renderingMode(.template)
-                        .foregroundColor(.kozBonBlue)
-                }
+                Label(String(localized: Strings.Buttons.createCustomServiceType), systemImage: Iconography.createServiceType)
             }
         } label: {
-            Label {
-                Text(self.viewModel.createButtonString)
-            } icon: {
-                Iconography.addImage
-                    .renderingMode(.template)
-                    .foregroundColor(.kozBonBlue)
-            }
+            Label(String(localized: Strings.Buttons.create), systemImage: Iconography.add)
+                .tint(.primary)
         }
         .accessibilityLabel(String(localized: Strings.Accessibility.create))
         .accessibilityHint(String(localized: Strings.Accessibility.createServiceTypeHint))

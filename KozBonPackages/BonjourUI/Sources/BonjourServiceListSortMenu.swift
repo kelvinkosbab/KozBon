@@ -29,9 +29,6 @@ struct BonjourServiceListSortMenu: View {
     /// or unsorted state.
     @Binding var sortType: BonjourServiceSortType?
 
-    /// Localized title used for the menu's label.
-    let sortButtonString = String(localized: Strings.Buttons.sort)
-
     /// The view hierarchy for the sort menu.
     ///
     /// Displays a `Menu` whose content consists of a button for each
@@ -46,16 +43,8 @@ struct BonjourServiceListSortMenu: View {
                 }
             }
         } label: {
-            Label(
-                title: {
-                    Text(self.sortButtonString)
-                },
-                icon: {
-                    Iconography.sortImage
-                        .renderingMode(.template)
-                        .foregroundColor(.kozBonBlue)
-                }
-            )
+            Label(String(localized: Strings.Buttons.sort), systemImage: Iconography.sort)
+                .tint(.primary)
         }
     }
 

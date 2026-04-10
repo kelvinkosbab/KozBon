@@ -40,35 +40,31 @@ public struct BlueSectionItemIconTitleDetailView: View {
             if let imageSystemName, !imageSystemName.isEmpty {
                 Image(systemName: imageSystemName)
                     .font(.title3).bold()
+                    .foregroundStyle(.white)
                     .accessibilityHidden(true)
             }
 
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 4) {
                 Text(verbatim: title)
                     .font(.headline).bold()
+                    .foregroundStyle(.white)
 
                 if let detail {
                     Text(verbatim: detail)
-                        .font(.caption).bold()
+                        .font(.subheadline)
+                        .foregroundStyle(.white.opacity(0.85))
                 }
             }
             Spacer()
         }
         .accessibilityElement(children: .combine)
-        .padding(.vertical, 10)
-        #if os(visionOS)
-        .listRowBackground(
-            EmptyView()
-                .glassBackgroundEffect()
-                .clipShape(.capsule)
-        )
-        #else
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .listRowInsets(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
         .listRowBackground(
             Color.kozBonBlue
-                .opacity(0.4)
                 .clipShape(.capsule)
         )
-        #endif
     }
 }
 
