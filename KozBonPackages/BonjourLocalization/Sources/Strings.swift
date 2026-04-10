@@ -617,6 +617,27 @@ public enum Strings {
         }
     }
 
+    // MARK: - AI
+
+    public enum AI {
+
+        public static var explainWithAI: LocalizedStringResource {
+            .init("button_explain_with_ai", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var insightsTitle: LocalizedStringResource {
+            .init("nav_ai_insights", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var generating: LocalizedStringResource {
+            .init("ai_generating", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var explainHint: LocalizedStringResource {
+            .init("a11y_explain_with_ai_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+    }
+
     // MARK: - Nearby Section Header
 
     public enum NearbySection {

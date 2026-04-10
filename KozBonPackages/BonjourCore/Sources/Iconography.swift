@@ -29,6 +29,9 @@ public enum Iconography {
     /// Bonjour protocol icon.
     public static let bonjour = "bonjour"
 
+    /// Apple Intelligence icon.
+    public static let appleIntelligence = "apple.intelligence"
+
     /// AirPort Extreme base station icon.
     public static let airportExtreme = "airport.extreme"
 

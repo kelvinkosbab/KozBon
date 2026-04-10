@@ -9,6 +9,7 @@ import SwiftUI
 import BonjourCore
 import BonjourLocalization
 import BonjourModels
+import BonjourAI
 import BonjourScanning
 
 // MARK: - BonjourScanForServicesView
@@ -24,6 +25,7 @@ public struct BonjourScanForServicesView: View {
 
     @Environment(\.scenePhase) private var scenePhase
     @State private var viewModel: BonjourServicesViewModel
+    @State private var serviceToExplain: BonjourService?
 
     @MainActor
     public init(dependencies: DependencyContainer) {
@@ -142,6 +144,9 @@ public struct BonjourScanForServicesView: View {
         }
         .focusedSceneValue(\.isBroadcastServicePresented, $viewModel.isBroadcastBonjourServicePresented)
         .focusedSceneValue(\.refreshScan, { [viewModel] in viewModel.load() })
+        #if canImport(FoundationModels)
+        .modifier(AIServiceExplanationSheetModifier(serviceToExplain: $serviceToExplain))
+        #endif
     }
 
     @ViewBuilder
@@ -186,8 +191,51 @@ public struct BonjourScanForServicesView: View {
                         }
                     }
                 }
+
+                #if canImport(FoundationModels)
+                if #available(iOS 26, macOS 26, visionOS 26, *) {
+                    Divider()
+
+                    Button {
+                        serviceToExplain = service
+                    } label: {
+                        Label(String(localized: Strings.AI.explainWithAI), systemImage: Iconography.appleIntelligence)
+                    }
+                }
+                #endif
             }
         }
     }
 
 }
+
+// MARK: - AI Service Explanation Sheet Modifier
+
+#if canImport(FoundationModels)
+import FoundationModels
+
+@available(iOS 26, macOS 26, visionOS 26, *)
+private struct AIServiceExplanationSheetAvailable: ViewModifier {
+    @Binding var serviceToExplain: BonjourService?
+
+    func body(content: Content) -> some View {
+        content
+            .sheet(item: $serviceToExplain) { service in
+                ServiceExplanationSheet(service: service)
+            }
+    }
+}
+
+struct AIServiceExplanationSheetModifier: ViewModifier {
+    @Binding var serviceToExplain: BonjourService?
+
+    func body(content: Content) -> some View {
+        if #available(iOS 26, macOS 26, visionOS 26, *) {
+            content
+                .modifier(AIServiceExplanationSheetAvailable(serviceToExplain: $serviceToExplain))
+        } else {
+            content
+        }
+    }
+}
+#endif

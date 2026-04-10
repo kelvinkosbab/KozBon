@@ -51,6 +51,7 @@ final class BonjourServiceDetailViewModel: MyNetServiceDelegate {
     var dataRecords: [BonjourService.TxtDataRecord] = []
     var isNavigationHeaderShown = false
     var isCreateTxtRecordPresented = false
+    var isAIExplanationPresented = false
     var txtRecordToEdit: BonjourService.TxtDataRecord?
 
     init(service: BonjourService, isPublished: Bool = false) {

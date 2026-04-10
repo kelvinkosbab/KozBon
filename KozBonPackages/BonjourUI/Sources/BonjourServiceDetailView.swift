@@ -9,6 +9,7 @@ import SwiftUI
 import BonjourCore
 import BonjourLocalization
 import BonjourModels
+import BonjourAI
 
 // MARK: - BonjourServiceDetailView
 
@@ -119,6 +120,18 @@ public struct BonjourServiceDetailView: View {
                         title: String(localized: Strings.DetailRows.protocolInformation),
                         detail: detail
                     )
+                    .contextMenu {
+                        #if canImport(FoundationModels)
+                        if #available(iOS 26, macOS 26, visionOS 26, *) {
+                            Button {
+                                viewModel.isAIExplanationPresented = true
+                            } label: {
+                                Label(String(localized: Strings.AI.explainWithAI), systemImage: Iconography.appleIntelligence)
+                            }
+                        }
+                        #endif
+                    }
+                    .accessibilityHint(Strings.Accessibility.longPressToCopy(String(localized: Strings.DetailRows.protocolInformation)))
                 }
             }
 
@@ -175,6 +188,9 @@ public struct BonjourServiceDetailView: View {
         }) {
             TxtRecordEditSheet(viewModel: viewModel)
         }
+        #if canImport(FoundationModels)
+        .modifier(AIExplanationSheetModifier(viewModel: viewModel))
+        #endif
     }
 
     // MARK: - TXT Records Section
@@ -254,3 +270,34 @@ public struct BonjourServiceDetailView: View {
         }
     }
 }
+
+// MARK: - AI Explanation Sheet Modifier
+
+#if canImport(FoundationModels)
+import FoundationModels
+
+@available(iOS 26, macOS 26, visionOS 26, *)
+private struct AIExplanationSheetAvailable: ViewModifier {
+    @Bindable var viewModel: BonjourServiceDetailViewModel
+
+    func body(content: Content) -> some View {
+        content
+            .sheet(isPresented: $viewModel.isAIExplanationPresented) {
+                ServiceExplanationSheet(service: viewModel.service)
+            }
+    }
+}
+
+struct AIExplanationSheetModifier: ViewModifier {
+    let viewModel: BonjourServiceDetailViewModel
+
+    func body(content: Content) -> some View {
+        if #available(iOS 26, macOS 26, visionOS 26, *) {
+            content
+                .modifier(AIExplanationSheetAvailable(viewModel: viewModel))
+        } else {
+            content
+        }
+    }
+}
+#endif
