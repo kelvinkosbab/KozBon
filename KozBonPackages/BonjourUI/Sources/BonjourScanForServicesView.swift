@@ -163,18 +163,28 @@ public struct BonjourScanForServicesView: View {
                     Label(String(localized: Strings.Actions.copyHostname), systemImage: Iconography.copy)
                 }
 
-                if let firstAddress = service.addresses.first {
-                    Button {
-                        Clipboard.copy(firstAddress.ipPortString)
-                    } label: {
-                        Label(String(localized: Strings.Actions.copyIpAddress), systemImage: Iconography.network)
-                    }
+                Button {
+                    Clipboard.copy(service.serviceType.name)
+                } label: {
+                    Label(String(localized: Strings.Actions.copyName), systemImage: Iconography.copy)
                 }
 
                 Button {
                     Clipboard.copy(service.serviceType.fullType)
                 } label: {
                     Label(String(localized: Strings.Actions.copyServiceType), systemImage: Iconography.copyAlternate)
+                }
+
+                if !service.addresses.isEmpty {
+                    Divider()
+
+                    ForEach(service.addresses, id: \.ipPortString) { address in
+                        Button {
+                            Clipboard.copy(address.ipPortString)
+                        } label: {
+                            Label(address.ipPortString, systemImage: Iconography.network)
+                        }
+                    }
                 }
             }
         }

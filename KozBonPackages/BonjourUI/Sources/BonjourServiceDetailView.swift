@@ -61,18 +61,51 @@ public struct BonjourServiceDetailView: View {
                     title: String(localized: Strings.DetailRows.name),
                     detail: viewModel.serviceType.name
                 )
+                .accessibilityHint(Strings.Accessibility.longPressToCopy(String(localized: Strings.DetailRows.name)))
+                .contextMenu {
+                    Button {
+                        Clipboard.copy(viewModel.serviceType.name)
+                    } label: {
+                        Label(String(localized: Strings.Actions.copyName), systemImage: Iconography.copy)
+                    }
+                }
                 TitleDetailStackView(
                     title: String(localized: Strings.DetailRows.hostname),
                     detail: viewModel.service.hostName
                 )
+                .accessibilityHint(Strings.Accessibility.longPressToCopy(String(localized: Strings.DetailRows.hostname)))
+                .contextMenu {
+                    Button {
+                        Clipboard.copy(viewModel.service.hostName)
+                    } label: {
+                        Label(String(localized: Strings.Actions.copyHostname), systemImage: Iconography.copy)
+                    }
+                }
                 TitleDetailStackView(
                     title: String(localized: Strings.DetailRows.fullType),
                     detail: viewModel.serviceType.fullType
                 )
+                .draggable(viewModel.serviceType.fullType)
+                .accessibilityHint(Strings.Accessibility.longPressToCopy(String(localized: Strings.DetailRows.fullType)))
+                .contextMenu {
+                    Button {
+                        Clipboard.copy(viewModel.serviceType.fullType)
+                    } label: {
+                        Label(String(localized: Strings.Actions.copyFullType), systemImage: Iconography.copy)
+                    }
+                }
                 TitleDetailStackView(
                     title: String(localized: Strings.DetailRows.type),
                     detail: viewModel.serviceType.type
                 )
+                .accessibilityHint(Strings.Accessibility.longPressToCopy(String(localized: Strings.DetailRows.type)))
+                .contextMenu {
+                    Button {
+                        Clipboard.copy(viewModel.serviceType.type)
+                    } label: {
+                        Label(String(localized: Strings.Actions.copyServiceType), systemImage: Iconography.copy)
+                    }
+                }
                 TitleDetailStackView(
                     title: String(localized: Strings.DetailRows.transportLayer),
                     detail: viewModel.serviceType.transportLayer.string
