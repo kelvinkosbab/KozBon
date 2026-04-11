@@ -23,6 +23,7 @@ public final class MockBonjourServiceExplainer: BonjourServiceExplainerProtocol 
     public var isGenerating: Bool = false
     public var error: String?
     public var isAvailable: Bool
+    public var expertiseLevel: BonjourServicePromptBuilder.ExpertiseLevel = .beginner
 
     /// The number of times ``explain(service:)`` has been called.
     public var explainCallCount = 0

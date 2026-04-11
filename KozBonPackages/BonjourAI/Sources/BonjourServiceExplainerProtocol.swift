@@ -29,6 +29,9 @@ public protocol BonjourServiceExplainerProtocol: AnyObject, Observable {
     /// Whether the AI model is available on this device.
     var isAvailable: Bool { get }
 
+    /// The desired level of technical detail in the explanation.
+    var expertiseLevel: BonjourServicePromptBuilder.ExpertiseLevel { get set }
+
     /// Generates a streaming explanation of the given Bonjour service.
     ///
     /// - Parameter service: The discovered Bonjour service to explain.

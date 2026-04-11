@@ -43,11 +43,26 @@ struct BonjourServiceSortTypeTests {
         #expect(BonjourServiceSortType.serviceNameDesc.id == "serviceNameDesc")
     }
 
+    @Test func allIDsRoundTripViaLookup() {
+        for sortType in BonjourServiceSortType.allCases {
+            let found = BonjourServiceSortType.allCases.first { $0.id == sortType.id }
+            #expect(found == sortType)
+        }
+    }
+
     // MARK: - Titles
 
     @Test func allTitlesAreNonEmpty() {
         for sortType in BonjourServiceSortType.allCases {
             #expect(!sortType.title.isEmpty)
+        }
+    }
+
+    // MARK: - Icon Names
+
+    @Test func allIconNamesAreNonEmpty() {
+        for sortType in BonjourServiceSortType.allCases {
+            #expect(!sortType.iconName.isEmpty)
         }
     }
 }

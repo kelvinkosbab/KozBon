@@ -58,6 +58,10 @@ public enum Strings {
         public static var supportedServices: LocalizedStringResource {
             .init("tab_supported_services", bundle: .atURL(Bundle.module.bundleURL))
         }
+
+        public static var preferences: LocalizedStringResource {
+            .init("tab_preferences", bundle: .atURL(Bundle.module.bundleURL))
+        }
     }
 
     // MARK: - Sections
@@ -594,6 +598,10 @@ public enum Strings {
             .init("settings_sort_none", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        public static var sortDefault: LocalizedStringResource {
+            .init("settings_sort_default", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var sortHostnameAsc: LocalizedStringResource {
             .init("settings_sort_hostname_asc", bundle: .atURL(Bundle.module.bundleURL))
         }
@@ -612,6 +620,38 @@ public enum Strings {
 
         public static var clearCustomServiceTypes: LocalizedStringResource {
             .init("settings_clear_custom_service_types", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var aiAnalysis: LocalizedStringResource {
+            .init("settings_ai_analysis", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var aiAnalysisEnabled: LocalizedStringResource {
+            .init("settings_ai_analysis_enabled", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var aiExpertiseLevel: LocalizedStringResource {
+            .init("settings_ai_expertise_level", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var whatsTheDifference: LocalizedStringResource {
+            .init("settings_whats_the_difference", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var detailLevelExplanation: LocalizedStringResource {
+            .init("settings_detail_level_explanation", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var resetToDefaults: LocalizedStringResource {
+            .init("settings_reset_to_defaults", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var reset: LocalizedStringResource {
+            .init("settings_reset", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var resetConfirmationMessage: LocalizedStringResource {
+            .init("settings_reset_confirmation_message", bundle: .atURL(Bundle.module.bundleURL))
         }
     }
 
@@ -633,6 +673,22 @@ public enum Strings {
 
         public static var explainHint: LocalizedStringResource {
             .init("a11y_explain_with_ai_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var beginner: LocalizedStringResource {
+            .init("ai_expertise_beginner", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var technical: LocalizedStringResource {
+            .init("ai_expertise_technical", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var moreDetail: LocalizedStringResource {
+            .init("ai_more_detail", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var lessDetail: LocalizedStringResource {
+            .init("ai_less_detail", bundle: .atURL(Bundle.module.bundleURL))
         }
     }
 

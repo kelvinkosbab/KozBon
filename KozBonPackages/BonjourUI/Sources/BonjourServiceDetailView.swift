@@ -10,6 +10,7 @@ import BonjourCore
 import BonjourLocalization
 import BonjourModels
 import BonjourAI
+import BonjourStorage
 
 #if canImport(FoundationModels)
 import FoundationModels
@@ -25,6 +26,7 @@ public struct BonjourServiceDetailView: View {
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.preferencesStore) private var preferencesStore
 
     @State private var viewModel: BonjourServiceDetailViewModel
 
@@ -126,7 +128,8 @@ public struct BonjourServiceDetailView: View {
                     )
                     .contextMenu {
                         #if canImport(FoundationModels)
-                        if #available(iOS 26, macOS 26, visionOS 26, *),
+                        if preferencesStore.aiAnalysisEnabled,
+                           #available(iOS 26, macOS 26, visionOS 26, *),
                            SystemLanguageModel.default.isAvailable {
                             Button {
                                 viewModel.isAIExplanationPresented = true

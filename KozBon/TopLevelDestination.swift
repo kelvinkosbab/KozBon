@@ -23,6 +23,9 @@ enum TopLevelDestination: Identifiable {
     /// The supported service type library and custom service type management tab.
     case bonjourServiceTypes
 
+    /// The user preferences tab.
+    case settings
+
     /// A stable identifier for each destination, used by SwiftUI for tab identity.
     var id: String {
         switch self {
@@ -31,6 +34,9 @@ enum TopLevelDestination: Identifiable {
 
         case .bonjourServiceTypes:
             "bonjourServiceTypes"
+
+        case .settings:
+            "settings"
         }
     }
 
@@ -44,6 +50,9 @@ enum TopLevelDestination: Identifiable {
 
         case .bonjourServiceTypes:
             String(localized: Strings.Tabs.supportedServices)
+
+        case .settings:
+            String(localized: Strings.Tabs.preferences)
         }
     }
 
@@ -55,6 +64,9 @@ enum TopLevelDestination: Identifiable {
 
         case .bonjourServiceTypes:
             Image(systemName: Iconography.serviceLibrary)
+
+        case .settings:
+            Image(systemName: Iconography.settings)
         }
     }
 }

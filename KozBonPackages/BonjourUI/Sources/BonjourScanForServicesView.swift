@@ -11,6 +11,7 @@ import BonjourLocalization
 import BonjourModels
 import BonjourAI
 import BonjourScanning
+import BonjourStorage
 
 #if canImport(FoundationModels)
 import FoundationModels
@@ -28,6 +29,7 @@ import FoundationModels
 public struct BonjourScanForServicesView: View {
 
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.preferencesStore) private var preferencesStore
     @State private var viewModel: BonjourServicesViewModel
     @State private var serviceToExplain: BonjourService?
 
@@ -109,6 +111,15 @@ public struct BonjourScanForServicesView: View {
         }
         .task {
             if viewModel.isInitialLoad {
+                // Apply persisted sort order on first load
+                if viewModel.sortType == nil, !preferencesStore.defaultSortOrder.isEmpty {
+                    let stored = BonjourServiceSortType.allCases.first {
+                        $0.id == preferencesStore.defaultSortOrder
+                    }
+                    if let stored {
+                        viewModel.sort(sortType: stored)
+                    }
+                }
                 viewModel.load()
             }
         }
@@ -197,7 +208,8 @@ public struct BonjourScanForServicesView: View {
                 }
 
                 #if canImport(FoundationModels)
-                if #available(iOS 26, macOS 26, visionOS 26, *),
+                if preferencesStore.aiAnalysisEnabled,
+                   #available(iOS 26, macOS 26, visionOS 26, *),
                    SystemLanguageModel.default.isAvailable {
                     Divider()
 

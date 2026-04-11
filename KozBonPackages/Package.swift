@@ -69,6 +69,7 @@ let package = Package(
         .library(name: "BonjourScanning", targets: ["BonjourScanning"]),
         .library(name: "BonjourLocalization", targets: ["BonjourLocalization"]),
         .library(name: "BonjourAI", targets: ["BonjourAI"]),
+        .library(name: "BonjourStorage", targets: ["BonjourStorage"]),
         .library(name: "BonjourUI", targets: ["BonjourUI"])
     ],
     dependencies: [
@@ -109,12 +110,16 @@ let package = Package(
         )
         + makeTargets(
             name: "BonjourAI",
-            dependencies: ["BonjourCore", "BonjourModels", "BonjourLocalization"],
+            dependencies: ["BonjourCore", "BonjourModels", "BonjourLocalization", "BonjourStorage"],
             hasTests: true,
             testDependencies: [
                 .byName(name: "BonjourCore"),
                 .byName(name: "BonjourModels")
             ]
+        )
+        + makeTargets(
+            name: "BonjourStorage",
+            hasTests: true
         )
         + makeTargets(
             name: "BonjourUI",
@@ -125,6 +130,7 @@ let package = Package(
                 "BonjourData",
                 "BonjourLocalization",
                 "BonjourAI",
+                "BonjourStorage",
                 .product(name: "CoreUI", package: "Core")
             ],
             hasTests: true,

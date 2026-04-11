@@ -9,6 +9,7 @@ import SwiftUI
 import BonjourCore
 import BonjourModels
 import BonjourLocalization
+import BonjourStorage
 
 #if canImport(FoundationModels)
 import FoundationModels
@@ -24,9 +25,11 @@ public struct ServiceExplanationSheet: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.serviceExplainer) private var injectedExplainer
+    @Environment(\.preferencesStore) private var preferencesStore
 
     private let service: BonjourService
     @State private var localExplainer = BonjourServiceExplainer()
+    @State private var expertiseLevel: BonjourServicePromptBuilder.ExpertiseLevel = .beginner
 
     /// The active explainer — uses the injected one if available, otherwise the local instance.
     private var explainer: any BonjourServiceExplainerProtocol {
@@ -89,9 +92,33 @@ public struct ServiceExplanationSheet: View {
                         Label(String(localized: Strings.Buttons.done), systemImage: Iconography.confirm)
                     }
                 }
+
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        expertiseLevel = expertiseLevel == .beginner ? .technical : .beginner
+                    } label: {
+                        Label(
+                            String(localized: expertiseLevel == .beginner
+                                   ? Strings.AIInsights.moreDetail
+                                   : Strings.AIInsights.lessDetail),
+                            systemImage: Iconography.info
+                        )
+                    }
+                    .disabled(explainer.isGenerating)
+                }
+            }
+            .onChange(of: expertiseLevel) {
+                explainer.expertiseLevel = expertiseLevel
+                Task {
+                    await explainer.explain(service: service)
+                }
             }
         }
         .task {
+            expertiseLevel = BonjourServicePromptBuilder.ExpertiseLevel(
+                rawValue: preferencesStore.aiExpertiseLevel
+            ) ?? .beginner
+            explainer.expertiseLevel = expertiseLevel
             await explainer.explain(service: service)
         }
     }

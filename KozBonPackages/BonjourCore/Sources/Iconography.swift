@@ -199,6 +199,9 @@ public enum Iconography {
     /// Build/hammer icon.
     public static let build = "hammer.fill"
 
+    /// Settings/preferences icon.
+    public static let settings = "gear"
+
     /// Gears icon.
     public static let gears = "gearshape.2.fill"
 

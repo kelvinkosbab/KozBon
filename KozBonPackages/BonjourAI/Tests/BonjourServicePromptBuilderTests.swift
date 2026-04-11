@@ -164,4 +164,56 @@ struct BonjourServicePromptBuilderTests {
         let prompt = BonjourServicePromptBuilder.buildPrompt(service: service)
         #expect(!prompt.contains("TXT records:"))
     }
+
+    // MARK: - Structured Output
+
+    @Test func systemInstructionsContainsStructuredSections() {
+        let instructions = BonjourServicePromptBuilder.systemInstructions
+        #expect(instructions.contains("## What It Does"))
+        #expect(instructions.contains("## Why It's Running"))
+        #expect(instructions.contains("## How to Interact"))
+        #expect(instructions.contains("## Configuration Details"))
+    }
+
+    // MARK: - Expertise Level
+
+    @Test func promptDefaultsToBeginnerLevel() {
+        let service = makeService()
+        let prompt = BonjourServicePromptBuilder.buildPrompt(service: service)
+        let beginnerDirective = BonjourServicePromptBuilder.expertiseLevelDirective(.beginner)
+        #expect(prompt.contains(beginnerDirective))
+    }
+
+    @Test func promptWithBeginnerContainsSimpleDirective() {
+        let service = makeService()
+        let prompt = BonjourServicePromptBuilder.buildPrompt(
+            service: service,
+            expertiseLevel: .beginner
+        )
+        #expect(prompt.contains("simple terms"))
+        #expect(prompt.contains("Avoid acronyms"))
+    }
+
+    @Test func promptWithTechnicalContainsTechnicalDirective() {
+        let service = makeService()
+        let prompt = BonjourServicePromptBuilder.buildPrompt(
+            service: service,
+            expertiseLevel: .technical
+        )
+        #expect(prompt.contains("protocol details"))
+        #expect(prompt.contains("RFC references"))
+    }
+
+    @Test func expertiseLevelDirectivesDiffer() {
+        let beginner = BonjourServicePromptBuilder.expertiseLevelDirective(.beginner)
+        let technical = BonjourServicePromptBuilder.expertiseLevelDirective(.technical)
+        #expect(beginner != technical)
+    }
+
+    @Test func expertiseLevelHasTwoCases() {
+        let allCases = BonjourServicePromptBuilder.ExpertiseLevel.allCases
+        #expect(allCases.count == 2)
+        #expect(allCases.contains(.beginner))
+        #expect(allCases.contains(.technical))
+    }
 }

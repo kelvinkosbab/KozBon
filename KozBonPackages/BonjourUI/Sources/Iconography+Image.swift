@@ -193,6 +193,9 @@ public extension Iconography {
     /// Build/hammer icon image.
     static var buildImage: Image { Image(systemName: build) }
 
+    /// Settings icon image (single gear).
+    static var settingsImage: Image { Image(systemName: settings) }
+
     /// Gears icon image.
     static var gearsImage: Image { Image(systemName: gears) }
 

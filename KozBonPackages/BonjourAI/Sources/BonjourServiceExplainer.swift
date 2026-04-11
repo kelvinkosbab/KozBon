@@ -39,6 +39,9 @@ public final class BonjourServiceExplainer: BonjourServiceExplainerProtocol {
         SystemLanguageModel.default.isAvailable
     }
 
+    /// The desired level of technical detail in the explanation.
+    public var expertiseLevel: BonjourServicePromptBuilder.ExpertiseLevel = .beginner
+
     private var session: LanguageModelSession?
 
     // MARK: - Init
@@ -55,7 +58,10 @@ public final class BonjourServiceExplainer: BonjourServiceExplainerProtocol {
         error = nil
         isGenerating = true
 
-        let prompt = BonjourServicePromptBuilder.buildPrompt(service: service)
+        let prompt = BonjourServicePromptBuilder.buildPrompt(
+            service: service,
+            expertiseLevel: expertiseLevel
+        )
 
         do {
             let session = LanguageModelSession(

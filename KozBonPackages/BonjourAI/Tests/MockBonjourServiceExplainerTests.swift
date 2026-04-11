@@ -87,4 +87,17 @@ struct MockBonjourServiceExplainerTests {
         await mock.explain(service: service)
         #expect(mock.explanation == "Second")
     }
+
+    // MARK: - Expertise Level
+
+    @Test func defaultExpertiseLevelIsBeginner() {
+        let mock = MockBonjourServiceExplainer()
+        #expect(mock.expertiseLevel == .beginner)
+    }
+
+    @Test func expertiseLevelCanBeChanged() {
+        let mock = MockBonjourServiceExplainer()
+        mock.expertiseLevel = .technical
+        #expect(mock.expertiseLevel == .technical)
+    }
 }

@@ -12,6 +12,7 @@ import BonjourModels
 import BonjourScanning
 import BonjourLocalization
 import BonjourAI
+import BonjourStorage
 
 #if canImport(FoundationModels)
 import FoundationModels
@@ -25,6 +26,7 @@ struct AppCore: App {
     // MARK: - Dependencies
 
     @State private var dependencies = DependencyContainer()
+    @State private var preferencesStore = PreferencesStore()
     @State private var explainer: (any BonjourServiceExplainerProtocol)? = Self.makeExplainer()
 
     /// Creates an AI explainer if the on-device model is available.
@@ -60,6 +62,16 @@ struct AppCore: App {
                             TopLevelDestination.bonjourServiceTypes.icon
                         }
                     }
+
+                    Tab {
+                        SettingsView()
+                    } label: {
+                        Label {
+                            Text(verbatim: TopLevelDestination.settings.titleString)
+                        } icon: {
+                            TopLevelDestination.settings.icon
+                        }
+                    }
                 }
                 #if os(macOS)
                 .tabViewStyle(.automatic)
@@ -69,6 +81,7 @@ struct AppCore: App {
                 .tint(.kozBonBlue)
                 .environment(\.dependencies, dependencies)
                 .environment(\.serviceExplainer, explainer)
+                .environment(\.preferencesStore, preferencesStore)
             } else {
                 TabView {
                     BonjourScanForServicesView(dependencies: dependencies)
@@ -88,10 +101,20 @@ struct AppCore: App {
                                 TopLevelDestination.bonjourServiceTypes.icon
                             }
                         }
+
+                    SettingsView()
+                        .tabItem {
+                            Label {
+                                Text(verbatim: TopLevelDestination.settings.titleString)
+                            } icon: {
+                                TopLevelDestination.settings.icon
+                            }
+                        }
                 }
                 .tint(.kozBonBlue)
                 .environment(\.dependencies, dependencies)
                 .environment(\.serviceExplainer, explainer)
+                .environment(\.preferencesStore, preferencesStore)
             }
         }
         #if os(macOS)

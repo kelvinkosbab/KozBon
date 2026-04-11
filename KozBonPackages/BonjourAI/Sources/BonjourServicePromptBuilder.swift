@@ -21,22 +21,57 @@ import UIKit
 /// is testable without requiring FoundationModels availability.
 public enum BonjourServicePromptBuilder {
 
+    // MARK: - ExpertiseLevel
+
+    /// The user's preferred level of technical detail in AI explanations.
+    ///
+    /// Controls how the on-device model frames its response — from everyday
+    /// language suitable for non-technical users to detailed protocol-level
+    /// information for networking professionals.
+    public enum ExpertiseLevel: String, CaseIterable, Sendable {
+
+        /// Plain-language explanation using everyday analogies.
+        ///
+        /// The model avoids acronyms and jargon, focusing on *what* the
+        /// service does and *why* it matters to the user rather than
+        /// implementation details. Best for users who want a quick,
+        /// approachable overview without networking background.
+        case beginner
+
+        /// In-depth explanation with protocol details and standards references.
+        ///
+        /// The model includes port conventions, transport-layer specifics,
+        /// relevant RFC numbers, and TXT-record semantics. Assumes the
+        /// reader is comfortable with networking fundamentals such as
+        /// TCP/UDP, DNS-SD, and mDNS.
+        case technical
+    }
+
     // MARK: - System Instructions
 
     /// The system prompt instructing the model how to explain Bonjour services.
     ///
     /// Dynamically includes the user's preferred language so the AI responds
-    /// in the correct locale.
+    /// in the correct locale. Requests structured Markdown sections for
+    /// consistent, scannable output.
     public static var systemInstructions: String {
         let languageName = preferredLanguageName
         return """
             You are a friendly networking expert helping everyday users understand \
-            Bonjour (mDNS/DNS-SD) services discovered on their local network. \
-            Explain what this service does, why it is likely running on the device, \
-            and how the user might interact with it. Keep your explanation clear, \
-            concise, and approachable — avoid deep technical jargon. \
-            Use 2-4 short paragraphs. If the service has TXT records, mention what \
-            they reveal about the service's configuration. \
+            Bonjour (mDNS/DNS-SD) services discovered on their local network.
+
+            Format your response with these Markdown sections:
+            ## What It Does
+            (1-2 sentences explaining what this service is and its purpose)
+            ## Why It's Running
+            (1-2 sentences on why this service is likely active on the advertising device)
+            ## How to Interact
+            (1-2 sentences on how the user can interact with it from their device)
+            ## Configuration Details
+            (Only include this section if TXT records are present. Explain what they reveal \
+            about the service's configuration.)
+
+            Keep each section concise — no more than 2-3 sentences. \
             IMPORTANT: Always respond in \(languageName).
             """
     }
@@ -58,6 +93,7 @@ public enum BonjourServicePromptBuilder {
     // MARK: - Device Context
 
     /// A description of the current device for contextualizing AI responses.
+    @MainActor
     public static var deviceContext: String {
         #if os(iOS)
         let device = UIDevice.current
@@ -73,6 +109,7 @@ public enum BonjourServicePromptBuilder {
     }
 
     /// A short name for the current device (e.g., "iPhone", "Mac", "Apple Vision Pro").
+    @MainActor
     public static var currentDeviceShortName: String {
         #if os(iOS)
         UIDevice.current.model
@@ -89,11 +126,16 @@ public enum BonjourServicePromptBuilder {
 
     /// Builds a prompt string from the given service's metadata.
     ///
-    /// - Parameter service: The Bonjour service to build a prompt for.
+    /// - Parameters:
+    ///   - service: The Bonjour service to build a prompt for.
+    ///   - expertiseLevel: The desired detail level for the explanation.
     /// - Returns: A formatted prompt string including device context, service details,
     ///   addresses, protocol description, and TXT records.
     @MainActor
-    public static func buildPrompt(service: BonjourService) -> String {
+    public static func buildPrompt(
+        service: BonjourService,
+        expertiseLevel: ExpertiseLevel = .beginner
+    ) -> String {
         let serviceType = service.serviceType
         var parts: [String] = []
 
@@ -123,6 +165,9 @@ public enum BonjourServicePromptBuilder {
         }
 
         parts.append("")
+        parts.append(expertiseLevelDirective(expertiseLevel))
+
+        parts.append("")
         parts.append(
             "What does this service do, why is it running on that device, " +
             "and how can I interact with it from my \(currentDeviceShortName)? " +
@@ -130,5 +175,22 @@ public enum BonjourServicePromptBuilder {
         )
 
         return parts.joined(separator: "\n")
+    }
+
+    // MARK: - Expertise Level Directive
+
+    /// Returns a prompt directive tailored to the given expertise level.
+    ///
+    /// - Parameter level: The desired expertise level.
+    /// - Returns: A string instructing the model how to adjust its tone and detail.
+    public static func expertiseLevelDirective(_ level: ExpertiseLevel) -> String {
+        switch level {
+        case .beginner:
+            return "Explain in simple terms. Use everyday analogies where helpful. " +
+                "Avoid acronyms and technical jargon."
+        case .technical:
+            return "Include protocol details, port conventions, and relevant RFC references. " +
+                "Assume the reader understands networking fundamentals."
+        }
     }
 }

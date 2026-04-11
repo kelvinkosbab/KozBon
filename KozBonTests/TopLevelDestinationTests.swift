@@ -23,10 +23,15 @@ struct TopLevelDestinationTests {
         #expect(TopLevelDestination.bonjourServiceTypes.id == "bonjourServiceTypes")
     }
 
+    @Test func settingsIdIsSettings() {
+        #expect(TopLevelDestination.settings.id == "settings")
+    }
+
     @Test func allIdsAreUnique() {
         let ids = [
             TopLevelDestination.bonjour.id,
             TopLevelDestination.bonjourServiceTypes.id,
+            TopLevelDestination.settings.id,
         ]
         #expect(Set(ids).count == ids.count)
     }
@@ -41,8 +46,12 @@ struct TopLevelDestinationTests {
         #expect(TopLevelDestination.bonjourServiceTypes.titleString == "Supported services")
     }
 
+    @Test func settingsTitleIsPreferences() {
+        #expect(TopLevelDestination.settings.titleString == "Preferences")
+    }
+
     @Test func allTitlesAreNonEmpty() {
-        let destinations: [TopLevelDestination] = [.bonjour, .bonjourServiceTypes]
+        let destinations: [TopLevelDestination] = [.bonjour, .bonjourServiceTypes, .settings]
         for destination in destinations {
             #expect(!destination.titleString.isEmpty)
         }
