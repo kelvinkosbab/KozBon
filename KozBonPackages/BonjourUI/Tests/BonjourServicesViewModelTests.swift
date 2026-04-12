@@ -208,4 +208,56 @@ struct BonjourServicesViewModelTests {
         viewModel.scanError = nil
         #expect(viewModel.scanError == nil)
     }
+
+    // MARK: - Initial Load State
+
+    @Test func isInitialLoadTrueBeforeFirstLoad() {
+        let (viewModel, _) = makeViewModel()
+        #expect(viewModel.isInitialLoad)
+    }
+
+    @Test func isInitialLoadFalseAfterLoad() {
+        let (viewModel, _) = makeViewModel()
+        viewModel.load()
+        #expect(!viewModel.isInitialLoad)
+    }
+
+    @Test func isInitialLoadRemainsFalseAfterSubsequentLoads() {
+        let (viewModel, _) = makeViewModel()
+        viewModel.load()
+        viewModel.load()
+        #expect(!viewModel.isInitialLoad)
+    }
+
+    @Test func isInitialLoadFalseEvenWhenNoServicesFound() {
+        let (viewModel, _) = makeViewModel()
+        viewModel.load()
+        #expect(!viewModel.isInitialLoad)
+        #expect(viewModel.flatActiveServices.isEmpty)
+    }
+
+    // MARK: - Broadcast Sheet State
+
+    @Test func isBroadcastBonjourServicePresentedDefaultsFalse() {
+        let (viewModel, _) = makeViewModel()
+        #expect(!viewModel.isBroadcastBonjourServicePresented)
+    }
+
+    @Test func broadcastSheetCanBePresented() {
+        let (viewModel, _) = makeViewModel()
+        viewModel.isBroadcastBonjourServicePresented = true
+        #expect(viewModel.isBroadcastBonjourServicePresented)
+    }
+
+    // MARK: - Strings
+
+    @Test func noActiveServicesStringIsNotEmpty() {
+        let (viewModel, _) = makeViewModel()
+        #expect(!viewModel.noActiveServicesString.isEmpty)
+    }
+
+    @Test func createButtonStringIsNotEmpty() {
+        let (viewModel, _) = makeViewModel()
+        #expect(!viewModel.createButtonString.isEmpty)
+    }
 }

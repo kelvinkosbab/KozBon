@@ -127,6 +127,9 @@ struct BroadcastBonjourServiceView: View {
                 )
             }
         }
+        #if os(macOS)
+        .frame(minWidth: 480, idealWidth: 520, minHeight: 400, idealHeight: 500)
+        #endif
     }
 
     // MARK: - Service Type Section

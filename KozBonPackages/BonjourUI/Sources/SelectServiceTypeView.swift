@@ -110,5 +110,8 @@ struct SelectServiceTypeView: View {
             text: $viewModel.searchText,
             prompt: String(localized: Strings.Placeholders.search)
         )
+        #if os(macOS)
+        .frame(minWidth: 480, minHeight: 400)
+        #endif
     }
 }

@@ -214,6 +214,10 @@ public enum Strings {
             .init("button_start_scanning", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        public static var scanningForServices: LocalizedStringResource {
+            .init("loading_scanning_for_services", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var refresh: LocalizedStringResource {
             .init("button_refresh", bundle: .atURL(Bundle.module.bundleURL))
         }

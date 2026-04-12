@@ -128,6 +128,9 @@ struct CreateTxtRecordView: View {
                 }
             }
         }
+        #if os(macOS)
+        .frame(minWidth: 400, idealWidth: 450, minHeight: 300, idealHeight: 350)
+        #endif
     }
 
     private func doneButtonSelected() {

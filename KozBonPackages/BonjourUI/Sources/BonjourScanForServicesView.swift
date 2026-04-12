@@ -64,7 +64,11 @@ public struct BonjourScanForServicesView: View {
             .navigationSplitViewColumnWidth(min: 280, ideal: 320)
             #endif
             .overlay {
-                if self.viewModel.flatActiveServices.isEmpty {
+                if viewModel.isInitialLoad {
+                    ProgressView {
+                        Text(Strings.Buttons.scanningForServices)
+                    }
+                } else if viewModel.flatActiveServices.isEmpty {
                     EmptyStateOverlayView(
                         image: nil,
                         title: self.viewModel.noActiveServicesString,
