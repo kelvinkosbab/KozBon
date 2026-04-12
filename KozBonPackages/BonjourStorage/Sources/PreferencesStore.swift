@@ -32,33 +32,41 @@ public final class PreferencesStore {
 
     // MARK: - Storage
 
-    private let container: ModelContainer
-    private let context: ModelContext
-    private var preferences: UserPreferences
+    /// Retained to keep the `ModelContext` alive for the store's lifetime.
+    private let container: ModelContainer?
+    private let context: ModelContext?
+    private var preferences: UserPreferences?
 
     // MARK: - Init
 
     /// Creates a preferences store backed by the default on-disk SwiftData container.
     ///
-    /// Falls back to an in-memory container if the on-disk store cannot be created
-    /// (e.g. due to disk permission or corruption issues).
+    /// Falls back to an in-memory container if the on-disk store cannot be created.
+    /// If both on-disk and in-memory containers fail, the store operates with
+    /// in-memory defaults that are not persisted.
     public init() {
-        let container: ModelContainer
+        let logger = Logger(subsystem: "com.kozinga.KozBon", category: "BonjourStorage")
+        var resolvedContainer: ModelContainer?
+
         do {
-            container = try ModelContainer(for: UserPreferences.self)
+            resolvedContainer = try ModelContainer(for: UserPreferences.self)
         } catch {
-            let logger = Logger(subsystem: "com.kozinga.KozBon", category: "BonjourStorage")
             logger.error(
                 "Failed to create on-disk ModelContainer: \(error.localizedDescription). Falling back to in-memory store."
             )
-            let config = ModelConfiguration(isStoredInMemoryOnly: true)
-            // In-memory containers should never fail to initialize.
-            // swiftlint:disable:next force_try
-            container = try! ModelContainer(for: UserPreferences.self, configurations: config)
+            do {
+                let config = ModelConfiguration(isStoredInMemoryOnly: true)
+                resolvedContainer = try ModelContainer(for: UserPreferences.self, configurations: config)
+            } catch {
+                logger.error(
+                    "Failed to create in-memory ModelContainer: \(error.localizedDescription). Preferences will not persist."
+                )
+            }
         }
-        self.container = container
-        self.context = container.mainContext
-        self.preferences = Self.fetchOrCreate(in: container.mainContext)
+
+        self.container = resolvedContainer
+        self.context = resolvedContainer?.mainContext
+        self.preferences = resolvedContainer.flatMap { Self.fetchOrCreate(in: $0.mainContext) }
     }
 
     /// Creates a preferences store with a custom container (useful for testing).
@@ -87,18 +95,18 @@ public final class PreferencesStore {
 
     /// Whether AI-powered service explanations are enabled.
     public var aiAnalysisEnabled: Bool {
-        get { preferences.aiAnalysisEnabled }
+        get { preferences?.aiAnalysisEnabled ?? UserPreferences.defaultAIAnalysisEnabled }
         set {
-            preferences.aiAnalysisEnabled = newValue
+            preferences?.aiAnalysisEnabled = newValue
             save()
         }
     }
 
     /// The preferred expertise level for AI explanations (`"basic"` or `"technical"`).
     public var aiExpertiseLevel: String {
-        get { preferences.aiExpertiseLevel }
+        get { preferences?.aiExpertiseLevel ?? UserPreferences.defaultAIExpertiseLevel }
         set {
-            preferences.aiExpertiseLevel = newValue
+            preferences?.aiExpertiseLevel = newValue
             save()
         }
     }
@@ -107,9 +115,9 @@ public final class PreferencesStore {
     ///
     /// An empty string means no preference (uses the default host name A→Z sort).
     public var defaultSortOrder: String {
-        get { preferences.defaultSortOrder }
+        get { preferences?.defaultSortOrder ?? UserPreferences.defaultSortOrder }
         set {
-            preferences.defaultSortOrder = newValue
+            preferences?.defaultSortOrder = newValue
             save()
         }
     }
@@ -118,15 +126,15 @@ public final class PreferencesStore {
 
     /// Resets all preferences to their default values.
     public func resetToDefaults() {
-        preferences.aiAnalysisEnabled = UserPreferences.defaultAIAnalysisEnabled
-        preferences.aiExpertiseLevel = UserPreferences.defaultAIExpertiseLevel
-        preferences.defaultSortOrder = UserPreferences.defaultSortOrder
+        preferences?.aiAnalysisEnabled = UserPreferences.defaultAIAnalysisEnabled
+        preferences?.aiExpertiseLevel = UserPreferences.defaultAIExpertiseLevel
+        preferences?.defaultSortOrder = UserPreferences.defaultSortOrder
         save()
     }
 
     // MARK: - Persistence
 
     private func save() {
-        try? context.save()
+        try? context?.save()
     }
 }
