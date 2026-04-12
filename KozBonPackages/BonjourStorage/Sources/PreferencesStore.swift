@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OSLog
 import SwiftData
 
 // MARK: - PreferencesStore
@@ -37,10 +38,24 @@ public final class PreferencesStore {
 
     // MARK: - Init
 
-    /// Creates a preferences store backed by the default SwiftData container.
+    /// Creates a preferences store backed by the default on-disk SwiftData container.
+    ///
+    /// Falls back to an in-memory container if the on-disk store cannot be created
+    /// (e.g. due to disk permission or corruption issues).
     public init() {
-        // swiftlint:disable:next force_try
-        let container = try! ModelContainer(for: UserPreferences.self)
+        let container: ModelContainer
+        do {
+            container = try ModelContainer(for: UserPreferences.self)
+        } catch {
+            let logger = Logger(subsystem: "com.kozinga.KozBon", category: "BonjourStorage")
+            logger.error(
+                "Failed to create on-disk ModelContainer: \(error.localizedDescription). Falling back to in-memory store."
+            )
+            let config = ModelConfiguration(isStoredInMemoryOnly: true)
+            // In-memory containers should never fail to initialize.
+            // swiftlint:disable:next force_try
+            container = try! ModelContainer(for: UserPreferences.self, configurations: config)
+        }
         self.container = container
         self.context = container.mainContext
         self.preferences = Self.fetchOrCreate(in: container.mainContext)

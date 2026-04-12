@@ -24,7 +24,6 @@ public struct BonjourServiceType: Hashable, Equatable, Sendable, Codable, Identi
     /// A stable identifier for this service type, derived from its full DNS-SD type string.
     public var id: String { fullType }
 
-
     /// The human-readable display name of the service type (e.g. "Web Server").
     public let name: String
 

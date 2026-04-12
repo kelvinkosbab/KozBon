@@ -124,4 +124,23 @@ struct PreferencesStoreTests {
         let storeB = PreferencesStore(container: container)
         #expect(storeB.aiExpertiseLevel == "technical")
     }
+
+    // MARK: - Reset Uses Defaults
+
+    @Test func resetUsesUserPreferencesDefaults() {
+        let store = makeStore()
+        store.resetToDefaults()
+        #expect(store.aiAnalysisEnabled == UserPreferences.defaultAIAnalysisEnabled)
+        #expect(store.aiExpertiseLevel == UserPreferences.defaultAIExpertiseLevel)
+        #expect(store.defaultSortOrder == UserPreferences.defaultSortOrder)
+    }
+
+    // MARK: - Default Init
+
+    @Test func defaultInitCreatesWorkingStore() {
+        let store = PreferencesStore()
+        #expect(store.aiAnalysisEnabled)
+        #expect(store.aiExpertiseLevel == "basic")
+        #expect(store.defaultSortOrder == "")
+    }
 }

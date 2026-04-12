@@ -100,4 +100,17 @@ struct MockBonjourServiceExplainerTests {
         mock.expertiseLevel = .technical
         #expect(mock.expertiseLevel == .technical)
     }
+
+    // MARK: - Explain Service Type
+
+    @Test func explainServiceTypeSetsExplanation() async {
+        let mock = MockBonjourServiceExplainer(cannedExplanation: "Type explanation")
+        let serviceType = BonjourServiceType(
+            name: "HTTP", type: "http", transportLayer: .tcp
+        )
+        await mock.explain(serviceType: serviceType)
+        #expect(mock.explanation == "Type explanation")
+        #expect(mock.explainCallCount == 1)
+        #expect(!mock.isGenerating)
+    }
 }

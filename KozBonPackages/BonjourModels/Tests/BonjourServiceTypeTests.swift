@@ -202,4 +202,48 @@ struct BonjourServiceTypeTests {
         let type = BonjourServiceType(name: "Apple HomeKit", type: "homekit", transportLayer: .tcp)
         #expect(type.imageSystemName == "homekit")
     }
+
+    // MARK: - Identifiable
+
+    @Test func idEqualsFullType() {
+        let type = BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp)
+        #expect(type.id == "_http._tcp")
+        #expect(type.id == type.fullType)
+    }
+
+    @Test func idIsUniqueAcrossTransportLayers() {
+        let tcp = BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp)
+        let udp = BonjourServiceType(name: "HTTP", type: "http", transportLayer: .udp)
+        #expect(tcp.id != udp.id)
+    }
+
+    // MARK: - Localized Detail
+
+    @Test func localizedDetailReturnsDetailWhenPresent() {
+        let type = BonjourServiceType(
+            name: "HTTP", type: "http", transportLayer: .tcp, detail: "Web server"
+        )
+        #expect(type.localizedDetail != nil)
+    }
+
+    @Test func localizedDetailReturnsNilWhenNoDetail() {
+        let type = BonjourServiceType(
+            name: "Custom", type: "custom", transportLayer: .tcp, detail: nil
+        )
+        #expect(type.localizedDetail == nil)
+    }
+
+    // MARK: - isBuiltIn (via Identifiable)
+
+    @Test func builtInServiceTypeReportsIsBuiltIn() {
+        let builtIn = BonjourServiceType.tcpServiceTypes.first
+        #expect(builtIn?.isBuiltIn == true)
+    }
+
+    @Test func unknownServiceTypeIsNotBuiltIn() {
+        let custom = BonjourServiceType(
+            name: "My Service", type: "myservice", transportLayer: .tcp
+        )
+        #expect(!custom.isBuiltIn)
+    }
 }
