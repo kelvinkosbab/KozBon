@@ -92,12 +92,15 @@ public struct ServiceExplanationSheet: View {
                     if let error = explainer.error {
                         Text(error)
                             .foregroundStyle(.red)
+                            .accessibilityLabel(Strings.Accessibility.error(error))
                     } else if explainer.explanation.isEmpty && explainer.isGenerating {
                         HStack(spacing: 8) {
                             ProgressView()
+                                .accessibilityLabel(String(localized: Strings.AIInsights.generating))
                             Text(Strings.AIInsights.generating)
                                 .foregroundStyle(.secondary)
                         }
+                        .accessibilityElement(children: .combine)
                     } else {
                         markdownContent(explainer.explanation)
                     }
@@ -110,6 +113,7 @@ public struct ServiceExplanationSheet: View {
                 .padding()
             }
             .navigationTitle(String(localized: Strings.AIInsights.insightsTitle))
+            .accessibilityIdentifier("ai_explanation_sheet")
             #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
@@ -148,61 +152,52 @@ public struct ServiceExplanationSheet: View {
 
     @ViewBuilder
     private func markdownContent(_ text: String) -> some View {
-        let paragraphs = text
-            .components(separatedBy: "\n\n")
-            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-            .filter { !$0.isEmpty }
+        let lines = text
+            .components(separatedBy: "\n")
+            .map { $0.trimmingCharacters(in: .whitespaces) }
 
-        VStack(alignment: .leading, spacing: 12) {
-            ForEach(Array(paragraphs.enumerated()), id: \.offset) { _, paragraph in
-                if paragraph.hasPrefix("# ") {
-                    Text(paragraph.dropFirst(2))
+        VStack(alignment: .leading, spacing: 10) {
+            ForEach(Array(lines.enumerated()), id: \.offset) { _, line in
+                if line.isEmpty {
+                    Spacer().frame(height: 4)
+                } else if line.hasPrefix("# ") {
+                    markdownText(String(line.dropFirst(2)))
                         .font(.title2).bold()
-                } else if paragraph.hasPrefix("## ") {
-                    Text(paragraph.dropFirst(3))
+                        .accessibilityAddTraits(.isHeader)
+                        .padding(.top, 4)
+                } else if line.hasPrefix("## ") {
+                    markdownText(String(line.dropFirst(3)))
                         .font(.title3).bold()
-                } else if paragraph.hasPrefix("### ") {
-                    Text(paragraph.dropFirst(4))
+                        .foregroundStyle(.primary)
+                        .accessibilityAddTraits(.isHeader)
+                        .padding(.top, 4)
+                } else if line.hasPrefix("### ") {
+                    markdownText(String(line.dropFirst(4)))
                         .font(.headline)
-                } else if paragraph.contains("\n- ") || paragraph.hasPrefix("- ") {
-                    // Bullet list
-                    let items = paragraph
-                        .components(separatedBy: "\n")
-                        .map { $0.trimmingCharacters(in: .whitespaces) }
-                        .filter { !$0.isEmpty }
-                    VStack(alignment: .leading, spacing: 6) {
-                        ForEach(Array(items.enumerated()), id: \.offset) { _, item in
-                            if item.hasPrefix("- ") {
-                                HStack(alignment: .top, spacing: 6) {
-                                    Text("•")
-                                        .foregroundStyle(.secondary)
-                                    if let attributed = try? AttributedString(markdown: String(item.dropFirst(2))) {
-                                        Text(attributed)
-                                            .font(.body)
-                                    } else {
-                                        Text(String(item.dropFirst(2)))
-                                            .font(.body)
-                                    }
-                                }
-                            } else if let attributed = try? AttributedString(markdown: item) {
-                                Text(attributed)
-                                    .font(.body)
-                            } else {
-                                Text(item)
-                                    .font(.body)
-                            }
-                        }
+                        .accessibilityAddTraits(.isHeader)
+                        .padding(.top, 2)
+                } else if line.hasPrefix("- ") || line.hasPrefix("* ") {
+                    HStack(alignment: .top, spacing: 6) {
+                        Text("•")
+                            .foregroundStyle(.secondary)
+                        markdownText(String(line.dropFirst(2)))
+                            .font(.body)
                     }
-                } else if let attributed = try? AttributedString(markdown: paragraph) {
-                    Text(attributed)
-                        .font(.body)
                 } else {
-                    Text(paragraph)
+                    markdownText(line)
                         .font(.body)
                 }
             }
         }
         .textSelection(.enabled)
+    }
+
+    /// Renders a single line of text with inline Markdown (bold, italic, code).
+    private func markdownText(_ text: String) -> Text {
+        if let attributed = try? AttributedString(markdown: text) {
+            return Text(attributed)
+        }
+        return Text(text)
     }
 }
 

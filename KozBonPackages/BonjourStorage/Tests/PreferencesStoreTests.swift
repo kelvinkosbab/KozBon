@@ -143,4 +143,43 @@ struct PreferencesStoreTests {
         #expect(store.aiExpertiseLevel == "basic")
         #expect(store.defaultSortOrder == "")
     }
+
+    // MARK: - Write Then Read
+
+    @Test func aiAnalysisEnabledWriteThenRead() {
+        let store = makeStore()
+        store.aiAnalysisEnabled = false
+        #expect(!store.aiAnalysisEnabled)
+        store.aiAnalysisEnabled = true
+        #expect(store.aiAnalysisEnabled)
+    }
+
+    @Test func aiExpertiseLevelWriteThenRead() {
+        let store = makeStore()
+        store.aiExpertiseLevel = "technical"
+        #expect(store.aiExpertiseLevel == "technical")
+        store.aiExpertiseLevel = "basic"
+        #expect(store.aiExpertiseLevel == "basic")
+    }
+
+    @Test func defaultSortOrderWriteThenRead() {
+        let store = makeStore()
+        store.defaultSortOrder = "serviceNameDesc"
+        #expect(store.defaultSortOrder == "serviceNameDesc")
+        store.defaultSortOrder = ""
+        #expect(store.defaultSortOrder == "")
+    }
+
+    // MARK: - Reset Preserves Subsequent Changes
+
+    @Test func resetThenModifyPersists() {
+        let store = makeStore()
+        store.resetToDefaults()
+        store.aiAnalysisEnabled = false
+        store.aiExpertiseLevel = "technical"
+        store.defaultSortOrder = "hostNameDesc"
+        #expect(!store.aiAnalysisEnabled)
+        #expect(store.aiExpertiseLevel == "technical")
+        #expect(store.defaultSortOrder == "hostNameDesc")
+    }
 }

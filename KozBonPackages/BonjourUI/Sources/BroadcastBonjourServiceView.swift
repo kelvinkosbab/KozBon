@@ -13,6 +13,7 @@ import BonjourScanning
 
 // MARK: - BroadcastBonjourServiceView
 
+// swiftlint:disable:next type_body_length
 struct BroadcastBonjourServiceView: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -108,6 +109,7 @@ struct BroadcastBonjourServiceView: View {
                         Label(String(localized: Strings.Buttons.cancel), systemImage: Iconography.cancel)
                     }
                     .keyboardShortcut(.cancelAction)
+                    .accessibilityIdentifier("broadcast_cancel_button")
                 }
 
                 ToolbarItem(placement: .confirmationAction) {
@@ -118,6 +120,7 @@ struct BroadcastBonjourServiceView: View {
                     }
                     .disabled(!isFormValid)
                     .keyboardShortcut(.defaultAction)
+                    .accessibilityIdentifier("broadcast_done_button")
                 }
             }
             .sheet(isPresented: $isCreateTxtRecordViewPresented) {
@@ -159,6 +162,7 @@ struct BroadcastBonjourServiceView: View {
             }
         } header: {
             Text(Strings.Sections.serviceType)
+                .accessibilityAddTraits(.isHeader)
         } footer: {
             if let serviceTypeError {
                 Text(verbatim: serviceTypeError)
@@ -184,14 +188,19 @@ struct BroadcastBonjourServiceView: View {
                 value: $port,
                 format: .number
             )
-            .accessibilityLabel(String(localized: Strings.Accessibility.portNumber))
-            .accessibilityHint(Strings.Accessibility.portHint(min: Constants.Network.minimumPort, max: Constants.Network.maximumPort))
+            #if !os(macOS)
+            .keyboardType(.numberPad)
+            #endif
             .onSubmit {
                 doneButtonSelected()
             }
+            .accessibilityLabel(String(localized: Strings.Accessibility.portNumber))
+            .accessibilityHint(Strings.Accessibility.portHint(min: Constants.Network.minimumPort, max: Constants.Network.maximumPort))
+            .accessibilityValue(port.map { "\($0)" } ?? "")
 
         } header: {
             Text(Strings.Sections.portNumber)
+                .accessibilityAddTraits(.isHeader)
         } footer: {
             if let portError {
                 Text(verbatim: portError)
@@ -221,6 +230,7 @@ struct BroadcastBonjourServiceView: View {
                 .disabled(false)
         } header: {
             Text(Strings.Sections.serviceDomain)
+                .accessibilityAddTraits(.isHeader)
         } footer: {
             if let domainError {
                 Text(verbatim: domainError)
@@ -240,7 +250,7 @@ struct BroadcastBonjourServiceView: View {
     // MARK: - TXT Records Section
 
     private func txtRecordsSection() -> some View {
-        Section(String(localized: Strings.Sections.txtRecords)) {
+        Section {
             ForEach(dataRecords, id: \.key) { dataRecord in
                 TitleDetailStackView(
                     title: dataRecord.key,
@@ -260,6 +270,7 @@ struct BroadcastBonjourServiceView: View {
                         Label(String(localized: Strings.Buttons.remove), systemImage: Iconography.remove)
                     }
                     .accessibilityLabel(Strings.Accessibility.remove(dataRecord.key))
+                    .accessibilityHint(String(localized: Strings.Accessibility.deleteTxtRecordHint))
                     .tint(.red)
                 }
             }
@@ -270,6 +281,9 @@ struct BroadcastBonjourServiceView: View {
                 Label(String(localized: Strings.Buttons.addTxtRecord), systemImage: Iconography.add)
             }
             .accessibilityHint(String(localized: Strings.Accessibility.addTxtRecordHint))
+        } header: {
+            Text(Strings.Sections.txtRecords)
+                .accessibilityAddTraits(.isHeader)
         }
     }
 

@@ -276,4 +276,59 @@ struct BonjourServicePromptBuilderTests {
         let prompt = BonjourServicePromptBuilder.buildPrompt(serviceType: serviceType)
         #expect(prompt.contains("what kinds of devices typically use it"))
     }
+
+    @Test func serviceTypePromptDefaultsToBasicLevel() {
+        let serviceType = BonjourServiceType(
+            name: "HTTP", type: "http", transportLayer: .tcp
+        )
+        let prompt = BonjourServicePromptBuilder.buildPrompt(serviceType: serviceType)
+        let basicDirective = BonjourServicePromptBuilder.expertiseLevelDirective(.basic)
+        #expect(prompt.contains(basicDirective))
+    }
+
+    @Test func serviceTypePromptWithTechnicalLevel() {
+        let serviceType = BonjourServiceType(
+            name: "HTTP", type: "http", transportLayer: .tcp
+        )
+        let prompt = BonjourServicePromptBuilder.buildPrompt(
+            serviceType: serviceType,
+            expertiseLevel: .technical
+        )
+        let technicalDirective = BonjourServicePromptBuilder.expertiseLevelDirective(.technical)
+        #expect(prompt.contains(technicalDirective))
+    }
+
+    @Test func serviceTypePromptContainsLanguageRequest() {
+        let serviceType = BonjourServiceType(
+            name: "HTTP", type: "http", transportLayer: .tcp
+        )
+        let prompt = BonjourServicePromptBuilder.buildPrompt(serviceType: serviceType)
+        let languageName = BonjourServicePromptBuilder.preferredLanguageName
+        #expect(prompt.contains("Please respond in \(languageName)."))
+    }
+
+    @Test func serviceTypePromptContainsDeviceContext() {
+        let serviceType = BonjourServiceType(
+            name: "HTTP", type: "http", transportLayer: .tcp
+        )
+        let prompt = BonjourServicePromptBuilder.buildPrompt(serviceType: serviceType)
+        #expect(prompt.contains(BonjourServicePromptBuilder.deviceContext))
+    }
+
+    // MARK: - ExpertiseLevel Raw Values
+
+    @Test func basicRawValueIsBasic() {
+        #expect(BonjourServicePromptBuilder.ExpertiseLevel.basic.rawValue == "basic")
+    }
+
+    @Test func technicalRawValueIsTechnical() {
+        #expect(BonjourServicePromptBuilder.ExpertiseLevel.technical.rawValue == "technical")
+    }
+
+    @Test func expertiseLevelRoundTripsFromRawValue() {
+        for level in BonjourServicePromptBuilder.ExpertiseLevel.allCases {
+            let roundTripped = BonjourServicePromptBuilder.ExpertiseLevel(rawValue: level.rawValue)
+            #expect(roundTripped == level)
+        }
+    }
 }

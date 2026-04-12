@@ -64,6 +64,7 @@ struct CreateTxtRecordView: View {
 
                 } header: {
                     Text(Strings.Sections.recordKey)
+                        .accessibilityAddTraits(.isHeader)
                 } footer: {
                     if let keyError {
                         Text(verbatim: keyError)
@@ -85,6 +86,7 @@ struct CreateTxtRecordView: View {
 
                 } header: {
                     Text(Strings.Sections.recordValue)
+                        .accessibilityAddTraits(.isHeader)
                 } footer: {
                     if let valueError {
                         Text(verbatim: valueError)

@@ -94,6 +94,13 @@ public final class PreferencesStore {
     // MARK: - Preferences
 
     /// Whether AI-powered service explanations are enabled.
+    ///
+    /// When enabled, users can request AI-generated explanations of Bonjour services.
+    /// This preference should be exposed with proper accessibility labels and hints
+    /// to ensure users with disabilities can understand and control this feature.
+    ///
+    /// - Important: Consider announcing changes to this preference to VoiceOver users
+    ///   when toggled in your UI.
     public var aiAnalysisEnabled: Bool {
         get { preferences?.aiAnalysisEnabled ?? UserPreferences.defaultAIAnalysisEnabled }
         set {

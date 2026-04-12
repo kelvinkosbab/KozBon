@@ -50,6 +50,7 @@ public struct BonjourScanForServicesView: View {
                     } header: {
                         Text(Strings.Sections.published)
                             .font(.caption)
+                            .accessibilityAddTraits(.isHeader)
                     }
                 }
 
@@ -180,6 +181,11 @@ public struct BonjourScanForServicesView: View {
             .tag(service)
             .draggable(service.hostName)
             .accessibilityHint(Strings.Accessibility.viewDetails(service.service.name))
+            .accessibilityActions {
+                Button(Strings.Accessibility.copyField(service.hostName)) {
+                    Clipboard.copy(service.hostName)
+                }
+            }
             .contextMenu {
                 Button {
                     Clipboard.copy(service.hostName)

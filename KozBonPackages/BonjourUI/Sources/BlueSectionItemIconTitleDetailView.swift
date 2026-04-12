@@ -15,6 +15,10 @@ import SwiftUI
 /// Used as a hero header in detail views to identify a service or service type.
 public struct BlueSectionItemIconTitleDetailView: View {
 
+    @ScaledMetric private var iconSize: CGFloat = 20
+    @ScaledMetric private var horizontalSpacing: CGFloat = 10
+    @ScaledMetric private var verticalSpacing: CGFloat = 4
+
     let imageSystemName: String?
     let title: String
     let detail: String?
@@ -36,15 +40,15 @@ public struct BlueSectionItemIconTitleDetailView: View {
     }
 
     public var body: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: horizontalSpacing) {
             if let imageSystemName, !imageSystemName.isEmpty {
                 Image(systemName: imageSystemName)
-                    .font(.title3).bold()
+                    .font(.system(size: iconSize, weight: .bold))
                     .foregroundStyle(.white)
                     .accessibilityHidden(true)
             }
 
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: verticalSpacing) {
                 Text(verbatim: title)
                     .font(.headline).bold()
                     .foregroundStyle(.white)
@@ -58,6 +62,8 @@ public struct BlueSectionItemIconTitleDetailView: View {
             Spacer()
         }
         .accessibilityElement(children: .combine)
+        .accessibilityLabel(detail.map { "\(title), \($0)" } ?? title)
+        .dynamicTypeSize(...DynamicTypeSize.accessibility1)
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
         .listRowInsets(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))

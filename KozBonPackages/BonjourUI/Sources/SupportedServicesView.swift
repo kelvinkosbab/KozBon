@@ -85,7 +85,7 @@ public struct SupportedServicesView: View {
     @ViewBuilder
     private func serviceTypeSection(title: String, serviceTypes: [BonjourServiceType]) -> some View {
         if !serviceTypes.isEmpty {
-            Section(title) {
+            Section {
                 ForEach(serviceTypes, id: \.fullType) { serviceType in
                     NavigationLink(value: serviceType) {
                         TitleDetailStackView(
@@ -96,11 +96,20 @@ public struct SupportedServicesView: View {
                         }
                     }
                     .draggable(serviceType.fullType)
+                    .accessibilityLabel("\(serviceType.name), \(serviceType.fullType)")
                     .accessibilityHint(Strings.Accessibility.viewDetails(serviceType.name))
+                    .accessibilityActions {
+                        Button(Strings.Accessibility.copyField(serviceType.name)) {
+                            Clipboard.copy(serviceType.fullType)
+                        }
+                    }
                     .contextMenu {
                         serviceTypeContextMenu(serviceType: serviceType)
                     }
                 }
+            } header: {
+                Text(verbatim: title)
+                    .accessibilityAddTraits(.isHeader)
             }
         }
     }
@@ -165,6 +174,7 @@ public struct SupportedServicesView: View {
         }
         .accessibilityLabel(String(localized: Strings.Accessibility.create))
         .accessibilityHint(String(localized: Strings.Accessibility.createServiceTypeHint))
+        .accessibilityIdentifier("create_service_type_menu")
     }
 }
 

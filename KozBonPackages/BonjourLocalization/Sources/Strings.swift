@@ -580,6 +580,42 @@ public enum Strings {
         public static func longPressToCopy(_ field: String) -> String {
             String(format: NSLocalizedString("a11y_long_press_copy_format", bundle: Bundle.module, comment: ""), field)
         }
+
+        public static func copyField(_ field: String) -> String {
+            String(format: NSLocalizedString("a11y_copy_field_format", bundle: Bundle.module, comment: ""), field)
+        }
+
+        public static var copyRecord: LocalizedStringResource {
+            .init("a11y_copy_record", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var copyValueOnly: LocalizedStringResource {
+            .init("a11y_copy_value_only", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var editRecord: LocalizedStringResource {
+            .init("a11y_edit_record", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var deleteRecord: LocalizedStringResource {
+            .init("a11y_delete_record", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var deleteTxtRecordHint: LocalizedStringResource {
+            .init("a11y_delete_txt_record_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var toggleAIHint: LocalizedStringResource {
+            .init("a11y_toggle_ai_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var resetHint: LocalizedStringResource {
+            .init("a11y_reset_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var formIncompleteHint: LocalizedStringResource {
+            .init("a11y_form_incomplete_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
     }
 
     // MARK: - Settings

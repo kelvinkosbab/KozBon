@@ -113,4 +113,25 @@ struct MockBonjourServiceExplainerTests {
         #expect(mock.explainCallCount == 1)
         #expect(!mock.isGenerating)
     }
+
+    @Test func explainServiceTypeIncrementsCallCount() async {
+        let mock = MockBonjourServiceExplainer()
+        let serviceType = BonjourServiceType(
+            name: "HTTP", type: "http", transportLayer: .tcp
+        )
+        await mock.explain(serviceType: serviceType)
+        await mock.explain(serviceType: serviceType)
+        #expect(mock.explainCallCount == 2)
+    }
+
+    @Test func mixedExplainCallsShareCallCount() async {
+        let mock = MockBonjourServiceExplainer()
+        let service = makeService()
+        let serviceType = BonjourServiceType(
+            name: "HTTP", type: "http", transportLayer: .tcp
+        )
+        await mock.explain(service: service)
+        await mock.explain(serviceType: serviceType)
+        #expect(mock.explainCallCount == 2)
+    }
 }

@@ -14,34 +14,28 @@ import BonjourModels
 
 /// A menu used to select a sorting strategy for a list of Bonjour services.
 ///
-/// Displays all available `BonjourServiceSortType` cases plus a "Default"
-/// option (host name A→Z). A checkmark indicates the currently selected sort.
+/// Displays all available `BonjourServiceSortType` cases with a checkmark
+/// indicating the currently selected sort. Defaults to Host Name A → Z
+/// when no sort type is set.
 struct BonjourServiceListSortMenu: View {
 
     /// The currently selected sort type, bound to a parent view.
     ///
-    /// A value of `nil` represents the default sort (host name A→Z).
+    /// A value of `nil` represents the default sort (Host Name A → Z).
     @Binding var sortType: BonjourServiceSortType?
+
+    /// The effective sort type, treating `nil` as `.hostNameAsc`.
+    private var effectiveSortType: BonjourServiceSortType {
+        sortType ?? .hostNameAsc
+    }
 
     var body: some View {
         Menu {
-            Button {
-                sortType = nil
-            } label: {
-                if sortType == nil {
-                    Label(String(localized: Strings.Settings.sortDefault), systemImage: Iconography.selected)
-                } else {
-                    Text(Strings.Settings.sortDefault)
-                }
-            }
-
-            Divider()
-
             ForEach(BonjourServiceSortType.allCases) { option in
                 Button {
                     sortType = option
                 } label: {
-                    if sortType == option {
+                    if effectiveSortType == option {
                         Label(option.title, systemImage: Iconography.selected)
                     } else {
                         Label(option.title, systemImage: option.iconName)

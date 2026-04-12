@@ -70,6 +70,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                         .accessibilityHint(String(localized: Strings.Accessibility.serviceNameHint))
                 } header: {
                     Text(Strings.Sections.serviceName)
+                        .accessibilityAddTraits(.isHeader)
                 } footer: {
                     if let nameError {
                         Text(verbatim: nameError)
@@ -92,6 +93,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                         }
                 } header: {
                     Text(Strings.Sections.bonjourType)
+                        .accessibilityAddTraits(.isHeader)
                 } footer: {
                     if let typeError, type.isEmpty {
                         Text(verbatim: typeError)
@@ -122,6 +124,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                         }
                 } header: {
                     Text(Strings.Sections.additionalDetails)
+                        .accessibilityAddTraits(.isHeader)
                 } footer: {
                     if let detailsError {
                         Text(verbatim: detailsError)
@@ -156,6 +159,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                         Label(String(localized: Strings.Buttons.done), systemImage: Iconography.confirm)
                     }
                     .disabled(!isFormValid)
+                    .accessibilityHint(isFormValid ? "" : String(localized: Strings.Accessibility.formIncompleteHint))
                     .keyboardShortcut(.defaultAction)
                 }
             }

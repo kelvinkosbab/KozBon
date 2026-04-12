@@ -3410,37 +3410,37 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "By host name ascending"
+            "value": "Host Name A → Z"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Por nombre de host ascendente"
+            "value": "Nombre de host A → Z"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Par nom d'hôte croissant"
+            "value": "Nom d’hôte A → Z"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nach Hostname aufsteigend"
+            "value": "Hostname A → Z"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "ホスト名昇順"
+            "value": "ホスト名 A → Z"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "按主机名升序"
+            "value": "主机名 A → Z"
           }
         }
       }
@@ -3451,37 +3451,37 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "By host name descending"
+            "value": "Host Name Z → A"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Por nombre de host descendente"
+            "value": "Nombre de host Z → A"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Par nom d'hôte décroissant"
+            "value": "Nom d’hôte Z → A"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nach Hostname absteigend"
+            "value": "Hostname Z → A"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "ホスト名降順"
+            "value": "ホスト名 Z → A"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "按主机名降序"
+            "value": "主机名 Z → A"
           }
         }
       }
@@ -9847,37 +9847,37 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "By service type ascending"
+            "value": "Service Type A → Z"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Por tipo de servicio ascendente"
+            "value": "Tipo de servicio A → Z"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Par type de service croissant"
+            "value": "Type de service A → Z"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nach Diensttyp aufsteigend"
+            "value": "Diensttyp A → Z"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "サービスタイプ昇順"
+            "value": "サービスタイプ A → Z"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "按服务类型升序"
+            "value": "服务类型 A → Z"
           }
         }
       }
@@ -9888,37 +9888,37 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "By service type descending"
+            "value": "Service Type Z → A"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Por tipo de servicio descendente"
+            "value": "Tipo de servicio Z → A"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Par type de service décroissant"
+            "value": "Type de service Z → A"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nach Diensttyp absteigend"
+            "value": "Diensttyp Z → A"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "サービスタイプ降順"
+            "value": "サービスタイプ Z → A"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "按服务类型降序"
+            "value": "服务类型 Z → A"
           }
         }
       }
@@ -10749,37 +10749,37 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Default (Host Name A→Z)"
+            "value": "Host Name A → Z"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Predeterminado (nombre de host A→Z)"
+            "value": "Nombre de host A → Z"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Par défaut (nom d'hôte A→Z)"
+            "value": "Nom d’hôte A → Z"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Standard (Hostname A→Z)"
+            "value": "Hostname A → Z"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "デフォルト（ホスト名 A→Z）"
+            "value": "ホスト名 A → Z"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "默认（主机名 A→Z）"
+            "value": "主机名 A → Z"
           }
         }
       }
@@ -10790,37 +10790,37 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Protocol details and RFC references"
+            "value": "In-depth networking details"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Detalles de protocolos y referencias RFC"
+            "value": "Detalles de red en profundidad"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Détails des protocoles et références RFC"
+            "value": "Détails réseau approfondis"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Protokolldetails und RFC-Referenzen"
+            "value": "Ausführliche Netzwerkdetails"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "プロトコルの詳細とRFC参照"
+            "value": "ネットワークの詳細情報"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "协议细节和RFC参考"
+            "value": "深入的网络详情"
           }
         }
       }
@@ -11026,6 +11026,375 @@
           "stringUnit": {
             "state": "translated",
             "value": "正在扫描服务…"
+          }
+        }
+      }
+    },
+    "a11y_copy_field_format": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copiar %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copier %@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ kopieren"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@をコピー"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "复制%@"
+          }
+        }
+      }
+    },
+    "a11y_copy_record": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy record"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copiar registro"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copier l'enregistrement"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eintrag kopieren"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "レコードをコピー"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "复制记录"
+          }
+        }
+      }
+    },
+    "a11y_copy_value_only": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy value only"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copiar solo el valor"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copier la valeur uniquement"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nur Wert kopieren"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "値のみコピー"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仅复制值"
+          }
+        }
+      }
+    },
+    "a11y_edit_record": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit record"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Editar registro"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modifier l'enregistrement"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eintrag bearbeiten"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "レコードを編集"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "编辑记录"
+          }
+        }
+      }
+    },
+    "a11y_delete_record": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete record"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eliminar registro"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Supprimer l'enregistrement"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eintrag löschen"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "レコードを削除"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除记录"
+          }
+        }
+      }
+    },
+    "a11y_delete_txt_record_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Double tap to delete this TXT record"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toca dos veces para eliminar este registro TXT"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Touchez deux fois pour supprimer cet enregistrement TXT"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Doppeltippen, um diesen TXT-Eintrag zu löschen"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ダブルタップしてこのTXTレコードを削除"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "双击以删除此TXT记录"
+          }
+        }
+      }
+    },
+    "a11y_toggle_ai_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enables or disables on-device AI explanations for discovered services"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activa o desactiva las explicaciones de IA en el dispositivo para los servicios descubiertos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Active ou désactive les explications IA sur l'appareil pour les services découverts"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aktiviert oder deaktiviert die KI-Erklärungen auf dem Gerät für entdeckte Dienste"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "発見されたサービスのデバイス上AI説明を有効または無効にします"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "启用或禁用已发现服务的设备端AI说明"
+          }
+        }
+      }
+    },
+    "a11y_reset_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resets all preferences to default values and removes custom service types"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restablece todas las preferencias a los valores predeterminados y elimina los tipos de servicio personalizados"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réinitialise toutes les préférences aux valeurs par défaut et supprime les types de service personnalisés"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Setzt alle Einstellungen auf Standardwerte zurück und entfernt benutzerdefinierte Diensttypen"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すべての設定をデフォルト値に戻し、カスタムサービスタイプを削除します"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "将所有偏好设置恢复为默认值并删除自定义服务类型"
+          }
+        }
+      }
+    },
+    "a11y_form_incomplete_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Complete all required fields to enable this button"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Complete todos los campos obligatorios para habilitar este botón"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remplissez tous les champs requis pour activer ce bouton"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Füllen Sie alle Pflichtfelder aus, um diese Schaltfläche zu aktivieren"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このボタンを有効にするにはすべての必須項目を入力してください"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "填写所有必填项以启用此按钮"
           }
         }
       }

@@ -51,4 +51,25 @@ struct UserPreferencesTests {
         prefs.defaultSortOrder = "hostNameAsc"
         #expect(prefs.defaultSortOrder == "hostNameAsc")
     }
+
+    // MARK: - Static Defaults
+
+    @Test func staticDefaultAIAnalysisEnabledIsTrue() {
+        #expect(UserPreferences.defaultAIAnalysisEnabled)
+    }
+
+    @Test func staticDefaultAIExpertiseLevelIsBasic() {
+        #expect(UserPreferences.defaultAIExpertiseLevel == "basic")
+    }
+
+    @Test func staticDefaultSortOrderIsEmpty() {
+        #expect(UserPreferences.defaultSortOrder == "")
+    }
+
+    @Test func instanceDefaultsMatchStaticDefaults() {
+        let prefs = UserPreferences()
+        #expect(prefs.aiAnalysisEnabled == UserPreferences.defaultAIAnalysisEnabled)
+        #expect(prefs.aiExpertiseLevel == UserPreferences.defaultAIExpertiseLevel)
+        #expect(prefs.defaultSortOrder == UserPreferences.defaultSortOrder)
+    }
 }

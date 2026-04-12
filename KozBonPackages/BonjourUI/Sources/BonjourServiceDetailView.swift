@@ -27,6 +27,7 @@ public struct BonjourServiceDetailView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.preferencesStore) private var preferencesStore
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     @State private var viewModel: BonjourServiceDetailViewModel
 
@@ -76,6 +77,11 @@ public struct BonjourServiceDetailView: View {
                         Label(String(localized: Strings.Actions.copyName), systemImage: Iconography.copy)
                     }
                 }
+                .accessibilityActions {
+                    Button(Strings.Accessibility.copyField(String(localized: Strings.DetailRows.name))) {
+                        Clipboard.copy(viewModel.serviceType.name)
+                    }
+                }
                 TitleDetailStackView(
                     title: String(localized: Strings.DetailRows.hostname),
                     detail: viewModel.service.hostName
@@ -86,6 +92,11 @@ public struct BonjourServiceDetailView: View {
                         Clipboard.copy(viewModel.service.hostName)
                     } label: {
                         Label(String(localized: Strings.Actions.copyHostname), systemImage: Iconography.copy)
+                    }
+                }
+                .accessibilityActions {
+                    Button(Strings.Accessibility.copyField(String(localized: Strings.DetailRows.hostname))) {
+                        Clipboard.copy(viewModel.service.hostName)
                     }
                 }
                 TitleDetailStackView(
@@ -101,6 +112,11 @@ public struct BonjourServiceDetailView: View {
                         Label(String(localized: Strings.Actions.copyFullType), systemImage: Iconography.copy)
                     }
                 }
+                .accessibilityActions {
+                    Button(Strings.Accessibility.copyField(String(localized: Strings.DetailRows.fullType))) {
+                        Clipboard.copy(viewModel.serviceType.fullType)
+                    }
+                }
                 TitleDetailStackView(
                     title: String(localized: Strings.DetailRows.type),
                     detail: viewModel.serviceType.type
@@ -111,6 +127,11 @@ public struct BonjourServiceDetailView: View {
                         Clipboard.copy(viewModel.serviceType.type)
                     } label: {
                         Label(String(localized: Strings.Actions.copyServiceType), systemImage: Iconography.copy)
+                    }
+                }
+                .accessibilityActions {
+                    Button(Strings.Accessibility.copyField(String(localized: Strings.DetailRows.type))) {
+                        Clipboard.copy(viewModel.serviceType.type)
                     }
                 }
                 TitleDetailStackView(
@@ -151,6 +172,7 @@ public struct BonjourServiceDetailView: View {
                             detail: address.protocol.stringRepresentation
                         )
                         .draggable(address.ipPortString)
+                        .accessibilityLabel("\(address.ipPortString), \(address.protocol.stringRepresentation)")
                         .accessibilityHint(String(localized: Strings.Accessibility.longPressCopyAddress))
                         .contextMenu {
                             Button {
@@ -159,12 +181,18 @@ public struct BonjourServiceDetailView: View {
                                 Label(String(localized: Strings.Actions.copyAddress), systemImage: Iconography.copy)
                             }
                         }
+                        .accessibilityActions {
+                            Button(String(localized: Strings.Actions.copyAddress)) {
+                                Clipboard.copy(address.ipPortString)
+                            }
+                        }
                     }
                 }
             }
 
             txtRecordsSection()
         }
+        .accessibilityIdentifier("service_detail_list")
         .contentMarginsBasedOnSizeClass()
         .navigationTitle(viewModel.service.service.name)
         #if !os(macOS)
@@ -217,7 +245,23 @@ public struct BonjourServiceDetailView: View {
                         )
                     }
                     .draggable("\(dataRecord.key)=\(dataRecord.value)")
+                    .accessibilityLabel("\(dataRecord.key): \(dataRecord.value)")
                     .accessibilityHint(String(localized: Strings.Accessibility.editRecordHint))
+                    .accessibilityActions {
+                        Button(String(localized: Strings.Accessibility.copyRecord)) {
+                            Clipboard.copy("\(dataRecord.key)=\(dataRecord.value)")
+                        }
+                        Button(String(localized: Strings.Accessibility.copyValueOnly)) {
+                            Clipboard.copy(dataRecord.value)
+                        }
+                        Button(String(localized: Strings.Accessibility.editRecord)) {
+                            viewModel.txtRecordToEdit = dataRecord
+                            viewModel.isCreateTxtRecordPresented = true
+                        }
+                        Button(String(localized: Strings.Accessibility.deleteRecord), role: .destructive) {
+                            viewModel.deleteTxtRecord(dataRecord)
+                        }
+                    }
                     .contextMenu {
                         Button {
                             Clipboard.copy("\(dataRecord.key)=\(dataRecord.value)")
@@ -238,6 +282,7 @@ public struct BonjourServiceDetailView: View {
                             Label(String(localized: Strings.Buttons.remove), systemImage: Iconography.remove)
                         }
                         .accessibilityLabel(Strings.Accessibility.remove(dataRecord.key))
+                        .accessibilityHint(String(localized: Strings.Accessibility.deleteTxtRecordHint))
                         .tint(.red)
                     }
                 }
@@ -249,6 +294,7 @@ public struct BonjourServiceDetailView: View {
                     Label(String(localized: Strings.Buttons.addTxtRecord), systemImage: Iconography.add)
                 }
                 .accessibilityHint(String(localized: Strings.Accessibility.addTxtRecordHint))
+                .accessibilityIdentifier("txt_record_add_button")
             }
         } else if !viewModel.dataRecords.isEmpty {
             Section(String(localized: Strings.Sections.txtRecords)) {
@@ -258,7 +304,16 @@ public struct BonjourServiceDetailView: View {
                         detail: dataRecord.value
                     )
                     .draggable("\(dataRecord.key)=\(dataRecord.value)")
+                    .accessibilityLabel("\(dataRecord.key): \(dataRecord.value)")
                     .accessibilityHint(String(localized: Strings.Accessibility.longPressCopyRecord))
+                    .accessibilityActions {
+                        Button(String(localized: Strings.Accessibility.copyRecord)) {
+                            Clipboard.copy("\(dataRecord.key)=\(dataRecord.value)")
+                        }
+                        Button(String(localized: Strings.Accessibility.copyValueOnly)) {
+                            Clipboard.copy(dataRecord.value)
+                        }
+                    }
                     .contextMenu {
                         Button {
                             Clipboard.copy("\(dataRecord.key)=\(dataRecord.value)")

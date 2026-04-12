@@ -110,6 +110,11 @@ public struct SupportedServiceDetailView: View {
                     }
                     #endif
                 }
+                .accessibilityActions {
+                    Button(Strings.Accessibility.copyField(String(localized: Strings.DetailRows.fullType).lowercased())) {
+                        Clipboard.copy(serviceType.fullType)
+                    }
+                }
                 if let detail = serviceType.localizedDetail, !detail.isEmpty {
                     TitleDetailStackView(
                         title: String(localized: Strings.DetailRows.details),
@@ -145,6 +150,11 @@ public struct SupportedServiceDetailView: View {
                             }
                         }
                         #endif
+                    }
+                    .accessibilityActions {
+                        Button(Strings.Accessibility.copyField(String(localized: Strings.DetailRows.details).lowercased())) {
+                            Clipboard.copy(detail)
+                        }
                     }
                 }
             }
@@ -239,7 +249,13 @@ public struct SupportedServiceDetailView: View {
     private func copyableDetailRow(title: String, detail: String, copyLabel: String) -> some View {
         TitleDetailStackView(title: title, detail: detail)
             .draggable(detail)
+            .accessibilityLabel("\(title), \(detail)")
             .accessibilityHint(Strings.Accessibility.longPressToCopy(title.lowercased()))
+            .accessibilityActions {
+                Button(Strings.Accessibility.copyField(title.lowercased())) {
+                    Clipboard.copy(detail)
+                }
+            }
             .contextMenu {
                 Button {
                     Clipboard.copy(detail)

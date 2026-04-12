@@ -40,6 +40,7 @@ public struct SettingsView: View {
                             }
                         )
                     )
+                    .accessibilityHint(String(localized: Strings.Accessibility.toggleAIHint))
 
                     if preferencesStore.aiAnalysisEnabled {
                         LabeledContent {
@@ -54,6 +55,8 @@ public struct SettingsView: View {
                                 Text(Strings.AIInsights.technical).tag("technical")
                             }
                             .labelsHidden()
+                            .font(.subheadline)
+                            .accessibilityLabel(String(localized: Strings.Settings.aiExpertiseLevel))
                         } label: {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(Strings.Settings.aiExpertiseLevel)
@@ -65,6 +68,7 @@ public struct SettingsView: View {
                     }
                 } header: {
                     Text(Strings.Settings.aiAnalysis)
+                        .accessibilityAddTraits(.isHeader)
                 } footer: {
                     Text(Strings.Settings.aiAnalysisFooter)
                 }
@@ -73,43 +77,25 @@ public struct SettingsView: View {
 
                 Section(String(localized: Strings.Settings.display)) {
                     LabeledContent {
-                        Menu {
-                            Button {
-                                preferencesStore.defaultSortOrder = ""
-                            } label: {
-                                if preferencesStore.defaultSortOrder.isEmpty {
-                                    Label(
-                                        String(localized: Strings.Settings.sortDefault),
-                                        systemImage: Iconography.selected
-                                    )
-                                } else {
-                                    Text(Strings.Settings.sortDefault)
-                                }
-                            }
-
-                            Divider()
-
+                        Picker(
+                            String(localized: Strings.Settings.defaultSortOrder),
+                            selection: Binding(
+                                get: {
+                                    let stored = preferencesStore.defaultSortOrder
+                                    return stored.isEmpty ? BonjourServiceSortType.hostNameAsc.id : stored
+                                },
+                                set: { preferencesStore.defaultSortOrder = $0 }
+                            )
+                        ) {
                             ForEach(BonjourServiceSortType.allCases) { sortType in
-                                Button {
-                                    preferencesStore.defaultSortOrder = sortType.id
-                                } label: {
-                                    if preferencesStore.defaultSortOrder == sortType.id {
-                                        Label(sortType.title, systemImage: Iconography.selected)
-                                    } else {
-                                        Text(sortType.title)
-                                    }
-                                }
+                                Text(sortType.title).tag(sortType.id)
                             }
-                        } label: {
-                            Text(Strings.Buttons.update)
                         }
+                        .labelsHidden()
+                        .font(.subheadline)
+                        .accessibilityLabel(String(localized: Strings.Settings.defaultSortOrder))
                     } label: {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(Strings.Settings.defaultSortOrder)
-                            Text(currentSortOrderDescription)
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
+                        Text(Strings.Settings.defaultSortOrder)
                     }
                 }
 
@@ -121,6 +107,7 @@ public struct SettingsView: View {
                     } label: {
                         Text(Strings.Settings.resetToDefaults)
                     }
+                    .accessibilityHint(String(localized: Strings.Accessibility.resetHint))
                 }
             }
             .formStyle(.grouped)
@@ -152,12 +139,4 @@ public struct SettingsView: View {
             : Strings.Settings.aiBasicSubtitle
     }
 
-    /// The display title of the currently selected sort order.
-    private var currentSortOrderDescription: String {
-        let storedId = preferencesStore.defaultSortOrder
-        if let sortType = BonjourServiceSortType.allCases.first(where: { $0.id == storedId }) {
-            return sortType.title
-        }
-        return String(localized: Strings.Settings.sortDefault)
-    }
 }
