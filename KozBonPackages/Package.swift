@@ -77,67 +77,67 @@ let package = Package(
         .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", from: "0.63.2")
     ],
     targets: makeTargets(
-            name: "BonjourCore",
-            dependencies: [.product(name: "Core", package: "Core")],
-            hasTests: true
-        )
-        + makeTargets(
-            name: "BonjourData",
-            dependencies: ["BonjourCore"],
-            // Note: BonjourData tests require Xcode to compile .xcdatamodeld → .momd.
-            // Run via: xcodebuild test -workspace KozBon.xcworkspace -scheme KozBonPackages
-            hasTests: false,
-            resources: [.process("Resources")]
-        )
-        + makeTargets(
-            name: "BonjourLocalization",
-            resources: [.process("Resources")]
-        )
-        + makeTargets(
-            name: "BonjourModels",
-            dependencies: ["BonjourCore", "BonjourData", "BonjourLocalization"],
-            hasTests: true,
-            testDependencies: [.byName(name: "BonjourCore")]
-        )
-        + makeTargets(
-            name: "BonjourScanning",
-            dependencies: ["BonjourCore", "BonjourModels"],
-            hasTests: true,
-            testDependencies: [
-                .byName(name: "BonjourCore"),
-                .byName(name: "BonjourModels")
-            ]
-        )
-        + makeTargets(
-            name: "BonjourAI",
-            dependencies: ["BonjourCore", "BonjourModels", "BonjourLocalization", "BonjourStorage"],
-            hasTests: true,
-            testDependencies: [
-                .byName(name: "BonjourCore"),
-                .byName(name: "BonjourModels")
-            ]
-        )
-        + makeTargets(
-            name: "BonjourStorage",
-            hasTests: true
-        )
-        + makeTargets(
-            name: "BonjourUI",
-            dependencies: [
-                "BonjourCore",
-                "BonjourModels",
-                "BonjourScanning",
-                "BonjourData",
-                "BonjourLocalization",
-                "BonjourAI",
-                "BonjourStorage",
-                .product(name: "CoreUI", package: "Core")
-            ],
-            hasTests: true,
-            testDependencies: [
-                .byName(name: "BonjourCore"),
-                .byName(name: "BonjourModels"),
-                .byName(name: "BonjourScanning")
-            ]
-        )
+        name: "BonjourCore",
+        dependencies: [.product(name: "Core", package: "Core")],
+        hasTests: true
+    )
+    + makeTargets(
+        name: "BonjourData",
+        dependencies: ["BonjourCore"],
+        // Note: BonjourData tests require Xcode to compile .xcdatamodeld → .momd.
+        // Run via: xcodebuild test -workspace KozBon.xcworkspace -scheme KozBonPackages
+        hasTests: false,
+        resources: [.process("Resources")]
+    )
+    + makeTargets(
+        name: "BonjourLocalization",
+        resources: [.process("Resources")]
+    )
+    + makeTargets(
+        name: "BonjourModels",
+        dependencies: ["BonjourCore", "BonjourData", "BonjourLocalization"],
+        hasTests: true,
+        testDependencies: [.byName(name: "BonjourCore")]
+    )
+    + makeTargets(
+        name: "BonjourScanning",
+        dependencies: ["BonjourCore", "BonjourModels"],
+        hasTests: true,
+        testDependencies: [
+            .byName(name: "BonjourCore"),
+            .byName(name: "BonjourModels")
+        ]
+    )
+    + makeTargets(
+        name: "BonjourAI",
+        dependencies: ["BonjourCore", "BonjourModels", "BonjourLocalization", "BonjourStorage"],
+        hasTests: true,
+        testDependencies: [
+            .byName(name: "BonjourCore"),
+            .byName(name: "BonjourModels")
+        ]
+    )
+    + makeTargets(
+        name: "BonjourStorage",
+        hasTests: true
+    )
+    + makeTargets(
+        name: "BonjourUI",
+        dependencies: [
+            "BonjourCore",
+            "BonjourModels",
+            "BonjourScanning",
+            "BonjourData",
+            "BonjourLocalization",
+            "BonjourAI",
+            "BonjourStorage",
+            .product(name: "CoreUI", package: "Core")
+        ],
+        hasTests: true,
+        testDependencies: [
+            .byName(name: "BonjourCore"),
+            .byName(name: "BonjourModels"),
+            .byName(name: "BonjourScanning")
+        ]
+    )
 )

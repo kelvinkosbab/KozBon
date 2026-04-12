@@ -15,6 +15,9 @@ import CoreUI
 /// Commonly used throughout the app for key-value style rows (e.g., hostname, type, IP address).
 public struct TitleDetailStackView<Trailing>: View where Trailing: View {
 
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @ScaledMetric private var verticalSpacing: CGFloat = 4
+
     let title: String
     let detail: String
     let trailing: (() -> Trailing)?
@@ -39,7 +42,7 @@ public struct TitleDetailStackView<Trailing>: View where Trailing: View {
         HStack(alignment: .center) {
             VStack(
                 alignment: .leading,
-                spacing: Spacing.small
+                spacing: verticalSpacing
             ) {
                 Text(self.title)
                     .font(.body)
@@ -54,6 +57,8 @@ public struct TitleDetailStackView<Trailing>: View where Trailing: View {
             trailing?()
         }
         .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(title), \(detail)")
+        .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
         #if os(iOS) || os(visionOS)
         .hoverEffect(.highlight)
         #endif
