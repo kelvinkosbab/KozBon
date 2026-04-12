@@ -158,12 +158,6 @@ public struct BonjourServiceDetailView: View {
                             } label: {
                                 Label(String(localized: Strings.Actions.copyAddress), systemImage: Iconography.copy)
                             }
-
-                            Button {
-                                Clipboard.copy(address.ip)
-                            } label: {
-                                Label(String(localized: Strings.Actions.copyIpOnly), systemImage: Iconography.network)
-                            }
                         }
                     }
                 }

@@ -72,16 +72,43 @@ public struct SettingsView: View {
                 // MARK: Display
 
                 Section(String(localized: Strings.Settings.display)) {
-                    Picker(
-                        String(localized: Strings.Settings.defaultSortOrder),
-                        selection: Binding(
-                            get: { preferencesStore.defaultSortOrder },
-                            set: { preferencesStore.defaultSortOrder = $0 }
-                        )
-                    ) {
-                        Text(Strings.Settings.sortDefault).tag("")
-                        ForEach(BonjourServiceSortType.allCases) { sortType in
-                            Text(sortType.title).tag(sortType.id)
+                    LabeledContent {
+                        Menu {
+                            Button {
+                                preferencesStore.defaultSortOrder = ""
+                            } label: {
+                                if preferencesStore.defaultSortOrder.isEmpty {
+                                    Label(
+                                        String(localized: Strings.Settings.sortDefault),
+                                        systemImage: Iconography.selected
+                                    )
+                                } else {
+                                    Text(Strings.Settings.sortDefault)
+                                }
+                            }
+
+                            Divider()
+
+                            ForEach(BonjourServiceSortType.allCases) { sortType in
+                                Button {
+                                    preferencesStore.defaultSortOrder = sortType.id
+                                } label: {
+                                    if preferencesStore.defaultSortOrder == sortType.id {
+                                        Label(sortType.title, systemImage: Iconography.selected)
+                                    } else {
+                                        Text(sortType.title)
+                                    }
+                                }
+                            }
+                        } label: {
+                            Text(Strings.Buttons.update)
+                        }
+                    } label: {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(Strings.Settings.defaultSortOrder)
+                            Text(currentSortOrderDescription)
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
                         }
                     }
                 }
@@ -123,5 +150,14 @@ public struct SettingsView: View {
         preferencesStore.aiExpertiseLevel == "technical"
             ? Strings.Settings.aiTechnicalSubtitle
             : Strings.Settings.aiBasicSubtitle
+    }
+
+    /// The display title of the currently selected sort order.
+    private var currentSortOrderDescription: String {
+        let storedId = preferencesStore.defaultSortOrder
+        if let sortType = BonjourServiceSortType.allCases.first(where: { $0.id == storedId }) {
+            return sortType.title
+        }
+        return String(localized: Strings.Settings.sortDefault)
     }
 }

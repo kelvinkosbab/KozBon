@@ -202,6 +202,10 @@ public enum Strings {
             .init("button_ok", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        public static var update: LocalizedStringResource {
+            .init("button_update", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var broadcastBonjourService: LocalizedStringResource {
             .init("button_broadcast_bonjour_service", bundle: .atURL(Bundle.module.bundleURL))
         }

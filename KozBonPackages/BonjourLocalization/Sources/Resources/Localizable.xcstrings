@@ -5132,37 +5132,37 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Default sort order"
+            "value": "Service sort order"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Orden predeterminado"
+            "value": "Orden de servicios"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ordre de tri par défaut"
+            "value": "Ordre de tri des services"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Standardsortierung"
+            "value": "Dienst-Sortierung"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "デフォルトの並び順"
+            "value": "サービスの並び順"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "默认排序"
+            "value": "服务排序方式"
           }
         }
       }
@@ -10944,6 +10944,47 @@
           "stringUnit": {
             "state": "translated",
             "value": "启用后，您可以长按已发现的服务，获取设备端AI对其功能和交互方式的说明。所有分析均在您的设备上私密运行，不会向外部服务器发送任何数据。"
+          }
+        }
+      }
+    },
+    "button_update": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Update"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Actualizar"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modifier"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ändern"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "変更"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "更新"
           }
         }
       }
