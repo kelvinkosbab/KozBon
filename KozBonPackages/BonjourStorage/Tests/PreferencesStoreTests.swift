@@ -38,7 +38,7 @@ struct PreferencesStoreTests {
 
     @Test func defaultAiExpertiseLevel() {
         let store = makeStore()
-        #expect(store.aiExpertiseLevel == "beginner")
+        #expect(store.aiExpertiseLevel == "basic")
     }
 
     @Test func defaultSortOrder() {
@@ -104,7 +104,7 @@ struct PreferencesStoreTests {
         store.resetToDefaults()
 
         #expect(store.aiAnalysisEnabled)
-        #expect(store.aiExpertiseLevel == "beginner")
+        #expect(store.aiExpertiseLevel == "basic")
         #expect(store.defaultSortOrder == "")
     }
 

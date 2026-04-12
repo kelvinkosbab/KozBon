@@ -79,7 +79,7 @@ public final class PreferencesStore {
         }
     }
 
-    /// The preferred expertise level for AI explanations (`"beginner"` or `"technical"`).
+    /// The preferred expertise level for AI explanations (`"basic"` or `"technical"`).
     public var aiExpertiseLevel: String {
         get { preferences.aiExpertiseLevel }
         set {
@@ -103,9 +103,9 @@ public final class PreferencesStore {
 
     /// Resets all preferences to their default values.
     public func resetToDefaults() {
-        preferences.aiAnalysisEnabled = true
-        preferences.aiExpertiseLevel = "beginner"
-        preferences.defaultSortOrder = ""
+        preferences.aiAnalysisEnabled = UserPreferences.defaultAIAnalysisEnabled
+        preferences.aiExpertiseLevel = UserPreferences.defaultAIExpertiseLevel
+        preferences.defaultSortOrder = UserPreferences.defaultSortOrder
         save()
     }
 

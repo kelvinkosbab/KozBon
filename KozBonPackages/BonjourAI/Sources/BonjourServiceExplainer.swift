@@ -40,7 +40,7 @@ public final class BonjourServiceExplainer: BonjourServiceExplainerProtocol {
     }
 
     /// The desired level of technical detail in the explanation.
-    public var expertiseLevel: BonjourServicePromptBuilder.ExpertiseLevel = .beginner
+    public var expertiseLevel: BonjourServicePromptBuilder.ExpertiseLevel = .basic
 
     private var session: LanguageModelSession?
 
@@ -60,6 +60,36 @@ public final class BonjourServiceExplainer: BonjourServiceExplainerProtocol {
 
         let prompt = BonjourServicePromptBuilder.buildPrompt(
             service: service,
+            expertiseLevel: expertiseLevel
+        )
+
+        do {
+            let session = LanguageModelSession(
+                instructions: BonjourServicePromptBuilder.systemInstructions
+            )
+            self.session = session
+
+            let stream = session.streamResponse(to: prompt)
+            for try await partial in stream {
+                explanation = partial.content
+            }
+        } catch {
+            self.error = error.localizedDescription
+        }
+
+        isGenerating = false
+    }
+
+    /// Generates a streaming explanation of the given Bonjour service type.
+    ///
+    /// - Parameter serviceType: The service type to explain.
+    public func explain(serviceType: BonjourServiceType) async {
+        explanation = ""
+        error = nil
+        isGenerating = true
+
+        let prompt = BonjourServicePromptBuilder.buildPrompt(
+            serviceType: serviceType,
             expertiseLevel: expertiseLevel
         )
 

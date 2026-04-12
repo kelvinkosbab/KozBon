@@ -23,13 +23,37 @@ import FoundationModels
 @available(iOS 26, macOS 26, visionOS 26, *)
 public struct ServiceExplanationSheet: View {
 
+    /// The subject to explain — either a discovered service or a service type from the library.
+    @MainActor
+    enum Subject {
+        case service(BonjourService)
+        case serviceType(BonjourServiceType)
+
+        var displayName: String {
+            switch self {
+            case .service(let service):
+                service.service.name
+            case .serviceType(let serviceType):
+                serviceType.name
+            }
+        }
+
+        var serviceType: BonjourServiceType {
+            switch self {
+            case .service(let service):
+                service.serviceType
+            case .serviceType(let serviceType):
+                serviceType
+            }
+        }
+    }
+
     @Environment(\.dismiss) private var dismiss
     @Environment(\.serviceExplainer) private var injectedExplainer
     @Environment(\.preferencesStore) private var preferencesStore
 
-    private let service: BonjourService
+    private let subject: Subject
     @State private var localExplainer = BonjourServiceExplainer()
-    @State private var expertiseLevel: BonjourServicePromptBuilder.ExpertiseLevel = .beginner
 
     /// The active explainer — uses the injected one if available, otherwise the local instance.
     private var explainer: any BonjourServiceExplainerProtocol {
@@ -37,7 +61,11 @@ public struct ServiceExplanationSheet: View {
     }
 
     public init(service: BonjourService) {
-        self.service = service
+        self.subject = .service(service)
+    }
+
+    public init(serviceType: BonjourServiceType) {
+        self.subject = .serviceType(serviceType)
     }
 
     public var body: some View {
@@ -46,18 +74,19 @@ public struct ServiceExplanationSheet: View {
                 VStack(alignment: .leading, spacing: 16) {
                     // Service header
                     HStack(spacing: 10) {
-                        Image(systemName: service.serviceType.imageSystemName)
+                        Image(systemName: subject.serviceType.imageSystemName)
                             .font(.title2)
                             .foregroundStyle(.secondary)
                         VStack(alignment: .leading) {
-                            Text(verbatim: service.service.name)
+                            Text(verbatim: subject.displayName)
                                 .font(.headline)
-                            Text(verbatim: service.serviceType.fullType)
+                            Text(verbatim: subject.serviceType.fullType)
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                         }
                     }
                     .padding(.bottom, 8)
+                    .frame(maxWidth: .infinity, alignment: .leading)
 
                     // AI explanation
                     if let error = explainer.error {
@@ -93,33 +122,25 @@ public struct ServiceExplanationSheet: View {
                     }
                 }
 
-                ToolbarItem(placement: .primaryAction) {
-                    Button {
-                        expertiseLevel = expertiseLevel == .beginner ? .technical : .beginner
-                    } label: {
-                        Label(
-                            String(localized: expertiseLevel == .beginner
-                                   ? Strings.AIInsights.moreDetail
-                                   : Strings.AIInsights.lessDetail),
-                            systemImage: Iconography.info
-                        )
-                    }
-                    .disabled(explainer.isGenerating)
-                }
-            }
-            .onChange(of: expertiseLevel) {
-                explainer.expertiseLevel = expertiseLevel
-                Task {
-                    await explainer.explain(service: service)
-                }
             }
         }
         .task {
-            expertiseLevel = BonjourServicePromptBuilder.ExpertiseLevel(
+            let level = BonjourServicePromptBuilder.ExpertiseLevel(
                 rawValue: preferencesStore.aiExpertiseLevel
-            ) ?? .beginner
-            explainer.expertiseLevel = expertiseLevel
+            ) ?? .basic
+            explainer.expertiseLevel = level
+            await explainSubject()
+        }
+    }
+
+    // MARK: - Explain
+
+    private func explainSubject() async {
+        switch subject {
+        case .service(let service):
             await explainer.explain(service: service)
+        case .serviceType(let serviceType):
+            await explainer.explain(serviceType: serviceType)
         }
     }
 

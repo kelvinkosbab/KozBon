@@ -24,7 +24,7 @@ struct UserPreferencesTests {
 
     @Test func defaultAiExpertiseLevel() {
         let prefs = UserPreferences()
-        #expect(prefs.aiExpertiseLevel == "beginner")
+        #expect(prefs.aiExpertiseLevel == "basic")
     }
 
     @Test func defaultSortOrder() {

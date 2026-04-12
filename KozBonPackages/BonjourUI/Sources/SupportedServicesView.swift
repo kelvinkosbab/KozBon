@@ -10,6 +10,12 @@ import SwiftUI
 import BonjourCore
 import BonjourLocalization
 import BonjourModels
+import BonjourAI
+import BonjourStorage
+
+#if canImport(FoundationModels)
+import FoundationModels
+#endif
 
 // MARK: - SupportedServicesView
 
@@ -19,7 +25,9 @@ import BonjourModels
 /// Supports creating custom service types via a sheet.
 public struct SupportedServicesView: View {
 
+    @Environment(\.preferencesStore) private var preferencesStore
     @State private var viewModel = SupportedServicesViewModel()
+    @State private var serviceTypeToExplain: BonjourServiceType?
 
     #if os(macOS)
     @Environment(\.openWindow) private var openWindow
@@ -68,6 +76,9 @@ public struct SupportedServicesView: View {
         .sheet(isPresented: $viewModel.isCreateCustomServiceTypePresented) {
             CreateOrUpdateBonjourServiceTypeView(isPresented: $viewModel.isCreateCustomServiceTypePresented)
         }
+        #if canImport(FoundationModels)
+        .modifier(AIServiceTypeListSheetModifier(serviceTypeToExplain: $serviceTypeToExplain))
+        #endif
         .focusedSceneValue(\.isCreateServiceTypePresented, $viewModel.isCreateCustomServiceTypePresented)
     }
 
@@ -116,6 +127,20 @@ public struct SupportedServicesView: View {
             }
         }
 
+        #if canImport(FoundationModels)
+        if preferencesStore.aiAnalysisEnabled,
+           #available(iOS 26, macOS 26, visionOS 26, *),
+           SystemLanguageModel.default.isAvailable {
+            Divider()
+
+            Button {
+                serviceTypeToExplain = serviceType
+            } label: {
+                Label(String(localized: Strings.AIInsights.explainWithAI), systemImage: Iconography.appleIntelligence)
+            }
+        }
+        #endif
+
         #if os(macOS)
         Divider()
 
@@ -142,3 +167,35 @@ public struct SupportedServicesView: View {
         .accessibilityHint(String(localized: Strings.Accessibility.createServiceTypeHint))
     }
 }
+
+// MARK: - AI Service Type List Sheet Modifier
+
+#if canImport(FoundationModels)
+
+@available(iOS 26, macOS 26, visionOS 26, *)
+private struct AIServiceTypeListSheetAvailable: ViewModifier {
+    @Binding var serviceTypeToExplain: BonjourServiceType?
+
+    func body(content: Content) -> some View {
+        content
+            .sheet(item: $serviceTypeToExplain) { serviceType in
+                ServiceExplanationSheet(serviceType: serviceType)
+            }
+    }
+}
+
+struct AIServiceTypeListSheetModifier: ViewModifier {
+    @Binding var serviceTypeToExplain: BonjourServiceType?
+
+    func body(content: Content) -> some View {
+        if #available(iOS 26, macOS 26, visionOS 26, *) {
+            content.modifier(AIServiceTypeListSheetAvailable(
+                serviceTypeToExplain: $serviceTypeToExplain
+            ))
+        } else {
+            content
+        }
+    }
+}
+
+#endif

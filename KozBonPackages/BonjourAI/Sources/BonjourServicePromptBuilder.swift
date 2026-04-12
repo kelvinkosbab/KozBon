@@ -30,13 +30,12 @@ public enum BonjourServicePromptBuilder {
     /// information for networking professionals.
     public enum ExpertiseLevel: String, CaseIterable, Sendable {
 
-        /// Plain-language explanation using everyday analogies.
+        /// Clear, approachable explanation using plain language.
         ///
-        /// The model avoids acronyms and jargon, focusing on *what* the
-        /// service does and *why* it matters to the user rather than
-        /// implementation details. Best for users who want a quick,
-        /// approachable overview without networking background.
-        case beginner
+        /// The model focuses on *what* the service does and *why* it
+        /// matters to the user, using everyday analogies rather than
+        /// implementation details. Ideal for a quick, useful overview.
+        case basic
 
         /// In-depth explanation with protocol details and standards references.
         ///
@@ -134,7 +133,7 @@ public enum BonjourServicePromptBuilder {
     @MainActor
     public static func buildPrompt(
         service: BonjourService,
-        expertiseLevel: ExpertiseLevel = .beginner
+        expertiseLevel: ExpertiseLevel = .basic
     ) -> String {
         let serviceType = service.serviceType
         var parts: [String] = []
@@ -177,6 +176,44 @@ public enum BonjourServicePromptBuilder {
         return parts.joined(separator: "\n")
     }
 
+    /// Builds a prompt string from a service type (without a specific discovered instance).
+    ///
+    /// - Parameters:
+    ///   - serviceType: The Bonjour service type to explain.
+    ///   - expertiseLevel: The desired detail level for the explanation.
+    /// - Returns: A formatted prompt string including device context and service type metadata.
+    @MainActor
+    public static func buildPrompt(
+        serviceType: BonjourServiceType,
+        expertiseLevel: ExpertiseLevel = .basic
+    ) -> String {
+        var parts: [String] = []
+
+        parts.append(deviceContext)
+        parts.append("")
+        parts.append("I'd like to understand this Bonjour service type:")
+        parts.append("")
+        parts.append("Service name: \(serviceType.name)")
+        parts.append("Full type: \(serviceType.fullType)")
+        parts.append("Transport layer: \(serviceType.transportLayer.string.uppercased())")
+
+        if let detail = serviceType.detail {
+            parts.append("Protocol description: \(detail)")
+        }
+
+        parts.append("")
+        parts.append(expertiseLevelDirective(expertiseLevel))
+
+        parts.append("")
+        parts.append(
+            "What does this service type do, what kinds of devices typically use it, " +
+            "and how might I interact with it from my \(currentDeviceShortName)? " +
+            "Please respond in \(preferredLanguageName)."
+        )
+
+        return parts.joined(separator: "\n")
+    }
+
     // MARK: - Expertise Level Directive
 
     /// Returns a prompt directive tailored to the given expertise level.
@@ -185,7 +222,7 @@ public enum BonjourServicePromptBuilder {
     /// - Returns: A string instructing the model how to adjust its tone and detail.
     public static func expertiseLevelDirective(_ level: ExpertiseLevel) -> String {
         switch level {
-        case .beginner:
+        case .basic:
             return "Explain in simple terms. Use everyday analogies where helpful. " +
                 "Avoid acronyms and technical jargon."
         case .technical:

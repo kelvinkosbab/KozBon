@@ -10333,47 +10333,6 @@
         }
       }
     },
-    "ai_expertise_beginner": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Beginner"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Principiante"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Débutant"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Anfänger"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "初心者"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "初学者"
-          }
-        }
-      }
-    },
     "ai_expertise_technical": {
       "extractionState": "manual",
       "localizations": {
@@ -10503,7 +10462,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Detail Level"
+            "value": "Detail level"
           }
         },
         "es": {
@@ -10825,84 +10784,166 @@
         }
       }
     },
-    "settings_whats_the_difference": {
+    "settings_ai_technical_subtitle": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "What's the difference?"
+            "value": "Protocol details and RFC references"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "¿Cuál es la diferencia?"
+            "value": "Detalles de protocolos y referencias RFC"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Quelle est la différence ?"
+            "value": "Détails des protocoles et références RFC"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Was ist der Unterschied?"
+            "value": "Protokolldetails und RFC-Referenzen"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "違いは何ですか？"
+            "value": "プロトコルの詳細とRFC参照"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "有什么区别？"
+            "value": "协议细节和RFC参考"
           }
         }
       }
     },
-    "settings_detail_level_explanation": {
+    "ai_expertise_basic": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Beginner uses simple, jargon-free language with everyday analogies.\n\nTechnical includes protocol details, port conventions, and RFC references for networking professionals."
+            "value": "Basic"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Principiante usa un lenguaje sencillo sin jerga técnica con analogías cotidianas.\n\nTécnico incluye detalles de protocolos, convenciones de puertos y referencias RFC para profesionales de redes."
+            "value": "Básico"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Débutant utilise un langage simple sans jargon avec des analogies du quotidien.\n\nTechnique inclut les détails des protocoles, les conventions de ports et les références RFC pour les professionnels réseau."
+            "value": "Basique"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Anfänger verwendet einfache, verständliche Sprache mit alltäglichen Analogien.\n\nTechnisch enthält Protokolldetails, Port-Konventionen und RFC-Referenzen für Netzwerkprofis."
+            "value": "Einfach"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "初心者は専門用語を避け、日常的なたとえを使ったわかりやすい説明です。\n\n技術的はプロトコルの詳細、ポート規則、RFC参照を含む、ネットワーク専門家向けの説明です。"
+            "value": "基本"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "初学者使用简单易懂的语言和日常类比，不含技术术语。\n\n技术性包含协议细节、端口约定和RFC参考，适合网络专业人士。"
+            "value": "基本"
+          }
+        }
+      }
+    },
+    "settings_ai_basic_subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick, easy-to-understand overview"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resumen rápido y fácil de entender"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aperçu rapide et facile à comprendre"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schneller, leicht verständlicher Überblick"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "わかりやすい概要"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "快速易懂的概览"
+          }
+        }
+      }
+    },
+    "settings_ai_analysis_footer": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When enabled, you can long press on a discovered service to get an on-device AI explanation of what it does and how to interact with it. All analysis runs privately on your device — no data is sent to external servers."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuando está activado, puedes mantener presionado un servicio descubierto para obtener una explicación generada por IA sobre qué hace y cómo interactuar con él. Todo el análisis se ejecuta de forma privada en tu dispositivo, sin enviar datos a servidores externos."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lorsque cette option est activée, vous pouvez appuyer longuement sur un service découvert pour obtenir une explication générée par l'IA sur ce qu'il fait et comment interagir avec lui. Toute l'analyse s'exécute en privé sur votre appareil — aucune donnée n'est envoyée à des serveurs externes."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wenn aktiviert, können Sie lange auf einen entdeckten Dienst drücken, um eine KI-Erklärung zu erhalten, was er tut und wie Sie damit interagieren können. Die gesamte Analyse läuft privat auf Ihrem Gerät — keine Daten werden an externe Server gesendet."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "有効にすると、発見したサービスを長押しして、そのサービスの内容や操作方法についてデバイス上のAIによる説明を確認できます。分析はすべてデバイス上でプライベートに実行され、外部サーバーにデータは送信されません。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "启用后，您可以长按已发现的服务，获取设备端AI对其功能和交互方式的说明。所有分析均在您的设备上私密运行，不会向外部服务器发送任何数据。"
           }
         }
       }

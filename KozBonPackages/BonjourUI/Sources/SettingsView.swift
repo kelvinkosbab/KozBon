@@ -18,8 +18,8 @@ import BonjourStorage
 public struct SettingsView: View {
 
     @Environment(\.preferencesStore) private var preferencesStore
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var isResetConfirmationPresented = false
-    @State private var isDetailLevelInfoPresented = false
 
     public init() {}
 
@@ -33,32 +33,40 @@ public struct SettingsView: View {
                         String(localized: Strings.Settings.aiAnalysisEnabled),
                         isOn: Binding(
                             get: { preferencesStore.aiAnalysisEnabled },
-                            set: { preferencesStore.aiAnalysisEnabled = $0 }
+                            set: { newValue in
+                                withAnimation(reduceMotion ? nil : .default) {
+                                    preferencesStore.aiAnalysisEnabled = newValue
+                                }
+                            }
                         )
                     )
 
-                    VStack(alignment: .leading) {
-                        Picker(
-                            String(localized: Strings.Settings.aiExpertiseLevel),
-                            selection: Binding(
-                                get: { preferencesStore.aiExpertiseLevel },
-                                set: { preferencesStore.aiExpertiseLevel = $0 }
-                            )
-                        ) {
-                            Text(Strings.AIInsights.beginner).tag("beginner")
-                            Text(Strings.AIInsights.technical).tag("technical")
-                        }
-
-                        Button {
-                            isDetailLevelInfoPresented = true
+                    if preferencesStore.aiAnalysisEnabled {
+                        LabeledContent {
+                            Picker(
+                                String(localized: Strings.Settings.aiExpertiseLevel),
+                                selection: Binding(
+                                    get: { preferencesStore.aiExpertiseLevel },
+                                    set: { preferencesStore.aiExpertiseLevel = $0 }
+                                )
+                            ) {
+                                Text(Strings.AIInsights.basic).tag("basic")
+                                Text(Strings.AIInsights.technical).tag("technical")
+                            }
+                            .labelsHidden()
                         } label: {
-                            Text(Strings.Settings.whatsTheDifference)
-                                .font(.caption)
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(Strings.Settings.aiExpertiseLevel)
+                                Text(currentExpertiseLevelDescription)
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
                         }
                     }
-                    .disabled(!preferencesStore.aiAnalysisEnabled)
                 } header: {
                     Text(Strings.Settings.aiAnalysis)
+                } footer: {
+                    Text(Strings.Settings.aiAnalysisFooter)
                 }
 
                 // MARK: Display
@@ -71,7 +79,7 @@ public struct SettingsView: View {
                             set: { preferencesStore.defaultSortOrder = $0 }
                         )
                     ) {
-                        Text(Strings.Settings.sortNone).tag("")
+                        Text(Strings.Settings.sortDefault).tag("")
                         ForEach(BonjourServiceSortType.allCases) { sortType in
                             Text(sortType.title).tag(sortType.id)
                         }
@@ -105,14 +113,15 @@ public struct SettingsView: View {
             } message: {
                 Text(Strings.Settings.resetConfirmationMessage)
             }
-            .alert(
-                String(localized: Strings.Settings.aiExpertiseLevel),
-                isPresented: $isDetailLevelInfoPresented
-            ) {
-                Button(String(localized: Strings.Buttons.ok)) {}
-            } message: {
-                Text(Strings.Settings.detailLevelExplanation)
-            }
         }
+    }
+
+    // MARK: - Helpers
+
+    /// A short description of the currently selected expertise level.
+    private var currentExpertiseLevelDescription: LocalizedStringResource {
+        preferencesStore.aiExpertiseLevel == "technical"
+            ? Strings.Settings.aiTechnicalSubtitle
+            : Strings.Settings.aiBasicSubtitle
     }
 }

@@ -90,9 +90,9 @@ struct MockBonjourServiceExplainerTests {
 
     // MARK: - Expertise Level
 
-    @Test func defaultExpertiseLevelIsBeginner() {
+    @Test func defaultExpertiseLevelIsBasic() {
         let mock = MockBonjourServiceExplainer()
-        #expect(mock.expertiseLevel == .beginner)
+        #expect(mock.expertiseLevel == .basic)
     }
 
     @Test func expertiseLevelCanBeChanged() {

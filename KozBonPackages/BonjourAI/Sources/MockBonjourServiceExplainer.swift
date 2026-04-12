@@ -23,7 +23,7 @@ public final class MockBonjourServiceExplainer: BonjourServiceExplainerProtocol 
     public var isGenerating: Bool = false
     public var error: String?
     public var isAvailable: Bool
-    public var expertiseLevel: BonjourServicePromptBuilder.ExpertiseLevel = .beginner
+    public var expertiseLevel: BonjourServicePromptBuilder.ExpertiseLevel = .basic
 
     /// The number of times ``explain(service:)`` has been called.
     public var explainCallCount = 0
@@ -49,6 +49,15 @@ public final class MockBonjourServiceExplainer: BonjourServiceExplainerProtocol 
     // MARK: - BonjourServiceExplainerProtocol
 
     public func explain(service: BonjourService) async {
+        explainCallCount += 1
+        explanation = ""
+        error = nil
+        isGenerating = true
+        explanation = cannedExplanation
+        isGenerating = false
+    }
+
+    public func explain(serviceType: BonjourServiceType) async {
         explainCallCount += 1
         explanation = ""
         error = nil

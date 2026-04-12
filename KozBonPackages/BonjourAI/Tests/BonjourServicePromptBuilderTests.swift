@@ -177,18 +177,18 @@ struct BonjourServicePromptBuilderTests {
 
     // MARK: - Expertise Level
 
-    @Test func promptDefaultsToBeginnerLevel() {
+    @Test func promptDefaultsToBasicLevel() {
         let service = makeService()
         let prompt = BonjourServicePromptBuilder.buildPrompt(service: service)
-        let beginnerDirective = BonjourServicePromptBuilder.expertiseLevelDirective(.beginner)
+        let beginnerDirective = BonjourServicePromptBuilder.expertiseLevelDirective(.basic)
         #expect(prompt.contains(beginnerDirective))
     }
 
-    @Test func promptWithBeginnerContainsSimpleDirective() {
+    @Test func promptWithBasicContainsSimpleDirective() {
         let service = makeService()
         let prompt = BonjourServicePromptBuilder.buildPrompt(
             service: service,
-            expertiseLevel: .beginner
+            expertiseLevel: .basic
         )
         #expect(prompt.contains("simple terms"))
         #expect(prompt.contains("Avoid acronyms"))
@@ -205,7 +205,7 @@ struct BonjourServicePromptBuilderTests {
     }
 
     @Test func expertiseLevelDirectivesDiffer() {
-        let beginner = BonjourServicePromptBuilder.expertiseLevelDirective(.beginner)
+        let beginner = BonjourServicePromptBuilder.expertiseLevelDirective(.basic)
         let technical = BonjourServicePromptBuilder.expertiseLevelDirective(.technical)
         #expect(beginner != technical)
     }
@@ -213,7 +213,67 @@ struct BonjourServicePromptBuilderTests {
     @Test func expertiseLevelHasTwoCases() {
         let allCases = BonjourServicePromptBuilder.ExpertiseLevel.allCases
         #expect(allCases.count == 2)
-        #expect(allCases.contains(.beginner))
+        #expect(allCases.contains(.basic))
         #expect(allCases.contains(.technical))
+    }
+
+    // MARK: - Service Type Prompt
+
+    @Test func serviceTypePromptContainsName() {
+        let serviceType = BonjourServiceType(
+            name: "AirPlay", type: "airplay", transportLayer: .tcp
+        )
+        let prompt = BonjourServicePromptBuilder.buildPrompt(serviceType: serviceType)
+        #expect(prompt.contains("Service name: AirPlay"))
+    }
+
+    @Test func serviceTypePromptContainsFullType() {
+        let serviceType = BonjourServiceType(
+            name: "AirPlay", type: "airplay", transportLayer: .tcp
+        )
+        let prompt = BonjourServicePromptBuilder.buildPrompt(serviceType: serviceType)
+        #expect(prompt.contains("Full type: _airplay._tcp"))
+    }
+
+    @Test func serviceTypePromptContainsTransportLayer() {
+        let serviceType = BonjourServiceType(
+            name: "DNS", type: "dns", transportLayer: .udp
+        )
+        let prompt = BonjourServicePromptBuilder.buildPrompt(serviceType: serviceType)
+        #expect(prompt.contains("Transport layer: UDP"))
+    }
+
+    @Test func serviceTypePromptContainsDescription() {
+        let serviceType = BonjourServiceType(
+            name: "HTTP", type: "http", transportLayer: .tcp, detail: "Web server"
+        )
+        let prompt = BonjourServicePromptBuilder.buildPrompt(serviceType: serviceType)
+        #expect(prompt.contains("Protocol description: Web server"))
+    }
+
+    @Test func serviceTypePromptOmitsDescriptionWhenNil() {
+        let serviceType = BonjourServiceType(
+            name: "HTTP", type: "http", transportLayer: .tcp, detail: nil
+        )
+        let prompt = BonjourServicePromptBuilder.buildPrompt(serviceType: serviceType)
+        #expect(!prompt.contains("Protocol description:"))
+    }
+
+    @Test func serviceTypePromptOmitsHostAndAddresses() {
+        let serviceType = BonjourServiceType(
+            name: "HTTP", type: "http", transportLayer: .tcp
+        )
+        let prompt = BonjourServicePromptBuilder.buildPrompt(serviceType: serviceType)
+        #expect(!prompt.contains("Host name:"))
+        #expect(!prompt.contains("IP addresses:"))
+        #expect(!prompt.contains("Device advertising"))
+    }
+
+    @Test func serviceTypePromptAsksAboutDeviceTypes() {
+        let serviceType = BonjourServiceType(
+            name: "HTTP", type: "http", transportLayer: .tcp
+        )
+        let prompt = BonjourServicePromptBuilder.buildPrompt(serviceType: serviceType)
+        #expect(prompt.contains("what kinds of devices typically use it"))
     }
 }

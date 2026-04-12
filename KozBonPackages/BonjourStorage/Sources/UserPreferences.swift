@@ -17,14 +17,29 @@ import SwiftData
 @Model
 public final class UserPreferences {
 
-    /// Whether AI-powered service explanations are enabled.
-    public var aiAnalysisEnabled: Bool = true
+    // MARK: - Defaults
 
-    /// The preferred expertise level for AI explanations (`"beginner"` or `"technical"`).
-    public var aiExpertiseLevel: String = "beginner"
+    /// Default value for ``aiAnalysisEnabled``.
+    public static let defaultAIAnalysisEnabled = true
+
+    /// Default value for ``aiExpertiseLevel``.
+    ///
+    /// Matches `BonjourServicePromptBuilder.ExpertiseLevel.basic.rawValue`.
+    public static let defaultAIExpertiseLevel = "basic"
+
+    /// Default value for ``defaultSortOrder``.
+    public static let defaultSortOrder = ""
+
+    // MARK: - Properties
+
+    /// Whether AI-powered service explanations are enabled.
+    public var aiAnalysisEnabled: Bool = defaultAIAnalysisEnabled
+
+    /// The preferred expertise level for AI explanations (`"basic"` or `"technical"`).
+    public var aiExpertiseLevel: String = defaultAIExpertiseLevel
 
     /// The default sort order ID for discovered services (empty string means no preference).
-    public var defaultSortOrder: String = ""
+    public var defaultSortOrder: String = UserPreferences.defaultSortOrder
 
     /// Creates a new preferences instance with default values.
     public init() {}

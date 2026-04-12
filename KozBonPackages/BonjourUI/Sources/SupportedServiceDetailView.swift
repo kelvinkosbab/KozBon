@@ -9,6 +9,12 @@ import SwiftUI
 import BonjourCore
 import BonjourLocalization
 import BonjourModels
+import BonjourAI
+import BonjourStorage
+
+#if canImport(FoundationModels)
+import FoundationModels
+#endif
 
 // MARK: - SupportedServiceDetailView
 
@@ -19,6 +25,7 @@ public struct SupportedServiceDetailView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.preferencesStore) private var preferencesStore
 
     /// Creates a detail view for the given service type.
     ///
@@ -31,6 +38,7 @@ public struct SupportedServiceDetailView: View {
     @State private var showDeleteConfirmation = false
     @State private var showEditConfirmation = false
     @State private var isNavigationHeaderShown = false
+    @State private var isAIExplanationPresented = false
 
     public var body: some View {
         List {
@@ -67,17 +75,77 @@ public struct SupportedServiceDetailView: View {
                     title: String(localized: Strings.DetailRows.transportLayer),
                     detail: serviceType.transportLayer.string
                 )
-                copyableDetailRow(
+                TitleDetailStackView(
                     title: String(localized: Strings.DetailRows.fullType),
-                    detail: serviceType.fullType,
-                    copyLabel: String(localized: Strings.Actions.copyFullType)
+                    detail: serviceType.fullType
                 )
+                .draggable(serviceType.fullType)
+                .accessibilityHint(Strings.Accessibility.longPressToCopy(
+                    String(localized: Strings.DetailRows.fullType).lowercased()
+                ))
+                .contextMenu {
+                    Button {
+                        Clipboard.copy(serviceType.fullType)
+                    } label: {
+                        Label(
+                            String(localized: Strings.Actions.copyFullType),
+                            systemImage: Iconography.copy
+                        )
+                    }
+
+                    #if canImport(FoundationModels)
+                    if preferencesStore.aiAnalysisEnabled,
+                       #available(iOS 26, macOS 26, visionOS 26, *),
+                       SystemLanguageModel.default.isAvailable {
+                        Divider()
+
+                        Button {
+                            isAIExplanationPresented = true
+                        } label: {
+                            Label(
+                                String(localized: Strings.AIInsights.explainWithAI),
+                                systemImage: Iconography.appleIntelligence
+                            )
+                        }
+                    }
+                    #endif
+                }
                 if let detail = serviceType.localizedDetail, !detail.isEmpty {
-                    copyableDetailRow(
+                    TitleDetailStackView(
                         title: String(localized: Strings.DetailRows.details),
-                        detail: detail,
-                        copyLabel: String(localized: Strings.Actions.copyDetails)
+                        detail: detail
                     )
+                    .draggable(detail)
+                    .accessibilityHint(Strings.Accessibility.longPressToCopy(
+                        String(localized: Strings.DetailRows.details).lowercased()
+                    ))
+                    .contextMenu {
+                        Button {
+                            Clipboard.copy(detail)
+                        } label: {
+                            Label(
+                                String(localized: Strings.Actions.copyDetails),
+                                systemImage: Iconography.copy
+                            )
+                        }
+
+                        #if canImport(FoundationModels)
+                        if preferencesStore.aiAnalysisEnabled,
+                           #available(iOS 26, macOS 26, visionOS 26, *),
+                           SystemLanguageModel.default.isAvailable {
+                            Divider()
+
+                            Button {
+                                isAIExplanationPresented = true
+                            } label: {
+                                Label(
+                                    String(localized: Strings.AIInsights.explainWithAI),
+                                    systemImage: Iconography.appleIntelligence
+                                )
+                            }
+                        }
+                        #endif
+                    }
                 }
             }
 
@@ -157,6 +225,12 @@ public struct SupportedServiceDetailView: View {
                 }
             }
         }
+        #if canImport(FoundationModels)
+        .modifier(AIServiceTypeSheetModifier(
+            serviceType: serviceType,
+            isPresented: $isAIExplanationPresented
+        ))
+        #endif
     }
 
     // MARK: - Copyable Detail Row
@@ -175,3 +249,38 @@ public struct SupportedServiceDetailView: View {
             }
     }
 }
+
+// MARK: - AI Service Type Sheet Modifier
+
+#if canImport(FoundationModels)
+
+@available(iOS 26, macOS 26, visionOS 26, *)
+private struct AIServiceTypeSheetAvailable: ViewModifier {
+    let serviceType: BonjourServiceType
+    @Binding var isPresented: Bool
+
+    func body(content: Content) -> some View {
+        content
+            .sheet(isPresented: $isPresented) {
+                ServiceExplanationSheet(serviceType: serviceType)
+            }
+    }
+}
+
+struct AIServiceTypeSheetModifier: ViewModifier {
+    let serviceType: BonjourServiceType
+    @Binding var isPresented: Bool
+
+    func body(content: Content) -> some View {
+        if #available(iOS 26, macOS 26, visionOS 26, *) {
+            content.modifier(AIServiceTypeSheetAvailable(
+                serviceType: serviceType,
+                isPresented: $isPresented
+            ))
+        } else {
+            content
+        }
+    }
+}
+
+#endif

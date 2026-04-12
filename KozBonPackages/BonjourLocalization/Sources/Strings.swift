@@ -630,16 +630,20 @@ public enum Strings {
             .init("settings_ai_analysis_enabled", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        public static var aiAnalysisFooter: LocalizedStringResource {
+            .init("settings_ai_analysis_footer", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var aiExpertiseLevel: LocalizedStringResource {
             .init("settings_ai_expertise_level", bundle: .atURL(Bundle.module.bundleURL))
         }
 
-        public static var whatsTheDifference: LocalizedStringResource {
-            .init("settings_whats_the_difference", bundle: .atURL(Bundle.module.bundleURL))
+        public static var aiBasicSubtitle: LocalizedStringResource {
+            .init("settings_ai_basic_subtitle", bundle: .atURL(Bundle.module.bundleURL))
         }
 
-        public static var detailLevelExplanation: LocalizedStringResource {
-            .init("settings_detail_level_explanation", bundle: .atURL(Bundle.module.bundleURL))
+        public static var aiTechnicalSubtitle: LocalizedStringResource {
+            .init("settings_ai_technical_subtitle", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         public static var resetToDefaults: LocalizedStringResource {
@@ -675,8 +679,8 @@ public enum Strings {
             .init("a11y_explain_with_ai_hint", bundle: .atURL(Bundle.module.bundleURL))
         }
 
-        public static var beginner: LocalizedStringResource {
-            .init("ai_expertise_beginner", bundle: .atURL(Bundle.module.bundleURL))
+        public static var basic: LocalizedStringResource {
+            .init("ai_expertise_basic", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         public static var technical: LocalizedStringResource {
