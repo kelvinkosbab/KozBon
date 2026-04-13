@@ -194,7 +194,6 @@ public struct BonjourServiceDetailView: View {
         }
         .accessibilityIdentifier("service_detail_list")
         .contentMarginsBasedOnSizeClass()
-        .navigationTitle(viewModel.service.service.name)
         #if !os(macOS)
         .navigationBarTitleDisplayMode(.inline)
         #endif

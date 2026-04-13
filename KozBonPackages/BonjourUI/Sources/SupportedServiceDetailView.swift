@@ -222,7 +222,6 @@ public struct SupportedServiceDetailView: View {
             }
         }
         .contentMarginsBasedOnSizeClass()
-        .navigationTitle(serviceType.name)
         #if !os(macOS)
         .navigationBarTitleDisplayMode(.inline)
         #endif

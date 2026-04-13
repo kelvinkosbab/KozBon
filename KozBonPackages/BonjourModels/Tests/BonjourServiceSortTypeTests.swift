@@ -15,8 +15,8 @@ struct BonjourServiceSortTypeTests {
 
     // MARK: - CaseIterable
 
-    @Test func allCasesContainsFourOptions() {
-        #expect(BonjourServiceSortType.allCases.count == 4)
+    @Test func allCasesContainsFiveOptions() {
+        #expect(BonjourServiceSortType.allCases.count == 5)
     }
 
     // MARK: - ID
@@ -41,6 +41,10 @@ struct BonjourServiceSortTypeTests {
 
     @Test func serviceNameDescID() {
         #expect(BonjourServiceSortType.serviceNameDesc.id == "serviceNameDesc")
+    }
+
+    @Test func smartHomeID() {
+        #expect(BonjourServiceSortType.smartHome.id == "smartHome")
     }
 
     @Test func allIDsRoundTripViaLookup() {

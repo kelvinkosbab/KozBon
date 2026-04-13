@@ -141,6 +141,18 @@ extension BonjourServiceType {
         case "matter smart home protocol":
             Iconography.homeKit
 
+        /// Thread border router (Apple TV, HomePod)
+        case "thread border router":
+            Iconography.radioWaves
+
+        /// Matter commissionable device awaiting pairing
+        case "matter commissionable device":
+            Iconography.homeKit
+
+        /// Matter commissioner for onboarding devices
+        case "matter commissioner":
+            Iconography.homeKit
+
         /// Home Assistant open-source home automation
         case "home assistant":
             Iconography.house

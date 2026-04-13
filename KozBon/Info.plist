@@ -135,6 +135,9 @@
 		<string>_continuity._tcp</string>
 		<string>_dns-sd._udp</string>
 		<string>_coap._udp</string>
+		<string>_meshcop._udp</string>
+		<string>_matterc._udp</string>
+		<string>_matterd._udp</string>
 		<string>_svn._tcp</string>
 		<string>_git._tcp</string>
 		<string>_domain._tcp</string>

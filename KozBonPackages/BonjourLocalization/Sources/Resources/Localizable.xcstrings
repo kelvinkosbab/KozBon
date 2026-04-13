@@ -130,7 +130,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Create Txt Record"
+            "value": "Create TXT record"
           }
         },
         "es": {
@@ -253,7 +253,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Your Preferences"
+            "value": "Your preferences"
           }
         },
         "es": {
@@ -458,7 +458,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "IP Addresses"
+            "value": "IP addresses"
           }
         },
         "es": {
@@ -499,7 +499,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "TXT Records"
+            "value": "TXT records"
           }
         },
         "es": {
@@ -581,7 +581,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Port Number"
+            "value": "Port number"
           }
         },
         "es": {
@@ -622,7 +622,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Service Domain"
+            "value": "Service domain"
           }
         },
         "es": {
@@ -663,7 +663,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Custom Service Types"
+            "value": "Custom service types"
           }
         },
         "es": {
@@ -704,7 +704,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Built-in Service Types"
+            "value": "Built-in service types"
           }
         },
         "es": {
@@ -745,7 +745,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Record Key"
+            "value": "Record key"
           }
         },
         "es": {
@@ -786,7 +786,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Record Value"
+            "value": "Record value"
           }
         },
         "es": {
@@ -1442,7 +1442,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Add TXT Record"
+            "value": "Add TXT record"
           }
         },
         "es": {
@@ -1770,7 +1770,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Create Custom Service Type"
+            "value": "Create custom service type"
           }
         },
         "es": {
@@ -10011,7 +10011,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Start Scanning"
+            "value": "Start scanning"
           }
         },
         "es": {
@@ -10093,7 +10093,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Clear Custom Service Types"
+            "value": "Clear custom service types"
           }
         },
         "es": {
@@ -10216,7 +10216,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI Insights"
+            "value": "AI insights"
           }
         },
         "es": {
@@ -10380,7 +10380,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI Analysis"
+            "value": "AI analysis"
           }
         },
         "es": {
@@ -10421,7 +10421,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Enable AI Analysis"
+            "value": "Enable AI analysis"
           }
         },
         "es": {
@@ -10585,7 +10585,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Reset to Defaults"
+            "value": "Reset to defaults"
           }
         },
         "es": {
@@ -11395,6 +11395,252 @@
           "stringUnit": {
             "state": "translated",
             "value": "填写所有必填项以启用此按钮"
+          }
+        }
+      }
+    },
+    "service_detail_meshcop": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thread Mesh Commissioning Protocol for Thread border routers such as Apple TV and HomePod. TXT records expose the Thread network name, channel, and PAN ID."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Protocolo de comisionado de malla Thread para routers de borde Thread como Apple TV y HomePod. Los registros TXT exponen el nombre de la red Thread, el canal y el PAN ID."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Protocole de commissionnement de maillage Thread pour les routeurs de bordure Thread tels que l'Apple TV et le HomePod. Les enregistrements TXT exposent le nom du réseau Thread, le canal et l'identifiant PAN."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thread-Mesh-Commissioning-Protokoll für Thread-Border-Router wie Apple TV und HomePod. TXT-Einträge zeigen den Thread-Netzwerknamen, Kanal und PAN-ID."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple TVやHomePodなどのThreadボーダールーター用のThread Meshコミッショニングプロトコル。TXTレコードにはThreadネットワーク名、チャンネル、PAN IDが含まれます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用于Apple TV和HomePod等Thread边界路由器的Thread Mesh调试协议。TXT记录包含Thread网络名称、通道和PAN ID。"
+          }
+        }
+      }
+    },
+    "service_detail_matterc": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A Matter device in commissioning mode, actively advertising its availability for pairing and setup on the local network."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un dispositivo Matter en modo de comisionado, anunciando activamente su disponibilidad para emparejamiento y configuración en la red local."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un appareil Matter en mode de commissionnement, annonçant activement sa disponibilité pour l'appairage et la configuration sur le réseau local."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein Matter-Gerät im Inbetriebnahme-Modus, das aktiv seine Verfügbarkeit für Kopplung und Einrichtung im lokalen Netzwerk bewirbt."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "コミッショニングモードのMatterデバイスで、ローカルネットワーク上でペアリングとセットアップの可用性をアクティブにアドバタイズしています。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "处于调试模式的Matter设备，正在本地网络上主动广播其配对和设置可用性。"
+          }
+        }
+      }
+    },
+    "service_detail_matterd": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A Matter commissioner device capable of onboarding new Matter accessories onto the smart home network."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un dispositivo comisionador Matter capaz de incorporar nuevos accesorios Matter a la red del hogar inteligente."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un appareil commissionnaire Matter capable d'intégrer de nouveaux accessoires Matter au réseau domotique."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein Matter-Commissioner-Gerät, das neue Matter-Zubehörteile in das Smart-Home-Netzwerk einbinden kann."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新しいMatterアクセサリをスマートホームネットワークに追加できるMatterコミッショナーデバイス。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "能够将新的Matter配件加入智能家居网络的Matter调试器设备。"
+          }
+        }
+      }
+    },
+    "sort_smart_home": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smart Home"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hogar inteligente"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maison connectée"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smart Home"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "スマートホーム"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "智能家居"
+          }
+        }
+      }
+    },
+    "settings_display_footer": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Controls how discovered services are organized on the Discover tab."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Controla cómo se organizan los servicios descubiertos en la pestaña Descubrir."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contrôle l’organisation des services découverts dans l’onglet Découvrir."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Steuert die Anordnung entdeckter Dienste auf dem Entdecken-Tab."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「検出」タブでの発見されたサービスの表示順序を設定します。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "控制“发现”标签页中已发现服务的排列方式。"
+          }
+        }
+      }
+    },
+    "settings_reset_footer": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This will restore all settings to their original values and remove any custom service types you have created."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esto restaurará todos los ajustes a sus valores originales y eliminará los tipos de servicio personalizados que haya creado."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cela restaurera tous les réglages à leurs valeurs d’origine et supprimera les types de service personnalisés que vous avez créés."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dadurch werden alle Einstellungen auf ihre ursprünglichen Werte zurückgesetzt und alle von Ihnen erstellten benutzerdefinierten Diensttypen entfernt."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すべての設定を初期値に戻し、作成したカスタムサービスタイプを削除します。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这将把所有设置恢复为初始值，并删除您创建的所有自定义服务类型。"
           }
         }
       }

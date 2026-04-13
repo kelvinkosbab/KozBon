@@ -75,7 +75,7 @@ public struct SettingsView: View {
 
                 // MARK: Display
 
-                Section(String(localized: Strings.Settings.display)) {
+                Section {
                     LabeledContent {
                         Picker(
                             String(localized: Strings.Settings.defaultSortOrder),
@@ -88,7 +88,8 @@ public struct SettingsView: View {
                             )
                         ) {
                             ForEach(BonjourServiceSortType.allCases) { sortType in
-                                Text(sortType.title).tag(sortType.id)
+                                Label(sortType.title, systemImage: sortType.iconName)
+                                    .tag(sortType.id)
                             }
                         }
                         .labelsHidden()
@@ -97,6 +98,11 @@ public struct SettingsView: View {
                     } label: {
                         Text(Strings.Settings.defaultSortOrder)
                     }
+                } header: {
+                    Text(Strings.Settings.display)
+                        .accessibilityAddTraits(.isHeader)
+                } footer: {
+                    Text(Strings.Settings.displayFooter)
                 }
 
                 // MARK: Reset
@@ -108,6 +114,8 @@ public struct SettingsView: View {
                         Text(Strings.Settings.resetToDefaults)
                     }
                     .accessibilityHint(String(localized: Strings.Accessibility.resetHint))
+                } footer: {
+                    Text(Strings.Settings.resetFooter)
                 }
             }
             .formStyle(.grouped)

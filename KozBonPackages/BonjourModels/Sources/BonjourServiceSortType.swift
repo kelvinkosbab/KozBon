@@ -6,14 +6,16 @@
 //
 
 import Foundation
+import BonjourCore
 import BonjourLocalization
 
 // MARK: - BonjourServiceSortType
 
-/// A sort option describing how nearby services should be ordered in lists.
+/// A sort or filter option describing how nearby services should be ordered or filtered in lists.
 ///
 /// Host name options cluster services from the same device together.
 /// Service type options cluster services of the same protocol together.
+/// The Thread & Matter option filters to show only Thread and Matter services.
 public enum BonjourServiceSortType: Identifiable, CaseIterable {
 
     /// Sort by host name in ascending (A → Z) order.
@@ -28,6 +30,9 @@ public enum BonjourServiceSortType: Identifiable, CaseIterable {
     /// Sort by service type name in descending (Z → A) order.
     case serviceNameDesc
 
+    /// Filter to show only smart home services (Thread, Matter, HomeKit, etc.).
+    case smartHome
+
     /// A stable identifier for the sort option.
     public var id: String {
         switch self {
@@ -39,6 +44,8 @@ public enum BonjourServiceSortType: Identifiable, CaseIterable {
             "serviceNameAsc"
         case .serviceNameDesc:
             "serviceNameDesc"
+        case .smartHome:
+            "smartHome"
         }
     }
 
@@ -53,6 +60,8 @@ public enum BonjourServiceSortType: Identifiable, CaseIterable {
             String(localized: Strings.SortOptions.serviceTypeAsc)
         case .serviceNameDesc:
             String(localized: Strings.SortOptions.serviceTypeDesc)
+        case .smartHome:
+            String(localized: Strings.SortOptions.smartHome)
         }
     }
 
@@ -63,6 +72,8 @@ public enum BonjourServiceSortType: Identifiable, CaseIterable {
             "arrow.up"
         case .hostNameDesc, .serviceNameDesc:
             "arrow.down"
+        case .smartHome:
+            Iconography.homeKit
         }
     }
 }

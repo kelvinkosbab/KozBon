@@ -766,7 +766,7 @@ extension BonjourServiceType {
         detail: "Prometheus systems monitoring and alerting toolkit for collecting and querying metrics from configured targets."
     )
 
-    // MARK: - UDP Services (Unused)
+    // MARK: - UDP Services
 
     public static var udpServiceTypes: [BonjourServiceType] {
         return [
@@ -781,7 +781,10 @@ extension BonjourServiceType {
             self.ssdp,
             self.rtspUdp,
             self.mdnsServiceDiscovery,
-            self.coapProtocol
+            self.coapProtocol,
+            self.threadBorderRouter,
+            self.matterCommissionable,
+            self.matterCommissioner
         ]
     }
 
@@ -862,5 +865,23 @@ extension BonjourServiceType {
         type: "coap",
         transportLayer: .udp,
         detail: "CoAP is a lightweight protocol designed for constrained IoT devices and low-power networks, similar to HTTP but optimized for machine-to-machine communication."
+    )
+    static private let threadBorderRouter: BonjourServiceType = BonjourServiceType(
+        name: "Thread Border Router",
+        type: "meshcop",
+        transportLayer: .udp,
+        detail: "Thread Mesh Commissioning Protocol for Thread border routers such as Apple TV and HomePod. TXT records expose the Thread network name, channel, and PAN ID."
+    )
+    static private let matterCommissionable: BonjourServiceType = BonjourServiceType(
+        name: "Matter Commissionable Device",
+        type: "matterc",
+        transportLayer: .udp,
+        detail: "A Matter device in commissioning mode, actively advertising its availability for pairing and setup on the local network."
+    )
+    static private let matterCommissioner: BonjourServiceType = BonjourServiceType(
+        name: "Matter Commissioner",
+        type: "matterd",
+        transportLayer: .udp,
+        detail: "A Matter commissioner device capable of onboarding new Matter accessories onto the smart home network."
     )
 }

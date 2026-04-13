@@ -91,6 +91,17 @@ final class BonjourServicesViewModel: BonjourServiceScannerDelegate {
             return nonPublished.sorted {
                 ($1.serviceType.name, $0.service.name) < ($0.serviceType.name, $1.service.name)
             }
+        case .smartHome:
+            let smartHomeTypes: Set<String> = [
+                "matter", "meshcop", "matterc", "matterd",
+                "hap", "homekit", "home-assistant",
+                "powerview", "sonos", "spotify-connect"
+            ]
+            return nonPublished
+                .filter { smartHomeTypes.contains($0.serviceType.type) }
+                .sorted {
+                    ($0.service.name, $0.serviceType.name) < ($1.service.name, $1.serviceType.name)
+                }
         }
     }
 

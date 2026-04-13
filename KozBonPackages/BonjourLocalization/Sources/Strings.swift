@@ -434,6 +434,10 @@ public enum Strings {
         public static var serviceTypeDesc: LocalizedStringResource {
             .init("sort_service_type_desc", bundle: .atURL(Bundle.module.bundleURL))
         }
+
+        public static var smartHome: LocalizedStringResource {
+            .init("sort_smart_home", bundle: .atURL(Bundle.module.bundleURL))
+        }
     }
 
     // MARK: - Alerts
@@ -700,6 +704,14 @@ public enum Strings {
 
         public static var resetConfirmationMessage: LocalizedStringResource {
             .init("settings_reset_confirmation_message", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var displayFooter: LocalizedStringResource {
+            .init("settings_display_footer", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var resetFooter: LocalizedStringResource {
+            .init("settings_reset_footer", bundle: .atURL(Bundle.module.bundleURL))
         }
     }
 
