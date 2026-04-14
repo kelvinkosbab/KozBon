@@ -134,4 +134,33 @@ struct MockBonjourServiceExplainerTests {
         await mock.explain(serviceType: serviceType)
         #expect(mock.explainCallCount == 2)
     }
+
+    // MARK: - isPublished Parameter
+
+    @Test func explainServiceWithIsPublishedWorks() async {
+        let mock = MockBonjourServiceExplainer(cannedExplanation: "Published explanation")
+        let service = makeService()
+        await mock.explain(service: service, isPublished: true)
+        #expect(mock.explanation == "Published explanation")
+        #expect(mock.explainCallCount == 1)
+    }
+
+    @Test func explainServiceDefaultIsPublishedIsFalse() async {
+        let mock = MockBonjourServiceExplainer(cannedExplanation: "Discovered explanation")
+        let service = makeService()
+        await mock.explain(service: service)
+        #expect(mock.explanation == "Discovered explanation")
+    }
+
+    // MARK: - Availability
+
+    @Test func availableByDefault() {
+        let mock = MockBonjourServiceExplainer()
+        #expect(mock.isAvailable)
+    }
+
+    @Test func unavailableWhenConfigured() {
+        let mock = MockBonjourServiceExplainer(isAvailable: false)
+        #expect(!mock.isAvailable)
+    }
 }

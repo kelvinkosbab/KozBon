@@ -746,6 +746,10 @@ public enum Strings {
             .init("button_explain_with_ai", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        public static var enableAppleIntelligence: LocalizedStringResource {
+            .init("button_enable_apple_intelligence", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var insightsTitle: LocalizedStringResource {
             .init("nav_ai_insights", bundle: .atURL(Bundle.module.bundleURL))
         }

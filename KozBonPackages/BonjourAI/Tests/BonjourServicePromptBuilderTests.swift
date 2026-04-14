@@ -165,6 +165,27 @@ struct BonjourServicePromptBuilderTests {
         #expect(!prompt.contains("TXT records:"))
     }
 
+    // MARK: - isPublished
+
+    @Test func promptForDiscoveredServiceMentionsDiscovered() {
+        let service = makeService()
+        let prompt = BonjourServicePromptBuilder.buildPrompt(service: service, isPublished: false)
+        #expect(prompt.contains("discovered"))
+    }
+
+    @Test func promptForPublishedServiceMentionsBroadcasting() {
+        let service = makeService()
+        let prompt = BonjourServicePromptBuilder.buildPrompt(service: service, isPublished: true)
+        #expect(prompt.contains("broadcasting"))
+    }
+
+    @Test func promptDefaultsToDiscovered() {
+        let service = makeService()
+        let prompt = BonjourServicePromptBuilder.buildPrompt(service: service)
+        #expect(prompt.contains("discovered"))
+        #expect(!prompt.contains("broadcasting"))
+    }
+
     // MARK: - Structured Output
 
     @Test func systemInstructionsContainsStructuredSections() {

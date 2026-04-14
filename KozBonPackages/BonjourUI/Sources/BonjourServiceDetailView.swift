@@ -12,10 +12,6 @@ import BonjourModels
 import BonjourAI
 import BonjourStorage
 
-#if canImport(FoundationModels)
-import FoundationModels
-#endif
-
 // MARK: - BonjourServiceDetailView
 
 /// Detail view displaying information about a single discovered or published Bonjour service.
@@ -149,14 +145,11 @@ public struct BonjourServiceDetailView: View {
                     )
                     .contextMenu {
                         #if canImport(FoundationModels)
-                        if preferencesStore.aiAnalysisEnabled,
-                           #available(iOS 26, macOS 26, visionOS 26, *),
-                           SystemLanguageModel.default.isAvailable {
-                            Button {
-                                viewModel.isAIExplanationPresented = true
-                            } label: {
-                                Label(String(localized: Strings.AIInsights.explainWithAI), systemImage: Iconography.appleIntelligence)
-                            }
+                        if #available(iOS 26, macOS 26, visionOS 26, *) {
+                            AIContextMenuItems(
+                                aiAnalysisEnabled: preferencesStore.aiAnalysisEnabled,
+                                action: { viewModel.isAIExplanationPresented = true }
+                            )
                         }
                         #endif
                     }

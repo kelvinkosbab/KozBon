@@ -12,10 +12,6 @@ import BonjourModels
 import BonjourAI
 import BonjourStorage
 
-#if canImport(FoundationModels)
-import FoundationModels
-#endif
-
 // MARK: - SupportedServiceDetailView
 
 /// Detail view for a supported Bonjour service type, showing its name, type string,
@@ -94,19 +90,11 @@ public struct SupportedServiceDetailView: View {
                     }
 
                     #if canImport(FoundationModels)
-                    if preferencesStore.aiAnalysisEnabled,
-                       #available(iOS 26, macOS 26, visionOS 26, *),
-                       SystemLanguageModel.default.isAvailable {
-                        Divider()
-
-                        Button {
-                            isAIExplanationPresented = true
-                        } label: {
-                            Label(
-                                String(localized: Strings.AIInsights.explainWithAI),
-                                systemImage: Iconography.appleIntelligence
-                            )
-                        }
+                    if #available(iOS 26, macOS 26, visionOS 26, *) {
+                        AIContextMenuItems(
+                            aiAnalysisEnabled: preferencesStore.aiAnalysisEnabled,
+                            action: { isAIExplanationPresented = true }
+                        )
                     }
                     #endif
                 }
@@ -135,19 +123,11 @@ public struct SupportedServiceDetailView: View {
                         }
 
                         #if canImport(FoundationModels)
-                        if preferencesStore.aiAnalysisEnabled,
-                           #available(iOS 26, macOS 26, visionOS 26, *),
-                           SystemLanguageModel.default.isAvailable {
-                            Divider()
-
-                            Button {
-                                isAIExplanationPresented = true
-                            } label: {
-                                Label(
-                                    String(localized: Strings.AIInsights.explainWithAI),
-                                    systemImage: Iconography.appleIntelligence
-                                )
-                            }
+                        if #available(iOS 26, macOS 26, visionOS 26, *) {
+                            AIContextMenuItems(
+                                aiAnalysisEnabled: preferencesStore.aiAnalysisEnabled,
+                                action: { isAIExplanationPresented = true }
+                            )
                         }
                         #endif
                     }

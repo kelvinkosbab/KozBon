@@ -13,10 +13,6 @@ import BonjourModels
 import BonjourAI
 import BonjourStorage
 
-#if canImport(FoundationModels)
-import FoundationModels
-#endif
-
 // MARK: - SupportedServicesView
 
 /// Browsable list of all supported Bonjour service types (built-in and user-created).
@@ -137,16 +133,11 @@ public struct SupportedServicesView: View {
         }
 
         #if canImport(FoundationModels)
-        if preferencesStore.aiAnalysisEnabled,
-           #available(iOS 26, macOS 26, visionOS 26, *),
-           SystemLanguageModel.default.isAvailable {
-            Divider()
-
-            Button {
-                serviceTypeToExplain = serviceType
-            } label: {
-                Label(String(localized: Strings.AIInsights.explainWithAI), systemImage: Iconography.appleIntelligence)
-            }
+        if #available(iOS 26, macOS 26, visionOS 26, *) {
+            AIContextMenuItems(
+                aiAnalysisEnabled: preferencesStore.aiAnalysisEnabled,
+                action: { serviceTypeToExplain = serviceType }
+            )
         }
         #endif
 
