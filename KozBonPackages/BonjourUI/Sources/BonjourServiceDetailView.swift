@@ -343,7 +343,7 @@ private struct AIExplanationSheetAvailable: ViewModifier {
     func body(content: Content) -> some View {
         content
             .sheet(isPresented: $viewModel.isAIExplanationPresented) {
-                ServiceExplanationSheet(service: viewModel.service)
+                ServiceExplanationSheet(service: viewModel.service, isPublished: viewModel.isPublished)
             }
     }
 }

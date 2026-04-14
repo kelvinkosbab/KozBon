@@ -48,7 +48,7 @@ public final class MockBonjourServiceExplainer: BonjourServiceExplainerProtocol 
 
     // MARK: - BonjourServiceExplainerProtocol
 
-    public func explain(service: BonjourService) async {
+    public func explain(service: BonjourService, isPublished: Bool = false) async {
         explainCallCount += 1
         explanation = ""
         error = nil

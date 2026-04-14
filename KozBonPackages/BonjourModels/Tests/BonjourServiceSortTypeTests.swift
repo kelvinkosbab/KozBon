@@ -15,8 +15,8 @@ struct BonjourServiceSortTypeTests {
 
     // MARK: - CaseIterable
 
-    @Test func allCasesContainsFiveOptions() {
-        #expect(BonjourServiceSortType.allCases.count == 5)
+    @Test func allCasesContainsNineOptions() {
+        #expect(BonjourServiceSortType.allCases.count == 9)
     }
 
     // MARK: - ID
@@ -47,6 +47,22 @@ struct BonjourServiceSortTypeTests {
         #expect(BonjourServiceSortType.smartHome.id == "smartHome")
     }
 
+    @Test func appleDevicesID() {
+        #expect(BonjourServiceSortType.appleDevices.id == "appleDevices")
+    }
+
+    @Test func mediaAndStreamingID() {
+        #expect(BonjourServiceSortType.mediaAndStreaming.id == "mediaAndStreaming")
+    }
+
+    @Test func printersAndScannersID() {
+        #expect(BonjourServiceSortType.printersAndScanners.id == "printersAndScanners")
+    }
+
+    @Test func remoteAccessID() {
+        #expect(BonjourServiceSortType.remoteAccess.id == "remoteAccess")
+    }
+
     @Test func allIDsRoundTripViaLookup() {
         for sortType in BonjourServiceSortType.allCases {
             let found = BonjourServiceSortType.allCases.first { $0.id == sortType.id }
@@ -68,5 +84,22 @@ struct BonjourServiceSortTypeTests {
         for sortType in BonjourServiceSortType.allCases {
             #expect(!sortType.iconName.isEmpty)
         }
+    }
+
+    // MARK: - isFilter
+
+    @Test func sortOptionsAreNotFilters() {
+        #expect(!BonjourServiceSortType.hostNameAsc.isFilter)
+        #expect(!BonjourServiceSortType.hostNameDesc.isFilter)
+        #expect(!BonjourServiceSortType.serviceNameAsc.isFilter)
+        #expect(!BonjourServiceSortType.serviceNameDesc.isFilter)
+    }
+
+    @Test func filterOptionsAreFilters() {
+        #expect(BonjourServiceSortType.smartHome.isFilter)
+        #expect(BonjourServiceSortType.appleDevices.isFilter)
+        #expect(BonjourServiceSortType.mediaAndStreaming.isFilter)
+        #expect(BonjourServiceSortType.printersAndScanners.isFilter)
+        #expect(BonjourServiceSortType.remoteAccess.isFilter)
     }
 }

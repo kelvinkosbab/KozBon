@@ -127,12 +127,14 @@ public enum BonjourServicePromptBuilder {
     ///
     /// - Parameters:
     ///   - service: The Bonjour service to build a prompt for.
+    ///   - isPublished: Whether this service was published by this device (vs discovered remotely).
     ///   - expertiseLevel: The desired detail level for the explanation.
     /// - Returns: A formatted prompt string including device context, service details,
     ///   addresses, protocol description, and TXT records.
     @MainActor
     public static func buildPrompt(
         service: BonjourService,
+        isPublished: Bool = false,
         expertiseLevel: ExpertiseLevel = .basic
     ) -> String {
         let serviceType = service.serviceType
@@ -140,7 +142,14 @@ public enum BonjourServicePromptBuilder {
 
         parts.append(deviceContext)
         parts.append("")
-        parts.append("I discovered this Bonjour service on my local network and would like to understand it:")
+        if isPublished {
+            parts.append(
+                "This is a Bonjour service that I am broadcasting from this device. " +
+                "I would like to understand it:"
+            )
+        } else {
+            parts.append("I discovered this Bonjour service on my local network and would like to understand it:")
+        }
         parts.append("")
         parts.append("Service name: \(serviceType.name)")
         parts.append("Full type: \(serviceType.fullType)")
@@ -176,12 +185,43 @@ public enum BonjourServicePromptBuilder {
         return parts.joined(separator: "\n")
     }
 
+    // MARK: - Service Type System Instructions
+
+    /// System instructions tailored for service type explanations (library tab).
+    ///
+    /// Unlike discovered service explanations, these do not assume the service
+    /// is currently running on the network.
+    public static var serviceTypeSystemInstructions: String {
+        let languageName = preferredLanguageName
+        return """
+            You are a friendly networking expert helping everyday users understand \
+            Bonjour (mDNS/DNS-SD) service types.
+
+            The user is browsing a library of service types — they have NOT discovered \
+            this service on their network. Do NOT assume it is running or active. \
+            Explain the service type itself, not a specific instance.
+
+            Format your response with these Markdown sections:
+            ## What it is
+            (1-2 sentences explaining what this service type is and its purpose)
+            ## Common devices
+            (1-2 sentences on what kinds of devices or apps typically advertise this service)
+            ## How it works
+            (1-2 sentences on how this protocol works and how users might interact with it)
+
+            Keep each section concise — no more than 2-3 sentences. \
+            IMPORTANT: Always respond in \(languageName).
+            """
+    }
+
+    // MARK: - Service Type Prompt
+
     /// Builds a prompt string from a service type (without a specific discovered instance).
     ///
     /// - Parameters:
     ///   - serviceType: The Bonjour service type to explain.
     ///   - expertiseLevel: The desired detail level for the explanation.
-    /// - Returns: A formatted prompt string including device context and service type metadata.
+    /// - Returns: A formatted prompt string with service type metadata.
     @MainActor
     public static func buildPrompt(
         serviceType: BonjourServiceType,
@@ -189,9 +229,7 @@ public enum BonjourServicePromptBuilder {
     ) -> String {
         var parts: [String] = []
 
-        parts.append(deviceContext)
-        parts.append("")
-        parts.append("I'd like to understand this Bonjour service type:")
+        parts.append("I'd like to understand this Bonjour service type from the service library:")
         parts.append("")
         parts.append("Service name: \(serviceType.name)")
         parts.append("Full type: \(serviceType.fullType)")
@@ -206,9 +244,9 @@ public enum BonjourServicePromptBuilder {
 
         parts.append("")
         parts.append(
-            "What does this service type do, what kinds of devices typically use it, " +
-            "and how might I interact with it from my \(currentDeviceShortName)? " +
-            "Please respond in \(preferredLanguageName)."
+            "Explain what this service type is, what devices commonly use it, " +
+            "and how it works. Do not assume this service is currently running " +
+            "on my network. Please respond in \(preferredLanguageName)."
         )
 
         return parts.joined(separator: "\n")

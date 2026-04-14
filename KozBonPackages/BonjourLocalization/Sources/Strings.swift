@@ -413,6 +413,13 @@ public enum Strings {
         public static var selectServiceTypeDescription: LocalizedStringResource {
             .init("empty_select_service_type_description", bundle: .atURL(Bundle.module.bundleURL))
         }
+
+        public static func noFilteredServices(_ filterName: String) -> String {
+            String(
+                format: NSLocalizedString("empty_no_filtered_services_format", bundle: Bundle.module, comment: ""),
+                filterName
+            )
+        }
     }
 
     // MARK: - Sort Options
@@ -437,6 +444,22 @@ public enum Strings {
 
         public static var smartHome: LocalizedStringResource {
             .init("sort_smart_home", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var appleDevices: LocalizedStringResource {
+            .init("sort_apple_devices", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var mediaAndStreaming: LocalizedStringResource {
+            .init("sort_media_and_streaming", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var printersAndScanners: LocalizedStringResource {
+            .init("sort_printers_and_scanners", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var remoteAccess: LocalizedStringResource {
+            .init("sort_remote_access", bundle: .atURL(Bundle.module.bundleURL))
         }
     }
 

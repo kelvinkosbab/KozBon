@@ -34,8 +34,10 @@ public protocol BonjourServiceExplainerProtocol: AnyObject, Observable {
 
     /// Generates a streaming explanation of the given Bonjour service.
     ///
-    /// - Parameter service: The discovered Bonjour service to explain.
-    func explain(service: BonjourService) async
+    /// - Parameters:
+    ///   - service: The Bonjour service to explain.
+    ///   - isPublished: Whether this service was published by this device.
+    func explain(service: BonjourService, isPublished: Bool) async
 
     /// Generates a streaming explanation of the given Bonjour service type.
     ///

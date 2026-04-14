@@ -92,17 +92,52 @@ final class BonjourServicesViewModel: BonjourServiceScannerDelegate {
                 ($1.serviceType.name, $0.service.name) < ($0.serviceType.name, $1.service.name)
             }
         case .smartHome:
-            let smartHomeTypes: Set<String> = [
+            return filterAndSort(nonPublished, types: [
                 "matter", "meshcop", "matterc", "matterd",
                 "hap", "homekit", "home-assistant",
                 "powerview", "sonos", "spotify-connect"
-            ]
-            return nonPublished
-                .filter { smartHomeTypes.contains($0.serviceType.type) }
-                .sorted {
-                    ($0.service.name, $0.serviceType.name) < ($1.service.name, $1.serviceType.name)
-                }
+            ])
+        case .appleDevices:
+            return filterAndSort(nonPublished, types: [
+                "airplay", "airdrop", "appletv", "appletv-v2", "appletv-v3", "appletv-v4",
+                "appletv-itunes", "appletv-pair", "apple-mobdev", "apple-mobdev2",
+                "apple-midi", "applerdbg", "apple-sasl",
+                "hap", "homekit", "companion-link", "continuity",
+                "keynoteaccess", "keynotepair", "keynotepairing",
+                "KeynoteControl", "mediaremotetv", "raop",
+                "device-info", "airport", "eppc", "workstation",
+                "carplay_ctrl", "sleep-proxy"
+            ])
+        case .mediaAndStreaming:
+            return filterAndSort(nonPublished, types: [
+                "airplay", "raop", "spotify-connect", "sonos",
+                "googlecast", "daap", "dpap", "home-sharing",
+                "rtsp", "roku-rcp", "amzn-wplay", "nvstream",
+                "touch-able", "ptp"
+            ])
+        case .printersAndScanners:
+            return filterAndSort(nonPublished, types: [
+                "printer", "ipp", "ipps", "pdl-datastream",
+                "riousbprint", "scanner", "uscan", "uscans"
+            ])
+        case .remoteAccess:
+            return filterAndSort(nonPublished, types: [
+                "ssh", "sftp-ssh", "udisks-ssh", "vnc", "rfb",
+                "rdp", "telnet", "eppc", "servermgr"
+            ])
         }
+    }
+
+    /// Filters services to only those matching the given type strings, sorted by host name A→Z.
+    private func filterAndSort(
+        _ services: [BonjourService],
+        types: Set<String>
+    ) -> [BonjourService] {
+        services
+            .filter { types.contains($0.serviceType.type) }
+            .sorted {
+                ($0.service.name, $0.serviceType.name) < ($1.service.name, $1.serviceType.name)
+            }
     }
 
     // MARK: - State

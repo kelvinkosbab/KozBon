@@ -274,7 +274,21 @@ struct BonjourServicePromptBuilderTests {
             name: "HTTP", type: "http", transportLayer: .tcp
         )
         let prompt = BonjourServicePromptBuilder.buildPrompt(serviceType: serviceType)
-        #expect(prompt.contains("what kinds of devices typically use it"))
+        #expect(prompt.contains("what devices commonly use it"))
+    }
+
+    @Test func serviceTypePromptDoesNotAssumeRunning() {
+        let serviceType = BonjourServiceType(
+            name: "HTTP", type: "http", transportLayer: .tcp
+        )
+        let prompt = BonjourServicePromptBuilder.buildPrompt(serviceType: serviceType)
+        #expect(prompt.contains("Do not assume this service is currently running"))
+    }
+
+    @Test func serviceTypeSystemInstructionsDoNotAssumeDiscovered() {
+        let instructions = BonjourServicePromptBuilder.serviceTypeSystemInstructions
+        #expect(instructions.contains("NOT discovered"))
+        #expect(instructions.contains("Do NOT assume"))
     }
 
     @Test func serviceTypePromptDefaultsToBasicLevel() {
@@ -307,12 +321,12 @@ struct BonjourServicePromptBuilderTests {
         #expect(prompt.contains("Please respond in \(languageName)."))
     }
 
-    @Test func serviceTypePromptContainsDeviceContext() {
+    @Test func serviceTypePromptOmitsDeviceContext() {
         let serviceType = BonjourServiceType(
             name: "HTTP", type: "http", transportLayer: .tcp
         )
         let prompt = BonjourServicePromptBuilder.buildPrompt(serviceType: serviceType)
-        #expect(prompt.contains(BonjourServicePromptBuilder.deviceContext))
+        #expect(!prompt.contains("I am using"))
     }
 
     // MARK: - ExpertiseLevel Raw Values

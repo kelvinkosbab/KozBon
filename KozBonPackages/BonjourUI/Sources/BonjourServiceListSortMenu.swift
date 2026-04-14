@@ -36,25 +36,46 @@ struct BonjourServiceListSortMenu: View {
 
     var body: some View {
         Menu {
-            ForEach(BonjourServiceSortType.allCases) { option in
-                Button {
-                    withAnimation(reduceMotion ? nil : .default) {
-                        sortType = option
-                    }
-                    #if os(iOS)
-                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                    #endif
-                } label: {
-                    if effectiveSortType == option {
-                        Label(option.title, systemImage: Iconography.selected)
-                    } else {
-                        Label(option.title, systemImage: option.iconName)
-                    }
-                }
+            ForEach(Self.sortOptions, id: \.self) { option in
+                sortButton(for: option)
+            }
+
+            Divider()
+
+            ForEach(Self.filterOptions, id: \.self) { option in
+                sortButton(for: option)
             }
         } label: {
             Label(String(localized: Strings.Buttons.sort), systemImage: Iconography.sort)
                 .tint(.primary)
+        }
+    }
+
+    // MARK: - Helpers
+
+    private static let sortOptions: [BonjourServiceSortType] = [
+        .hostNameAsc, .hostNameDesc, .serviceNameAsc, .serviceNameDesc
+    ]
+
+    private static let filterOptions: [BonjourServiceSortType] = [
+        .smartHome, .appleDevices, .mediaAndStreaming, .printersAndScanners, .remoteAccess
+    ]
+
+    @ViewBuilder
+    private func sortButton(for option: BonjourServiceSortType) -> some View {
+        Button {
+            withAnimation(reduceMotion ? nil : .default) {
+                sortType = option
+            }
+            #if os(iOS)
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            #endif
+        } label: {
+            if effectiveSortType == option {
+                Label(option.title, systemImage: Iconography.selected)
+            } else {
+                Label(option.title, systemImage: option.iconName)
+            }
         }
     }
 }

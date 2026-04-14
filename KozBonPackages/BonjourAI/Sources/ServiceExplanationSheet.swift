@@ -26,12 +26,12 @@ public struct ServiceExplanationSheet: View {
     /// The subject to explain — either a discovered service or a service type from the library.
     @MainActor
     enum Subject {
-        case service(BonjourService)
+        case service(BonjourService, isPublished: Bool)
         case serviceType(BonjourServiceType)
 
         var displayName: String {
             switch self {
-            case .service(let service):
+            case .service(let service, _):
                 service.service.name
             case .serviceType(let serviceType):
                 serviceType.name
@@ -40,7 +40,7 @@ public struct ServiceExplanationSheet: View {
 
         var serviceType: BonjourServiceType {
             switch self {
-            case .service(let service):
+            case .service(let service, _):
                 service.serviceType
             case .serviceType(let serviceType):
                 serviceType
@@ -60,8 +60,8 @@ public struct ServiceExplanationSheet: View {
         injectedExplainer ?? localExplainer
     }
 
-    public init(service: BonjourService) {
-        self.subject = .service(service)
+    public init(service: BonjourService, isPublished: Bool = false) {
+        self.subject = .service(service, isPublished: isPublished)
     }
 
     public init(serviceType: BonjourServiceType) {
@@ -141,8 +141,8 @@ public struct ServiceExplanationSheet: View {
 
     private func explainSubject() async {
         switch subject {
-        case .service(let service):
-            await explainer.explain(service: service)
+        case .service(let service, let isPublished):
+            await explainer.explain(service: service, isPublished: isPublished)
         case .serviceType(let serviceType):
             await explainer.explain(serviceType: serviceType)
         }

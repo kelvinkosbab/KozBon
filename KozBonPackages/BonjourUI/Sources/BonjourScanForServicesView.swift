@@ -69,6 +69,12 @@ public struct BonjourScanForServicesView: View {
                     ProgressView {
                         Text(Strings.Buttons.scanningForServices)
                     }
+                } else if viewModel.flatActiveServices.isEmpty,
+                          let sortType = viewModel.sortType, sortType.isFilter {
+                    ContentUnavailableView(
+                        Strings.EmptyStates.noFilteredServices(sortType.title),
+                        systemImage: sortType.iconName
+                    )
                 } else if viewModel.flatActiveServices.isEmpty {
                     EmptyStateOverlayView(
                         image: nil,

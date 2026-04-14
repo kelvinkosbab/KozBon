@@ -53,13 +53,14 @@ public final class BonjourServiceExplainer: BonjourServiceExplainerProtocol {
     /// Generates a streaming explanation of the given Bonjour service.
     ///
     /// - Parameter service: The discovered Bonjour service to explain.
-    public func explain(service: BonjourService) async {
+    public func explain(service: BonjourService, isPublished: Bool = false) async {
         explanation = ""
         error = nil
         isGenerating = true
 
         let prompt = BonjourServicePromptBuilder.buildPrompt(
             service: service,
+            isPublished: isPublished,
             expertiseLevel: expertiseLevel
         )
 
@@ -95,7 +96,7 @@ public final class BonjourServiceExplainer: BonjourServiceExplainerProtocol {
 
         do {
             let session = LanguageModelSession(
-                instructions: BonjourServicePromptBuilder.systemInstructions
+                instructions: BonjourServicePromptBuilder.serviceTypeSystemInstructions
             )
             self.session = session
 

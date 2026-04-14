@@ -44,18 +44,32 @@ public struct SettingsView: View {
 
                     if preferencesStore.aiAnalysisEnabled {
                         LabeledContent {
-                            Picker(
-                                String(localized: Strings.Settings.aiExpertiseLevel),
-                                selection: Binding(
-                                    get: { preferencesStore.aiExpertiseLevel },
-                                    set: { preferencesStore.aiExpertiseLevel = $0 }
-                                )
-                            ) {
-                                Text(Strings.AIInsights.basic).tag("basic")
-                                Text(Strings.AIInsights.technical).tag("technical")
+                            Menu {
+                                Button {
+                                    preferencesStore.aiExpertiseLevel = "basic"
+                                } label: {
+                                    if preferencesStore.aiExpertiseLevel == "basic" {
+                                        Label(String(localized: Strings.AIInsights.basic), systemImage: Iconography.selected)
+                                    } else {
+                                        Text(Strings.AIInsights.basic)
+                                    }
+                                }
+
+                                Button {
+                                    preferencesStore.aiExpertiseLevel = "technical"
+                                } label: {
+                                    if preferencesStore.aiExpertiseLevel == "technical" {
+                                        Label(String(localized: Strings.AIInsights.technical), systemImage: Iconography.selected)
+                                    } else {
+                                        Text(Strings.AIInsights.technical)
+                                    }
+                                }
+                            } label: {
+                                Text(preferencesStore.aiExpertiseLevel == "technical"
+                                     ? Strings.AIInsights.technical
+                                     : Strings.AIInsights.basic)
+                                    .font(.subheadline)
                             }
-                            .labelsHidden()
-                            .font(.subheadline)
                             .accessibilityLabel(String(localized: Strings.Settings.aiExpertiseLevel))
                         } label: {
                             VStack(alignment: .leading, spacing: 2) {
@@ -77,23 +91,20 @@ public struct SettingsView: View {
 
                 Section {
                     LabeledContent {
-                        Picker(
-                            String(localized: Strings.Settings.defaultSortOrder),
-                            selection: Binding(
-                                get: {
-                                    let stored = preferencesStore.defaultSortOrder
-                                    return stored.isEmpty ? BonjourServiceSortType.hostNameAsc.id : stored
-                                },
-                                set: { preferencesStore.defaultSortOrder = $0 }
-                            )
-                        ) {
-                            ForEach(BonjourServiceSortType.allCases) { sortType in
-                                Label(sortType.title, systemImage: sortType.iconName)
-                                    .tag(sortType.id)
+                        Menu {
+                            ForEach(Self.sortOptions, id: \.self) { sortType in
+                                sortMenuButton(for: sortType)
                             }
+
+                            Divider()
+
+                            ForEach(Self.filterOptions, id: \.self) { sortType in
+                                sortMenuButton(for: sortType)
+                            }
+                        } label: {
+                            Text(currentSortTitle)
+                                .font(.subheadline)
                         }
-                        .labelsHidden()
-                        .font(.subheadline)
                         .accessibilityLabel(String(localized: Strings.Settings.defaultSortOrder))
                     } label: {
                         Text(Strings.Settings.defaultSortOrder)
@@ -138,6 +149,39 @@ public struct SettingsView: View {
         }
     }
 
+    // MARK: - Sort Options
+
+    private static let sortOptions: [BonjourServiceSortType] = [
+        .hostNameAsc, .hostNameDesc, .serviceNameAsc, .serviceNameDesc
+    ]
+
+    private static let filterOptions: [BonjourServiceSortType] = [
+        .smartHome, .appleDevices, .mediaAndStreaming, .printersAndScanners, .remoteAccess
+    ]
+
+    private var effectiveSortId: String {
+        let stored = preferencesStore.defaultSortOrder
+        return stored.isEmpty ? BonjourServiceSortType.hostNameAsc.id : stored
+    }
+
+    private var currentSortTitle: String {
+        BonjourServiceSortType.allCases.first { $0.id == effectiveSortId }?.title
+            ?? BonjourServiceSortType.hostNameAsc.title
+    }
+
+    @ViewBuilder
+    private func sortMenuButton(for sortType: BonjourServiceSortType) -> some View {
+        Button {
+            preferencesStore.defaultSortOrder = sortType.id
+        } label: {
+            if effectiveSortId == sortType.id {
+                Label(sortType.title, systemImage: Iconography.selected)
+            } else {
+                Label(sortType.title, systemImage: sortType.iconName)
+            }
+        }
+    }
+
     // MARK: - Helpers
 
     /// A short description of the currently selected expertise level.
@@ -146,5 +190,4 @@ public struct SettingsView: View {
             ? Strings.Settings.aiTechnicalSubtitle
             : Strings.Settings.aiBasicSubtitle
     }
-
 }
