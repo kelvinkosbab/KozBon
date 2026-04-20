@@ -62,6 +62,10 @@ public enum Strings {
         public static var preferences: LocalizedStringResource {
             .init("tab_preferences", bundle: .atURL(Bundle.module.bundleURL))
         }
+
+        public static var chat: LocalizedStringResource {
+            .init("tab_chat", bundle: .atURL(Bundle.module.bundleURL))
+        }
     }
 
     // MARK: - Sections
@@ -776,6 +780,47 @@ public enum Strings {
 
         public static var lessDetail: LocalizedStringResource {
             .init("ai_less_detail", bundle: .atURL(Bundle.module.bundleURL))
+        }
+    }
+
+    // MARK: - Chat
+
+    public enum Chat {
+
+        public static var title: LocalizedStringResource {
+            .init("chat_title", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var inputPlaceholder: LocalizedStringResource {
+            .init("chat_input_placeholder", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var send: LocalizedStringResource {
+            .init("chat_send", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var emptyTitle: LocalizedStringResource {
+            .init("chat_empty_title", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var emptySubtitle: LocalizedStringResource {
+            .init("chat_empty_subtitle", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var clearHistory: LocalizedStringResource {
+            .init("chat_clear_history", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var suggestion1: LocalizedStringResource {
+            .init("chat_suggestion_1", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var suggestion2: LocalizedStringResource {
+            .init("chat_suggestion_2", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var suggestion3: LocalizedStringResource {
+            .init("chat_suggestion_3", bundle: .atURL(Bundle.module.bundleURL))
         }
     }
 

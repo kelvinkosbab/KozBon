@@ -23,6 +23,9 @@ enum TopLevelDestination: Identifiable {
     /// The supported service type library and custom service type management tab.
     case bonjourServiceTypes
 
+    /// The AI chat assistant tab (only shown on Apple Intelligence-capable devices).
+    case chat
+
     /// The user preferences tab.
     case settings
 
@@ -34,6 +37,9 @@ enum TopLevelDestination: Identifiable {
 
         case .bonjourServiceTypes:
             "bonjourServiceTypes"
+
+        case .chat:
+            "chat"
 
         case .settings:
             "settings"
@@ -51,6 +57,9 @@ enum TopLevelDestination: Identifiable {
         case .bonjourServiceTypes:
             String(localized: Strings.Tabs.supportedServices)
 
+        case .chat:
+            String(localized: Strings.Tabs.chat)
+
         case .settings:
             String(localized: Strings.Tabs.preferences)
         }
@@ -64,6 +73,9 @@ enum TopLevelDestination: Identifiable {
 
         case .bonjourServiceTypes:
             Image(systemName: Iconography.serviceLibrary)
+
+        case .chat:
+            Image(systemName: Iconography.appleIntelligence)
 
         case .settings:
             Image(systemName: Iconography.settings)

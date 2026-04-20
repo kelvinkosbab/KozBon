@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import BonjourAI
 import BonjourCore
 import BonjourLocalization
 import BonjourModels
@@ -26,108 +27,13 @@ public struct SettingsView: View {
     public var body: some View {
         NavigationStack {
             Form {
-                // MARK: AI Analysis
-
-                Section {
-                    Toggle(
-                        String(localized: Strings.Settings.aiAnalysisEnabled),
-                        isOn: Binding(
-                            get: { preferencesStore.aiAnalysisEnabled },
-                            set: { newValue in
-                                withAnimation(reduceMotion ? nil : .default) {
-                                    preferencesStore.aiAnalysisEnabled = newValue
-                                }
-                            }
-                        )
-                    )
-                    .accessibilityHint(String(localized: Strings.Accessibility.toggleAIHint))
-
-                    if preferencesStore.aiAnalysisEnabled {
-                        LabeledContent {
-                            Menu {
-                                Button {
-                                    preferencesStore.aiExpertiseLevel = "basic"
-                                } label: {
-                                    if preferencesStore.aiExpertiseLevel == "basic" {
-                                        Label(String(localized: Strings.AIInsights.basic), systemImage: Iconography.selected)
-                                    } else {
-                                        Text(Strings.AIInsights.basic)
-                                    }
-                                }
-
-                                Button {
-                                    preferencesStore.aiExpertiseLevel = "technical"
-                                } label: {
-                                    if preferencesStore.aiExpertiseLevel == "technical" {
-                                        Label(String(localized: Strings.AIInsights.technical), systemImage: Iconography.selected)
-                                    } else {
-                                        Text(Strings.AIInsights.technical)
-                                    }
-                                }
-                            } label: {
-                                Text(preferencesStore.aiExpertiseLevel == "technical"
-                                     ? Strings.AIInsights.technical
-                                     : Strings.AIInsights.basic)
-                                    .font(.subheadline)
-                            }
-                            .accessibilityLabel(String(localized: Strings.Settings.aiExpertiseLevel))
-                        } label: {
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text(Strings.Settings.aiExpertiseLevel)
-                                Text(currentExpertiseLevelDescription)
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                            }
-                        }
-                    }
-                } header: {
-                    Text(Strings.Settings.aiAnalysis)
-                        .accessibilityAddTraits(.isHeader)
-                } footer: {
-                    Text(Strings.Settings.aiAnalysisFooter)
+                if AppleIntelligenceSupport.isDeviceSupported {
+                    aiAnalysisSection
                 }
 
-                // MARK: Display
+                displaySection
 
-                Section {
-                    LabeledContent {
-                        Menu {
-                            ForEach(Self.sortOptions, id: \.self) { sortType in
-                                sortMenuButton(for: sortType)
-                            }
-
-                            Divider()
-
-                            ForEach(Self.filterOptions, id: \.self) { sortType in
-                                sortMenuButton(for: sortType)
-                            }
-                        } label: {
-                            Text(currentSortTitle)
-                                .font(.subheadline)
-                        }
-                        .accessibilityLabel(String(localized: Strings.Settings.defaultSortOrder))
-                    } label: {
-                        Text(Strings.Settings.defaultSortOrder)
-                    }
-                } header: {
-                    Text(Strings.Settings.display)
-                        .accessibilityAddTraits(.isHeader)
-                } footer: {
-                    Text(Strings.Settings.displayFooter)
-                }
-
-                // MARK: Reset
-
-                Section {
-                    Button(role: .destructive) {
-                        isResetConfirmationPresented = true
-                    } label: {
-                        Text(Strings.Settings.resetToDefaults)
-                    }
-                    .accessibilityHint(String(localized: Strings.Accessibility.resetHint))
-                } footer: {
-                    Text(Strings.Settings.resetFooter)
-                }
+                resetSection
             }
             .formStyle(.grouped)
             #if os(macOS)
@@ -146,6 +52,118 @@ public struct SettingsView: View {
             } message: {
                 Text(Strings.Settings.resetConfirmationMessage)
             }
+        }
+    }
+
+    // MARK: - AI Analysis Section
+
+    @ViewBuilder
+    private var aiAnalysisSection: some View {
+        Section {
+            Toggle(
+                String(localized: Strings.Settings.aiAnalysisEnabled),
+                isOn: Binding(
+                    get: { preferencesStore.aiAnalysisEnabled },
+                    set: { newValue in
+                        withAnimation(reduceMotion ? nil : .default) {
+                            preferencesStore.aiAnalysisEnabled = newValue
+                        }
+                    }
+                )
+            )
+            .accessibilityHint(String(localized: Strings.Accessibility.toggleAIHint))
+
+            if preferencesStore.aiAnalysisEnabled {
+                LabeledContent {
+                    Menu {
+                        Button {
+                            preferencesStore.aiExpertiseLevel = "basic"
+                        } label: {
+                            if preferencesStore.aiExpertiseLevel == "basic" {
+                                Label(String(localized: Strings.AIInsights.basic), systemImage: Iconography.selected)
+                            } else {
+                                Text(Strings.AIInsights.basic)
+                            }
+                        }
+
+                        Button {
+                            preferencesStore.aiExpertiseLevel = "technical"
+                        } label: {
+                            if preferencesStore.aiExpertiseLevel == "technical" {
+                                Label(String(localized: Strings.AIInsights.technical), systemImage: Iconography.selected)
+                            } else {
+                                Text(Strings.AIInsights.technical)
+                            }
+                        }
+                    } label: {
+                        Text(preferencesStore.aiExpertiseLevel == "technical"
+                             ? Strings.AIInsights.technical
+                             : Strings.AIInsights.basic)
+                            .font(.subheadline)
+                    }
+                    .accessibilityLabel(String(localized: Strings.Settings.aiExpertiseLevel))
+                } label: {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(Strings.Settings.aiExpertiseLevel)
+                        Text(currentExpertiseLevelDescription)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+            }
+        } header: {
+            Text(Strings.Settings.aiAnalysis)
+                .accessibilityAddTraits(.isHeader)
+        } footer: {
+            Text(Strings.Settings.aiAnalysisFooter)
+        }
+    }
+
+    // MARK: - Display Section
+
+    @ViewBuilder
+    private var displaySection: some View {
+        Section {
+            LabeledContent {
+                Menu {
+                    ForEach(Self.sortOptions, id: \.self) { sortType in
+                        sortMenuButton(for: sortType)
+                    }
+
+                    Divider()
+
+                    ForEach(Self.filterOptions, id: \.self) { sortType in
+                        sortMenuButton(for: sortType)
+                    }
+                } label: {
+                    Text(currentSortTitle)
+                        .font(.subheadline)
+                }
+                .accessibilityLabel(String(localized: Strings.Settings.defaultSortOrder))
+            } label: {
+                Text(Strings.Settings.defaultSortOrder)
+            }
+        } header: {
+            Text(Strings.Settings.display)
+                .accessibilityAddTraits(.isHeader)
+        } footer: {
+            Text(Strings.Settings.displayFooter)
+        }
+    }
+
+    // MARK: - Reset Section
+
+    @ViewBuilder
+    private var resetSection: some View {
+        Section {
+            Button(role: .destructive) {
+                isResetConfirmationPresented = true
+            } label: {
+                Text(Strings.Settings.resetToDefaults)
+            }
+            .accessibilityHint(String(localized: Strings.Accessibility.resetHint))
+        } footer: {
+            Text(Strings.Settings.resetFooter)
         }
     }
 

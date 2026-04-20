@@ -72,6 +72,18 @@ struct AppCore: App {
                             TopLevelDestination.settings.icon
                         }
                     }
+
+                    if AppleIntelligenceSupport.isDeviceSupported {
+                        Tab(role: .search) {
+                            BonjourChatView(dependencies: dependencies)
+                        } label: {
+                            Label {
+                                Text(verbatim: TopLevelDestination.chat.titleString)
+                            } icon: {
+                                TopLevelDestination.chat.icon
+                            }
+                        }
+                    }
                 }
                 #if os(macOS)
                 .tabViewStyle(.automatic)
@@ -101,6 +113,17 @@ struct AppCore: App {
                                 TopLevelDestination.bonjourServiceTypes.icon
                             }
                         }
+
+                    if AppleIntelligenceSupport.isDeviceSupported {
+                        BonjourChatView(dependencies: dependencies)
+                            .tabItem {
+                                Label {
+                                    Text(verbatim: TopLevelDestination.chat.titleString)
+                                } icon: {
+                                    TopLevelDestination.chat.icon
+                                }
+                            }
+                    }
 
                     SettingsView()
                         .tabItem {

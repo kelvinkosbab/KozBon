@@ -102,7 +102,7 @@ public struct ServiceExplanationSheet: View {
                         }
                         .accessibilityElement(children: .combine)
                     } else {
-                        markdownContent(explainer.explanation)
+                        MarkdownContentView(explainer.explanation)
                     }
 
                     if explainer.isGenerating && !explainer.explanation.isEmpty {
@@ -148,57 +148,6 @@ public struct ServiceExplanationSheet: View {
         }
     }
 
-    // MARK: - Markdown Rendering
-
-    @ViewBuilder
-    private func markdownContent(_ text: String) -> some View {
-        let lines = text
-            .components(separatedBy: "\n")
-            .map { $0.trimmingCharacters(in: .whitespaces) }
-
-        VStack(alignment: .leading, spacing: 10) {
-            ForEach(Array(lines.enumerated()), id: \.offset) { _, line in
-                if line.isEmpty {
-                    Spacer().frame(height: 4)
-                } else if line.hasPrefix("# ") {
-                    markdownText(String(line.dropFirst(2)))
-                        .font(.title2).bold()
-                        .accessibilityAddTraits(.isHeader)
-                        .padding(.top, 4)
-                } else if line.hasPrefix("## ") {
-                    markdownText(String(line.dropFirst(3)))
-                        .font(.title3).bold()
-                        .foregroundStyle(.primary)
-                        .accessibilityAddTraits(.isHeader)
-                        .padding(.top, 4)
-                } else if line.hasPrefix("### ") {
-                    markdownText(String(line.dropFirst(4)))
-                        .font(.headline)
-                        .accessibilityAddTraits(.isHeader)
-                        .padding(.top, 2)
-                } else if line.hasPrefix("- ") || line.hasPrefix("* ") {
-                    HStack(alignment: .top, spacing: 6) {
-                        Text("•")
-                            .foregroundStyle(.secondary)
-                        markdownText(String(line.dropFirst(2)))
-                            .font(.body)
-                    }
-                } else {
-                    markdownText(line)
-                        .font(.body)
-                }
-            }
-        }
-        .textSelection(.enabled)
-    }
-
-    /// Renders a single line of text with inline Markdown (bold, italic, code).
-    private func markdownText(_ text: String) -> Text {
-        if let attributed = try? AttributedString(markdown: text) {
-            return Text(attributed)
-        }
-        return Text(text)
-    }
 }
 
 #endif
