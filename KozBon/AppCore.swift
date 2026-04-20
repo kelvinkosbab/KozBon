@@ -30,13 +30,20 @@ struct AppCore: App {
     @State private var explainer: (any BonjourServiceExplainerProtocol)? = Self.makeExplainer()
 
     /// Creates an AI explainer if the on-device model is available.
+    ///
+    /// In the iOS Simulator, returns a mock that streams lorem ipsum responses
+    /// so the UI can be tested end-to-end without a real AI device.
     private static func makeExplainer() -> (any BonjourServiceExplainerProtocol)? {
-        #if canImport(FoundationModels)
+        #if targetEnvironment(simulator)
+        return SimulatorBonjourServiceExplainer()
+        #elseif canImport(FoundationModels)
         if #available(iOS 26, macOS 26, visionOS 26, *) {
             return BonjourServiceExplainer()
         }
-        #endif
         return nil
+        #else
+        return nil
+        #endif
     }
 
     var body: some Scene {

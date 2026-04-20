@@ -328,12 +328,20 @@ public struct BonjourChatView: View {
 
     // MARK: - Session Factory
 
+    /// Creates a chat session for this device.
+    ///
+    /// In the iOS Simulator, returns a mock that streams lorem ipsum responses
+    /// so the chat UI can be tested end-to-end without a real AI device.
     private static func makeSession() -> (any BonjourChatSessionProtocol)? {
-        #if canImport(FoundationModels)
+        #if targetEnvironment(simulator)
+        return SimulatorBonjourChatSession()
+        #elseif canImport(FoundationModels)
         if #available(iOS 26, macOS 26, visionOS 26, *) {
             return BonjourChatSession()
         }
-        #endif
         return nil
+        #else
+        return nil
+        #endif
     }
 }

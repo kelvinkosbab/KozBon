@@ -46,6 +46,19 @@ public struct AIContextMenuItems: View {
 
     public var body: some View {
         if aiAnalysisEnabled {
+            #if targetEnvironment(simulator)
+            // On the simulator, always show "Explain with AI" so developers
+            // can test the UI flow with mock lorem ipsum responses.
+            Divider()
+            Button {
+                action()
+            } label: {
+                Label(
+                    String(localized: Strings.AIInsights.explainWithAI),
+                    systemImage: Iconography.appleIntelligence
+                )
+            }
+            #else
             switch SystemLanguageModel.default.availability {
             case .available:
                 Divider()
@@ -74,6 +87,7 @@ public struct AIContextMenuItems: View {
             @unknown default:
                 EmptyView()
             }
+            #endif
         }
     }
 
