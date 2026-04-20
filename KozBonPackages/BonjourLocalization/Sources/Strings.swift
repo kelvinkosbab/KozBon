@@ -757,6 +757,22 @@ public enum Strings {
             .init("settings_ai_technical_subtitle", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        public static var aiResponseLength: LocalizedStringResource {
+            .init("settings_ai_response_length", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var aiResponseLengthBriefSubtitle: LocalizedStringResource {
+            .init("settings_ai_response_length_brief_subtitle", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var aiResponseLengthStandardSubtitle: LocalizedStringResource {
+            .init("settings_ai_response_length_standard_subtitle", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var aiResponseLengthThoroughSubtitle: LocalizedStringResource {
+            .init("settings_ai_response_length_thorough_subtitle", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var resetToDefaults: LocalizedStringResource {
             .init("settings_reset_to_defaults", bundle: .atURL(Bundle.module.bundleURL))
         }
@@ -817,6 +833,18 @@ public enum Strings {
         public static var lessDetail: LocalizedStringResource {
             .init("ai_less_detail", bundle: .atURL(Bundle.module.bundleURL))
         }
+
+        public static var responseLengthBrief: LocalizedStringResource {
+            .init("ai_response_length_brief", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var responseLengthStandard: LocalizedStringResource {
+            .init("ai_response_length_standard", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var responseLengthThorough: LocalizedStringResource {
+            .init("ai_response_length_thorough", bundle: .atURL(Bundle.module.bundleURL))
+        }
     }
 
     // MARK: - Chat
@@ -857,6 +885,26 @@ public enum Strings {
 
         public static var suggestion3: LocalizedStringResource {
             .init("chat_suggestion_3", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var suggestion4: LocalizedStringResource {
+            .init("chat_suggestion_4", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var suggestion5: LocalizedStringResource {
+            .init("chat_suggestion_5", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var errorTooLong: LocalizedStringResource {
+            .init("chat_error_too_long", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var errorPromptInjection: LocalizedStringResource {
+            .init("chat_error_prompt_injection", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var errorOffTopic: LocalizedStringResource {
+            .init("chat_error_off_topic", bundle: .atURL(Bundle.module.bundleURL))
         }
     }
 

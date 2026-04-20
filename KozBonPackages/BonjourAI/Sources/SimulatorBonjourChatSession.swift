@@ -25,6 +25,7 @@ public final class SimulatorBonjourChatSession: BonjourChatSessionProtocol {
     public private(set) var messages: [BonjourChatMessage] = []
     public private(set) var isGenerating: Bool = false
     public var error: String?
+    public var responseLength: BonjourServicePromptBuilder.ResponseLength = .standard
 
     public init() {}
 

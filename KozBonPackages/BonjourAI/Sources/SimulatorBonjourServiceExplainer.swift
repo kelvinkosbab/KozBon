@@ -27,6 +27,7 @@ public final class SimulatorBonjourServiceExplainer: BonjourServiceExplainerProt
     public var error: String?
     public var isAvailable: Bool = true
     public var expertiseLevel: BonjourServicePromptBuilder.ExpertiseLevel = .basic
+    public var responseLength: BonjourServicePromptBuilder.ResponseLength = .standard
 
     public init() {}
 

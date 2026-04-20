@@ -132,6 +132,7 @@ struct PreferencesStoreTests {
         store.resetToDefaults()
         #expect(store.aiAnalysisEnabled == UserPreferences.defaultAIAnalysisEnabled)
         #expect(store.aiExpertiseLevel == UserPreferences.defaultAIExpertiseLevel)
+        #expect(store.aiResponseLength == UserPreferences.defaultAIResponseLength)
         #expect(store.defaultSortOrder == UserPreferences.defaultSortOrder)
     }
 
@@ -141,7 +142,37 @@ struct PreferencesStoreTests {
         let store = PreferencesStore()
         #expect(store.aiAnalysisEnabled)
         #expect(store.aiExpertiseLevel == "basic")
+        #expect(store.aiResponseLength == "standard")
         #expect(store.defaultSortOrder == "")
+    }
+
+    // MARK: - Response Length
+
+    @Test func responseLengthWriteThenRead() {
+        let store = makeStore()
+        store.aiResponseLength = "brief"
+        #expect(store.aiResponseLength == "brief")
+        store.aiResponseLength = "thorough"
+        #expect(store.aiResponseLength == "thorough")
+    }
+
+    @Test func responseLengthDefaultIsStandard() {
+        let store = makeStore()
+        #expect(store.aiResponseLength == "standard")
+    }
+
+    @Test func responseLengthPersistsAcrossStoreInstances() {
+        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        // swiftlint:disable:next force_try
+        let container = try! ModelContainer(
+            for: UserPreferences.self,
+            configurations: config
+        )
+        let storeA = PreferencesStore(container: container)
+        storeA.aiResponseLength = "thorough"
+
+        let storeB = PreferencesStore(container: container)
+        #expect(storeB.aiResponseLength == "thorough")
     }
 
     // MARK: - Write Then Read

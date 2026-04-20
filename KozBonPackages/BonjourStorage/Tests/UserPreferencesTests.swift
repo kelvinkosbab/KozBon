@@ -66,10 +66,29 @@ struct UserPreferencesTests {
         #expect(UserPreferences.defaultSortOrder == "")
     }
 
+    @Test func staticDefaultAIResponseLengthIsStandard() {
+        #expect(UserPreferences.defaultAIResponseLength == "standard")
+    }
+
     @Test func instanceDefaultsMatchStaticDefaults() {
         let prefs = UserPreferences()
         #expect(prefs.aiAnalysisEnabled == UserPreferences.defaultAIAnalysisEnabled)
         #expect(prefs.aiExpertiseLevel == UserPreferences.defaultAIExpertiseLevel)
+        #expect(prefs.aiResponseLength == UserPreferences.defaultAIResponseLength)
         #expect(prefs.defaultSortOrder == UserPreferences.defaultSortOrder)
+    }
+
+    // MARK: - Response Length
+
+    @Test func aiResponseLengthCanBeSetToBrief() {
+        let prefs = UserPreferences()
+        prefs.aiResponseLength = "brief"
+        #expect(prefs.aiResponseLength == "brief")
+    }
+
+    @Test func aiResponseLengthCanBeSetToThorough() {
+        let prefs = UserPreferences()
+        prefs.aiResponseLength = "thorough"
+        #expect(prefs.aiResponseLength == "thorough")
     }
 }

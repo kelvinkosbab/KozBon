@@ -42,6 +42,9 @@ public final class BonjourServiceExplainer: BonjourServiceExplainerProtocol {
     /// The desired level of technical detail in the explanation.
     public var expertiseLevel: BonjourServicePromptBuilder.ExpertiseLevel = .basic
 
+    /// The desired verbosity of the explanation.
+    public var responseLength: BonjourServicePromptBuilder.ResponseLength = .standard
+
     private var session: LanguageModelSession?
 
     // MARK: - Init
@@ -61,7 +64,8 @@ public final class BonjourServiceExplainer: BonjourServiceExplainerProtocol {
         let prompt = BonjourServicePromptBuilder.buildPrompt(
             service: service,
             isPublished: isPublished,
-            expertiseLevel: expertiseLevel
+            expertiseLevel: expertiseLevel,
+            responseLength: responseLength
         )
 
         do {
@@ -91,7 +95,8 @@ public final class BonjourServiceExplainer: BonjourServiceExplainerProtocol {
 
         let prompt = BonjourServicePromptBuilder.buildPrompt(
             serviceType: serviceType,
-            expertiseLevel: expertiseLevel
+            expertiseLevel: expertiseLevel,
+            responseLength: responseLength
         )
 
         do {

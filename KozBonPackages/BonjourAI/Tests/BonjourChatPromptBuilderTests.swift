@@ -39,32 +39,39 @@ struct BonjourChatPromptBuilderTests {
     // MARK: - System Instructions
 
     @Test func systemInstructionsContainsScope() {
-        let context = BonjourChatPromptBuilder.ChatContext()
-        let instructions = BonjourChatPromptBuilder.systemInstructions(context: context)
+        let instructions = BonjourChatPromptBuilder.systemInstructions()
         #expect(instructions.contains("Bonjour"))
         #expect(instructions.contains("KozBon"))
     }
 
     @Test func systemInstructionsRefusesOffTopic() {
-        let context = BonjourChatPromptBuilder.ChatContext()
-        let instructions = BonjourChatPromptBuilder.systemInstructions(context: context)
-        #expect(instructions.contains("DO NOT"))
-        #expect(instructions.contains("politely redirect"))
+        let instructions = BonjourChatPromptBuilder.systemInstructions()
+        #expect(instructions.contains("CANNOT answer"))
+        #expect(instructions.contains("Refusal template"))
     }
 
     @Test func systemInstructionsIncludesLanguageDirective() {
-        let context = BonjourChatPromptBuilder.ChatContext()
-        let instructions = BonjourChatPromptBuilder.systemInstructions(context: context)
+        let instructions = BonjourChatPromptBuilder.systemInstructions()
         let language = BonjourServicePromptBuilder.preferredLanguageName
-        #expect(instructions.contains("respond in \(language)"))
+        #expect(instructions.contains("Respond in \(language)"))
     }
 
     @Test func systemInstructionsMentionsTabs() {
-        let context = BonjourChatPromptBuilder.ChatContext()
-        let instructions = BonjourChatPromptBuilder.systemInstructions(context: context)
-        #expect(instructions.contains("Discover tab"))
-        #expect(instructions.contains("Library tab"))
-        #expect(instructions.contains("Preferences tab"))
+        let instructions = BonjourChatPromptBuilder.systemInstructions()
+        #expect(instructions.contains("Discover"))
+        #expect(instructions.contains("Library"))
+        #expect(instructions.contains("Preferences"))
+    }
+
+    @Test func systemInstructionsStartsWithLanguageDirective() {
+        let instructions = BonjourChatPromptBuilder.systemInstructions()
+        #expect(instructions.hasPrefix("TOP PRIORITY: Respond in"))
+    }
+
+    @Test func systemInstructionsMentionsMultiTurn() {
+        let instructions = BonjourChatPromptBuilder.systemInstructions()
+        #expect(instructions.contains("previous turns"))
+        #expect(instructions.contains("follow-up"))
     }
 
     // MARK: - Context Block — Discovered Services
@@ -149,24 +156,61 @@ struct BonjourChatPromptBuilderTests {
         #expect(!block.contains("more"))
     }
 
-    // MARK: - Integration: System Instructions include Context
+    // MARK: - Context Preamble
 
-    @Test func systemInstructionsIncludesContextBlock() {
-        let services = [makeService(name: "Test Device", type: "http")]
-        let context = BonjourChatPromptBuilder.ChatContext(discoveredServices: services)
-        let instructions = BonjourChatPromptBuilder.systemInstructions(context: context)
-        #expect(instructions.contains("CURRENT CONTEXT"))
-        #expect(instructions.contains("Test Device"))
+    @Test func contextPreambleWrapsInTags() {
+        let context = BonjourChatPromptBuilder.ChatContext()
+        let preamble = BonjourChatPromptBuilder.contextPreamble(context: context)
+        #expect(preamble.contains("<context>"))
+        #expect(preamble.contains("</context>"))
     }
 
-    @Test func systemInstructionsReflectDifferentContexts() {
-        let emptyContext = BonjourChatPromptBuilder.ChatContext()
-        let populatedContext = BonjourChatPromptBuilder.ChatContext(
-            discoveredServices: [makeService(name: "Discovered")]
+    @Test func contextPreambleIncludesContextBlock() {
+        let services = [makeService(name: "Test Device", type: "http")]
+        let context = BonjourChatPromptBuilder.ChatContext(discoveredServices: services)
+        let preamble = BonjourChatPromptBuilder.contextPreamble(context: context)
+        #expect(preamble.contains("Test Device"))
+    }
+
+    // MARK: - User Turn Builder
+
+    @Test func userTurnOnFirstTurnIncludesContext() {
+        let services = [makeService(name: "Printer", type: "ipp")]
+        let context = BonjourChatPromptBuilder.ChatContext(discoveredServices: services)
+        let turn = BonjourChatPromptBuilder.userTurn(
+            message: "What is this?",
+            context: context,
+            isFirstTurn: true,
+            contextChanged: false
         )
-        let empty = BonjourChatPromptBuilder.systemInstructions(context: emptyContext)
-        let populated = BonjourChatPromptBuilder.systemInstructions(context: populatedContext)
-        #expect(empty != populated)
+        #expect(turn.contains("<context>"))
+        #expect(turn.contains("Printer"))
+        #expect(turn.contains("What is this?"))
+    }
+
+    @Test func userTurnWhenContextChangedIncludesContext() {
+        let services = [makeService(name: "AirPlay", type: "airplay")]
+        let context = BonjourChatPromptBuilder.ChatContext(discoveredServices: services)
+        let turn = BonjourChatPromptBuilder.userTurn(
+            message: "What about the new one?",
+            context: context,
+            isFirstTurn: false,
+            contextChanged: true
+        )
+        #expect(turn.contains("<context>"))
+        #expect(turn.contains("AirPlay"))
+    }
+
+    @Test func userTurnOnSubsequentStableContextOmitsContext() {
+        let context = BonjourChatPromptBuilder.ChatContext()
+        let turn = BonjourChatPromptBuilder.userTurn(
+            message: "Tell me more",
+            context: context,
+            isFirstTurn: false,
+            contextChanged: false
+        )
+        #expect(!turn.contains("<context>"))
+        #expect(turn == "Tell me more")
     }
 
     // MARK: - ChatContext Defaults

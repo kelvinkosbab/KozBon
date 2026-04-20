@@ -15,6 +15,7 @@ import BonjourModels
 
 @Suite("BonjourServicePromptBuilder")
 @MainActor
+// swiftlint:disable:next type_body_length
 struct BonjourServicePromptBuilderTests {
 
     // MARK: - Helpers
@@ -190,10 +191,26 @@ struct BonjourServicePromptBuilderTests {
 
     @Test func systemInstructionsContainsStructuredSections() {
         let instructions = BonjourServicePromptBuilder.systemInstructions
-        #expect(instructions.contains("## What It Does"))
-        #expect(instructions.contains("## Why It's Running"))
-        #expect(instructions.contains("## How to Interact"))
-        #expect(instructions.contains("## Configuration Details"))
+        #expect(instructions.contains("## What it does"))
+        #expect(instructions.contains("## Why it's running"))
+        #expect(instructions.contains("## How to interact"))
+        #expect(instructions.contains("## Configuration details"))
+    }
+
+    @Test func systemInstructionsStartsWithLanguageDirective() {
+        let instructions = BonjourServicePromptBuilder.systemInstructions
+        #expect(instructions.hasPrefix("TOP PRIORITY: Respond in"))
+    }
+
+    @Test func systemInstructionsHasAccuracyRules() {
+        let instructions = BonjourServicePromptBuilder.systemInstructions
+        #expect(instructions.contains("ACCURACY RULES"))
+        #expect(instructions.contains("Never invent port numbers"))
+    }
+
+    @Test func systemInstructionsHasTXTRecordGuardrail() {
+        let instructions = BonjourServicePromptBuilder.systemInstructions
+        #expect(instructions.contains("Vendor-specific"))
     }
 
     // MARK: - Expertise Level
@@ -211,8 +228,8 @@ struct BonjourServicePromptBuilderTests {
             service: service,
             expertiseLevel: .basic
         )
-        #expect(prompt.contains("simple terms"))
-        #expect(prompt.contains("Avoid acronyms"))
+        #expect(prompt.contains("curious friend"))
+        #expect(prompt.contains("analogies"))
     }
 
     @Test func promptWithTechnicalContainsTechnicalDirective() {
@@ -221,14 +238,66 @@ struct BonjourServicePromptBuilderTests {
             service: service,
             expertiseLevel: .technical
         )
-        #expect(prompt.contains("protocol details"))
-        #expect(prompt.contains("RFC references"))
+        #expect(prompt.contains("developer or sysadmin"))
+        #expect(prompt.contains("RFC"))
     }
 
     @Test func expertiseLevelDirectivesDiffer() {
         let beginner = BonjourServicePromptBuilder.expertiseLevelDirective(.basic)
         let technical = BonjourServicePromptBuilder.expertiseLevelDirective(.technical)
         #expect(beginner != technical)
+    }
+
+    // MARK: - Response Length
+
+    @Test func responseLengthHasThreeCases() {
+        let allCases = BonjourServicePromptBuilder.ResponseLength.allCases
+        #expect(allCases.count == 3)
+        #expect(allCases.contains(.brief))
+        #expect(allCases.contains(.standard))
+        #expect(allCases.contains(.thorough))
+    }
+
+    @Test func responseLengthDirectivesDiffer() {
+        let brief = BonjourServicePromptBuilder.responseLengthDirective(.brief)
+        let standard = BonjourServicePromptBuilder.responseLengthDirective(.standard)
+        let thorough = BonjourServicePromptBuilder.responseLengthDirective(.thorough)
+        #expect(brief != standard)
+        #expect(standard != thorough)
+        #expect(brief != thorough)
+    }
+
+    @Test func briefDirectiveMentionsConcise() {
+        let directive = BonjourServicePromptBuilder.responseLengthDirective(.brief)
+        #expect(directive.contains("concise") || directive.contains("1-2 sentences"))
+    }
+
+    @Test func thoroughDirectiveMentionsComprehensive() {
+        let directive = BonjourServicePromptBuilder.responseLengthDirective(.thorough)
+        #expect(directive.contains("comprehensive") || directive.contains("4-6 sentences"))
+    }
+
+    @Test func promptWithBriefLengthIncludesBriefDirective() {
+        let service = makeService()
+        let prompt = BonjourServicePromptBuilder.buildPrompt(
+            service: service,
+            responseLength: .brief
+        )
+        let directive = BonjourServicePromptBuilder.responseLengthDirective(.brief)
+        #expect(prompt.contains(directive))
+    }
+
+    @Test func promptDefaultResponseLengthIsStandard() {
+        let service = makeService()
+        let prompt = BonjourServicePromptBuilder.buildPrompt(service: service)
+        let directive = BonjourServicePromptBuilder.responseLengthDirective(.standard)
+        #expect(prompt.contains(directive))
+    }
+
+    @Test func responseLengthRawValuesAreStable() {
+        #expect(BonjourServicePromptBuilder.ResponseLength.brief.rawValue == "brief")
+        #expect(BonjourServicePromptBuilder.ResponseLength.standard.rawValue == "standard")
+        #expect(BonjourServicePromptBuilder.ResponseLength.thorough.rawValue == "thorough")
     }
 
     @Test func expertiseLevelHasTwoCases() {
@@ -308,8 +377,18 @@ struct BonjourServicePromptBuilderTests {
 
     @Test func serviceTypeSystemInstructionsDoNotAssumeDiscovered() {
         let instructions = BonjourServicePromptBuilder.serviceTypeSystemInstructions
-        #expect(instructions.contains("NOT discovered"))
         #expect(instructions.contains("Do NOT assume"))
+        #expect(instructions.contains("browsing a library"))
+    }
+
+    @Test func serviceTypeSystemInstructionsStartsWithLanguageDirective() {
+        let instructions = BonjourServicePromptBuilder.serviceTypeSystemInstructions
+        #expect(instructions.hasPrefix("TOP PRIORITY: Respond in"))
+    }
+
+    @Test func serviceTypeSystemInstructionsHasAccuracyRules() {
+        let instructions = BonjourServicePromptBuilder.serviceTypeSystemInstructions
+        #expect(instructions.contains("ACCURACY RULES"))
     }
 
     @Test func serviceTypePromptDefaultsToBasicLevel() {

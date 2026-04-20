@@ -15,8 +15,15 @@ import FoundationModels
 /// On-device chat session for asking questions about the user's network and the KozBon app.
 ///
 /// Uses Apple's FoundationModels framework with a strict system prompt that
-/// refuses off-topic queries. Supports multi-turn conversation by keeping a
-/// `LanguageModelSession` alive across messages.
+/// refuses off-topic queries. Supports **multi-turn conversation** by keeping a
+/// single `LanguageModelSession` alive across messages so the model remembers
+/// prior turns.
+///
+/// The system prompt contains only the static rules (scope, refusal, language,
+/// tone, length). Live service context is injected into each user turn via a
+/// `<context>` preamble when it has materially changed, so follow-up questions
+/// always have an up-to-date view of the network without losing conversation
+/// history.
 @available(iOS 26, macOS 26, visionOS 26, *)
 @MainActor
 @Observable
@@ -27,12 +34,19 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
     public private(set) var messages: [BonjourChatMessage] = []
     public private(set) var isGenerating: Bool = false
     public var error: String?
+    public var responseLength: BonjourServicePromptBuilder.ResponseLength = .standard
 
-    /// The current session. Created lazily on first send.
+    /// The current session. Created lazily on first send and kept alive across turns
+    /// so conversation history is preserved.
     private var session: LanguageModelSession?
 
-    /// The context used to create the current session. If this changes, we start a fresh session.
-    private var sessionContextSnapshot: String?
+    /// The response length used when the current session was created. If it changes,
+    /// the session is recreated (history is lost).
+    private var sessionResponseLengthSnapshot: BonjourServicePromptBuilder.ResponseLength?
+
+    /// The last context block sent to the model. Used to detect when the live
+    /// service context has materially changed.
+    private var lastContextBlock: String?
 
     public init() {}
 
@@ -45,16 +59,36 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
         error = nil
         isGenerating = true
 
-        // Append the user message.
+        // Append the user message as it appears to the user (without the context
+        // preamble — the preamble is internal guidance for the model).
         messages.append(BonjourChatMessage(role: .user, content: trimmed))
 
-        // Build or reuse the session. If context changed significantly (e.g. new services
-        // discovered), create a fresh session with updated system instructions.
-        let instructions = BonjourChatPromptBuilder.systemInstructions(context: context)
-        if session == nil || sessionContextSnapshot != instructions {
+        // Build or reuse the session. Only recreate when the response-length
+        // preference changes (since it affects the static instructions).
+        // Changes to the live context do NOT recreate the session — that
+        // would destroy conversation history.
+        if session == nil || sessionResponseLengthSnapshot != responseLength {
+            let instructions = BonjourChatPromptBuilder.systemInstructions(
+                responseLength: responseLength
+            )
             session = LanguageModelSession(instructions: instructions)
-            sessionContextSnapshot = instructions
+            sessionResponseLengthSnapshot = responseLength
+            // Fresh session — treat the next turn as the first turn so context
+            // is injected.
+            lastContextBlock = nil
         }
+
+        // Determine whether to prepend a context preamble.
+        let currentContextBlock = BonjourChatPromptBuilder.contextBlock(context: context)
+        let isFirstTurn = (lastContextBlock == nil)
+        let contextChanged = lastContextBlock != currentContextBlock
+        let turnToSend = BonjourChatPromptBuilder.userTurn(
+            message: trimmed,
+            context: context,
+            isFirstTurn: isFirstTurn,
+            contextChanged: contextChanged
+        )
+        lastContextBlock = currentContextBlock
 
         // Create a placeholder assistant message that we stream into.
         let assistantId = UUID()
@@ -66,7 +100,7 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
         }
 
         do {
-            let stream = session.streamResponse(to: trimmed)
+            let stream = session.streamResponse(to: turnToSend)
             for try await partial in stream {
                 if let index = messages.firstIndex(where: { $0.id == assistantId }) {
                     messages[index].content = partial.content
@@ -86,7 +120,8 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
     public func reset() {
         messages.removeAll()
         session = nil
-        sessionContextSnapshot = nil
+        sessionResponseLengthSnapshot = nil
+        lastContextBlock = nil
         error = nil
         isGenerating = false
     }

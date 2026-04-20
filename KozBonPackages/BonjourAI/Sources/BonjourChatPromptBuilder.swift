@@ -53,44 +53,105 @@ public enum BonjourChatPromptBuilder {
     ///
     /// - Parameter context: A snapshot of the user's current services and library.
     /// - Returns: A formatted system prompt string.
+    /// Builds the **static** system prompt for the chat assistant — the part that
+    /// does not depend on the live service context.
+    ///
+    /// Kept separate from ``contextBlock(context:)`` so the `LanguageModelSession`
+    /// can persist across turns while fresh context is injected into each user
+    /// message only when needed.
+    ///
+    /// - Parameter responseLength: Desired verbosity of assistant responses.
+    /// - Returns: The static system prompt string.
     @MainActor
-    public static func systemInstructions(context: ChatContext) -> String {
+    public static func systemInstructions(
+        responseLength: BonjourServicePromptBuilder.ResponseLength = .standard
+    ) -> String {
         let language = BonjourServicePromptBuilder.preferredLanguageName
-        var parts: [String] = []
+        return """
+            TOP PRIORITY: Respond in \(language).
 
-        parts.append("""
-            You are KozBon's on-device assistant. You help the user understand \
-            Bonjour (mDNS/DNS-SD) network services on their local network and \
-            how to use the KozBon app.
+            ACCURACY RULES:
+            - Only use information from <context> blocks in user messages to answer \
+            questions about the user's network. Do not assume anything else about \
+            their environment.
+            - When information is missing or uncertain, say so explicitly. Never \
+            invent port numbers, RFC numbers, service names, or vendor details.
+            - If the user asks about a service that is not in the latest <context> \
+            block, say you don't see it on their network.
+            - Remember previous turns in the conversation. The user may ask follow-up \
+            questions that build on earlier answers.
 
-            YOU CAN ANSWER QUESTIONS ABOUT:
-            - Services currently discovered on the user's network (listed below)
-            - Services the user is broadcasting from this device (listed below)
-            - The service type library (supported protocols)
-            - How to use the KozBon app:
-              * Discover tab: browse and filter nearby Bonjour services
-              * Library tab: browse supported service types, create custom ones
-              * Preferences tab: AI settings, sort order, reset preferences
-              * Broadcast: publish custom Bonjour services from this device
-              * Sort/filter options: Host Name A→Z / Z→A, Service Type A→Z / Z→A, \
-            Smart Home, Apple Devices, Media & Streaming, Printers & Scanners, \
-            Remote Access
+            ---
 
-            DO NOT answer questions unrelated to networking, Bonjour, or this app. \
-            For off-topic requests (weather, general knowledge, math, recipes, etc.), \
-            politely redirect: "I can only help with Bonjour services and the KozBon \
-            app. What would you like to know about your network?"
+            You are KozBon's on-device assistant. You help the user understand Bonjour \
+            (mDNS/DNS-SD) network services on their local network and how to use the \
+            KozBon app.
 
-            Keep responses concise and helpful. Use Markdown formatting for lists \
-            and emphasis where appropriate.
+            ## Scope
+            You CAN answer questions about:
+            - Services currently discovered on the user's network
+            - Services the user is broadcasting from this device
+            - The service type library
+            - How to use KozBon (Discover, Library, Preferences tabs; broadcasting; \
+            filtering and sorting)
+
+            You CANNOT answer unrelated questions (weather, general knowledge, math, \
+            recipes, creative writing, news, etc.).
+
+            ## Refusal template
+            When asked an off-topic question, respond exactly in this form:
+            "I can only help with Bonjour services and the KozBon app. Did you want to \
+            know about [suggest one relevant topic: the services on your network, the \
+            service type library, or how to broadcast a service]?"
+
+            ## Output format
+            \(BonjourServicePromptBuilder.responseLengthDirective(responseLength))
+
+            Use Markdown for lists and emphasis where appropriate.
 
             IMPORTANT: Always respond in \(language).
-            """)
+            """
+    }
 
-        parts.append("")
-        parts.append(contextBlock(context: context))
+    // MARK: - Context Preamble
 
-        return parts.joined(separator: "\n")
+    /// Builds a preamble to prepend to a user message when the context is new or has changed.
+    ///
+    /// Wraps the context block in `<context>` tags so the model can distinguish it
+    /// from the user's actual question.
+    ///
+    /// - Parameter context: Current snapshot of services and library.
+    /// - Returns: A multi-line string safe to prepend to a user message.
+    @MainActor
+    public static func contextPreamble(context: ChatContext) -> String {
+        return """
+            <context>
+            \(contextBlock(context: context))
+            </context>
+
+            """
+    }
+
+    /// Combines a context preamble (if needed) with the user's message.
+    ///
+    /// - Parameters:
+    ///   - userMessage: The trimmed user message text.
+    ///   - context: Current snapshot of services and library.
+    ///   - isFirstTurn: Whether this is the first message in the conversation.
+    ///   - contextChanged: Whether the live context has materially changed since the
+    ///     last turn. Ignored when `isFirstTurn` is `true`.
+    /// - Returns: The final user turn to send to the model.
+    @MainActor
+    public static func userTurn(
+        message userMessage: String,
+        context: ChatContext,
+        isFirstTurn: Bool,
+        contextChanged: Bool
+    ) -> String {
+        if isFirstTurn || contextChanged {
+            return contextPreamble(context: context) + userMessage
+        }
+        return userMessage
     }
 
     // MARK: - Context Block

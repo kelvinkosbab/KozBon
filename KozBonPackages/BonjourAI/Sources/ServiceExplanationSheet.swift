@@ -132,7 +132,11 @@ public struct ServiceExplanationSheet: View {
             let level = BonjourServicePromptBuilder.ExpertiseLevel(
                 rawValue: preferencesStore.aiExpertiseLevel
             ) ?? .basic
+            let length = BonjourServicePromptBuilder.ResponseLength(
+                rawValue: preferencesStore.aiResponseLength
+            ) ?? .standard
             explainer.expertiseLevel = level
+            explainer.responseLength = length
             await explainSubject()
         }
     }

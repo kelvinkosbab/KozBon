@@ -25,6 +25,9 @@ public protocol BonjourChatSessionProtocol: AnyObject, Observable {
     /// An error message if the last send failed.
     var error: String? { get set }
 
+    /// The desired verbosity of assistant responses.
+    var responseLength: BonjourServicePromptBuilder.ResponseLength { get set }
+
     /// Sends a user message and streams the assistant's response.
     ///
     /// - Parameters:

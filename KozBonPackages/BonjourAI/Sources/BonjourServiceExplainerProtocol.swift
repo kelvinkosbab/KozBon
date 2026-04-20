@@ -32,6 +32,9 @@ public protocol BonjourServiceExplainerProtocol: AnyObject, Observable {
     /// The desired level of technical detail in the explanation.
     var expertiseLevel: BonjourServicePromptBuilder.ExpertiseLevel { get set }
 
+    /// The desired verbosity of the explanation.
+    var responseLength: BonjourServicePromptBuilder.ResponseLength { get set }
+
     /// Generates a streaming explanation of the given Bonjour service.
     ///
     /// - Parameters:

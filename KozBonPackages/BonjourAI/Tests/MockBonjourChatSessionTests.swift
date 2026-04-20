@@ -104,4 +104,32 @@ struct MockBonjourChatSessionTests {
         await mock.send("Hi", context: emptyContext)
         #expect(mock.messages.last?.content == "Custom reply")
     }
+
+    // MARK: - Multi-turn History
+
+    @Test func multipleTurnsAllAppearInHistory() async {
+        let mock = MockBonjourChatSession(cannedReply: "ack")
+        await mock.send("First question", context: emptyContext)
+        await mock.send("Second question", context: emptyContext)
+        await mock.send("Third question", context: emptyContext)
+
+        #expect(mock.messages.count == 6)
+        #expect(mock.messages[0].role == .user)
+        #expect(mock.messages[0].content == "First question")
+        #expect(mock.messages[1].role == .assistant)
+        #expect(mock.messages[2].role == .user)
+        #expect(mock.messages[2].content == "Second question")
+        #expect(mock.messages[4].role == .user)
+        #expect(mock.messages[4].content == "Third question")
+    }
+
+    @Test func resetAfterMultipleTurnsClearsEverything() async {
+        let mock = MockBonjourChatSession()
+        await mock.send("Q1", context: emptyContext)
+        await mock.send("Q2", context: emptyContext)
+        #expect(mock.messages.count == 4)
+
+        mock.reset()
+        #expect(mock.messages.isEmpty)
+    }
 }

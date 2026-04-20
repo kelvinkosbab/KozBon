@@ -118,6 +118,15 @@ public final class PreferencesStore {
         }
     }
 
+    /// The preferred response length for AI explanations (`"brief"`, `"standard"`, or `"thorough"`).
+    public var aiResponseLength: String {
+        get { preferences?.aiResponseLength ?? UserPreferences.defaultAIResponseLength }
+        set {
+            preferences?.aiResponseLength = newValue
+            save()
+        }
+    }
+
     /// The default sort order ID for discovered services.
     ///
     /// An empty string means no preference (uses the default host name A→Z sort).
@@ -135,6 +144,7 @@ public final class PreferencesStore {
     public func resetToDefaults() {
         preferences?.aiAnalysisEnabled = UserPreferences.defaultAIAnalysisEnabled
         preferences?.aiExpertiseLevel = UserPreferences.defaultAIExpertiseLevel
+        preferences?.aiResponseLength = UserPreferences.defaultAIResponseLength
         preferences?.defaultSortOrder = UserPreferences.defaultSortOrder
         save()
     }

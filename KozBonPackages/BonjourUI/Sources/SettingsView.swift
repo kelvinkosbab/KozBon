@@ -110,6 +110,25 @@ public struct SettingsView: View {
                             .foregroundStyle(.secondary)
                     }
                 }
+
+                LabeledContent {
+                    Menu {
+                        ForEach(Self.responseLengthOptions, id: \.rawValue) { length in
+                            responseLengthButton(length: length)
+                        }
+                    } label: {
+                        Text(currentResponseLength.displayTitle)
+                            .font(.subheadline)
+                    }
+                    .accessibilityLabel(String(localized: Strings.Settings.aiResponseLength))
+                } label: {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(Strings.Settings.aiResponseLength)
+                        Text(currentResponseLength.displaySubtitle)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
             }
         } header: {
             Text(Strings.Settings.aiAnalysis)
@@ -117,6 +136,29 @@ public struct SettingsView: View {
         } footer: {
             Text(Strings.Settings.aiAnalysisFooter)
         }
+    }
+
+    @ViewBuilder
+    private func responseLengthButton(length: BonjourServicePromptBuilder.ResponseLength) -> some View {
+        Button {
+            preferencesStore.aiResponseLength = length.rawValue
+        } label: {
+            if preferencesStore.aiResponseLength == length.rawValue {
+                Label(length.displayTitle, systemImage: Iconography.selected)
+            } else {
+                Text(length.displayTitle)
+            }
+        }
+    }
+
+    private static let responseLengthOptions: [BonjourServicePromptBuilder.ResponseLength] = [
+        .brief, .standard, .thorough
+    ]
+
+    private var currentResponseLength: BonjourServicePromptBuilder.ResponseLength {
+        BonjourServicePromptBuilder.ResponseLength(
+            rawValue: preferencesStore.aiResponseLength
+        ) ?? .standard
     }
 
     // MARK: - Display Section
@@ -207,5 +249,32 @@ public struct SettingsView: View {
         preferencesStore.aiExpertiseLevel == "technical"
             ? Strings.Settings.aiTechnicalSubtitle
             : Strings.Settings.aiBasicSubtitle
+    }
+}
+
+// MARK: - ResponseLength Display
+
+extension BonjourServicePromptBuilder.ResponseLength {
+
+    var displayTitle: String {
+        switch self {
+        case .brief:
+            String(localized: Strings.AIInsights.responseLengthBrief)
+        case .standard:
+            String(localized: Strings.AIInsights.responseLengthStandard)
+        case .thorough:
+            String(localized: Strings.AIInsights.responseLengthThorough)
+        }
+    }
+
+    var displaySubtitle: LocalizedStringResource {
+        switch self {
+        case .brief:
+            Strings.Settings.aiResponseLengthBriefSubtitle
+        case .standard:
+            Strings.Settings.aiResponseLengthStandardSubtitle
+        case .thorough:
+            Strings.Settings.aiResponseLengthThoroughSubtitle
+        }
     }
 }

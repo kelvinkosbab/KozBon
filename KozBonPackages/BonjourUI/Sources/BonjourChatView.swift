@@ -11,10 +11,13 @@ import BonjourCore
 import BonjourLocalization
 import BonjourModels
 import BonjourScanning
+import BonjourStorage
 
 #if canImport(UIKit)
 import UIKit
 #endif
+
+// swiftlint:disable type_body_length
 
 // MARK: - BonjourChatView
 
@@ -24,6 +27,7 @@ public struct BonjourChatView: View {
 
     @Environment(\.dependencies) private var dependencies
     @Environment(\.chatSession) private var injectedSession
+    @Environment(\.preferencesStore) private var preferencesStore
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var localSession: (any BonjourChatSessionProtocol)? = Self.makeSession()
@@ -180,6 +184,8 @@ public struct BonjourChatView: View {
                     suggestionButton(text: String(localized: Strings.Chat.suggestion1), session: session)
                     suggestionButton(text: String(localized: Strings.Chat.suggestion2), session: session)
                     suggestionButton(text: String(localized: Strings.Chat.suggestion3), session: session)
+                    suggestionButton(text: String(localized: Strings.Chat.suggestion4), session: session)
+                    suggestionButton(text: String(localized: Strings.Chat.suggestion5), session: session)
                 }
             }
             .padding()
@@ -304,8 +310,20 @@ public struct BonjourChatView: View {
     // MARK: - Send
 
     private func sendMessage(_ text: String, using session: any BonjourChatSessionProtocol) async {
+        guard !session.isGenerating else { return }
+
+        // Pre-validate the input before sending to the model.
+        switch ChatInputValidator.validate(text) {
+        case .allowed:
+            break
+        case .rejected(.empty):
+            return
+        case .rejected(let reason):
+            session.error = Self.errorMessage(for: reason)
+            return
+        }
+
         let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmed.isEmpty, !session.isGenerating else { return }
 
         // Clear input and dismiss keyboard with animation.
         withAnimation(reduceMotion ? nil : .easeOut(duration: 0.2)) {
@@ -323,7 +341,25 @@ public struct BonjourChatView: View {
             serviceTypeLibrary: BonjourServiceType.fetchAll()
         )
 
+        session.responseLength = BonjourServicePromptBuilder.ResponseLength(
+            rawValue: preferencesStore.aiResponseLength
+        ) ?? .standard
+
         await session.send(trimmed, context: context)
+    }
+
+    /// Returns a localized error message for the given validation rejection reason.
+    private static func errorMessage(for reason: ChatInputValidator.Reason) -> String {
+        switch reason {
+        case .empty:
+            return ""
+        case .tooLong(let limit):
+            return String(format: String(localized: Strings.Chat.errorTooLong), limit)
+        case .promptInjection:
+            return String(localized: Strings.Chat.errorPromptInjection)
+        case .offTopic:
+            return String(localized: Strings.Chat.errorOffTopic)
+        }
     }
 
     // MARK: - Session Factory

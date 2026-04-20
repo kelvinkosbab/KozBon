@@ -19,6 +19,7 @@ public final class MockBonjourChatSession: BonjourChatSessionProtocol {
     public private(set) var messages: [BonjourChatMessage] = []
     public private(set) var isGenerating: Bool = false
     public var error: String?
+    public var responseLength: BonjourServicePromptBuilder.ResponseLength = .standard
 
     /// The canned reply returned by ``send(_:context:)``.
     public var cannedReply: String
