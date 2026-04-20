@@ -116,20 +116,28 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                 }
 
                 Section {
-                    TextField(String(localized: Strings.Placeholders.additionalInformation), text: $details)
-                        .accessibilityLabel(String(localized: Strings.Accessibility.additionalDetails))
-                        .accessibilityHint(String(localized: Strings.Accessibility.additionalDetailsHint))
-                        .onSubmit {
-                            doneButtonSelected()
-                        }
+                    TextField(
+                        String(localized: Strings.Placeholders.additionalInformation),
+                        text: $details,
+                        axis: .vertical
+                    )
+                    .lineLimit(3...8)
+                    .accessibilityLabel(String(localized: Strings.Accessibility.additionalDetails))
+                    .accessibilityHint(String(localized: Strings.Accessibility.additionalDetailsHint))
+                    .onSubmit {
+                        doneButtonSelected()
+                    }
                 } header: {
                     Text(Strings.Sections.additionalDetails)
                         .accessibilityAddTraits(.isHeader)
                 } footer: {
-                    if let detailsError {
-                        Text(verbatim: detailsError)
-                            .foregroundStyle(.red)
-                            .accessibilityLabel(Strings.Accessibility.error(detailsError))
+                    VStack(alignment: .leading, spacing: 4) {
+                        if let detailsError {
+                            Text(verbatim: detailsError)
+                                .foregroundStyle(.red)
+                                .accessibilityLabel(Strings.Accessibility.error(detailsError))
+                        }
+                        Text(Strings.Sections.aiContextFooter)
                     }
                 }
             }

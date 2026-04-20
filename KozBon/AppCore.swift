@@ -73,7 +73,8 @@ struct AppCore: App {
                         }
                     }
 
-                    if AppleIntelligenceSupport.isDeviceSupported {
+                    if AppleIntelligenceSupport.isDeviceSupported,
+                       preferencesStore.aiAnalysisEnabled {
                         Tab(role: .search) {
                             BonjourChatView(dependencies: dependencies)
                         } label: {
@@ -114,7 +115,8 @@ struct AppCore: App {
                             }
                         }
 
-                    if AppleIntelligenceSupport.isDeviceSupported {
+                    if AppleIntelligenceSupport.isDeviceSupported,
+                       preferencesStore.aiAnalysisEnabled {
                         BonjourChatView(dependencies: dependencies)
                             .tabItem {
                                 Label {

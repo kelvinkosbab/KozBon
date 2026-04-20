@@ -78,6 +78,7 @@ public struct BonjourChatView: View {
                                 systemImage: Iconography.cancel
                             )
                         }
+                        .accessibilityHint(String(localized: Strings.Accessibility.chatClearHistoryHint))
                     }
                 }
             }
@@ -116,6 +117,7 @@ public struct BonjourChatView: View {
                         }
                         .padding()
                     }
+                    .scrollDismissesKeyboard(.interactively)
                     .transition(.opacity)
                     .onChange(of: session.messages.last?.id) {
                         withAnimation(reduceMotion ? nil : .easeOut(duration: 0.3)) {
@@ -195,12 +197,15 @@ public struct BonjourChatView: View {
                 Spacer()
                 Image(systemName: "arrow.up.right")
                     .foregroundStyle(.secondary)
+                    .accessibilityHidden(true)
             }
             .padding()
             .background(Color.kozBonBlue.opacity(0.1))
             .cornerRadius(12)
         }
         .buttonStyle(.plain)
+        .accessibilityLabel(text)
+        .accessibilityHint(String(localized: Strings.Accessibility.chatSuggestionHint))
     }
 
     // MARK: - Message Bubble
@@ -216,19 +221,26 @@ public struct BonjourChatView: View {
                     .background(Color.kozBonBlue)
                     .foregroundStyle(.white)
                     .cornerRadius(16)
-                    .accessibilityLabel(message.content)
+                    .accessibilityElement(children: .combine)
+                    .accessibilityLabel(Strings.Accessibility.chatUserMessage(message.content))
             } else {
                 VStack(alignment: .leading, spacing: 6) {
                     if message.content.isEmpty {
                         ProgressView()
                             .controlSize(.small)
+                            .accessibilityLabel(String(localized: Strings.Accessibility.chatAssistantThinking))
                     } else {
                         MarkdownContentView(message.content)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.vertical, 4)
-                .accessibilityLabel(message.content)
+                .accessibilityElement(children: message.content.isEmpty ? .contain : .combine)
+                .accessibilityLabel(
+                    message.content.isEmpty
+                        ? String(localized: Strings.Accessibility.chatAssistantThinking)
+                        : Strings.Accessibility.chatAssistantMessage(message.content)
+                )
                 Spacer(minLength: 40)
             }
         }
@@ -246,11 +258,26 @@ public struct BonjourChatView: View {
             )
             .textFieldStyle(.roundedBorder)
             .lineLimit(1...5)
+            .submitLabel(.send)
             .focused($isInputFocused)
             .disabled(session.isGenerating)
+            .accessibilityLabel(String(localized: Strings.Chat.inputPlaceholder))
+            .accessibilityHint(String(localized: Strings.Accessibility.chatInputHint))
             .onSubmit {
                 Task { await sendMessage(inputText, using: session) }
             }
+            #if !os(macOS)
+            .toolbar {
+                if isInputFocused {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        Spacer()
+                        Button(String(localized: Strings.Buttons.done)) {
+                            isInputFocused = false
+                        }
+                    }
+                }
+            }
+            #endif
 
             Button {
                 Task { await sendMessage(inputText, using: session) }
@@ -258,13 +285,20 @@ public struct BonjourChatView: View {
                 Image(systemName: "arrow.up.circle.fill")
                     .font(.title2)
             }
-            .disabled(
-                session.isGenerating ||
-                inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-            )
+            .disabled(sendDisabled(session: session))
             .accessibilityLabel(String(localized: Strings.Chat.send))
+            .accessibilityHint(
+                sendDisabled(session: session)
+                    ? String(localized: Strings.Accessibility.chatSendDisabledHint)
+                    : String(localized: Strings.Accessibility.chatSendHint)
+            )
         }
         .padding()
+    }
+
+    private func sendDisabled(session: any BonjourChatSessionProtocol) -> Bool {
+        session.isGenerating
+            || inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
     // MARK: - Send

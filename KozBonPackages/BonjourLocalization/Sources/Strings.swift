@@ -127,6 +127,10 @@ public enum Strings {
         public static var additionalDetails: LocalizedStringResource {
             .init("section_additional_details", bundle: .atURL(Bundle.module.bundleURL))
         }
+
+        public static var aiContextFooter: LocalizedStringResource {
+            .init("section_ai_context_footer", bundle: .atURL(Bundle.module.bundleURL))
+        }
     }
 
     // MARK: - Detail Rows
@@ -646,6 +650,38 @@ public enum Strings {
 
         public static var formIncompleteHint: LocalizedStringResource {
             .init("a11y_form_incomplete_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static func chatUserMessage(_ content: String) -> String {
+            String(format: NSLocalizedString("a11y_chat_user_message_format", bundle: Bundle.module, comment: ""), content)
+        }
+
+        public static func chatAssistantMessage(_ content: String) -> String {
+            String(format: NSLocalizedString("a11y_chat_assistant_message_format", bundle: Bundle.module, comment: ""), content)
+        }
+
+        public static var chatAssistantThinking: LocalizedStringResource {
+            .init("a11y_chat_assistant_thinking", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var chatInputHint: LocalizedStringResource {
+            .init("a11y_chat_input_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var chatSendHint: LocalizedStringResource {
+            .init("a11y_chat_send_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var chatSendDisabledHint: LocalizedStringResource {
+            .init("a11y_chat_send_disabled_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var chatClearHistoryHint: LocalizedStringResource {
+            .init("a11y_chat_clear_history_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var chatSuggestionHint: LocalizedStringResource {
+            .init("a11y_chat_suggestion_hint", bundle: .atURL(Bundle.module.bundleURL))
         }
     }
 

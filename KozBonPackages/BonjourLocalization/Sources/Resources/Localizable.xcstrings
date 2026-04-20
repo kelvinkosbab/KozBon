@@ -2590,37 +2590,37 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Additional information"
+            "value": "Describe what this service does…"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Información adicional"
+            "value": "Describe qué hace este servicio…"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Informations supplémentaires"
+            "value": "Décrivez ce que fait ce service…"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Zusätzliche Informationen"
+            "value": "Beschreibe, was dieser Dienst tut…"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "追加情報"
+            "value": "このサービスの説明を入力…"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "附加信息"
+            "value": "描述此服务的功能…"
           }
         }
       }
@@ -12297,6 +12297,375 @@
           "stringUnit": {
             "state": "translated",
             "value": "什么是Matter / Thread？"
+          }
+        }
+      }
+    },
+    "section_ai_context_footer": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This description will be used by Apple Intelligence to explain your service when users long press \"Explain with AI\"."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esta descripción será utilizada por Apple Intelligence para explicar tu servicio cuando los usuarios mantengan pulsado “Explicar con IA”."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cette description sera utilisée par Apple Intelligence pour expliquer votre service lorsque les utilisateurs appuieront longuement sur « Expliquer avec l’IA »."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diese Beschreibung wird von Apple Intelligence verwendet, um deinen Dienst zu erklären, wenn Nutzer lange auf „Mit KI erklären“ drücken."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この説明は、ユーザーが「AIで説明」を長押ししたときにApple Intelligenceがあなたのサービスを説明するために使用されます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "当用户长按“用AI解释”时，Apple Intelligence将使用此描述来解释您的服务。"
+          }
+        }
+      }
+    },
+    "a11y_chat_user_message_format": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You said: %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tú dijiste: %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vous avez dit : %@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du hast gesagt: %@"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "あなたのメッセージ: %@"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "您说: %@"
+          }
+        }
+      }
+    },
+    "a11y_chat_assistant_message_format": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Assistant replied: %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Respuesta del asistente: %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réponse de l’assistant : %@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Antwort des Assistenten: %@"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アシスタントの応答: %@"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "助手回复: %@"
+          }
+        }
+      }
+    },
+    "a11y_chat_assistant_thinking": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Assistant is thinking"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El asistente está pensando"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L’assistant réfléchit"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Assistent denkt nach"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アシスタントが考えています"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "助手正在思考"
+          }
+        }
+      }
+    },
+    "a11y_chat_input_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Type a question about your network or the KozBon app"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escribe una pregunta sobre tu red o la app KozBon"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tapez une question sur votre réseau ou l’app KozBon"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tippe eine Frage zu deinem Netzwerk oder zur KozBon-App"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ネットワークやKozBonアプリについての質問を入力"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "输入关于您的网络或KozBon应用的问题"
+          }
+        }
+      }
+    },
+    "a11y_chat_send_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sends your message to the assistant"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Envía tu mensaje al asistente"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Envoie votre message à l’assistant"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sendet deine Nachricht an den Assistenten"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アシスタントにメッセージを送信"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "将您的消息发送给助手"
+          }
+        }
+      }
+    },
+    "a11y_chat_send_disabled_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Type a message to enable this button"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escribe un mensaje para activar este botón"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tapez un message pour activer ce bouton"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tippe eine Nachricht, um diese Schaltfläche zu aktivieren"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このボタンを有効にするにはメッセージを入力"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "输入消息以启用此按钮"
+          }
+        }
+      }
+    },
+    "a11y_chat_clear_history_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Removes all messages and starts a new conversation"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Elimina todos los mensajes e inicia una nueva conversación"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Supprime tous les messages et démarre une nouvelle conversation"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Entfernt alle Nachrichten und startet eine neue Unterhaltung"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すべてのメッセージを削除し、新しい会話を開始します"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除所有消息并开始新的对话"
+          }
+        }
+      }
+    },
+    "a11y_chat_suggestion_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sends this suggested question to the assistant"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Envía esta pregunta sugerida al asistente"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Envoie cette question suggérée à l’assistant"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sendet diese vorgeschlagene Frage an den Assistenten"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この提案の質問をアシスタントに送信"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "将此建议问题发送给助手"
           }
         }
       }
