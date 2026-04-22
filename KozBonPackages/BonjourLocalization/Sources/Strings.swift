@@ -66,6 +66,10 @@ public enum Strings {
         public static var chat: LocalizedStringResource {
             .init("tab_chat", bundle: .atURL(Bundle.module.bundleURL))
         }
+
+        public static var explore: LocalizedStringResource {
+            .init("tab_explore", bundle: .atURL(Bundle.module.bundleURL))
+        }
     }
 
     // MARK: - Sections

@@ -17,9 +17,16 @@ import BonjourScanning
 ///
 /// Handles starting and stopping scans, tracking discovered services, managing user-published
 /// services, and determining when a foreground refresh is needed based on elapsed time.
+///
+/// A single instance is created at the app level and shared between the Discover tab
+/// and the Chat tab. This is required because the underlying `BonjourServiceScanner`
+/// exposes only one `weak var delegate`; creating a separate view model per tab would
+/// cause the tabs to overwrite each other's delegate registration, and whichever tab
+/// was initialized most recently would silently "win" while the other showed zero
+/// discovered services.
 @MainActor
 @Observable
-final class BonjourServicesViewModel: BonjourServiceScannerDelegate {
+public final class BonjourServicesViewModel: BonjourServiceScannerDelegate {
 
     // MARK: - Properties
 
@@ -160,13 +167,22 @@ final class BonjourServicesViewModel: BonjourServiceScannerDelegate {
     ///
     /// - Parameter serviceScanner: The scanner to use for discovering services.
     /// - Parameter publishManager: The publish manager to use.
-    init(
+    public init(
         serviceScanner: BonjourServiceScannerProtocol,
         publishManager: BonjourPublishManagerProtocol
     ) {
         self.serviceScanner = serviceScanner
         self.publishManager = publishManager
         self.serviceScanner.delegate = self
+    }
+
+    /// Convenience initializer that resolves the scanner and publish manager
+    /// from a ``DependencyContainer``.
+    public convenience init(dependencies: DependencyContainer) {
+        self.init(
+            serviceScanner: dependencies.bonjourServiceScanner,
+            publishManager: dependencies.bonjourPublishManager
+        )
     }
 
     // MARK: - Strings
@@ -217,7 +233,7 @@ final class BonjourServicesViewModel: BonjourServiceScannerDelegate {
     ///
     /// Uses the service's `id` (derived from the underlying `NetService`) to find
     /// existing entries, since `BonjourService` inherits `NSObject` identity-based hashing.
-    func didAdd(service: BonjourService) {
+    public func didAdd(service: BonjourService) {
         withAnimation {
             let index = activeServices.firstIndex { $0.id == service.id }
             if let index {
@@ -229,7 +245,7 @@ final class BonjourServicesViewModel: BonjourServiceScannerDelegate {
     }
 
     /// Called when a previously discovered service is no longer available.
-    func didRemove(service: BonjourService) {
+    public func didRemove(service: BonjourService) {
         withAnimation {
             let index = activeServices.firstIndex { $0.id == service.id }
             if let index {
@@ -239,14 +255,14 @@ final class BonjourServicesViewModel: BonjourServiceScannerDelegate {
     }
 
     /// Called when the scanner resets, clearing all discovered services.
-    func didReset() {
+    public func didReset() {
         withAnimation {
             self.activeServices = []
         }
     }
 
     /// Called when the scanner encounters an error during service discovery.
-    func didFailWithError(description: String) {
+    public func didFailWithError(description: String) {
         withAnimation {
             self.scanError = description
         }

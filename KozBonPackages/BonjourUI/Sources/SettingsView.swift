@@ -168,13 +168,12 @@ public struct SettingsView: View {
         Section {
             LabeledContent {
                 Menu {
+                    // Only sort options are offered as a persistent default.
+                    // Filters (Smart Home, Apple devices, etc.) are transient
+                    // view modes accessible from the Discover tab's sort menu —
+                    // persisting a filter would hide all non-matching services
+                    // on every launch, which confuses users.
                     ForEach(Self.sortOptions, id: \.self) { sortType in
-                        sortMenuButton(for: sortType)
-                    }
-
-                    Divider()
-
-                    ForEach(Self.filterOptions, id: \.self) { sortType in
                         sortMenuButton(for: sortType)
                     }
                 } label: {
@@ -213,10 +212,6 @@ public struct SettingsView: View {
 
     private static let sortOptions: [BonjourServiceSortType] = [
         .hostNameAsc, .hostNameDesc, .serviceNameAsc, .serviceNameDesc
-    ]
-
-    private static let filterOptions: [BonjourServiceSortType] = [
-        .smartHome, .appleDevices, .mediaAndStreaming, .printersAndScanners, .remoteAccess
     ]
 
     private var effectiveSortId: String {

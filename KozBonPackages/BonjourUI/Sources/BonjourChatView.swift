@@ -17,8 +17,6 @@ import BonjourStorage
 import UIKit
 #endif
 
-// swiftlint:disable type_body_length
-
 // MARK: - BonjourChatView
 
 /// Chat interface for asking the on-device Apple Intelligence assistant about
@@ -40,12 +38,14 @@ public struct BonjourChatView: View {
 
     private let viewModel: BonjourServicesViewModel
 
-    @MainActor
-    public init(dependencies: DependencyContainer) {
-        self.viewModel = BonjourServicesViewModel(
-            serviceScanner: dependencies.bonjourServiceScanner,
-            publishManager: dependencies.bonjourPublishManager
-        )
+    /// Creates the Chat view bound to the shared services view model.
+    ///
+    /// The view model is owned by the app root so that the Chat tab observes the
+    /// same scanner delegate as the Discover tab. See ``BonjourServicesViewModel``
+    /// for the rationale — two separate view models would race for the single
+    /// `weak var delegate` on `BonjourServiceScanner`.
+    public init(viewModel: BonjourServicesViewModel) {
+        self.viewModel = viewModel
     }
 
     /// The active session — injected if available, otherwise a local instance.
@@ -71,21 +71,12 @@ public struct BonjourChatView: View {
             #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
-            .toolbar {
-                if let session, !session.messages.isEmpty {
-                    ToolbarItem(placement: .primaryAction) {
-                        Button(role: .destructive) {
-                            session.reset()
-                        } label: {
-                            Label(
-                                String(localized: Strings.Chat.clearHistory),
-                                systemImage: Iconography.cancel
-                            )
-                        }
-                        .accessibilityHint(String(localized: Strings.Accessibility.chatClearHistoryHint))
-                    }
-                }
-            }
+            // No clear-history toolbar button: the chat is intentionally
+            // presented as a continuous conversation where earlier turns are
+            // remembered. A prominent "clear" affordance in the primary toolbar
+            // position undermined that chatbot feel. The session still resets
+            // on app launch, which is the expected lifetime for on-device
+            // multi-turn chats with no persistence.
         }
     }
 
@@ -105,7 +96,10 @@ public struct BonjourChatView: View {
                     ScrollView {
                         VStack(alignment: .leading, spacing: 12) {
                             ForEach(session.messages) { message in
-                                messageBubble(message: message)
+                                messageBubble(
+                                    message: message,
+                                    isStreaming: isStreaming(message, in: session)
+                                )
                                     .id(message.id)
                                     .transition(.asymmetric(
                                         insertion: messageInsertionTransition(for: message.role),
@@ -217,7 +211,7 @@ public struct BonjourChatView: View {
     // MARK: - Message Bubble
 
     @ViewBuilder
-    private func messageBubble(message: BonjourChatMessage) -> some View {
+    private func messageBubble(message: BonjourChatMessage, isStreaming: Bool) -> some View {
         HStack {
             if message.role == .user {
                 Spacer(minLength: 40)
@@ -230,13 +224,19 @@ public struct BonjourChatView: View {
                     .accessibilityElement(children: .combine)
                     .accessibilityLabel(Strings.Accessibility.chatUserMessage(message.content))
             } else {
-                VStack(alignment: .leading, spacing: 6) {
-                    if message.content.isEmpty {
-                        ProgressView()
-                            .controlSize(.small)
-                            .accessibilityLabel(String(localized: Strings.Accessibility.chatAssistantThinking))
-                    } else {
+                VStack(alignment: .leading, spacing: 8) {
+                    if !message.content.isEmpty {
                         MarkdownContentView(message.content)
+                    }
+
+                    // Always show the typing indicator while this assistant message
+                    // is still being generated — even after the first tokens have
+                    // arrived. The model can pause mid-response, and without a
+                    // visible indicator the chat looks frozen.
+                    if isStreaming {
+                        TypingIndicator()
+                            .accessibilityLabel(String(localized: Strings.Accessibility.chatAssistantThinking))
+                            .transition(.opacity)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -250,6 +250,16 @@ public struct BonjourChatView: View {
                 Spacer(minLength: 40)
             }
         }
+    }
+
+    /// Returns whether the given message is the one currently being streamed.
+    ///
+    /// True when the session is actively generating and this is the last message
+    /// in the conversation and it's from the assistant.
+    private func isStreaming(_ message: BonjourChatMessage, in session: any BonjourChatSessionProtocol) -> Bool {
+        guard session.isGenerating else { return false }
+        guard message.role == .assistant else { return false }
+        return session.messages.last?.id == message.id
     }
 
     // MARK: - Input Bar

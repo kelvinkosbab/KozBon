@@ -260,4 +260,87 @@ struct BonjourServicesViewModelTests {
         let (viewModel, _) = makeViewModel()
         #expect(!viewModel.createButtonString.isEmpty)
     }
+
+    // MARK: - Convenience Init
+
+    @Test func initWithDependenciesResolvesScannerAndPublishManager() {
+        let scanner = MockBonjourServiceScanner()
+        let publishManager = MockBonjourPublishManager()
+        let container = DependencyContainer(
+            bonjourServiceScanner: scanner,
+            bonjourPublishManager: publishManager
+        )
+
+        let viewModel = BonjourServicesViewModel(dependencies: container)
+
+        // The convenience init should pull the same underlying scanner and
+        // publish manager out of the container — comparing by ObjectIdentifier
+        // guarantees we got the exact instances back, not copies.
+        #expect(ObjectIdentifier(viewModel.serviceScanner as AnyObject)
+                == ObjectIdentifier(scanner))
+        #expect(ObjectIdentifier(viewModel.publishManager as AnyObject)
+                == ObjectIdentifier(publishManager))
+    }
+
+    // MARK: - Scanner Delegate Ownership
+    //
+    // These tests pin down the scanner's single-delegate semantics so that
+    // nobody reintroduces the "Discover tab shows zero services" bug. The
+    // scanner exposes `weak var delegate`, so creating a second view model
+    // against the same scanner silently steals the delegate slot from the
+    // first. The app ships with one shared `BonjourServicesViewModel` hoisted
+    // to `AppCore` to avoid exactly this.
+
+    @Test func viewModelRegistersItselfAsScannerDelegate() {
+        let (viewModel, scanner) = makeViewModel()
+        #expect(scanner.delegate === viewModel)
+    }
+
+    @Test func secondViewModelOverwritesFirstAsScannerDelegate() {
+        let scanner = MockBonjourServiceScanner()
+        let publishManager = MockBonjourPublishManager()
+
+        let first = BonjourServicesViewModel(
+            serviceScanner: scanner,
+            publishManager: publishManager
+        )
+        #expect(scanner.delegate === first)
+
+        let second = BonjourServicesViewModel(
+            serviceScanner: scanner,
+            publishManager: publishManager
+        )
+
+        // The scanner's `weak var delegate` is a single pointer — creating a
+        // second view model against the same scanner overwrites the first.
+        // This is the reason `AppCore` hoists one shared view model and
+        // passes it to both the Discover tab and the Chat tab.
+        #expect(scanner.delegate === second)
+        #expect(scanner.delegate !== first)
+    }
+
+    @Test func onlyTheMostRecentViewModelReceivesScannerEvents() {
+        let scanner = MockBonjourServiceScanner()
+        let publishManager = MockBonjourPublishManager()
+
+        let first = BonjourServicesViewModel(
+            serviceScanner: scanner,
+            publishManager: publishManager
+        )
+        let second = BonjourServicesViewModel(
+            serviceScanner: scanner,
+            publishManager: publishManager
+        )
+
+        // Simulate the scanner reporting a discovered service to its current
+        // delegate (which is `second` after the second init ran).
+        let service = makeService(name: "Discovered")
+        scanner.delegate?.didAdd(service: service)
+
+        // The second view model sees the service; the first is "blind" —
+        // exactly the bug that made the Discover tab appear empty while
+        // the Chat tab (initialized later) could still see services.
+        #expect(second.flatActiveServices.count == 1)
+        #expect(first.flatActiveServices.isEmpty)
+    }
 }

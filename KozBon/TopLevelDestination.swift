@@ -58,7 +58,13 @@ enum TopLevelDestination: Identifiable {
             String(localized: Strings.Tabs.supportedServices)
 
         case .chat:
+            // "Chat" on iOS, "Explore" on macOS/visionOS where the tab feels
+            // more like a discovery surface than a messaging thread.
+            #if os(macOS) || os(visionOS)
+            String(localized: Strings.Tabs.explore)
+            #else
             String(localized: Strings.Tabs.chat)
+            #endif
 
         case .settings:
             String(localized: Strings.Tabs.preferences)

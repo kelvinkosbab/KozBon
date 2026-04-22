@@ -26,15 +26,17 @@ public struct BonjourScanForServicesView: View {
 
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.preferencesStore) private var preferencesStore
-    @State private var viewModel: BonjourServicesViewModel
+    @Bindable var viewModel: BonjourServicesViewModel
     @State private var serviceToExplain: BonjourService?
 
-    @MainActor
-    public init(dependencies: DependencyContainer) {
-        _viewModel = State(initialValue: BonjourServicesViewModel(
-            serviceScanner: dependencies.bonjourServiceScanner,
-            publishManager: dependencies.bonjourPublishManager
-        ))
+    /// Creates the Discover view bound to the shared services view model.
+    ///
+    /// The view model is owned by the app root so that both the Discover tab and
+    /// the Chat tab observe the same `BonjourServiceScanner` delegate — creating
+    /// two view models would cause one tab to steal the delegate slot from the
+    /// other (see the note on `BonjourServicesViewModel`).
+    public init(viewModel: BonjourServicesViewModel) {
+        self.viewModel = viewModel
     }
 
     public var body: some View {
@@ -118,13 +120,19 @@ public struct BonjourScanForServicesView: View {
         }
         .task {
             if viewModel.isInitialLoad {
-                // Apply persisted sort order on first load
+                // Apply persisted sort order on first load — but never apply filters
+                // as a default (filters are transient view modes; persisting one
+                // would hide all non-matching services on every launch).
                 if viewModel.sortType == nil, !preferencesStore.defaultSortOrder.isEmpty {
                     let stored = BonjourServiceSortType.allCases.first {
                         $0.id == preferencesStore.defaultSortOrder
                     }
-                    if let stored {
+                    if let stored, !stored.isFilter {
                         viewModel.sort(sortType: stored)
+                    } else if stored?.isFilter == true {
+                        // Migrate out a previously-persisted filter so it doesn't
+                        // keep applying on future launches.
+                        preferencesStore.defaultSortOrder = ""
                     }
                 }
                 viewModel.load()

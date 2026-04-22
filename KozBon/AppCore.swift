@@ -25,9 +25,24 @@ struct AppCore: App {
 
     // MARK: - Dependencies
 
-    @State private var dependencies = DependencyContainer()
+    @State private var dependencies: DependencyContainer
     @State private var preferencesStore = PreferencesStore()
     @State private var explainer: (any BonjourServiceExplainerProtocol)? = Self.makeExplainer()
+
+    /// The single, app-wide services view model.
+    ///
+    /// Must be shared between the Discover and Chat tabs because
+    /// `BonjourServiceScanner` exposes one `weak var delegate`. If each tab
+    /// created its own view model, the tabs would race to register themselves
+    /// as the delegate and one tab would silently show zero discovered
+    /// services — see ``BonjourServicesViewModel`` for the full explanation.
+    @State private var servicesViewModel: BonjourServicesViewModel
+
+    init() {
+        let dependencies = DependencyContainer()
+        _dependencies = State(initialValue: dependencies)
+        _servicesViewModel = State(initialValue: BonjourServicesViewModel(dependencies: dependencies))
+    }
 
     /// Creates an AI explainer if the on-device model is available.
     ///
@@ -51,7 +66,7 @@ struct AppCore: App {
             if #available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *) {
                 TabView {
                     Tab {
-                        BonjourScanForServicesView(dependencies: dependencies)
+                        BonjourScanForServicesView(viewModel: servicesViewModel)
                     } label: {
                         Label {
                             Text(verbatim: TopLevelDestination.bonjour.titleString)
@@ -82,8 +97,14 @@ struct AppCore: App {
 
                     if AppleIntelligenceSupport.isDeviceSupported,
                        preferencesStore.aiAnalysisEnabled {
-                        Tab(role: .search) {
-                            BonjourChatView(dependencies: dependencies)
+                        // On iOS/visionOS, `role: .search` places this tab at the trailing
+                        // edge with the Liquid Glass separation treatment. On macOS the
+                        // system overrides the custom icon with a magnifying glass for
+                        // any search-role tab, so we use a regular tab there to keep
+                        // the Apple Intelligence icon intact.
+                        #if os(macOS)
+                        Tab {
+                            BonjourChatView(viewModel: servicesViewModel)
                         } label: {
                             Label {
                                 Text(verbatim: TopLevelDestination.chat.titleString)
@@ -91,6 +112,17 @@ struct AppCore: App {
                                 TopLevelDestination.chat.icon
                             }
                         }
+                        #else
+                        Tab(role: .search) {
+                            BonjourChatView(viewModel: servicesViewModel)
+                        } label: {
+                            Label {
+                                Text(verbatim: TopLevelDestination.chat.titleString)
+                            } icon: {
+                                TopLevelDestination.chat.icon
+                            }
+                        }
+                        #endif
                     }
                 }
                 #if os(macOS)
@@ -104,7 +136,7 @@ struct AppCore: App {
                 .environment(\.preferencesStore, preferencesStore)
             } else {
                 TabView {
-                    BonjourScanForServicesView(dependencies: dependencies)
+                    BonjourScanForServicesView(viewModel: servicesViewModel)
                         .tabItem {
                             Label {
                                 Text(verbatim: TopLevelDestination.bonjour.titleString)
@@ -124,7 +156,7 @@ struct AppCore: App {
 
                     if AppleIntelligenceSupport.isDeviceSupported,
                        preferencesStore.aiAnalysisEnabled {
-                        BonjourChatView(dependencies: dependencies)
+                        BonjourChatView(viewModel: servicesViewModel)
                             .tabItem {
                                 Label {
                                     Text(verbatim: TopLevelDestination.chat.titleString)

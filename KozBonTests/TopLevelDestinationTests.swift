@@ -51,8 +51,12 @@ struct TopLevelDestinationTests {
         #expect(TopLevelDestination.bonjourServiceTypes.titleString == "Supported services")
     }
 
-    @Test func chatTitleIsChat() {
+    @Test func chatTitleIsPlatformSpecific() {
+        #if os(macOS) || os(visionOS)
+        #expect(TopLevelDestination.chat.titleString == "Explore")
+        #else
         #expect(TopLevelDestination.chat.titleString == "Chat")
+        #endif
     }
 
     @Test func settingsTitleIsPreferences() {
