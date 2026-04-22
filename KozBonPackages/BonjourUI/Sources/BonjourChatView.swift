@@ -115,7 +115,12 @@ public struct BonjourChatView: View {
                         }
                         .padding()
                     }
+                    // `scrollDismissesKeyboard` is unavailable on visionOS —
+                    // the Vision Pro uses a floating virtual keyboard that
+                    // doesn't need an in-scroll-view dismiss gesture.
+                    #if !os(visionOS)
                     .scrollDismissesKeyboard(.interactively)
+                    #endif
                     .transition(.opacity)
                     .onChange(of: session.messages.last?.id) {
                         withAnimation(reduceMotion ? nil : .easeOut(duration: 0.3)) {
@@ -282,7 +287,11 @@ public struct BonjourChatView: View {
             .onSubmit {
                 Task { await sendMessage(inputText, using: session) }
             }
-            #if !os(macOS)
+            // Only iOS has a hardware/software keyboard toolbar placement.
+            // macOS has the menu bar, visionOS uses a floating virtual
+            // keyboard with its own built-in dismiss affordance — both
+            // reject `ToolbarItemPlacement.keyboard`.
+            #if os(iOS)
             .toolbar {
                 if isInputFocused {
                     ToolbarItemGroup(placement: .keyboard) {
