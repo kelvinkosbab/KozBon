@@ -58,6 +58,15 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
 
         error = nil
         isGenerating = true
+        // `defer` guarantees the flag flips back even if we add an early
+        // return in the future. The send button's enabled state depends
+        // on `!isGenerating`, so a stuck flag locks the user out of the
+        // chat until they leave and re-enter the tab. The previous
+        // end-of-function `isGenerating = false` covered the happy
+        // path; `defer` covers every path, including any thrown errors
+        // that escape the `do { ... } catch { ... }` (none today, but
+        // cheap insurance).
+        defer { isGenerating = false }
 
         // Append the user message as it appears to the user (without the context
         // preamble — the preamble is internal guidance for the model).
@@ -94,10 +103,7 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
         let assistantId = UUID()
         messages.append(BonjourChatMessage(id: assistantId, role: .assistant, content: ""))
 
-        guard let session = session else {
-            isGenerating = false
-            return
-        }
+        guard let session = session else { return }
 
         do {
             let stream = session.streamResponse(to: turnToSend)
@@ -111,8 +117,19 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
             // Remove the empty assistant placeholder on error.
             messages.removeAll { $0.id == assistantId }
         }
+        // `isGenerating = false` is handled by the `defer` at the top.
+    }
 
-        isGenerating = false
+    // MARK: - Local Rejection
+
+    public func appendLocalRejection(userMessage: String, refusalText: String) {
+        // Render the exchange as real chat turns so the UI treats it
+        // like any other back-and-forth. We deliberately do NOT append
+        // these to the underlying `LanguageModelSession` transcript —
+        // the model shouldn't see rejected content in its history or
+        // it may start drifting toward the rejected topic in follow-ups.
+        messages.append(BonjourChatMessage(role: .user, content: userMessage))
+        messages.append(BonjourChatMessage(role: .assistant, content: refusalText))
     }
 
     // MARK: - Reset

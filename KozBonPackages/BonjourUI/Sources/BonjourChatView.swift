@@ -22,7 +22,7 @@ import BonjourStorage
 // that state into bindings and parameter drilling for no structural
 // benefit. The detection logic that *can* stand alone (completed-sentence
 // counting and its state machine) has already been extracted to
-// `ChatSentenceHapticTracker`.
+// `SentenceHapticTracker`.
 
 // MARK: - BonjourChatView
 
@@ -48,11 +48,11 @@ public struct BonjourChatView: View {
 
     /// Drives the light per-sentence haptic that plays while the assistant
     /// streams a response. All detection and bookkeeping lives inside
-    /// `ChatSentenceHapticTracker` so this view can stay focused on
+    /// `SentenceHapticTracker` so this view can stay focused on
     /// presentation. The view just forwards content/id/isGenerating
     /// changes in via `.onChange` and binds `.sensoryFeedback` to the
     /// tracker's `tickCount`.
-    @State private var sentenceHapticTracker = ChatSentenceHapticTracker()
+    @State private var sentenceHapticTracker = SentenceHapticTracker()
 
     private var messageTransitionAnimation: Animation? {
         reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.75)
@@ -422,10 +422,17 @@ public struct BonjourChatView: View {
             // Either way there is no solid tinted fill — the field
             // visually rides on top of whatever sits behind the compose
             // bar (the streaming chat messages blur through it cleanly).
+            // Single-line (no `axis: .vertical`). iOS treats return as a
+            // newline on a vertical TextField even with `.submitLabel(.send)`,
+            // which is why the keyboard's Send key was producing a stray
+            // `\n` in the input instead of submitting. Without the vertical
+            // axis, `.onSubmit` fires on return as expected and the Send
+            // label on the keyboard actually submits. Users who need to
+            // send a long question can still type one — the field scrolls
+            // horizontally and the send button remains reachable.
             TextField(
                 String(localized: Strings.Chat.inputPlaceholder),
-                text: $inputText,
-                axis: .vertical
+                text: $inputText
             )
             .textFieldStyle(.plain)
             .padding(.horizontal, .space14)
@@ -433,7 +440,6 @@ public struct BonjourChatView: View {
             .glassOrMaterialBackground(
                 in: RoundedRectangle(cornerRadius: .radius20, style: .continuous)
             )
-            .lineLimit(1...5)
             .submitLabel(.send)
             .focused($isInputFocused)
             .disabled(session.isGenerating)
@@ -502,28 +508,39 @@ public struct BonjourChatView: View {
     private func sendMessage(_ text: String, using session: any BonjourChatSessionProtocol) async {
         guard !session.isGenerating else { return }
 
-        // Pre-validate the input before sending to the model.
-        switch ChatInputValidator.validate(text) {
-        case .allowed:
-            break
-        case .rejected(.empty):
-            return
-        case .rejected(let reason):
-            session.error = Self.errorMessage(for: reason)
-            return
-        }
-
         let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return }
 
-        // Clear input and dismiss keyboard with animation.
+        // EVERY send tap gets tactile + visual feedback BEFORE validation
+        // runs. Previously a client-side validator rejection silently
+        // dropped the input — no haptic, input stayed, keyboard stayed,
+        // and on an empty chat the `session.error` that was set was
+        // invisible behind the empty-state view. The tap read as broken.
+        // Now every tap: fires the submit haptic, clears the input,
+        // dismisses the keyboard. What happens next depends on
+        // validation, but the tap is never lost.
+        submitCount &+= 1
         withAnimation(reduceMotion ? nil : .easeOut(duration: 0.2)) {
             inputText = ""
         }
         isInputFocused = false
 
-        // Tick the counter — the `.sensoryFeedback` modifier attached to the
-        // NavigationStack observes this value and fires a medium impact haptic.
-        submitCount &+= 1
+        // Client-side pre-filter catches obvious prompt-injection and
+        // off-topic patterns without paying model latency. On rejection
+        // we render the exchange as a normal chat turn (user message +
+        // assistant refusal) — identical to how the model itself would
+        // refuse — so the Chat surface stays coherent and the refusal
+        // is visible even on a previously-empty chat.
+        switch ChatInputValidator.validate(trimmed) {
+        case .allowed:
+            break
+        case .rejected(let reason):
+            session.appendLocalRejection(
+                userMessage: trimmed,
+                refusalText: Self.errorMessage(for: reason)
+            )
+            return
+        }
 
         let context = BonjourChatPromptBuilder.ChatContext(
             discoveredServices: viewModel.flatActiveServices,

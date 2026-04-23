@@ -37,6 +37,11 @@ public final class SimulatorBonjourChatSession: BonjourChatSessionProtocol {
 
         error = nil
         isGenerating = true
+        // `defer` guarantees the flag flips back on every exit path —
+        // including task cancellation mid-stream. If `isGenerating`
+        // gets stuck at true, the send button stays disabled and the
+        // user can't fire a follow-up.
+        defer { isGenerating = false }
 
         messages.append(BonjourChatMessage(role: .user, content: trimmed))
 
@@ -58,8 +63,11 @@ public final class SimulatorBonjourChatSession: BonjourChatSessionProtocol {
             }
             try? await Task.sleep(nanoseconds: 25_000_000) // 25ms per word
         }
+    }
 
-        isGenerating = false
+    public func appendLocalRejection(userMessage: String, refusalText: String) {
+        messages.append(BonjourChatMessage(role: .user, content: userMessage))
+        messages.append(BonjourChatMessage(role: .assistant, content: refusalText))
     }
 
     public func reset() {

@@ -31,6 +31,8 @@ import AppKit
 @available(iOS 26, macOS 26, visionOS 26, *)
 public struct AIContextMenuItems: View {
 
+    @Environment(\.hapticFeedback) private var hapticFeedback
+
     private let aiAnalysisEnabled: Bool
     private let action: () -> Void
 
@@ -38,7 +40,9 @@ public struct AIContextMenuItems: View {
     ///
     /// - Parameters:
     ///   - aiAnalysisEnabled: Whether the user has enabled AI analysis in Preferences.
-    ///   - action: The action to perform when "Explain with AI" is tapped.
+    ///   - action: The action to perform when "Insights" is tapped. Called after
+    ///     a `.medium` haptic has already fired, so the caller doesn't need to
+    ///     add one.
     public init(aiAnalysisEnabled: Bool, action: @escaping () -> Void) {
         self.aiAnalysisEnabled = aiAnalysisEnabled
         self.action = action
@@ -47,11 +51,11 @@ public struct AIContextMenuItems: View {
     public var body: some View {
         if aiAnalysisEnabled {
             #if targetEnvironment(simulator)
-            // On the simulator, always show "Explain with AI" so developers
+            // On the simulator, always show "Insights" so developers
             // can test the UI flow with mock lorem ipsum responses.
             Divider()
             Button {
-                action()
+                onInsightsTapped()
             } label: {
                 Label(
                     String(localized: Strings.Insights.explainWithAI),
@@ -63,7 +67,7 @@ public struct AIContextMenuItems: View {
             case .available:
                 Divider()
                 Button {
-                    action()
+                    onInsightsTapped()
                 } label: {
                     Label(
                         String(localized: Strings.Insights.explainWithAI),
@@ -75,6 +79,7 @@ public struct AIContextMenuItems: View {
                 if reason != .deviceNotEligible {
                     Divider()
                     Button {
+                        hapticFeedback.play(.light)
                         openAppleIntelligenceSettings()
                     } label: {
                         Label(
@@ -89,6 +94,18 @@ public struct AIContextMenuItems: View {
             }
             #endif
         }
+    }
+
+    /// Handles the "Insights" button tap: fires a medium haptic to confirm
+    /// the action landed (context-menu taps don't get a default haptic the
+    /// way buttons elsewhere in the UI do) and invokes the caller-provided
+    /// action to present the Insights sheet. Centralizing this here means
+    /// all six call sites get consistent tactile feedback without each
+    /// view having to plumb `@Environment(\.hapticFeedback)` into its own
+    /// closure — the user reported missing feedback on exactly this path.
+    private func onInsightsTapped() {
+        hapticFeedback.play(.medium)
+        action()
     }
 
     // MARK: - Open Settings

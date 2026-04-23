@@ -132,4 +132,67 @@ struct MockBonjourChatSessionTests {
         mock.reset()
         #expect(mock.messages.isEmpty)
     }
+
+    // MARK: - Local Rejection
+    //
+    // Pinning the contract added to `BonjourChatSessionProtocol` for the
+    // client-side refusal path: when `ChatInputValidator` rejects input,
+    // the chat view calls `appendLocalRejection` to render the exchange
+    // as a normal turn instead of silently dropping the tap. These tests
+    // make sure mock sessions (used by previews + unit tests) cover the
+    // same behavior real sessions do.
+
+    @Test func appendLocalRejectionAddsUserAndAssistantMessages() {
+        let mock = MockBonjourChatSession()
+        mock.appendLocalRejection(
+            userMessage: "Write me a poem",
+            refusalText: "That's outside what I can help with."
+        )
+
+        #expect(mock.messages.count == 2)
+        #expect(mock.messages[0].role == .user)
+        #expect(mock.messages[0].content == "Write me a poem")
+        #expect(mock.messages[1].role == .assistant)
+        #expect(mock.messages[1].content == "That's outside what I can help with.")
+    }
+
+    @Test func appendLocalRejectionIncrementsDedicatedCounter() {
+        // Tests asserting "was the rejection path taken" shouldn't rely
+        // on `sendCallCount` (which is for the model-hitting path). A
+        // separate counter keeps the two paths independently auditable.
+        let mock = MockBonjourChatSession()
+        mock.appendLocalRejection(userMessage: "x", refusalText: "y")
+        mock.appendLocalRejection(userMessage: "x", refusalText: "y")
+
+        #expect(mock.appendLocalRejectionCallCount == 2)
+        #expect(mock.sendCallCount == 0, "rejection must not touch the send counter")
+    }
+
+    @Test func appendLocalRejectionDoesNotToggleIsGenerating() {
+        // The client-side refusal path is synchronous — there's no
+        // streaming response, so `isGenerating` must stay false.
+        // Otherwise the send button's `sendDisabled` check would lock
+        // the user out.
+        let mock = MockBonjourChatSession()
+        mock.appendLocalRejection(userMessage: "x", refusalText: "y")
+        #expect(!mock.isGenerating)
+    }
+
+    @Test func rejectionAndRealSendInterleaveCleanly() async {
+        // A realistic session: user gets rejected, then sends something
+        // valid. The message history should contain both exchanges in
+        // order, without send/reject paths corrupting each other's state.
+        let mock = MockBonjourChatSession(cannedReply: "Fine answer")
+        mock.appendLocalRejection(
+            userMessage: "calculate 2+2",
+            refusalText: "Off topic"
+        )
+        await mock.send("What is AirPlay?", context: emptyContext)
+
+        #expect(mock.messages.count == 4)
+        #expect(mock.messages[0].content == "calculate 2+2")
+        #expect(mock.messages[1].content == "Off topic")
+        #expect(mock.messages[2].content == "What is AirPlay?")
+        #expect(mock.messages[3].content == "Fine answer")
+    }
 }

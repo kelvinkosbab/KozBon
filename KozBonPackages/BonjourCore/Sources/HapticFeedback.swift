@@ -1,8 +1,15 @@
 //
 //  HapticFeedback.swift
-//  BonjourUI
+//  BonjourCore
 //
 //  Copyright © 2016-present Kozinga. All rights reserved.
+//
+//  Moved from BonjourUI to BonjourCore so that BonjourAI (which cannot
+//  depend on BonjourUI — BonjourUI depends on BonjourAI, not the
+//  reverse) can request haptic feedback from its shared UI components,
+//  most notably `AIContextMenuItems`. Importing from BonjourCore keeps
+//  a single environment key and a single production implementation
+//  across every downstream module.
 //
 
 import SwiftUI

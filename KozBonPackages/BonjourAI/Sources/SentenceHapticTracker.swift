@@ -1,29 +1,37 @@
 //
-//  ChatSentenceHapticTracker.swift
-//  BonjourUI
+//  SentenceHapticTracker.swift
+//  BonjourAI
 //
 //  Copyright © 2016-present Kozinga. All rights reserved.
+//
+//  Originally `ChatSentenceHapticTracker` in BonjourUI. Moved to
+//  BonjourAI and renamed to drop the `Chat` prefix because it's used
+//  by *any* surface that streams an AI response — the chat view AND
+//  the Insights explanation sheet both bind `.sensoryFeedback` to it.
+//  Placing it in BonjourAI also resolves a module-layer issue: the
+//  Insights sheet lives in BonjourAI and can't import BonjourUI.
 //
 
 import Foundation
 
-// MARK: - ChatSentenceHapticTracker
+// MARK: - SentenceHapticTracker
 
 /// Value-type state machine that drives sentence-boundary haptic feedback
-/// for the streaming assistant response in `BonjourChatView`.
+/// while the on-device model streams a response.
 ///
-/// Held as a single `@State` on the view. The view calls
-/// `onMessageIdChanged` whenever the last message identity changes (so the
-/// counter resets at the start of each new assistant response), and
-/// `onStreamingStateChanged` every time content grows or generation
-/// transitions between in-flight and finished. Each time a newly-completed
-/// sentence is detected, `tickCount` is incremented — the view binds
-/// `.sensoryFeedback(_:trigger:)` to that counter, so every tick produces
-/// a tactile tap.
+/// Held as a single `@State` on the presenting view. Callers tell the
+/// tracker when the tracked response identity changes (via
+/// `onMessageIdChanged`) and when either content or generation state
+/// changes (via `onStreamingStateChanged`). Each newly-completed
+/// sentence bumps `tickCount` — the view binds
+/// `.sensoryFeedback(_:trigger:)` to that counter, producing one haptic
+/// tap per sentence.
 ///
-/// Keeping this outside the view keeps `BonjourChatView` slim and makes
-/// the detection logic independently testable.
-struct ChatSentenceHapticTracker: Equatable {
+/// Used by both `BonjourChatView` (streaming assistant messages) and
+/// `ServiceExplanationSheet` (streaming the Insights explanation).
+/// Keeping the state machine separate from the view keeps the view
+/// slim and makes the detection logic independently testable.
+public struct SentenceHapticTracker: Equatable {
 
     // MARK: - State
 
@@ -38,14 +46,16 @@ struct ChatSentenceHapticTracker: Equatable {
 
     /// Monotonically-increasing counter the view binds to
     /// `.sensoryFeedback(_:trigger:)`. Each increment produces one haptic.
-    private(set) var tickCount: Int = 0
+    public private(set) var tickCount: Int = 0
+
+    public init() {}
 
     // MARK: - State Transitions
 
     /// Call whenever the observed last-message id changes. If the id is
     /// different from the one we're tracking, reset the per-message
     /// sentence counter so the next sentence in the new message fires.
-    mutating func onMessageIdChanged(_ newId: UUID?) {
+    public mutating func onMessageIdChanged(_ newId: UUID?) {
         guard trackedMessageId != newId else { return }
         trackedMessageId = newId
         sentencesAlreadyTicked = 0
@@ -63,7 +73,7 @@ struct ChatSentenceHapticTracker: Equatable {
     ///     to `false`. Tells the detector it's OK to count a trailing
     ///     terminator without a following space as a completed sentence
     ///     (the "final sentence" case).
-    mutating func onStreamingStateChanged(content: String, isFinal: Bool) {
+    public mutating func onStreamingStateChanged(content: String, isFinal: Bool) {
         let completed = Self.completedSentenceCount(in: content, isFinal: isFinal)
         guard completed > sentencesAlreadyTicked else { return }
         // Advance by the full delta, not just 1 — if two sentences land
@@ -103,7 +113,7 @@ struct ChatSentenceHapticTracker: Equatable {
     /// Known false positives (accepted as rare enough not to matter in
     /// the networking/Bonjour chat context): abbreviations like "Mr. " or
     /// "Dr. " will tick mid-sentence.
-    static func completedSentenceCount(in text: String, isFinal: Bool) -> Int {
+    public static func completedSentenceCount(in text: String, isFinal: Bool) -> Int {
         let terminators: Set<Character> = [".", "!", "?"]
         var count = 0
         let characters = Array(text)

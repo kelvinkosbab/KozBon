@@ -6,7 +6,7 @@
 //
 
 import Testing
-@testable import BonjourUI
+@testable import BonjourCore
 
 // MARK: - HapticFeedbackTests
 

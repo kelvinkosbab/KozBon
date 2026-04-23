@@ -35,6 +35,23 @@ public protocol BonjourChatSessionProtocol: AnyObject, Observable {
     ///   - context: A snapshot of the user's current services and library.
     func send(_ text: String, context: BonjourChatPromptBuilder.ChatContext) async
 
+    /// Appends a user message and an immediate assistant refusal to the
+    /// conversation **without hitting the model**. Used when client-side
+    /// validation (`ChatInputValidator`) rejects an input.
+    ///
+    /// Rendering the exchange as real chat turns — rather than silently
+    /// dropping the input — keeps the Chat surface coherent: every user
+    /// tap produces a visible outcome. Previously, on an empty chat, a
+    /// client-rejected send would fall through to `session.error` which
+    /// is only rendered once at least one real message exists, so the
+    /// user saw nothing happen and reported the send button as broken.
+    ///
+    /// - Parameters:
+    ///   - userMessage: The trimmed user text the validator rejected.
+    ///   - refusalText: The localized refusal reason to display as the
+    ///     assistant's reply.
+    func appendLocalRejection(userMessage: String, refusalText: String)
+
     /// Clears the conversation history and starts a new session.
     func reset()
 }

@@ -68,50 +68,76 @@ public enum BonjourServicePromptBuilder {
 
     /// The system prompt instructing the model how to explain Bonjour services.
     ///
-    /// Puts the language directive and anti-hallucination guardrails at the top
-    /// since models follow early instructions more reliably. Uses structured
-    /// Markdown sections with concrete examples for consistent output.
+    /// Structured for reliability:
+    /// 1. Language directive is first (models follow early instructions most reliably).
+    /// 2. ACCURACY RULES define a source hierarchy and named uncertainty phrasing so
+    ///    the model can hedge explicitly instead of confabulating.
+    /// 3. TXT-record rule uses an allowlist + verbatim fallback to stop speculation
+    ///    on vendor-specific keys — the single most common hallucination surface.
+    /// 4. VOICE + FORMATTING directives pin the output style.
+    /// 5. A "skip preamble" rule requires the first character to be `#` so streaming
+    ///    tokens show actual content instead of "Sure, here's..." filler.
     public static var systemInstructions: String {
         let languageName = preferredLanguageName
         return """
             TOP PRIORITY: Respond in \(languageName).
 
             ACCURACY RULES:
-            - When information is uncertain or missing from the provided context, say so \
-            explicitly rather than guessing.
-            - Never invent port numbers, RFC numbers, protocol versions, or vendor names.
-            - For TXT records, only describe keys whose meaning is widely documented \
-            (e.g., `rmodel`, `model`, `txtvers`). For unknown or vendor-specific keys, \
-            state "Vendor-specific: <key>=<value>" without speculating about meaning.
+            - Source priority when they conflict: TXT records (runtime device data) > \
+            "Protocol description" field (authoritative type metadata) > your general \
+            training. Never contradict the "Protocol description" — it is this app's \
+            canonical description of the service type.
+            - When inferring something not explicitly in the provided data, prefix with \
+            "Likely:" or "This typically means:". Never use confident language ("This \
+            is…", "It does…") for inferred content.
+            - Never invent port numbers, protocol versions, or vendor names.
+            - For TXT records:
+              · You may interpret these documented keys directly: `txtvers`, `rmodel`, \
+            `model`, `pv`, `deviceid`, `srcvers`, `features`, `fn`, `md`.
+              · For every other key, write exactly: "The device advertises `<key>=<value>`." \
+            Do NOT speculate about meaning.
+            - If the full type contains `apple-mobdev`, `companion-link`, `apple-sasl`, or \
+            another Apple-internal prefix, acknowledge it's an undocumented Apple internal \
+            service. Describe its likely broad function, never invent specifics.
 
             ---
 
-            You are a friendly networking expert helping everyday users understand \
-            Bonjour (mDNS/DNS-SD) services discovered on their local network.
+            You are a friendly networking expert helping users understand Bonjour \
+            (mDNS/DNS-SD) services on their local network.
+
+            VOICE: Address the user as "you". Use second person, active voice. Avoid \
+            passive phrasings like "this service can be used" — write "you can use this".
+
+            FORMATTING: Wrap protocol names (`_airplay._tcp`), port numbers (`:5353`), \
+            TXT-record keys (`rmodel`), and any command-line tokens in backticks.
+
+            OUTPUT: Start your response with the first section heading. The very first \
+            character you emit must be `#`. No conversational preamble ("Sure,", \
+            "Of course,", "Here's...") — it makes streaming feel slow.
 
             Format your response with these Markdown sections:
 
             ## What it does
-            (1-2 sentences explaining what this service type is and its purpose.)
-            Example: "AirPlay lets this Apple TV receive audio and video from other Apple \
-            devices on the same network."
+            (1-2 sentences explaining what this service is and its purpose. For example, \
+            "AirPlay lets this Apple TV receive audio and video from other Apple devices \
+            on the same network.")
 
-            ## Why it's running
-            (Explain the typical purpose of this service type on this *kind* of device. \
-            Do NOT speculate about this particular user's setup or intent.)
-            Example: "Apple TVs advertise AirPlay by default so any nearby Apple device can \
-            stream content to them."
+            ## Why devices advertise this
+            (Explain the typical purpose of this service type. Do NOT speculate about \
+            this particular user's setup or intent. For example, "Apple TVs advertise \
+            AirPlay by default so any nearby Apple device can stream content to them.")
 
             ## How to interact
-            (1-2 sentences on how a user typically interacts with this service from their device.)
-            Example: "Open Control Center on your iPhone and tap Screen Mirroring to send \
-            content to this Apple TV."
+            (1-2 sentences on how to interact with this service from **your specific \
+            device** — iPhone, Mac, or Vision Pro — not devices in general. Name a \
+            concrete app, Control Center action, menu item, or command. If the service \
+            isn't useful to your device, say so. For example, "Open Control Center on \
+            your iPhone and tap Screen Mirroring to send content to this Apple TV.")
 
             ## Configuration details
-            (Only include this section if TXT records are present. Explain what the documented \
-            keys reveal about the service's configuration. Label unknown keys as vendor-specific.)
-
-            IMPORTANT: Always respond in \(languageName).
+            (Only include this section if TXT records are present. Explain what the \
+            documented keys reveal about the service's configuration. Label unknown \
+            keys exactly as the TXT rule above specifies.)
             """
     }
 
@@ -220,9 +246,9 @@ public enum BonjourServicePromptBuilder {
 
         parts.append("")
         parts.append(
-            "What does this service do, why is it running on that device, " +
-            "and how can I interact with it from my \(currentDeviceShortName)? " +
-            "Please respond in \(preferredLanguageName)."
+            "What is this service, why do devices advertise it, and how can I use " +
+            "it from my \(currentDeviceShortName)? Please respond in " +
+            "\(preferredLanguageName)."
         )
 
         return parts.joined(separator: "\n")
@@ -232,45 +258,57 @@ public enum BonjourServicePromptBuilder {
 
     /// System instructions tailored for service type explanations (library tab).
     ///
-    /// Unlike discovered service explanations, these do not assume the service
-    /// is currently running on the network.
+    /// Shares the ACCURACY / VOICE / FORMATTING / OUTPUT conventions with
+    /// ``systemInstructions`` so users get a consistent response style across
+    /// the Discover and Library surfaces. The key structural difference is
+    /// that these instructions explicitly forbid assuming the service is
+    /// currently running — the user is browsing a catalog, not looking at
+    /// live data — so the model cannot reach for TXT records or host-specific
+    /// behaviors it doesn't have.
     public static var serviceTypeSystemInstructions: String {
         let languageName = preferredLanguageName
         return """
             TOP PRIORITY: Respond in \(languageName).
 
             ACCURACY RULES:
-            - When information is uncertain, say so explicitly rather than guessing.
-            - Never invent port numbers, RFC numbers, protocol versions, or vendor names.
+            - When inferring, prefix with "Likely:" or "This typically means:". Never \
+            use confident language for inferred content.
+            - Never invent port numbers, protocol versions, or vendor names.
             - Do NOT assume this service is currently running on the user's network — \
             they are browsing a library of supported service types.
+            - If the full type contains `apple-mobdev`, `companion-link`, `apple-sasl`, \
+            or another Apple-internal prefix, acknowledge it's an undocumented internal \
+            service and describe its likely broad function without inventing specifics.
 
             ---
 
-            You are a friendly networking expert helping everyday users understand \
-            Bonjour (mDNS/DNS-SD) service types.
+            You are a friendly networking expert helping users understand Bonjour \
+            (mDNS/DNS-SD) service types. Explain the service type itself, not a specific \
+            instance.
 
-            Explain the service type itself, not a specific instance.
+            VOICE: Address the user as "you". Use second person, active voice.
+
+            FORMATTING: Wrap protocol names (`_http._tcp`), port numbers (`:80`), and \
+            command-line tokens in backticks.
+
+            OUTPUT: Start your response with the first section heading. The very first \
+            character you emit must be `#`. No conversational preamble.
 
             Format your response with these Markdown sections:
 
             ## What it is
-            (1-2 sentences explaining what this service type is and its purpose.)
-            Example: "HTTP is the standard protocol for web servers, used by browsers to \
-            request web pages and APIs."
+            (1-2 sentences. For example, "HTTP is the standard protocol for web servers, \
+            used by browsers to request web pages and APIs.")
 
             ## Common devices
-            (1-2 sentences on what kinds of devices or apps typically advertise this service.)
-            Example: "Web servers, smart-home hubs, and network printers often advertise HTTP \
-            to expose local web interfaces."
+            (1-2 sentences on what kinds of devices or apps typically advertise this. \
+            For example, "Web servers, smart-home hubs, and network printers often \
+            advertise HTTP to expose local web interfaces.")
 
             ## How it works
-            (1-2 sentences on how this protocol works at a high level and how users might \
-            interact with it.)
-            Example: "Clients connect over TCP and send GET or POST requests to retrieve or \
-            submit data."
-
-            IMPORTANT: Always respond in \(languageName).
+            (1-2 sentences on how this protocol works at a high level. For example, \
+            "Clients connect over TCP and send GET or POST requests to retrieve or \
+            submit data.")
             """
     }
 
@@ -319,6 +357,13 @@ public enum BonjourServicePromptBuilder {
 
     /// Returns a prompt directive tailored to the given expertise level.
     ///
+    /// Intentionally does NOT ask the technical directive to cite RFCs: the
+    /// model's training contains strong priors on common RFCs and weak priors
+    /// on obscure ones, but it will confidently emit either — which is the
+    /// single most effective way to produce a citation-shaped hallucination.
+    /// If authoritative RFC numbers are ever needed, they should come from a
+    /// curated lookup in `BonjourModels`, not the model's memory.
+    ///
     /// - Parameter level: The desired expertise level.
     /// - Returns: A string instructing the model how to adjust its tone and detail.
     public static func expertiseLevelDirective(_ level: ExpertiseLevel) -> String {
@@ -330,8 +375,8 @@ public enum BonjourServicePromptBuilder {
                 "sure data arrives reliably)\")."
         case .technical:
             return "TONE: Assume a developer or sysadmin audience. Be precise with terminology. " +
-                "Cite RFCs by number when relevant (only if you are certain of the number). " +
-                "Include port conventions and transport-layer specifics where applicable."
+                "Include port conventions and transport-layer specifics where applicable. " +
+                "Do NOT cite RFC numbers — you are likely to get them wrong."
         }
     }
 
@@ -339,14 +384,23 @@ public enum BonjourServicePromptBuilder {
 
     /// Returns a prompt directive tailored to the given response length.
     ///
+    /// `.brief` deliberately overrides the section template in
+    /// ``systemInstructions``: trying to fit 4 headed sections into a handful
+    /// of sentences produced choppy, inconsistent output. Instead, `.brief`
+    /// instructs the model to drop headings entirely and emit a concise
+    /// paragraph, which gives the three length settings genuinely different
+    /// structural shapes (paragraph / sectioned / sectioned-with-examples).
+    ///
     /// - Parameter length: The desired response length.
     /// - Returns: A string instructing the model how verbose the response should be.
     public static func responseLengthDirective(_ length: ResponseLength) -> String {
         switch length {
         case .brief:
-            return "LENGTH: Use no more than 3 sentences TOTAL across all sections combined. " +
-                "If a section isn't essential for answering, omit it entirely. Be concise " +
-                "and direct — prioritize only the most essential information."
+            return "LENGTH: Respond in a SINGLE paragraph of 2-3 concise sentences. " +
+                "DO NOT use Markdown section headings — ignore the sectioned template " +
+                "above when brief length is requested. Pack the most essential " +
+                "information (what it does and how you'd use it from your device) into " +
+                "that single paragraph."
         case .standard:
             return "LENGTH: Keep each section to 2-3 sentences — enough to explain the topic " +
                 "clearly without being verbose."

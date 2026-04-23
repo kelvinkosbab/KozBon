@@ -11,6 +11,15 @@ import Testing
 import BonjourCore
 import BonjourModels
 
+// swiftlint:disable file_length
+// The file intentionally holds one narrowly-scoped assertion per prompt
+// invariant — each `@Test` catches a specific regression (e.g. "the RFC
+// citation ban was removed", "the source-priority hierarchy disappeared").
+// Splitting across multiple files would scatter related invariants and
+// make it harder to see the full prompt contract at a glance. The
+// `type_body_length` suite disable below extends the same rationale to
+// the struct body.
+
 // MARK: - BonjourServicePromptBuilderTests
 
 @Suite("BonjourServicePromptBuilder")
@@ -57,9 +66,14 @@ struct BonjourServicePromptBuilderTests {
     }
 
     @Test func systemInstructionsContainsLanguageDirective() {
+        // The prompt audit removed the duplicated "IMPORTANT: Always
+        // respond in X" tail — modern models follow the top-level
+        // directive reliably, and the duplicate was burning tokens
+        // without improving reliability. We pin the TOP PRIORITY form
+        // (uppercase `Respond`) as the sole source of truth.
         let instructions = BonjourServicePromptBuilder.systemInstructions
         let languageName = BonjourServicePromptBuilder.preferredLanguageName
-        #expect(instructions.contains("respond in \(languageName)"))
+        #expect(instructions.contains("TOP PRIORITY: Respond in \(languageName)"))
     }
 
     // MARK: - Language Detection
@@ -144,7 +158,7 @@ struct BonjourServicePromptBuilderTests {
         let service = makeService()
         let prompt = BonjourServicePromptBuilder.buildPrompt(service: service)
         let deviceName = BonjourServicePromptBuilder.currentDeviceShortName
-        #expect(prompt.contains("how can I interact with it from my \(deviceName)?"))
+        #expect(prompt.contains("how can I use it from my \(deviceName)?"))
     }
 
     @Test func promptContainsLanguageRequest() {
@@ -192,7 +206,10 @@ struct BonjourServicePromptBuilderTests {
     @Test func systemInstructionsContainsStructuredSections() {
         let instructions = BonjourServicePromptBuilder.systemInstructions
         #expect(instructions.contains("## What it does"))
-        #expect(instructions.contains("## Why it's running"))
+        // Renamed from "Why it's running" to "Why devices advertise this" so
+        // the heading anchors the answer to the service type's typical
+        // deployment rather than inviting speculation about the user's setup.
+        #expect(instructions.contains("## Why devices advertise this"))
         #expect(instructions.contains("## How to interact"))
         #expect(instructions.contains("## Configuration details"))
     }
@@ -210,7 +227,15 @@ struct BonjourServicePromptBuilderTests {
 
     @Test func systemInstructionsHasTXTRecordGuardrail() {
         let instructions = BonjourServicePromptBuilder.systemInstructions
-        #expect(instructions.contains("Vendor-specific"))
+        // Rule replaced the "Vendor-specific" label with a verbatim
+        // pass-through ("The device advertises `<key>=<value>`.") plus a
+        // concrete allowlist of documented keys the model may interpret.
+        // Both halves of the guardrail must be present — the allowlist
+        // bounds what the model speculates on, the pass-through bounds
+        // what it does when it can't.
+        #expect(instructions.contains("The device advertises"))
+        #expect(instructions.contains("`txtvers`"))
+        #expect(instructions.contains("`rmodel`"))
     }
 
     // MARK: - Expertise Level
@@ -239,7 +264,20 @@ struct BonjourServicePromptBuilderTests {
             expertiseLevel: .technical
         )
         #expect(prompt.contains("developer or sysadmin"))
-        #expect(prompt.contains("RFC"))
+        // RFC citations are now explicitly forbidden — the previous
+        // "cite if you're certain" wording produced confident-wrong
+        // hallucinations. Any future RFC references need to come from a
+        // curated lookup, not the model's memory.
+        #expect(prompt.contains("Do NOT cite RFC numbers"))
+    }
+
+    @Test func expertiseDirectiveTechnicalForbidsRFCCitations() {
+        // Pin the anti-hallucination rule: even on a "technical" response,
+        // the model must not be asked to cite RFC numbers. This is the
+        // single highest-return change from the prompt audit — RFC numbers
+        // are where the model fails most confidently.
+        let directive = BonjourServicePromptBuilder.expertiseLevelDirective(.technical)
+        #expect(directive.contains("Do NOT cite RFC"))
     }
 
     @Test func expertiseLevelDirectivesDiffer() {
@@ -267,9 +305,16 @@ struct BonjourServicePromptBuilderTests {
         #expect(brief != thorough)
     }
 
-    @Test func briefDirectiveMentionsConcise() {
+    @Test func briefDirectiveProducesSingleParagraph() {
+        // `.brief` used to shrink the sectioned template into 3 sentences
+        // total, which made the model drop sections inconsistently. The
+        // new directive explicitly bypasses the section template and
+        // asks for a single paragraph — giving the three length settings
+        // genuinely distinct structural shapes. Both invariants matter:
+        // (1) the paragraph framing, (2) the explicit "no headings" rule.
         let directive = BonjourServicePromptBuilder.responseLengthDirective(.brief)
-        #expect(directive.contains("concise") || directive.contains("1-2 sentences"))
+        #expect(directive.contains("SINGLE paragraph"))
+        #expect(directive.contains("DO NOT use Markdown section headings"))
     }
 
     @Test func thoroughDirectiveMentionsComprehensive() {
@@ -444,5 +489,70 @@ struct BonjourServicePromptBuilderTests {
             let roundTripped = BonjourServicePromptBuilder.ExpertiseLevel(rawValue: level.rawValue)
             #expect(roundTripped == level)
         }
+    }
+
+    // MARK: - Prompt Quality Invariants
+    //
+    // These tests pin specific guardrails introduced in the prompt audit.
+    // They're intentionally narrow — each asserts one behavior users would
+    // feel if it regressed, so a failure points at a specific missing
+    // rule rather than "the prompt string changed".
+
+    @Test func systemInstructionsForbidConversationalPreamble() {
+        // Users see tokens stream as they generate. A "Sure, here's..."
+        // preamble means the user waits an extra beat before useful
+        // content arrives. The rule must stay explicit.
+        let instructions = BonjourServicePromptBuilder.systemInstructions
+        #expect(instructions.contains("first character you emit must be `#`"))
+    }
+
+    @Test func systemInstructionsDirectUserVoice() {
+        // Second-person ("you") reads warmer than third-person ("the
+        // user"). The rule also requires active voice to avoid
+        // awkward "this service can be used" phrasings.
+        let instructions = BonjourServicePromptBuilder.systemInstructions
+        #expect(instructions.contains("Address the user as \"you\""))
+    }
+
+    @Test func systemInstructionsInlineCodeFormatting() {
+        // Protocol names and port numbers must render as inline code in
+        // the output. The example in the rule itself demonstrates the
+        // pattern so the model has a concrete template to mimic.
+        let instructions = BonjourServicePromptBuilder.systemInstructions
+        #expect(instructions.contains("Wrap protocol names"))
+        #expect(instructions.contains("`_airplay._tcp`"))
+    }
+
+    @Test func systemInstructionsUncertaintyPhrasingRule() {
+        // Named prefixes ("Likely:", "This typically means:") give the
+        // model a stable way to hedge instead of confabulating.
+        let instructions = BonjourServicePromptBuilder.systemInstructions
+        #expect(instructions.contains("Likely:"))
+        #expect(instructions.contains("This typically means:"))
+    }
+
+    @Test func systemInstructionsSourcePriorityHierarchy() {
+        // Resolves conflicts between TXT records, "Protocol description",
+        // and model training by pinning an explicit priority order.
+        let instructions = BonjourServicePromptBuilder.systemInstructions
+        #expect(instructions.contains("Source priority when they conflict"))
+        #expect(instructions.contains("Never contradict the \"Protocol description\""))
+    }
+
+    @Test func systemInstructionsHandleAppleInternalServices() {
+        // Services like `_companion-link._tcp` are undocumented. The
+        // model must acknowledge the uncertainty instead of inventing
+        // plausible-sounding but wrong details.
+        let instructions = BonjourServicePromptBuilder.systemInstructions
+        #expect(instructions.contains("apple-mobdev"))
+        #expect(instructions.contains("companion-link"))
+        #expect(instructions.contains("undocumented"))
+    }
+
+    @Test func howToInteractSectionTargetsUserDevice() {
+        // The explanation must be specific to the reader's device, not
+        // generic — otherwise `deviceContext` is wasted context.
+        let instructions = BonjourServicePromptBuilder.systemInstructions
+        #expect(instructions.contains("your specific device"))
     }
 }

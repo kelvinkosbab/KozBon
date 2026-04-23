@@ -30,6 +30,11 @@ public final class MockBonjourChatSession: BonjourChatSessionProtocol {
     /// The number of times ``reset()`` has been called.
     public var resetCallCount = 0
 
+    /// The number of times ``appendLocalRejection(userMessage:refusalText:)``
+    /// has been called. Tests can assert on this to verify client-side
+    /// rejection paths are taken.
+    public var appendLocalRejectionCallCount = 0
+
     /// The most recent context passed to ``send(_:context:)``.
     public var lastContext: BonjourChatPromptBuilder.ChatContext?
 
@@ -52,6 +57,12 @@ public final class MockBonjourChatSession: BonjourChatSessionProtocol {
         messages.append(BonjourChatMessage(role: .assistant, content: cannedReply))
 
         isGenerating = false
+    }
+
+    public func appendLocalRejection(userMessage: String, refusalText: String) {
+        appendLocalRejectionCallCount += 1
+        messages.append(BonjourChatMessage(role: .user, content: userMessage))
+        messages.append(BonjourChatMessage(role: .assistant, content: refusalText))
     }
 
     public func reset() {

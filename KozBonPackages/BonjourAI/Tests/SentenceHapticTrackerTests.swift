@@ -1,5 +1,5 @@
 //
-//  ChatSentenceHapticTrackerTests.swift
+//  SentenceHapticTrackerTests.swift
 //  KozBon
 //
 //  Copyright © 2016-present Kozinga. All rights reserved.
@@ -7,9 +7,9 @@
 
 import Foundation
 import Testing
-@testable import BonjourUI
+@testable import BonjourAI
 
-// MARK: - ChatSentenceHapticTrackerTests
+// MARK: - SentenceHapticTrackerTests
 
 /// Covers the sentence-boundary haptic state machine that runs alongside
 /// the streaming assistant response.
@@ -26,32 +26,32 @@ import Testing
 ///    changes, content grows, generation finishes) and asserts `tickCount`
 ///    reflects exactly one increment per completed sentence. This is the
 ///    invariant the view depends on for one-haptic-per-sentence semantics.
-@Suite("ChatSentenceHapticTracker")
-struct ChatSentenceHapticTrackerTests {
+@Suite("SentenceHapticTracker")
+struct SentenceHapticTrackerTests {
 
     // MARK: - Static Detector: Basic Counting
 
     @Test func emptyStringCountsZero() {
-        #expect(ChatSentenceHapticTracker.completedSentenceCount(in: "", isFinal: false) == 0)
-        #expect(ChatSentenceHapticTracker.completedSentenceCount(in: "", isFinal: true) == 0)
+        #expect(SentenceHapticTracker.completedSentenceCount(in: "", isFinal: false) == 0)
+        #expect(SentenceHapticTracker.completedSentenceCount(in: "", isFinal: true) == 0)
     }
 
     @Test func contentWithoutTerminatorCountsZero() {
-        #expect(ChatSentenceHapticTracker.completedSentenceCount(in: "Hello world", isFinal: false) == 0)
-        #expect(ChatSentenceHapticTracker.completedSentenceCount(in: "Hello world", isFinal: true) == 0)
+        #expect(SentenceHapticTracker.completedSentenceCount(in: "Hello world", isFinal: false) == 0)
+        #expect(SentenceHapticTracker.completedSentenceCount(in: "Hello world", isFinal: true) == 0)
     }
 
     @Test func singleSentenceFollowedBySpaceCountsOne() {
-        #expect(ChatSentenceHapticTracker.completedSentenceCount(in: "Hello. ", isFinal: false) == 1)
+        #expect(SentenceHapticTracker.completedSentenceCount(in: "Hello. ", isFinal: false) == 1)
     }
 
     @Test func multipleSentencesCountCorrectly() {
         let text = "Bonjour is a protocol. It discovers services. AirPlay uses it."
         // Two terminators are followed by spaces; the trailing "." is the
         // in-flight final sentence and shouldn't count while streaming.
-        #expect(ChatSentenceHapticTracker.completedSentenceCount(in: text, isFinal: false) == 2)
+        #expect(SentenceHapticTracker.completedSentenceCount(in: text, isFinal: false) == 2)
         // Once generation finishes, the trailing "." counts too.
-        #expect(ChatSentenceHapticTracker.completedSentenceCount(in: text, isFinal: true) == 3)
+        #expect(SentenceHapticTracker.completedSentenceCount(in: text, isFinal: true) == 3)
     }
 
     // MARK: - Static Detector: Streaming-Completion Semantics
@@ -59,22 +59,22 @@ struct ChatSentenceHapticTrackerTests {
     @Test func trailingTerminatorWithoutFollowingSpaceDoesNotCountWhileStreaming() {
         // During streaming we don't know yet whether this `.` ends the
         // response or is a mid-sentence pause like `e.g.`, so hold off.
-        #expect(ChatSentenceHapticTracker.completedSentenceCount(in: "Hello.", isFinal: false) == 0)
+        #expect(SentenceHapticTracker.completedSentenceCount(in: "Hello.", isFinal: false) == 0)
     }
 
     @Test func trailingTerminatorCountsOnceGenerationFinishes() {
         // With `isFinal == true` the final terminator lands the last tick
         // for the just-completed response.
-        #expect(ChatSentenceHapticTracker.completedSentenceCount(in: "Hello.", isFinal: true) == 1)
-        #expect(ChatSentenceHapticTracker.completedSentenceCount(in: "Hello!", isFinal: true) == 1)
-        #expect(ChatSentenceHapticTracker.completedSentenceCount(in: "Is it?", isFinal: true) == 1)
+        #expect(SentenceHapticTracker.completedSentenceCount(in: "Hello.", isFinal: true) == 1)
+        #expect(SentenceHapticTracker.completedSentenceCount(in: "Hello!", isFinal: true) == 1)
+        #expect(SentenceHapticTracker.completedSentenceCount(in: "Is it?", isFinal: true) == 1)
     }
 
     @Test func newlineAfterTerminatorCountsAsSentenceBoundary() {
         // Models often emit `.\n` when starting a new paragraph.
         let text = "First paragraph.\nSecond paragraph."
-        #expect(ChatSentenceHapticTracker.completedSentenceCount(in: text, isFinal: false) == 1)
-        #expect(ChatSentenceHapticTracker.completedSentenceCount(in: text, isFinal: true) == 2)
+        #expect(SentenceHapticTracker.completedSentenceCount(in: text, isFinal: false) == 1)
+        #expect(SentenceHapticTracker.completedSentenceCount(in: text, isFinal: true) == 2)
     }
 
     // MARK: - Static Detector: False-Positive Guards
@@ -82,35 +82,35 @@ struct ChatSentenceHapticTrackerTests {
     @Test func decimalNumberDoesNotCount() {
         // "3.14" has a `.` surrounded by digits — the scan requires a
         // whitespace-following terminator, so no tick fires.
-        #expect(ChatSentenceHapticTracker.completedSentenceCount(in: "Pi is 3.14", isFinal: false) == 0)
+        #expect(SentenceHapticTracker.completedSentenceCount(in: "Pi is 3.14", isFinal: false) == 0)
     }
 
     @Test func urlDotsDoNotCount() {
         // `example.com` and `/foo.html` must not fire because the dot is
         // followed by a letter, not whitespace.
         let text = "Visit example.com/foo.html"
-        #expect(ChatSentenceHapticTracker.completedSentenceCount(in: text, isFinal: false) == 0)
+        #expect(SentenceHapticTracker.completedSentenceCount(in: text, isFinal: false) == 0)
     }
 
     @Test func egAbbreviationDoesNotCount() {
         // "e.g., something" — the dot after `e` is followed by `g`, and
         // the dot after `g` is followed by `,`. Neither triggers.
         let text = "Protocols, e.g., Bonjour"
-        #expect(ChatSentenceHapticTracker.completedSentenceCount(in: text, isFinal: false) == 0)
+        #expect(SentenceHapticTracker.completedSentenceCount(in: text, isFinal: false) == 0)
     }
 
     @Test func ellipsisDoesNotOvercount() {
         // "..." — only the last `.` could fire, and only when `isFinal`.
-        #expect(ChatSentenceHapticTracker.completedSentenceCount(in: "Wait...", isFinal: false) == 0)
-        #expect(ChatSentenceHapticTracker.completedSentenceCount(in: "Wait...", isFinal: true) == 1)
+        #expect(SentenceHapticTracker.completedSentenceCount(in: "Wait...", isFinal: false) == 0)
+        #expect(SentenceHapticTracker.completedSentenceCount(in: "Wait...", isFinal: true) == 1)
     }
 
     // MARK: - Static Detector: Mixed Terminators
 
     @Test func mixOfExclamationQuestionAndPeriodCountsAll() {
         let text = "Hello! How are you? I'm fine."
-        #expect(ChatSentenceHapticTracker.completedSentenceCount(in: text, isFinal: false) == 2)
-        #expect(ChatSentenceHapticTracker.completedSentenceCount(in: text, isFinal: true) == 3)
+        #expect(SentenceHapticTracker.completedSentenceCount(in: text, isFinal: false) == 2)
+        #expect(SentenceHapticTracker.completedSentenceCount(in: text, isFinal: true) == 3)
     }
 
     // MARK: - Static Detector: Monotonicity
@@ -133,7 +133,7 @@ struct ChatSentenceHapticTrackerTests {
         ]
         var previous = 0
         for chunk in stream {
-            let current = ChatSentenceHapticTracker.completedSentenceCount(in: chunk, isFinal: false)
+            let current = SentenceHapticTracker.completedSentenceCount(in: chunk, isFinal: false)
             #expect(current >= previous, "count decreased from \(previous) to \(current) at '\(chunk)'")
             previous = current
         }
@@ -142,7 +142,7 @@ struct ChatSentenceHapticTrackerTests {
     // MARK: - State Machine: Initial State
 
     @Test func freshTrackerStartsAtTickZero() {
-        let tracker = ChatSentenceHapticTracker()
+        let tracker = SentenceHapticTracker()
         #expect(tracker.tickCount == 0)
     }
 
@@ -150,7 +150,7 @@ struct ChatSentenceHapticTrackerTests {
 
     @Test func tickCountIncrementsOncePerCompletedSentenceWhileStreaming() {
         let messageId = UUID()
-        var tracker = ChatSentenceHapticTracker()
+        var tracker = SentenceHapticTracker()
         tracker.onMessageIdChanged(messageId)
         #expect(tracker.tickCount == 0)
 
@@ -177,7 +177,7 @@ struct ChatSentenceHapticTrackerTests {
 
     @Test func finalSentenceTicksWhenGenerationFinishes() {
         let messageId = UUID()
-        var tracker = ChatSentenceHapticTracker()
+        var tracker = SentenceHapticTracker()
         tracker.onMessageIdChanged(messageId)
 
         // Build up to "Hello. World." while still streaming — one tick.
@@ -191,7 +191,7 @@ struct ChatSentenceHapticTrackerTests {
 
     @Test func repeatedCallsWithSameContentDoNotDoubleTick() {
         let messageId = UUID()
-        var tracker = ChatSentenceHapticTracker()
+        var tracker = SentenceHapticTracker()
         tracker.onMessageIdChanged(messageId)
 
         tracker.onStreamingStateChanged(content: "Hello. ", isFinal: false)
@@ -205,7 +205,7 @@ struct ChatSentenceHapticTrackerTests {
     // MARK: - State Machine: Multiple Responses
 
     @Test func newMessageIdResetsPerMessageCounterSoFirstSentenceTicks() {
-        var tracker = ChatSentenceHapticTracker()
+        var tracker = SentenceHapticTracker()
 
         // First assistant response — reaches tickCount 2.
         let firstId = UUID()
@@ -224,7 +224,7 @@ struct ChatSentenceHapticTrackerTests {
 
     @Test func unchangedMessageIdDoesNotResetCounter() {
         let messageId = UUID()
-        var tracker = ChatSentenceHapticTracker()
+        var tracker = SentenceHapticTracker()
         tracker.onMessageIdChanged(messageId)
         tracker.onStreamingStateChanged(content: "One. Two. ", isFinal: false)
         let afterTwoSentences = tracker.tickCount
