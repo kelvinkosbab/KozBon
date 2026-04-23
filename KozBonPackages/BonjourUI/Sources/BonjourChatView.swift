@@ -13,9 +13,13 @@ import BonjourModels
 import BonjourScanning
 import BonjourStorage
 
-#if canImport(UIKit)
-import UIKit
-#endif
+// swiftlint:disable type_body_length
+// Chat is a single cohesive surface — message list, empty-state suggestions,
+// streaming typing indicator, platform-gated keyboard handling, and the
+// compose bar all share tightly-coupled view state (`inputText`,
+// `isInputFocused`, `reduceMotion`, `session`). Splitting across multiple
+// types would force that state into bindings and parameter drilling for no
+// structural benefit.
 
 // MARK: - BonjourChatView
 
@@ -31,6 +35,13 @@ public struct BonjourChatView: View {
     @State private var localSession: (any BonjourChatSessionProtocol)? = Self.makeSession()
     @State private var inputText: String = ""
     @FocusState private var isInputFocused: Bool
+
+    /// Incremented on every successful send. Drives the `.sensoryFeedback`
+    /// modifier below so each submit produces a tactile tap confirming the
+    /// message was dispatched. Tracked as a monotonic counter rather than a
+    /// boolean so consecutive sends reliably trigger the feedback — the
+    /// modifier only fires on an actual value change.
+    @State private var submitCount: Int = 0
 
     private var messageTransitionAnimation: Animation? {
         reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.75)
@@ -68,6 +79,13 @@ public struct BonjourChatView: View {
                     )
                 }
             }
+            // Declaring a navigation title — even in inline mode — gives iOS
+            // a real navigation bar to render. Without it the scroll view
+            // rides all the way to the top of the screen, which on iPhone
+            // clips the Dynamic Island and bleeds into the status bar.
+            // With an inline title the iOS 26 Liquid Glass material fades
+            // content behind the bar cleanly as the user scrolls up.
+            .navigationTitle(chatNavigationTitle)
             #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
@@ -77,7 +95,28 @@ public struct BonjourChatView: View {
             // position undermined that chatbot feel. The session still resets
             // on app launch, which is the expected lifetime for on-device
             // multi-turn chats with no persistence.
+            //
+            // Tactile confirmation that a message was dispatched. SwiftUI's
+            // `.sensoryFeedback` is a no-op on platforms without haptics
+            // (macOS, tvOS), so no `#if` guards are needed. `.medium` weight
+            // is deliberately more noticeable than the default `.light` —
+            // "send" is a discrete, confirm-worthy action.
+            .sensoryFeedback(.impact(weight: .medium), trigger: submitCount)
         }
+    }
+
+    /// The localized title shown in the inline navigation bar.
+    ///
+    /// Matches the tab label: "Chat" on iOS, "Explore" on macOS and visionOS
+    /// (where the surface is positioned as a discovery tool rather than a
+    /// messaging thread). Keeping this in sync with `TopLevelDestination.chat`
+    /// is important so the nav bar title and the tab bar label don't disagree.
+    private var chatNavigationTitle: String {
+        #if os(macOS) || os(visionOS)
+        String(localized: Strings.Tabs.explore)
+        #else
+        String(localized: Strings.Tabs.chat)
+        #endif
     }
 
     // MARK: - Message List
@@ -168,7 +207,7 @@ public struct BonjourChatView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 VStack(alignment: .leading, spacing: 8) {
-                    Image(systemName: Iconography.appleIntelligence)
+                    Image.appleIntelligence
                         .font(.largeTitle)
                         .foregroundStyle(Color.kozBonBlue)
                     Text(Strings.Chat.emptyTitle)
@@ -200,7 +239,7 @@ public struct BonjourChatView: View {
                 Text(text)
                     .multilineTextAlignment(.leading)
                 Spacer()
-                Image(systemName: "arrow.up.right")
+                Image.arrowUpRight
                     .foregroundStyle(.secondary)
                     .accessibilityHidden(true)
             }
@@ -272,12 +311,23 @@ public struct BonjourChatView: View {
     @ViewBuilder
     private func inputBar(session: any BonjourChatSessionProtocol) -> some View {
         HStack(alignment: .bottom, spacing: 8) {
+            // `.roundedBorder` renders a system-fixed height that looked too
+            // thin for a chat surface. Switch to `.plain` and draw our own
+            // padded capsule so the field has the same comfortable touch
+            // depth as an iMessage compose bar, and so it grows cleanly
+            // when the user types a multi-line message.
             TextField(
                 String(localized: Strings.Chat.inputPlaceholder),
                 text: $inputText,
                 axis: .vertical
             )
-            .textFieldStyle(.roundedBorder)
+            .textFieldStyle(.plain)
+            .padding(.horizontal, .space14)
+            .padding(.vertical, .space10)
+            .background(
+                Color.secondary.opacity(0.15),
+                in: RoundedRectangle(cornerRadius: .radius20, style: .continuous)
+            )
             .lineLimit(1...5)
             .submitLabel(.send)
             .focused($isInputFocused)
@@ -304,12 +354,31 @@ public struct BonjourChatView: View {
             }
             #endif
 
+            // Fixed-size capsule send button. The height matches the single-
+            // line text field height (`.size40` ≈ vertical padding + body line
+            // height), so in the common one-line case the field and the button
+            // read as a matched pair. The HStack's `alignment: .bottom` then
+            // pins the button to the bottom of the text field when the user
+            // composes a multi-line message — same behavior as iMessage.
+            //
+            // Width is deliberately larger than height (`.size56` × `.size40`,
+            // ~1.4:1) to give the capsule its horizontal pill shape rather
+            // than appearing as a circle.
             Button {
                 Task { await sendMessage(inputText, using: session) }
             } label: {
-                Image(systemName: "arrow.up.circle.fill")
-                    .font(.title2)
+                Image.arrowUp
+                    .font(.headline.weight(.bold))
+                    .foregroundStyle(.white)
+                    .frame(width: .size56, height: .size40)
+                    .background(Color.kozBonBlue, in: Capsule())
+                    .opacity(sendDisabled(session: session) ? 0.4 : 1.0)
+                    .animation(
+                        reduceMotion ? nil : .easeInOut(duration: 0.15),
+                        value: sendDisabled(session: session)
+                    )
             }
+            .buttonStyle(.plain)
             .disabled(sendDisabled(session: session))
             .accessibilityLabel(String(localized: Strings.Chat.send))
             .accessibilityHint(
@@ -350,9 +419,9 @@ public struct BonjourChatView: View {
         }
         isInputFocused = false
 
-        #if os(iOS)
-        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-        #endif
+        // Tick the counter — the `.sensoryFeedback` modifier attached to the
+        // NavigationStack observes this value and fires a medium impact haptic.
+        submitCount &+= 1
 
         let context = BonjourChatPromptBuilder.ChatContext(
             discoveredServices: viewModel.flatActiveServices,

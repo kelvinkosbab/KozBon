@@ -50,3 +50,36 @@ force_unwrapping:
 
 trailing_comma:
   mandatory_comma: false
+
+# MARK: - Custom Rules
+
+custom_rules:
+
+  # Forbids hard-coded SF Symbol name strings like `Image(systemName: "gear")`.
+  # All static icon references must flow through the named API exposed on
+  # `Image` in BonjourUI's `Image+Icons.swift`, which is itself backed by the
+  # `Iconography` string catalog in BonjourCore. That keeps every icon the
+  # app renders in one searchable place, gives us compile-time checking of
+  # every reference, and lets us swap a symbol app-wide from a single edit.
+  #
+  # Dynamic references — `Image(systemName: someVariable)` where the name
+  # comes from model data at runtime — do NOT trigger this rule because the
+  # regex only matches when the argument is an opening string literal (`"`).
+  # Those calls (e.g. `Image(systemName: serviceType.imageSystemName)`) are
+  # the intended escape hatch, documented in `Image+Icons.swift`.
+  #
+  # `excluded_match_kinds` filters out matches whose span overlaps a comment
+  # or doc-comment token, so the rule doesn't fire on `Image(systemName: "…")`
+  # that appears inside documentation examples. (Using `match_kinds` here
+  # would over-filter — the matched span contains punctuation and whitespace
+  # that belong to no syntax kind, so any whitelist approach rejects every
+  # match including the real violations.)
+  literal_sf_symbol_string:
+    name: "Literal SF Symbol string"
+    regex: 'Image\(systemName:\s*"'
+    message: "Use the named Image API from BonjourUI (e.g. `Image.chat`, `Image.arrowUp`) instead of a literal SF Symbol string. If the icon is missing, add a constant to Iconography.swift first, then expose it on `Image` in Image+Icons.swift."
+    severity: warning
+    excluded_match_kinds:
+      - comment
+      - doccomment
+      - doccomment.field

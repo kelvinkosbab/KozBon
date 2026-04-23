@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import BonjourCore
 import CoreUI
 
 // MARK: - EmptyStateOverlayView
@@ -76,7 +75,7 @@ struct EmptyStateOverlayView_Previews: PreviewProvider {
         )
 
         EmptyStateOverlayView(
-            image: Image(systemName: Iconography.antenna),
+            image: Image.antenna,
             title: "Some title saying something",
             actionTitle: "Start Scanning",
             action: {}

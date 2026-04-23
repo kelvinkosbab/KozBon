@@ -66,6 +66,14 @@ public enum Iconography {
     /// Refresh icon.
     public static let refresh = "arrow.clockwise"
 
+    // MARK: - Arrows
+
+    /// Upward arrow — used as the Send glyph in the chat compose bar.
+    public static let arrowUp = "arrow.up"
+
+    /// Upward-and-trailing arrow — used as the affordance on suggestion chips.
+    public static let arrowUpRight = "arrow.up.right"
+
     // MARK: - Clipboard & Copy
 
     /// Copy to clipboard icon.

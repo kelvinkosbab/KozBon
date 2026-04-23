@@ -57,8 +57,11 @@ public struct TypingIndicator: View {
                     .scaleEffect(scale(for: index))
             }
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 8)
+        // Vertical padding is noticeably larger than before so the capsule
+        // reads as a proper pill instead of a thin sliver — at vpad=8 the
+        // capsule was ~22pt tall and felt cramped against the dots.
+        .padding(.horizontal, 14)
+        .padding(.vertical, 12)
         .background(.ultraThinMaterial, in: Capsule())
         .padding(.top, 6)
         .onAppear {

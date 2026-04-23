@@ -95,7 +95,7 @@ struct SelectServiceTypeView: View {
                 title: serviceType.name,
                 detail: serviceType.fullType
             ) {
-                Image(systemName: selectedServiceType == serviceType ? Iconography.selected : Iconography.unselected)
+                (selectedServiceType == serviceType ? Image.selected : Image.unselected)
                     .font(.body).bold()
                     .foregroundStyle(selectedServiceType == serviceType ? Color.kozBonBlue : .secondary)
                     .accessibilityHidden(true)

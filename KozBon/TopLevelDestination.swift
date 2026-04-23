@@ -8,6 +8,7 @@
 import SwiftUI
 import BonjourCore
 import BonjourLocalization
+import BonjourUI
 
 // MARK: - TopLevelDestination
 
@@ -75,16 +76,16 @@ enum TopLevelDestination: Identifiable {
     var icon: Image {
         switch self {
         case .bonjour:
-            Iconography.bonjourImage
+            Image.bonjour
 
         case .bonjourServiceTypes:
-            Image(systemName: Iconography.serviceLibrary)
+            Image.serviceLibrary
 
         case .chat:
-            Image(systemName: Iconography.appleIntelligence)
+            Image.appleIntelligence
 
         case .settings:
-            Image(systemName: Iconography.settings)
+            Image.settings
         }
     }
 }

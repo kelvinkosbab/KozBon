@@ -50,3 +50,31 @@ force_unwrapping:
 
 trailing_comma:
   mandatory_comma: false
+
+# MARK: - Custom Rules
+#
+# Kept in sync with the project-root `.swiftlint.yml`. The SPM swiftlint
+# plugin reads this file when linting the package targets; the Xcode build
+# phase reads the project-root file when linting the app target. Both must
+# carry the same custom rules for coverage parity.
+
+custom_rules:
+
+  # Forbids hard-coded SF Symbol name strings like `Image(systemName: "gear")`.
+  # Every static icon reference must flow through the named API on `Image` in
+  # BonjourUI's `Image+Icons.swift`, which is backed by the `Iconography`
+  # string catalog in BonjourCore. That keeps the icon set in one searchable
+  # place and gives compile-time checking of every reference.
+  #
+  # Dynamic references — `Image(systemName: someVariable)` where the name
+  # comes from model data — do NOT trigger this rule because the regex only
+  # matches when the argument begins with a string literal (`"`).
+  literal_sf_symbol_string:
+    name: "Literal SF Symbol string"
+    regex: 'Image\(systemName:\s*"'
+    message: "Use the named Image API from BonjourUI (e.g. `Image.chat`, `Image.arrowUp`) instead of a literal SF Symbol string. If the icon is missing, add a constant to Iconography.swift first, then expose it on `Image` in Image+Icons.swift."
+    severity: warning
+    excluded_match_kinds:
+      - comment
+      - doccomment
+      - doccomment.field
