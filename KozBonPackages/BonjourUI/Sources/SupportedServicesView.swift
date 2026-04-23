@@ -34,12 +34,23 @@ public struct SupportedServicesView: View {
     public var body: some View {
         NavigationSplitView {
             List(selection: $viewModel.selectedServiceType) {
+                // User-created types appear ABOVE the built-in catalog so
+                // the user's own content is the first thing they see.
                 serviceTypeSection(
                     title: String(localized: Strings.Sections.customServiceTypes),
                     serviceTypes: viewModel.filteredCustomServiceTypes
                 )
+                // The "Built-in service types" header is only meaningful
+                // when a preceding custom section exists — the header
+                // primarily exists to separate *user content* from the
+                // system catalog. When there are no custom types, the
+                // built-in list is the only section and the header adds
+                // no signal, so we pass `nil` and the section renders
+                // unlabeled.
                 serviceTypeSection(
-                    title: String(localized: Strings.Sections.builtinServiceTypes),
+                    title: viewModel.filteredCustomServiceTypes.isEmpty
+                        ? nil
+                        : String(localized: Strings.Sections.builtinServiceTypes),
                     serviceTypes: viewModel.filteredBuiltInServiceTypes
                 )
             }
@@ -78,34 +89,57 @@ public struct SupportedServicesView: View {
         .focusedSceneValue(\.isCreateServiceTypePresented, $viewModel.isCreateCustomServiceTypePresented)
     }
 
+    /// Renders a list section for a group of service types, omitting
+    /// the whole section when empty and omitting just the header when
+    /// `title` is `nil`.
+    ///
+    /// A `nil` title is how we render the built-in catalog as an
+    /// unlabeled primary list in the no-custom-types case — the
+    /// "Built-in service types" header only earns its space when there's
+    /// a preceding custom section to differentiate from.
     @ViewBuilder
-    private func serviceTypeSection(title: String, serviceTypes: [BonjourServiceType]) -> some View {
+    private func serviceTypeSection(title: String?, serviceTypes: [BonjourServiceType]) -> some View {
         if !serviceTypes.isEmpty {
-            Section {
-                ForEach(serviceTypes, id: \.fullType) { serviceType in
-                    NavigationLink(value: serviceType) {
-                        TitleDetailStackView(
-                            title: serviceType.name,
-                            detail: serviceType.fullType
-                        ) {
-                            ServiceTypeBadge(serviceType: serviceType, style: .iconOnly)
-                        }
-                    }
-                    .draggable(serviceType.fullType)
-                    .accessibilityLabel("\(serviceType.name), \(serviceType.fullType)")
-                    .accessibilityHint(Strings.Accessibility.viewDetails(serviceType.name))
-                    .accessibilityActions {
-                        Button(Strings.Accessibility.copyField(serviceType.name)) {
-                            Clipboard.copy(serviceType.fullType)
-                        }
-                    }
-                    .contextMenu {
-                        serviceTypeContextMenu(serviceType: serviceType)
-                    }
+            if let title {
+                Section {
+                    serviceTypeRows(for: serviceTypes)
+                } header: {
+                    Text(verbatim: title)
+                        .accessibilityAddTraits(.isHeader)
                 }
-            } header: {
-                Text(verbatim: title)
-                    .accessibilityAddTraits(.isHeader)
+            } else {
+                Section {
+                    serviceTypeRows(for: serviceTypes)
+                }
+            }
+        }
+    }
+
+    /// The shared row content used by both the custom and built-in
+    /// sections. Extracted so the section body can be rendered inside
+    /// either the `Section(content:header:)` or `Section(content:)`
+    /// overload without duplicating the row wiring.
+    @ViewBuilder
+    private func serviceTypeRows(for serviceTypes: [BonjourServiceType]) -> some View {
+        ForEach(serviceTypes, id: \.fullType) { serviceType in
+            NavigationLink(value: serviceType) {
+                TitleDetailStackView(
+                    title: serviceType.name,
+                    detail: serviceType.fullType
+                ) {
+                    ServiceTypeBadge(serviceType: serviceType, style: .iconOnly)
+                }
+            }
+            .draggable(serviceType.fullType)
+            .accessibilityLabel("\(serviceType.name), \(serviceType.fullType)")
+            .accessibilityHint(Strings.Accessibility.viewDetails(serviceType.name))
+            .accessibilityActions {
+                Button(Strings.Accessibility.copyField(serviceType.name)) {
+                    Clipboard.copy(serviceType.fullType)
+                }
+            }
+            .contextMenu {
+                serviceTypeContextMenu(serviceType: serviceType)
             }
         }
     }

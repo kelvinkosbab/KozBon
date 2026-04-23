@@ -13,13 +13,16 @@ import BonjourModels
 import BonjourScanning
 import BonjourStorage
 
-// swiftlint:disable type_body_length
+// swiftlint:disable type_body_length file_length
 // Chat is a single cohesive surface — message list, empty-state suggestions,
-// streaming typing indicator, platform-gated keyboard handling, and the
-// compose bar all share tightly-coupled view state (`inputText`,
-// `isInputFocused`, `reduceMotion`, `session`). Splitting across multiple
-// types would force that state into bindings and parameter drilling for no
-// structural benefit.
+// streaming typing indicator, platform-gated keyboard handling, compose bar,
+// send logic, and haptic forwarding all share tightly-coupled view state
+// (`inputText`, `isInputFocused`, `reduceMotion`, `session`,
+// `sentenceHapticTracker`). Splitting across multiple types would force
+// that state into bindings and parameter drilling for no structural
+// benefit. The detection logic that *can* stand alone (completed-sentence
+// counting and its state machine) has already been extracted to
+// `ChatSentenceHapticTracker`.
 
 // MARK: - BonjourChatView
 
@@ -42,6 +45,14 @@ public struct BonjourChatView: View {
     /// boolean so consecutive sends reliably trigger the feedback — the
     /// modifier only fires on an actual value change.
     @State private var submitCount: Int = 0
+
+    /// Drives the light per-sentence haptic that plays while the assistant
+    /// streams a response. All detection and bookkeeping lives inside
+    /// `ChatSentenceHapticTracker` so this view can stay focused on
+    /// presentation. The view just forwards content/id/isGenerating
+    /// changes in via `.onChange` and binds `.sensoryFeedback` to the
+    /// tracker's `tickCount`.
+    @State private var sentenceHapticTracker = ChatSentenceHapticTracker()
 
     private var messageTransitionAnimation: Animation? {
         reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.75)
@@ -66,11 +77,28 @@ public struct BonjourChatView: View {
 
     public var body: some View {
         NavigationStack {
-            VStack(spacing: 0) {
+            Group {
                 if let session {
+                    // `.safeAreaInset(edge: .bottom)` attaches the compose bar
+                    // to the bottom of the scroll view *without* clipping the
+                    // scrollable content above it. The system keeps extending
+                    // the scroll region under the inset view, so messages
+                    // flow behind the input bar as the user scrolls.
+                    //
+                    // On iOS 26+ the text field and send button apply their
+                    // own Liquid Glass backgrounds, so the outer bar must
+                    // stay transparent — otherwise an extra `.bar` material
+                    // layer sits behind the inner glass and the effect
+                    // reads as frosted material instead of clear glass.
+                    // `.composeBarBackgroundForLegacySystems()` keeps `.bar`
+                    // on older iOS/macOS and on visionOS (where there's no
+                    // Liquid Glass) so content still has visual separation
+                    // from the compose area.
                     messageList(session: session)
-                    Divider()
-                    inputBar(session: session)
+                        .safeAreaInset(edge: .bottom, spacing: 0) {
+                            inputBar(session: session)
+                                .composeBarBackgroundForLegacySystems()
+                        }
                 } else {
                     ContentUnavailableView(
                         String(localized: Strings.Chat.emptyTitle),
@@ -96,13 +124,58 @@ public struct BonjourChatView: View {
             // on app launch, which is the expected lifetime for on-device
             // multi-turn chats with no persistence.
             //
-            // Tactile confirmation that a message was dispatched. SwiftUI's
-            // `.sensoryFeedback` is a no-op on platforms without haptics
-            // (macOS, tvOS), so no `#if` guards are needed. `.medium` weight
-            // is deliberately more noticeable than the default `.light` —
-            // "send" is a discrete, confirm-worthy action.
+            // Tactile confirmation that a message was dispatched, plus a
+            // lighter tap for each sentence the model completes while
+            // streaming. The hierarchy is: `.medium` for submit (discrete
+            // action) > `.light` for sentence tick (ambient progress), so
+            // the user can feel both without them competing.
+            //
+            // `.sensoryFeedback(_:trigger:)` is iOS 17+ / macOS 14+ but
+            // visionOS-26-only, and our visionOS deployment target is 2.0.
+            // Vision Pro devices don't have a taptic engine anyway, so
+            // gating these out on visionOS costs nothing in practice.
+            #if !os(visionOS)
             .sensoryFeedback(.impact(weight: .medium), trigger: submitCount)
+            .sensoryFeedback(.impact(weight: .light), trigger: sentenceHapticTracker.tickCount)
+            #endif
+            .onChange(of: session?.messages.last?.id) { _, newId in
+                sentenceHapticTracker.onMessageIdChanged(newId)
+            }
+            .onChange(of: session?.messages.last?.content) { _, _ in
+                forwardStreamingStateToHapticTracker()
+            }
+            .onChange(of: session?.isGenerating) { _, _ in
+                forwardStreamingStateToHapticTracker()
+            }
+            // Reset the chat to its empty "what would you like to ask"
+            // state every time the Chat tab becomes visible. SwiftUI keeps
+            // tab views alive when the user switches to another tab, so
+            // without this the conversation would persist indefinitely
+            // and the user would land on a wall of old messages instead
+            // of the recommended-prompts hero view. On the very first
+            // appearance after launch the session is already empty, so
+            // `reset()` and the `inputText` clear are safe no-ops — same
+            // behavior as a cold start.
+            .onAppear {
+                session?.reset()
+                inputText = ""
+                isInputFocused = false
+            }
         }
+    }
+
+    /// Forwards the current streaming state into the sentence-haptic
+    /// tracker. Bails when the last message isn't an assistant turn so
+    /// user-submitted messages don't accidentally fire sentence haptics
+    /// (the submit action has its own dedicated haptic above).
+    private func forwardStreamingStateToHapticTracker() {
+        guard let session,
+              let lastMessage = session.messages.last,
+              lastMessage.role == .assistant else { return }
+        sentenceHapticTracker.onStreamingStateChanged(
+            content: lastMessage.content,
+            isFinal: !session.isGenerating
+        )
     }
 
     /// The localized title shown in the inline navigation bar.
@@ -121,7 +194,14 @@ public struct BonjourChatView: View {
 
     // MARK: - Message List
 
+    // The three `.onChange` handlers below all coordinate scroll position
+    // through the same `ScrollViewProxy` captured by `ScrollViewReader`.
+    // Extracting any of them would push the proxy through another
+    // function for no structural benefit, so we disable the length rule
+    // locally — same precedent as the file-level `type_body_length` and
+    // `file_length` disables above.
     @ViewBuilder
+    // swiftlint:disable:next function_body_length
     private func messageList(session: any BonjourChatSessionProtocol) -> some View {
         ZStack {
             if session.messages.isEmpty {
@@ -171,6 +251,26 @@ public struct BonjourChatView: View {
                     .onChange(of: session.messages.last?.content) {
                         if let last = session.messages.last {
                             withAnimation(reduceMotion ? nil : .easeOut(duration: 0.15)) {
+                                proxy.scrollTo(last.id, anchor: .bottom)
+                            }
+                        }
+                    }
+                    // When the user taps into the compose field, scroll the
+                    // latest message to the bottom of the visible region so
+                    // it sits right above the keyboard — without this the
+                    // keyboard slides up and covers whatever the user was
+                    // reading, leaving no context as they type.
+                    //
+                    // A ~300ms delay lets the keyboard's safe-area insets
+                    // propagate before we compute the scroll position;
+                    // scrolling synchronously with the focus change would
+                    // use the pre-keyboard layout and leave the last
+                    // message clipped under the keyboard.
+                    .onChange(of: isInputFocused) { _, focused in
+                        guard focused, let last = session.messages.last else { return }
+                        Task { @MainActor in
+                            try? await Task.sleep(for: .milliseconds(300))
+                            withAnimation(reduceMotion ? nil : .easeOut(duration: 0.25)) {
                                 proxy.scrollTo(last.id, anchor: .bottom)
                             }
                         }
@@ -316,6 +416,12 @@ public struct BonjourChatView: View {
             // padded capsule so the field has the same comfortable touch
             // depth as an iMessage compose bar, and so it grows cleanly
             // when the user types a multi-line message.
+            //
+            // On iOS 26+ the `.glassOrMaterialBackground` helper applies
+            // Liquid Glass; older systems get `.ultraThinMaterial` instead.
+            // Either way there is no solid tinted fill — the field
+            // visually rides on top of whatever sits behind the compose
+            // bar (the streaming chat messages blur through it cleanly).
             TextField(
                 String(localized: Strings.Chat.inputPlaceholder),
                 text: $inputText,
@@ -324,8 +430,7 @@ public struct BonjourChatView: View {
             .textFieldStyle(.plain)
             .padding(.horizontal, .space14)
             .padding(.vertical, .space10)
-            .background(
-                Color.secondary.opacity(0.15),
+            .glassOrMaterialBackground(
                 in: RoundedRectangle(cornerRadius: .radius20, style: .continuous)
             )
             .lineLimit(1...5)
@@ -337,22 +442,12 @@ public struct BonjourChatView: View {
             .onSubmit {
                 Task { await sendMessage(inputText, using: session) }
             }
-            // Only iOS has a hardware/software keyboard toolbar placement.
-            // macOS has the menu bar, visionOS uses a floating virtual
-            // keyboard with its own built-in dismiss affordance — both
-            // reject `ToolbarItemPlacement.keyboard`.
-            #if os(iOS)
-            .toolbar {
-                if isInputFocused {
-                    ToolbarItemGroup(placement: .keyboard) {
-                        Spacer()
-                        Button(String(localized: Strings.Buttons.done)) {
-                            isInputFocused = false
-                        }
-                    }
-                }
-            }
-            #endif
+            // No keyboard-accessory "Done" button. The `scrollDismissesKeyboard
+            // (.interactively)` modifier on the message list already lets the
+            // user dismiss the keyboard by dragging the chat downward, and
+            // tapping `return` / the send button both dispatch the message.
+            // A persistent "Done" bar above the keyboard was redundant and
+            // competed visually with the compose UI.
 
             // Fixed-size capsule send button. The height matches the single-
             // line text field height (`.size40` ≈ vertical padding + body line
@@ -364,6 +459,13 @@ public struct BonjourChatView: View {
             // Width is deliberately larger than height (`.size56` × `.size40`,
             // ~1.4:1) to give the capsule its horizontal pill shape rather
             // than appearing as a circle.
+            //
+            // On iOS 26+ the background is a *tinted* Liquid Glass capsule
+            // (`.glassEffect(.regular.tint(.kozBonBlue).interactive())`),
+            // which preserves the brand color while participating in the
+            // glass layer hierarchy and getting system press/hover
+            // feedback for free. Older systems fall back to the solid
+            // `.kozBonBlue` fill so the primary action still reads.
             Button {
                 Task { await sendMessage(inputText, using: session) }
             } label: {
@@ -371,7 +473,7 @@ public struct BonjourChatView: View {
                     .font(.headline.weight(.bold))
                     .foregroundStyle(.white)
                     .frame(width: .size56, height: .size40)
-                    .background(Color.kozBonBlue, in: Capsule())
+                    .glassOrTintedBackground(tint: .kozBonBlue, in: Capsule())
                     .opacity(sendDisabled(session: session) ? 0.4 : 1.0)
                     .animation(
                         reduceMotion ? nil : .easeInOut(duration: 0.15),

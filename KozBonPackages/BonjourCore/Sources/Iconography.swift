@@ -38,7 +38,7 @@ public enum Iconography {
     // MARK: - Navigation & Tabs
 
     /// Supported services tab icon (library).
-    public static let serviceLibrary = "books.vertical"
+    public static let serviceLibrary = "list.bullet"
 
     /// Antenna icon for broadcasting and wireless services.
     public static let antenna = "antenna.radiowaves.left.and.right"
