@@ -13,8 +13,16 @@ import BonjourModels
 
 // MARK: - BonjourChatPromptBuilderTests
 
+// One narrow `@Test` per invariant — system-instruction rules, context
+// sections (scan status, discovered services, published services,
+// library, per-service fields), query-triggered descriptions, and user-
+// turn composition. Splitting by section would scatter tightly-related
+// prompt-shape assertions across files and make it harder to see the
+// full prompt contract at a glance, so the length rule is disabled for
+// this suite.
 @Suite("BonjourChatPromptBuilder")
 @MainActor
+// swiftlint:disable:next type_body_length
 struct BonjourChatPromptBuilderTests {
 
     // MARK: - Helpers
@@ -124,7 +132,11 @@ struct BonjourChatPromptBuilderTests {
         ]
         let context = BonjourChatPromptBuilder.ChatContext(serviceTypeLibrary: library)
         let block = BonjourChatPromptBuilder.contextBlock(context: context)
-        #expect(block.contains("2 types supported"))
+        // Library now renders as "Service type library (N types, grouped
+        // by category)" so the model knows to use the taxonomy. The test
+        // just pins that the count is surfaced; the exact phrasing around
+        // it can evolve.
+        #expect(block.contains("(2 types"))
     }
 
     @Test func contextBlockIncludesLibraryNames() {
@@ -279,5 +291,187 @@ struct BonjourChatPromptBuilderTests {
         // reads decisively, not apologetically.
         let instructions = BonjourChatPromptBuilder.systemInstructions()
         #expect(instructions.contains("That's outside what I can help with"))
+    }
+
+    // MARK: - Context Block: Scan Status
+    //
+    // The scan-freshness line is the model's signal for whether an
+    // empty discovered list means "nothing here" or "scan hasn't run
+    // yet". Both branches matter: missing this distinction produces
+    // the exact "I don't have enough information" responses that
+    // triggered this whole audit.
+
+    @Test func scanStatusReportsNoScanWhenLastScanTimeIsNil() {
+        let context = BonjourChatPromptBuilder.ChatContext()
+        let block = BonjourChatPromptBuilder.contextBlock(context: context)
+        #expect(block.contains("no scan has run yet"))
+    }
+
+    @Test func scanStatusReportsElapsedTimeWhenLastScanKnown() {
+        let tenSecondsAgo = Date(timeIntervalSinceNow: -10)
+        let context = BonjourChatPromptBuilder.ChatContext(lastScanTime: tenSecondsAgo)
+        let block = BonjourChatPromptBuilder.contextBlock(context: context)
+        #expect(block.contains("last scan started"))
+        #expect(block.contains("s ago"))
+    }
+
+    @Test func scanStatusReportsInProgressTakesPriority() {
+        // Even with a prior lastScanTime, `isScanning = true` means
+        // results are still populating and the model should caveat
+        // accordingly. The in-progress line must take priority.
+        let earlier = Date(timeIntervalSinceNow: -30)
+        let context = BonjourChatPromptBuilder.ChatContext(
+            lastScanTime: earlier,
+            isScanning: true
+        )
+        let block = BonjourChatPromptBuilder.contextBlock(context: context)
+        #expect(block.contains("in progress"))
+        #expect(!block.contains("last scan started"))
+    }
+
+    // MARK: - Context Block: Rich Per-Service Data
+
+    @Test func discoveredServiceLineIncludesTransportLayer() {
+        // Transport (tcp/udp) is called out because the model needs it
+        // to differentiate protocols that exist on both (e.g. DNS,
+        // some streaming) and to caveat behaviors that depend on it.
+        let service = makeService(name: "Printer", type: "ipp")
+        let context = BonjourChatPromptBuilder.ChatContext(discoveredServices: [service])
+        let block = BonjourChatPromptBuilder.contextBlock(context: context)
+        #expect(block.contains("· tcp ·"))
+    }
+
+    @Test func discoveredServiceLineIncludesHostname() {
+        let service = makeService(name: "Apple TV", type: "airplay")
+        let context = BonjourChatPromptBuilder.ChatContext(discoveredServices: [service])
+        let block = BonjourChatPromptBuilder.contextBlock(context: context)
+        #expect(block.contains("host:"))
+    }
+
+    @Test func emptyDiscoveredListExplainsScanMayNotHaveRunYet() {
+        // When the context is empty, the block must distinguish "nothing
+        // on the network" from "scan hasn't populated yet". The richer
+        // copy tells the model to suggest waiting rather than declaring
+        // the network empty.
+        let context = BonjourChatPromptBuilder.ChatContext()
+        let block = BonjourChatPromptBuilder.contextBlock(context: context)
+        #expect(block.contains("scan has not populated any results"))
+    }
+
+    // MARK: - Context Block: Grouped Library
+
+    @Test func libraryListsCategoriesWhenTypesMatch() {
+        // Types that belong in known categories should render under
+        // their category heading so the model doesn't have to infer
+        // taxonomy from names alone.
+        let library = [
+            makeServiceType(name: "AirPlay", type: "airplay"),
+            makeServiceType(name: "HomeKit", type: "hap"),
+            makeServiceType(name: "IPP", type: "ipp")
+        ]
+        let context = BonjourChatPromptBuilder.ChatContext(serviceTypeLibrary: library)
+        let block = BonjourChatPromptBuilder.contextBlock(context: context)
+        #expect(block.contains("Apple Devices"))
+        #expect(block.contains("Smart Home"))
+        #expect(block.contains("Printers & Scanners"))
+    }
+
+    @Test func libraryBucketsUncategorizedTypesUnderOther() {
+        // Types not in any predefined category must still appear so the
+        // model knows they exist. An "Other" bucket catches them.
+        let library = [
+            makeServiceType(name: "Obscure", type: "some-unknown-proto")
+        ]
+        let context = BonjourChatPromptBuilder.ChatContext(serviceTypeLibrary: library)
+        let block = BonjourChatPromptBuilder.contextBlock(context: context)
+        #expect(block.contains("Other:"))
+        #expect(block.contains("Obscure"))
+    }
+
+    // MARK: - Queried Descriptions Block
+
+    @Test func queriedBlockEmptyWhenQueryMatchesNoType() {
+        let library = [makeServiceType(name: "HTTP", type: "http")]
+        let context = BonjourChatPromptBuilder.ChatContext(serviceTypeLibrary: library)
+        let block = BonjourChatPromptBuilder.queriedDescriptionsBlock(
+            context: context,
+            query: "What's the weather today?"
+        )
+        #expect(block.isEmpty)
+    }
+
+    @Test func queriedBlockIncludesMatchedTypeDescription() {
+        let serviceType = BonjourServiceType(
+            name: "AirPlay",
+            type: "airplay",
+            transportLayer: .tcp,
+            detail: "Streams audio/video from Apple devices to compatible receivers."
+        )
+        let context = BonjourChatPromptBuilder.ChatContext(serviceTypeLibrary: [serviceType])
+        let block = BonjourChatPromptBuilder.queriedDescriptionsBlock(
+            context: context,
+            query: "How does AirPlay work on my network?"
+        )
+        #expect(block.contains("AirPlay"))
+        #expect(block.contains("Streams audio"))
+    }
+
+    @Test func queriedBlockIsCaseInsensitive() {
+        let serviceType = BonjourServiceType(
+            name: "HomeKit",
+            type: "hap",
+            transportLayer: .tcp,
+            detail: "Apple's smart-home accessory protocol."
+        )
+        let context = BonjourChatPromptBuilder.ChatContext(serviceTypeLibrary: [serviceType])
+        let block = BonjourChatPromptBuilder.queriedDescriptionsBlock(
+            context: context,
+            query: "Tell me about homekit setup"
+        )
+        #expect(block.contains("HomeKit"))
+    }
+
+    @Test func queriedBlockSkipsTypesWithoutDetail() {
+        // If a matched type has no localized detail, there's nothing
+        // to tell the model that it wouldn't already know — so it's
+        // skipped rather than shipping an empty placeholder line.
+        let typed = BonjourServiceType(name: "Ghost", type: "ghost", transportLayer: .tcp)
+        let context = BonjourChatPromptBuilder.ChatContext(serviceTypeLibrary: [typed])
+        let block = BonjourChatPromptBuilder.queriedDescriptionsBlock(
+            context: context,
+            query: "ghost service running"
+        )
+        #expect(block.isEmpty)
+    }
+
+    // MARK: - User Turn: Queried Descriptions Integration
+
+    @Test func userTurnIncludesQueriedBlockWhenMatch() {
+        let serviceType = BonjourServiceType(
+            name: "SSH",
+            type: "ssh",
+            transportLayer: .tcp,
+            detail: "Secure shell for remote terminal access."
+        )
+        let context = BonjourChatPromptBuilder.ChatContext(serviceTypeLibrary: [serviceType])
+        let turn = BonjourChatPromptBuilder.userTurn(
+            message: "Can I ssh to this machine?",
+            context: context,
+            isFirstTurn: true,
+            contextChanged: false
+        )
+        #expect(turn.contains("<referenced>"))
+        #expect(turn.contains("Secure shell"))
+    }
+
+    @Test func userTurnOmitsReferencedBlockWhenNoMatch() {
+        let context = BonjourChatPromptBuilder.ChatContext()
+        let turn = BonjourChatPromptBuilder.userTurn(
+            message: "Hello!",
+            context: context,
+            isFirstTurn: true,
+            contextChanged: false
+        )
+        #expect(!turn.contains("<referenced>"))
     }
 }

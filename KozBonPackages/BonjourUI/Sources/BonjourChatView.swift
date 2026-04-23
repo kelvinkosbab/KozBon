@@ -160,7 +160,21 @@ public struct BonjourChatView: View {
                 session?.reset()
                 inputText = ""
                 isInputFocused = false
+                // Kick off a scan if one isn't already running. Users
+                // who open the app and jump straight to Chat without
+                // visiting Discover would otherwise get an empty
+                // `discoveredServices` context, which the model honestly
+                // reports as "I don't see anything on your network" —
+                // the data wasn't missing, the scan just never started.
+                // `load()` has its own `isProcessing` guard so a call
+                // here while Discover is already scanning is a no-op.
+                viewModel.load()
             }
+            // Page-level handle for UI tests so a test can find the
+            // Chat tab without needing to know its current nav title
+            // (which is platform-dependent: "Chat" on iOS, "Explore"
+            // on macOS/visionOS).
+            .accessibilityIdentifier("chat_page")
         }
     }
 
@@ -230,10 +244,23 @@ public struct BonjourChatView: View {
                                     .foregroundStyle(.red)
                                     .padding(.horizontal)
                                     .transition(.opacity)
+                                    // Without this, VoiceOver reads the raw
+                                    // error text and users relying on the red
+                                    // color as the error signal are excluded.
+                                    // Matches the `Strings.Accessibility.error`
+                                    // format used throughout the rest of the
+                                    // app (CreateTxtRecordView, BroadcastView).
+                                    .accessibilityLabel(Strings.Accessibility.error(error))
                             }
                         }
                         .padding()
                     }
+                    // Announce the scroll region to VoiceOver users as
+                    // "Conversation" so they know what they're entering
+                    // when they swipe into it. Also gives UI tests a
+                    // stable handle on the messages collection.
+                    .accessibilityLabel(String(localized: Strings.Accessibility.chatConversation))
+                    .accessibilityIdentifier("chat_message_list")
                     // `scrollDismissesKeyboard` is unavailable on visionOS —
                     // the Vision Pro uses a floating virtual keyboard that
                     // doesn't need an in-scroll-view dismiss gesture.
@@ -306,24 +333,54 @@ public struct BonjourChatView: View {
     private func emptyState(session: any BonjourChatSessionProtocol) -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
+                // Combine the icon + title + subtitle into one VoiceOver
+                // element so swipe navigation doesn't treat them as three
+                // unrelated fragments. The icon is decorative (hidden),
+                // the title carries the `.isHeader` trait so rotor
+                // navigation lets users jump to it, and the combined
+                // element's label is the title + subtitle read together.
                 VStack(alignment: .leading, spacing: 8) {
                     Image.appleIntelligence
                         .font(.largeTitle)
                         .foregroundStyle(Color.kozBonBlue)
+                        .accessibilityHidden(true)
                     Text(Strings.Chat.emptyTitle)
                         .font(.title2).bold()
+                        .accessibilityAddTraits(.isHeader)
                     Text(Strings.Chat.emptySubtitle)
                         .font(.body)
                         .foregroundStyle(.secondary)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .accessibilityElement(children: .combine)
+                .accessibilityIdentifier("chat_empty_state")
 
                 VStack(spacing: 8) {
-                    suggestionButton(text: String(localized: Strings.Chat.suggestion1), session: session)
-                    suggestionButton(text: String(localized: Strings.Chat.suggestion2), session: session)
-                    suggestionButton(text: String(localized: Strings.Chat.suggestion3), session: session)
-                    suggestionButton(text: String(localized: Strings.Chat.suggestion4), session: session)
-                    suggestionButton(text: String(localized: Strings.Chat.suggestion5), session: session)
+                    suggestionButton(
+                        text: String(localized: Strings.Chat.suggestion1),
+                        identifier: "chat_suggestion_1",
+                        session: session
+                    )
+                    suggestionButton(
+                        text: String(localized: Strings.Chat.suggestion2),
+                        identifier: "chat_suggestion_2",
+                        session: session
+                    )
+                    suggestionButton(
+                        text: String(localized: Strings.Chat.suggestion3),
+                        identifier: "chat_suggestion_3",
+                        session: session
+                    )
+                    suggestionButton(
+                        text: String(localized: Strings.Chat.suggestion4),
+                        identifier: "chat_suggestion_4",
+                        session: session
+                    )
+                    suggestionButton(
+                        text: String(localized: Strings.Chat.suggestion5),
+                        identifier: "chat_suggestion_5",
+                        session: session
+                    )
                 }
             }
             .padding()
@@ -331,7 +388,11 @@ public struct BonjourChatView: View {
     }
 
     @ViewBuilder
-    private func suggestionButton(text: String, session: any BonjourChatSessionProtocol) -> some View {
+    private func suggestionButton(
+        text: String,
+        identifier: String,
+        session: any BonjourChatSessionProtocol
+    ) -> some View {
         Button {
             Task { await sendMessage(text, using: session) }
         } label: {
@@ -346,10 +407,18 @@ public struct BonjourChatView: View {
             .padding()
             .background(Color.kozBonBlue.opacity(0.1))
             .cornerRadius(12)
+            // Explicitly set the hit-test shape to match the visible
+            // pill. `.buttonStyle(.plain)` otherwise follows the label's
+            // intrinsic bounds, which with multi-line text + spacer is
+            // usually correct but can miss tall empty regions on
+            // wrapped suggestions. Matching the shape to the background
+            // keeps the whole card tappable.
+            .contentShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
         }
         .buttonStyle(.plain)
         .accessibilityLabel(text)
         .accessibilityHint(String(localized: Strings.Accessibility.chatSuggestionHint))
+        .accessibilityIdentifier(identifier)
     }
 
     // MARK: - Message Bubble
@@ -445,6 +514,7 @@ public struct BonjourChatView: View {
             .disabled(session.isGenerating)
             .accessibilityLabel(String(localized: Strings.Chat.inputPlaceholder))
             .accessibilityHint(String(localized: Strings.Accessibility.chatInputHint))
+            .accessibilityIdentifier("chat_input_field")
             .onSubmit {
                 Task { await sendMessage(inputText, using: session) }
             }
@@ -478,8 +548,24 @@ public struct BonjourChatView: View {
                 Image.arrowUp
                     .font(.headline.weight(.bold))
                     .foregroundStyle(.white)
+                    // The glyph is purely decorative — the Button's own
+                    // a11y label ("Send") is what VoiceOver should
+                    // announce. Hiding the Image keeps the tree clean
+                    // and prevents the SF Symbol default name from ever
+                    // leaking through in edge cases.
+                    .accessibilityHidden(true)
                     .frame(width: .size56, height: .size40)
                     .glassOrTintedBackground(tint: .kozBonBlue, in: Capsule())
+                    // Make the entire `.size56 × .size40` capsule tappable,
+                    // not just the tiny intrinsic-size arrow glyph at its
+                    // center. `.buttonStyle(.plain)` defaults to hit-
+                    // testing the label's intrinsic content — with a small
+                    // `Image` inside a much larger `.frame`, most of the
+                    // visually-filled pill was NOT tappable, and taps near
+                    // the capsule edges silently missed. This was the
+                    // "follow-up send doesn't work" symptom: users were
+                    // hitting the pill, not the glyph.
+                    .contentShape(Capsule())
                     .opacity(sendDisabled(session: session) ? 0.4 : 1.0)
                     .animation(
                         reduceMotion ? nil : .easeInOut(duration: 0.15),
@@ -494,6 +580,7 @@ public struct BonjourChatView: View {
                     ? String(localized: Strings.Accessibility.chatSendDisabledHint)
                     : String(localized: Strings.Accessibility.chatSendHint)
             )
+            .accessibilityIdentifier("chat_send_button")
         }
         .padding()
     }
@@ -545,7 +632,9 @@ public struct BonjourChatView: View {
         let context = BonjourChatPromptBuilder.ChatContext(
             discoveredServices: viewModel.flatActiveServices,
             publishedServices: viewModel.sortedPublishedServices,
-            serviceTypeLibrary: BonjourServiceType.fetchAll()
+            serviceTypeLibrary: BonjourServiceType.fetchAll(),
+            lastScanTime: viewModel.lastScanTime,
+            isScanning: viewModel.serviceScanner.isProcessing
         )
 
         session.responseLength = BonjourServicePromptBuilder.ResponseLength(

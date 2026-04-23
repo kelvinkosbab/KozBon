@@ -687,6 +687,14 @@ public enum Strings {
         public static var chatSuggestionHint: LocalizedStringResource {
             .init("a11y_chat_suggestion_hint", bundle: .atURL(Bundle.module.bundleURL))
         }
+
+        /// VoiceOver region label for the scrollable message list on the
+        /// Chat tab. Announces "Conversation" when the user swipes into
+        /// the scroll view so it reads as a distinct region instead of
+        /// an unlabeled collection of message bubbles.
+        public static var chatConversation: LocalizedStringResource {
+            .init("a11y_chat_conversation", bundle: .atURL(Bundle.module.bundleURL))
+        }
     }
 
     // MARK: - Settings
