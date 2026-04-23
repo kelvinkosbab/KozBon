@@ -131,13 +131,22 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                     Text(Strings.Sections.additionalDetails)
                         .accessibilityAddTraits(.isHeader)
                 } footer: {
-                    VStack(alignment: .leading, spacing: 4) {
+                    // Stack the three footnotes that belong under the
+                    // details field: any validation error, the Insights
+                    // context note (what this text is used for), and
+                    // the form-wide best-practices guidance. Putting
+                    // them in the last section's footer — instead of a
+                    // separate empty section below it — avoids the
+                    // visible gap that inset-grouped card spacing
+                    // introduces between sections.
+                    VStack(alignment: .leading, spacing: 8) {
                         if let detailsError {
                             Text(verbatim: detailsError)
                                 .foregroundStyle(.red)
                                 .accessibilityLabel(Strings.Accessibility.error(detailsError))
                         }
                         Text(Strings.Sections.aiContextFooter)
+                        Text(Strings.Guidance.createServiceType)
                     }
                 }
             }

@@ -697,6 +697,30 @@ public enum Strings {
         }
     }
 
+    // MARK: - Guidance
+
+    /// Instructional footer text shown under long-form user-input forms
+    /// (create service type, broadcast a service, add a TXT record). The
+    /// content is intentionally short — a footnote-sized block of tips
+    /// that guides first-time users without crowding the form.
+    public enum Guidance {
+
+        /// Best-practice tips for the create-service-type form.
+        public static var createServiceType: LocalizedStringResource {
+            .init("guidance_create_service_type", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Best-practice tips for the broadcast-a-service form.
+        public static var broadcastService: LocalizedStringResource {
+            .init("guidance_broadcast_service", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Explains what TXT records publish and how clients use them.
+        public static var txtRecord: LocalizedStringResource {
+            .init("guidance_txt_record", bundle: .atURL(Bundle.module.bundleURL))
+        }
+    }
+
     // MARK: - Settings
 
     public enum Settings {

@@ -284,6 +284,13 @@ struct BroadcastBonjourServiceView: View {
         } header: {
             Text(Strings.Sections.txtRecords)
                 .accessibilityAddTraits(.isHeader)
+        } footer: {
+            // Best-practices guidance for the whole form. Rendered in
+            // the last section's footer (rather than a separate empty
+            // section below it) so it sits tight against the TXT
+            // records section instead of adding inset-grouped card
+            // spacing between them.
+            Text(Strings.Guidance.broadcastService)
         }
     }
 

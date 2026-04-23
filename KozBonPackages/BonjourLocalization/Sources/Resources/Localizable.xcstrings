@@ -12711,6 +12711,129 @@
         }
       }
     },
+    "guidance_create_service_type": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tips: Use a short, human-readable name (e.g., “Web Server”). For the type, follow the IANA service-name format — lowercase letters, digits, and hyphens only. The app adds the leading underscore and transport suffix automatically. Details help the on-device model explain this service when a user taps Insights."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Consejos: Usa un nombre corto y legible (por ejemplo, «Servidor web»). Para el tipo, sigue el formato de nombre de servicio IANA: solo letras minúsculas, dígitos y guiones. La app agrega automáticamente el guion bajo inicial y el sufijo de transporte. Los detalles ayudan al modelo integrado a explicar este servicio cuando un usuario toca Información."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conseils : Utilisez un nom court et lisible (p. ex. « Serveur web »). Pour le type, suivez le format de nom de service IANA — lettres minuscules, chiffres et tirets uniquement. L’app ajoute automatiquement le tiret bas initial et le suffixe de transport. Les détails aident le modèle embarqué à expliquer ce service lorsque l’utilisateur appuie sur Aperçus."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tipps: Verwende einen kurzen, lesbaren Namen (z. B. „Webserver“). Für den Typ nutze das IANA-Dienstnamensformat — nur Kleinbuchstaben, Ziffern und Bindestriche. Die App fügt den führenden Unterstrich und das Transport-Suffix automatisch hinzu. Die Details helfen dem integrierten Modell, diesen Dienst zu erklären, wenn ein Benutzer auf Einblicke tippt."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ヒント: 短くて読みやすい名前を使用してください（例:「Webサーバー」）。タイプにはIANAサービス名形式を使います — 小文字、数字、ハイフンのみ。アプリは先頭のアンダースコアと転送層のサフィックスを自動的に追加します。詳細は、ユーザーがインサイトをタップしたときにデバイス上のモデルがこのサービスを説明するのに役立ちます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "提示：使用简短、易读的名称（例如「Web服务器」）。类型请遵循IANA服务名称格式——仅使用小写字母、数字和连字符。应用会自动添加开头的下划线和传输层后缀。详细信息有助于设备端模型在用户点击「洞察」时解释此服务。"
+          }
+        }
+      }
+    },
+    "guidance_broadcast_service": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tips: Pick the service type that matches the protocol your service speaks. Use the port it’s actually listening on — standard ports like 80 (HTTP) or 22 (SSH) make discovery easier. Keep the domain “local.” for local-network discovery. TXT records let clients see your service’s capabilities before connecting."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Consejos: Elige el tipo de servicio que coincida con el protocolo que usa tu servicio. Usa el puerto en el que realmente escucha — los puertos estándar como 80 (HTTP) o 22 (SSH) facilitan la detección. Mantén el dominio «local.» para detección en la red local. Los registros TXT permiten a los clientes ver las capacidades del servicio antes de conectarse."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conseils : Choisissez le type de service correspondant au protocole utilisé. Utilisez le port réellement en écoute — les ports standard comme 80 (HTTP) ou 22 (SSH) facilitent la découverte. Conservez le domaine « local. » pour la découverte sur le réseau local. Les enregistrements TXT permettent aux clients de voir les capacités du service avant de s’y connecter."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tipps: Wähle den Diensttyp, der zum Protokoll deines Dienstes passt. Verwende den Port, auf dem dein Dienst tatsächlich lauscht — Standardports wie 80 (HTTP) oder 22 (SSH) erleichtern die Erkennung. Behalte die Domain „local.“ für die lokale Netzwerkerkennung bei. TXT-Einträge ermöglichen Clients, die Fähigkeiten deines Dienstes vor der Verbindung einzusehen."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ヒント: サービスが話すプロトコルに一致するサービスタイプを選択してください。実際にリッスンしているポートを使用します — 80（HTTP）や22（SSH）などの標準ポートを使うと検出が容易になります。ローカルネットワーク検出のためドメインは「local.」のままにしてください。TXTレコードにより、クライアントは接続前にサービスの機能を確認できます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "提示：选择与服务所使用协议相匹配的服务类型。使用服务实际监听的端口——使用标准端口（如80 (HTTP) 或22 (SSH)）更便于发现。保持域为「local.」以在本地网络中发现服务。TXT记录让客户端在连接前即可了解服务的功能。"
+          }
+        }
+      }
+    },
+    "guidance_txt_record": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TXT records publish key-value metadata alongside your service so clients can inspect it before connecting. Common uses: model and firmware version, protocol version, supported features, a friendly name, or configuration hints. Keys are short ASCII identifiers; values can be any string."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Los registros TXT publican metadatos clave-valor junto con tu servicio para que los clientes puedan inspeccionarlos antes de conectarse. Usos habituales: modelo y versión del firmware, versión del protocolo, funciones admitidas, un nombre descriptivo o pistas de configuración. Las claves son identificadores ASCII cortos; los valores pueden ser cualquier cadena."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les enregistrements TXT publient des métadonnées clé-valeur à côté de votre service, afin que les clients puissent les inspecter avant de se connecter. Utilisations courantes : modèle et version du firmware, version du protocole, fonctionnalités prises en charge, nom convivial ou indications de configuration. Les clés sont de courts identifiants ASCII ; les valeurs peuvent être n’importe quelle chaîne."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TXT-Einträge veröffentlichen Schlüssel-Wert-Metadaten neben deinem Dienst, sodass Clients sie vor der Verbindung einsehen können. Typische Verwendung: Modell und Firmware-Version, Protokollversion, unterstützte Funktionen, ein Anzeigename oder Konfigurationshinweise. Schlüssel sind kurze ASCII-Bezeichner; Werte können beliebige Zeichenfolgen sein."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TXTレコードは、サービスとともにキーと値のメタデータを公開し、クライアントが接続前にそれを確認できるようにします。一般的な用途: モデルとファームウェアのバージョン、プロトコルバージョン、サポートされる機能、フレンドリー名、または構成のヒント。キーは短いASCII識別子です。値は任意の文字列にできます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TXT记录会与您的服务一起发布键值元数据，使客户端能够在连接前进行检查。常见用途：型号和固件版本、协议版本、支持的功能、友好名称或配置提示。键是简短的ASCII标识符；值可以是任何字符串。"
+          }
+        }
+      }
+    },
     "settings_ai_response_length": {
       "extractionState": "manual",
       "localizations": {

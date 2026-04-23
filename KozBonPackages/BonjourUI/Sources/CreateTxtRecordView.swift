@@ -88,10 +88,19 @@ struct CreateTxtRecordView: View {
                     Text(Strings.Sections.recordValue)
                         .accessibilityAddTraits(.isHeader)
                 } footer: {
-                    if let valueError {
-                        Text(verbatim: valueError)
-                            .foregroundStyle(.red)
-                            .accessibilityLabel(Strings.Accessibility.error(valueError))
+                    // Stack the validation error (if any) above the
+                    // form-wide guidance explaining what TXT records
+                    // publish. Both live in the last section's footer
+                    // rather than a separate trailing section — putting
+                    // it in a separate section would add inset-grouped
+                    // card spacing between the fields and the footnote.
+                    VStack(alignment: .leading, spacing: 8) {
+                        if let valueError {
+                            Text(verbatim: valueError)
+                                .foregroundStyle(.red)
+                                .accessibilityLabel(Strings.Accessibility.error(valueError))
+                        }
+                        Text(Strings.Guidance.txtRecord)
                     }
                 }
             }
