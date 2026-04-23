@@ -798,9 +798,16 @@ public enum Strings {
         }
     }
 
-    // MARK: - AI
+    // MARK: - Insights
+    //
+    // User-facing strings never mention "AI" — the product name for this
+    // capability is "Insights". We keep the underlying xcstrings keys
+    // prefixed `ai_` / `settings_ai_*` / `button_explain_with_ai` to
+    // preserve localizer memory and avoid a churn of xcstrings key
+    // renames, but everything the user reads is phrased as "Insights",
+    // "Explain", etc.
 
-    public enum AIInsights {
+    public enum Insights {
 
         public static var explainWithAI: LocalizedStringResource {
             .init("button_explain_with_ai", bundle: .atURL(Bundle.module.bundleURL))

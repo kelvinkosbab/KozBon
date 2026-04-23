@@ -96,8 +96,8 @@ public struct ServiceExplanationSheet: View {
                     } else if explainer.explanation.isEmpty && explainer.isGenerating {
                         HStack(spacing: 8) {
                             ProgressView()
-                                .accessibilityLabel(String(localized: Strings.AIInsights.generating))
-                            Text(Strings.AIInsights.generating)
+                                .accessibilityLabel(String(localized: Strings.Insights.generating))
+                            Text(Strings.Insights.generating)
                                 .foregroundStyle(.secondary)
                         }
                         .accessibilityElement(children: .combine)
@@ -112,7 +112,7 @@ public struct ServiceExplanationSheet: View {
                 }
                 .padding()
             }
-            .navigationTitle(String(localized: Strings.AIInsights.insightsTitle))
+            .navigationTitle(String(localized: Strings.Insights.insightsTitle))
             .accessibilityIdentifier("ai_explanation_sheet")
             #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)

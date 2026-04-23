@@ -80,9 +80,9 @@ public struct SettingsView: View {
                             preferencesStore.aiExpertiseLevel = "basic"
                         } label: {
                             if preferencesStore.aiExpertiseLevel == "basic" {
-                                Label(String(localized: Strings.AIInsights.basic), systemImage: Iconography.selected)
+                                Label(String(localized: Strings.Insights.basic), systemImage: Iconography.selected)
                             } else {
-                                Text(Strings.AIInsights.basic)
+                                Text(Strings.Insights.basic)
                             }
                         }
 
@@ -90,15 +90,15 @@ public struct SettingsView: View {
                             preferencesStore.aiExpertiseLevel = "technical"
                         } label: {
                             if preferencesStore.aiExpertiseLevel == "technical" {
-                                Label(String(localized: Strings.AIInsights.technical), systemImage: Iconography.selected)
+                                Label(String(localized: Strings.Insights.technical), systemImage: Iconography.selected)
                             } else {
-                                Text(Strings.AIInsights.technical)
+                                Text(Strings.Insights.technical)
                             }
                         }
                     } label: {
                         Text(preferencesStore.aiExpertiseLevel == "technical"
-                             ? Strings.AIInsights.technical
-                             : Strings.AIInsights.basic)
+                             ? Strings.Insights.technical
+                             : Strings.Insights.basic)
                             .font(.subheadline)
                     }
                     .accessibilityLabel(String(localized: Strings.Settings.aiExpertiseLevel))
@@ -254,11 +254,11 @@ extension BonjourServicePromptBuilder.ResponseLength {
     var displayTitle: String {
         switch self {
         case .brief:
-            String(localized: Strings.AIInsights.responseLengthBrief)
+            String(localized: Strings.Insights.responseLengthBrief)
         case .standard:
-            String(localized: Strings.AIInsights.responseLengthStandard)
+            String(localized: Strings.Insights.responseLengthStandard)
         case .thorough:
-            String(localized: Strings.AIInsights.responseLengthThorough)
+            String(localized: Strings.Insights.responseLengthThorough)
         }
     }
 

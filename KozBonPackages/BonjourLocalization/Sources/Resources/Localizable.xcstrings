@@ -10175,37 +10175,37 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Explain with AI"
+            "value": "Insights"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Explicar con IA"
+            "value": "Información"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Expliquer avec l'IA"
+            "value": "Aperçus"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Mit KI erklären"
+            "value": "Einblicke"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "AIで説明"
+            "value": "インサイト"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "用AI解释"
+            "value": "洞察"
           }
         }
       }
@@ -10216,37 +10216,37 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI insights"
+            "value": "Insights"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Análisis de IA"
+            "value": "Información"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Aperçu IA"
+            "value": "Aperçu"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "KI-Einblicke"
+            "value": "Einblicke"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "AIインサイト"
+            "value": "インサイト"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI洞察"
+            "value": "洞察"
           }
         }
       }
@@ -10298,37 +10298,37 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Get an AI-powered explanation of this service"
+            "value": "Get insights about this service"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Obtener una explicación con IA de este servicio"
+            "value": "Obtener información sobre este servicio"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Obtenir une explication IA de ce service"
+            "value": "Obtenir des aperçus sur ce service"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "KI-gestützte Erklärung dieses Dienstes erhalten"
+            "value": "Einblicke zu diesem Dienst erhalten"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "このサービスのAI説明を取得"
+            "value": "このサービスのインサイトを取得"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "获取此服务的AI解释"
+            "value": "获取此服务的洞察"
           }
         }
       }
@@ -10380,37 +10380,37 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI analysis"
+            "value": "Insights"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Análisis IA"
+            "value": "Información"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Analyse IA"
+            "value": "Aperçus"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "KI-Analyse"
+            "value": "Einblicke"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI分析"
+            "value": "インサイト"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI分析"
+            "value": "洞察"
           }
         }
       }
@@ -10421,37 +10421,37 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Enable AI analysis"
+            "value": "Enable insights"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Activar análisis IA"
+            "value": "Activar información"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Activer l'analyse IA"
+            "value": "Activer les aperçus"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "KI-Analyse aktivieren"
+            "value": "Einblicke aktivieren"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI分析を有効にする"
+            "value": "インサイトを有効にする"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "启用AI分析"
+            "value": "启用洞察"
           }
         }
       }
@@ -10913,37 +10913,37 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "When enabled, you can long press on a discovered service to get an on-device AI explanation of what it does and how to interact with it. All analysis runs privately on your device — no data is sent to external servers."
+            "value": "When enabled, you can long press on a discovered service to get an on-device explanation of what it does and how to interact with it. Everything runs privately on your device — no data is sent to external servers."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cuando está activado, puedes mantener presionado un servicio descubierto para obtener una explicación generada por IA sobre qué hace y cómo interactuar con él. Todo el análisis se ejecuta de forma privada en tu dispositivo, sin enviar datos a servidores externos."
+            "value": "Cuando está activado, puedes mantener presionado un servicio descubierto para obtener una explicación en el dispositivo sobre qué hace y cómo interactuar con él. Todo se ejecuta de forma privada en tu dispositivo, sin enviar datos a servidores externos."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Lorsque cette option est activée, vous pouvez appuyer longuement sur un service découvert pour obtenir une explication générée par l'IA sur ce qu'il fait et comment interagir avec lui. Toute l'analyse s'exécute en privé sur votre appareil — aucune donnée n'est envoyée à des serveurs externes."
+            "value": "Lorsque cette option est activée, vous pouvez appuyer longuement sur un service découvert pour obtenir une explication sur l'appareil de ce qu'il fait et comment interagir avec lui. Tout s'exécute en privé sur votre appareil — aucune donnée n'est envoyée à des serveurs externes."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Wenn aktiviert, können Sie lange auf einen entdeckten Dienst drücken, um eine KI-Erklärung zu erhalten, was er tut und wie Sie damit interagieren können. Die gesamte Analyse läuft privat auf Ihrem Gerät — keine Daten werden an externe Server gesendet."
+            "value": "Wenn aktiviert, können Sie lange auf einen entdeckten Dienst drücken, um eine Erklärung zu erhalten, was er tut und wie Sie damit interagieren können. Alles läuft privat auf Ihrem Gerät — keine Daten werden an externe Server gesendet."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "有効にすると、発見したサービスを長押しして、そのサービスの内容や操作方法についてデバイス上のAIによる説明を確認できます。分析はすべてデバイス上でプライベートに実行され、外部サーバーにデータは送信されません。"
+            "value": "有効にすると、発見したサービスを長押しして、そのサービスの内容や操作方法についてデバイス上の説明を確認できます。すべてデバイス上でプライベートに実行され、外部サーバーにデータは送信されません。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "启用后，您可以长按已发现的服务，获取设备端AI对其功能和交互方式的说明。所有分析均在您的设备上私密运行，不会向外部服务器发送任何数据。"
+            "value": "启用后，您可以长按已发现的服务，获取设备端对其功能和交互方式的说明。所有内容均在您的设备上私密运行，不会向外部服务器发送任何数据。"
           }
         }
       }
@@ -11282,37 +11282,37 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Enables or disables on-device AI explanations for discovered services"
+            "value": "Enables or disables on-device explanations for discovered services"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Activa o desactiva las explicaciones de IA en el dispositivo para los servicios descubiertos"
+            "value": "Activa o desactiva las explicaciones en el dispositivo para los servicios descubiertos"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Active ou désactive les explications IA sur l'appareil pour les services découverts"
+            "value": "Active ou désactive les explications sur l'appareil pour les services découverts"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Aktiviert oder deaktiviert die KI-Erklärungen auf dem Gerät für entdeckte Dienste"
+            "value": "Aktiviert oder deaktiviert die Erklärungen auf dem Gerät für entdeckte Dienste"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "発見されたサービスのデバイス上AI説明を有効または無効にします"
+            "value": "発見されたサービスのデバイス上の説明を有効または無効にします"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "启用或禁用已发现服务的设备端AI说明"
+            "value": "启用或禁用已发现服务的设备端说明"
           }
         }
       }
@@ -12307,37 +12307,37 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "This description will be used by Apple Intelligence to explain your service when users long press \"Explain with AI\"."
+            "value": "This description will be used to explain your service when users long press \"Insights\"."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Esta descripción será utilizada por Apple Intelligence para explicar tu servicio cuando los usuarios mantengan pulsado “Explicar con IA”."
+            "value": "Esta descripción se utilizará para explicar tu servicio cuando los usuarios mantengan pulsado “Información”."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cette description sera utilisée par Apple Intelligence pour expliquer votre service lorsque les utilisateurs appuieront longuement sur « Expliquer avec l’IA »."
+            "value": "Cette description sera utilisée pour expliquer votre service lorsque les utilisateurs appuieront longuement sur « Aperçus »."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Diese Beschreibung wird von Apple Intelligence verwendet, um deinen Dienst zu erklären, wenn Nutzer lange auf „Mit KI erklären“ drücken."
+            "value": "Diese Beschreibung wird verwendet, um deinen Dienst zu erklären, wenn Nutzer lange auf „Einblicke“ drücken."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "この説明は、ユーザーが「AIで説明」を長押ししたときにApple Intelligenceがあなたのサービスを説明するために使用されます。"
+            "value": "この説明は、ユーザーが「インサイト」を長押ししたときにサービスを説明するために使用されます。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "当用户长按“用AI解释”时，Apple Intelligence将使用此描述来解释您的服务。"
+            "value": "当用户长按“洞察”时，将使用此描述来解释您的服务。"
           }
         }
       }

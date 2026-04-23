@@ -10,10 +10,6 @@ import BonjourCore
 import BonjourLocalization
 import BonjourModels
 
-#if canImport(UIKit)
-import UIKit
-#endif
-
 // MARK: - BonjourServiceListSortMenu
 
 /// A menu used to select a sorting strategy for a list of Bonjour services.
@@ -27,6 +23,7 @@ struct BonjourServiceListSortMenu: View {
     ///
     /// A value of `nil` represents the default sort (Host Name A → Z).
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.hapticFeedback) private var hapticFeedback
     @Binding var sortType: BonjourServiceSortType?
 
     /// The effective sort type, treating `nil` as `.hostNameAsc`.
@@ -67,9 +64,7 @@ struct BonjourServiceListSortMenu: View {
             withAnimation(reduceMotion ? nil : .default) {
                 sortType = option
             }
-            #if os(iOS)
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            #endif
+            hapticFeedback.play(.light)
         } label: {
             if effectiveSortType == option {
                 Label(option.title, systemImage: Iconography.selected)

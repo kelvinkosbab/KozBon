@@ -54,7 +54,7 @@ public struct AIContextMenuItems: View {
                 action()
             } label: {
                 Label(
-                    String(localized: Strings.AIInsights.explainWithAI),
+                    String(localized: Strings.Insights.explainWithAI),
                     systemImage: Iconography.appleIntelligence
                 )
             }
@@ -66,7 +66,7 @@ public struct AIContextMenuItems: View {
                     action()
                 } label: {
                     Label(
-                        String(localized: Strings.AIInsights.explainWithAI),
+                        String(localized: Strings.Insights.explainWithAI),
                         systemImage: Iconography.appleIntelligence
                     )
                 }
@@ -78,7 +78,7 @@ public struct AIContextMenuItems: View {
                         openAppleIntelligenceSettings()
                     } label: {
                         Label(
-                            String(localized: Strings.AIInsights.enableAppleIntelligence),
+                            String(localized: Strings.Insights.enableAppleIntelligence),
                             systemImage: Iconography.appleIntelligence
                         )
                     }

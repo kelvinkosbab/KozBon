@@ -12,16 +12,13 @@ import BonjourLocalization
 import BonjourModels
 import BonjourStorage
 
-#if canImport(UIKit)
-import UIKit
-#endif
-
 // MARK: - SelectServiceTypeView
 
 struct SelectServiceTypeView: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.preferencesStore) private var preferencesStore
+    @Environment(\.hapticFeedback) private var hapticFeedback
     @Binding var selectedServiceType: BonjourServiceType?
     @State private var viewModel = SelectServiceTypeViewModel()
     @State private var serviceTypeToExplain: BonjourServiceType?
@@ -34,9 +31,7 @@ struct SelectServiceTypeView: View {
         withAnimation(reduceMotion ? nil : .default) {
             selectedServiceType = serviceType
         }
-        #if os(iOS)
-        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-        #endif
+        hapticFeedback.play(.light)
     }
 
     var body: some View {
