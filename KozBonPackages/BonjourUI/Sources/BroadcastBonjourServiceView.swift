@@ -294,84 +294,121 @@ struct BroadcastBonjourServiceView: View {
         }
     }
 
+    // MARK: - Validated Inputs
+
+    /// The validated, ready-to-publish form values returned by
+    /// ``validateForm()``. Bundling them in a struct keeps the
+    /// `doneButtonSelected` body short and makes the Task closure
+    /// receive a single value instead of capturing five.
+    private struct ValidatedInputs {
+        let serviceType: BonjourServiceType
+        let port: Int
+        let domain: String
+    }
+
     // MARK: - Done Action
 
-    // swiftlint:disable:next function_body_length
     private func doneButtonSelected() {
+        clearAllErrors()
+        guard let inputs = validateForm() else { return }
+        publish(inputs: inputs)
+    }
 
-        let transportLayer = selectedTransportLayer
-        let domain = domain.trimmed
-
-        withAnimation(reduceMotion ? nil : .default) {
-            serviceTypeError = nil
-            portError = nil
-            domainError = nil
-        }
-
+    /// Validates every field on the form, animating the appropriate
+    /// inline error if anything is missing or out of range. Returns
+    /// `nil` after surfacing the first failure so the caller knows
+    /// not to proceed with a publish.
+    private func validateForm() -> ValidatedInputs? {
         guard let serviceType else {
             withAnimation(reduceMotion ? nil : .default) {
                 serviceTypeError = String(localized: Strings.Errors.serviceTypeRequired)
             }
-            return
+            return nil
         }
 
         guard let port else {
             withAnimation(reduceMotion ? nil : .default) {
                 portError = String(localized: Strings.Errors.portNumberRequired)
             }
-            return
+            return nil
         }
 
         guard port >= Constants.Network.minimumPort else {
             withAnimation(reduceMotion ? nil : .default) {
                 portError = Strings.Errors.portMin(Constants.Network.minimumPort)
             }
-            return
+            return nil
         }
 
         guard port <= Constants.Network.maximumPort else {
             withAnimation(reduceMotion ? nil : .default) {
                 portError = Strings.Errors.portMax(Constants.Network.maximumPort)
             }
-            return
+            return nil
         }
 
-        guard !domain.isEmpty else {
+        let trimmedDomain = domain.trimmed
+        guard !trimmedDomain.isEmpty else {
             withAnimation(reduceMotion ? nil : .default) {
                 domainError = String(localized: Strings.Errors.domainRequired)
             }
-            return
+            return nil
         }
 
+        return ValidatedInputs(
+            serviceType: serviceType,
+            port: port,
+            domain: trimmedDomain
+        )
+    }
+
+    /// Publishes the validated inputs and updates the parent
+    /// view's published-services list with the new or replaced
+    /// service. Wraps the network call in an animated Task so
+    /// the list change reads as a smooth append/replace and any
+    /// publish error surfaces inline on the form.
+    private func publish(inputs: ValidatedInputs) {
         Task {
             do {
                 let publishedService = try await dependencies.bonjourPublishManager.publish(
-                    name: serviceType.name,
-                    type: serviceType.type,
-                    port: port,
-                    domain: domain.trimmed,
-                    transportLayer: transportLayer,
-                    detail: serviceType.localizedDetail ?? "N/A"
+                    name: inputs.serviceType.name,
+                    type: inputs.serviceType.type,
+                    port: inputs.port,
+                    domain: inputs.domain,
+                    transportLayer: selectedTransportLayer,
+                    detail: inputs.serviceType.localizedDetail ?? "N/A"
                 )
 
                 publishedService.updateTXTRecords(dataRecords)
-
-                let index = customPublishedServices.firstIndex(of: publishedService)
-                if let index {
-                    withAnimation(reduceMotion ? nil : .default) {
-                        customPublishedServices[index] = publishedService
-                    }
-                } else {
-                    withAnimation(reduceMotion ? nil : .default) {
-                        customPublishedServices.append(publishedService)
-                    }
-                }
-
+                upsert(publishedService)
                 isPresented = false
-
             } catch {
                 serviceTypeError = Strings.Errors.publishFailed(error.localizedDescription)
             }
+        }
+    }
+
+    /// Inserts or replaces `service` in the parent view's
+    /// `customPublishedServices` binding, with a respect-Reduce-Motion
+    /// animation on the change.
+    private func upsert(_ service: BonjourService) {
+        withAnimation(reduceMotion ? nil : .default) {
+            if let index = customPublishedServices.firstIndex(of: service) {
+                customPublishedServices[index] = service
+            } else {
+                customPublishedServices.append(service)
+            }
+        }
+    }
+
+    /// Clears all three inline errors with a single Reduce-Motion-aware
+    /// animation. Called at the top of every submit so a re-tap after
+    /// fixing one field clears the stale message.
+    private func clearAllErrors() {
+        withAnimation(reduceMotion ? nil : .default) {
+            serviceTypeError = nil
+            portError = nil
+            domainError = nil
         }
     }
 }

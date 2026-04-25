@@ -18,43 +18,47 @@ struct PreferencesStoreTests {
 
     // MARK: - Helpers
 
-    /// Creates an in-memory preferences store for testing.
-    private func makeStore() -> PreferencesStore {
+    /// Creates a fresh in-memory `ModelContainer` for tests. Each call
+    /// returns a brand-new container so tests are isolated. The function
+    /// throws on container-init failure (rather than swallowing with
+    /// `try!`), which Swift Testing surfaces as a test failure with the
+    /// underlying error — strictly more informative than a crash.
+    private func makeContainer() throws -> ModelContainer {
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        // swiftlint:disable:next force_try
-        let container = try! ModelContainer(
+        return try ModelContainer(
             for: UserPreferences.self,
             configurations: config
         )
-        return PreferencesStore(container: container)
+    }
+
+    /// Convenience that wraps ``makeContainer()`` in a fresh
+    /// ``PreferencesStore``. Tests that don't need to inspect the
+    /// underlying container directly should prefer this.
+    private func makeStore() throws -> PreferencesStore {
+        PreferencesStore(container: try makeContainer())
     }
 
     // MARK: - Default Values
 
-    @Test func defaultAiAnalysisEnabled() {
-        let store = makeStore()
+    @Test func defaultAiAnalysisEnabled() throws {
+        let store = try makeStore()
         #expect(store.aiAnalysisEnabled)
     }
 
-    @Test func defaultAiExpertiseLevel() {
-        let store = makeStore()
+    @Test func defaultAiExpertiseLevel() throws {
+        let store = try makeStore()
         #expect(store.aiExpertiseLevel == "basic")
     }
 
-    @Test func defaultSortOrder() {
-        let store = makeStore()
+    @Test func defaultSortOrder() throws {
+        let store = try makeStore()
         #expect(store.defaultSortOrder == "")
     }
 
     // MARK: - Persistence
 
-    @Test func aiAnalysisEnabledPersists() {
-        let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        // swiftlint:disable:next force_try
-        let container = try! ModelContainer(
-            for: UserPreferences.self,
-            configurations: config
-        )
+    @Test func aiAnalysisEnabledPersists() throws {
+        let container = try makeContainer()
 
         let store1 = PreferencesStore(container: container)
         store1.aiAnalysisEnabled = false
@@ -63,13 +67,8 @@ struct PreferencesStoreTests {
         #expect(!store2.aiAnalysisEnabled)
     }
 
-    @Test func aiExpertiseLevelPersists() {
-        let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        // swiftlint:disable:next force_try
-        let container = try! ModelContainer(
-            for: UserPreferences.self,
-            configurations: config
-        )
+    @Test func aiExpertiseLevelPersists() throws {
+        let container = try makeContainer()
 
         let store1 = PreferencesStore(container: container)
         store1.aiExpertiseLevel = "technical"
@@ -78,13 +77,8 @@ struct PreferencesStoreTests {
         #expect(store2.aiExpertiseLevel == "technical")
     }
 
-    @Test func defaultSortOrderPersists() {
-        let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        // swiftlint:disable:next force_try
-        let container = try! ModelContainer(
-            for: UserPreferences.self,
-            configurations: config
-        )
+    @Test func defaultSortOrderPersists() throws {
+        let container = try makeContainer()
 
         let store1 = PreferencesStore(container: container)
         store1.defaultSortOrder = "hostNameAsc"
@@ -95,8 +89,8 @@ struct PreferencesStoreTests {
 
     // MARK: - Reset
 
-    @Test func resetToDefaultsRestoresAllValues() {
-        let store = makeStore()
+    @Test func resetToDefaultsRestoresAllValues() throws {
+        let store = try makeStore()
         store.aiAnalysisEnabled = false
         store.aiExpertiseLevel = "technical"
         store.defaultSortOrder = "serviceNameDesc"
@@ -110,13 +104,8 @@ struct PreferencesStoreTests {
 
     // MARK: - Single Row
 
-    @Test func multipleStoreInstancesShareSameRow() {
-        let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        // swiftlint:disable:next force_try
-        let container = try! ModelContainer(
-            for: UserPreferences.self,
-            configurations: config
-        )
+    @Test func multipleStoreInstancesShareSameRow() throws {
+        let container = try makeContainer()
 
         let storeA = PreferencesStore(container: container)
         storeA.aiExpertiseLevel = "technical"
@@ -127,8 +116,8 @@ struct PreferencesStoreTests {
 
     // MARK: - Reset Uses Defaults
 
-    @Test func resetUsesUserPreferencesDefaults() {
-        let store = makeStore()
+    @Test func resetUsesUserPreferencesDefaults() throws {
+        let store = try makeStore()
         store.resetToDefaults()
         #expect(store.aiAnalysisEnabled == UserPreferences.defaultAIAnalysisEnabled)
         #expect(store.aiExpertiseLevel == UserPreferences.defaultAIExpertiseLevel)
@@ -148,26 +137,21 @@ struct PreferencesStoreTests {
 
     // MARK: - Response Length
 
-    @Test func responseLengthWriteThenRead() {
-        let store = makeStore()
+    @Test func responseLengthWriteThenRead() throws {
+        let store = try makeStore()
         store.aiResponseLength = "brief"
         #expect(store.aiResponseLength == "brief")
         store.aiResponseLength = "thorough"
         #expect(store.aiResponseLength == "thorough")
     }
 
-    @Test func responseLengthDefaultIsStandard() {
-        let store = makeStore()
+    @Test func responseLengthDefaultIsStandard() throws {
+        let store = try makeStore()
         #expect(store.aiResponseLength == "standard")
     }
 
-    @Test func responseLengthPersistsAcrossStoreInstances() {
-        let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        // swiftlint:disable:next force_try
-        let container = try! ModelContainer(
-            for: UserPreferences.self,
-            configurations: config
-        )
+    @Test func responseLengthPersistsAcrossStoreInstances() throws {
+        let container = try makeContainer()
         let storeA = PreferencesStore(container: container)
         storeA.aiResponseLength = "thorough"
 
@@ -177,24 +161,24 @@ struct PreferencesStoreTests {
 
     // MARK: - Write Then Read
 
-    @Test func aiAnalysisEnabledWriteThenRead() {
-        let store = makeStore()
+    @Test func aiAnalysisEnabledWriteThenRead() throws {
+        let store = try makeStore()
         store.aiAnalysisEnabled = false
         #expect(!store.aiAnalysisEnabled)
         store.aiAnalysisEnabled = true
         #expect(store.aiAnalysisEnabled)
     }
 
-    @Test func aiExpertiseLevelWriteThenRead() {
-        let store = makeStore()
+    @Test func aiExpertiseLevelWriteThenRead() throws {
+        let store = try makeStore()
         store.aiExpertiseLevel = "technical"
         #expect(store.aiExpertiseLevel == "technical")
         store.aiExpertiseLevel = "basic"
         #expect(store.aiExpertiseLevel == "basic")
     }
 
-    @Test func defaultSortOrderWriteThenRead() {
-        let store = makeStore()
+    @Test func defaultSortOrderWriteThenRead() throws {
+        let store = try makeStore()
         store.defaultSortOrder = "serviceNameDesc"
         #expect(store.defaultSortOrder == "serviceNameDesc")
         store.defaultSortOrder = ""
@@ -203,8 +187,8 @@ struct PreferencesStoreTests {
 
     // MARK: - Reset Preserves Subsequent Changes
 
-    @Test func resetThenModifyPersists() {
-        let store = makeStore()
+    @Test func resetThenModifyPersists() throws {
+        let store = try makeStore()
         store.resetToDefaults()
         store.aiAnalysisEnabled = false
         store.aiExpertiseLevel = "technical"

@@ -222,79 +222,76 @@ public struct BonjourServiceDetailView: View {
     // MARK: - TXT Records Section
 
     @ViewBuilder
-    // swiftlint:disable:next function_body_length
     private func txtRecordsSection() -> some View {
         if viewModel.isPublished {
-            Section(String(localized: Strings.Sections.txtRecords)) {
-                ForEach(viewModel.dataRecords, id: \.key) { dataRecord in
-                    Button {
-                        viewModel.txtRecordToEdit = dataRecord
-                        viewModel.isCreateTxtRecordPresented = true
-                    } label: {
-                        TitleDetailStackView(
-                            title: dataRecord.key,
-                            detail: dataRecord.value
-                        )
-                    }
-                    .draggable("\(dataRecord.key)=\(dataRecord.value)")
-                    .accessibilityLabel("\(dataRecord.key): \(dataRecord.value)")
-                    .accessibilityHint(String(localized: Strings.Accessibility.editRecordHint))
-                    .accessibilityActions {
-                        Button(String(localized: Strings.Accessibility.copyRecord)) {
-                            Clipboard.copy("\(dataRecord.key)=\(dataRecord.value)")
-                        }
-                        Button(String(localized: Strings.Accessibility.copyValueOnly)) {
-                            Clipboard.copy(dataRecord.value)
-                        }
-                        Button(String(localized: Strings.Accessibility.editRecord)) {
-                            viewModel.txtRecordToEdit = dataRecord
-                            viewModel.isCreateTxtRecordPresented = true
-                        }
-                        Button(String(localized: Strings.Accessibility.deleteRecord), role: .destructive) {
-                            viewModel.deleteTxtRecord(dataRecord)
-                        }
-                    }
-                    .contextMenu {
-                        Button {
-                            Clipboard.copy("\(dataRecord.key)=\(dataRecord.value)")
-                        } label: {
-                            Label(String(localized: Strings.Actions.copyRecord), systemImage: Iconography.copy)
-                        }
-
-                        Button {
-                            Clipboard.copy(dataRecord.value)
-                        } label: {
-                            Label(String(localized: Strings.Actions.copyValue), systemImage: Iconography.copyAlternate)
-                        }
-                    }
-                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                        Button(role: .destructive) {
-                            viewModel.deleteTxtRecord(dataRecord)
-                        } label: {
-                            Label(String(localized: Strings.Buttons.remove), systemImage: Iconography.remove)
-                        }
-                        .accessibilityLabel(Strings.Accessibility.remove(dataRecord.key))
-                        .accessibilityHint(String(localized: Strings.Accessibility.deleteTxtRecordHint))
-                        .tint(.red)
-                    }
-                }
-
-                Button {
-                    viewModel.txtRecordToEdit = nil
-                    viewModel.isCreateTxtRecordPresented = true
-                } label: {
-                    Label(String(localized: Strings.Buttons.addTxtRecord), systemImage: Iconography.add)
-                }
-                .accessibilityHint(String(localized: Strings.Accessibility.addTxtRecordHint))
-                .accessibilityIdentifier("txt_record_add_button")
-            }
+            editableTxtRecordsSection()
         } else if !viewModel.dataRecords.isEmpty {
-            Section(String(localized: Strings.Sections.txtRecords)) {
-                ForEach(viewModel.dataRecords, id: \.key) { dataRecord in
-                    TitleDetailStackView(
-                        title: dataRecord.key,
-                        detail: dataRecord.value
-                    )
+            readOnlyTxtRecordsSection()
+        }
+    }
+
+    @ViewBuilder
+    private func editableTxtRecordsSection() -> some View {
+        Section(String(localized: Strings.Sections.txtRecords)) {
+            ForEach(viewModel.dataRecords, id: \.key) { dataRecord in
+                editableTxtRecordRow(dataRecord)
+            }
+
+            Button {
+                viewModel.txtRecordToEdit = nil
+                viewModel.isCreateTxtRecordPresented = true
+            } label: {
+                Label(String(localized: Strings.Buttons.addTxtRecord), systemImage: Iconography.add)
+            }
+            .accessibilityHint(String(localized: Strings.Accessibility.addTxtRecordHint))
+            .accessibilityIdentifier("txt_record_add_button")
+        }
+    }
+
+    @ViewBuilder
+    private func editableTxtRecordRow(_ dataRecord: BonjourService.TxtDataRecord) -> some View {
+        Button {
+            viewModel.txtRecordToEdit = dataRecord
+            viewModel.isCreateTxtRecordPresented = true
+        } label: {
+            TitleDetailStackView(title: dataRecord.key, detail: dataRecord.value)
+        }
+        .draggable("\(dataRecord.key)=\(dataRecord.value)")
+        .accessibilityLabel("\(dataRecord.key): \(dataRecord.value)")
+        .accessibilityHint(String(localized: Strings.Accessibility.editRecordHint))
+        .accessibilityActions {
+            Button(String(localized: Strings.Accessibility.copyRecord)) {
+                Clipboard.copy("\(dataRecord.key)=\(dataRecord.value)")
+            }
+            Button(String(localized: Strings.Accessibility.copyValueOnly)) {
+                Clipboard.copy(dataRecord.value)
+            }
+            Button(String(localized: Strings.Accessibility.editRecord)) {
+                viewModel.txtRecordToEdit = dataRecord
+                viewModel.isCreateTxtRecordPresented = true
+            }
+            Button(String(localized: Strings.Accessibility.deleteRecord), role: .destructive) {
+                viewModel.deleteTxtRecord(dataRecord)
+            }
+        }
+        .contextMenu { copyRecordContextMenu(for: dataRecord) }
+        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+            Button(role: .destructive) {
+                viewModel.deleteTxtRecord(dataRecord)
+            } label: {
+                Label(String(localized: Strings.Buttons.remove), systemImage: Iconography.remove)
+            }
+            .accessibilityLabel(Strings.Accessibility.remove(dataRecord.key))
+            .accessibilityHint(String(localized: Strings.Accessibility.deleteTxtRecordHint))
+            .tint(.red)
+        }
+    }
+
+    @ViewBuilder
+    private func readOnlyTxtRecordsSection() -> some View {
+        Section(String(localized: Strings.Sections.txtRecords)) {
+            ForEach(viewModel.dataRecords, id: \.key) { dataRecord in
+                TitleDetailStackView(title: dataRecord.key, detail: dataRecord.value)
                     .draggable("\(dataRecord.key)=\(dataRecord.value)")
                     .accessibilityLabel("\(dataRecord.key): \(dataRecord.value)")
                     .accessibilityHint(String(localized: Strings.Accessibility.longPressCopyRecord))
@@ -306,21 +303,26 @@ public struct BonjourServiceDetailView: View {
                             Clipboard.copy(dataRecord.value)
                         }
                     }
-                    .contextMenu {
-                        Button {
-                            Clipboard.copy("\(dataRecord.key)=\(dataRecord.value)")
-                        } label: {
-                            Label(String(localized: Strings.Actions.copyRecord), systemImage: Iconography.copy)
-                        }
-
-                        Button {
-                            Clipboard.copy(dataRecord.value)
-                        } label: {
-                            Label(String(localized: Strings.Actions.copyValue), systemImage: Iconography.copyAlternate)
-                        }
-                    }
-                }
+                    .contextMenu { copyRecordContextMenu(for: dataRecord) }
             }
+        }
+    }
+
+    /// Shared "Copy record / Copy value" context menu used by both editable
+    /// and read-only TXT record rows. Centralized here so the two sections
+    /// stay in sync if the menu evolves.
+    @ViewBuilder
+    private func copyRecordContextMenu(for dataRecord: BonjourService.TxtDataRecord) -> some View {
+        Button {
+            Clipboard.copy("\(dataRecord.key)=\(dataRecord.value)")
+        } label: {
+            Label(String(localized: Strings.Actions.copyRecord), systemImage: Iconography.copy)
+        }
+
+        Button {
+            Clipboard.copy(dataRecord.value)
+        } label: {
+            Label(String(localized: Strings.Actions.copyValue), systemImage: Iconography.copyAlternate)
         }
     }
 }
