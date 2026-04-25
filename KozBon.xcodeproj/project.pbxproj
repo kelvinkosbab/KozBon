@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B6CE1D301E1208C1003D4FFA /* iDiscover.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B6CE1D2E1E1208C1003D4FFA /* iDiscover.xcdatamodeld */; };
 		B6CE1D321E1208C1003D4FFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6CE1D311E1208C1003D4FFA /* Assets.xcassets */; };
 		B6CE1D4A1E120AF8003D4FFA /* service-names-port-numbers.csv in Resources */ = {isa = PBXBuildFile; fileRef = B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */; };
 		F6240E692A92CF0600951875 /* AppCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E682A92CF0600951875 /* AppCore.swift */; };
@@ -39,7 +38,6 @@
 
 /* Begin PBXFileReference section */
 		B6CE1D241E1208C1003D4FFA /* KozBon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KozBon.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B6CE1D2F1E1208C1003D4FFA /* iDiscover.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iDiscover.xcdatamodel; sourceTree = "<group>"; };
 		B6CE1D311E1208C1003D4FFA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B6CE1D361E1208C1003D4FFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "service-names-port-numbers.csv"; sourceTree = "<group>"; };
@@ -110,20 +108,11 @@
 				F6C472FA2C1A248000BBB0F9 /* TopLevelDestination.swift */,
 
 				F6C473002C1A4D7400BBB0F9 /* BonjourNearbyServices */,
-				F67B65442C1B922500324FFF /* Model */,
 				B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */,
 				B6CE1D311E1208C1003D4FFA /* Assets.xcassets */,
 				B6CE1D361E1208C1003D4FFA /* Info.plist */,
 			);
 			path = KozBon;
-			sourceTree = "<group>";
-		};
-		F67B65442C1B922500324FFF /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				B6CE1D2E1E1208C1003D4FFA /* iDiscover.xcdatamodeld */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		F690B5F92561E9B600902DAB /* Frameworks */ = {
@@ -272,7 +261,6 @@
 
 				F6CA76602F3690EF0036BE3B /* DependencyInjectionExamples.swift in Sources */,
 				F6CA76682F36915C0036BE3B /* PreviewDependencies.swift in Sources */,
-				B6CE1D301E1208C1003D4FFA /* iDiscover.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -611,19 +599,6 @@
 			productName = BonjourUI;
 		};
 /* End XCSwiftPackageProductDependency section */
-
-/* Begin XCVersionGroup section */
-		B6CE1D2E1E1208C1003D4FFA /* iDiscover.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				B6CE1D2F1E1208C1003D4FFA /* iDiscover.xcdatamodel */,
-			);
-			currentVersion = B6CE1D2F1E1208C1003D4FFA /* iDiscover.xcdatamodel */;
-			path = iDiscover.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = B6CE1D1C1E1208C1003D4FFA /* Project object */;
 }
