@@ -120,7 +120,44 @@ extension BonjourServiceType {
             self.mySQLDatabase,
             self.homeAssistant,
             self.vncRemoteAccess,
-            self.prometheusMonitoring
+            self.prometheusMonitoring,
+            // MARK: Tier 1 additions — media servers, smart home, mail/calendar, modern dev
+            self.plexMediaServer,
+            self.jellyfinMediaServer,
+            self.kodiMediaCenter,
+            self.philipsHueBridge,
+            self.ecobeeThermostat,
+            self.octoPrint,
+            self.calDAV,
+            self.calDAVSecure,
+            self.cardDAV,
+            self.cardDAVSecure,
+            self.imap,
+            self.imapSecure,
+            self.smtp,
+            self.smtpSecure,
+            self.smtpSubmission,
+            self.pop3,
+            self.pop3Secure,
+            self.syncthing,
+            self.warpinator,
+            self.redisDatabase,
+            self.gRPC,
+            self.hashiCorpConsul,
+            self.appleMobileDeviceProtocolV3,
+            // MARK: Tier 2 additions
+            self.embyMediaServer,
+            self.steamLink,
+            self.minecraftLAN,
+            self.sipTcp,
+            self.piHole,
+            self.klipper3DPrinter,
+            self.tasmotaIoT,
+            // MARK: Tier 3 additions — encrypted DNS, enterprise auth, audio
+            self.dnsOverTls,
+            self.dnsOverHttps,
+            self.kerberosTcp,
+            self.pulseAudioServer
         ]
     }
 
@@ -784,7 +821,15 @@ extension BonjourServiceType {
             self.coapProtocol,
             self.threadBorderRouter,
             self.matterCommissionable,
-            self.matterCommissioner
+            self.matterCommissioner,
+            // MARK: Tier 1–3 UDP additions
+            self.lifxLighting,
+            self.kdeConnect,
+            self.sipUdp,
+            self.networkTimeProtocol,
+            self.appleMobileDeviceProtocolV2Udp,
+            self.snmpProtocol,
+            self.kerberosUdp
         ]
     }
 
@@ -883,5 +928,272 @@ extension BonjourServiceType {
         type: "matterd",
         transportLayer: .udp,
         detail: "A Matter commissioner device capable of onboarding new Matter accessories onto the smart home network."
+    )
+
+    // MARK: - Tier 1 Additions — Media Servers
+
+    static private let plexMediaServer: BonjourServiceType = BonjourServiceType(
+        name: "Plex Media Server",
+        type: "plex",
+        transportLayer: .tcp,
+        detail: "Plex Media Server, a self-hosted media library that streams movies, TV, music, and photos to clients on the local network and beyond. Plex also uses a separate UDP-based group discovery protocol on the LAN."
+    )
+    static private let jellyfinMediaServer: BonjourServiceType = BonjourServiceType(
+        name: "Jellyfin Media Server",
+        type: "jellyfin",
+        transportLayer: .tcp,
+        detail: "Jellyfin, an open-source media server for streaming personal video, music, and photo libraries to clients on the local network. The free, community-run alternative to Plex and Emby."
+    )
+    static private let kodiMediaCenter: BonjourServiceType = BonjourServiceType(
+        name: "Kodi (XBMC) Media Center",
+        type: "xbmc",
+        transportLayer: .tcp,
+        detail: "Kodi (formerly XBMC), an open-source media center for playing local and streamed media. Commonly seen on Raspberry Pi, Apple TV jailbreaks, and dedicated home-theater PCs."
+    )
+    static private let embyMediaServer: BonjourServiceType = BonjourServiceType(
+        name: "Emby Media Server",
+        type: "emby",
+        transportLayer: .tcp,
+        detail: "Emby Media Server, a personal media server for streaming videos, music, and live TV to apps on phones, TVs, and game consoles."
+    )
+
+    // MARK: - Tier 1 Additions — Smart Home & IoT
+
+    static private let philipsHueBridge: BonjourServiceType = BonjourServiceType(
+        name: "Philips Hue Bridge",
+        type: "hue",
+        transportLayer: .tcp,
+        detail: "Philips Hue smart-lighting bridge, the hub that connects Philips Hue bulbs and accessories to the local Wi-Fi network and lets apps control them. Often the most-deployed smart-home hub in a household."
+    )
+    static private let ecobeeThermostat: BonjourServiceType = BonjourServiceType(
+        name: "Ecobee Thermostat",
+        type: "ecobee",
+        transportLayer: .tcp,
+        detail: "Ecobee smart thermostat, a connected HVAC controller that integrates with Apple Home, Amazon Alexa, and Google Home for remote temperature scheduling and energy monitoring."
+    )
+    static private let octoPrint: BonjourServiceType = BonjourServiceType(
+        name: "OctoPrint",
+        type: "octoprint",
+        transportLayer: .tcp,
+        detail: "OctoPrint, a web-based controller for desktop 3D printers — typically a Raspberry Pi running the OctoPrint server attached to the printer over USB. Lets the user start prints, monitor progress, and stream camera video."
+    )
+    static private let lifxLighting: BonjourServiceType = BonjourServiceType(
+        name: "LIFX Smart Lighting",
+        type: "lifx",
+        transportLayer: .udp,
+        detail: "LIFX smart bulbs, Wi-Fi-connected color-changing lights that announce themselves on the local network for control by the LIFX app and smart-home hubs."
+    )
+    static private let klipper3DPrinter: BonjourServiceType = BonjourServiceType(
+        name: "Klipper 3D Printer",
+        type: "klipper",
+        transportLayer: .tcp,
+        detail: "Klipper, a high-performance 3D-printer firmware that runs on a Raspberry Pi alongside the printer's microcontroller. Often paired with the Mainsail or Fluidd web UIs."
+    )
+    static private let tasmotaIoT: BonjourServiceType = BonjourServiceType(
+        name: "Tasmota IoT Firmware",
+        type: "tasmota",
+        transportLayer: .tcp,
+        detail: "Tasmota, an open-source firmware for ESP8266/ESP32-based smart-home devices (Sonoff, Shelly, etc.). Commonly used to flash off-the-shelf smart plugs, switches, and bulbs for local-only control."
+    )
+
+    // MARK: - Tier 1 Additions — Mail, Calendar, Contacts (RFC 6186 / RFC 6764)
+
+    static private let calDAV: BonjourServiceType = BonjourServiceType(
+        name: "CalDAV (Calendar)",
+        type: "caldav",
+        transportLayer: .tcp,
+        detail: "CalDAV, the standard calendar-sharing protocol used by Apple Calendar, Fastmail, Nextcloud, and most other calendar services. Defined for service discovery in RFC 6764."
+    )
+    static private let calDAVSecure: BonjourServiceType = BonjourServiceType(
+        name: "CalDAV over TLS",
+        type: "caldavs",
+        transportLayer: .tcp,
+        detail: "CalDAV calendar sharing over TLS — the modern, encrypted variant of CalDAV. Mail-and-calendar clients prefer this when both endpoints are advertised."
+    )
+    static private let cardDAV: BonjourServiceType = BonjourServiceType(
+        name: "CardDAV (Contacts)",
+        type: "carddav",
+        transportLayer: .tcp,
+        detail: "CardDAV, the standard contacts-sharing protocol used by Apple Contacts, Fastmail, Nextcloud, and most other address-book services. Defined for service discovery in RFC 6764."
+    )
+    static private let cardDAVSecure: BonjourServiceType = BonjourServiceType(
+        name: "CardDAV over TLS",
+        type: "carddavs",
+        transportLayer: .tcp,
+        detail: "CardDAV contacts sharing over TLS — the modern, encrypted variant of CardDAV. Mail-and-calendar clients prefer this when both endpoints are advertised."
+    )
+    static private let imap: BonjourServiceType = BonjourServiceType(
+        name: "IMAP (Mail)",
+        type: "imap",
+        transportLayer: .tcp,
+        detail: "Internet Message Access Protocol — the standard mail-retrieval protocol that keeps the messages on the server. Defined for service discovery in RFC 6186."
+    )
+    static private let imapSecure: BonjourServiceType = BonjourServiceType(
+        name: "IMAP over TLS",
+        type: "imaps",
+        transportLayer: .tcp,
+        detail: "IMAP over TLS — the encrypted variant of IMAP. Mail clients (Apple Mail, Thunderbird, etc.) prefer this when discovered."
+    )
+    static private let smtp: BonjourServiceType = BonjourServiceType(
+        name: "SMTP (Mail Send)",
+        type: "smtp",
+        transportLayer: .tcp,
+        detail: "Simple Mail Transfer Protocol — used for sending outgoing mail. Mail clients typically use the `submission` variant for authenticated user-originated mail."
+    )
+    static private let smtpSecure: BonjourServiceType = BonjourServiceType(
+        name: "SMTP over TLS",
+        type: "smtps",
+        transportLayer: .tcp,
+        detail: "SMTP over TLS — the encrypted variant of SMTP for sending mail. Less common today than the `submission` flow, but still seen on some mail servers."
+    )
+    static private let smtpSubmission: BonjourServiceType = BonjourServiceType(
+        name: "SMTP Submission",
+        type: "submission",
+        transportLayer: .tcp,
+        detail: "SMTP Submission — the authenticated mail-submission protocol used by mail clients to send messages through their provider. Defined for service discovery in RFC 6186."
+    )
+    static private let pop3: BonjourServiceType = BonjourServiceType(
+        name: "POP3 (Mail)",
+        type: "pop3",
+        transportLayer: .tcp,
+        detail: "Post Office Protocol v3 — a legacy mail-retrieval protocol that downloads messages and (typically) deletes them from the server. Largely superseded by IMAP, but still defined in RFC 6186 for service discovery."
+    )
+    static private let pop3Secure: BonjourServiceType = BonjourServiceType(
+        name: "POP3 over TLS",
+        type: "pop3s",
+        transportLayer: .tcp,
+        detail: "POP3 over TLS — the encrypted variant of POP3 for retrieving mail."
+    )
+
+    // MARK: - Tier 1 Additions — Modern Dev & Cross-Platform Sharing
+
+    static private let syncthing: BonjourServiceType = BonjourServiceType(
+        name: "Syncthing",
+        type: "syncthing",
+        transportLayer: .tcp,
+        detail: "Syncthing, an open-source peer-to-peer file-sync tool that mirrors folders between devices over the local network and the internet. Often used as a self-hosted alternative to Dropbox or iCloud Drive."
+    )
+    static private let warpinator: BonjourServiceType = BonjourServiceType(
+        name: "Warpinator",
+        type: "warpinator",
+        transportLayer: .tcp,
+        detail: "Warpinator, the cross-platform file-sharing tool from Linux Mint. Inspired by AirDrop and works between Linux, Windows, macOS, and Android over the local network."
+    )
+    static private let redisDatabase: BonjourServiceType = BonjourServiceType(
+        name: "Redis Database",
+        type: "redis",
+        transportLayer: .tcp,
+        detail: "Redis, an in-memory key-value data store widely used as a cache, message broker, and ephemeral database in modern application stacks."
+    )
+    static private let gRPC: BonjourServiceType = BonjourServiceType(
+        name: "gRPC",
+        type: "grpc",
+        transportLayer: .tcp,
+        detail: "gRPC, a modern remote-procedure-call framework built on HTTP/2. Microservices and developer tools occasionally advertise gRPC endpoints over Bonjour during local development."
+    )
+    static private let hashiCorpConsul: BonjourServiceType = BonjourServiceType(
+        name: "HashiCorp Consul",
+        type: "consul",
+        transportLayer: .tcp,
+        detail: "HashiCorp Consul, a service-mesh and service-discovery platform. Some Consul deployments register agent endpoints via mDNS so clients can find them without static configuration."
+    )
+    static private let appleMobileDeviceProtocolV3: BonjourServiceType = BonjourServiceType(
+        name: "Apple Mobile Device v3",
+        type: "apple-mobdev3",
+        transportLayer: .tcp,
+        detail: "Newer variant of Apple's iOS-device sync protocol seen on iOS 17+ devices. Used alongside the v1 (`_apple-mobdev._tcp`) and v2 (`_apple-mobdev2._tcp`) services for Wi-Fi sync with Finder/iTunes."
+    )
+
+    // MARK: - Tier 2 Additions
+
+    static private let steamLink: BonjourServiceType = BonjourServiceType(
+        name: "Steam Link / In-Home Streaming",
+        type: "steam",
+        transportLayer: .tcp,
+        detail: "Valve's Steam in-home streaming service used by Steam Link clients (and the Steam app on phones, tablets, and Apple TV) to stream PC games over the LAN."
+    )
+    static private let minecraftLAN: BonjourServiceType = BonjourServiceType(
+        name: "Minecraft LAN Game",
+        type: "minecraft",
+        transportLayer: .tcp,
+        detail: "Minecraft LAN-game advertisement. When a player opens their world to LAN, the game broadcasts its presence so other Minecraft instances on the same network can join without typing an IP."
+    )
+    static private let sipTcp: BonjourServiceType = BonjourServiceType(
+        name: "SIP (VoIP)",
+        type: "sip",
+        transportLayer: .tcp,
+        detail: "Session Initiation Protocol — the signaling protocol that negotiates voice and video calls. Used by VoIP phones, Apple FaceTime audio fallbacks, and corporate calling systems."
+    )
+    static private let sipUdp: BonjourServiceType = BonjourServiceType(
+        name: "SIP (VoIP)",
+        type: "sip",
+        transportLayer: .udp,
+        detail: "Session Initiation Protocol over UDP — the original transport for SIP signaling, still widely used by VoIP phones and PBX systems on the local network."
+    )
+    static private let networkTimeProtocol: BonjourServiceType = BonjourServiceType(
+        name: "Network Time Protocol (NTP)",
+        type: "ntp",
+        transportLayer: .udp,
+        detail: "Network Time Protocol — used to keep clocks synchronized across networked devices. Some local NTP servers (router-based, AppleTV-based) advertise themselves over Bonjour."
+    )
+    static private let appleMobileDeviceProtocolV2Udp: BonjourServiceType = BonjourServiceType(
+        name: "Apple Mobile Device v2 (UDP)",
+        type: "apple-mobdev2",
+        transportLayer: .udp,
+        detail: "UDP companion to Apple's iOS Wi-Fi-sync protocol. Some iOS devices advertise both the TCP and UDP variants while pairing with macOS Finder."
+    )
+    static private let piHole: BonjourServiceType = BonjourServiceType(
+        name: "Pi-hole DNS Sinkhole",
+        type: "pi-hole",
+        transportLayer: .tcp,
+        detail: "Pi-hole, a network-level DNS-based ad blocker that runs on a Raspberry Pi or similar. Some installations advertise their admin endpoint via mDNS for easy discovery."
+    )
+
+    // MARK: - Tier 3 Additions — Encrypted DNS, Enterprise Auth, Linux Audio
+
+    static private let dnsOverTls: BonjourServiceType = BonjourServiceType(
+        name: "DNS over TLS",
+        type: "dot",
+        transportLayer: .tcp,
+        detail: "DNS over TLS, an encrypted variant of DNS that protects queries from eavesdropping on the local network and ISP. Used by privacy-conscious resolvers and some home routers."
+    )
+    static private let dnsOverHttps: BonjourServiceType = BonjourServiceType(
+        name: "DNS over HTTPS",
+        type: "doh",
+        transportLayer: .tcp,
+        detail: "DNS over HTTPS, an encrypted DNS variant that wraps queries in HTTPS so they're indistinguishable from regular web traffic. Used by Apple Private Relay, Firefox, and some local resolvers."
+    )
+    static private let kerberosTcp: BonjourServiceType = BonjourServiceType(
+        name: "Kerberos Authentication",
+        type: "kerberos",
+        transportLayer: .tcp,
+        detail: "Kerberos, the network authentication protocol used by macOS, Active Directory, and many enterprise login systems. Defined in RFC 4120 with mDNS service discovery in RFC 4120/6763."
+    )
+    static private let kerberosUdp: BonjourServiceType = BonjourServiceType(
+        name: "Kerberos Authentication",
+        type: "kerberos",
+        transportLayer: .udp,
+        detail: "Kerberos authentication over UDP — the original Kerberos transport, still used by some KDCs alongside the TCP variant."
+    )
+    static private let snmpProtocol: BonjourServiceType = BonjourServiceType(
+        name: "SNMP (Network Monitoring)",
+        type: "snmp",
+        transportLayer: .udp,
+        detail: "Simple Network Management Protocol — the long-standing protocol for monitoring and configuring network devices like switches, printers, and UPSes. Most often seen in business networks."
+    )
+    static private let pulseAudioServer: BonjourServiceType = BonjourServiceType(
+        name: "PulseAudio Server",
+        type: "pulse-server",
+        transportLayer: .tcp,
+        detail: "PulseAudio, the Linux audio server. Some Linux systems advertise their PulseAudio server over Bonjour so other machines can route audio to or from them over the local network."
+    )
+
+    // MARK: - KDE Connect
+
+    static private let kdeConnect: BonjourServiceType = BonjourServiceType(
+        name: "KDE Connect",
+        type: "kdeconnect",
+        transportLayer: .udp,
+        detail: "KDE Connect, the cross-platform pairing protocol that links phones (Android, iOS) with Linux/Windows/macOS desktops for shared clipboards, notification mirroring, and file transfer."
     )
 }

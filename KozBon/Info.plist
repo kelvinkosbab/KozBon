@@ -148,6 +148,50 @@
 		<string>_home-assistant._tcp</string>
 		<string>_vnc._tcp</string>
 		<string>_prometheus._tcp</string>
+		<!-- Tier 1 additions: media servers, smart home, mail/calendar, modern dev -->
+		<string>_plex._tcp</string>
+		<string>_jellyfin._tcp</string>
+		<string>_xbmc._tcp</string>
+		<string>_hue._tcp</string>
+		<string>_ecobee._tcp</string>
+		<string>_octoprint._tcp</string>
+		<string>_caldav._tcp</string>
+		<string>_caldavs._tcp</string>
+		<string>_carddav._tcp</string>
+		<string>_carddavs._tcp</string>
+		<string>_imap._tcp</string>
+		<string>_imaps._tcp</string>
+		<string>_smtp._tcp</string>
+		<string>_smtps._tcp</string>
+		<string>_submission._tcp</string>
+		<string>_pop3._tcp</string>
+		<string>_pop3s._tcp</string>
+		<string>_syncthing._tcp</string>
+		<string>_warpinator._tcp</string>
+		<string>_redis._tcp</string>
+		<string>_grpc._tcp</string>
+		<string>_consul._tcp</string>
+		<string>_apple-mobdev3._tcp</string>
+		<string>_lifx._udp</string>
+		<string>_kdeconnect._udp</string>
+		<!-- Tier 2 additions -->
+		<string>_emby._tcp</string>
+		<string>_steam._tcp</string>
+		<string>_minecraft._tcp</string>
+		<string>_sip._tcp</string>
+		<string>_sip._udp</string>
+		<string>_pi-hole._tcp</string>
+		<string>_klipper._tcp</string>
+		<string>_tasmota._tcp</string>
+		<string>_ntp._udp</string>
+		<string>_apple-mobdev2._udp</string>
+		<!-- Tier 3 additions: encrypted DNS, enterprise auth, Linux audio -->
+		<string>_dot._tcp</string>
+		<string>_doh._tcp</string>
+		<string>_kerberos._tcp</string>
+		<string>_kerberos._udp</string>
+		<string>_snmp._udp</string>
+		<string>_pulse-server._tcp</string>
 	</array>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>KozBon needs permission to scan for nearby Bonjour services.</string>
