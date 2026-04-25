@@ -12834,6 +12834,88 @@
         }
       }
     },
+    "guidance_service_port_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The port your service listens on for incoming connections. For testing, pick any unused value between 1024 and 65535 — ports below 1024 are reserved for system services. This number must match the port your service implementation actually opens, otherwise clients that find the advertisement won't be able to connect."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El puerto en el que tu servicio escucha conexiones entrantes. Para pruebas, elige cualquier valor sin usar entre 1024 y 65535: los puertos por debajo de 1024 están reservados para servicios del sistema. Este número debe coincidir con el puerto que abre realmente tu implementación del servicio; de lo contrario, los clientes que encuentren el anuncio no podrán conectarse."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le port sur lequel votre service écoute les connexions entrantes. Pour les tests, choisissez une valeur libre entre 1024 et 65535 — les ports inférieurs à 1024 sont réservés aux services système. Ce numéro doit correspondre au port que votre implémentation ouvre réellement, sinon les clients qui découvriront l'annonce ne pourront pas se connecter."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Port, an dem dein Dienst eingehende Verbindungen entgegennimmt. Wähle für Tests einen freien Wert zwischen 1024 und 65535 — Ports unter 1024 sind für Systemdienste reserviert. Diese Nummer muss mit dem Port übereinstimmen, den deine Implementierung tatsächlich öffnet, sonst können Clients, die die Ankündigung finden, keine Verbindung herstellen."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "サービスが受信接続をリッスンするポートです。テストでは 1024〜65535 の未使用の値を使用してください。1024 未満のポートはシステムサービス用に予約されています。この番号は、実際にサービスが開いているポートと一致している必要があります。一致していないと、広告を見つけたクライアントが接続できません。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "您的服务用于侦听传入连接的端口。测试时，请选择 1024 到 65535 之间任何未使用的值；低于 1024 的端口保留给系统服务。此数字必须与您的服务实际打开的端口匹配，否则发现该广告的客户端将无法连接。"
+          }
+        }
+      }
+    },
+    "guidance_service_domain_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use `local.` for normal home and office networks — it's the link-local domain Bonjour uses for multicast discovery. Custom domains only work if your network's DNS server is configured to host DNS-SD records, which most aren't."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usa `local.` en redes domésticas y de oficina normales: es el dominio de enlace local que Bonjour utiliza para el descubrimiento multidifusión. Los dominios personalizados solo funcionan si el servidor DNS de tu red está configurado para alojar registros DNS-SD, algo poco habitual."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utilisez `local.` pour les réseaux domestiques et professionnels classiques : c'est le domaine lien-local que Bonjour utilise pour la découverte par multidiffusion. Les domaines personnalisés ne fonctionnent que si le serveur DNS de votre réseau est configuré pour héberger des enregistrements DNS-SD, ce qui est rarement le cas."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verwende `local.` in normalen Heim- und Büronetzwerken — das ist die Link-Local-Domain, die Bonjour für Multicast-Erkennung nutzt. Benutzerdefinierte Domains funktionieren nur, wenn der DNS-Server deines Netzwerks DNS-SD-Einträge hostet, was selten der Fall ist."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通常の家庭やオフィスのネットワークでは `local.` を使ってください。これは Bonjour がマルチキャスト検出に使用するリンクローカルドメインです。カスタムドメインは、ネットワークの DNS サーバーが DNS-SD レコードをホストするように設定されている場合にのみ機能します（多くの場合そうなっていません）。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在普通家庭和办公网络中请使用 `local.`，这是 Bonjour 用于多播发现的链路本地域。自定义域名仅在您的网络 DNS 服务器配置为承载 DNS-SD 记录时才有效，而大多数 DNS 服务器并未如此配置。"
+          }
+        }
+      }
+    },
     "settings_ai_response_length": {
       "extractionState": "manual",
       "localizations": {

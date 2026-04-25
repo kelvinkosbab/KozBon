@@ -19,9 +19,17 @@ struct SelectServiceTypeView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.preferencesStore) private var preferencesStore
     @Environment(\.hapticFeedback) private var hapticFeedback
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Binding var selectedServiceType: BonjourServiceType?
     @State private var viewModel = SelectServiceTypeViewModel()
     @State private var serviceTypeToExplain: BonjourServiceType?
+
+    /// Tracks when the in-content `BlueSectionItemIconTitleDetailView`
+    /// header scrolls out of view, so the toolbar can surface a
+    /// `ServiceTypeBadge` for the selected type — matching the
+    /// scroll-aware behavior in `BonjourServiceDetailView` and
+    /// `SupportedServiceDetailView`.
+    @State private var isNavigationHeaderShown = false
 
     init(selectedServiceType: Binding<BonjourServiceType?>) {
         self._selectedServiceType = selectedServiceType
@@ -43,6 +51,16 @@ struct SelectServiceTypeView: View {
                         title: selectedServiceType.name,
                         detail: selectedServiceType.fullType
                     )
+                    .onAppear {
+                        withAnimation(reduceMotion ? nil : .default) {
+                            isNavigationHeaderShown = false
+                        }
+                    }
+                    .onDisappear {
+                        withAnimation(reduceMotion ? nil : .default) {
+                            isNavigationHeaderShown = true
+                        }
+                    }
                 }
             }
 
@@ -64,6 +82,25 @@ struct SelectServiceTypeView: View {
         }
         .contentMarginsBasedOnSizeClass()
         .navigationTitle(String(localized: Strings.NavigationTitles.supportedServices))
+        #if !os(macOS)
+        // Inline title is required for the `.principal` toolbar slot
+        // (where the badge animates in on scroll) to render in the
+        // expected position. Matches the detail views.
+        .navigationBarTitleDisplayMode(.inline)
+        #endif
+        .toolbar {
+            if isNavigationHeaderShown, let selectedServiceType {
+                ToolbarItem(
+                    placement: horizontalSizeClass == .compact ? .principal : .confirmationAction
+                ) {
+                    ServiceTypeBadge(
+                        serviceType: selectedServiceType,
+                        style: .basedOnSizeClass,
+                        size: .compact
+                    )
+                }
+            }
+        }
         .task {
             viewModel.load()
         }

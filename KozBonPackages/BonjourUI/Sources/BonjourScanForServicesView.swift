@@ -182,13 +182,21 @@ public struct BonjourScanForServicesView: View {
     @ViewBuilder
     private func forEach(services: [BonjourService]) -> some View {
         ForEach(services) { service in
-            TitleDetailStackView(
-                title: service.service.name,
-                detail: service.serviceType.name
-            ) {
-                ServiceTypeBadge(serviceType: service.serviceType, style: .iconOnly)
+            // `NavigationLink(value:)` (instead of plain `.tag`) is what
+            // renders the disclosure chevron and the system "tappable
+            // row" treatment that every other list in the app shows.
+            // The `selection: $viewModel.selectedService` binding on
+            // the enclosing `List` still drives the detail column —
+            // `NavigationLink` value updates the binding for free, so
+            // no `.navigationDestination(for:)` is needed.
+            NavigationLink(value: service) {
+                TitleDetailStackView(
+                    title: service.service.name,
+                    detail: service.serviceType.name
+                ) {
+                    ServiceTypeBadge(serviceType: service.serviceType, style: .iconOnly)
+                }
             }
-            .tag(service)
             .draggable(service.hostName)
             .accessibilityHint(Strings.Accessibility.viewDetails(service.service.name))
             .accessibilityActions {

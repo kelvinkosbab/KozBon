@@ -198,7 +198,11 @@ public struct BonjourServiceDetailView: View {
                 ToolbarItem(
                     placement: horizontalSizeClass == .compact ? .principal : .confirmationAction
                 ) {
-                    ServiceTypeBadge(serviceType: viewModel.serviceType, style: .basedOnSizeClass)
+                    ServiceTypeBadge(
+                        serviceType: viewModel.serviceType,
+                        style: .basedOnSizeClass,
+                        size: .compact
+                    )
                 }
             }
         }

@@ -751,6 +751,24 @@ public enum Strings {
         public static var txtRecord: LocalizedStringResource {
             .init("guidance_txt_record", bundle: .atURL(Bundle.module.bundleURL))
         }
+
+        /// Field-level hint for the broadcast form's Domain field —
+        /// explains why `local.` is the default and what custom
+        /// domains require. Surfaced as the field's section footer
+        /// (always visible) and as a `.help(...)` tooltip on hover
+        /// (macOS).
+        public static var serviceDomainHint: LocalizedStringResource {
+            .init("guidance_service_domain_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Field-level hint for the broadcast form's Port field —
+        /// explains the safe range for testing and notes that the
+        /// value must match the port the user's service actually
+        /// listens on. Surfaced as the section footer (always
+        /// visible) and as a `.help(...)` tooltip on macOS hover.
+        public static var servicePortHint: LocalizedStringResource {
+            .init("guidance_service_port_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
     }
 
     // MARK: - Settings

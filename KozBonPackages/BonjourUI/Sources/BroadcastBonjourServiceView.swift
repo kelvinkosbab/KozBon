@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import BonjourAI
 import BonjourCore
 import BonjourLocalization
 import BonjourModels
 import BonjourScanning
+import BonjourStorage
 
 // MARK: - BroadcastBonjourServiceView
 
@@ -18,6 +20,7 @@ struct BroadcastBonjourServiceView: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dependencies) private var dependencies
+    @Environment(\.preferencesStore) private var preferencesStore
 
     @Binding private var isPresented: Bool
     @Binding private var customPublishedServices: [BonjourService]
@@ -31,6 +34,10 @@ struct BroadcastBonjourServiceView: View {
     @State private var dataRecords: [BonjourService.TxtDataRecord]
     @State private var domainError: String?
     @State private var isCreateTxtRecordViewPresented = false
+
+    /// Drives the Apple Intelligence Insights sheet from the
+    /// service-type row's long-press menu.
+    @State private var serviceTypeToExplain: BonjourServiceType?
 
     /// Whether the form has valid inputs for broadcasting a service.
     private var isFormValid: Bool {
@@ -137,6 +144,10 @@ struct BroadcastBonjourServiceView: View {
         // so the form reads as an inset card on both platforms.
         .frame(minWidth: 480, idealWidth: 520, minHeight: 400, idealHeight: 500)
         #endif
+        #if canImport(FoundationModels)
+        // Shared with `SupportedServicesView`; gates on iOS/macOS/visionOS 26 internally.
+        .modifier(AIServiceTypeListSheetModifier(serviceTypeToExplain: $serviceTypeToExplain))
+        #endif
     }
 
     // MARK: - Service Type Section
@@ -149,6 +160,7 @@ struct BroadcastBonjourServiceView: View {
                     title: serviceType.name,
                     detail: serviceType.fullType
                 )
+                .contextMenu { aiInsightsContextMenu(for: serviceType) }
             } else {
                 NavigationLink {
                     SelectServiceTypeView(selectedServiceType: $serviceType)
@@ -160,9 +172,21 @@ struct BroadcastBonjourServiceView: View {
                     )
                 }
                 .listRowBackground(
+                    // Capsule clip mirrors `BlueSectionItemIconTitleDetailView`'s
+                    // own row background; without it the override falls back to
+                    // the system's rounded-rectangle row shape. The 40% opacity
+                    // keeps the unselected state reading as "tap to choose."
                     Color.kozBonBlue
                         .opacity(0.4)
+                        .clipShape(.capsule)
                 )
+                .contextMenu {
+                    // Skip the menu before a selection — empty menus consume
+                    // the long-press gesture without showing anything.
+                    if let serviceType {
+                        aiInsightsContextMenu(for: serviceType)
+                    }
+                }
             }
         } header: {
             Text(Strings.Sections.serviceType)
@@ -195,6 +219,8 @@ struct BroadcastBonjourServiceView: View {
             #if !os(macOS)
             .keyboardType(.numberPad)
             #endif
+            // macOS hover tooltip; other platforms ignore `.help`.
+            .help(Text(Strings.Guidance.servicePortHint))
             .onSubmit {
                 doneButtonSelected()
             }
@@ -206,10 +232,13 @@ struct BroadcastBonjourServiceView: View {
             Text(Strings.Sections.portNumber)
                 .accessibilityAddTraits(.isHeader)
         } footer: {
+            // Dual-purpose footer: red error when validation fails, hint otherwise.
             if let portError {
                 Text(verbatim: portError)
                     .foregroundStyle(.red)
                     .accessibilityLabel(Strings.Accessibility.error(portError))
+            } else {
+                Text(Strings.Guidance.servicePortHint)
             }
         }
         .onChange(of: [port]) {
@@ -228,6 +257,8 @@ struct BroadcastBonjourServiceView: View {
             TextField(String(localized: Strings.Placeholders.serviceDomain), text: $domain)
                 .accessibilityLabel(String(localized: Strings.Accessibility.serviceDomain))
                 .accessibilityHint(String(localized: Strings.Accessibility.serviceDomainHint))
+                // macOS hover tooltip; other platforms ignore `.help`.
+                .help(Text(Strings.Guidance.serviceDomainHint))
                 .onSubmit {
                     doneButtonSelected()
                 }
@@ -236,10 +267,13 @@ struct BroadcastBonjourServiceView: View {
             Text(Strings.Sections.serviceDomain)
                 .accessibilityAddTraits(.isHeader)
         } footer: {
+            // Dual-purpose footer: red error when validation fails, hint otherwise.
             if let domainError {
                 Text(verbatim: domainError)
                     .foregroundStyle(.red)
                     .accessibilityLabel(Strings.Accessibility.error(domainError))
+            } else {
+                Text(Strings.Guidance.serviceDomainHint)
             }
         }
         .onChange(of: [domain]) {
@@ -414,5 +448,27 @@ struct BroadcastBonjourServiceView: View {
             portError = nil
             domainError = nil
         }
+    }
+
+    // MARK: - AI Insights Menu
+
+    /// Long-press menu shown on the selected service-type row that
+    /// surfaces Apple Intelligence's "Insights" affordance — the same
+    /// component used by the Library and Discover rows. Tapping the
+    /// menu item plays a medium haptic and triggers the AI
+    /// explanation sheet via the `serviceTypeToExplain` binding.
+    /// Internally `AIContextMenuItems` checks the device's Apple
+    /// Intelligence availability and the user's preference, so this
+    /// view doesn't have to duplicate any of that gating logic.
+    @ViewBuilder
+    private func aiInsightsContextMenu(for serviceType: BonjourServiceType) -> some View {
+        #if canImport(FoundationModels)
+        if #available(iOS 26, macOS 26, visionOS 26, *) {
+            AIContextMenuItems(
+                aiAnalysisEnabled: preferencesStore.aiAnalysisEnabled,
+                action: { serviceTypeToExplain = serviceType }
+            )
+        }
+        #endif
     }
 }

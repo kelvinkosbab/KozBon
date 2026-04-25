@@ -210,7 +210,11 @@ public struct SupportedServiceDetailView: View {
                 ToolbarItem(
                     placement: horizontalSizeClass == .compact ? .principal : .confirmationAction
                 ) {
-                    ServiceTypeBadge(serviceType: serviceType, style: .basedOnSizeClass)
+                    ServiceTypeBadge(
+                        serviceType: serviceType,
+                        style: .basedOnSizeClass,
+                        size: .compact
+                    )
                 }
             }
         }
