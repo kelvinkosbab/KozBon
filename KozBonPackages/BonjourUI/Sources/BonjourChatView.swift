@@ -142,6 +142,17 @@ public struct BonjourChatView: View {
                                 systemImage: Iconography.clearChat
                             )
                         }
+                        // `role: .destructive` colors the dialog
+                        // confirm button red but doesn't tint the
+                        // toolbar glyph itself — the system leaves
+                        // toolbar items in the parent's accent color
+                        // by default. Override with an explicit
+                        // `.tint(.red)` so the trash icon visually
+                        // signals "this clears your conversation"
+                        // before the user taps it. `Color.red` maps
+                        // to `systemRed`, which respects increase-
+                        // contrast and dark-mode adjustments.
+                        .tint(.red)
                         .accessibilityHint(String(localized: Strings.Accessibility.chatClearHistoryHint))
                         .accessibilityIdentifier("chat_clear_button")
                     }
