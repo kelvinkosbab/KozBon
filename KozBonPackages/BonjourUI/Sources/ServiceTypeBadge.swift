@@ -16,6 +16,8 @@ import BonjourModels
 /// style based on the provided ``Style``.
 public struct ServiceTypeBadge: View {
 
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+
     let serviceType: BonjourServiceType
     let style: Style
 
@@ -31,6 +33,14 @@ public struct ServiceTypeBadge: View {
     /// pixel count.
     @ScaledMetric private var badgeHeight: CGFloat = 30
 
+    /// Locks the capsule's width to a fixed value when the badge
+    /// renders icon-only — same rationale as `badgeHeight`. Set
+    /// equal to `badgeHeight` so icon-only badges render as a clean
+    /// circle (a capsule with equal width and height is a circle by
+    /// definition). Title+icon badges leave the width intrinsic so
+    /// they can grow to fit their text.
+    @ScaledMetric private var badgeWidth: CGFloat = 30
+
     /// Creates a service type badge.
     ///
     /// - Parameters:
@@ -39,6 +49,20 @@ public struct ServiceTypeBadge: View {
     public init(serviceType: BonjourServiceType, style: Style) {
         self.serviceType = serviceType
         self.style = style
+    }
+
+    /// Whether the rendered Label currently shows ONLY the icon
+    /// (no title). Drives the badge's width constraint — icon-only
+    /// badges get a fixed square shape so adjacent rows align;
+    /// title+icon badges grow to fit their text. Resolved here so
+    /// the outer `.frame` and the inner `LabelStyleModifier` stay
+    /// in lockstep on `.basedOnSizeClass`.
+    private var isEffectivelyIconOnly: Bool {
+        switch style {
+        case .iconOnly: true
+        case .titleAndIcon: false
+        case .basedOnSizeClass: horizontalSizeClass != .regular
+        }
     }
 
     public var body: some View {
@@ -51,9 +75,18 @@ public struct ServiceTypeBadge: View {
                 // varies by platform — explicit body keeps every badge
                 // the same regardless of where it's embedded.
                 .font(.body)
-                .padding(.horizontal)
+                // Title+icon badges need horizontal breathing room
+                // around the text. Icon-only badges are governed
+                // entirely by the fixed square frame below — adding
+                // padding there would push the content past the
+                // frame and cause the icon to clip against the
+                // capsule's edge.
+                .padding(.horizontal, isEffectivelyIconOnly ? 0 : 16)
         }
-        .frame(height: badgeHeight)
+        .frame(
+            width: isEffectivelyIconOnly ? badgeWidth : nil,
+            height: badgeHeight
+        )
         #if os(visionOS)
         .glassBackgroundEffect()
         .clipShape(.capsule)
