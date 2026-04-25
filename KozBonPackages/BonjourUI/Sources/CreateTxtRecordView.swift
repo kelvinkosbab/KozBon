@@ -139,7 +139,11 @@ struct CreateTxtRecordView: View {
                 }
             }
         }
-        #if os(macOS)
+        #if os(macOS) || os(visionOS)
+        // Inset card sizing on macOS and visionOS — without an explicit
+        // frame, the simple key/value form sprawls across the full
+        // window/ornament. Smaller than the broadcast/create-type
+        // sheets because there are only two fields here.
         .frame(minWidth: 400, idealWidth: 450, minHeight: 300, idealHeight: 350)
         #endif
     }

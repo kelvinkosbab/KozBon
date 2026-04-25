@@ -85,6 +85,13 @@ struct AppCore: App {
                         }
                     }
 
+                    // macOS preferences belong in the standard Settings
+                    // window (⌘,) — the `Settings { }` scene below already
+                    // provides one, so duplicating it as a tab is the kind
+                    // of pattern Mac users find confusing. iOS / iPadOS /
+                    // visionOS keep the Settings tab because those
+                    // platforms have no equivalent Settings scene.
+                    #if !os(macOS)
                     Tab {
                         SettingsView()
                     } label: {
@@ -94,6 +101,7 @@ struct AppCore: App {
                             TopLevelDestination.settings.icon
                         }
                     }
+                    #endif
 
                     if AppleIntelligenceSupport.isDeviceSupported,
                        preferencesStore.aiAnalysisEnabled {
@@ -127,6 +135,7 @@ struct AppCore: App {
                 }
                 #if os(macOS)
                 .tabViewStyle(.automatic)
+                .frame(minWidth: 800, minHeight: 500)
                 #else
                 .tabViewStyle(.sidebarAdaptable)
                 #endif
@@ -166,6 +175,9 @@ struct AppCore: App {
                             }
                     }
 
+                    // Settings tab omitted on macOS — see comment in
+                    // the modern (`TabView`) branch above for rationale.
+                    #if !os(macOS)
                     SettingsView()
                         .tabItem {
                             Label {
@@ -174,7 +186,11 @@ struct AppCore: App {
                                 TopLevelDestination.settings.icon
                             }
                         }
+                    #endif
                 }
+                #if os(macOS)
+                .frame(minWidth: 800, minHeight: 500)
+                #endif
                 .tint(.kozBonBlue)
                 .environment(\.dependencies, dependencies)
                 .environment(\.serviceExplainer, explainer)
@@ -182,6 +198,10 @@ struct AppCore: App {
             }
         }
         #if os(macOS)
+        // `.windowResizability(.contentSize)` lets the window shrink to
+        // whatever the content allows — without a min frame on the
+        // content, that's effectively zero. Pin a sensible floor so the
+        // sidebar + detail layout stays usable.
         .defaultSize(width: 1100, height: 700)
         .windowResizability(.contentSize)
         .commands {
@@ -239,6 +259,53 @@ private struct AppCommands: Commands {
             .disabled(refreshScan == nil)
             .keyboardShortcut("r", modifiers: .command)
         }
+
+        // Replace the system Help menu (which only ever offered "Search"
+        // by default) with curated links the user can reach for when
+        // KozBon shows them something they don't recognize. Items are
+        // grouped: app-level resources (source, vendor narrative, the
+        // human-readable IANA registry, Apple's port reference) above
+        // the divider; protocol specs below. The links open in the
+        // user's default browser via `Link`, which renders as a regular
+        // menu item on macOS.
+        //
+        // The URLs are hardcoded constants known to be valid — the
+        // force-unwraps can't fail at runtime, and `Link`'s API requires
+        // a non-optional `URL`. The disables are scoped to this block.
+        // swiftlint:disable force_unwrapping
+        CommandGroup(replacing: .help) {
+            Link(
+                String(localized: Strings.Help.kozbonOnGitHub),
+                destination: URL(string: "https://github.com/kelvinkosbab/KozBon")!
+            )
+
+            Divider()
+
+            Link(
+                String(localized: Strings.Help.aboutBonjour),
+                destination: URL(string: "https://developer.apple.com/bonjour/")!
+            )
+            Link(
+                String(localized: Strings.Help.ianaServiceRegistry),
+                destination: URL(string: "https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml")!
+            )
+            Link(
+                String(localized: Strings.Help.applePortsReference),
+                destination: URL(string: "https://support.apple.com/HT202944")!
+            )
+
+            Divider()
+
+            Link(
+                String(localized: Strings.Help.mdnsSpecification),
+                destination: URL(string: "https://datatracker.ietf.org/doc/html/rfc6762")!
+            )
+            Link(
+                String(localized: Strings.Help.dnssdSpecification),
+                destination: URL(string: "https://datatracker.ietf.org/doc/html/rfc6763")!
+            )
+        }
+        // swiftlint:enable force_unwrapping
     }
 }
 #endif

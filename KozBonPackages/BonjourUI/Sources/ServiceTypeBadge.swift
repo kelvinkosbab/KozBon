@@ -48,6 +48,9 @@ public struct ServiceTypeBadge: View {
         #endif
         .accessibilityElement(children: .combine)
         .accessibilityLabel(serviceType.name)
+        // `.hoverEffect` is unavailable on macOS — AppKit handles
+        // pointer-hover through its native control styling. Limit the
+        // modifier to the platforms where it actually exists.
         #if os(iOS) || os(visionOS)
         .hoverEffect(.lift)
         #endif

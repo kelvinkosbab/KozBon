@@ -76,6 +76,12 @@ public struct AIContextMenuItems: View {
                 }
 
             case .unavailable(let reason):
+                // visionOS doesn't expose a public Apple Intelligence
+                // settings deep link, so an "Enable Apple Intelligence"
+                // CTA there would dead-end — hide it. iOS and macOS both
+                // route through the platform-specific URLs in
+                // `openAppleIntelligenceSettings()`.
+                #if !os(visionOS)
                 if reason != .deviceNotEligible {
                     Divider()
                     Button {
@@ -88,6 +94,7 @@ public struct AIContextMenuItems: View {
                         )
                     }
                 }
+                #endif
 
             @unknown default:
                 EmptyView()

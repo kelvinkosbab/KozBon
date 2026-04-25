@@ -130,7 +130,11 @@ struct BroadcastBonjourServiceView: View {
                 )
             }
         }
-        #if os(macOS)
+        #if os(macOS) || os(visionOS)
+        // Same min/ideal sizing on macOS and visionOS — without it,
+        // Vision Pro sheets render at the system's full ornament-ish
+        // default which dwarfs the content. Pin a content-shaped size
+        // so the form reads as an inset card on both platforms.
         .frame(minWidth: 480, idealWidth: 520, minHeight: 400, idealHeight: 500)
         #endif
     }

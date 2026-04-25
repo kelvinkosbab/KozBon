@@ -963,6 +963,40 @@ public enum Strings {
             .init("nearby_services", bundle: .atURL(Bundle.module.bundleURL))
         }
     }
+
+    // MARK: - Help Menu (macOS)
+    //
+    // Items shown in the macOS Help menu via `CommandGroup(replacing: .help)`.
+    // Each item is a `Link` to an authoritative external resource so the user
+    // can dig deeper without leaving the app's worldview. Localized so the
+    // menu reads natively for non-English macOS users.
+
+    public enum Help {
+
+        public static var kozbonOnGitHub: LocalizedStringResource {
+            .init("help_kozbon_on_github", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var ianaServiceRegistry: LocalizedStringResource {
+            .init("help_iana_service_registry", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var aboutBonjour: LocalizedStringResource {
+            .init("help_about_bonjour", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var applePortsReference: LocalizedStringResource {
+            .init("help_apple_ports_reference", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var mdnsSpecification: LocalizedStringResource {
+            .init("help_mdns_specification", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var dnssdSpecification: LocalizedStringResource {
+            .init("help_dnssd_specification", bundle: .atURL(Bundle.module.bundleURL))
+        }
+    }
 }
 
 // swiftlint:enable file_length

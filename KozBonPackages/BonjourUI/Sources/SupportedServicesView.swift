@@ -130,6 +130,19 @@ public struct SupportedServicesView: View {
                     ServiceTypeBadge(serviceType: serviceType, style: .iconOnly)
                 }
             }
+            // macOS users expect double-click to open in a new window, the
+            // same way Finder, Mail, and Notes work. The right-click
+            // "Open in New Window" menu item still exists for
+            // discoverability, but this is the muscle-memory shortcut. We
+            // attach it as a `.simultaneousGesture` so the single-tap
+            // navigation behavior of `NavigationLink` is preserved.
+            #if os(macOS)
+            .simultaneousGesture(
+                TapGesture(count: 2).onEnded {
+                    openWindow(value: serviceType)
+                }
+            )
+            #endif
             .draggable(serviceType.fullType)
             .accessibilityLabel("\(serviceType.name), \(serviceType.fullType)")
             .accessibilityHint(Strings.Accessibility.viewDetails(serviceType.name))

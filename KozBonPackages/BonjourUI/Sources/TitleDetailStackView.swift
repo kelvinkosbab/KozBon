@@ -59,6 +59,11 @@ public struct TitleDetailStackView<Trailing>: View where Trailing: View {
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(title), \(detail)")
         .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
+        // `.hoverEffect` is unavailable on macOS — the framework marks
+        // it `@available(macOS, unavailable)` because AppKit list cells
+        // already provide native pointer-hover feedback through their
+        // standard selection styling. Apply the modifier only on the
+        // platforms that actually expose it.
         #if os(iOS) || os(visionOS)
         .hoverEffect(.highlight)
         #endif

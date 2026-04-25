@@ -196,7 +196,9 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                 }
             }
         }
-        #if os(macOS)
+        #if os(macOS) || os(visionOS)
+        // Inset card sizing on macOS and visionOS — see the matching
+        // comment in `BroadcastBonjourServiceView` for rationale.
         .frame(minWidth: 480, idealWidth: 520, minHeight: 400, idealHeight: 500)
         #endif
     }
