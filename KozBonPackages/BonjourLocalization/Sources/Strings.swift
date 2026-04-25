@@ -968,6 +968,19 @@ public enum Strings {
             .init("chat_clear_history", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        /// Title for the confirmation dialog shown when the user taps
+        /// the trailing "Clear" toolbar button.
+        public static var clearHistoryConfirmationTitle: LocalizedStringResource {
+            .init("chat_clear_history_confirmation_title", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Body copy for the clear-chat confirmation dialog —
+        /// explains that clearing resets the conversation context
+        /// (so the model "forgets" earlier turns).
+        public static var clearHistoryConfirmationMessage: LocalizedStringResource {
+            .init("chat_clear_history_confirmation_message", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var suggestion1: LocalizedStringResource {
             .init("chat_suggestion_1", bundle: .atURL(Bundle.module.bundleURL))
         }

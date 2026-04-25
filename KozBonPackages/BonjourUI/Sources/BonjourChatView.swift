@@ -54,6 +54,13 @@ public struct BonjourChatView: View {
     /// tracker's `tickCount`.
     @State private var sentenceHapticTracker = SentenceHapticTracker()
 
+    /// Controls presentation of the confirmation dialog for the
+    /// trailing "Clear" toolbar button. Lifted to view state (not
+    /// session state) because the dialog is a transient UI mode
+    /// that shouldn't survive view tear-down — and because the
+    /// session protocol stays focused on chat data.
+    @State private var isClearConfirmationPresented = false
+
     private var messageTransitionAnimation: Animation? {
         reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.75)
     }
@@ -117,13 +124,47 @@ public struct BonjourChatView: View {
             #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
-            // No clear-history toolbar button: the chat is intentionally
-            // presented as a continuous conversation where earlier turns are
-            // remembered. A prominent "clear" affordance in the primary toolbar
-            // position undermined that chatbot feel. The session still resets
-            // on app launch, which is the expected lifetime for on-device
-            // multi-turn chats with no persistence.
-            //
+            // Trailing "Clear" affordance — only surfaces once the
+            // user has actually started a conversation. On the
+            // empty landing screen there's nothing to clear, and
+            // the button would just be visual noise. Tapping it
+            // brings up a confirmation dialog so an accidental
+            // press doesn't blow away an in-flight thread (which
+            // is unrecoverable — the chat doesn't persist).
+            .toolbar {
+                if let session, !session.messages.isEmpty {
+                    ToolbarItem(placement: .primaryAction) {
+                        Button(role: .destructive) {
+                            isClearConfirmationPresented = true
+                        } label: {
+                            Label(
+                                String(localized: Strings.Chat.clearHistory),
+                                systemImage: Iconography.clearChat
+                            )
+                        }
+                        .accessibilityHint(String(localized: Strings.Accessibility.chatClearHistoryHint))
+                        .accessibilityIdentifier("chat_clear_button")
+                    }
+                }
+            }
+            .confirmationDialog(
+                String(localized: Strings.Chat.clearHistoryConfirmationTitle),
+                isPresented: $isClearConfirmationPresented,
+                titleVisibility: .visible
+            ) {
+                Button(String(localized: Strings.Chat.clearHistory), role: .destructive) {
+                    // Resetting the session clears `messages`, which
+                    // flips the `messages.isEmpty` branch in
+                    // `messageList(...)` and animates the user back to
+                    // the empty-state landing view with the suggested
+                    // prompts.
+                    session?.reset()
+                    isInputFocused = false
+                }
+                Button(String(localized: Strings.Buttons.cancel), role: .cancel) {}
+            } message: {
+                Text(Strings.Chat.clearHistoryConfirmationMessage)
+            }
             // Tactile confirmation that a message was dispatched, plus a
             // lighter tap for each sentence the model completes while
             // streaming. The hierarchy is: `.medium` for submit (discrete

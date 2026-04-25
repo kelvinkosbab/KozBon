@@ -67,6 +67,12 @@ public enum Iconography {
     /// Refresh icon.
     public static let refresh = "arrow.clockwise"
 
+    /// Clear / delete-all icon used by the Chat tab's "Clear chat"
+    /// toolbar button. `trash` reads as "discard everything here"
+    /// — the same metaphor Mail and Notes use when the action
+    /// removes content the user can't recover.
+    public static let clearChat = "trash"
+
     // MARK: - Arrows
 
     /// Upward arrow — used as the Send glyph in the chat compose bar.

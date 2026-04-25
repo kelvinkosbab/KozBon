@@ -12137,6 +12137,88 @@
         }
       }
     },
+    "chat_clear_history_confirmation_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clear chat?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Borrar chat?"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Effacer le chat ?"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chat löschen?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "チャットをクリアしますか？"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "要清除聊天吗？"
+          }
+        }
+      }
+    },
+    "chat_clear_history_confirmation_message": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This removes the current conversation and resets the assistant's memory of earlier turns. You'll go back to the suggested-prompt landing screen."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esto elimina la conversación actual y reinicia la memoria del asistente sobre turnos anteriores. Volverás a la pantalla inicial con sugerencias."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cette action efface la conversation en cours et réinitialise la mémoire des échanges précédents. Vous reviendrez à l'écran d'accueil avec les suggestions."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Damit wird die aktuelle Unterhaltung entfernt und der Kontext früherer Wechsel zurückgesetzt. Du gelangst zurück zum Startbildschirm mit den Vorschlägen."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "現在の会話を削除し、これまでのやり取りに関するアシスタントの記憶をリセットします。提案プロンプトのランディング画面に戻ります。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这将删除当前对话，并重置助手对之前轮次的记忆。您将返回到带有建议提示的初始页面。"
+          }
+        }
+      }
+    },
     "chat_clear_history": {
       "extractionState": "manual",
       "localizations": {
