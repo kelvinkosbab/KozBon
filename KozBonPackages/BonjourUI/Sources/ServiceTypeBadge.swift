@@ -19,6 +19,18 @@ public struct ServiceTypeBadge: View {
     let serviceType: BonjourServiceType
     let style: Style
 
+    /// Locks the capsule's height to a fixed value so badges in
+    /// adjacent list rows line up regardless of which SF Symbol is
+    /// rendered inside. SF Symbols have different intrinsic
+    /// bounding-box ratios — `homekit` is short and wide, `printer.fill`
+    /// is closer to square, `terminal` is square — and without this
+    /// frame the rows render at slightly different heights, which
+    /// reads as "ragged" against the otherwise tidy list. Wrapping
+    /// the value in `@ScaledMetric` lets the badge grow with the
+    /// user's Dynamic Type setting instead of capping at a hard
+    /// pixel count.
+    @ScaledMetric private var badgeHeight: CGFloat = 30
+
     /// Creates a service type badge.
     ///
     /// - Parameters:
@@ -33,9 +45,15 @@ public struct ServiceTypeBadge: View {
         HStack {
             Label(serviceType.name, systemImage: serviceType.imageSystemName)
                 .modifier(LabelStyleModifier(style: style))
-                .padding(.vertical, 6)
+                // Pin the SF Symbol size to the body font's cap-height.
+                // Without an explicit font, `Label` inherits whatever
+                // ambient style the parent List/Form applies, which
+                // varies by platform — explicit body keeps every badge
+                // the same regardless of where it's embedded.
+                .font(.body)
                 .padding(.horizontal)
         }
+        .frame(height: badgeHeight)
         #if os(visionOS)
         .glassBackgroundEffect()
         .clipShape(.capsule)
