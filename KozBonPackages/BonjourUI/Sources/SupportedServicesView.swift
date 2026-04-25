@@ -22,6 +22,7 @@ import BonjourStorage
 public struct SupportedServicesView: View {
 
     @Environment(\.preferencesStore) private var preferencesStore
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var viewModel = SupportedServicesViewModel()
     @State private var serviceTypeToExplain: BonjourServiceType?
 
@@ -60,9 +61,32 @@ public struct SupportedServicesView: View {
             #endif
             .navigationTitle(String(localized: Strings.NavigationTitles.supportedServices))
             .searchable(text: $viewModel.searchText, prompt: String(localized: Strings.Placeholders.search))
+            .overlay {
+                // When an active category filter narrows the list to
+                // zero results we surface a `ContentUnavailableView`
+                // instead of an empty list. Search-only emptiness is
+                // left to the system's standard "No Results" search
+                // overlay (built into `.searchable`), so this only
+                // fires for the filter case.
+                if viewModel.isFilteredResultEmpty,
+                   let category = viewModel.filterCategory,
+                   viewModel.searchText.isEmpty {
+                    ContentUnavailableView {
+                        Label(
+                            Strings.Filters.noServicesInCategory(String(localized: category.title)),
+                            systemImage: category.iconName
+                        )
+                    } description: {
+                        Text(Strings.Filters.noServicesInCategoryHint)
+                    }
+                }
+            }
             .toolbar {
                 ToolbarItem {
-                    self.renderTrailingToolbarItems()
+                    self.renderFilterMenu()
+                }
+                ToolbarItem {
+                    self.renderCreateMenu()
                 }
             }
         } detail: {
@@ -199,7 +223,7 @@ public struct SupportedServicesView: View {
         #endif
     }
 
-    private func renderTrailingToolbarItems() -> some View {
+    private func renderCreateMenu() -> some View {
         Menu {
             Button {
                 viewModel.isCreateCustomServiceTypePresented = true
@@ -213,6 +237,55 @@ public struct SupportedServicesView: View {
         .accessibilityLabel(String(localized: Strings.Accessibility.create))
         .accessibilityHint(String(localized: Strings.Accessibility.createServiceTypeHint))
         .accessibilityIdentifier("create_service_type_menu")
+    }
+
+    /// Category filter menu — mirrors the filter section of the
+    /// Discover tab's combined sort/filter menu, but limited to
+    /// just the 5 categories plus an "All categories" reset.
+    /// Selecting the active category clears the filter.
+    @ViewBuilder
+    private func renderFilterMenu() -> some View {
+        Menu {
+            Button {
+                setFilter(nil)
+            } label: {
+                if viewModel.filterCategory == nil {
+                    Label(String(localized: Strings.Filters.allCategories), systemImage: Iconography.selected)
+                } else {
+                    Text(Strings.Filters.allCategories)
+                }
+            }
+
+            Divider()
+
+            ForEach(BonjourServiceCategory.allCases) { category in
+                Button {
+                    // Toggling: tapping the active category clears
+                    // it. Otherwise sets it.
+                    setFilter(viewModel.filterCategory == category ? nil : category)
+                } label: {
+                    if viewModel.filterCategory == category {
+                        Label(category.title, systemImage: Iconography.selected)
+                    } else {
+                        Label(category.title, systemImage: category.iconName)
+                    }
+                }
+            }
+        } label: {
+            Label(String(localized: Strings.Filters.filterByCategory), systemImage: Iconography.filter)
+                .tint(.primary)
+        }
+        .accessibilityLabel(String(localized: Strings.Filters.filterByCategory))
+        .accessibilityIdentifier("filter_category_menu")
+    }
+
+    /// Wraps `filterCategory` mutation with motion-respecting
+    /// animation so list rows animate in/out cleanly when the user
+    /// changes the filter.
+    private func setFilter(_ category: BonjourServiceCategory?) {
+        withAnimation(reduceMotion ? nil : .default) {
+            viewModel.filterCategory = category
+        }
     }
 }
 

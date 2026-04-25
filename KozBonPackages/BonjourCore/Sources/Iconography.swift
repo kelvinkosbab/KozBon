@@ -63,6 +63,10 @@ public enum Iconography {
     /// Sort icon.
     public static let sort = "line.3.horizontal.decrease"
 
+    /// Filter icon — the encircled variant of `sort`, conventionally
+    /// used for "narrow this list to a category" controls.
+    public static let filter = "line.3.horizontal.decrease.circle"
+
     /// Refresh icon.
     public static let refresh = "arrow.clockwise"
 

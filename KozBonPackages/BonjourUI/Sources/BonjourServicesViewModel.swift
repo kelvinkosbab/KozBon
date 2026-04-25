@@ -81,6 +81,17 @@ public final class BonjourServicesViewModel: BonjourServiceScannerDelegate {
     var flatActiveServices: [BonjourService] {
         let nonPublished = activeServices.filter { !isPublishedService($0) }
 
+        // Filter cases delegate to the shared `BonjourServiceCategory`
+        // — the source of truth for which service types belong to
+        // each bucket. Sort cases handle ordering inline.
+        if let category = sortType?.category {
+            return nonPublished
+                .filter(category.matches)
+                .sorted {
+                    ($0.service.name, $0.serviceType.name) < ($1.service.name, $1.serviceType.name)
+                }
+        }
+
         switch sortType {
         case .hostNameAsc, nil:
             return nonPublished.sorted {
@@ -98,53 +109,11 @@ public final class BonjourServicesViewModel: BonjourServiceScannerDelegate {
             return nonPublished.sorted {
                 ($1.serviceType.name, $0.service.name) < ($0.serviceType.name, $1.service.name)
             }
-        case .smartHome:
-            return filterAndSort(nonPublished, types: [
-                "matter", "meshcop", "matterc", "matterd",
-                "hap", "homekit", "home-assistant",
-                "powerview", "sonos", "spotify-connect"
-            ])
-        case .appleDevices:
-            return filterAndSort(nonPublished, types: [
-                "airplay", "airdrop", "appletv", "appletv-v2", "appletv-v3", "appletv-v4",
-                "appletv-itunes", "appletv-pair", "apple-mobdev", "apple-mobdev2",
-                "apple-midi", "applerdbg", "apple-sasl",
-                "hap", "homekit", "companion-link", "continuity",
-                "keynoteaccess", "keynotepair", "keynotepairing",
-                "KeynoteControl", "mediaremotetv", "raop",
-                "device-info", "airport", "eppc", "workstation",
-                "carplay_ctrl", "sleep-proxy"
-            ])
-        case .mediaAndStreaming:
-            return filterAndSort(nonPublished, types: [
-                "airplay", "raop", "spotify-connect", "sonos",
-                "googlecast", "daap", "dpap", "home-sharing",
-                "rtsp", "roku-rcp", "amzn-wplay", "nvstream",
-                "touch-able", "ptp"
-            ])
-        case .printersAndScanners:
-            return filterAndSort(nonPublished, types: [
-                "printer", "ipp", "ipps", "pdl-datastream",
-                "riousbprint", "scanner", "uscan", "uscans"
-            ])
-        case .remoteAccess:
-            return filterAndSort(nonPublished, types: [
-                "ssh", "sftp-ssh", "udisks-ssh", "vnc", "rfb",
-                "rdp", "telnet", "eppc", "servermgr"
-            ])
+        case .smartHome, .appleDevices, .mediaAndStreaming, .printersAndScanners, .remoteAccess:
+            // Unreachable — the `category` branch above covers these.
+            // The exhaustive switch is here to satisfy the compiler.
+            return []
         }
-    }
-
-    /// Filters services to only those matching the given type strings, sorted by host name A→Z.
-    private func filterAndSort(
-        _ services: [BonjourService],
-        types: Set<String>
-    ) -> [BonjourService] {
-        services
-            .filter { types.contains($0.serviceType.type) }
-            .sorted {
-                ($0.service.name, $0.serviceType.name) < ($1.service.name, $1.serviceType.name)
-            }
     }
 
     // MARK: - State

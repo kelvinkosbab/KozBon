@@ -100,4 +100,33 @@ struct SupportedServicesViewModelTests {
         let vm = SupportedServicesViewModel()
         #expect(!vm.createButtonString.isEmpty)
     }
+
+    // MARK: - Category Filter
+
+    @Test("`filterCategory` starts nil so the Library tab opens with all categories visible")
+    func filterCategoryIsNilInitially() {
+        let vm = SupportedServicesViewModel()
+        #expect(vm.filterCategory == nil)
+    }
+
+    @Test("`filterCategory` round-trips through writes so the filter menu binding works")
+    func filterCategoryCanBeSetAndCleared() {
+        let vm = SupportedServicesViewModel()
+        vm.filterCategory = .smartHome
+        #expect(vm.filterCategory == .smartHome)
+        vm.filterCategory = nil
+        #expect(vm.filterCategory == nil)
+    }
+
+    @Test("`isFilteredResultEmpty` is true on a fresh view model with no loaded data")
+    func isFilteredResultEmptyOnFreshViewModel() {
+        // Before `load()` runs, both `filteredBuiltInServiceTypes`
+        // and `filteredCustomServiceTypes` are empty regardless of
+        // filter — so the empty-state property is `true`. The view
+        // additionally checks `filterCategory != nil` before showing
+        // the empty-state UI, which prevents the "no scan yet"
+        // initial render from triggering it.
+        let vm = SupportedServicesViewModel()
+        #expect(vm.isFilteredResultEmpty)
+    }
 }

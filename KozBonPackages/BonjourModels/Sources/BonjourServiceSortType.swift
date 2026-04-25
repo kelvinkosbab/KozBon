@@ -64,39 +64,57 @@ public enum BonjourServiceSortType: Identifiable, CaseIterable {
 
     /// A localized, user-facing title describing the sort option.
     public var title: String {
+        if let category {
+            return String(localized: category.title)
+        }
         switch self {
-        case .hostNameAsc: String(localized: Strings.SortOptions.hostNameAsc)
-        case .hostNameDesc: String(localized: Strings.SortOptions.hostNameDesc)
-        case .serviceNameAsc: String(localized: Strings.SortOptions.serviceTypeAsc)
-        case .serviceNameDesc: String(localized: Strings.SortOptions.serviceTypeDesc)
-        case .smartHome: String(localized: Strings.SortOptions.smartHome)
-        case .appleDevices: String(localized: Strings.SortOptions.appleDevices)
-        case .mediaAndStreaming: String(localized: Strings.SortOptions.mediaAndStreaming)
-        case .printersAndScanners: String(localized: Strings.SortOptions.printersAndScanners)
-        case .remoteAccess: String(localized: Strings.SortOptions.remoteAccess)
+        case .hostNameAsc: return String(localized: Strings.SortOptions.hostNameAsc)
+        case .hostNameDesc: return String(localized: Strings.SortOptions.hostNameDesc)
+        case .serviceNameAsc: return String(localized: Strings.SortOptions.serviceTypeAsc)
+        case .serviceNameDesc: return String(localized: Strings.SortOptions.serviceTypeDesc)
+        case .smartHome, .appleDevices, .mediaAndStreaming, .printersAndScanners, .remoteAccess:
+            // Unreachable — the `category` branch above covers these.
+            // The exhaustive switch is here to satisfy the compiler.
+            return ""
         }
     }
 
     /// The SF Symbol name for this sort option's menu icon.
     public var iconName: String {
+        if let category {
+            return category.iconName
+        }
         switch self {
-        case .hostNameAsc, .serviceNameAsc: "arrow.up"
-        case .hostNameDesc, .serviceNameDesc: "arrow.down"
-        case .smartHome: Iconography.homeKit
-        case .appleDevices: Iconography.macAndIphone
-        case .mediaAndStreaming: Iconography.airplayVideo
-        case .printersAndScanners: Iconography.printer
-        case .remoteAccess: Iconography.terminal
+        case .hostNameAsc, .serviceNameAsc: return "arrow.up"
+        case .hostNameDesc, .serviceNameDesc: return "arrow.down"
+        case .smartHome, .appleDevices, .mediaAndStreaming, .printersAndScanners, .remoteAccess:
+            // Unreachable — covered by the `category` branch above.
+            return ""
         }
     }
 
     /// Whether this option filters the list (vs reordering it).
+    /// Equivalent to `category != nil`.
     public var isFilter: Bool {
+        category != nil
+    }
+
+    /// The shared `BonjourServiceCategory` this filter case represents,
+    /// or `nil` if the option is a sort (not a filter).
+    ///
+    /// The filter cases here are a UI-side enum that wraps
+    /// `BonjourServiceCategory` so they can sit in the same menu as
+    /// the sort cases. The category is the source of truth for
+    /// titles, icons, and which service types belong — this property
+    /// is the bridge.
+    public var category: BonjourServiceCategory? {
         switch self {
-        case .hostNameAsc, .hostNameDesc, .serviceNameAsc, .serviceNameDesc:
-            false
-        case .smartHome, .appleDevices, .mediaAndStreaming, .printersAndScanners, .remoteAccess:
-            true
+        case .hostNameAsc, .hostNameDesc, .serviceNameAsc, .serviceNameDesc: nil
+        case .smartHome: .smartHome
+        case .appleDevices: .appleDevices
+        case .mediaAndStreaming: .mediaAndStreaming
+        case .printersAndScanners: .printersAndScanners
+        case .remoteAccess: .remoteAccess
         }
     }
 }

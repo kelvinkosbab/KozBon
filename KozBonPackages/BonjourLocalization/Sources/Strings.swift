@@ -475,6 +475,38 @@ public enum Strings {
         }
     }
 
+    // MARK: - Filters
+
+    public enum Filters {
+
+        /// Menu label for the category-filter button on the Library tab.
+        public static var filterByCategory: LocalizedStringResource {
+            .init("filter_by_category", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// "Show all categories" — the default / clear-filter option in
+        /// a category filter menu.
+        public static var allCategories: LocalizedStringResource {
+            .init("filter_all_categories", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Empty-state title shown when an active category filter
+        /// produces zero results in the Library tab. Format: "No
+        /// services in <category>".
+        public static func noServicesInCategory(_ category: String) -> String {
+            String(
+                format: NSLocalizedString("filter_no_services_in_category", bundle: Bundle.module, comment: ""),
+                category
+            )
+        }
+
+        /// Body text for the Library empty-state when a filter narrows
+        /// to zero results — invites the user to clear the filter.
+        public static var noServicesInCategoryHint: LocalizedStringResource {
+            .init("filter_no_services_in_category_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+    }
+
     // MARK: - Alerts
 
     public enum Alerts {

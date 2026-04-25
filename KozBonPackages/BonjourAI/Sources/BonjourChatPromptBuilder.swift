@@ -414,42 +414,16 @@ public enum BonjourChatPromptBuilder {
 
     // MARK: - Library Categories
     //
-    // Mirrors the filter buckets in `BonjourServicesViewModel.flatActiveServices`
-    // so the model's view of the library matches the grouping the user
-    // sees in the Discover tab's sort menu. If categories change there,
-    // update the arrays here too. A type may appear in more than one
-    // category (e.g. AirPlay is both Apple and media) — the first
-    // matching category wins in the `Other` computation, but both
-    // appear in their respective lines.
-    private static let libraryCategoriesInOrder: [(String, Set<String>)] = [
-        ("Smart Home", [
-            "matter", "meshcop", "matterc", "matterd",
-            "hap", "homekit", "home-assistant",
-            "powerview", "sonos", "spotify-connect"
-        ]),
-        ("Apple Devices", [
-            "airplay", "airdrop", "appletv", "appletv-v2", "appletv-v3", "appletv-v4",
-            "appletv-itunes", "appletv-pair", "apple-mobdev", "apple-mobdev2",
-            "apple-midi", "applerdbg", "apple-sasl",
-            "hap", "homekit", "companion-link", "continuity",
-            "keynoteaccess", "keynotepair", "keynotepairing",
-            "KeynoteControl", "mediaremotetv", "raop",
-            "device-info", "airport", "eppc", "workstation",
-            "carplay_ctrl", "sleep-proxy"
-        ]),
-        ("Media & Streaming", [
-            "airplay", "raop", "spotify-connect", "sonos",
-            "googlecast", "daap", "dpap", "home-sharing",
-            "rtsp", "roku-rcp", "amzn-wplay", "nvstream",
-            "touch-able", "ptp"
-        ]),
-        ("Printers & Scanners", [
-            "printer", "ipp", "ipps", "pdl-datastream",
-            "riousbprint", "scanner", "uscan", "uscans"
-        ]),
-        ("Remote Access", [
-            "ssh", "sftp-ssh", "udisks-ssh", "vnc", "rfb",
-            "rdp", "telnet", "eppc", "servermgr"
-        ])
-    ]
+    // Sourced from the shared `BonjourServiceCategory` enum so the
+    // model's view of the library matches the bucket labels the user
+    // sees in the Discover tab's filter menu and the Library tab's
+    // filter menu. The `promptLabel` is intentionally English-only —
+    // the model reasons in English and renders its answer in the
+    // user's locale at the end. A type may appear in more than one
+    // category (e.g. AirPlay is both Apple and media); both
+    // categories surface it. The first match wins in the trailing
+    // "Other" bucket computation.
+    private static var libraryCategoriesInOrder: [(String, Set<String>)] {
+        BonjourServiceCategory.allCases.map { ($0.promptLabel, $0.typeStrings) }
+    }
 }
