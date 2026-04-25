@@ -54,7 +54,7 @@ A multi-platform Apple app for discovering, broadcasting, and understanding Bonj
 
 - **Swift 6.2** with strict concurrency (`Sendable`, `@MainActor`, structured concurrency, `defer`-guarded state resets)
 - **SwiftUI** with MVVM, `@Observable` view models, `NavigationSplitView` for adaptive list-detail layouts
-- **9 modular SPM packages** in `KozBonPackages/` — `BonjourCore`, `BonjourData`, `BonjourModels`, `BonjourScanning`, `BonjourUI`, `BonjourLocalization`, `BonjourAI`, `BonjourStorage`, plus the app target
+- **8 modular SPM packages** in `KozBonPackages/` — `BonjourCore`, `BonjourStorage`, `BonjourLocalization`, `BonjourModels`, `BonjourScanning`, `BonjourAI`, `BonjourUI`, plus the app target. (`BonjourStorage` owns both the SwiftData preferences container and the legacy Core Data custom-service-type store, so all persistence lives in one module.)
 - **Dependency injection** via `DependencyContainer` + SwiftUI environment; shared `BonjourServicesViewModel` at the app root so all tabs see the same scanner delegate
 - **Core Data** for persistent custom service types
 - **SwiftData** for user preferences

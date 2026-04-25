@@ -1,13 +1,13 @@
 //
 //  CustomServiceTypeTests.swift
-//  KozBon
+//  BonjourStorage
 //
 //  Copyright © 2016-present Kozinga. All rights reserved.
 //
 
 import Foundation
 import Testing
-@testable import BonjourData
+@testable import BonjourStorage
 import BonjourCore
 
 // MARK: - CustomServiceTypeTests

@@ -26,7 +26,8 @@ func makeTargets(
     hasTests: Bool = false,
     resources: [Resource]? = nil,
     testDependencies: [Target.Dependency] = [],
-    testResources: [Resource]? = nil
+    testResources: [Resource]? = nil,
+    testExcludes: [String] = []
 ) -> [Target] {
     var targets: [Target] = [
         .target(
@@ -43,6 +44,7 @@ func makeTargets(
                 name: "\(name)Tests",
                 dependencies: [.byName(name: name)] + testDependencies,
                 path: "\(name)/Tests",
+                exclude: testExcludes,
                 resources: testResources,
                 swiftSettings: sharedSwiftSettings
             )
@@ -64,7 +66,6 @@ let package = Package(
     ],
     products: [
         .library(name: "BonjourCore", targets: ["BonjourCore"]),
-        .library(name: "BonjourData", targets: ["BonjourData"]),
         .library(name: "BonjourModels", targets: ["BonjourModels"]),
         .library(name: "BonjourScanning", targets: ["BonjourScanning"]),
         .library(name: "BonjourLocalization", targets: ["BonjourLocalization"]),
@@ -82,20 +83,12 @@ let package = Package(
         hasTests: true
     )
     + makeTargets(
-        name: "BonjourData",
-        dependencies: ["BonjourCore"],
-        // Note: BonjourData tests require Xcode to compile .xcdatamodeld → .momd.
-        // Run via: xcodebuild test -workspace KozBon.xcworkspace -scheme KozBonPackages
-        hasTests: false,
-        resources: [.process("Resources")]
-    )
-    + makeTargets(
         name: "BonjourLocalization",
         resources: [.process("Resources")]
     )
     + makeTargets(
         name: "BonjourModels",
-        dependencies: ["BonjourCore", "BonjourData", "BonjourLocalization"],
+        dependencies: ["BonjourCore", "BonjourStorage", "BonjourLocalization"],
         hasTests: true,
         testDependencies: [.byName(name: "BonjourCore")]
     )
@@ -119,7 +112,18 @@ let package = Package(
     )
     + makeTargets(
         name: "BonjourStorage",
-        hasTests: true
+        dependencies: ["BonjourCore"],
+        // BonjourStorage owns both the SwiftData preferences container
+        // and the legacy Core Data store (`iDiscover.xcdatamodeld`) for
+        // user-defined service types. The SwiftData tests run fine
+        // under `swift test` *and* `xcodebuild test`. The Core Data
+        // tests need `.xcdatamodeld` compiled to `.momd`, which only
+        // Xcode does — so `CustomServiceTypeTests.swift` is excluded
+        // from the SPM test target and runs via `xcodebuild test`
+        // exclusively.
+        hasTests: true,
+        resources: [.process("Resources")],
+        testExcludes: ["CustomServiceTypeTests.swift"]
     )
     + makeTargets(
         name: "BonjourUI",
@@ -127,7 +131,6 @@ let package = Package(
             "BonjourCore",
             "BonjourModels",
             "BonjourScanning",
-            "BonjourData",
             "BonjourLocalization",
             "BonjourAI",
             "BonjourStorage",

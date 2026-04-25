@@ -20,7 +20,7 @@
 		F6CA76602F3690EF0036BE3B /* DependencyInjectionExamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CA765F2F3690EF0036BE3B /* DependencyInjectionExamples.swift */; };
 		F6CA76682F36915C0036BE3B /* PreviewDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CA76672F36915C0036BE3B /* PreviewDependencies.swift */; };
 		F6KOZPKG0BF0001 /* BonjourCore in Frameworks */ = {isa = PBXBuildFile; productRef = F6KOZPKG0PD0001 /* BonjourCore */; };
-		F6KOZPKG0BF0002 /* BonjourData in Frameworks */ = {isa = PBXBuildFile; productRef = F6KOZPKG0PD0002 /* BonjourData */; };
+		F6KOZPKG0BF0002 /* BonjourStorage in Frameworks */ = {isa = PBXBuildFile; productRef = F6KOZPKG0PD0002 /* BonjourStorage */; };
 		F6KOZPKG0BF0003 /* BonjourModels in Frameworks */ = {isa = PBXBuildFile; productRef = F6KOZPKG0PD0003 /* BonjourModels */; };
 		F6KOZPKG0BF0004 /* BonjourScanning in Frameworks */ = {isa = PBXBuildFile; productRef = F6KOZPKG0PD0004 /* BonjourScanning */; };
 		F6KOZPKG0BF0005 /* BonjourUI in Frameworks */ = {isa = PBXBuildFile; productRef = F6KOZPKG0PD0005 /* BonjourUI */; };
@@ -65,7 +65,7 @@
 				F690B5FB2561E9B600902DAB /* NetworkExtension.framework in Frameworks */,
 				F6C472F52C1A1EAB00BBB0F9 /* Core in Frameworks */,
 				F6KOZPKG0BF0001 /* BonjourCore in Frameworks */,
-				F6KOZPKG0BF0002 /* BonjourData in Frameworks */,
+				F6KOZPKG0BF0002 /* BonjourStorage in Frameworks */,
 				F6KOZPKG0BF0003 /* BonjourModels in Frameworks */,
 				F6KOZPKG0BF0004 /* BonjourScanning in Frameworks */,
 				F6KOZPKG0BF0005 /* BonjourUI in Frameworks */,
@@ -172,7 +172,7 @@
 				F6C472F62C1A1EAB00BBB0F9 /* CoreStorage */,
 				F6C472F82C1A1EAB00BBB0F9 /* CoreUI */,
 				F6KOZPKG0PD0001 /* BonjourCore */,
-				F6KOZPKG0PD0002 /* BonjourData */,
+				F6KOZPKG0PD0002 /* BonjourStorage */,
 				F6KOZPKG0PD0003 /* BonjourModels */,
 				F6KOZPKG0PD0004 /* BonjourScanning */,
 				F6KOZPKG0PD0005 /* BonjourUI */,
@@ -594,9 +594,9 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = BonjourCore;
 		};
-		F6KOZPKG0PD0002 /* BonjourData */ = {
+		F6KOZPKG0PD0002 /* BonjourStorage */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = BonjourData;
+			productName = BonjourStorage;
 		};
 		F6KOZPKG0PD0003 /* BonjourModels */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -7,7 +7,7 @@
 
 import Foundation
 import BonjourCore
-import BonjourData
+import BonjourStorage
 
 // MARK: - CustomServiceType + BonjourServiceType Bridge
 

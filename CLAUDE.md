@@ -56,20 +56,22 @@ Each module follows the `{name}/Sources` and `{name}/Tests` layout:
 | Module | Purpose | Key Types |
 |--------|---------|-----------|
 | **BonjourCore** | Value types, constants, utilities | `Constants`, `TransportLayer`, `InternetAddress`, `Logger`, `Clipboard` |
-| **BonjourData** | Core Data persistence | `MyCoreDataStack`, `MyDataManagerObject`, `CustomServiceType` |
+| **BonjourStorage** | Persistence — SwiftData preferences + Core Data custom-service-type store | `PreferencesStore`, `UserPreferences`, `CustomServiceType`, `MyCoreDataStack`, `MyDataManagerObject` |
+| **BonjourLocalization** | Localized strings (6 languages) | `Strings` enum, `Localizable.xcstrings` |
 | **BonjourModels** | Domain models and service library | `BonjourServiceType`, `BonjourService`, `BonjourServiceSortType` |
 | **BonjourScanning** | Network discovery and publishing | `BonjourServiceScanner`, `MyBonjourPublishManager`, `DependencyContainer`, mocks |
+| **BonjourAI** | On-device AI explainer + chat (FoundationModels) | `BonjourServicePromptBuilder`, `BonjourChatPromptBuilder`, `BonjourServiceExplainer`, `BonjourChatSession` |
 | **BonjourUI** | SwiftUI views and view models | All views, `BonjourServicesViewModel`, UI components |
-| **BonjourLocalization** | Localized strings (6 languages) | `Strings` enum, `Localizable.xcstrings` |
 
 ### Dependency Graph
 
 ```
 App → BonjourUI, BonjourScanning, BonjourModels, BonjourLocalization
-BonjourUI → BonjourModels, BonjourScanning, BonjourData, BonjourLocalization, CoreUI
+BonjourUI → BonjourModels, BonjourScanning, BonjourLocalization, BonjourAI, BonjourStorage, CoreUI
+BonjourAI → BonjourCore, BonjourModels, BonjourLocalization, BonjourStorage
 BonjourScanning → BonjourCore, BonjourModels
-BonjourModels → BonjourCore, BonjourData, BonjourLocalization
-BonjourData → BonjourCore
+BonjourModels → BonjourCore, BonjourStorage, BonjourLocalization
+BonjourStorage → BonjourCore
 BonjourLocalization → (Foundation only)
 BonjourCore → Core (BasicSwiftUtilities)
 ```
@@ -148,7 +150,7 @@ BonjourCore → Core (BasicSwiftUtilities)
 - **Naming**: `<TypeName>Tests.swift` (e.g., `TransportLayerTests.swift`)
 - **`@MainActor` tests**: Use `@MainActor` on the suite when testing `@MainActor`-isolated types
 - **Cross-module testing**: Use `@testable import <Module>` to access internal types, `import <Module>` for public API tests
-- **BonjourData tests**: Require Xcode to compile `.xcdatamodeld` — cannot run via `swift test`, use `xcodebuild test` instead
+- **`CustomServiceTypeTests` in BonjourStorage**: Require Xcode to compile `.xcdatamodeld` — excluded from the SPM test target (`Package.swift` `testExcludes`) and run via `xcodebuild test` only. The other BonjourStorage tests (SwiftData-backed `PreferencesStore` / `UserPreferences`) run fine under `swift test`
 
 ## CI / GitHub Actions
 
@@ -167,6 +169,6 @@ All workflows use `macos-16` runner with concurrency groups and SPM caching.
 - **Info.plist NSBonjourServices**: Every service type the app wants to discover must be listed here. Format: `_type._transport` (e.g., `_http._tcp`). No duplicates.
 - **service-names-port-numbers.csv**: IANA registry reference file bundled as a resource. Not parsed at runtime — service types are hardcoded in the Swift library.
 - **BonjourService.id** uses `serviceIdentifier` (cached from `NetService.hashValue` at init) — stable within a session but not across launches.
-- **Core Data model in package**: `iDiscover.xcdatamodeld` is in `BonjourData/Sources/Resources/` and loaded via `Bundle.module`. SPM CLI (`swift test`) cannot compile `.xcdatamodeld` — use Xcode for BonjourData tests.
+- **Core Data model in package**: `iDiscover.xcdatamodeld` lives in `BonjourStorage/Sources/Resources/` (alongside the SwiftData preferences container) and is loaded via `Bundle.module`. SPM CLI (`swift test`) cannot compile `.xcdatamodeld` — use Xcode for the Core Data tests.
 - **`@_exported import Core`**: `BonjourCore/Sources/Exports.swift` re-exports the `Core` package so downstream modules get `Logger`/`Loggable` without explicitly importing `Core`.
 - **SF Symbol validation**: All `imageSystemName` values in `BonjourServiceType+UI.swift` are verified valid SF Symbols. When adding new ones, validate with `NSImage(systemSymbolName:accessibilityDescription:)`.

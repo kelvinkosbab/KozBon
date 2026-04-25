@@ -43,12 +43,14 @@ struct TopLevelDestinationTests {
 
     // MARK: - titleString
 
-    @Test func bonjourTitleIsBonjour() {
-        #expect(TopLevelDestination.bonjour.titleString == "Bonjour")
+    @Test("`bonjour` destination renders as `Discover` (the user-facing tab title)")
+    func bonjourTitleIsDiscover() {
+        #expect(TopLevelDestination.bonjour.titleString == "Discover")
     }
 
-    @Test func bonjourServiceTypesTitleIsSupportedServices() {
-        #expect(TopLevelDestination.bonjourServiceTypes.titleString == "Supported services")
+    @Test("`bonjourServiceTypes` destination renders as `Library` (the user-facing tab title)")
+    func bonjourServiceTypesTitleIsLibrary() {
+        #expect(TopLevelDestination.bonjourServiceTypes.titleString == "Library")
     }
 
     @Test func chatTitleIsPlatformSpecific() {

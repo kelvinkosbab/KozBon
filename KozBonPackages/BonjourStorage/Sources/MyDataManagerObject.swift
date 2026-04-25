@@ -1,6 +1,6 @@
 //
 //  MyDataManagerObject.swift
-//  KozBon
+//  BonjourStorage
 //
 //  Copyright © 2016-present Kozinga. All rights reserved.
 //
