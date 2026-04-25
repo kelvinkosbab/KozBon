@@ -29,7 +29,7 @@ A multi-platform Apple app for discovering, broadcasting, and understanding Bonj
 - **Scan freshness awareness** — The assistant knows whether results are fresh, stale, or still populating and hedges answers accordingly
 - **Prompt safety** — Source-priority hierarchy (TXT > type description > model training), named uncertainty phrasing, TXT-key allowlist, client-side refusal for prompt injection and off-topic queries
 - **On-device only** — Everything runs through Apple's Foundation Models; no data leaves the device
-- **Configurable** — Expertise level (Basic / Technical) and response length (Brief / Standard / Thorough)
+- **Configurable** — Single Detail level setting (Basic / Technical) drives both vocabulary and response length, so the two settings can't drift out of sync
 
 ### Polish
 
@@ -61,7 +61,7 @@ A multi-platform Apple app for discovering, broadcasting, and understanding Bonj
 - **FoundationModels** (iOS 26 / macOS 26) for on-device AI with graceful fallback on ineligible devices
 - **Design system** in `BonjourUI` — semantic `CGFloat` tokens (`.space16`, `.size16`, `.radius12`, `.stroke1`), `Image.xxx` SF-Symbol façade (no raw `Image(systemName: "…")` at call sites), `glassOrMaterialBackground` and `glassOrTintedBackground` helpers for Liquid-Glass-with-fallback
 - **HapticFeedback** provider injected via environment so view models can request haptics without direct UIKit dependencies
-- **Swift Testing** — 436 tests across 29 suites covering prompt-quality invariants, view-model logic, state machines (sentence haptic tracker, broadcast publish flow), design-token value pins, haptic mocks, scanner delegate flows, and chat-session rejection paths
+- **Swift Testing** — 439 tests across 33 suites covering prompt-quality invariants, view-model logic, state machines (sentence haptic tracker, broadcast publish flow), design-token value pins, haptic mocks, scanner delegate flows, and chat-session rejection paths
 - **SwiftLint** — project-wide rules plus a custom rule forbidding literal SF Symbol strings in favor of the `Image.xxx` façade
 - **CI** — GitHub Actions workflows for iOS build+test, SPM package tests, SwiftLint, and multi-platform (macOS + visionOS) builds
 
