@@ -272,7 +272,12 @@ public struct SupportedServicesView: View {
                 }
             }
         } label: {
-            Label(String(localized: Strings.Filters.filterByCategory), systemImage: Iconography.filter)
+            // Same `Iconography.sort` glyph as the Discover tab's
+            // combined sort/filter menu — the two tabs are visually
+            // matched so the filter affordance is recognizable from
+            // either side. The label text differentiates ("Filter by
+            // category" here vs the implicit Sort label there).
+            Label(String(localized: Strings.Filters.filterByCategory), systemImage: Iconography.sort)
                 .tint(.primary)
         }
         .accessibilityLabel(String(localized: Strings.Filters.filterByCategory))

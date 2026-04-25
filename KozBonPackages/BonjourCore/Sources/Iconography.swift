@@ -60,12 +60,9 @@ public enum Iconography {
     /// Confirm/done icon.
     public static let confirm = "checkmark"
 
-    /// Sort icon.
+    /// Sort or filter icon — used by both the Discover tab's combined
+    /// sort/filter menu and the Library tab's category filter menu.
     public static let sort = "line.3.horizontal.decrease"
-
-    /// Filter icon — the encircled variant of `sort`, conventionally
-    /// used for "narrow this list to a category" controls.
-    public static let filter = "line.3.horizontal.decrease.circle"
 
     /// Refresh icon.
     public static let refresh = "arrow.clockwise"
