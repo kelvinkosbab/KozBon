@@ -167,14 +167,17 @@ public struct ServiceExplanationSheet: View {
             }
         }
         .task {
+            // Both preferences now flow from the single Detail level
+            // setting in Preferences. ExpertiseLevel still controls
+            // tone/vocabulary directly; ResponseLength is derived from
+            // it (Basic → .standard, Technical → .thorough) so the
+            // two surfaces stay in sync without exposing the user to
+            // a redundant second axis.
             let level = BonjourServicePromptBuilder.ExpertiseLevel(
                 rawValue: preferencesStore.aiExpertiseLevel
             ) ?? .basic
-            let length = BonjourServicePromptBuilder.ResponseLength(
-                rawValue: preferencesStore.aiResponseLength
-            ) ?? .standard
             explainer.expertiseLevel = level
-            explainer.responseLength = length
+            explainer.responseLength = level.responseLength
             await explainSubject()
         }
     }

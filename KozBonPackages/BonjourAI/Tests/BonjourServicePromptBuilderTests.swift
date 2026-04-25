@@ -491,6 +491,41 @@ struct BonjourServicePromptBuilderTests {
         }
     }
 
+    // MARK: - ExpertiseLevel → ResponseLength Mapping
+    //
+    // The standalone "Response length" preference was removed from the
+    // Preferences UI; both the Insights long-press and the Chat surface
+    // derive their response length from the user's Detail level
+    // selection. These tests pin the mapping so the two settings stay
+    // meaningfully different — losing the mapping would silently
+    // collapse Basic and Technical to the same shape of response.
+
+    @Test func basicExpertiseMapsToStandardLength() {
+        // Basic readers want a friendly, medium-length explanation —
+        // long enough to cover the topic, short enough not to wall-of-
+        // text a non-technical user.
+        #expect(BonjourServicePromptBuilder.ExpertiseLevel.basic.responseLength == .standard)
+    }
+
+    @Test func technicalExpertiseMapsToThoroughLength() {
+        // Technical readers asked for depth in their Detail level
+        // selection — so the response should also use the longer,
+        // example-rich `.thorough` shape rather than collapsing to
+        // standard.
+        #expect(BonjourServicePromptBuilder.ExpertiseLevel.technical.responseLength == .thorough)
+    }
+
+    @Test func expertiseLevelMappingsAreDistinct() {
+        // If both Basic and Technical mapped to the same length, the
+        // single Detail level setting would lose a real axis of
+        // differentiation — vocabulary alone, with identical length,
+        // is too subtle. Pin the contract that the two levels produce
+        // different lengths.
+        let basic = BonjourServicePromptBuilder.ExpertiseLevel.basic.responseLength
+        let technical = BonjourServicePromptBuilder.ExpertiseLevel.technical.responseLength
+        #expect(basic != technical)
+    }
+
     // MARK: - Prompt Quality Invariants
     //
     // These tests pin specific guardrails introduced in the prompt audit.

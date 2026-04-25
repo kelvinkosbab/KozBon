@@ -111,24 +111,14 @@ public struct SettingsView: View {
                     }
                 }
 
-                LabeledContent {
-                    Menu {
-                        ForEach(Self.responseLengthOptions, id: \.rawValue) { length in
-                            responseLengthButton(length: length)
-                        }
-                    } label: {
-                        Text(currentResponseLength.displayTitle)
-                            .font(.subheadline)
-                    }
-                    .accessibilityLabel(String(localized: Strings.Settings.aiResponseLength))
-                } label: {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(Strings.Settings.aiResponseLength)
-                        Text(currentResponseLength.displaySubtitle)
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                }
+                // Response length is no longer user-selectable: it's
+                // derived from the Detail level above (Basic →
+                // standard, Technical → thorough). The previous
+                // standalone picker confused users because both
+                // controls seemed to govern "how much detail you get."
+                // Folding length into Detail level keeps the surface
+                // clean while still giving each level a meaningfully
+                // different shape of response.
             }
         } header: {
             Text(Strings.Settings.aiAnalysis)
@@ -136,29 +126,6 @@ public struct SettingsView: View {
         } footer: {
             Text(Strings.Settings.aiAnalysisFooter)
         }
-    }
-
-    @ViewBuilder
-    private func responseLengthButton(length: BonjourServicePromptBuilder.ResponseLength) -> some View {
-        Button {
-            preferencesStore.aiResponseLength = length.rawValue
-        } label: {
-            if preferencesStore.aiResponseLength == length.rawValue {
-                Label(length.displayTitle, systemImage: Iconography.selected)
-            } else {
-                Text(length.displayTitle)
-            }
-        }
-    }
-
-    private static let responseLengthOptions: [BonjourServicePromptBuilder.ResponseLength] = [
-        .brief, .standard, .thorough
-    ]
-
-    private var currentResponseLength: BonjourServicePromptBuilder.ResponseLength {
-        BonjourServicePromptBuilder.ResponseLength(
-            rawValue: preferencesStore.aiResponseLength
-        ) ?? .standard
     }
 
     // MARK: - Display Section

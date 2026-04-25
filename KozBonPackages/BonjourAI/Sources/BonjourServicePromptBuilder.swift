@@ -44,6 +44,29 @@ public enum BonjourServicePromptBuilder {
         /// reader is comfortable with networking fundamentals such as
         /// TCP/UDP, DNS-SD, and mDNS.
         case technical
+
+        /// The response length that pairs with this expertise level.
+        ///
+        /// Users no longer pick length and detail independently — the
+        /// Preferences screen has a single "Detail level" control. We
+        /// derive a sensible length per level here so each level
+        /// genuinely changes both vocabulary AND verbosity:
+        ///
+        /// - `basic` → `.standard` — friendly tone, medium-length
+        ///   sections that don't overwhelm a non-technical reader.
+        /// - `technical` → `.thorough` — developer-targeted detail,
+        ///   longer sections with examples and edge cases that a
+        ///   sysadmin actually wants.
+        ///
+        /// Both surfaces (Insights long-press and the Explore chat)
+        /// read this single setting, so the experience stays
+        /// consistent across the app.
+        public var responseLength: ResponseLength {
+            switch self {
+            case .basic: return .standard
+            case .technical: return .thorough
+            }
+        }
     }
 
     // MARK: - ResponseLength

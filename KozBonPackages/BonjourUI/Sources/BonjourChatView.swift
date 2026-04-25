@@ -637,9 +637,15 @@ public struct BonjourChatView: View {
             isScanning: viewModel.serviceScanner.isProcessing
         )
 
-        session.responseLength = BonjourServicePromptBuilder.ResponseLength(
-            rawValue: preferencesStore.aiResponseLength
-        ) ?? .standard
+        // Response length is derived from the user's Detail level
+        // preference now — the standalone "Response length" picker was
+        // removed because users found the two settings confusing
+        // (both seemed to control "how much detail you get"). Basic
+        // pairs with .standard, Technical pairs with .thorough.
+        let detailLevel = BonjourServicePromptBuilder.ExpertiseLevel(
+            rawValue: preferencesStore.aiExpertiseLevel
+        ) ?? .basic
+        session.responseLength = detailLevel.responseLength
 
         await session.send(trimmed, context: context)
     }
