@@ -147,27 +147,20 @@ public struct BonjourChatView: View {
             .onChange(of: session?.isGenerating) { _, _ in
                 forwardStreamingStateToHapticTracker()
             }
-            // Reset the chat to its empty "what would you like to ask"
-            // state every time the Chat tab becomes visible. SwiftUI keeps
-            // tab views alive when the user switches to another tab, so
-            // without this the conversation would persist indefinitely
-            // and the user would land on a wall of old messages instead
-            // of the recommended-prompts hero view. On the very first
-            // appearance after launch the session is already empty, so
-            // `reset()` and the `inputText` clear are safe no-ops — same
-            // behavior as a cold start.
+            // The Chat conversation persists for the lifetime of the
+            // app process. Switching tabs and coming back lands the
+            // user back on whatever exchange they had going — the same
+            // mental model as Messages, Notes, etc. The conversation
+            // is only cleared when the OS reclaims the app from
+            // memory (cold launch).
+            //
+            // We deliberately don't call `session?.reset()` here. The
+            // only thing this hook now does is make sure the network
+            // scanner is running so the chat context has fresh data
+            // for the next user turn. `viewModel.load()` has its own
+            // `isProcessing` guard, so calling it while Discover is
+            // already scanning is a no-op.
             .onAppear {
-                session?.reset()
-                inputText = ""
-                isInputFocused = false
-                // Kick off a scan if one isn't already running. Users
-                // who open the app and jump straight to Chat without
-                // visiting Discover would otherwise get an empty
-                // `discoveredServices` context, which the model honestly
-                // reports as "I don't see anything on your network" —
-                // the data wasn't missing, the scan just never started.
-                // `load()` has its own `isProcessing` guard so a call
-                // here while Discover is already scanning is a no-op.
                 viewModel.load()
             }
             // Page-level handle for UI tests so a test can find the
