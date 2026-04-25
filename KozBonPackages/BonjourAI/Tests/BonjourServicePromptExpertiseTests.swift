@@ -48,14 +48,16 @@ struct BonjourServicePromptExpertiseTests {
 
     // MARK: - Expertise Level
 
-    @Test func promptDefaultsToBasicLevel() {
+    @Test("`buildPrompt` defaults to the `.basic` expertise directive when no level is passed")
+    func promptDefaultsToBasicLevel() {
         let service = makeService()
         let prompt = BonjourServicePromptBuilder.buildPrompt(service: service)
         let beginnerDirective = BonjourServicePromptBuilder.expertiseLevelDirective(.basic)
         #expect(prompt.contains(beginnerDirective))
     }
 
-    @Test func promptWithBasicContainsSimpleDirective() {
+    @Test("`.basic` directive uses `curious friend` framing and asks for analogies, not jargon")
+    func promptWithBasicContainsSimpleDirective() {
         let service = makeService()
         let prompt = BonjourServicePromptBuilder.buildPrompt(
             service: service,
@@ -65,7 +67,8 @@ struct BonjourServicePromptExpertiseTests {
         #expect(prompt.contains("analogies"))
     }
 
-    @Test func promptWithTechnicalContainsTechnicalDirective() {
+    @Test("`.technical` directive targets developers/sysadmins and explicitly forbids RFC citations")
+    func promptWithTechnicalContainsTechnicalDirective() {
         let service = makeService()
         let prompt = BonjourServicePromptBuilder.buildPrompt(
             service: service,
@@ -79,7 +82,8 @@ struct BonjourServicePromptExpertiseTests {
         #expect(prompt.contains("Do NOT cite RFC numbers"))
     }
 
-    @Test func expertiseDirectiveTechnicalForbidsRFCCitations() {
+    @Test("Technical directive forbids RFC citations to prevent confidently-wrong hallucinations")
+    func expertiseDirectiveTechnicalForbidsRFCCitations() {
         // Pin the anti-hallucination rule: even on a "technical" response,
         // the model must not be asked to cite RFC numbers. This is the
         // single highest-return change from the prompt audit — RFC numbers
@@ -88,7 +92,8 @@ struct BonjourServicePromptExpertiseTests {
         #expect(directive.contains("Do NOT cite RFC"))
     }
 
-    @Test func expertiseLevelDirectivesDiffer() {
+    @Test("Basic and technical directives are distinct strings — settings change must produce visible differences")
+    func expertiseLevelDirectivesDiffer() {
         let beginner = BonjourServicePromptBuilder.expertiseLevelDirective(.basic)
         let technical = BonjourServicePromptBuilder.expertiseLevelDirective(.technical)
         #expect(beginner != technical)
@@ -96,7 +101,8 @@ struct BonjourServicePromptExpertiseTests {
 
     // MARK: - Response Length
 
-    @Test func responseLengthHasThreeCases() {
+    @Test("`ResponseLength` enumerates exactly three cases (`brief`, `standard`, `thorough`)")
+    func responseLengthHasThreeCases() {
         let allCases = BonjourServicePromptBuilder.ResponseLength.allCases
         #expect(allCases.count == 3)
         #expect(allCases.contains(.brief))
@@ -104,7 +110,8 @@ struct BonjourServicePromptExpertiseTests {
         #expect(allCases.contains(.thorough))
     }
 
-    @Test func responseLengthDirectivesDiffer() {
+    @Test("All three response-length directives are pairwise distinct so settings produce visible differences")
+    func responseLengthDirectivesDiffer() {
         let brief = BonjourServicePromptBuilder.responseLengthDirective(.brief)
         let standard = BonjourServicePromptBuilder.responseLengthDirective(.standard)
         let thorough = BonjourServicePromptBuilder.responseLengthDirective(.thorough)
@@ -113,7 +120,8 @@ struct BonjourServicePromptExpertiseTests {
         #expect(brief != thorough)
     }
 
-    @Test func briefDirectiveProducesSingleParagraph() {
+    @Test("`.brief` directive bypasses the section template and forces a single heading-less paragraph")
+    func briefDirectiveProducesSingleParagraph() {
         // `.brief` used to shrink the sectioned template into 3 sentences
         // total, which made the model drop sections inconsistently. The
         // new directive explicitly bypasses the section template and
@@ -125,12 +133,14 @@ struct BonjourServicePromptExpertiseTests {
         #expect(directive.contains("DO NOT use Markdown section headings"))
     }
 
-    @Test func thoroughDirectiveMentionsComprehensive() {
+    @Test("`.thorough` directive asks for `comprehensive` length or a 4–6 sentence shape")
+    func thoroughDirectiveMentionsComprehensive() {
         let directive = BonjourServicePromptBuilder.responseLengthDirective(.thorough)
         #expect(directive.contains("comprehensive") || directive.contains("4-6 sentences"))
     }
 
-    @Test func promptWithBriefLengthIncludesBriefDirective() {
+    @Test("`buildPrompt(responseLength: .brief)` injects the brief directive into the prompt")
+    func promptWithBriefLengthIncludesBriefDirective() {
         let service = makeService()
         let prompt = BonjourServicePromptBuilder.buildPrompt(
             service: service,
@@ -140,20 +150,23 @@ struct BonjourServicePromptExpertiseTests {
         #expect(prompt.contains(directive))
     }
 
-    @Test func promptDefaultResponseLengthIsStandard() {
+    @Test("`buildPrompt` defaults to the `.standard` response-length directive when none is passed")
+    func promptDefaultResponseLengthIsStandard() {
         let service = makeService()
         let prompt = BonjourServicePromptBuilder.buildPrompt(service: service)
         let directive = BonjourServicePromptBuilder.responseLengthDirective(.standard)
         #expect(prompt.contains(directive))
     }
 
-    @Test func responseLengthRawValuesAreStable() {
+    @Test("`ResponseLength` raw values are stable wire strings (persisted in user defaults)")
+    func responseLengthRawValuesAreStable() {
         #expect(BonjourServicePromptBuilder.ResponseLength.brief.rawValue == "brief")
         #expect(BonjourServicePromptBuilder.ResponseLength.standard.rawValue == "standard")
         #expect(BonjourServicePromptBuilder.ResponseLength.thorough.rawValue == "thorough")
     }
 
-    @Test func expertiseLevelHasTwoCases() {
+    @Test("`ExpertiseLevel` enumerates exactly two cases (`basic`, `technical`)")
+    func expertiseLevelHasTwoCases() {
         let allCases = BonjourServicePromptBuilder.ExpertiseLevel.allCases
         #expect(allCases.count == 2)
         #expect(allCases.contains(.basic))
@@ -162,15 +175,18 @@ struct BonjourServicePromptExpertiseTests {
 
     // MARK: - ExpertiseLevel Raw Values
 
-    @Test func basicRawValueIsBasic() {
+    @Test("`ExpertiseLevel.basic` raw value is the stable wire string `basic`")
+    func basicRawValueIsBasic() {
         #expect(BonjourServicePromptBuilder.ExpertiseLevel.basic.rawValue == "basic")
     }
 
-    @Test func technicalRawValueIsTechnical() {
+    @Test("`ExpertiseLevel.technical` raw value is the stable wire string `technical`")
+    func technicalRawValueIsTechnical() {
         #expect(BonjourServicePromptBuilder.ExpertiseLevel.technical.rawValue == "technical")
     }
 
-    @Test func expertiseLevelRoundTripsFromRawValue() {
+    @Test("Every `ExpertiseLevel` round-trips through its raw value so persistence stays lossless")
+    func expertiseLevelRoundTripsFromRawValue() {
         for level in BonjourServicePromptBuilder.ExpertiseLevel.allCases {
             let roundTripped = BonjourServicePromptBuilder.ExpertiseLevel(rawValue: level.rawValue)
             #expect(roundTripped == level)
@@ -186,14 +202,16 @@ struct BonjourServicePromptExpertiseTests {
     // meaningfully different — losing the mapping would silently
     // collapse Basic and Technical to the same shape of response.
 
-    @Test func basicExpertiseMapsToStandardLength() {
+    @Test("`.basic` expertise maps to `.standard` length so non-technical users get a friendly mid-length answer")
+    func basicExpertiseMapsToStandardLength() {
         // Basic readers want a friendly, medium-length explanation —
         // long enough to cover the topic, short enough not to wall-of-
         // text a non-technical user.
         #expect(BonjourServicePromptBuilder.ExpertiseLevel.basic.responseLength == .standard)
     }
 
-    @Test func technicalExpertiseMapsToThoroughLength() {
+    @Test("`.technical` expertise maps to `.thorough` length so depth-seekers get the longer, example-rich shape")
+    func technicalExpertiseMapsToThoroughLength() {
         // Technical readers asked for depth in their Detail level
         // selection — so the response should also use the longer,
         // example-rich `.thorough` shape rather than collapsing to
@@ -201,7 +219,8 @@ struct BonjourServicePromptExpertiseTests {
         #expect(BonjourServicePromptBuilder.ExpertiseLevel.technical.responseLength == .thorough)
     }
 
-    @Test func expertiseLevelMappingsAreDistinct() {
+    @Test("Expertise→length mappings are pairwise distinct so the Detail-level setting stays meaningful")
+    func expertiseLevelMappingsAreDistinct() {
         // If both Basic and Technical mapped to the same length, the
         // single Detail level setting would lose a real axis of
         // differentiation — vocabulary alone, with identical length,

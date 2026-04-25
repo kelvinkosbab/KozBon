@@ -18,37 +18,43 @@ struct SelectServiceTypeViewModelTests {
 
     // MARK: - Initial State
 
-    @Test func searchTextIsEmptyInitially() {
+    @Test("New view model starts with an empty `searchText` so the search field is blank")
+    func searchTextIsEmptyInitially() {
         let vm = SelectServiceTypeViewModel()
         #expect(vm.searchText.isEmpty)
     }
 
     // MARK: - Filtering (without Core Data)
 
-    @Test func filteredBuiltInServiceTypesIsEmptyBeforeLoad() {
+    @Test("`filteredBuiltInServiceTypes` is empty until `load()` populates the data")
+    func filteredBuiltInServiceTypesIsEmptyBeforeLoad() {
         let vm = SelectServiceTypeViewModel()
         // Before load() is called, no data is populated
         #expect(vm.filteredBuiltInServiceTypes.isEmpty)
     }
 
-    @Test func filteredCustomServiceTypesIsEmptyBeforeLoad() {
+    @Test("`filteredCustomServiceTypes` is empty until `load()` populates the data")
+    func filteredCustomServiceTypesIsEmptyBeforeLoad() {
         let vm = SelectServiceTypeViewModel()
         #expect(vm.filteredCustomServiceTypes.isEmpty)
     }
 
-    @Test func filteredBuiltInServiceTypesReturnsEmptyForNoMatchBeforeLoad() {
+    @Test("Filtering with no data loaded returns an empty result instead of crashing")
+    func filteredBuiltInServiceTypesReturnsEmptyForNoMatchBeforeLoad() {
         let vm = SelectServiceTypeViewModel()
         vm.searchText = "NONEXISTENT"
         #expect(vm.filteredBuiltInServiceTypes.isEmpty)
     }
 
-    @Test func searchTextCanBeSetAndRead() {
+    @Test("`searchText` round-trips through writes so the search field binds correctly")
+    func searchTextCanBeSetAndRead() {
         let vm = SelectServiceTypeViewModel()
         vm.searchText = "SSH"
         #expect(vm.searchText == "SSH")
     }
 
-    @Test func filteredCustomServiceTypesStaysEmptyWithSearchText() {
+    @Test("Setting `searchText` does not invent custom service types when none have been loaded")
+    func filteredCustomServiceTypesStaysEmptyWithSearchText() {
         let vm = SelectServiceTypeViewModel()
         vm.searchText = "custom"
         // No custom types loaded, so filtered custom should also be empty

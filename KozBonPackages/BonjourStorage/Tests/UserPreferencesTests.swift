@@ -17,36 +17,42 @@ struct UserPreferencesTests {
 
     // MARK: - Default Values
 
-    @Test func defaultAiAnalysisEnabled() {
+    @Test("New `UserPreferences` instance has `aiAnalysisEnabled` true")
+    func defaultAiAnalysisEnabled() {
         let prefs = UserPreferences()
         #expect(prefs.aiAnalysisEnabled)
     }
 
-    @Test func defaultAiExpertiseLevel() {
+    @Test("New `UserPreferences` instance has `aiExpertiseLevel` set to `\"basic\"`")
+    func defaultAiExpertiseLevel() {
         let prefs = UserPreferences()
         #expect(prefs.aiExpertiseLevel == "basic")
     }
 
-    @Test func defaultSortOrder() {
+    @Test("New `UserPreferences` instance has `defaultSortOrder` as the empty string")
+    func defaultSortOrder() {
         let prefs = UserPreferences()
         #expect(prefs.defaultSortOrder == "")
     }
 
     // MARK: - Mutation
 
-    @Test func aiAnalysisEnabledCanBeDisabled() {
+    @Test("`aiAnalysisEnabled` accepts a write to false and reads it back")
+    func aiAnalysisEnabledCanBeDisabled() {
         let prefs = UserPreferences()
         prefs.aiAnalysisEnabled = false
         #expect(!prefs.aiAnalysisEnabled)
     }
 
-    @Test func aiExpertiseLevelCanBeSetToTechnical() {
+    @Test("`aiExpertiseLevel` accepts a write to `\"technical\"` and reads it back")
+    func aiExpertiseLevelCanBeSetToTechnical() {
         let prefs = UserPreferences()
         prefs.aiExpertiseLevel = "technical"
         #expect(prefs.aiExpertiseLevel == "technical")
     }
 
-    @Test func defaultSortOrderCanBeSet() {
+    @Test("`defaultSortOrder` accepts a write to a non-empty value and reads it back")
+    func defaultSortOrderCanBeSet() {
         let prefs = UserPreferences()
         prefs.defaultSortOrder = "hostNameAsc"
         #expect(prefs.defaultSortOrder == "hostNameAsc")
@@ -54,23 +60,28 @@ struct UserPreferencesTests {
 
     // MARK: - Static Defaults
 
-    @Test func staticDefaultAIAnalysisEnabledIsTrue() {
+    @Test("Static `defaultAIAnalysisEnabled` is true so AI analysis is opt-out")
+    func staticDefaultAIAnalysisEnabledIsTrue() {
         #expect(UserPreferences.defaultAIAnalysisEnabled)
     }
 
-    @Test func staticDefaultAIExpertiseLevelIsBasic() {
+    @Test("Static `defaultAIExpertiseLevel` is `\"basic\"` for newcomer-friendly output")
+    func staticDefaultAIExpertiseLevelIsBasic() {
         #expect(UserPreferences.defaultAIExpertiseLevel == "basic")
     }
 
-    @Test func staticDefaultSortOrderIsEmpty() {
+    @Test("Static `defaultSortOrder` is empty so the UI falls back to its built-in default")
+    func staticDefaultSortOrderIsEmpty() {
         #expect(UserPreferences.defaultSortOrder == "")
     }
 
-    @Test func staticDefaultAIResponseLengthIsStandard() {
+    @Test("Static `defaultAIResponseLength` is `\"standard\"` for medium-length AI replies")
+    func staticDefaultAIResponseLengthIsStandard() {
         #expect(UserPreferences.defaultAIResponseLength == "standard")
     }
 
-    @Test func instanceDefaultsMatchStaticDefaults() {
+    @Test("Instance defaults match `UserPreferences.default*` constants exactly")
+    func instanceDefaultsMatchStaticDefaults() {
         let prefs = UserPreferences()
         #expect(prefs.aiAnalysisEnabled == UserPreferences.defaultAIAnalysisEnabled)
         #expect(prefs.aiExpertiseLevel == UserPreferences.defaultAIExpertiseLevel)
@@ -80,13 +91,15 @@ struct UserPreferencesTests {
 
     // MARK: - Response Length
 
-    @Test func aiResponseLengthCanBeSetToBrief() {
+    @Test("`aiResponseLength` accepts a write to `\"brief\"` and reads it back")
+    func aiResponseLengthCanBeSetToBrief() {
         let prefs = UserPreferences()
         prefs.aiResponseLength = "brief"
         #expect(prefs.aiResponseLength == "brief")
     }
 
-    @Test func aiResponseLengthCanBeSetToThorough() {
+    @Test("`aiResponseLength` accepts a write to `\"thorough\"` and reads it back")
+    func aiResponseLengthCanBeSetToThorough() {
         let prefs = UserPreferences()
         prefs.aiResponseLength = "thorough"
         #expect(prefs.aiResponseLength == "thorough")

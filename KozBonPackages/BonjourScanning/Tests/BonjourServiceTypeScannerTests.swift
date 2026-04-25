@@ -51,19 +51,22 @@ struct BonjourServiceTypeScannerTests {
 
     // MARK: - Init Tests
 
-    @Test func initSetsStateToStopped() {
+    @Test("Newly initialized type scanner starts in `.stopped` state")
+    func initSetsStateToStopped() {
         let scanner = makeScanner()
         #expect(scanner.state == .stopped)
     }
 
-    @Test func initSetsEmptyActiveServices() {
+    @Test("Newly initialized type scanner has no active services")
+    func initSetsEmptyActiveServices() {
         let scanner = makeScanner()
         #expect(scanner.activeServices.isEmpty)
     }
 
     // MARK: - startScan Guard
 
-    @Test func startScanGuardsAgainstDuplicateSearch() {
+    @Test("`startScan` is a no-op when the scanner is already searching")
+    func startScanGuardsAgainstDuplicateSearch() {
         let scanner = makeScanner()
         // Manually transition to searching state via the delegate method
         scanner.netServiceBrowserWillSearch(makeDummyBrowser())
@@ -75,7 +78,8 @@ struct BonjourServiceTypeScannerTests {
 
     // MARK: - reset
 
-    @Test func resetClearsActiveServicesAndCallsDelegate() {
+    @Test("`reset` empties active services and notifies the delegate via `didReset`")
+    func resetClearsActiveServicesAndCallsDelegate() {
         let scanner = makeScanner()
         let delegate = TypeScannerTestDelegate()
         scanner.delegate = delegate
@@ -91,13 +95,15 @@ struct BonjourServiceTypeScannerTests {
 
     // MARK: - NetServiceBrowserDelegate State Transitions
 
-    @Test func netServiceBrowserWillSearchSetsSearchingState() {
+    @Test("`netServiceBrowserWillSearch` transitions the scanner state to `.searching`")
+    func netServiceBrowserWillSearchSetsSearchingState() {
         let scanner = makeScanner()
         scanner.netServiceBrowserWillSearch(makeDummyBrowser())
         #expect(scanner.state == .searching)
     }
 
-    @Test func netServiceBrowserDidStopSearchSetsStoppedState() {
+    @Test("`netServiceBrowserDidStopSearch` transitions the scanner back to `.stopped`")
+    func netServiceBrowserDidStopSearchSetsStoppedState() {
         let scanner = makeScanner()
         // First transition to searching
         scanner.netServiceBrowserWillSearch(makeDummyBrowser())
@@ -107,7 +113,8 @@ struct BonjourServiceTypeScannerTests {
         #expect(scanner.state == .stopped)
     }
 
-    @Test func netServiceBrowserDidNotSearchSetsStoppedAndDelegatesError() {
+    @Test("`didNotSearch` stops the scanner and reports an error to the delegate")
+    func netServiceBrowserDidNotSearchSetsStoppedAndDelegatesError() {
         let scanner = makeScanner()
         let delegate = TypeScannerTestDelegate()
         scanner.delegate = delegate
@@ -119,7 +126,8 @@ struct BonjourServiceTypeScannerTests {
 
     // MARK: - didFind / didRemove
 
-    @Test func netServiceBrowserDidFindAddsServiceAndCallsDelegate() {
+    @Test("`didFind` with `moreComing: true` adds the service and notifies the delegate")
+    func netServiceBrowserDidFindAddsServiceAndCallsDelegate() {
         let scanner = makeScanner()
         let delegate = TypeScannerTestDelegate()
         scanner.delegate = delegate
@@ -129,7 +137,8 @@ struct BonjourServiceTypeScannerTests {
         #expect(delegate.addedServices.count == 1)
     }
 
-    @Test func netServiceBrowserDidFindStopsBrowserWhenNotMoreComing() {
+    @Test("`didFind` with `moreComing: false` still adds the service and notifies the delegate")
+    func netServiceBrowserDidFindStopsBrowserWhenNotMoreComing() {
         let scanner = makeScanner()
         let delegate = TypeScannerTestDelegate()
         scanner.delegate = delegate
@@ -140,7 +149,8 @@ struct BonjourServiceTypeScannerTests {
         #expect(delegate.addedServices.count == 1)
     }
 
-    @Test func netServiceBrowserDidRemoveCallsDelegateWithService() {
+    @Test("`didRemove` notifies the delegate even though the wrapper differs by NSObject identity")
+    func netServiceBrowserDidRemoveCallsDelegateWithService() {
         let scanner = makeScanner()
         let delegate = TypeScannerTestDelegate()
         scanner.delegate = delegate

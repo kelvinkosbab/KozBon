@@ -15,13 +15,15 @@ struct TxtDataRecordTests {
 
     // MARK: - Equality
 
-    @Test func recordsWithSameKeyAreEqual() {
+    @Test("Equality is keyed on `key` only — value differences don't break equality")
+    func recordsWithSameKeyAreEqual() {
         let a = BonjourService.TxtDataRecord(key: "name", value: "hello")
         let b = BonjourService.TxtDataRecord(key: "name", value: "world")
         #expect(a == b)
     }
 
-    @Test func recordsWithDifferentKeysAreNotEqual() {
+    @Test("Different keys break equality even when values match")
+    func recordsWithDifferentKeysAreNotEqual() {
         let a = BonjourService.TxtDataRecord(key: "name", value: "hello")
         let b = BonjourService.TxtDataRecord(key: "type", value: "hello")
         #expect(a != b)
@@ -29,14 +31,16 @@ struct TxtDataRecordTests {
 
     // MARK: - Comparable
 
-    @Test func recordsSortAlphabeticallyByKey() {
+    @Test("`<` orders records alphabetically by key for deterministic display")
+    func recordsSortAlphabeticallyByKey() {
         let a = BonjourService.TxtDataRecord(key: "alpha", value: "1")
         let b = BonjourService.TxtDataRecord(key: "beta", value: "2")
         #expect(a < b)
         #expect(!(b < a))
     }
 
-    @Test func arraySortsByKey() {
+    @Test("`Array.sorted()` orders records by key, regardless of insertion order")
+    func arraySortsByKey() {
         let records = [
             BonjourService.TxtDataRecord(key: "charlie", value: "3"),
             BonjourService.TxtDataRecord(key: "alpha", value: "1"),

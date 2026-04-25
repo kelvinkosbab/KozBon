@@ -38,7 +38,8 @@ struct MockBonjourServiceExplainerTests {
 
     // MARK: - Initial State
 
-    @Test func defaultInitIsAvailable() {
+    @Test("Default-initialized explainer is available, idle, and has zero recorded calls")
+    func defaultInitIsAvailable() {
         let mock = MockBonjourServiceExplainer()
         #expect(mock.isAvailable)
         #expect(mock.explanation.isEmpty)
@@ -47,19 +48,22 @@ struct MockBonjourServiceExplainerTests {
         #expect(mock.explainCallCount == 0)
     }
 
-    @Test func initWithUnavailable() {
+    @Test("`isAvailable: false` constructor flag lets tests simulate the no-AI-on-device path")
+    func initWithUnavailable() {
         let mock = MockBonjourServiceExplainer(isAvailable: false)
         #expect(!mock.isAvailable)
     }
 
-    @Test func initWithCustomExplanation() {
+    @Test("`cannedExplanation:` constructor parameter is stored verbatim for later replay")
+    func initWithCustomExplanation() {
         let mock = MockBonjourServiceExplainer(cannedExplanation: "Custom response")
         #expect(mock.cannedExplanation == "Custom response")
     }
 
     // MARK: - Explain
 
-    @Test func explainSetsCannedExplanation() async {
+    @Test("`explain(service:)` writes the canned explanation, bumps the counter, and clears flags/error")
+    func explainSetsCannedExplanation() async {
         let mock = MockBonjourServiceExplainer(cannedExplanation: "Test explanation")
         let service = makeService()
         await mock.explain(service: service)
@@ -69,7 +73,8 @@ struct MockBonjourServiceExplainerTests {
         #expect(mock.error == nil)
     }
 
-    @Test func explainIncrementsCallCount() async {
+    @Test("Each `explain(service:)` call increments `explainCallCount`")
+    func explainIncrementsCallCount() async {
         let mock = MockBonjourServiceExplainer()
         let service = makeService()
         await mock.explain(service: service)
@@ -77,7 +82,8 @@ struct MockBonjourServiceExplainerTests {
         #expect(mock.explainCallCount == 2)
     }
 
-    @Test func explainResetsState() async {
+    @Test("Mutating `cannedExplanation` mid-test changes what subsequent `explain` calls return")
+    func explainResetsState() async {
         let mock = MockBonjourServiceExplainer(cannedExplanation: "First")
         let service = makeService()
         await mock.explain(service: service)
@@ -90,12 +96,14 @@ struct MockBonjourServiceExplainerTests {
 
     // MARK: - Expertise Level
 
-    @Test func defaultExpertiseLevelIsBasic() {
+    @Test("Default `expertiseLevel` is `.basic`, matching the Preferences default for first-launch users")
+    func defaultExpertiseLevelIsBasic() {
         let mock = MockBonjourServiceExplainer()
         #expect(mock.expertiseLevel == .basic)
     }
 
-    @Test func expertiseLevelCanBeChanged() {
+    @Test("`expertiseLevel` is mutable so tests can simulate user changes from Preferences")
+    func expertiseLevelCanBeChanged() {
         let mock = MockBonjourServiceExplainer()
         mock.expertiseLevel = .technical
         #expect(mock.expertiseLevel == .technical)
@@ -103,7 +111,8 @@ struct MockBonjourServiceExplainerTests {
 
     // MARK: - Explain Service Type
 
-    @Test func explainServiceTypeSetsExplanation() async {
+    @Test("`explain(serviceType:)` writes the canned explanation and bumps the counter")
+    func explainServiceTypeSetsExplanation() async {
         let mock = MockBonjourServiceExplainer(cannedExplanation: "Type explanation")
         let serviceType = BonjourServiceType(
             name: "HTTP", type: "http", transportLayer: .tcp
@@ -114,7 +123,8 @@ struct MockBonjourServiceExplainerTests {
         #expect(!mock.isGenerating)
     }
 
-    @Test func explainServiceTypeIncrementsCallCount() async {
+    @Test("Each `explain(serviceType:)` call increments `explainCallCount`")
+    func explainServiceTypeIncrementsCallCount() async {
         let mock = MockBonjourServiceExplainer()
         let serviceType = BonjourServiceType(
             name: "HTTP", type: "http", transportLayer: .tcp
@@ -124,7 +134,8 @@ struct MockBonjourServiceExplainerTests {
         #expect(mock.explainCallCount == 2)
     }
 
-    @Test func mixedExplainCallsShareCallCount() async {
+    @Test("Both `explain` overloads share `explainCallCount` — total reflects either entry point")
+    func mixedExplainCallsShareCallCount() async {
         let mock = MockBonjourServiceExplainer()
         let service = makeService()
         let serviceType = BonjourServiceType(
@@ -137,7 +148,8 @@ struct MockBonjourServiceExplainerTests {
 
     // MARK: - isPublished Parameter
 
-    @Test func explainServiceWithIsPublishedWorks() async {
+    @Test("`explain(service:isPublished: true)` works the same as the default-published path")
+    func explainServiceWithIsPublishedWorks() async {
         let mock = MockBonjourServiceExplainer(cannedExplanation: "Published explanation")
         let service = makeService()
         await mock.explain(service: service, isPublished: true)
@@ -145,7 +157,8 @@ struct MockBonjourServiceExplainerTests {
         #expect(mock.explainCallCount == 1)
     }
 
-    @Test func explainServiceDefaultIsPublishedIsFalse() async {
+    @Test("`explain(service:)` defaults `isPublished` to false (the discovered framing)")
+    func explainServiceDefaultIsPublishedIsFalse() async {
         let mock = MockBonjourServiceExplainer(cannedExplanation: "Discovered explanation")
         let service = makeService()
         await mock.explain(service: service)
@@ -154,12 +167,14 @@ struct MockBonjourServiceExplainerTests {
 
     // MARK: - Availability
 
-    @Test func availableByDefault() {
+    @Test("Default-initialized mock advertises itself as available so the Insights flow renders")
+    func availableByDefault() {
         let mock = MockBonjourServiceExplainer()
         #expect(mock.isAvailable)
     }
 
-    @Test func unavailableWhenConfigured() {
+    @Test("Mock honors `isAvailable: false` so tests can exercise the unavailable UI branch")
+    func unavailableWhenConfigured() {
         let mock = MockBonjourServiceExplainer(isAvailable: false)
         #expect(!mock.isAvailable)
     }

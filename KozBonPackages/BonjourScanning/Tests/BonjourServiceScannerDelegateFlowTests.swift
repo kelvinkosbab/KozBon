@@ -33,7 +33,8 @@ struct BonjourServiceScannerDelegateFlowTests {
 
     // MARK: - didAdd
 
-    @Test func didAddForwardsToDelegateAndTracksService() {
+    @Test("`didAdd` forwards the service to the delegate and stores it for tracking")
+    func didAddForwardsToDelegateAndTracksService() {
         let scanner = BonjourServiceScanner()
         let delegate = makeDelegate()
         scanner.delegate = delegate
@@ -51,7 +52,8 @@ struct BonjourServiceScannerDelegateFlowTests {
 
     // MARK: - didRemove
 
-    @Test func didRemoveForwardsToDelegateAndRemovesService() {
+    @Test("`didRemove` forwards to the delegate and drops the service from tracking")
+    func didRemoveForwardsToDelegateAndRemovesService() {
         let scanner = BonjourServiceScanner()
         let delegate = makeDelegate()
         scanner.delegate = delegate
@@ -71,7 +73,8 @@ struct BonjourServiceScannerDelegateFlowTests {
 
     // MARK: - didReset
 
-    @Test func didResetForwardsToDelegateAndClearsServices() {
+    @Test("`didReset` forwards to the delegate and clears the tracked services list")
+    func didResetForwardsToDelegateAndClearsServices() {
         let scanner = BonjourServiceScanner()
         let delegate = makeDelegate()
         scanner.delegate = delegate
@@ -88,7 +91,8 @@ struct BonjourServiceScannerDelegateFlowTests {
 
     // MARK: - didFailWithError
 
-    @Test func didFailWithErrorForwardsToDelegate() {
+    @Test("`didFailWithError` propagates the error description verbatim to the delegate")
+    func didFailWithErrorForwardsToDelegate() {
         let scanner = BonjourServiceScanner()
         let delegate = makeDelegate()
         scanner.delegate = delegate
@@ -104,7 +108,8 @@ struct BonjourServiceScannerDelegateFlowTests {
 
     // MARK: - isProcessing
 
-    @Test func isProcessingIsFalseWhenNoScanners() {
+    @Test("`isProcessing` is false when the scanner is idle with no per-type scanners running")
+    func isProcessingIsFalseWhenNoScanners() {
         let scanner = BonjourServiceScanner()
         // When idle with no type scanners running, isProcessing should be false
         #expect(!scanner.isProcessing)
@@ -112,7 +117,8 @@ struct BonjourServiceScannerDelegateFlowTests {
 
     // MARK: - Weak Delegate
 
-    @Test func delegateIsWeak() {
+    @Test("Scanner holds the delegate weakly so deallocating it nils the reference")
+    func delegateIsWeak() {
         let scanner = BonjourServiceScanner()
         var delegate: TypeScannerTestDelegate? = makeDelegate()
         scanner.delegate = delegate

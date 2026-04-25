@@ -43,7 +43,8 @@ struct BonjourChatPromptBuilderUserTurnTests {
 
     // MARK: - User Turn Builder
 
-    @Test func userTurnOnFirstTurnIncludesContext() {
+    @Test("First turn always carries the `<context>` block so the model has the network state")
+    func userTurnOnFirstTurnIncludesContext() {
         let services = [makeService(name: "Printer", type: "ipp")]
         let context = BonjourChatPromptBuilder.ChatContext(discoveredServices: services)
         let turn = BonjourChatPromptBuilder.userTurn(
@@ -57,7 +58,8 @@ struct BonjourChatPromptBuilderUserTurnTests {
         #expect(turn.contains("What is this?"))
     }
 
-    @Test func userTurnWhenContextChangedIncludesContext() {
+    @Test("Context-changed turns re-emit `<context>` so the model sees the refreshed state")
+    func userTurnWhenContextChangedIncludesContext() {
         let services = [makeService(name: "AirPlay", type: "airplay")]
         let context = BonjourChatPromptBuilder.ChatContext(discoveredServices: services)
         let turn = BonjourChatPromptBuilder.userTurn(
@@ -70,7 +72,8 @@ struct BonjourChatPromptBuilderUserTurnTests {
         #expect(turn.contains("AirPlay"))
     }
 
-    @Test func userTurnOnSubsequentStableContextOmitsContext() {
+    @Test("Stable subsequent turns omit `<context>` to save tokens and the message goes through verbatim")
+    func userTurnOnSubsequentStableContextOmitsContext() {
         let context = BonjourChatPromptBuilder.ChatContext()
         let turn = BonjourChatPromptBuilder.userTurn(
             message: "Tell me more",
@@ -84,7 +87,8 @@ struct BonjourChatPromptBuilderUserTurnTests {
 
     // MARK: - ChatContext Defaults
 
-    @Test func chatContextDefaultsToEmpty() {
+    @Test("`ChatContext()` defaults all collections to empty so callers opt in to context")
+    func chatContextDefaultsToEmpty() {
         let context = BonjourChatPromptBuilder.ChatContext()
         #expect(context.discoveredServices.isEmpty)
         #expect(context.publishedServices.isEmpty)
@@ -93,7 +97,8 @@ struct BonjourChatPromptBuilderUserTurnTests {
 
     // MARK: - Queried Descriptions Block
 
-    @Test func queriedBlockEmptyWhenQueryMatchesNoType() {
+    @Test("Queried block is empty when the user's question does not name any library type")
+    func queriedBlockEmptyWhenQueryMatchesNoType() {
         let library = [makeServiceType(name: "HTTP", type: "http")]
         let context = BonjourChatPromptBuilder.ChatContext(serviceTypeLibrary: library)
         let block = BonjourChatPromptBuilder.queriedDescriptionsBlock(
@@ -103,7 +108,8 @@ struct BonjourChatPromptBuilderUserTurnTests {
         #expect(block.isEmpty)
     }
 
-    @Test func queriedBlockIncludesMatchedTypeDescription() {
+    @Test("Queried block surfaces the matched type's localized detail so the model has authoritative copy")
+    func queriedBlockIncludesMatchedTypeDescription() {
         let serviceType = BonjourServiceType(
             name: "AirPlay",
             type: "airplay",
@@ -119,7 +125,8 @@ struct BonjourChatPromptBuilderUserTurnTests {
         #expect(block.contains("Streams audio"))
     }
 
-    @Test func queriedBlockIsCaseInsensitive() {
+    @Test("Queried block matches type names case-insensitively so casual capitalization still matches")
+    func queriedBlockIsCaseInsensitive() {
         let serviceType = BonjourServiceType(
             name: "HomeKit",
             type: "hap",
@@ -134,7 +141,8 @@ struct BonjourChatPromptBuilderUserTurnTests {
         #expect(block.contains("HomeKit"))
     }
 
-    @Test func queriedBlockSkipsTypesWithoutDetail() {
+    @Test("Queried block omits matched types that have no localized detail to avoid empty placeholder lines")
+    func queriedBlockSkipsTypesWithoutDetail() {
         // If a matched type has no localized detail, there's nothing
         // to tell the model that it wouldn't already know — so it's
         // skipped rather than shipping an empty placeholder line.
@@ -149,7 +157,8 @@ struct BonjourChatPromptBuilderUserTurnTests {
 
     // MARK: - User Turn: Queried Descriptions Integration
 
-    @Test func userTurnIncludesQueriedBlockWhenMatch() {
+    @Test("User turn embeds a `<referenced>` block when the query matches a known service type")
+    func userTurnIncludesQueriedBlockWhenMatch() {
         let serviceType = BonjourServiceType(
             name: "SSH",
             type: "ssh",
@@ -167,7 +176,8 @@ struct BonjourChatPromptBuilderUserTurnTests {
         #expect(turn.contains("Secure shell"))
     }
 
-    @Test func userTurnOmitsReferencedBlockWhenNoMatch() {
+    @Test("User turn omits the `<referenced>` block when the query matches no library type")
+    func userTurnOmitsReferencedBlockWhenNoMatch() {
         let context = BonjourChatPromptBuilder.ChatContext()
         let turn = BonjourChatPromptBuilder.userTurn(
             message: "Hello!",

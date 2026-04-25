@@ -25,7 +25,8 @@ struct CustomServiceTypeTests {
 
     // MARK: - Create
 
-    @Test func createSetsProperties() {
+    @Test("`createOrUpdate` persists name, type, and transport layer onto the new managed object")
+    func createSetsProperties() {
         cleanUp()
 
         let object = CustomServiceType.createOrUpdate(
@@ -43,7 +44,8 @@ struct CustomServiceTypeTests {
 
     // MARK: - Create or Update
 
-    @Test func createOrUpdateCreatesNewWhenNotExists() {
+    @Test("`createOrUpdate` inserts a new row when no matching `(serviceType, transport)` exists")
+    func createOrUpdateCreatesNewWhenNotExists() {
         cleanUp()
 
         _ = CustomServiceType.createOrUpdate(
@@ -57,7 +59,8 @@ struct CustomServiceTypeTests {
         cleanUp()
     }
 
-    @Test func createOrUpdateUpdatesExisting() {
+    @Test("`createOrUpdate` mutates the existing row in place rather than creating a duplicate")
+    func createOrUpdateUpdatesExisting() {
         cleanUp()
 
         _ = CustomServiceType.createOrUpdate(
@@ -84,7 +87,8 @@ struct CustomServiceTypeTests {
 
     // MARK: - Fetch
 
-    @Test func fetchFindsExisting() {
+    @Test("`fetch(serviceType:transportLayerValue:)` returns a previously inserted row")
+    func fetchFindsExisting() {
         cleanUp()
 
         _ = CustomServiceType.createOrUpdate(
@@ -104,7 +108,8 @@ struct CustomServiceTypeTests {
         cleanUp()
     }
 
-    @Test func fetchReturnsNilWhenNotFound() {
+    @Test("`fetch` returns nil for an unknown `(serviceType, transport)` pair")
+    func fetchReturnsNilWhenNotFound() {
         cleanUp()
 
         let fetched = CustomServiceType.fetch(
@@ -117,7 +122,8 @@ struct CustomServiceTypeTests {
 
     // MARK: - Full Type
 
-    @Test func fullTypeFormatsCorrectly() {
+    @Test("`fullType` for a TCP row formats as `_<service>._tcp` for Bonjour browsing")
+    func fullTypeFormatsCorrectly() {
         cleanUp()
 
         let object = CustomServiceType.createOrUpdate(
@@ -131,7 +137,8 @@ struct CustomServiceTypeTests {
         cleanUp()
     }
 
-    @Test func fullTypeWithUdp() {
+    @Test("`fullType` for a UDP row formats as `_<service>._udp` for Bonjour browsing")
+    func fullTypeWithUdp() {
         cleanUp()
 
         let object = CustomServiceType.createOrUpdate(
@@ -147,7 +154,8 @@ struct CustomServiceTypeTests {
 
     // MARK: - Delete
 
-    @Test func deleteOneRemovesObject() {
+    @Test("`deleteOne(_:)` removes the targeted row from the store")
+    func deleteOneRemovesObject() {
         cleanUp()
 
         let object = CustomServiceType.createOrUpdate(
@@ -161,7 +169,8 @@ struct CustomServiceTypeTests {
         #expect(CustomServiceType.countAll() == 0)
     }
 
-    @Test func deleteAllRemovesAll() {
+    @Test("`deleteAll()` purges every row regardless of transport layer")
+    func deleteAllRemovesAll() {
         cleanUp()
 
         _ = CustomServiceType.createOrUpdate(
@@ -187,7 +196,8 @@ struct CustomServiceTypeTests {
 
     // MARK: - Count and Fetch All
 
-    @Test func countAllReturnsCorrectCount() {
+    @Test("`countAll()` reflects the number of inserted rows")
+    func countAllReturnsCorrectCount() {
         cleanUp()
 
         _ = CustomServiceType.createOrUpdate(
@@ -211,7 +221,8 @@ struct CustomServiceTypeTests {
         cleanUp()
     }
 
-    @Test func fetchAllReturnsAllObjects() {
+    @Test("`fetchAll()` returns every persisted row across transport layers")
+    func fetchAllReturnsAllObjects() {
         cleanUp()
 
         _ = CustomServiceType.createOrUpdate(

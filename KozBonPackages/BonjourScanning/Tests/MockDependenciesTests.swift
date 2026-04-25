@@ -44,7 +44,8 @@ struct MockDependenciesTests {
 
     // MARK: - MockBonjourServiceScanner Tests
 
-    @Test func scannerStartScanIncrementsCount() {
+    @Test("Mock scanner increments `startScanCallCount` once per `startScan` call")
+    func scannerStartScanIncrementsCount() {
         let scanner = MockBonjourServiceScanner()
         scanner.startScan()
         #expect(scanner.startScanCallCount == 1)
@@ -52,14 +53,16 @@ struct MockDependenciesTests {
         #expect(scanner.startScanCallCount == 2)
     }
 
-    @Test func scannerStartScanSetsProcessing() {
+    @Test("Mock scanner flips `isProcessing` to true after `startScan`")
+    func scannerStartScanSetsProcessing() {
         let scanner = MockBonjourServiceScanner()
         #expect(!scanner.isProcessing)
         scanner.startScan()
         #expect(scanner.isProcessing)
     }
 
-    @Test func scannerStopScanIncrementsCount() {
+    @Test("Mock scanner increments `stopScanCallCount` once per `stopScan` call")
+    func scannerStopScanIncrementsCount() {
         let scanner = MockBonjourServiceScanner()
         scanner.stopScan()
         #expect(scanner.stopScanCallCount == 1)
@@ -67,7 +70,8 @@ struct MockDependenciesTests {
         #expect(scanner.stopScanCallCount == 2)
     }
 
-    @Test func scannerStopScanClearsProcessing() {
+    @Test("Mock scanner flips `isProcessing` back to false after `stopScan`")
+    func scannerStopScanClearsProcessing() {
         let scanner = MockBonjourServiceScanner()
         scanner.startScan()
         #expect(scanner.isProcessing)
@@ -75,7 +79,8 @@ struct MockDependenciesTests {
         #expect(!scanner.isProcessing)
     }
 
-    @Test func scannerResetClearsState() {
+    @Test("Mock scanner `reset` zeroes call counters and clears `isProcessing`")
+    func scannerResetClearsState() {
         let scanner = MockBonjourServiceScanner()
         scanner.startScan()
         scanner.startScan()
@@ -90,7 +95,8 @@ struct MockDependenciesTests {
         #expect(!scanner.isProcessing)
     }
 
-    @Test func scannerSimulateServiceFoundCallsDelegate() {
+    @Test("`simulateServiceFound` drives `didAdd(service:)` on the registered delegate")
+    func scannerSimulateServiceFoundCallsDelegate() {
         let scanner = MockBonjourServiceScanner()
         let delegate = TestScannerDelegate()
         scanner.delegate = delegate
@@ -100,7 +106,8 @@ struct MockDependenciesTests {
         #expect(delegate.addedServices.first?.service.name == "Found")
     }
 
-    @Test func scannerSimulateErrorCallsDelegate() {
+    @Test("`simulateError` drives `didFailWithError(description:)` on the delegate")
+    func scannerSimulateErrorCallsDelegate() {
         let scanner = MockBonjourServiceScanner()
         let delegate = TestScannerDelegate()
         scanner.delegate = delegate
@@ -111,21 +118,24 @@ struct MockDependenciesTests {
 
     // MARK: - MockBonjourPublishManager Tests
 
-    @Test func publishManagerPublishIncrementsCount() async throws {
+    @Test("Mock publish manager increments `publishCallCount` per `publish(service:)` call")
+    func publishManagerPublishIncrementsCount() async throws {
         let manager = MockBonjourPublishManager()
         let service = makeService()
         _ = try await manager.publish(service: service)
         #expect(manager.publishCallCount == 1)
     }
 
-    @Test func publishManagerPublishAddsToSet() async throws {
+    @Test("Mock publish manager records published services in `publishedServices`")
+    func publishManagerPublishAddsToSet() async throws {
         let manager = MockBonjourPublishManager()
         let service = makeService()
         let published = try await manager.publish(service: service)
         #expect(manager.publishedServices.contains(published))
     }
 
-    @Test func publishManagerPublishTracksName() async throws {
+    @Test("Parameterized `publish` stores the supplied name in `lastPublishedServiceName`")
+    func publishManagerPublishTracksName() async throws {
         let manager = MockBonjourPublishManager()
         _ = try await manager.publish(
             name: "MyService",
@@ -138,7 +148,8 @@ struct MockDependenciesTests {
         #expect(manager.lastPublishedServiceName == "MyService")
     }
 
-    @Test func publishManagerPublishThrowsWhenConfigured() async {
+    @Test("Mock publish manager throws the configured error when `shouldSucceed` is false")
+    func publishManagerPublishThrowsWhenConfigured() async {
         let manager = MockBonjourPublishManager()
         manager.shouldSucceed = false
         manager.errorToThrow = MockError.publishFailed
@@ -151,7 +162,8 @@ struct MockDependenciesTests {
         }
     }
 
-    @Test func publishManagerUnPublishRemovesFromSet() async throws {
+    @Test("`unPublish(service:)` removes the matching entry from `publishedServices`")
+    func publishManagerUnPublishRemovesFromSet() async throws {
         let manager = MockBonjourPublishManager()
         let service = makeService()
         let published = try await manager.publish(service: service)
@@ -160,7 +172,8 @@ struct MockDependenciesTests {
         #expect(manager.publishedServices.isEmpty)
     }
 
-    @Test func publishManagerUnPublishAllClearsSet() async throws {
+    @Test("`unPublishAllServices` empties `publishedServices` regardless of count")
+    func publishManagerUnPublishAllClearsSet() async throws {
         let manager = MockBonjourPublishManager()
         _ = try await manager.publish(service: makeService(name: "A"))
         _ = try await manager.publish(service: makeService(name: "B", type: "ssh"))
@@ -169,7 +182,8 @@ struct MockDependenciesTests {
         #expect(manager.publishedServices.isEmpty)
     }
 
-    @Test func publishManagerResetClearsEverything() async throws {
+    @Test("Mock publish manager `reset` returns counters, flags, and tracking back to defaults")
+    func publishManagerResetClearsEverything() async throws {
         let manager = MockBonjourPublishManager()
         _ = try await manager.publish(
             name: "Svc",

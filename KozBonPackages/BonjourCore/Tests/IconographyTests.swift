@@ -33,11 +33,13 @@ struct IconographyTests {
     // by the constant name, so a swap would be a semantic regression the
     // compiler can't catch.
 
-    @Test func arrowUpIsUpwardArrow() {
+    @Test("`arrowUp` resolves to the upward `arrow.up` symbol the chat send button relies on")
+    func arrowUpIsUpwardArrow() {
         #expect(Iconography.arrowUp == "arrow.up")
     }
 
-    @Test func arrowUpRightIsDiagonalArrow() {
+    @Test("`arrowUpRight` resolves to the diagonal `arrow.up.right` symbol used on suggestion chips")
+    func arrowUpRightIsDiagonalArrow() {
         #expect(Iconography.arrowUpRight == "arrow.up.right")
     }
 
@@ -46,7 +48,8 @@ struct IconographyTests {
     /// Every published constant must be a non-empty SF Symbol name. An
     /// empty string would render as a blank image at the call site, which
     /// typically goes unnoticed in QA until it ships.
-    @Test func everyConstantIsNonEmpty() {
+    @Test("Every catalog constant is non-empty so no call site renders a blank icon")
+    func everyConstantIsNonEmpty() {
         for constant in Self.allConstants {
             #expect(!constant.isEmpty)
         }

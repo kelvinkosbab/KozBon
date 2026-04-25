@@ -13,27 +13,33 @@ import Testing
 @Suite("BonjourServiceBrowserState")
 struct BonjourServiceBrowserStateTests {
 
-    @Test func stoppedStringIsNotEmpty() {
+    @Test("`.stopped.string` is populated so the status row never renders blank")
+    func stoppedStringIsNotEmpty() {
         #expect(!BonjourServiceBrowserState.stopped.string.isEmpty)
     }
 
-    @Test func searchingStringIsNotEmpty() {
+    @Test("`.searching.string` is populated so the status row never renders blank")
+    func searchingStringIsNotEmpty() {
         #expect(!BonjourServiceBrowserState.searching.string.isEmpty)
     }
 
-    @Test func stoppedIsStopped() {
+    @Test("`.stopped.isStopped` is true")
+    func stoppedIsStopped() {
         #expect(BonjourServiceBrowserState.stopped.isStopped)
     }
 
-    @Test func stoppedIsNotSearching() {
+    @Test("`.stopped.isSearching` is false to keep the two predicates mutually exclusive")
+    func stoppedIsNotSearching() {
         #expect(!BonjourServiceBrowserState.stopped.isSearching)
     }
 
-    @Test func searchingIsSearching() {
+    @Test("`.searching.isSearching` is true")
+    func searchingIsSearching() {
         #expect(BonjourServiceBrowserState.searching.isSearching)
     }
 
-    @Test func searchingIsNotStopped() {
+    @Test("`.searching.isStopped` is false to keep the two predicates mutually exclusive")
+    func searchingIsNotStopped() {
         #expect(!BonjourServiceBrowserState.searching.isStopped)
     }
 }

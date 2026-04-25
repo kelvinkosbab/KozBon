@@ -40,24 +40,28 @@ struct PreferencesStoreTests {
 
     // MARK: - Default Values
 
-    @Test func defaultAiAnalysisEnabled() throws {
+    @Test("Fresh store reports `aiAnalysisEnabled` as true by default")
+    func defaultAiAnalysisEnabled() throws {
         let store = try makeStore()
         #expect(store.aiAnalysisEnabled)
     }
 
-    @Test func defaultAiExpertiseLevel() throws {
+    @Test("Fresh store reports `aiExpertiseLevel` as `\"basic\"` by default")
+    func defaultAiExpertiseLevel() throws {
         let store = try makeStore()
         #expect(store.aiExpertiseLevel == "basic")
     }
 
-    @Test func defaultSortOrder() throws {
+    @Test("Fresh store reports `defaultSortOrder` as the empty string by default")
+    func defaultSortOrder() throws {
         let store = try makeStore()
         #expect(store.defaultSortOrder == "")
     }
 
     // MARK: - Persistence
 
-    @Test func aiAnalysisEnabledPersists() throws {
+    @Test("`aiAnalysisEnabled` survives across new store instances on the same container")
+    func aiAnalysisEnabledPersists() throws {
         let container = try makeContainer()
 
         let store1 = PreferencesStore(container: container)
@@ -67,7 +71,8 @@ struct PreferencesStoreTests {
         #expect(!store2.aiAnalysisEnabled)
     }
 
-    @Test func aiExpertiseLevelPersists() throws {
+    @Test("`aiExpertiseLevel` survives across new store instances on the same container")
+    func aiExpertiseLevelPersists() throws {
         let container = try makeContainer()
 
         let store1 = PreferencesStore(container: container)
@@ -77,7 +82,8 @@ struct PreferencesStoreTests {
         #expect(store2.aiExpertiseLevel == "technical")
     }
 
-    @Test func defaultSortOrderPersists() throws {
+    @Test("`defaultSortOrder` survives across new store instances on the same container")
+    func defaultSortOrderPersists() throws {
         let container = try makeContainer()
 
         let store1 = PreferencesStore(container: container)
@@ -89,7 +95,8 @@ struct PreferencesStoreTests {
 
     // MARK: - Reset
 
-    @Test func resetToDefaultsRestoresAllValues() throws {
+    @Test("`resetToDefaults` restores every preference to its documented default value")
+    func resetToDefaultsRestoresAllValues() throws {
         let store = try makeStore()
         store.aiAnalysisEnabled = false
         store.aiExpertiseLevel = "technical"
@@ -104,7 +111,8 @@ struct PreferencesStoreTests {
 
     // MARK: - Single Row
 
-    @Test func multipleStoreInstancesShareSameRow() throws {
+    @Test("Two store instances on one container read and write the same singleton row")
+    func multipleStoreInstancesShareSameRow() throws {
         let container = try makeContainer()
 
         let storeA = PreferencesStore(container: container)
@@ -116,7 +124,8 @@ struct PreferencesStoreTests {
 
     // MARK: - Reset Uses Defaults
 
-    @Test func resetUsesUserPreferencesDefaults() throws {
+    @Test("`resetToDefaults` mirrors `UserPreferences.default*` constants exactly")
+    func resetUsesUserPreferencesDefaults() throws {
         let store = try makeStore()
         store.resetToDefaults()
         #expect(store.aiAnalysisEnabled == UserPreferences.defaultAIAnalysisEnabled)
@@ -127,7 +136,8 @@ struct PreferencesStoreTests {
 
     // MARK: - Default Init
 
-    @Test func defaultInitCreatesWorkingStore() {
+    @Test("Zero-argument `PreferencesStore()` produces a usable store with default values")
+    func defaultInitCreatesWorkingStore() {
         let store = PreferencesStore()
         #expect(store.aiAnalysisEnabled)
         #expect(store.aiExpertiseLevel == "basic")
@@ -137,7 +147,8 @@ struct PreferencesStoreTests {
 
     // MARK: - Response Length
 
-    @Test func responseLengthWriteThenRead() throws {
+    @Test("`aiResponseLength` round-trips through writes for `\"brief\"` and `\"thorough\"`")
+    func responseLengthWriteThenRead() throws {
         let store = try makeStore()
         store.aiResponseLength = "brief"
         #expect(store.aiResponseLength == "brief")
@@ -145,12 +156,14 @@ struct PreferencesStoreTests {
         #expect(store.aiResponseLength == "thorough")
     }
 
-    @Test func responseLengthDefaultIsStandard() throws {
+    @Test("Fresh store reports `aiResponseLength` as `\"standard\"` by default")
+    func responseLengthDefaultIsStandard() throws {
         let store = try makeStore()
         #expect(store.aiResponseLength == "standard")
     }
 
-    @Test func responseLengthPersistsAcrossStoreInstances() throws {
+    @Test("`aiResponseLength` survives across new store instances on the same container")
+    func responseLengthPersistsAcrossStoreInstances() throws {
         let container = try makeContainer()
         let storeA = PreferencesStore(container: container)
         storeA.aiResponseLength = "thorough"
@@ -161,7 +174,8 @@ struct PreferencesStoreTests {
 
     // MARK: - Write Then Read
 
-    @Test func aiAnalysisEnabledWriteThenRead() throws {
+    @Test("`aiAnalysisEnabled` round-trips through writes in both directions")
+    func aiAnalysisEnabledWriteThenRead() throws {
         let store = try makeStore()
         store.aiAnalysisEnabled = false
         #expect(!store.aiAnalysisEnabled)
@@ -169,7 +183,8 @@ struct PreferencesStoreTests {
         #expect(store.aiAnalysisEnabled)
     }
 
-    @Test func aiExpertiseLevelWriteThenRead() throws {
+    @Test("`aiExpertiseLevel` round-trips through writes for `\"technical\"` and `\"basic\"`")
+    func aiExpertiseLevelWriteThenRead() throws {
         let store = try makeStore()
         store.aiExpertiseLevel = "technical"
         #expect(store.aiExpertiseLevel == "technical")
@@ -177,7 +192,8 @@ struct PreferencesStoreTests {
         #expect(store.aiExpertiseLevel == "basic")
     }
 
-    @Test func defaultSortOrderWriteThenRead() throws {
+    @Test("`defaultSortOrder` round-trips through writes including back to the empty string")
+    func defaultSortOrderWriteThenRead() throws {
         let store = try makeStore()
         store.defaultSortOrder = "serviceNameDesc"
         #expect(store.defaultSortOrder == "serviceNameDesc")
@@ -187,7 +203,8 @@ struct PreferencesStoreTests {
 
     // MARK: - Reset Preserves Subsequent Changes
 
-    @Test func resetThenModifyPersists() throws {
+    @Test("Writes after `resetToDefaults` are persisted normally instead of being clobbered")
+    func resetThenModifyPersists() throws {
         let store = try makeStore()
         store.resetToDefaults()
         store.aiAnalysisEnabled = false

@@ -31,21 +31,25 @@ struct SentenceHapticTrackerTests {
 
     // MARK: - Static Detector: Basic Counting
 
-    @Test func emptyStringCountsZero() {
+    @Test("Empty content yields zero sentences in both streaming and final modes")
+    func emptyStringCountsZero() {
         #expect(SentenceHapticTracker.completedSentenceCount(in: "", isFinal: false) == 0)
         #expect(SentenceHapticTracker.completedSentenceCount(in: "", isFinal: true) == 0)
     }
 
-    @Test func contentWithoutTerminatorCountsZero() {
+    @Test("Content without any sentence terminator counts zero in both streaming and final modes")
+    func contentWithoutTerminatorCountsZero() {
         #expect(SentenceHapticTracker.completedSentenceCount(in: "Hello world", isFinal: false) == 0)
         #expect(SentenceHapticTracker.completedSentenceCount(in: "Hello world", isFinal: true) == 0)
     }
 
-    @Test func singleSentenceFollowedBySpaceCountsOne() {
+    @Test("Terminator + trailing whitespace counts the sentence as completed mid-stream")
+    func singleSentenceFollowedBySpaceCountsOne() {
         #expect(SentenceHapticTracker.completedSentenceCount(in: "Hello. ", isFinal: false) == 1)
     }
 
-    @Test func multipleSentencesCountCorrectly() {
+    @Test("Trailing in-flight sentence is held until `isFinal` flips, then it counts too")
+    func multipleSentencesCountCorrectly() {
         let text = "Bonjour is a protocol. It discovers services. AirPlay uses it."
         // Two terminators are followed by spaces; the trailing "." is the
         // in-flight final sentence and shouldn't count while streaming.
@@ -56,13 +60,15 @@ struct SentenceHapticTrackerTests {
 
     // MARK: - Static Detector: Streaming-Completion Semantics
 
-    @Test func trailingTerminatorWithoutFollowingSpaceDoesNotCountWhileStreaming() {
+    @Test("Mid-stream `Hello.` (no trailing whitespace yet) does not count — could still be `e.g.`")
+    func trailingTerminatorWithoutFollowingSpaceDoesNotCountWhileStreaming() {
         // During streaming we don't know yet whether this `.` ends the
         // response or is a mid-sentence pause like `e.g.`, so hold off.
         #expect(SentenceHapticTracker.completedSentenceCount(in: "Hello.", isFinal: false) == 0)
     }
 
-    @Test func trailingTerminatorCountsOnceGenerationFinishes() {
+    @Test("With `isFinal == true` the closing terminator (`.`, `!`, or `?`) lands the last tick")
+    func trailingTerminatorCountsOnceGenerationFinishes() {
         // With `isFinal == true` the final terminator lands the last tick
         // for the just-completed response.
         #expect(SentenceHapticTracker.completedSentenceCount(in: "Hello.", isFinal: true) == 1)
@@ -70,7 +76,8 @@ struct SentenceHapticTrackerTests {
         #expect(SentenceHapticTracker.completedSentenceCount(in: "Is it?", isFinal: true) == 1)
     }
 
-    @Test func newlineAfterTerminatorCountsAsSentenceBoundary() {
+    @Test("Newline after terminator (paragraph break, `.\\n`) counts as a sentence boundary")
+    func newlineAfterTerminatorCountsAsSentenceBoundary() {
         // Models often emit `.\n` when starting a new paragraph.
         let text = "First paragraph.\nSecond paragraph."
         #expect(SentenceHapticTracker.completedSentenceCount(in: text, isFinal: false) == 1)
@@ -79,27 +86,31 @@ struct SentenceHapticTrackerTests {
 
     // MARK: - Static Detector: False-Positive Guards
 
-    @Test func decimalNumberDoesNotCount() {
+    @Test("Decimals like `3.14` never tick — the `.` is bracketed by digits, not whitespace")
+    func decimalNumberDoesNotCount() {
         // "3.14" has a `.` surrounded by digits — the scan requires a
         // whitespace-following terminator, so no tick fires.
         #expect(SentenceHapticTracker.completedSentenceCount(in: "Pi is 3.14", isFinal: false) == 0)
     }
 
-    @Test func urlDotsDoNotCount() {
+    @Test("URL dots (`example.com`, `/foo.html`) never tick — letter follows the `.`, not whitespace")
+    func urlDotsDoNotCount() {
         // `example.com` and `/foo.html` must not fire because the dot is
         // followed by a letter, not whitespace.
         let text = "Visit example.com/foo.html"
         #expect(SentenceHapticTracker.completedSentenceCount(in: text, isFinal: false) == 0)
     }
 
-    @Test func egAbbreviationDoesNotCount() {
+    @Test("Common abbreviation `e.g.,` never ticks — the `.`s are followed by letters or commas")
+    func egAbbreviationDoesNotCount() {
         // "e.g., something" — the dot after `e` is followed by `g`, and
         // the dot after `g` is followed by `,`. Neither triggers.
         let text = "Protocols, e.g., Bonjour"
         #expect(SentenceHapticTracker.completedSentenceCount(in: text, isFinal: false) == 0)
     }
 
-    @Test func ellipsisDoesNotOvercount() {
+    @Test("Ellipsis `...` ticks at most once, and only on `isFinal` (mid-stream stays at zero)")
+    func ellipsisDoesNotOvercount() {
         // "..." — only the last `.` could fire, and only when `isFinal`.
         #expect(SentenceHapticTracker.completedSentenceCount(in: "Wait...", isFinal: false) == 0)
         #expect(SentenceHapticTracker.completedSentenceCount(in: "Wait...", isFinal: true) == 1)
@@ -107,7 +118,8 @@ struct SentenceHapticTrackerTests {
 
     // MARK: - Static Detector: Mixed Terminators
 
-    @Test func mixOfExclamationQuestionAndPeriodCountsAll() {
+    @Test("`.`, `!`, and `?` are all treated as sentence terminators")
+    func mixOfExclamationQuestionAndPeriodCountsAll() {
         let text = "Hello! How are you? I'm fine."
         #expect(SentenceHapticTracker.completedSentenceCount(in: text, isFinal: false) == 2)
         #expect(SentenceHapticTracker.completedSentenceCount(in: text, isFinal: true) == 3)
@@ -120,7 +132,8 @@ struct SentenceHapticTrackerTests {
     // could get "ahead" of the current count and the haptic would stop
     // firing for the rest of the response.
 
-    @Test func countIsMonotonicAsContentGrows() {
+    @Test("Count is monotonically non-decreasing across a streaming sequence so haptics never re-fire")
+    func countIsMonotonicAsContentGrows() {
         let stream = [
             "",
             "Hello",
@@ -141,14 +154,16 @@ struct SentenceHapticTrackerTests {
 
     // MARK: - State Machine: Initial State
 
-    @Test func freshTrackerStartsAtTickZero() {
+    @Test("A newly constructed tracker starts at `tickCount == 0` (no haptic on instantiation)")
+    func freshTrackerStartsAtTickZero() {
         let tracker = SentenceHapticTracker()
         #expect(tracker.tickCount == 0)
     }
 
     // MARK: - State Machine: Single-Response Streaming
 
-    @Test func tickCountIncrementsOncePerCompletedSentenceWhileStreaming() {
+    @Test("Streaming sequence ticks exactly once per completed sentence (no re-fires, no missed sentences)")
+    func tickCountIncrementsOncePerCompletedSentenceWhileStreaming() {
         let messageId = UUID()
         var tracker = SentenceHapticTracker()
         tracker.onMessageIdChanged(messageId)
@@ -175,7 +190,8 @@ struct SentenceHapticTrackerTests {
         #expect(tracker.tickCount == 2)
     }
 
-    @Test func finalSentenceTicksWhenGenerationFinishes() {
+    @Test("Flipping `isFinal` true on the same content fires the held trailing-sentence tick")
+    func finalSentenceTicksWhenGenerationFinishes() {
         let messageId = UUID()
         var tracker = SentenceHapticTracker()
         tracker.onMessageIdChanged(messageId)
@@ -189,7 +205,8 @@ struct SentenceHapticTrackerTests {
         #expect(tracker.tickCount == 2)
     }
 
-    @Test func repeatedCallsWithSameContentDoNotDoubleTick() {
+    @Test("Repeated calls with identical content are idempotent so haptics don't double-fire")
+    func repeatedCallsWithSameContentDoNotDoubleTick() {
         let messageId = UUID()
         var tracker = SentenceHapticTracker()
         tracker.onMessageIdChanged(messageId)
@@ -204,7 +221,8 @@ struct SentenceHapticTrackerTests {
 
     // MARK: - State Machine: Multiple Responses
 
-    @Test func newMessageIdResetsPerMessageCounterSoFirstSentenceTicks() {
+    @Test("New message id resets the per-message counter so the next reply's first sentence ticks")
+    func newMessageIdResetsPerMessageCounterSoFirstSentenceTicks() {
         var tracker = SentenceHapticTracker()
 
         // First assistant response — reaches tickCount 2.
@@ -222,7 +240,8 @@ struct SentenceHapticTrackerTests {
         #expect(tracker.tickCount == 3, "first sentence of new message must tick")
     }
 
-    @Test func unchangedMessageIdDoesNotResetCounter() {
+    @Test("Re-asserting the same message id is a no-op so already-ticked sentences don't re-fire")
+    func unchangedMessageIdDoesNotResetCounter() {
         let messageId = UUID()
         var tracker = SentenceHapticTracker()
         tracker.onMessageIdChanged(messageId)

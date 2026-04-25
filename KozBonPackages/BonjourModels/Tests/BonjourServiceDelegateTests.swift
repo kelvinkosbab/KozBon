@@ -41,13 +41,15 @@ struct BonjourServiceDelegateTests {
 
     // MARK: - Resolve State
 
-    @Test func resolveChangesIsResolvingToTrue() {
+    @Test("`resolve()` flips `isResolving` to true so the UI can show a spinner")
+    func resolveChangesIsResolvingToTrue() {
         let service = makeService()
         service.resolve()
         #expect(service.isResolving == true)
     }
 
-    @Test func stopResetsState() {
+    @Test("`stop()` clears both `isResolving` and `isPublishing` to a clean idle state")
+    func stopResetsState() {
         let service = makeService()
         service.resolve()
         service.stop()
@@ -55,7 +57,8 @@ struct BonjourServiceDelegateTests {
         #expect(service.isPublishing == false)
     }
 
-    @Test func stopCallsDidStopCallback() {
+    @Test("`stop(completion:)` invokes the callback once `NetService` reports it has stopped")
+    func stopCallsDidStopCallback() {
         let service = makeService()
         var callbackCalled = false
         service.stop {
@@ -68,7 +71,8 @@ struct BonjourServiceDelegateTests {
 
     // MARK: - Resolve Delegate Callbacks
 
-    @Test func netServiceDidResolveAddressCallsDelegate() {
+    @Test("`netServiceDidResolveAddress` notifies the registered delegate on success")
+    func netServiceDidResolveAddressCallsDelegate() {
         let service = makeService()
         let delegate = TestNetServiceDelegate()
         service.delegate = delegate
@@ -78,7 +82,8 @@ struct BonjourServiceDelegateTests {
         #expect(delegate.resolvedServices.count == 1)
     }
 
-    @Test func netServiceDidResolveAddressSetsIsResolvingFalse() {
+    @Test("Successful resolution clears `isResolving` so the spinner stops")
+    func netServiceDidResolveAddressSetsIsResolvingFalse() {
         let service = makeService()
         service.resolve()
         #expect(service.isResolving == true)
@@ -87,7 +92,8 @@ struct BonjourServiceDelegateTests {
         #expect(service.isResolving == false)
     }
 
-    @Test func netServiceDidNotResolveCallsDelegate() {
+    @Test("Failed resolution still notifies the delegate so the UI can react")
+    func netServiceDidNotResolveCallsDelegate() {
         let service = makeService()
         let delegate = TestNetServiceDelegate()
         service.delegate = delegate
@@ -97,7 +103,8 @@ struct BonjourServiceDelegateTests {
         #expect(delegate.resolvedServices.count == 1)
     }
 
-    @Test func netServiceDidNotResolveSetsIsResolvingFalse() {
+    @Test("Failed resolution clears `isResolving` so the spinner stops")
+    func netServiceDidNotResolveSetsIsResolvingFalse() {
         let service = makeService()
         service.resolve()
         #expect(service.isResolving == true)
@@ -108,14 +115,16 @@ struct BonjourServiceDelegateTests {
 
     // MARK: - Publish Delegate Callbacks
 
-    @Test func netServiceDidPublishSetsIsPublishingFalse() {
+    @Test("Successful publish clears `isPublishing` once the system confirms registration")
+    func netServiceDidPublishSetsIsPublishingFalse() {
         let service = makeService()
         // Directly call the delegate method to test state transition
         service.netServiceDidPublish(service.service)
         #expect(service.isPublishing == false)
     }
 
-    @Test func netServiceDidNotPublishSetsIsPublishingFalse() {
+    @Test("Failed publish clears `isPublishing` so the UI doesn't get stuck in a publishing state")
+    func netServiceDidNotPublishSetsIsPublishingFalse() {
         let service = makeService()
         service.netService(service.service, didNotPublish: [:])
         #expect(service.isPublishing == false)
@@ -123,13 +132,15 @@ struct BonjourServiceDelegateTests {
 
     // MARK: - Monitoring
 
-    @Test func startMonitoringDoesNotCrash() {
+    @Test("`startMonitoring()` is safe to call without an active resolver")
+    func startMonitoringDoesNotCrash() {
         let service = makeService()
         service.startMonitoring()
         // If we reach here without crashing, the test passes
     }
 
-    @Test func stopMonitoringDoesNotCrash() {
+    @Test("`stopMonitoring()` is safe to call when monitoring was never started")
+    func stopMonitoringDoesNotCrash() {
         let service = makeService()
         service.stopMonitoring()
         // If we reach here without crashing, the test passes
@@ -137,7 +148,8 @@ struct BonjourServiceDelegateTests {
 
     // MARK: - TXT Record Updates
 
-    @Test func netServiceDidUpdateTXTRecordParsesRecords() {
+    @Test("TXT record updates are parsed into `dataRecords` and sorted by key")
+    func netServiceDidUpdateTXTRecordParsesRecords() {
         let service = makeService()
 
         let txtData = NetService.data(fromTXTRecord: [

@@ -44,13 +44,15 @@ struct BonjourChatPromptBuilderContextTests {
 
     // MARK: - Context Block — Discovered Services
 
-    @Test func contextBlockShowsNoneWhenNoDiscoveredServices() {
+    @Test("Empty discovered list renders as `Discovered services: none` rather than blank")
+    func contextBlockShowsNoneWhenNoDiscoveredServices() {
         let context = BonjourChatPromptBuilder.ChatContext()
         let block = BonjourChatPromptBuilder.contextBlock(context: context)
         #expect(block.contains("Discovered services: none"))
     }
 
-    @Test func contextBlockIncludesDiscoveredServiceNames() {
+    @Test("Discovered services are listed by name so the model can quote them verbatim")
+    func contextBlockIncludesDiscoveredServiceNames() {
         let services = [
             makeService(name: "Living Room Apple TV", type: "airplay"),
             makeService(name: "Office Printer", type: "ipp")
@@ -61,7 +63,8 @@ struct BonjourChatPromptBuilderContextTests {
         #expect(block.contains("Office Printer"))
     }
 
-    @Test func contextBlockShowsCountForDiscoveredServices() {
+    @Test("Discovered list header includes the total count so the model knows the size")
+    func contextBlockShowsCountForDiscoveredServices() {
         let services = (0..<3).map { makeService(name: "Service \($0)") }
         let context = BonjourChatPromptBuilder.ChatContext(discoveredServices: services)
         let block = BonjourChatPromptBuilder.contextBlock(context: context)
@@ -70,13 +73,15 @@ struct BonjourChatPromptBuilderContextTests {
 
     // MARK: - Context Block — Published Services
 
-    @Test func contextBlockShowsNoneWhenNoPublishedServices() {
+    @Test("Empty published list renders as `Published services from this device: none`")
+    func contextBlockShowsNoneWhenNoPublishedServices() {
         let context = BonjourChatPromptBuilder.ChatContext()
         let block = BonjourChatPromptBuilder.contextBlock(context: context)
         #expect(block.contains("Published services from this device: none"))
     }
 
-    @Test func contextBlockIncludesPublishedServiceNames() {
+    @Test("Published services are surfaced by name so the model distinguishes self vs others")
+    func contextBlockIncludesPublishedServiceNames() {
         let services = [makeService(name: "My Web Server", type: "http")]
         let context = BonjourChatPromptBuilder.ChatContext(publishedServices: services)
         let block = BonjourChatPromptBuilder.contextBlock(context: context)
@@ -85,7 +90,8 @@ struct BonjourChatPromptBuilderContextTests {
 
     // MARK: - Context Block — Library
 
-    @Test func contextBlockIncludesLibraryCount() {
+    @Test("Library header carries the type count so the model knows the taxonomy size")
+    func contextBlockIncludesLibraryCount() {
         let library = [
             makeServiceType(name: "HTTP", type: "http"),
             makeServiceType(name: "SSH", type: "ssh")
@@ -99,7 +105,8 @@ struct BonjourChatPromptBuilderContextTests {
         #expect(block.contains("(2 types"))
     }
 
-    @Test func contextBlockIncludesLibraryNames() {
+    @Test("Library entries are emitted by display name so the model can reference them")
+    func contextBlockIncludesLibraryNames() {
         let library = [
             makeServiceType(name: "HTTP", type: "http"),
             makeServiceType(name: "SSH", type: "ssh")
@@ -112,7 +119,8 @@ struct BonjourChatPromptBuilderContextTests {
 
     // MARK: - Context Block — Large Lists
 
-    @Test func contextBlockTruncatesDiscoveredServicesAt50() {
+    @Test("Discovered list past 50 entries shows total count plus an `N more` overflow line")
+    func contextBlockTruncatesDiscoveredServicesAt50() {
         let services = (0..<75).map { makeService(name: "Service \($0)") }
         let context = BonjourChatPromptBuilder.ChatContext(discoveredServices: services)
         let block = BonjourChatPromptBuilder.contextBlock(context: context)
@@ -120,7 +128,8 @@ struct BonjourChatPromptBuilderContextTests {
         #expect(block.contains("25 more"))
     }
 
-    @Test func contextBlockHandlesExactly50DiscoveredServices() {
+    @Test("Exactly 50 discovered services renders without an `N more` overflow line")
+    func contextBlockHandlesExactly50DiscoveredServices() {
         let services = (0..<50).map { makeService(name: "Service \($0)") }
         let context = BonjourChatPromptBuilder.ChatContext(discoveredServices: services)
         let block = BonjourChatPromptBuilder.contextBlock(context: context)
@@ -130,14 +139,16 @@ struct BonjourChatPromptBuilderContextTests {
 
     // MARK: - Context Preamble
 
-    @Test func contextPreambleWrapsInTags() {
+    @Test("Preamble wraps the block in `<context>`/`</context>` tags for parsing clarity")
+    func contextPreambleWrapsInTags() {
         let context = BonjourChatPromptBuilder.ChatContext()
         let preamble = BonjourChatPromptBuilder.contextPreamble(context: context)
         #expect(preamble.contains("<context>"))
         #expect(preamble.contains("</context>"))
     }
 
-    @Test func contextPreambleIncludesContextBlock() {
+    @Test("Preamble inlines the context block contents inside the wrapping tags")
+    func contextPreambleIncludesContextBlock() {
         let services = [makeService(name: "Test Device", type: "http")]
         let context = BonjourChatPromptBuilder.ChatContext(discoveredServices: services)
         let preamble = BonjourChatPromptBuilder.contextPreamble(context: context)
@@ -152,13 +163,15 @@ struct BonjourChatPromptBuilderContextTests {
     // the exact "I don't have enough information" responses that
     // triggered this whole audit.
 
-    @Test func scanStatusReportsNoScanWhenLastScanTimeIsNil() {
+    @Test("Nil `lastScanTime` renders as `no scan has run yet`, not as a stale empty list")
+    func scanStatusReportsNoScanWhenLastScanTimeIsNil() {
         let context = BonjourChatPromptBuilder.ChatContext()
         let block = BonjourChatPromptBuilder.contextBlock(context: context)
         #expect(block.contains("no scan has run yet"))
     }
 
-    @Test func scanStatusReportsElapsedTimeWhenLastScanKnown() {
+    @Test("Known `lastScanTime` renders elapsed seconds so the model can hedge on staleness")
+    func scanStatusReportsElapsedTimeWhenLastScanKnown() {
         let tenSecondsAgo = Date(timeIntervalSinceNow: -10)
         let context = BonjourChatPromptBuilder.ChatContext(lastScanTime: tenSecondsAgo)
         let block = BonjourChatPromptBuilder.contextBlock(context: context)
@@ -166,7 +179,8 @@ struct BonjourChatPromptBuilderContextTests {
         #expect(block.contains("s ago"))
     }
 
-    @Test func scanStatusReportsInProgressTakesPriority() {
+    @Test("`isScanning` overrides `lastScanTime` so the model knows results are still streaming")
+    func scanStatusReportsInProgressTakesPriority() {
         // Even with a prior lastScanTime, `isScanning = true` means
         // results are still populating and the model should caveat
         // accordingly. The in-progress line must take priority.
@@ -182,7 +196,8 @@ struct BonjourChatPromptBuilderContextTests {
 
     // MARK: - Context Block: Rich Per-Service Data
 
-    @Test func discoveredServiceLineIncludesTransportLayer() {
+    @Test("Each discovered-service line includes the transport layer for protocol disambiguation")
+    func discoveredServiceLineIncludesTransportLayer() {
         // Transport (tcp/udp) is called out because the model needs it
         // to differentiate protocols that exist on both (e.g. DNS,
         // some streaming) and to caveat behaviors that depend on it.
@@ -192,14 +207,16 @@ struct BonjourChatPromptBuilderContextTests {
         #expect(block.contains("· tcp ·"))
     }
 
-    @Test func discoveredServiceLineIncludesHostname() {
+    @Test("Each discovered-service line surfaces the `host:` tag so the model can ground replies")
+    func discoveredServiceLineIncludesHostname() {
         let service = makeService(name: "Apple TV", type: "airplay")
         let context = BonjourChatPromptBuilder.ChatContext(discoveredServices: [service])
         let block = BonjourChatPromptBuilder.contextBlock(context: context)
         #expect(block.contains("host:"))
     }
 
-    @Test func emptyDiscoveredListExplainsScanMayNotHaveRunYet() {
+    @Test("Empty discovered block warns the scan may not have populated yet, not that the network is empty")
+    func emptyDiscoveredListExplainsScanMayNotHaveRunYet() {
         // When the context is empty, the block must distinguish "nothing
         // on the network" from "scan hasn't populated yet". The richer
         // copy tells the model to suggest waiting rather than declaring
@@ -211,7 +228,8 @@ struct BonjourChatPromptBuilderContextTests {
 
     // MARK: - Context Block: Grouped Library
 
-    @Test func libraryListsCategoriesWhenTypesMatch() {
+    @Test("Library renders known types under category headings so the model has explicit taxonomy")
+    func libraryListsCategoriesWhenTypesMatch() {
         // Types that belong in known categories should render under
         // their category heading so the model doesn't have to infer
         // taxonomy from names alone.
@@ -227,7 +245,8 @@ struct BonjourChatPromptBuilderContextTests {
         #expect(block.contains("Printers & Scanners"))
     }
 
-    @Test func libraryBucketsUncategorizedTypesUnderOther() {
+    @Test("Library uses an `Other:` bucket for types outside any predefined category")
+    func libraryBucketsUncategorizedTypesUnderOther() {
         // Types not in any predefined category must still appear so the
         // model knows they exist. An "Other" bucket catches them.
         let library = [

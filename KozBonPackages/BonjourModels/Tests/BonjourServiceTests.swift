@@ -33,14 +33,16 @@ struct BonjourServiceTests {
 
     // MARK: - Init
 
-    @Test func initSetsProperties() {
+    @Test("Initializer wires up `NetService`, `serviceType`, and a non-zero `serviceIdentifier`")
+    func initSetsProperties() {
         let service = makeService()
         #expect(service.service.name == "Test Device")
         #expect(service.serviceType.type == "http")
         #expect(service.serviceIdentifier != 0)
     }
 
-    @Test func serviceIdentifierIsStable() {
+    @Test("`serviceIdentifier` is cached from `NetService.hashValue` at init for in-session stability")
+    func serviceIdentifierIsStable() {
         let netService = NetService(domain: "local.", type: "_http._tcp", name: "Stable Device", port: 8080)
         let serviceType = BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp)
         let a = BonjourService(service: netService, serviceType: serviceType)
@@ -50,47 +52,55 @@ struct BonjourServiceTests {
 
     // MARK: - Default State
 
-    @Test func hostNameReturnsNAWhenNoHostName() {
+    @Test("`hostName` falls back to `NA` when the underlying `NetService` has none yet")
+    func hostNameReturnsNAWhenNoHostName() {
         let service = makeService()
         #expect(service.hostName == "NA")
     }
 
-    @Test func hasResolvedAddressesMatchesNetServiceState() {
+    @Test("`hasResolvedAddresses` mirrors whether `NetService.addresses` is non-nil")
+    func hasResolvedAddressesMatchesNetServiceState() {
         let service = makeService()
         // NetService.addresses is non-nil after init with a port, so hasResolvedAddresses reflects that
         #expect(service.hasResolvedAddresses == (service.service.addresses != nil))
     }
 
-    @Test func isResolvingIsFalseInitially() {
+    @Test("`isResolving` defaults to false so newly constructed services aren't shown as in-flight")
+    func isResolvingIsFalseInitially() {
         let service = makeService()
         #expect(!service.isResolving)
     }
 
-    @Test func isPublishingIsFalseInitially() {
+    @Test("`isPublishing` defaults to false so newly constructed services aren't shown as publishing")
+    func isPublishingIsFalseInitially() {
         let service = makeService()
         #expect(!service.isPublishing)
     }
 
-    @Test func addressesAreEmptyInitially() {
+    @Test("`addresses` is empty before `resolve()` populates it")
+    func addressesAreEmptyInitially() {
         let service = makeService()
         #expect(service.addresses.isEmpty)
     }
 
-    @Test func dataRecordsAreEmptyInitially() {
+    @Test("`dataRecords` is empty before any TXT record update arrives")
+    func dataRecordsAreEmptyInitially() {
         let service = makeService()
         #expect(service.dataRecords.isEmpty)
     }
 
     // MARK: - Identifiable
 
-    @Test func identifiableIdMatchesServiceIdentifier() {
+    @Test("`Identifiable.id` returns the cached `serviceIdentifier` for stable list diffing")
+    func identifiableIdMatchesServiceIdentifier() {
         let service = makeService()
         #expect(service.id == service.serviceIdentifier)
     }
 
     // MARK: - Equality
 
-    @Test func equalityBasedOnNSObjectIdentity() {
+    @Test("Two services with identical descriptors are not equal — equality uses `NSObject` identity")
+    func equalityBasedOnNSObjectIdentity() {
         let a = makeService(name: "Device A")
         let b = makeService(name: "Device A")
         #expect(a != b)
@@ -98,7 +108,8 @@ struct BonjourServiceTests {
 
     // MARK: - Delegate
 
-    @Test func delegateIsWeakReference() {
+    @Test("`delegate` is weak — releasing the delegate clears it without manual unregistration")
+    func delegateIsWeakReference() {
         let service = makeService()
         var delegate: MockDelegate? = MockDelegate()
         service.delegate = delegate

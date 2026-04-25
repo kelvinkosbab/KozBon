@@ -40,7 +40,8 @@ struct BonjourServicesViewModelTests {
 
     // MARK: - Initial State
 
-    @Test func initialStateIsCorrect() {
+    @Test("New view model starts in the initial-load state with no services or errors")
+    func initialStateIsCorrect() {
         let (viewModel, _) = makeViewModel()
         #expect(viewModel.isInitialLoad)
         #expect(viewModel.lastScanTime == nil)
@@ -51,12 +52,14 @@ struct BonjourServicesViewModelTests {
 
     // MARK: - shouldRefreshOnForeground
 
-    @Test func shouldRefreshOnForegroundReturnsTrueInitially() {
+    @Test("`shouldRefreshOnForeground` is true before the first scan ever runs")
+    func shouldRefreshOnForegroundReturnsTrueInitially() {
         let (viewModel, _) = makeViewModel()
         #expect(viewModel.shouldRefreshOnForeground())
     }
 
-    @Test func shouldRefreshOnForegroundReturnsFalseAfterRecentScan() {
+    @Test("`shouldRefreshOnForeground` is false right after `load()` to avoid back-to-back scans")
+    func shouldRefreshOnForegroundReturnsFalseAfterRecentScan() {
         let (viewModel, _) = makeViewModel()
         viewModel.load()
         #expect(!viewModel.shouldRefreshOnForeground())
@@ -64,7 +67,8 @@ struct BonjourServicesViewModelTests {
 
     // MARK: - load
 
-    @Test func loadStartsScanAndUpdatesState() {
+    @Test("`load()` triggers a scan and records `lastScanTime` and exits the initial-load state")
+    func loadStartsScanAndUpdatesState() {
         let (viewModel, scanner) = makeViewModel()
         viewModel.load()
         #expect(!viewModel.isInitialLoad)
@@ -72,7 +76,8 @@ struct BonjourServicesViewModelTests {
         #expect(scanner.startScanCallCount == 1)
     }
 
-    @Test func loadDoesNotStartScanWhileProcessing() {
+    @Test("`load()` is a no-op while the scanner reports `isProcessing`")
+    func loadDoesNotStartScanWhileProcessing() {
         let (viewModel, scanner) = makeViewModel()
         scanner.isProcessing = true
         viewModel.load()
@@ -81,14 +86,16 @@ struct BonjourServicesViewModelTests {
 
     // MARK: - Delegate Methods
 
-    @Test func didAddAppendsService() {
+    @Test("`didAdd(service:)` appends a new service to `flatActiveServices`")
+    func didAddAppendsService() {
         let (viewModel, _) = makeViewModel()
         let service = makeService(name: "Test Device")
         viewModel.didAdd(service: service)
         #expect(viewModel.flatActiveServices.count == 1)
     }
 
-    @Test func didRemoveRemovesService() {
+    @Test("`didRemove(service:)` removes the matching entry from `flatActiveServices`")
+    func didRemoveRemovesService() {
         let (viewModel, _) = makeViewModel()
         let service = makeService(name: "Test Device")
         viewModel.didAdd(service: service)
@@ -96,7 +103,8 @@ struct BonjourServicesViewModelTests {
         #expect(viewModel.flatActiveServices.isEmpty)
     }
 
-    @Test func didResetClearsAllServices() {
+    @Test("`didReset()` empties `flatActiveServices` regardless of how many services were tracked")
+    func didResetClearsAllServices() {
         let (viewModel, _) = makeViewModel()
         viewModel.didAdd(service: makeService(name: "Device 1"))
         viewModel.didAdd(service: makeService(name: "Device 2"))
@@ -104,7 +112,8 @@ struct BonjourServicesViewModelTests {
         #expect(viewModel.flatActiveServices.isEmpty)
     }
 
-    @Test func didFailWithErrorSetsScanError() {
+    @Test("`didFailWithError(description:)` surfaces the message via `scanError` for the UI")
+    func didFailWithErrorSetsScanError() {
         let (viewModel, _) = makeViewModel()
         viewModel.didFailWithError(description: "Test error")
         #expect(viewModel.scanError == "Test error")
@@ -112,7 +121,8 @@ struct BonjourServicesViewModelTests {
 
     // MARK: - Sorting
 
-    @Test func flatActiveServicesHostNameAsc() {
+    @Test("`hostNameAsc` sort orders `flatActiveServices` alphabetically by host name")
+    func flatActiveServicesHostNameAsc() {
         let (viewModel, _) = makeViewModel()
         viewModel.didAdd(service: makeService(name: "Zebra"))
         viewModel.didAdd(service: makeService(name: "Alpha", type: "ssh"))
@@ -122,7 +132,8 @@ struct BonjourServicesViewModelTests {
         #expect(names == ["Alpha", "Zebra"])
     }
 
-    @Test func flatActiveServicesHostNameDesc() {
+    @Test("`hostNameDesc` sort orders `flatActiveServices` reverse-alphabetically by host name")
+    func flatActiveServicesHostNameDesc() {
         let (viewModel, _) = makeViewModel()
         viewModel.didAdd(service: makeService(name: "Alpha"))
         viewModel.didAdd(service: makeService(name: "Zebra", type: "ssh"))
@@ -132,7 +143,8 @@ struct BonjourServicesViewModelTests {
         #expect(names == ["Zebra", "Alpha"])
     }
 
-    @Test func flatActiveServicesServiceNameAsc() throws {
+    @Test("`serviceNameAsc` sort orders `flatActiveServices` ascending by service-type name")
+    func flatActiveServicesServiceNameAsc() throws {
         let (viewModel, _) = makeViewModel()
         viewModel.didAdd(service: makeService(name: "DeviceA", type: "ssh"))
         viewModel.didAdd(service: makeService(name: "DeviceB", type: "http"))
@@ -144,7 +156,8 @@ struct BonjourServicesViewModelTests {
         #expect(first <= last)
     }
 
-    @Test func flatActiveServicesServiceNameDesc() throws {
+    @Test("`serviceNameDesc` sort orders `flatActiveServices` descending by service-type name")
+    func flatActiveServicesServiceNameDesc() throws {
         let (viewModel, _) = makeViewModel()
         viewModel.didAdd(service: makeService(name: "DeviceA", type: "http"))
         viewModel.didAdd(service: makeService(name: "DeviceB", type: "ssh"))
@@ -158,7 +171,8 @@ struct BonjourServicesViewModelTests {
 
     // MARK: - Published vs Active Filtering
 
-    @Test func publishedServicesAreFilteredFromActive() {
+    @Test("Locally-published services appear in `sortedPublishedServices` and not in `flatActiveServices`")
+    func publishedServicesAreFilteredFromActive() {
         let (viewModel, _) = makeViewModel()
         let service = makeService(name: "My Device")
         viewModel.customPublishedServices.append(service)
@@ -170,7 +184,8 @@ struct BonjourServicesViewModelTests {
 
     // MARK: - Edge Cases
 
-    @Test func didAddUpdatesExistingServiceById() {
+    @Test("`didAdd` deduplicates by id so adding the same service twice yields one entry")
+    func didAddUpdatesExistingServiceById() {
         let (viewModel, _) = makeViewModel()
         let service = makeService(name: "Device")
         viewModel.didAdd(service: service)
@@ -178,14 +193,16 @@ struct BonjourServicesViewModelTests {
         #expect(viewModel.flatActiveServices.count == 1)
     }
 
-    @Test func didRemoveNonExistentServiceIsNoOp() {
+    @Test("`didRemove` for a service that was never added is a safe no-op")
+    func didRemoveNonExistentServiceIsNoOp() {
         let (viewModel, _) = makeViewModel()
         let service = makeService(name: "Ghost")
         viewModel.didRemove(service: service)
         #expect(viewModel.flatActiveServices.isEmpty)
     }
 
-    @Test func flatActiveServicesWithNilSortTypeDefaultsToAsc() {
+    @Test("With `sortType == nil`, `flatActiveServices` still surfaces every added service")
+    func flatActiveServicesWithNilSortTypeDefaultsToAsc() {
         let (viewModel, _) = makeViewModel()
         viewModel.didAdd(service: makeService(name: "Zebra"))
         viewModel.didAdd(service: makeService(name: "Alpha", type: "ssh"))
@@ -193,7 +210,8 @@ struct BonjourServicesViewModelTests {
         #expect(viewModel.flatActiveServices.count == 2)
     }
 
-    @Test func multipleDidResetCallsAreIdempotent() {
+    @Test("Calling `didReset` twice in a row does not throw or re-populate services")
+    func multipleDidResetCallsAreIdempotent() {
         let (viewModel, _) = makeViewModel()
         viewModel.didAdd(service: makeService(name: "Device"))
         viewModel.didReset()
@@ -201,7 +219,8 @@ struct BonjourServicesViewModelTests {
         #expect(viewModel.flatActiveServices.isEmpty)
     }
 
-    @Test func scanErrorClearsWhenSetToNil() {
+    @Test("Setting `scanError = nil` dismisses a previously-set error so the UI can hide it")
+    func scanErrorClearsWhenSetToNil() {
         let (viewModel, _) = makeViewModel()
         viewModel.didFailWithError(description: "Error")
         #expect(viewModel.scanError == "Error")
@@ -211,25 +230,29 @@ struct BonjourServicesViewModelTests {
 
     // MARK: - Initial Load State
 
-    @Test func isInitialLoadTrueBeforeFirstLoad() {
+    @Test("`isInitialLoad` is true before `load()` so the UI can show the first-run placeholder")
+    func isInitialLoadTrueBeforeFirstLoad() {
         let (viewModel, _) = makeViewModel()
         #expect(viewModel.isInitialLoad)
     }
 
-    @Test func isInitialLoadFalseAfterLoad() {
+    @Test("`isInitialLoad` flips to false after the first `load()` call")
+    func isInitialLoadFalseAfterLoad() {
         let (viewModel, _) = makeViewModel()
         viewModel.load()
         #expect(!viewModel.isInitialLoad)
     }
 
-    @Test func isInitialLoadRemainsFalseAfterSubsequentLoads() {
+    @Test("`isInitialLoad` stays false through repeated `load()` calls — it never re-enters initial state")
+    func isInitialLoadRemainsFalseAfterSubsequentLoads() {
         let (viewModel, _) = makeViewModel()
         viewModel.load()
         viewModel.load()
         #expect(!viewModel.isInitialLoad)
     }
 
-    @Test func isInitialLoadFalseEvenWhenNoServicesFound() {
+    @Test("`isInitialLoad` flips to false after `load()` even if zero services are discovered")
+    func isInitialLoadFalseEvenWhenNoServicesFound() {
         let (viewModel, _) = makeViewModel()
         viewModel.load()
         #expect(!viewModel.isInitialLoad)
@@ -238,12 +261,14 @@ struct BonjourServicesViewModelTests {
 
     // MARK: - Broadcast Sheet State
 
-    @Test func isBroadcastBonjourServicePresentedDefaultsFalse() {
+    @Test("`isBroadcastBonjourServicePresented` starts false so the broadcast sheet is hidden")
+    func isBroadcastBonjourServicePresentedDefaultsFalse() {
         let (viewModel, _) = makeViewModel()
         #expect(!viewModel.isBroadcastBonjourServicePresented)
     }
 
-    @Test func broadcastSheetCanBePresented() {
+    @Test("`isBroadcastBonjourServicePresented` accepts a write to true to present the sheet")
+    func broadcastSheetCanBePresented() {
         let (viewModel, _) = makeViewModel()
         viewModel.isBroadcastBonjourServicePresented = true
         #expect(viewModel.isBroadcastBonjourServicePresented)
@@ -251,19 +276,22 @@ struct BonjourServicesViewModelTests {
 
     // MARK: - Strings
 
-    @Test func noActiveServicesStringIsNotEmpty() {
+    @Test("`noActiveServicesString` is non-empty so the empty-state UI always has copy to display")
+    func noActiveServicesStringIsNotEmpty() {
         let (viewModel, _) = makeViewModel()
         #expect(!viewModel.noActiveServicesString.isEmpty)
     }
 
-    @Test func createButtonStringIsNotEmpty() {
+    @Test("`createButtonString` is non-empty so the create button always has a label")
+    func createButtonStringIsNotEmpty() {
         let (viewModel, _) = makeViewModel()
         #expect(!viewModel.createButtonString.isEmpty)
     }
 
     // MARK: - Convenience Init
 
-    @Test func initWithDependenciesResolvesScannerAndPublishManager() {
+    @Test("Convenience init pulls the exact scanner and publish manager out of the dependency container")
+    func initWithDependenciesResolvesScannerAndPublishManager() {
         let scanner = MockBonjourServiceScanner()
         let publishManager = MockBonjourPublishManager()
         let container = DependencyContainer(
@@ -291,12 +319,14 @@ struct BonjourServicesViewModelTests {
     // first. The app ships with one shared `BonjourServicesViewModel` hoisted
     // to `AppCore` to avoid exactly this.
 
-    @Test func viewModelRegistersItselfAsScannerDelegate() {
+    @Test("View model registers itself as the scanner's delegate during initialization")
+    func viewModelRegistersItselfAsScannerDelegate() {
         let (viewModel, scanner) = makeViewModel()
         #expect(scanner.delegate === viewModel)
     }
 
-    @Test func secondViewModelOverwritesFirstAsScannerDelegate() {
+    @Test("Second view model on the same scanner clobbers the first as delegate (single-slot semantics)")
+    func secondViewModelOverwritesFirstAsScannerDelegate() {
         let scanner = MockBonjourServiceScanner()
         let publishManager = MockBonjourPublishManager()
 
@@ -319,7 +349,8 @@ struct BonjourServicesViewModelTests {
         #expect(scanner.delegate !== first)
     }
 
-    @Test func onlyTheMostRecentViewModelReceivesScannerEvents() {
+    @Test("Only the most recently-attached view model receives scanner events — the empty-Discover-tab regression")
+    func onlyTheMostRecentViewModelReceivesScannerEvents() {
         let scanner = MockBonjourServiceScanner()
         let publishManager = MockBonjourPublishManager()
 

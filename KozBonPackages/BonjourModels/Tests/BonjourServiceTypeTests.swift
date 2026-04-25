@@ -17,24 +17,28 @@ struct BonjourServiceTypeTests {
 
     // MARK: - generateFullType
 
-    @Test func generateFullTypeWithTcp() {
+    @Test("`generateFullType` formats a TCP type as `_<type>._tcp`")
+    func generateFullTypeWithTcp() {
         let fullType = BonjourServiceType.generateFullType(type: "http", transportLayer: .tcp)
         #expect(fullType == "_http._tcp")
     }
 
-    @Test func generateFullTypeWithUdp() {
+    @Test("`generateFullType` formats a UDP type as `_<type>._udp`")
+    func generateFullTypeWithUdp() {
         let fullType = BonjourServiceType.generateFullType(type: "dns", transportLayer: .udp)
         #expect(fullType == "_dns._udp")
     }
 
     // MARK: - Init
 
-    @Test func initSetsFullType() {
+    @Test("Initializer derives `fullType` from the `(type, transportLayer)` pair")
+    func initSetsFullType() {
         let serviceType = BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp)
         #expect(serviceType.fullType == "_http._tcp")
     }
 
-    @Test func initSetsAllProperties() {
+    @Test("Initializer stores name, type, transport, and detail unchanged")
+    func initSetsAllProperties() {
         let serviceType = BonjourServiceType(
             name: "HTTP",
             type: "http",
@@ -47,32 +51,37 @@ struct BonjourServiceTypeTests {
         #expect(serviceType.detail == "Web server")
     }
 
-    @Test func initDetailDefaultsToNil() {
+    @Test("`detail` defaults to nil when not supplied to the initializer")
+    func initDetailDefaultsToNil() {
         let serviceType = BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp)
         #expect(serviceType.detail == nil)
     }
 
     // MARK: - Equality
 
-    @Test func equalServiceTypesAreEqual() {
+    @Test("Two service types with all fields equal compare equal")
+    func equalServiceTypesAreEqual() {
         let a = BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp, detail: "Web")
         let b = BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp, detail: "Web")
         #expect(a == b)
     }
 
-    @Test func differentNamesAreNotEqual() {
+    @Test("Differing display name breaks equality")
+    func differentNamesAreNotEqual() {
         let a = BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp)
         let b = BonjourServiceType(name: "HTTPS", type: "http", transportLayer: .tcp)
         #expect(a != b)
     }
 
-    @Test func differentTypesAreNotEqual() {
+    @Test("Differing wire type breaks equality")
+    func differentTypesAreNotEqual() {
         let a = BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp)
         let b = BonjourServiceType(name: "HTTP", type: "https", transportLayer: .tcp)
         #expect(a != b)
     }
 
-    @Test func differentDetailsAreNotEqual() {
+    @Test("Differing `detail` text breaks equality")
+    func differentDetailsAreNotEqual() {
         let a = BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp, detail: "Web")
         let b = BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp, detail: "Other")
         #expect(a != b)
@@ -80,19 +89,22 @@ struct BonjourServiceTypeTests {
 
     // MARK: - Hashing
 
-    @Test func sameFullTypeProducesSameHash() {
+    @Test("Hash is keyed on `fullType` only — two values sharing it collide regardless of name")
+    func sameFullTypeProducesSameHash() {
         let a = BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp)
         let b = BonjourServiceType(name: "Different", type: "http", transportLayer: .tcp)
         #expect(a.hashValue == b.hashValue)
     }
 
-    @Test func differentFullTypeProducesDifferentHash() {
+    @Test("Different `fullType` values hash to different buckets")
+    func differentFullTypeProducesDifferentHash() {
         let a = BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp)
         let b = BonjourServiceType(name: "DNS", type: "dns", transportLayer: .udp)
         #expect(a.hashValue != b.hashValue)
     }
 
-    @Test func canBeUsedInSet() {
+    @Test("Equal instances dedupe inside `Set`, confirming `Hashable` matches `Equatable`")
+    func canBeUsedInSet() {
         let a = BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp)
         let b = BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp)
         let set: Set<BonjourServiceType> = [a, b]
@@ -102,7 +114,8 @@ struct BonjourServiceTypeTests {
 
     // MARK: - fetch (with explicit serviceTypes array)
 
-    @Test func fetchByTypeAndTransportLayer() {
+    @Test("`fetch(serviceTypes:type:transportLayer:)` returns the matching entry")
+    func fetchByTypeAndTransportLayer() {
         let types = [
             BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp),
             BonjourServiceType(name: "DNS", type: "dns", transportLayer: .udp)
@@ -112,7 +125,8 @@ struct BonjourServiceTypeTests {
         #expect(result?.name == "HTTP")
     }
 
-    @Test func fetchByTypeAndTransportLayerNotFound() {
+    @Test("`fetch(serviceTypes:type:transportLayer:)` returns nil when no entry matches")
+    func fetchByTypeAndTransportLayerNotFound() {
         let types = [
             BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp)
         ]
@@ -120,7 +134,8 @@ struct BonjourServiceTypeTests {
         #expect(result == nil)
     }
 
-    @Test func fetchByFullType() {
+    @Test("`fetch(serviceTypes:fullType:)` looks up by the wire-format string")
+    func fetchByFullType() {
         let types = [
             BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp),
             BonjourServiceType(name: "DNS", type: "dns", transportLayer: .udp)
@@ -130,7 +145,8 @@ struct BonjourServiceTypeTests {
         #expect(result?.name == "DNS")
     }
 
-    @Test func fetchByFullTypeNotFound() {
+    @Test("`fetch(serviceTypes:fullType:)` returns nil when no entry matches")
+    func fetchByFullTypeNotFound() {
         let types = [
             BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp)
         ]
@@ -140,21 +156,24 @@ struct BonjourServiceTypeTests {
 
     // MARK: - exists (with explicit serviceTypes array)
 
-    @Test func existsReturnsTrueWhenFound() {
+    @Test("`exists(serviceTypes:type:transportLayer:)` is true when a match is in the array")
+    func existsReturnsTrueWhenFound() {
         let types = [
             BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp)
         ]
         #expect(BonjourServiceType.exists(serviceTypes: types, type: "http", transportLayer: .tcp))
     }
 
-    @Test func existsReturnsFalseWhenNotFound() {
+    @Test("`exists(serviceTypes:type:transportLayer:)` is false when no match is in the array")
+    func existsReturnsFalseWhenNotFound() {
         let types = [
             BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp)
         ]
         #expect(!BonjourServiceType.exists(serviceTypes: types, type: "ssh", transportLayer: .tcp))
     }
 
-    @Test func existsByFullType() {
+    @Test("`exists(serviceTypes:fullType:)` matches via the wire-format string")
+    func existsByFullType() {
         let types = [
             BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp)
         ]
@@ -163,55 +182,64 @@ struct BonjourServiceTypeTests {
 
     // MARK: - isBuiltIn
 
-    @Test func builtInServiceTypeIsRecognized() {
+    @Test("Built-in HTTP/TCP entry is present in `serviceTypeLibrary`")
+    func builtInServiceTypeIsRecognized() {
         // Check that the library contains a service type with type "http" and transportLayer .tcp
         let library = BonjourServiceType.serviceTypeLibrary
         let httpExists = library.contains { $0.type == "http" && $0.transportLayer == .tcp }
         #expect(httpExists)
     }
 
-    @Test func customServiceTypeIsNotBuiltIn() {
+    @Test("A user-defined service type reports `isBuiltIn == false`")
+    func customServiceTypeIsNotBuiltIn() {
         let custom = BonjourServiceType(name: "My Custom Service", type: "mycustom", transportLayer: .tcp)
         #expect(!custom.isBuiltIn)
     }
 
     // MARK: - serviceTypeLibrary
 
-    @Test func serviceTypeLibraryIsNotEmpty() {
+    @Test("`serviceTypeLibrary` is non-empty so the discover tab always has content")
+    func serviceTypeLibraryIsNotEmpty() {
         #expect(!BonjourServiceType.serviceTypeLibrary.isEmpty)
     }
 
     // MARK: - imageSystemName
 
-    @Test func airplayImageIsAirplayVideo() {
+    @Test("AirPlay maps to the `airplayvideo` SF Symbol")
+    func airplayImageIsAirplayVideo() {
         let type = BonjourServiceType(name: "AirPlay", type: "airplay", transportLayer: .tcp)
         #expect(type.imageSystemName == "airplayvideo")
     }
 
-    @Test func sshImageIsGreaterThanSquare() {
+    @Test("SSH maps to the `greaterthan.square` SF Symbol")
+    func sshImageIsGreaterThanSquare() {
         let type = BonjourServiceType(name: "Secure Shell (SSH)", type: "ssh", transportLayer: .tcp)
         #expect(type.imageSystemName == "greaterthan.square")
     }
 
-    @Test func unknownServiceDefaultsToWifi() {
+    @Test("Unrecognized service types fall back to the `wifi` SF Symbol")
+    func unknownServiceDefaultsToWifi() {
         let type = BonjourServiceType(name: "Unknown Service", type: "unknown", transportLayer: .tcp)
         #expect(type.imageSystemName == "wifi")
     }
 
-    @Test func homekitImageIsHomekit() {
+    @Test("HomeKit maps to the `homekit` SF Symbol")
+    func homekitImageIsHomekit() {
         let type = BonjourServiceType(name: "Apple HomeKit", type: "homekit", transportLayer: .tcp)
         #expect(type.imageSystemName == "homekit")
     }
 
     // MARK: - Identifiable
 
-    @Test func idEqualsFullType() {
+    @Test("`Identifiable.id` returns the `fullType` string for stable list diffing")
+    func idEqualsFullType() {
         let type = BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp)
         #expect(type.id == "_http._tcp")
         #expect(type.id == type.fullType)
     }
 
-    @Test func idIsUniqueAcrossTransportLayers() {
+    @Test("Same type name on TCP vs UDP yields distinct `id`s so both can coexist in a list")
+    func idIsUniqueAcrossTransportLayers() {
         let tcp = BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp)
         let udp = BonjourServiceType(name: "HTTP", type: "http", transportLayer: .udp)
         #expect(tcp.id != udp.id)
@@ -219,14 +247,16 @@ struct BonjourServiceTypeTests {
 
     // MARK: - Localized Detail
 
-    @Test func localizedDetailReturnsDetailWhenPresent() {
+    @Test("`localizedDetail` is non-nil whenever a `detail` string was supplied")
+    func localizedDetailReturnsDetailWhenPresent() {
         let type = BonjourServiceType(
             name: "HTTP", type: "http", transportLayer: .tcp, detail: "Web server"
         )
         #expect(type.localizedDetail != nil)
     }
 
-    @Test func localizedDetailReturnsNilWhenNoDetail() {
+    @Test("`localizedDetail` is nil when no underlying `detail` string was supplied")
+    func localizedDetailReturnsNilWhenNoDetail() {
         let type = BonjourServiceType(
             name: "Custom", type: "custom", transportLayer: .tcp, detail: nil
         )
@@ -235,12 +265,14 @@ struct BonjourServiceTypeTests {
 
     // MARK: - isBuiltIn (via Identifiable)
 
-    @Test func builtInServiceTypeReportsIsBuiltIn() {
+    @Test("Library-shipped TCP service types report `isBuiltIn == true`")
+    func builtInServiceTypeReportsIsBuiltIn() {
         let builtIn = BonjourServiceType.tcpServiceTypes.first
         #expect(builtIn?.isBuiltIn == true)
     }
 
-    @Test func unknownServiceTypeIsNotBuiltIn() {
+    @Test("Service type whose `fullType` isn't in the library reports `isBuiltIn == false`")
+    func unknownServiceTypeIsNotBuiltIn() {
         let custom = BonjourServiceType(
             name: "My Service", type: "myservice", transportLayer: .tcp
         )

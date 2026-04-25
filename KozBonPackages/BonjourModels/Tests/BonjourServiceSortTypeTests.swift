@@ -15,55 +15,67 @@ struct BonjourServiceSortTypeTests {
 
     // MARK: - CaseIterable
 
-    @Test func allCasesContainsNineOptions() {
+    @Test("`allCases` exposes all 9 sort/filter options the menu UI relies on")
+    func allCasesContainsNineOptions() {
         #expect(BonjourServiceSortType.allCases.count == 9)
     }
 
     // MARK: - ID
 
-    @Test func allIDsAreUnique() {
+    @Test("Every case has a unique `id` so SwiftUI selection bindings stay unambiguous")
+    func allIDsAreUnique() {
         let ids = BonjourServiceSortType.allCases.map(\.id)
         let uniqueIds = Set(ids)
         #expect(ids.count == uniqueIds.count)
     }
 
-    @Test func hostNameAscID() {
+    @Test("`.hostNameAsc.id` is the persisted `hostNameAsc` token")
+    func hostNameAscID() {
         #expect(BonjourServiceSortType.hostNameAsc.id == "hostNameAsc")
     }
 
-    @Test func hostNameDescID() {
+    @Test("`.hostNameDesc.id` is the persisted `hostNameDesc` token")
+    func hostNameDescID() {
         #expect(BonjourServiceSortType.hostNameDesc.id == "hostNameDesc")
     }
 
-    @Test func serviceNameAscID() {
+    @Test("`.serviceNameAsc.id` is the persisted `serviceNameAsc` token")
+    func serviceNameAscID() {
         #expect(BonjourServiceSortType.serviceNameAsc.id == "serviceNameAsc")
     }
 
-    @Test func serviceNameDescID() {
+    @Test("`.serviceNameDesc.id` is the persisted `serviceNameDesc` token")
+    func serviceNameDescID() {
         #expect(BonjourServiceSortType.serviceNameDesc.id == "serviceNameDesc")
     }
 
-    @Test func smartHomeID() {
+    @Test("`.smartHome.id` is the persisted `smartHome` token")
+    func smartHomeID() {
         #expect(BonjourServiceSortType.smartHome.id == "smartHome")
     }
 
-    @Test func appleDevicesID() {
+    @Test("`.appleDevices.id` is the persisted `appleDevices` token")
+    func appleDevicesID() {
         #expect(BonjourServiceSortType.appleDevices.id == "appleDevices")
     }
 
-    @Test func mediaAndStreamingID() {
+    @Test("`.mediaAndStreaming.id` is the persisted `mediaAndStreaming` token")
+    func mediaAndStreamingID() {
         #expect(BonjourServiceSortType.mediaAndStreaming.id == "mediaAndStreaming")
     }
 
-    @Test func printersAndScannersID() {
+    @Test("`.printersAndScanners.id` is the persisted `printersAndScanners` token")
+    func printersAndScannersID() {
         #expect(BonjourServiceSortType.printersAndScanners.id == "printersAndScanners")
     }
 
-    @Test func remoteAccessID() {
+    @Test("`.remoteAccess.id` is the persisted `remoteAccess` token")
+    func remoteAccessID() {
         #expect(BonjourServiceSortType.remoteAccess.id == "remoteAccess")
     }
 
-    @Test func allIDsRoundTripViaLookup() {
+    @Test("Each case can be recovered from its `id` via `allCases` lookup")
+    func allIDsRoundTripViaLookup() {
         for sortType in BonjourServiceSortType.allCases {
             let found = BonjourServiceSortType.allCases.first { $0.id == sortType.id }
             #expect(found == sortType)
@@ -72,7 +84,8 @@ struct BonjourServiceSortTypeTests {
 
     // MARK: - Titles
 
-    @Test func allTitlesAreNonEmpty() {
+    @Test("Every case has a non-empty `title` so the picker never shows a blank row")
+    func allTitlesAreNonEmpty() {
         for sortType in BonjourServiceSortType.allCases {
             #expect(!sortType.title.isEmpty)
         }
@@ -80,7 +93,8 @@ struct BonjourServiceSortTypeTests {
 
     // MARK: - Icon Names
 
-    @Test func allIconNamesAreNonEmpty() {
+    @Test("Every case has a non-empty `iconName` so each menu row renders a symbol")
+    func allIconNamesAreNonEmpty() {
         for sortType in BonjourServiceSortType.allCases {
             #expect(!sortType.iconName.isEmpty)
         }
@@ -88,14 +102,16 @@ struct BonjourServiceSortTypeTests {
 
     // MARK: - isFilter
 
-    @Test func sortOptionsAreNotFilters() {
+    @Test("Pure ordering options (host/service name asc & desc) report `isFilter == false`")
+    func sortOptionsAreNotFilters() {
         #expect(!BonjourServiceSortType.hostNameAsc.isFilter)
         #expect(!BonjourServiceSortType.hostNameDesc.isFilter)
         #expect(!BonjourServiceSortType.serviceNameAsc.isFilter)
         #expect(!BonjourServiceSortType.serviceNameDesc.isFilter)
     }
 
-    @Test func filterOptionsAreFilters() {
+    @Test("Category-narrowing options (smart home, devices, etc.) report `isFilter == true`")
+    func filterOptionsAreFilters() {
         #expect(BonjourServiceSortType.smartHome.isFilter)
         #expect(BonjourServiceSortType.appleDevices.isFilter)
         #expect(BonjourServiceSortType.mediaAndStreaming.isFilter)

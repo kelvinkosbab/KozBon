@@ -15,54 +15,66 @@ struct StringUtilTests {
 
     // MARK: - trimmed
 
-    @Test func trimmedRemovesLeadingWhitespace() {
+    @Test("`trimmed` strips leading whitespace")
+    func trimmedRemovesLeadingWhitespace() {
         #expect("  hello".trimmed == "hello")
     }
 
-    @Test func trimmedRemovesTrailingWhitespace() {
+    @Test("`trimmed` strips trailing whitespace")
+    func trimmedRemovesTrailingWhitespace() {
         #expect("hello  ".trimmed == "hello")
     }
 
-    @Test func trimmedRemovesBothSides() {
+    @Test("`trimmed` strips whitespace from both ends in a single call")
+    func trimmedRemovesBothSides() {
         #expect("  hello  ".trimmed == "hello")
     }
 
-    @Test func trimmedPreservesInternalSpaces() {
+    @Test("`trimmed` leaves interior whitespace untouched")
+    func trimmedPreservesInternalSpaces() {
         #expect("hello world".trimmed == "hello world")
     }
 
-    @Test func trimmedEmptyString() {
+    @Test("`trimmed` is a no-op on the empty string")
+    func trimmedEmptyString() {
         #expect("".trimmed == "")
     }
 
-    @Test func trimmedOnlyWhitespace() {
+    @Test("`trimmed` collapses an all-whitespace string to empty")
+    func trimmedOnlyWhitespace() {
         #expect("   ".trimmed == "")
     }
 
     // MARK: - containsIgnoreCase
 
-    @Test func containsIgnoreCaseMatchesSameCase() {
+    @Test("`containsIgnoreCase` matches when needle case matches haystack")
+    func containsIgnoreCaseMatchesSameCase() {
         #expect("Hello World".containsIgnoreCase("Hello"))
     }
 
-    @Test func containsIgnoreCaseMatchesDifferentCase() {
+    @Test("`containsIgnoreCase` matches a lowercase needle inside a mixed-case haystack")
+    func containsIgnoreCaseMatchesDifferentCase() {
         #expect("Hello World".containsIgnoreCase("hello"))
     }
 
-    @Test func containsIgnoreCaseMatchesUpperCase() {
+    @Test("`containsIgnoreCase` matches an uppercase needle inside a lowercase haystack")
+    func containsIgnoreCaseMatchesUpperCase() {
         #expect("hello world".containsIgnoreCase("HELLO"))
     }
 
-    @Test func containsIgnoreCaseReturnsFalseForNoMatch() {
+    @Test("`containsIgnoreCase` returns false when the needle is absent")
+    func containsIgnoreCaseReturnsFalseForNoMatch() {
         #expect(!"Hello World".containsIgnoreCase("xyz"))
     }
 
-    @Test func containsIgnoreCaseEmptySearchString() {
+    @Test("`containsIgnoreCase` returns false for an empty needle (Foundation `range(of:)` quirk)")
+    func containsIgnoreCaseEmptySearchString() {
         // Empty string range(of:) returns nil, so containsIgnoreCase returns false
         #expect(!"Hello".containsIgnoreCase(""))
     }
 
-    @Test func containsIgnoreCaseSubstringMatch() {
+    @Test("`containsIgnoreCase` matches an interior substring regardless of case")
+    func containsIgnoreCaseSubstringMatch() {
         #expect("AirPlay".containsIgnoreCase("play"))
     }
 }

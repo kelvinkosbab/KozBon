@@ -13,39 +13,48 @@ import Testing
 @Suite("TransportLayer")
 struct TransportLayerTests {
 
-    @Test func udpRawValueIsZero() {
+    @Test("`.udp` raw value is pinned to 0 for stable persistence")
+    func udpRawValueIsZero() {
         #expect(TransportLayer.udp.rawValue == 0)
     }
 
-    @Test func tcpRawValueIsOne() {
+    @Test("`.tcp` raw value is pinned to 1 for stable persistence")
+    func tcpRawValueIsOne() {
         #expect(TransportLayer.tcp.rawValue == 1)
     }
 
-    @Test func udpStringIsUdp() {
+    @Test("`.udp.string` matches the Bonjour wire suffix `udp`")
+    func udpStringIsUdp() {
         #expect(TransportLayer.udp.string == "udp")
     }
 
-    @Test func tcpStringIsTcp() {
+    @Test("`.tcp.string` matches the Bonjour wire suffix `tcp`")
+    func tcpStringIsTcp() {
         #expect(TransportLayer.tcp.string == "tcp")
     }
 
-    @Test func udpIsUdpReturnsTrue() {
+    @Test("`.udp.isUdp` is true")
+    func udpIsUdpReturnsTrue() {
         #expect(TransportLayer.udp.isUdp)
     }
 
-    @Test func udpIsTcpReturnsFalse() {
+    @Test("`.udp.isTcp` is false to avoid cross-classification")
+    func udpIsTcpReturnsFalse() {
         #expect(!TransportLayer.udp.isTcp)
     }
 
-    @Test func tcpIsTcpReturnsTrue() {
+    @Test("`.tcp.isTcp` is true")
+    func tcpIsTcpReturnsTrue() {
         #expect(TransportLayer.tcp.isTcp)
     }
 
-    @Test func tcpIsUdpReturnsFalse() {
+    @Test("`.tcp.isUdp` is false to avoid cross-classification")
+    func tcpIsUdpReturnsFalse() {
         #expect(!TransportLayer.tcp.isUdp)
     }
 
-    @Test func caseIterableContainsBothCases() {
+    @Test("`allCases` exposes exactly `.udp` and `.tcp` so UI menus stay complete")
+    func caseIterableContainsBothCases() {
         let allCases = TransportLayer.allCases
         #expect(allCases.count == 2)
         #expect(allCases.contains(.udp))

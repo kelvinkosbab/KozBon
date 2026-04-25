@@ -16,34 +16,40 @@ struct BonjourChatMessageTests {
 
     // MARK: - Init
 
-    @Test func userMessageStoresRole() {
+    @Test("Init with `.user` role preserves the role on the message")
+    func userMessageStoresRole() {
         let message = BonjourChatMessage(role: .user, content: "Hello")
         #expect(message.role == .user)
     }
 
-    @Test func assistantMessageStoresRole() {
+    @Test("Init with `.assistant` role preserves the role on the message")
+    func assistantMessageStoresRole() {
         let message = BonjourChatMessage(role: .assistant, content: "Hi there")
         #expect(message.role == .assistant)
     }
 
-    @Test func messageStoresContent() {
+    @Test("Init preserves the content string verbatim")
+    func messageStoresContent() {
         let message = BonjourChatMessage(role: .user, content: "test content")
         #expect(message.content == "test content")
     }
 
-    @Test func messageGeneratesUniqueIdsByDefault() {
+    @Test("Default init mints a fresh UUID per message so list diffing stays stable")
+    func messageGeneratesUniqueIdsByDefault() {
         let message1 = BonjourChatMessage(role: .user, content: "A")
         let message2 = BonjourChatMessage(role: .user, content: "B")
         #expect(message1.id != message2.id)
     }
 
-    @Test func messageUsesProvidedId() {
+    @Test("Caller-supplied id wins over the default UUID generator")
+    func messageUsesProvidedId() {
         let id = UUID()
         let message = BonjourChatMessage(id: id, role: .user, content: "test")
         #expect(message.id == id)
     }
 
-    @Test func messageUsesProvidedTimestamp() {
+    @Test("Caller-supplied timestamp wins over the default `Date()` snapshot")
+    func messageUsesProvidedTimestamp() {
         let date = Date(timeIntervalSince1970: 1_000_000)
         let message = BonjourChatMessage(role: .user, content: "test", timestamp: date)
         #expect(message.timestamp == date)
@@ -51,13 +57,15 @@ struct BonjourChatMessageTests {
 
     // MARK: - Mutability
 
-    @Test func contentIsMutable() {
+    @Test("`content` is var so streaming responses can mutate the same message")
+    func contentIsMutable() {
         var message = BonjourChatMessage(role: .assistant, content: "initial")
         message.content = "updated"
         #expect(message.content == "updated")
     }
 
-    @Test func contentCanAppend() {
+    @Test("`+=` append works for streaming token-by-token assistant replies")
+    func contentCanAppend() {
         var message = BonjourChatMessage(role: .assistant, content: "Hello")
         message.content += " world"
         #expect(message.content == "Hello world")
@@ -65,7 +73,8 @@ struct BonjourChatMessageTests {
 
     // MARK: - Equality
 
-    @Test func messagesWithSameIdAndContentAreEqual() {
+    @Test("Two messages with identical id, role, content, and timestamp compare equal")
+    func messagesWithSameIdAndContentAreEqual() {
         let id = UUID()
         let date = Date()
         let message1 = BonjourChatMessage(id: id, role: .user, content: "A", timestamp: date)
@@ -73,7 +82,8 @@ struct BonjourChatMessageTests {
         #expect(message1 == message2)
     }
 
-    @Test func messagesWithDifferentIdsAreNotEqual() {
+    @Test("Identity is by id — same content with different ids is not equal")
+    func messagesWithDifferentIdsAreNotEqual() {
         let message1 = BonjourChatMessage(role: .user, content: "A")
         let message2 = BonjourChatMessage(role: .user, content: "A")
         #expect(message1 != message2)
@@ -81,11 +91,13 @@ struct BonjourChatMessageTests {
 
     // MARK: - Role Raw Values
 
-    @Test func userRoleRawValueIsUser() {
+    @Test("`Role.user` raw value is the wire-format string `user`")
+    func userRoleRawValueIsUser() {
         #expect(BonjourChatMessage.Role.user.rawValue == "user")
     }
 
-    @Test func assistantRoleRawValueIsAssistant() {
+    @Test("`Role.assistant` raw value is the wire-format string `assistant`")
+    func assistantRoleRawValueIsAssistant() {
         #expect(BonjourChatMessage.Role.assistant.rawValue == "assistant")
     }
 }

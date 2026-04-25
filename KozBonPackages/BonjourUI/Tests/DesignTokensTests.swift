@@ -22,7 +22,8 @@ struct DesignTokensTests {
 
     // MARK: - Spacing
 
-    @Test func spaceTokensMatchTheirNames() {
+    @Test("Every `.space{N}` token equals its label N so layouts honor the named spacing contract")
+    func spaceTokensMatchTheirNames() {
         #expect(CGFloat.space2 == 2)
         #expect(CGFloat.space4 == 4)
         #expect(CGFloat.space6 == 6)
@@ -45,7 +46,8 @@ struct DesignTokensTests {
 
     // MARK: - Sizes
 
-    @Test func sizeTokensMatchTheirNames() {
+    @Test("Every `.size{N}` token equals its label N so sized elements honor the named contract")
+    func sizeTokensMatchTheirNames() {
         #expect(CGFloat.size4 == 4)
         #expect(CGFloat.size6 == 6)
         #expect(CGFloat.size8 == 8)
@@ -68,7 +70,8 @@ struct DesignTokensTests {
 
     // MARK: - Corner Radius
 
-    @Test func radiusTokensMatchTheirNames() {
+    @Test("Every `.radius{N}` token equals its label N so corner rounding honors the named contract")
+    func radiusTokensMatchTheirNames() {
         #expect(CGFloat.radius2 == 2)
         #expect(CGFloat.radius4 == 4)
         #expect(CGFloat.radius6 == 6)
@@ -83,7 +86,8 @@ struct DesignTokensTests {
 
     // MARK: - Stroke
 
-    @Test func strokeTokensMatchTheirNames() {
+    @Test("Stroke tokens map to their labels (`hairline = 0.5`, `stroke{N} = N`)")
+    func strokeTokensMatchTheirNames() {
         #expect(CGFloat.strokeHairline == 0.5)
         #expect(CGFloat.stroke1 == 1)
         #expect(CGFloat.stroke2 == 2)
@@ -97,7 +101,8 @@ struct DesignTokensTests {
     /// semantically distinct namespaces but both read from the same 4pt grid.
     /// This test documents that expectation so a future divergence is an
     /// explicit, test-visible change rather than an accidental drift.
-    @Test func spaceAndSizeShareSharedValues() {
+    @Test("`.space{N}` and `.size{N}` share values so a divergence is an explicit, test-visible change")
+    func spaceAndSizeShareSharedValues() {
         #expect(CGFloat.space16 == CGFloat.size16)
         #expect(CGFloat.space24 == CGFloat.size24)
         #expect(CGFloat.space32 == CGFloat.size32)

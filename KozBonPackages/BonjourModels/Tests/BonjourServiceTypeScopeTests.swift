@@ -15,48 +15,57 @@ struct BonjourServiceTypeScopeTests {
 
     // MARK: - string
 
-    @Test func allStringIsAll() {
+    @Test("`.all.string` is the segmented-control label `All`")
+    func allStringIsAll() {
         #expect(BonjourServiceTypeScope.all.string == "All")
     }
 
-    @Test func builtInStringIsBuiltIn() {
+    @Test("`.builtIn.string` is the segmented-control label `Built-In`")
+    func builtInStringIsBuiltIn() {
         #expect(BonjourServiceTypeScope.builtIn.string == "Built-In")
     }
 
-    @Test func createdStringIsCreated() {
+    @Test("`.created.string` is the segmented-control label `Created`")
+    func createdStringIsCreated() {
         #expect(BonjourServiceTypeScope.created.string == "Created")
     }
 
     // MARK: - isAll
 
-    @Test func isAllReturnsTrueForAll() {
+    @Test("`.all.isAll` is true")
+    func isAllReturnsTrueForAll() {
         #expect(BonjourServiceTypeScope.all.isAll == true)
     }
 
-    @Test func isAllReturnsFalseForOthers() {
+    @Test("Non-`.all` scopes report `isAll == false`")
+    func isAllReturnsFalseForOthers() {
         #expect(BonjourServiceTypeScope.builtIn.isAll == false)
         #expect(BonjourServiceTypeScope.created.isAll == false)
     }
 
     // MARK: - isBuiltIn
 
-    @Test func isBuiltInReturnsTrueForBuiltIn() {
+    @Test("`.builtIn.isBuiltIn` is true")
+    func isBuiltInReturnsTrueForBuiltIn() {
         #expect(BonjourServiceTypeScope.builtIn.isBuiltIn == true)
     }
 
     // MARK: - isCreated
 
-    @Test func isCreatedReturnsTrueForCreated() {
+    @Test("`.created.isCreated` is true")
+    func isCreatedReturnsTrueForCreated() {
         #expect(BonjourServiceTypeScope.created.isCreated == true)
     }
 
     // MARK: - allScopes
 
-    @Test func allScopesContainsThreeElements() {
+    @Test("`allScopes` exposes exactly the three segmented-control buckets")
+    func allScopesContainsThreeElements() {
         #expect(BonjourServiceTypeScope.allScopes.count == 3)
     }
 
-    @Test func allScopesContainsAllCases() {
+    @Test("`allScopes` includes `.all`, `.builtIn`, and `.created`")
+    func allScopesContainsAllCases() {
         let scopes = BonjourServiceTypeScope.allScopes
         #expect(scopes.contains(.all))
         #expect(scopes.contains(.builtIn))
@@ -65,13 +74,15 @@ struct BonjourServiceTypeScopeTests {
 
     // MARK: - allScopeTitles
 
-    @Test func allScopeTitlesMatchesStrings() {
+    @Test("`allScopeTitles` returns the three labels in display order")
+    func allScopeTitlesMatchesStrings() {
         #expect(BonjourServiceTypeScope.allScopeTitles == ["All", "Built-In", "Created"])
     }
 
     // MARK: - CaseIterable
 
-    @Test func caseIterableMatchesAllScopes() {
+    @Test("`allCases` and `allScopes` stay in sync so neither path drops a scope")
+    func caseIterableMatchesAllScopes() {
         #expect(BonjourServiceTypeScope.allCases.count == BonjourServiceTypeScope.allScopes.count)
     }
 }

@@ -22,20 +22,23 @@ struct HapticFeedbackTests {
 
     // MARK: - Mock: Initial State
 
-    @Test func freshMockHasNoRecordedStyles() {
+    @Test("Newly constructed mock has no recorded styles so tests start from a known baseline")
+    func freshMockHasNoRecordedStyles() {
         let mock = MockHapticFeedback()
         #expect(mock.playedStyles.isEmpty)
     }
 
     // MARK: - Mock: Recording
 
-    @Test func playAppendsStyleToHistory() {
+    @Test("`play(_:)` records the requested style for later assertion")
+    func playAppendsStyleToHistory() {
         let mock = MockHapticFeedback()
         mock.play(.light)
         #expect(mock.playedStyles == [.light])
     }
 
-    @Test func multiplePlaysPreserveOrder() {
+    @Test("`playedStyles` preserves the call order so timing-sensitive sequences can be asserted")
+    func multiplePlaysPreserveOrder() {
         let mock = MockHapticFeedback()
         mock.play(.medium)
         mock.play(.success)
@@ -43,7 +46,8 @@ struct HapticFeedbackTests {
         #expect(mock.playedStyles == [.medium, .success, .light])
     }
 
-    @Test func repeatedSameStyleAppendsEachTime() {
+    @Test("Identical consecutive styles each append — mock is a log, not a deduplicating set")
+    func repeatedSameStyleAppendsEachTime() {
         // Consecutive identical requests must all record — the mock is a
         // log, not a `Set`, because view models may legitimately fire
         // the same haptic several times in a row (e.g. per-sentence tick).
@@ -57,7 +61,8 @@ struct HapticFeedbackTests {
 
     // MARK: - Mock: Reset
 
-    @Test func resetClearsRecordedHistory() {
+    @Test("`reset()` clears recorded history so tests can reuse a single mock")
+    func resetClearsRecordedHistory() {
         let mock = MockHapticFeedback()
         mock.play(.medium)
         mock.play(.error)
@@ -65,7 +70,8 @@ struct HapticFeedbackTests {
         #expect(mock.playedStyles.isEmpty)
     }
 
-    @Test func playAfterResetStartsFreshHistory() {
+    @Test("Plays after `reset()` are recorded fresh with no carry-over from prior history")
+    func playAfterResetStartsFreshHistory() {
         let mock = MockHapticFeedback()
         mock.play(.light)
         mock.reset()
@@ -81,7 +87,8 @@ struct HapticFeedbackTests {
     /// switch there is exhaustive, so an unhandled case becomes a build
     /// error; this test covers the mirror axis (mock must also handle
     /// it).
-    @Test func mockAcceptsEveryStyle() {
+    @Test("Mock records every published `HapticFeedbackStyle` case, mirroring the system switch")
+    func mockAcceptsEveryStyle() {
         let mock = MockHapticFeedback()
         let styles: [HapticFeedbackStyle] = [
             .light, .medium, .heavy, .soft, .rigid,
@@ -99,7 +106,8 @@ struct HapticFeedbackTests {
     /// The system implementation must not throw or crash for any style
     /// on any platform. On iOS it fires UIKit generators; everywhere
     /// else it's a no-op. Either way, `play` should return cleanly.
-    @Test func systemImplementationNeverThrows() {
+    @Test("`SystemHapticFeedback.play(_:)` returns cleanly for every style on every platform")
+    func systemImplementationNeverThrows() {
         let system = SystemHapticFeedback()
         let styles: [HapticFeedbackStyle] = [
             .light, .medium, .heavy, .soft, .rigid,

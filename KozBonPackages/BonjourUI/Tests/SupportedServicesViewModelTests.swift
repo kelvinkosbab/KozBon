@@ -32,61 +32,71 @@ struct SupportedServicesViewModelTests {
 
     // MARK: - Initial State
 
-    @Test func searchTextIsEmptyInitially() {
+    @Test("New view model starts with an empty `searchText` so the search field is blank")
+    func searchTextIsEmptyInitially() {
         let vm = SupportedServicesViewModel()
         #expect(vm.searchText.isEmpty)
     }
 
-    @Test func selectedServiceTypeIsNilInitially() {
+    @Test("New view model has no `selectedServiceType` so the detail pane stays unselected")
+    func selectedServiceTypeIsNilInitially() {
         let vm = SupportedServicesViewModel()
         #expect(vm.selectedServiceType == nil)
     }
 
-    @Test func isCreateCustomServiceTypePresentedIsFalseInitially() {
+    @Test("`isCreateCustomServiceTypePresented` starts false so the create-custom sheet is hidden")
+    func isCreateCustomServiceTypePresentedIsFalseInitially() {
         let vm = SupportedServicesViewModel()
         #expect(!vm.isCreateCustomServiceTypePresented)
     }
 
     // MARK: - Filtering Built-in Service Types (without Core Data)
 
-    @Test func filteredBuiltInServiceTypesIsEmptyBeforeLoad() {
+    @Test("`filteredBuiltInServiceTypes` is empty until `load()` populates the data")
+    func filteredBuiltInServiceTypesIsEmptyBeforeLoad() {
         let vm = SupportedServicesViewModel()
         // Before load() is called, no data is populated
         #expect(vm.filteredBuiltInServiceTypes.isEmpty)
     }
 
-    @Test func filteredCustomServiceTypesIsEmptyBeforeLoad() {
+    @Test("`filteredCustomServiceTypes` is empty until `load()` populates the data")
+    func filteredCustomServiceTypesIsEmptyBeforeLoad() {
         let vm = SupportedServicesViewModel()
         #expect(vm.filteredCustomServiceTypes.isEmpty)
     }
 
-    @Test func filteredBuiltInServiceTypesReturnsEmptyForNoMatchBeforeLoad() {
+    @Test("Filtering with no data loaded returns an empty result instead of crashing")
+    func filteredBuiltInServiceTypesReturnsEmptyForNoMatchBeforeLoad() {
         let vm = SupportedServicesViewModel()
         vm.searchText = "XYZNONEXISTENT"
         #expect(vm.filteredBuiltInServiceTypes.isEmpty)
     }
 
-    @Test func searchTextCanBeSetAndRead() {
+    @Test("`searchText` round-trips through writes so the search field binds correctly")
+    func searchTextCanBeSetAndRead() {
         let vm = SupportedServicesViewModel()
         vm.searchText = "HTTP"
         #expect(vm.searchText == "HTTP")
     }
 
-    @Test func selectedServiceTypeCanBeSetAndRead() {
+    @Test("`selectedServiceType` round-trips through writes so the detail pane binding works")
+    func selectedServiceTypeCanBeSetAndRead() {
         let vm = SupportedServicesViewModel()
         let serviceType = BonjourServiceType(name: "HTTP", type: "http", transportLayer: .tcp)
         vm.selectedServiceType = serviceType
         #expect(vm.selectedServiceType == serviceType)
     }
 
-    @Test func isCreateCustomServiceTypePresentedCanBeToggled() {
+    @Test("`isCreateCustomServiceTypePresented` accepts a write to true to present the create sheet")
+    func isCreateCustomServiceTypePresentedCanBeToggled() {
         let vm = SupportedServicesViewModel()
         #expect(!vm.isCreateCustomServiceTypePresented)
         vm.isCreateCustomServiceTypePresented = true
         #expect(vm.isCreateCustomServiceTypePresented)
     }
 
-    @Test func createButtonStringIsNotEmpty() {
+    @Test("`createButtonString` is non-empty so the create button always has a label")
+    func createButtonStringIsNotEmpty() {
         let vm = SupportedServicesViewModel()
         #expect(!vm.createButtonString.isEmpty)
     }

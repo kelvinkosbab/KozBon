@@ -23,7 +23,8 @@ struct MockBonjourChatSessionTests {
 
     // MARK: - Initial State
 
-    @Test func initialStateIsEmpty() {
+    @Test("A fresh mock session starts with empty messages, no error, and zero call counts")
+    func initialStateIsEmpty() {
         let mock = MockBonjourChatSession()
         #expect(mock.messages.isEmpty)
         #expect(!mock.isGenerating)
@@ -34,7 +35,8 @@ struct MockBonjourChatSessionTests {
 
     // MARK: - Send
 
-    @Test func sendAppendsUserAndAssistantMessages() async {
+    @Test("`send` appends both the user message and the canned assistant reply in order")
+    func sendAppendsUserAndAssistantMessages() async {
         let mock = MockBonjourChatSession(cannedReply: "Test reply")
         await mock.send("Hello", context: emptyContext)
         #expect(mock.messages.count == 2)
@@ -44,33 +46,38 @@ struct MockBonjourChatSessionTests {
         #expect(mock.messages[1].content == "Test reply")
     }
 
-    @Test func sendIncrementsCallCount() async {
+    @Test("`sendCallCount` increments once per `send` invocation, regardless of context")
+    func sendIncrementsCallCount() async {
         let mock = MockBonjourChatSession()
         await mock.send("One", context: emptyContext)
         await mock.send("Two", context: emptyContext)
         #expect(mock.sendCallCount == 2)
     }
 
-    @Test func sendIgnoresEmptyInput() async {
+    @Test("Empty input is silently dropped — no message appended, counter unchanged")
+    func sendIgnoresEmptyInput() async {
         let mock = MockBonjourChatSession()
         await mock.send("", context: emptyContext)
         #expect(mock.sendCallCount == 0)
         #expect(mock.messages.isEmpty)
     }
 
-    @Test func sendIgnoresWhitespaceOnlyInput() async {
+    @Test("Whitespace-only input is also dropped (matches the real session's trim-then-check)")
+    func sendIgnoresWhitespaceOnlyInput() async {
         let mock = MockBonjourChatSession()
         await mock.send("   \n\t  ", context: emptyContext)
         #expect(mock.sendCallCount == 0)
     }
 
-    @Test func sendTrimsWhitespace() async {
+    @Test("`send` trims surrounding whitespace before storing the user message")
+    func sendTrimsWhitespace() async {
         let mock = MockBonjourChatSession()
         await mock.send("  hello  ", context: emptyContext)
         #expect(mock.messages[0].content == "hello")
     }
 
-    @Test func sendStoresLastContext() async {
+    @Test("`send` records the most recent context so tests can assert what was passed")
+    func sendStoresLastContext() async {
         let mock = MockBonjourChatSession()
         let context = BonjourChatPromptBuilder.ChatContext()
         await mock.send("Hi", context: context)
@@ -79,7 +86,8 @@ struct MockBonjourChatSessionTests {
 
     // MARK: - Reset
 
-    @Test func resetClearsMessages() async {
+    @Test("`reset` clears the message history and bumps `resetCallCount`")
+    func resetClearsMessages() async {
         let mock = MockBonjourChatSession()
         await mock.send("Hello", context: emptyContext)
         #expect(!mock.messages.isEmpty)
@@ -89,7 +97,8 @@ struct MockBonjourChatSessionTests {
         #expect(mock.resetCallCount == 1)
     }
 
-    @Test func resetClearsErrorAndGeneratingFlags() {
+    @Test("`reset` clears any pending error and the `isGenerating` flag")
+    func resetClearsErrorAndGeneratingFlags() {
         let mock = MockBonjourChatSession()
         mock.error = "Something failed"
         mock.reset()
@@ -99,7 +108,8 @@ struct MockBonjourChatSessionTests {
 
     // MARK: - Canned Reply
 
-    @Test func cannedReplyCanBeCustomized() async {
+    @Test("Custom `cannedReply` controls the assistant content the mock returns from `send`")
+    func cannedReplyCanBeCustomized() async {
         let mock = MockBonjourChatSession(cannedReply: "Custom reply")
         await mock.send("Hi", context: emptyContext)
         #expect(mock.messages.last?.content == "Custom reply")
@@ -107,7 +117,8 @@ struct MockBonjourChatSessionTests {
 
     // MARK: - Multi-turn History
 
-    @Test func multipleTurnsAllAppearInHistory() async {
+    @Test("Three sends produce six messages in user/assistant alternating order")
+    func multipleTurnsAllAppearInHistory() async {
         let mock = MockBonjourChatSession(cannedReply: "ack")
         await mock.send("First question", context: emptyContext)
         await mock.send("Second question", context: emptyContext)
@@ -123,7 +134,8 @@ struct MockBonjourChatSessionTests {
         #expect(mock.messages[4].content == "Third question")
     }
 
-    @Test func resetAfterMultipleTurnsClearsEverything() async {
+    @Test("`reset` after multiple turns wipes the entire history, not just the latest pair")
+    func resetAfterMultipleTurnsClearsEverything() async {
         let mock = MockBonjourChatSession()
         await mock.send("Q1", context: emptyContext)
         await mock.send("Q2", context: emptyContext)
@@ -142,7 +154,8 @@ struct MockBonjourChatSessionTests {
     // make sure mock sessions (used by previews + unit tests) cover the
     // same behavior real sessions do.
 
-    @Test func appendLocalRejectionAddsUserAndAssistantMessages() {
+    @Test("`appendLocalRejection` renders the rejected exchange as a normal user/assistant pair")
+    func appendLocalRejectionAddsUserAndAssistantMessages() {
         let mock = MockBonjourChatSession()
         mock.appendLocalRejection(
             userMessage: "Write me a poem",
@@ -156,7 +169,8 @@ struct MockBonjourChatSessionTests {
         #expect(mock.messages[1].content == "That's outside what I can help with.")
     }
 
-    @Test func appendLocalRejectionIncrementsDedicatedCounter() {
+    @Test("Local-rejection counter is independent from `sendCallCount` so the two paths stay auditable")
+    func appendLocalRejectionIncrementsDedicatedCounter() {
         // Tests asserting "was the rejection path taken" shouldn't rely
         // on `sendCallCount` (which is for the model-hitting path). A
         // separate counter keeps the two paths independently auditable.
@@ -168,7 +182,8 @@ struct MockBonjourChatSessionTests {
         #expect(mock.sendCallCount == 0, "rejection must not touch the send counter")
     }
 
-    @Test func appendLocalRejectionDoesNotToggleIsGenerating() {
+    @Test("Local-rejection path leaves `isGenerating` false so the send button stays enabled")
+    func appendLocalRejectionDoesNotToggleIsGenerating() {
         // The client-side refusal path is synchronous — there's no
         // streaming response, so `isGenerating` must stay false.
         // Otherwise the send button's `sendDisabled` check would lock
@@ -178,7 +193,8 @@ struct MockBonjourChatSessionTests {
         #expect(!mock.isGenerating)
     }
 
-    @Test func rejectionAndRealSendInterleaveCleanly() async {
+    @Test("Interleaving a rejection then a real `send` yields four messages in chronological order")
+    func rejectionAndRealSendInterleaveCleanly() async {
         // A realistic session: user gets rejected, then sends something
         // valid. The message history should contain both exchanges in
         // order, without send/reject paths corrupting each other's state.
