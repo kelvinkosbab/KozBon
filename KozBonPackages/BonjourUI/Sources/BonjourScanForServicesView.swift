@@ -247,22 +247,31 @@ public struct BonjourScanForServicesView: View {
         }
     }
 
-    /// Picks the best user-facing string for the row's primary title.
+    /// Builds the row's primary title in the form
+    /// `"<hostname> - <device type>"` when both pieces are
+    /// available, or the most useful single piece otherwise.
     ///
-    /// `NetService.name` (`service.service.name`) is the canonical
-    /// source, and on most Apple devices it's the friendly user-given
-    /// name from Settings → About → Name ("Kelvin's iPhone"). For
-    /// some service types — companion-link, mobdev, certain HomeKit
-    /// accessories — it can come back as a UUID-flavored or
-    /// MAC-address-flavored string the user can't readily parse.
-    /// When `BonjourDeviceIdentifier` resolves the device class
-    /// (Apple model match in TXT records or hostname pattern), prefer
-    /// that — "iPhone 15 Pro" reads better than "iPhone-1F2A".
+    /// Combining the two gives the user both a unique identifier
+    /// (the hostname, which differs across multiple devices of the
+    /// same model) and a readable description (the resolved device
+    /// type, which is what you actually want at a glance). Either
+    /// piece alone leaves a gap: the hostname can be cryptic
+    /// (`iPhone-1F2A.local.`), while the device type alone makes
+    /// every "iPhone 15 Pro" on the network look identical.
+    ///
+    /// Fallbacks:
+    /// - No device type resolved → just the hostname.
+    /// - Empty hostname (rare; pre-resolution) → use `service.name`
+    ///   to avoid a leading dash with nothing in front of it.
     private func displayTitle(for service: BonjourService) -> String {
+        let primaryIdentifier = service.hostName.isEmpty
+            ? service.service.name
+            : service.hostName
+
         if let identification = BonjourDeviceIdentifier.identify(service: service) {
-            return identification.friendlyName
+            return "\(primaryIdentifier) - \(identification.friendlyName)"
         }
-        return service.service.name
+        return primaryIdentifier
     }
 }
 
