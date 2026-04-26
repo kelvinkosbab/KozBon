@@ -417,6 +417,11 @@ public struct BonjourChatView: View {
                         identifier: "chat_suggestion_5",
                         session: session
                     )
+                    suggestionButton(
+                        text: String(localized: Strings.Chat.suggestion6),
+                        identifier: "chat_suggestion_6",
+                        session: session
+                    )
                 }
             }
             .padding()

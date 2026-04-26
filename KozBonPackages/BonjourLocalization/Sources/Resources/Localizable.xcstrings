@@ -13408,6 +13408,47 @@
         }
       }
     },
+    "chat_suggestion_6": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How can I create my own service type to broadcast?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Cómo puedo crear mi propio tipo de servicio para emitir?"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comment puis-je créer mon propre type de service à diffuser ?"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wie kann ich einen eigenen Diensttyp zum Senden erstellen?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ブロードキャスト用に独自のサービスタイプを作成するには？"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "如何创建我自己的服务类型来广播？"
+          }
+        }
+      }
+    },
     "tab_explore": {
       "extractionState": "manual",
       "localizations": {

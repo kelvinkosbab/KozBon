@@ -988,6 +988,10 @@ public enum Strings {
             .init("chat_suggestion_5", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        public static var suggestion6: LocalizedStringResource {
+            .init("chat_suggestion_6", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var errorTooLong: LocalizedStringResource {
             .init("chat_error_too_long", bundle: .atURL(Bundle.module.bundleURL))
         }
