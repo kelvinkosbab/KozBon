@@ -259,14 +259,25 @@ public struct BonjourScanForServicesView: View {
     /// (`iPhone-1F2A.local.`), while the device type alone makes
     /// every "iPhone 15 Pro" on the network look identical.
     ///
+    /// Hostname-availability detection has to handle the `"NA"`
+    /// sentinel that `BonjourService.hostName` returns when the
+    /// underlying `NetService.hostName` is `nil` (pre-resolution or
+    /// services that never resolve a host). A raw `"NA"` would
+    /// render as an unhelpful row title, so we treat it as
+    /// "missing" and fall back to the Service Name
+    /// (`service.service.name`) — the same field labeled "Service
+    /// Name" in the detail view.
+    ///
     /// Fallbacks:
-    /// - No device type resolved → just the hostname.
-    /// - Empty hostname (rare; pre-resolution) → use `service.name`
-    ///   to avoid a leading dash with nothing in front of it.
+    /// - No device type resolved → just the hostname (or Service
+    ///   Name if hostname is missing/`"NA"`).
+    /// - Hostname missing/`"NA"` → use Service Name in its slot.
     private func displayTitle(for service: BonjourService) -> String {
-        let primaryIdentifier = service.hostName.isEmpty
-            ? service.service.name
-            : service.hostName
+        let rawHostname = service.hostName
+        let isHostnameAvailable = !rawHostname.isEmpty && rawHostname != "NA"
+        let primaryIdentifier = isHostnameAvailable
+            ? rawHostname
+            : service.service.name
 
         if let identification = BonjourDeviceIdentifier.identify(service: service) {
             return "\(primaryIdentifier) - \(identification.friendlyName)"
