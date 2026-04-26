@@ -54,13 +54,6 @@ public struct BonjourChatView: View {
     /// tracker's `tickCount`.
     @State private var sentenceHapticTracker = SentenceHapticTracker()
 
-    /// Controls presentation of the confirmation dialog for the
-    /// trailing "Clear" toolbar button. Lifted to view state (not
-    /// session state) because the dialog is a transient UI mode
-    /// that shouldn't survive view tear-down — and because the
-    /// session protocol stays focused on chat data.
-    @State private var isClearConfirmationPresented = false
-
     private var messageTransitionAnimation: Animation? {
         reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.75)
     }
@@ -127,54 +120,52 @@ public struct BonjourChatView: View {
             // Trailing "Clear" affordance — only surfaces once the
             // user has actually started a conversation. On the
             // empty landing screen there's nothing to clear, and
-            // the button would just be visual noise. Tapping it
-            // brings up a confirmation dialog so an accidental
-            // press doesn't blow away an in-flight thread (which
-            // is unrecoverable — the chat doesn't persist).
+            // the button would just be visual noise.
+            //
+            // Implemented as a `Menu` (not a `confirmationDialog`)
+            // so the popover anchors to the trash icon itself
+            // rather than floating in arbitrary list positions on
+            // iPad/Mac/visionOS — and so the destructive role on
+            // the inner button gives the user a clear "this is
+            // serious" cue. The two-tap gesture (open menu →
+            // tap "Clear chat") IS the confirmation step; an
+            // additional dialog on top would just be modal noise.
             .toolbar {
                 if let session, !session.messages.isEmpty {
                     ToolbarItem(placement: .primaryAction) {
-                        Button(role: .destructive) {
-                            isClearConfirmationPresented = true
+                        Menu {
+                            Button(role: .destructive) {
+                                // Resetting the session clears
+                                // `messages`, which flips the
+                                // `messages.isEmpty` branch in
+                                // `messageList(...)` and animates
+                                // the user back to the empty-state
+                                // landing view with the suggested
+                                // prompts.
+                                session.reset()
+                                isInputFocused = false
+                            } label: {
+                                Label(
+                                    String(localized: Strings.Chat.clearHistory),
+                                    systemImage: Iconography.clearChat
+                                )
+                            }
                         } label: {
                             Label(
                                 String(localized: Strings.Chat.clearHistory),
                                 systemImage: Iconography.clearChat
                             )
                         }
-                        // `role: .destructive` colors the dialog
-                        // confirm button red but doesn't tint the
-                        // toolbar glyph itself — the system leaves
-                        // toolbar items in the parent's accent color
-                        // by default. Override with an explicit
-                        // `.tint(.red)` so the trash icon visually
-                        // signals "this clears your conversation"
-                        // before the user taps it. `Color.red` maps
-                        // to `systemRed`, which respects increase-
-                        // contrast and dark-mode adjustments.
+                        // `Color.red` resolves to `systemRed`, which
+                        // adapts to increase-contrast and dark-mode
+                        // automatically. Tints the toolbar glyph so
+                        // the destructive intent reads at a glance,
+                        // before the menu is even opened.
                         .tint(.red)
                         .accessibilityHint(String(localized: Strings.Accessibility.chatClearHistoryHint))
                         .accessibilityIdentifier("chat_clear_button")
                     }
                 }
-            }
-            .confirmationDialog(
-                String(localized: Strings.Chat.clearHistoryConfirmationTitle),
-                isPresented: $isClearConfirmationPresented,
-                titleVisibility: .visible
-            ) {
-                Button(String(localized: Strings.Chat.clearHistory), role: .destructive) {
-                    // Resetting the session clears `messages`, which
-                    // flips the `messages.isEmpty` branch in
-                    // `messageList(...)` and animates the user back to
-                    // the empty-state landing view with the suggested
-                    // prompts.
-                    session?.reset()
-                    isInputFocused = false
-                }
-                Button(String(localized: Strings.Buttons.cancel), role: .cancel) {}
-            } message: {
-                Text(Strings.Chat.clearHistoryConfirmationMessage)
             }
             // Tactile confirmation that a message was dispatched, plus a
             // lighter tap for each sentence the model completes while
