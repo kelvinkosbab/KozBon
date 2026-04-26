@@ -211,4 +211,50 @@ struct MockBonjourChatSessionTests {
         #expect(mock.messages[2].content == "What is AirPlay?")
         #expect(mock.messages[3].content == "Fine answer")
     }
+
+    // MARK: - Restore (Persisted-History Replay)
+
+    @Test("`restore` replaces messages with the supplied list and bumps `restoreCallCount`")
+    func restoreReplacesMessages() {
+        let mock = MockBonjourChatSession()
+        let restored: [BonjourChatMessage] = [
+            BonjourChatMessage(role: .user, content: "previous question"),
+            BonjourChatMessage(role: .assistant, content: "previous answer")
+        ]
+        mock.restore(messages: restored)
+        #expect(mock.messages == restored)
+        #expect(mock.restoreCallCount == 1)
+    }
+
+    @Test("`restore` overwrites any existing in-flight messages — the supplied list wins")
+    func restoreOverwritesExistingMessages() async {
+        // Real flow: a session that already has live messages
+        // shouldn't receive a `restore` call (the chat view guards
+        // on `session.messages.isEmpty`), but if it did the
+        // semantics should be deterministic — replace, don't merge.
+        let mock = MockBonjourChatSession()
+        await mock.send("live question", context: emptyContext)
+        #expect(mock.messages.count == 2)
+
+        let restored = [BonjourChatMessage(role: .user, content: "from disk")]
+        mock.restore(messages: restored)
+        #expect(mock.messages == restored)
+    }
+
+    @Test("`restore` with an empty array clears any prior messages cleanly")
+    func restoreWithEmptyArrayClearsMessages() async {
+        let mock = MockBonjourChatSession()
+        await mock.send("anything", context: emptyContext)
+        mock.restore(messages: [])
+        #expect(mock.messages.isEmpty)
+    }
+
+    @Test("`restore` clears any pending error and the `isGenerating` flag")
+    func restoreClearsErrorAndGenerating() {
+        let mock = MockBonjourChatSession()
+        mock.error = "previous failure"
+        mock.restore(messages: [BonjourChatMessage(role: .user, content: "ok")])
+        #expect(mock.error == nil)
+        #expect(!mock.isGenerating)
+    }
 }

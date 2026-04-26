@@ -31,6 +31,14 @@ public struct SettingsView: View {
                     aiAnalysisSection
                 }
 
+                // Chat persistence is only meaningful when the
+                // chat tab is actually surfaced — otherwise the
+                // toggle is for a feature the user can't reach.
+                if AppleIntelligenceSupport.isDeviceSupported,
+                   preferencesStore.aiAnalysisEnabled {
+                    chatSection
+                }
+
                 displaySection
 
                 resetSection
@@ -126,6 +134,42 @@ public struct SettingsView: View {
         } footer: {
             Text(Strings.Settings.aiAnalysisFooter)
         }
+    }
+
+    // MARK: - Chat Section
+
+    @ViewBuilder
+    private var chatSection: some View {
+        Section {
+            Toggle(
+                String(localized: Strings.Settings.persistChatHistory),
+                isOn: Binding(
+                    get: { preferencesStore.persistChatHistory },
+                    set: { newValue in
+                        withAnimation(reduceMotion ? nil : .default) {
+                            preferencesStore.persistChatHistory = newValue
+                        }
+                    }
+                )
+            )
+        } header: {
+            Text(chatSectionHeader)
+                .accessibilityAddTraits(.isHeader)
+        } footer: {
+            Text(Strings.Settings.persistChatHistoryFooter)
+        }
+    }
+
+    /// Section header label that matches the platform's chat-tab
+    /// label ("Chat" on iOS, "Explore" on macOS/visionOS) so the
+    /// Preferences row reads consistently with the tab the user
+    /// just tapped over from.
+    private var chatSectionHeader: LocalizedStringResource {
+        #if os(macOS) || os(visionOS)
+        Strings.Tabs.explore
+        #else
+        Strings.Tabs.chat
+        #endif
     }
 
     // MARK: - Display Section

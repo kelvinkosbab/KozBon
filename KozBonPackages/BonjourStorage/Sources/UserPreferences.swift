@@ -35,6 +35,11 @@ public final class UserPreferences {
     /// Default value for ``defaultSortOrder``.
     public static let defaultSortOrder = ""
 
+    /// Default value for ``persistChatHistory``. Off by default so the
+    /// existing "fresh slate per launch" behavior is preserved for
+    /// users who liked it; opting in is one toggle in Preferences.
+    public static let defaultPersistChatHistory = false
+
     // MARK: - Properties
 
     /// Whether AI-powered service explanations are enabled.
@@ -48,6 +53,22 @@ public final class UserPreferences {
 
     /// The default sort order ID for discovered services (empty string means no preference).
     public var defaultSortOrder: String = UserPreferences.defaultSortOrder
+
+    /// Whether the Chat conversation should be restored across app
+    /// launches. When `false` (default), the chat resets when iOS
+    /// reclaims the app from memory — matching the original
+    /// fresh-slate behavior. When `true`, the most recent
+    /// conversation is encoded into ``chatHistory`` on each turn
+    /// and restored when the Chat tab next appears.
+    public var persistChatHistory: Bool = defaultPersistChatHistory
+
+    /// JSON-encoded `[BonjourChatMessage]` representing the user's
+    /// last conversation, or `nil` if no history is saved.
+    /// Persisted only when ``persistChatHistory`` is `true`. The
+    /// value is `Data?` rather than `String?` so SwiftData stores
+    /// it efficiently as a binary blob; encode/decode happens at
+    /// the call site.
+    public var chatHistory: Data?
 
     /// Creates a new preferences instance with default values.
     public init() {}

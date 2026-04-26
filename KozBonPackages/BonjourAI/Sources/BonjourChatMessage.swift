@@ -13,10 +13,14 @@ import Foundation
 ///
 /// Can represent either a user message or a streaming assistant response.
 /// Content is mutable so assistant messages can be updated as tokens stream in.
-public struct BonjourChatMessage: Identifiable, Sendable, Hashable {
+///
+/// Conforms to `Codable` so messages can be serialized for persistence
+/// across app launches when the user opts in via the
+/// "Persist chat history" preference.
+public struct BonjourChatMessage: Identifiable, Sendable, Hashable, Codable {
 
     /// Whether the message is from the user or the assistant.
-    public enum Role: String, Sendable {
+    public enum Role: String, Sendable, Codable {
         case user
         case assistant
     }

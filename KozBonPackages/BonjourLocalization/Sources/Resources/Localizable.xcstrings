@@ -10948,6 +10948,88 @@
         }
       }
     },
+    "settings_persist_chat_history": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Persist chat history"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conservar el historial del chat"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conserver l'historique du chat"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chat-Verlauf beibehalten"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "チャット履歴を保持"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保留聊天历史记录"
+          }
+        }
+      }
+    },
+    "settings_persist_chat_history_footer": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When on, your previous conversation is restored when you reopen the app. The visible history comes back, but the assistant starts each launch without memory of earlier turns — so follow-ups about prior questions may need rephrasing. When off, the chat resets every time the app cold-launches."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuando está activado, tu conversación anterior se restaura al volver a abrir la app. El historial visible vuelve, pero el asistente inicia cada lanzamiento sin memoria de los turnos anteriores; las preguntas de seguimiento sobre temas previos pueden necesitar reformulación. Cuando está desactivado, el chat se reinicia cada vez que la app arranca en frío."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lorsque cette option est activée, votre conversation précédente est restaurée lors de la réouverture de l'app. L'historique visible revient, mais l'assistant démarre chaque lancement sans mémoire des échanges précédents — les questions de suivi peuvent donc nécessiter une reformulation. Lorsque désactivée, le chat est réinitialisé à chaque lancement à froid de l'app."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wenn aktiviert, wird deine vorherige Unterhaltung wiederhergestellt, wenn du die App erneut öffnest. Der sichtbare Verlauf kommt zurück, aber der Assistent startet bei jedem Start ohne Erinnerung an frühere Wechsel — Folgefragen zu früheren Themen müssen daher möglicherweise neu formuliert werden. Wenn deaktiviert, wird der Chat bei jedem Kaltstart der App zurückgesetzt."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オンにすると、アプリを再度開いたときに以前の会話が復元されます。表示されている履歴は戻りますが、アシスタントは起動ごとに以前のやり取りの記憶なしで始まるため、過去の話題に関するフォローアップは言い換えが必要な場合があります。オフのときは、アプリがコールドスタートするたびにチャットがリセットされます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "开启时，重新打开应用后您之前的对话会被恢复。可见的历史记录会回来，但助手在每次启动时都不会记得之前的对话——所以涉及先前内容的追问可能需要重新表述。关闭时，每次冷启动应用都会重置聊天。"
+          }
+        }
+      }
+    },
     "button_update": {
       "extractionState": "manual",
       "localizations": {

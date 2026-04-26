@@ -142,6 +142,24 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
         error = nil
         isGenerating = false
     }
+
+    // MARK: - Restore
+
+    public func restore(messages: [BonjourChatMessage]) {
+        // Replace the visible history. The underlying
+        // `LanguageModelSession` is intentionally cleared — re-seeding
+        // it would mean re-sending the prior turns through the model
+        // (no public transcript API for direct injection), which is
+        // both wasteful and would re-generate responses the user has
+        // already seen. See `BonjourChatSessionProtocol.restore` for
+        // the trade-off documentation.
+        self.messages = messages
+        session = nil
+        sessionResponseLengthSnapshot = nil
+        lastContextBlock = nil
+        error = nil
+        isGenerating = false
+    }
 }
 
 #endif

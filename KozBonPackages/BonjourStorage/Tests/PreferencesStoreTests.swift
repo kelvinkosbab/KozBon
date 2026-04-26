@@ -214,4 +214,79 @@ struct PreferencesStoreTests {
         #expect(store.aiExpertiseLevel == "technical")
         #expect(store.defaultSortOrder == "hostNameDesc")
     }
+
+    // MARK: - Persist Chat History
+
+    @Test("Fresh store reports `persistChatHistory` as false (default opt-out)")
+    func persistChatHistoryDefaultIsFalse() throws {
+        let store = try makeStore()
+        #expect(!store.persistChatHistory)
+    }
+
+    @Test("Fresh store reports `chatHistory` as nil (no saved blob)")
+    func chatHistoryDefaultIsNil() throws {
+        let store = try makeStore()
+        #expect(store.chatHistory == nil)
+    }
+
+    @Test("`persistChatHistory` round-trips through writes in both directions")
+    func persistChatHistoryWriteThenRead() throws {
+        let store = try makeStore()
+        store.persistChatHistory = true
+        #expect(store.persistChatHistory)
+        store.persistChatHistory = false
+        #expect(!store.persistChatHistory)
+    }
+
+    @Test("`chatHistory` blob round-trips through write/read")
+    func chatHistoryWriteThenRead() throws {
+        let store = try makeStore()
+        let blob = Data("hello".utf8)
+        store.chatHistory = blob
+        #expect(store.chatHistory == blob)
+    }
+
+    @Test("Toggling `persistChatHistory` to false clears the saved `chatHistory` blob")
+    func disablingPersistenceClearsChatHistory() throws {
+        // Pin the side effect: turning the toggle off without
+        // clearing the blob would leave stale data on disk that
+        // could re-surface if the user toggles back on later. The
+        // setter purges the blob to keep that re-enable case clean.
+        let store = try makeStore()
+        store.persistChatHistory = true
+        store.chatHistory = Data("snapshot".utf8)
+        store.persistChatHistory = false
+        #expect(store.chatHistory == nil)
+    }
+
+    @Test("`persistChatHistory` survives across new store instances on the same container")
+    func persistChatHistoryPersistsAcrossStoreInstances() throws {
+        let container = try makeContainer()
+        let storeA = PreferencesStore(container: container)
+        storeA.persistChatHistory = true
+
+        let storeB = PreferencesStore(container: container)
+        #expect(storeB.persistChatHistory)
+    }
+
+    @Test("`chatHistory` survives across new store instances on the same container")
+    func chatHistoryPersistsAcrossStoreInstances() throws {
+        let container = try makeContainer()
+        let storeA = PreferencesStore(container: container)
+        let blob = Data([0x01, 0x02, 0x03, 0x04])
+        storeA.chatHistory = blob
+
+        let storeB = PreferencesStore(container: container)
+        #expect(storeB.chatHistory == blob)
+    }
+
+    @Test("`resetToDefaults` clears `persistChatHistory` and `chatHistory`")
+    func resetClearsChatHistory() throws {
+        let store = try makeStore()
+        store.persistChatHistory = true
+        store.chatHistory = Data("non-empty".utf8)
+        store.resetToDefaults()
+        #expect(!store.persistChatHistory)
+        #expect(store.chatHistory == nil)
+    }
 }

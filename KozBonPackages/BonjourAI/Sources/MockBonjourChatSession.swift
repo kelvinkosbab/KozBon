@@ -30,6 +30,11 @@ public final class MockBonjourChatSession: BonjourChatSessionProtocol {
     /// The number of times ``reset()`` has been called.
     public var resetCallCount = 0
 
+    /// The number of times ``restore(messages:)`` has been called.
+    /// Tests can assert on this to verify the chat-history-restoration
+    /// path runs when persistence is on.
+    public var restoreCallCount = 0
+
     /// The number of times ``appendLocalRejection(userMessage:refusalText:)``
     /// has been called. Tests can assert on this to verify client-side
     /// rejection paths are taken.
@@ -68,6 +73,13 @@ public final class MockBonjourChatSession: BonjourChatSessionProtocol {
     public func reset() {
         resetCallCount += 1
         messages.removeAll()
+        error = nil
+        isGenerating = false
+    }
+
+    public func restore(messages: [BonjourChatMessage]) {
+        restoreCallCount += 1
+        self.messages = messages
         error = nil
         isGenerating = false
     }

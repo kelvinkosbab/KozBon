@@ -138,6 +138,37 @@ public final class PreferencesStore {
         }
     }
 
+    /// Whether the Chat conversation should be restored across app launches.
+    ///
+    /// When toggled to `false`, the saved ``chatHistory`` is also
+    /// cleared so a future opt-in starts cleanly. The setter handles
+    /// that side effect; callers don't need to remember it.
+    public var persistChatHistory: Bool {
+        get { preferences?.persistChatHistory ?? UserPreferences.defaultPersistChatHistory }
+        set {
+            preferences?.persistChatHistory = newValue
+            if !newValue {
+                preferences?.chatHistory = nil
+            }
+            save()
+        }
+    }
+
+    /// JSON-encoded chat history blob, or `nil` if no history is saved.
+    ///
+    /// Reads/writes pass through unconditionally — the chat view is
+    /// responsible for checking ``persistChatHistory`` before writing.
+    /// (The `chatHistory` blob can still be read after persistence is
+    /// turned off, but ``persistChatHistory``'s setter clears it on
+    /// the off-toggle so a re-enable starts fresh.)
+    public var chatHistory: Data? {
+        get { preferences?.chatHistory }
+        set {
+            preferences?.chatHistory = newValue
+            save()
+        }
+    }
+
     // MARK: - Actions
 
     /// Resets all preferences to their default values.
@@ -146,6 +177,8 @@ public final class PreferencesStore {
         preferences?.aiExpertiseLevel = UserPreferences.defaultAIExpertiseLevel
         preferences?.aiResponseLength = UserPreferences.defaultAIResponseLength
         preferences?.defaultSortOrder = UserPreferences.defaultSortOrder
+        preferences?.persistChatHistory = UserPreferences.defaultPersistChatHistory
+        preferences?.chatHistory = nil
         save()
     }
 

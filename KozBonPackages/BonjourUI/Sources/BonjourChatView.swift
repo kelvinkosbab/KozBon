@@ -54,6 +54,12 @@ public struct BonjourChatView: View {
     /// tracker's `tickCount`.
     @State private var sentenceHapticTracker = SentenceHapticTracker()
 
+    /// Set after the first appearance attempts to restore persisted
+    /// chat history, so re-entering the tab (which runs `.task`
+    /// again) doesn't clobber the user's in-progress conversation
+    /// with a stale snapshot from disk.
+    @State private var hasAttemptedRestore = false
+
     private var messageTransitionAnimation: Animation? {
         reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.75)
     }
@@ -193,24 +199,87 @@ public struct BonjourChatView: View {
             // The Chat conversation persists for the lifetime of the
             // app process. Switching tabs and coming back lands the
             // user back on whatever exchange they had going — the same
-            // mental model as Messages, Notes, etc. The conversation
-            // is only cleared when the OS reclaims the app from
-            // memory (cold launch).
+            // mental model as Messages, Notes, etc. By default the
+            // conversation is cleared when the OS reclaims the app
+            // from memory (cold launch), but the user can opt into
+            // cross-launch persistence via the "Persist chat history"
+            // toggle in Preferences — in which case the messages are
+            // restored once on first appear (see `restoreChatHistoryIfNeeded`).
             //
-            // We deliberately don't call `session?.reset()` here. The
-            // only thing this hook now does is make sure the network
-            // scanner is running so the chat context has fresh data
-            // for the next user turn. `viewModel.load()` has its own
-            // `isProcessing` guard, so calling it while Discover is
-            // already scanning is a no-op.
+            // `viewModel.load()` keeps the network scanner running so
+            // the chat context has fresh data for the next user turn;
+            // it has its own `isProcessing` guard, so calling it while
+            // Discover is already scanning is a no-op.
             .onAppear {
                 viewModel.load()
+                restoreChatHistoryIfNeeded()
+            }
+            // Save the current conversation when the user sends or
+            // when an assistant turn completes. Saving on every token
+            // would write to disk ~100 times a second; gating on
+            // `messages.count` (changes only on user-send/assistant-
+            // placeholder/reset) and `isGenerating` flipping false
+            // (the end of an assistant turn) keeps writes to ~2 per
+            // turn. Both checks are no-ops when the persistence
+            // preference is off.
+            .onChange(of: session?.messages.count) { _, _ in
+                persistChatHistoryIfNeeded()
+            }
+            .onChange(of: session?.isGenerating) { _, isGenerating in
+                if isGenerating == false {
+                    persistChatHistoryIfNeeded()
+                }
             }
             // Page-level handle for UI tests so a test can find the
             // Chat tab without needing to know its current nav title
             // (which is platform-dependent: "Chat" on iOS, "Explore"
             // on macOS/visionOS).
             .accessibilityIdentifier("chat_page")
+        }
+    }
+
+    // MARK: - Chat History Persistence
+
+    /// Restores a previously-persisted conversation into the active
+    /// session, if the user has opted in via the "Persist chat
+    /// history" preference and a saved blob exists. No-ops in every
+    /// other case (preference off, no saved blob, decoder failure,
+    /// session already populated, or restore already attempted in
+    /// this view's lifetime).
+    ///
+    /// The underlying `LanguageModelSession` is intentionally not
+    /// pre-loaded — see the doc comment on
+    /// `BonjourChatSessionProtocol.restore(messages:)` for the
+    /// rationale and the user-facing trade-off.
+    private func restoreChatHistoryIfNeeded() {
+        guard !hasAttemptedRestore else { return }
+        hasAttemptedRestore = true
+
+        guard preferencesStore.persistChatHistory,
+              let data = preferencesStore.chatHistory,
+              let messages = try? JSONDecoder().decode([BonjourChatMessage].self, from: data),
+              !messages.isEmpty,
+              let session,
+              session.messages.isEmpty else { return }
+
+        session.restore(messages: messages)
+    }
+
+    /// Saves the current conversation to user preferences when
+    /// persistence is enabled. Triggered from `.onChange` hooks on
+    /// `messages.count` and `isGenerating`, both of which change
+    /// only on meaningful turn boundaries (not on every streamed
+    /// token), so disk I/O stays bounded to ~2 saves per turn.
+    private func persistChatHistoryIfNeeded() {
+        guard preferencesStore.persistChatHistory,
+              let messages = session?.messages else { return }
+
+        do {
+            preferencesStore.chatHistory = try JSONEncoder().encode(messages)
+        } catch {
+            // Encoding failure is non-fatal — there's nowhere
+            // meaningful for the user to act on it. The next
+            // turn's encode attempt will retry.
         }
     }
 

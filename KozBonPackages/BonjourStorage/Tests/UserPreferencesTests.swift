@@ -104,4 +104,38 @@ struct UserPreferencesTests {
         prefs.aiResponseLength = "thorough"
         #expect(prefs.aiResponseLength == "thorough")
     }
+
+    // MARK: - Persist Chat History
+
+    @Test("New `UserPreferences` has `persistChatHistory` false (opt-in feature)")
+    func defaultPersistChatHistoryIsFalse() {
+        let prefs = UserPreferences()
+        #expect(!prefs.persistChatHistory)
+    }
+
+    @Test("New `UserPreferences` has `chatHistory` nil (no saved blob)")
+    func defaultChatHistoryIsNil() {
+        let prefs = UserPreferences()
+        #expect(prefs.chatHistory == nil)
+    }
+
+    @Test("Static `defaultPersistChatHistory` is false to preserve the original fresh-slate behavior")
+    func staticDefaultPersistChatHistoryIsFalse() {
+        #expect(!UserPreferences.defaultPersistChatHistory)
+    }
+
+    @Test("`persistChatHistory` accepts a write to true and reads it back")
+    func persistChatHistoryCanBeEnabled() {
+        let prefs = UserPreferences()
+        prefs.persistChatHistory = true
+        #expect(prefs.persistChatHistory)
+    }
+
+    @Test("`chatHistory` accepts a write to a non-nil blob and reads it back")
+    func chatHistoryCanBeSet() {
+        let prefs = UserPreferences()
+        let blob = Data("{\"messages\":[]}".utf8)
+        prefs.chatHistory = blob
+        #expect(prefs.chatHistory == blob)
+    }
 }

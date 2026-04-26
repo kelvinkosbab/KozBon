@@ -100,4 +100,47 @@ struct BonjourChatMessageTests {
     func assistantRoleRawValueIsAssistant() {
         #expect(BonjourChatMessage.Role.assistant.rawValue == "assistant")
     }
+
+    // MARK: - Codable
+
+    @Test("Single message round-trips through JSON encode/decode")
+    func singleMessageJsonRoundTrip() throws {
+        let original = BonjourChatMessage(
+            id: UUID(),
+            role: .assistant,
+            content: "AirPlay streams audio and video to compatible receivers.",
+            timestamp: Date(timeIntervalSince1970: 1_700_000_000)
+        )
+        let data = try JSONEncoder().encode(original)
+        let decoded = try JSONDecoder().decode(BonjourChatMessage.self, from: data)
+        #expect(decoded == original)
+    }
+
+    @Test("Multi-message conversation round-trips through JSON encode/decode")
+    func conversationJsonRoundTrip() throws {
+        // The chat-persistence path (`persistChatHistory` preference)
+        // serializes the whole `[BonjourChatMessage]` array as a
+        // single Data blob. This pins that the array-level encoding
+        // also round-trips byte-for-byte.
+        let conversation: [BonjourChatMessage] = [
+            BonjourChatMessage(role: .user, content: "What's _airplay._tcp?"),
+            BonjourChatMessage(role: .assistant, content: "AirPlay over TCP — the receiver advertises…"),
+            BonjourChatMessage(role: .user, content: "Why isn't it on my Apple TV?"),
+            BonjourChatMessage(role: .assistant, content: "Likely the TV is asleep — Bonjour…")
+        ]
+        let data = try JSONEncoder().encode(conversation)
+        let decoded = try JSONDecoder().decode([BonjourChatMessage].self, from: data)
+        #expect(decoded == conversation)
+    }
+
+    @Test("`Role.user` round-trips as the JSON string `\"user\"`")
+    func roleUserJsonValueIsString() throws {
+        let data = try JSONEncoder().encode(BonjourChatMessage.Role.user)
+        let decoded = try JSONDecoder().decode(BonjourChatMessage.Role.self, from: data)
+        #expect(decoded == .user)
+        // Pin the wire format too — this is the contract the
+        // persistence layer relies on, so a future renaming of the
+        // enum cases mustn't silently change what's on disk.
+        #expect(String(data: data, encoding: .utf8) == "\"user\"")
+    }
 }

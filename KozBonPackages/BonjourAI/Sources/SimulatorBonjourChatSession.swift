@@ -75,6 +75,17 @@ public final class SimulatorBonjourChatSession: BonjourChatSessionProtocol {
         error = nil
         isGenerating = false
     }
+
+    public func restore(messages: [BonjourChatMessage]) {
+        // Same semantics as the production session: replace the
+        // visible history wholesale, clear any in-flight error/
+        // generating state. The simulator stub doesn't have a
+        // language-model transcript to invalidate — there's nothing
+        // beyond the messages array to manage.
+        self.messages = messages
+        error = nil
+        isGenerating = false
+    }
 }
 
 #endif
