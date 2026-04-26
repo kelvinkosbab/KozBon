@@ -78,23 +78,7 @@ public struct BonjourServiceDetailView: View {
                         Clipboard.copy(viewModel.serviceType.name)
                     }
                 }
-                TitleDetailStackView(
-                    title: String(localized: Strings.DetailRows.hostname),
-                    detail: viewModel.service.hostName
-                )
-                .accessibilityHint(Strings.Accessibility.longPressToCopy(String(localized: Strings.DetailRows.hostname)))
-                .contextMenu {
-                    Button {
-                        Clipboard.copy(viewModel.service.hostName)
-                    } label: {
-                        Label(String(localized: Strings.Actions.copyHostname), systemImage: Iconography.copy)
-                    }
-                }
-                .accessibilityActions {
-                    Button(Strings.Accessibility.copyField(String(localized: Strings.DetailRows.hostname))) {
-                        Clipboard.copy(viewModel.service.hostName)
-                    }
-                }
+                deviceIdentityRows()
                 TitleDetailStackView(
                     title: String(localized: Strings.DetailRows.fullType),
                     detail: viewModel.serviceType.fullType
@@ -327,6 +311,91 @@ public struct BonjourServiceDetailView: View {
             Clipboard.copy(dataRecord.value)
         } label: {
             Label(String(localized: Strings.Actions.copyValue), systemImage: Iconography.copyAlternate)
+        }
+    }
+}
+
+// MARK: - Device Identity Rows
+//
+// Lives in an extension so the rows don't bloat
+// `BonjourServiceDetailView`'s primary type body past SwiftLint's
+// `type_body_length` floor. Same-file extensions can still reach
+// the struct's `private` state (`viewModel`), so visibility is
+// preserved.
+
+private extension BonjourServiceDetailView {
+
+    /// Surfaces three rows that together answer "who is this":
+    /// the user-given device name (always), the deduced Apple model
+    /// when one is recognized, and the DNS hostname (always).
+    @ViewBuilder
+    func deviceIdentityRows() -> some View {
+        // Device Name — the user's chosen name, e.g.,
+        // "Kelvin's iPhone". Comes straight from `NetService.name`,
+        // which Apple devices populate from Settings → About → Name.
+        TitleDetailStackView(
+            title: String(localized: Strings.DetailRows.deviceName),
+            detail: viewModel.service.service.name
+        )
+        .accessibilityHint(Strings.Accessibility.longPressToCopy(String(localized: Strings.DetailRows.deviceName)))
+        .contextMenu {
+            Button {
+                Clipboard.copy(viewModel.service.service.name)
+            } label: {
+                Label(String(localized: Strings.Actions.copyName), systemImage: Iconography.copy)
+            }
+        }
+        .accessibilityActions {
+            Button(Strings.Accessibility.copyField(String(localized: Strings.DetailRows.deviceName))) {
+                Clipboard.copy(viewModel.service.service.name)
+            }
+        }
+
+        // Device Type — only when `BonjourDeviceIdentifier` resolves
+        // an Apple model (high-confidence TXT lookup) or family
+        // (medium-confidence hostname pattern). Hidden for non-Apple
+        // / unrecognized services so the row doesn't render with an
+        // empty or unhelpful value.
+        if let identification = BonjourDeviceIdentifier.identify(service: viewModel.service) {
+            TitleDetailStackView(
+                title: String(localized: Strings.DetailRows.deviceType),
+                detail: identification.friendlyName
+            )
+            .accessibilityHint(Strings.Accessibility.longPressToCopy(String(localized: Strings.DetailRows.deviceType)))
+            .contextMenu {
+                Button {
+                    Clipboard.copy(identification.friendlyName)
+                } label: {
+                    Label(String(localized: Strings.Actions.copyName), systemImage: Iconography.copy)
+                }
+            }
+            .accessibilityActions {
+                Button(Strings.Accessibility.copyField(String(localized: Strings.DetailRows.deviceType))) {
+                    Clipboard.copy(identification.friendlyName)
+                }
+            }
+        }
+
+        // Hostname — the device's DNS name. Often less readable than
+        // the device-name and device-type rows above, but kept for
+        // power users who want the raw `hostname.local.` string for
+        // direct DNS / SSH workflows.
+        TitleDetailStackView(
+            title: String(localized: Strings.DetailRows.hostname),
+            detail: viewModel.service.hostName
+        )
+        .accessibilityHint(Strings.Accessibility.longPressToCopy(String(localized: Strings.DetailRows.hostname)))
+        .contextMenu {
+            Button {
+                Clipboard.copy(viewModel.service.hostName)
+            } label: {
+                Label(String(localized: Strings.Actions.copyHostname), systemImage: Iconography.copy)
+            }
+        }
+        .accessibilityActions {
+            Button(Strings.Accessibility.copyField(String(localized: Strings.DetailRows.hostname))) {
+                Clipboard.copy(viewModel.service.hostName)
+            }
         }
     }
 }

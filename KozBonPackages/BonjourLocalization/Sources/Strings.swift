@@ -172,6 +172,23 @@ public enum Strings {
         public static var details: LocalizedStringResource {
             .init("detail_details", bundle: .atURL(Bundle.module.bundleURL))
         }
+
+        /// Row label for the deduced device type (e.g., "iPhone 15
+        /// Pro Max"). Surfaced when `BonjourDeviceIdentifier`
+        /// resolves an identification from TXT records or hostname
+        /// patterns.
+        public static var deviceType: LocalizedStringResource {
+            .init("detail_device_type", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Row label for the user-given device name (e.g., "Kelvin's
+        /// iPhone"). Comes straight from the advertised
+        /// `NetService.name`, which Apple devices populate from
+        /// Settings → About → Name. Always available, so this row
+        /// always renders.
+        public static var deviceName: LocalizedStringResource {
+            .init("detail_device_name", bundle: .atURL(Bundle.module.bundleURL))
+        }
     }
 
     // MARK: - Buttons
