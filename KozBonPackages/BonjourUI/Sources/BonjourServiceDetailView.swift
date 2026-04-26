@@ -330,14 +330,17 @@ private extension BonjourServiceDetailView {
     /// when one is recognized, and the DNS hostname (always).
     @ViewBuilder
     func deviceIdentityRows() -> some View {
-        // Device Name — the user's chosen name, e.g.,
-        // "Kelvin's iPhone". Comes straight from `NetService.name`,
-        // which Apple devices populate from Settings → About → Name.
+        // Service Name — `NetService.name`. On Apple devices this is
+        // usually the user-given device name from Settings → About →
+        // Name (e.g., "Kelvin's iPhone"), but for some service types
+        // it's a UUID- or MAC-flavored identifier — hence the
+        // technically-honest "Service Name" label rather than
+        // "Device Name".
         TitleDetailStackView(
-            title: String(localized: Strings.DetailRows.deviceName),
+            title: String(localized: Strings.DetailRows.serviceName),
             detail: viewModel.service.service.name
         )
-        .accessibilityHint(Strings.Accessibility.longPressToCopy(String(localized: Strings.DetailRows.deviceName)))
+        .accessibilityHint(Strings.Accessibility.longPressToCopy(String(localized: Strings.DetailRows.serviceName)))
         .contextMenu {
             Button {
                 Clipboard.copy(viewModel.service.service.name)
@@ -346,7 +349,7 @@ private extension BonjourServiceDetailView {
             }
         }
         .accessibilityActions {
-            Button(Strings.Accessibility.copyField(String(localized: Strings.DetailRows.deviceName))) {
+            Button(Strings.Accessibility.copyField(String(localized: Strings.DetailRows.serviceName))) {
                 Clipboard.copy(viewModel.service.service.name)
             }
         }

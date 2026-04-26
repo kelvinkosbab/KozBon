@@ -181,13 +181,19 @@ public enum Strings {
             .init("detail_device_type", bundle: .atURL(Bundle.module.bundleURL))
         }
 
-        /// Row label for the user-given device name (e.g., "Kelvin's
-        /// iPhone"). Comes straight from the advertised
-        /// `NetService.name`, which Apple devices populate from
-        /// Settings → About → Name. Always available, so this row
+        /// Row label for the advertised Bonjour service name. Maps
+        /// directly to `NetService.name` — on Apple devices this is
+        /// usually the friendly device name from Settings → About →
+        /// Name (e.g., "Kelvin's iPhone"), but for some service types
+        /// (`_companion-link._tcp`, `_apple-mobdev._tcp`, certain
+        /// HomeKit accessories) it's a UUID- or MAC-flavored
+        /// identifier. Labelling it "Service Name" instead of the
+        /// previous "Device Name" matches Apple's own terminology
+        /// and is honest about the cases where the value isn't a
+        /// human-readable device name. Always available, so this row
         /// always renders.
-        public static var deviceName: LocalizedStringResource {
-            .init("detail_device_name", bundle: .atURL(Bundle.module.bundleURL))
+        public static var serviceName: LocalizedStringResource {
+            .init("detail_service_name", bundle: .atURL(Bundle.module.bundleURL))
         }
     }
 

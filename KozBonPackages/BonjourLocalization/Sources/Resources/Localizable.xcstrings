@@ -1313,43 +1313,43 @@
         }
       }
     },
-    "detail_device_name": {
+    "detail_service_name": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Device Name"
+            "value": "Service Name"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nombre del dispositivo"
+            "value": "Nombre del servicio"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nom de l'appareil"
+            "value": "Nom du service"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Gerätename"
+            "value": "Dienstname"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "デバイス名"
+            "value": "サービス名"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "设备名称"
+            "value": "服务名称"
           }
         }
       }
