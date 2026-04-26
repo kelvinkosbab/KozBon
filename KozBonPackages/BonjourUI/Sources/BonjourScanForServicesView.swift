@@ -191,7 +191,7 @@ public struct BonjourScanForServicesView: View {
             // no `.navigationDestination(for:)` is needed.
             NavigationLink(value: service) {
                 TitleDetailStackView(
-                    title: service.service.name,
+                    title: displayTitle(for: service),
                     detail: service.serviceType.name
                 ) {
                     ServiceTypeBadge(serviceType: service.serviceType, style: .iconOnly)
@@ -247,6 +247,23 @@ public struct BonjourScanForServicesView: View {
         }
     }
 
+    /// Picks the best user-facing string for the row's primary title.
+    ///
+    /// `NetService.name` (`service.service.name`) is the canonical
+    /// source, and on most Apple devices it's the friendly user-given
+    /// name from Settings → About → Name ("Kelvin's iPhone"). For
+    /// some service types — companion-link, mobdev, certain HomeKit
+    /// accessories — it can come back as a UUID-flavored or
+    /// MAC-address-flavored string the user can't readily parse.
+    /// When `BonjourDeviceIdentifier` resolves the device class
+    /// (Apple model match in TXT records or hostname pattern), prefer
+    /// that — "iPhone 15 Pro" reads better than "iPhone-1F2A".
+    private func displayTitle(for service: BonjourService) -> String {
+        if let identification = BonjourDeviceIdentifier.identify(service: service) {
+            return identification.friendlyName
+        }
+        return service.service.name
+    }
 }
 
 // MARK: - AI Service Explanation Sheet Modifier
