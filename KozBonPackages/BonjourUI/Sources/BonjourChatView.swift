@@ -421,6 +421,17 @@ public struct BonjourChatView: View {
             }
             .padding()
         }
+        // Same Messages-style interactive keyboard dismiss the
+        // populated message list uses. The empty state has its own
+        // `ScrollView` for the suggested-prompt buttons, so it
+        // needs the same modifier — otherwise typing in the compose
+        // bar on the landing screen produces a keyboard the user
+        // can't dismiss by swiping. visionOS uses a floating
+        // virtual keyboard that doesn't pair with this gesture, so
+        // gate it out the same way.
+        #if !os(visionOS)
+        .scrollDismissesKeyboard(.interactively)
+        #endif
     }
 
     @ViewBuilder
