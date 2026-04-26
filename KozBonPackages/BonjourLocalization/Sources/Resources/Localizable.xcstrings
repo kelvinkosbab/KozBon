@@ -12061,37 +12061,37 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ask me about your network"
+            "value": "Ask about your network"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pregúntame sobre tu red"
+            "value": "Pregunta sobre tu red"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Posez-moi des questions sur votre réseau"
+            "value": "Posez des questions sur votre réseau"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Frage mich zu deinem Netzwerk"
+            "value": "Fragen zu deinem Netzwerk"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "ネットワークについて何でも聞いてください"
+            "value": "ネットワークについて聞いてください"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "向我询问您的网络"
+            "value": "询问您的网络"
           }
         }
       }
