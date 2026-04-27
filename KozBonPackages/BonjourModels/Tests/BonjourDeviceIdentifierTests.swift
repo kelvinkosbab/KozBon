@@ -9,12 +9,21 @@ import Foundation
 import Testing
 @testable import BonjourModels
 
+// swiftlint:disable file_length type_body_length
+// One coherent suite covering every strategy in
+// `BonjourDeviceIdentifier`. Splitting it across files would force
+// readers to hop between test files to understand the priority
+// chain, which is exactly the property these tests pin. Same
+// precedent as the source file's own table-driven length disable.
+
 // MARK: - BonjourDeviceIdentifierTests
 
-/// Pin the deterministic Apple device-identification surface. Every
-/// strategy here is a candidate for fallback when the AI Insights
-/// path can't reliably identify a device, so regressions need to fail
-/// loudly.
+/// Pin the deterministic device-identification surface. Covers Apple
+/// devices plus the most common non-Apple hardware we can recognize
+/// from public TXT-record schemas, hostname conventions, and DNS-SD
+/// service-type signals. Every strategy here is a candidate for
+/// fallback when the AI Insights path can't reliably identify a
+/// device, so regressions need to fail loudly.
 @Suite("BonjourDeviceIdentifier")
 struct BonjourDeviceIdentifierTests {
 
@@ -27,12 +36,14 @@ struct BonjourDeviceIdentifierTests {
     private func identify(
         txt records: [BonjourService.TxtDataRecord] = [],
         hostname: String = "",
-        serviceName: String = ""
+        serviceName: String = "",
+        serviceType: String? = nil
     ) -> DeviceIdentification? {
         BonjourDeviceIdentifier.identify(
             txtRecords: records,
             hostname: hostname,
-            serviceName: serviceName
+            serviceName: serviceName,
+            serviceType: serviceType
         )
     }
 
@@ -221,11 +232,20 @@ struct BonjourDeviceIdentifierTests {
         #expect(result?.confidence == .medium)
     }
 
-    @Test("Non-Apple hostname produces nil — the identifier intentionally doesn't guess")
-    func nonAppleHostnameReturnsNil() {
-        // Sonos, Hue, Roku, etc. fall through. These can be added
-        // in a follow-up; for now the AI Insights menu covers them.
+    @Test("Hostname `sonos-living-room.local.` resolves to Sonos speaker (medium confidence)")
+    func sonosHostnameResolves() {
         let result = identify(hostname: "sonos-living-room.local.")
+        #expect(result?.friendlyName == "Sonos speaker")
+        #expect(result?.category == .speaker)
+        #expect(result?.confidence == .medium)
+    }
+
+    @Test("Truly unrecognizable hostname produces nil — the identifier doesn't make things up")
+    func unknownHostnameStillReturnsNil() {
+        // No Apple keyword, no vendor keyword, no service type to
+        // fall back on. The identifier must return nil rather than
+        // guess at a category.
+        let result = identify(hostname: "zxw1234.local.")
         #expect(result == nil)
     }
 
@@ -286,5 +306,205 @@ struct BonjourDeviceIdentifierTests {
         for (identifier, entry) in appleTVEntries {
             #expect(entry.category == .tv, "\(identifier) categorized as \(entry.category), expected .tv")
         }
+    }
+
+    // MARK: - Vendor TXT Extraction (Non-Apple)
+
+    @Test("Chromecast `_googlecast._tcp` with `md=Chromecast Ultra` resolves to the model name (high confidence)")
+    func chromecastModelTxtResolves() {
+        let result = identify(
+            txt: txt(["md": "Chromecast Ultra"]),
+            serviceType: "_googlecast._tcp"
+        )
+        #expect(result?.friendlyName == "Chromecast Ultra")
+        #expect(result?.category == .streamingDevice)
+        #expect(result?.confidence == .high)
+    }
+
+    @Test("Chromecast `md=` outside `_googlecast._tcp` does NOT trigger the streaming-device heuristic")
+    func chromecastModelTxtScopedToServiceType() {
+        // The same `md=` key shows up on HomeKit accessories and
+        // others — the strategy must require the googlecast service
+        // type to avoid misclassifying unrelated services.
+        let result = identify(
+            txt: txt(["md": "Chromecast Ultra"]),
+            serviceType: "_hap._tcp"
+        )
+        #expect(result == nil)
+    }
+
+    @Test("Printer `_ipp._tcp` with `ty=HP LaserJet Pro M404n` resolves to the model name (high confidence)")
+    func printerTyTxtResolves() {
+        let result = identify(
+            txt: txt(["ty": "HP LaserJet Pro M404n"]),
+            serviceType: "_ipp._tcp"
+        )
+        #expect(result?.friendlyName == "HP LaserJet Pro M404n")
+        #expect(result?.category == .printer)
+        #expect(result?.confidence == .high)
+    }
+
+    @Test("Printer `usb_MFG=HP` + `usb_MDL=LaserJet 4050` resolves to the combined manufacturer/model name")
+    func printerUsbMfgMdlTxtResolves() {
+        let result = identify(
+            txt: txt(["usb_MFG": "HP", "usb_MDL": "LaserJet 4050"]),
+            serviceType: "_pdl-datastream._tcp"
+        )
+        #expect(result?.friendlyName == "HP LaserJet 4050")
+        #expect(result?.category == .printer)
+        #expect(result?.confidence == .high)
+    }
+
+    @Test("Printer `usb_MDL` already prefixed with the manufacturer is not duplicated")
+    func printerUsbMdlAlreadyPrefixedNotDuplicated() {
+        // Some printers ship the manufacturer name embedded in
+        // `usb_MDL` already. Combining naively would render
+        // "HP HP LaserJet 4050" — the strategy must detect and
+        // strip the duplicate prefix.
+        let result = identify(
+            txt: txt(["usb_MFG": "HP", "usb_MDL": "HP LaserJet 4050"]),
+            serviceType: "_ipp._tcp"
+        )
+        #expect(result?.friendlyName == "HP LaserJet 4050")
+    }
+
+    @Test("Vendor TXT extraction is gated on the service type — `ty=` outside printer types does not match")
+    func tyKeyScopedToPrinterServiceTypes() {
+        // `ty` is a generic short-form key used by some HomeKit
+        // accessories. The strategy must require a printer service
+        // type so we don't render a HomeKit accessory's `ty` value
+        // in the printer category.
+        let result = identify(
+            txt: txt(["ty": "Eve Energy"]),
+            serviceType: "_hap._tcp"
+        )
+        #expect(result == nil)
+    }
+
+    // MARK: - Vendor Hostname Patterns (Non-Apple)
+
+    @Test("Hostname `Living-Room-Roku.local.` matches Roku in the streaming-device category")
+    func rokuHostnameMatches() {
+        let result = identify(hostname: "Living-Room-Roku.local.")
+        #expect(result?.friendlyName == "Roku")
+        #expect(result?.category == .streamingDevice)
+    }
+
+    @Test("Hostname `chromecast-ultra-1234.local.` matches Chromecast Ultra before generic Chromecast")
+    func chromecastUltraHostnameMatchesBeforeChromecast() {
+        let result = identify(hostname: "chromecast-ultra-1234.local.")
+        #expect(result?.friendlyName == "Chromecast Ultra")
+    }
+
+    @Test("Hostname `synology-nas.local.` matches Synology NAS")
+    func synologyHostnameMatches() {
+        let result = identify(hostname: "synology-nas.local.")
+        #expect(result?.friendlyName == "Synology NAS")
+        #expect(result?.category == .nas)
+    }
+
+    @Test("Hostname `Philips-Hue-Bridge.local.` matches Philips Hue Bridge")
+    func philipsHueHostnameMatches() {
+        let result = identify(hostname: "Philips-Hue-Bridge.local.")
+        #expect(result?.friendlyName == "Philips Hue Bridge")
+        #expect(result?.category == .light)
+    }
+
+    @Test("Hostname `Xbox-Series-X.local.` matches Xbox in the game-console category")
+    func xboxHostnameMatches() {
+        let result = identify(hostname: "Xbox-Series-X.local.")
+        #expect(result?.friendlyName == "Xbox")
+        #expect(result?.category == .gameConsole)
+    }
+
+    @Test("Hostname `eero-pro.local.` matches eero router")
+    func eeroHostnameMatches() {
+        let result = identify(hostname: "eero-pro.local.")
+        #expect(result?.friendlyName == "eero router")
+    }
+
+    // MARK: - Service-Type Fallback
+
+    @Test("`_ipp._tcp` with no other signal falls back to a generic Printer (low confidence)")
+    func ippServiceTypeFallback() {
+        let result = identify(serviceType: "_ipp._tcp")
+        #expect(result?.friendlyName == "Printer")
+        #expect(result?.category == .printer)
+        #expect(result?.confidence == .low)
+    }
+
+    @Test("`_googlecast._tcp` with no TXT data falls back to a generic Google Cast device (low confidence)")
+    func googleCastServiceTypeFallback() {
+        let result = identify(serviceType: "_googlecast._tcp")
+        #expect(result?.friendlyName == "Google Cast device")
+        #expect(result?.category == .streamingDevice)
+        #expect(result?.confidence == .low)
+    }
+
+    @Test("`_amzn-wplay._tcp` falls back to Fire TV (low confidence)")
+    func fireTVServiceTypeFallback() {
+        let result = identify(serviceType: "_amzn-wplay._tcp")
+        #expect(result?.friendlyName == "Fire TV")
+        #expect(result?.category == .streamingDevice)
+    }
+
+    @Test("`_sonos._tcp` falls back to a generic Sonos speaker (low confidence)")
+    func sonosServiceTypeFallback() {
+        let result = identify(serviceType: "_sonos._tcp")
+        #expect(result?.friendlyName == "Sonos speaker")
+        #expect(result?.category == .speaker)
+    }
+
+    @Test("Unknown service type produces nil — the fallback only fires for known device classes")
+    func unknownServiceTypeReturnsNil() {
+        let result = identify(serviceType: "_some-novel-service._tcp")
+        #expect(result == nil)
+    }
+
+    // MARK: - Strategy Priority (Cross-Strategy)
+
+    @Test("Vendor TXT (high) wins over service-type fallback (low) for the same Cast device")
+    func vendorTxtBeatsServiceTypeFallback() {
+        // A real Chromecast advertises `md=` AND its service type is
+        // `_googlecast._tcp`. The TXT extraction returns the specific
+        // model, the fallback returns "Google Cast device" — the
+        // specific name must win.
+        let result = identify(
+            txt: txt(["md": "Chromecast Ultra"]),
+            serviceType: "_googlecast._tcp"
+        )
+        #expect(result?.friendlyName == "Chromecast Ultra")
+        #expect(result?.confidence == .high)
+    }
+
+    @Test("Hostname pattern (medium) wins over service-type fallback (low) for the same Roku")
+    func hostnamePatternBeatsServiceTypeFallback() {
+        // The hostname pattern says "Roku" with medium confidence;
+        // the service-type fallback also says "Roku" but with low
+        // confidence. The medium-confidence answer wins.
+        let result = identify(
+            hostname: "Living-Room-Roku.local.",
+            serviceType: "_roku-rcp._tcp"
+        )
+        #expect(result?.confidence == .medium)
+    }
+
+    // MARK: - New Category Icons
+
+    @Test("New non-Apple categories all have non-empty SF Symbol icon names")
+    func nonAppleCategoryIconsArePopulated() {
+        #expect(!DeviceIdentification.Category.printer.iconName.isEmpty)
+        #expect(!DeviceIdentification.Category.streamingDevice.iconName.isEmpty)
+        #expect(!DeviceIdentification.Category.nas.iconName.isEmpty)
+        #expect(!DeviceIdentification.Category.light.iconName.isEmpty)
+        #expect(!DeviceIdentification.Category.gameConsole.iconName.isEmpty)
+    }
+
+    @Test("Non-Apple category icons map to recognizable SF Symbols")
+    func nonAppleCategoryIconAssignmentsAreSensible() {
+        #expect(DeviceIdentification.Category.printer.iconName == "printer.fill")
+        #expect(DeviceIdentification.Category.streamingDevice.iconName == "tv.and.mediabox.fill")
+        #expect(DeviceIdentification.Category.light.iconName == "lightbulb.fill")
+        #expect(DeviceIdentification.Category.gameConsole.iconName == "gamecontroller.fill")
     }
 }

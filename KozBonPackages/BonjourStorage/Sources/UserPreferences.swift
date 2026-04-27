@@ -35,10 +35,30 @@ public final class UserPreferences {
     /// Default value for ``defaultSortOrder``.
     public static let defaultSortOrder = ""
 
-    /// Default value for ``persistChatHistory``. Off by default so the
-    /// existing "fresh slate per launch" behavior is preserved for
-    /// users who liked it; opting in is one toggle in Preferences.
-    public static let defaultPersistChatHistory = false
+    /// Default value for ``persistChatHistory``.
+    ///
+    /// Defaults to `true` so a returning user's conversation is
+    /// restored across launches without making them hunt for a
+    /// toggle. Existing users who opted out keep their preference
+    /// — SwiftData stores the chosen value, so the new default
+    /// only applies to fresh installs.
+    public static let defaultPersistChatHistory = true
+
+    /// Hard ceiling on the number of messages saved to disk when
+    /// ``persistChatHistory`` is enabled. The in-memory session is
+    /// not trimmed — this only bounds the persisted blob so storage
+    /// stays predictable across very long conversations.
+    ///
+    /// Sized to comfortably fit several dozen chat turns of mixed
+    /// user/assistant content (each turn is roughly two messages).
+    public static let maxStoredChatMessages: Int = 200
+
+    /// Hard ceiling on the encoded byte size of the persisted chat
+    /// history. Prevents pathological growth if a single assistant
+    /// response is unusually long, and keeps the SwiftData blob
+    /// well under platform sync limits (CloudKit's 1 MB per-record
+    /// cap, in case persistence is ever moved off-device).
+    public static let maxStoredChatBytes: Int = 1_048_576
 
     // MARK: - Properties
 
@@ -55,11 +75,10 @@ public final class UserPreferences {
     public var defaultSortOrder: String = UserPreferences.defaultSortOrder
 
     /// Whether the Chat conversation should be restored across app
-    /// launches. When `false` (default), the chat resets when iOS
-    /// reclaims the app from memory — matching the original
-    /// fresh-slate behavior. When `true`, the most recent
+    /// launches. When `true` (default), the most recent
     /// conversation is encoded into ``chatHistory`` on each turn
-    /// and restored when the Chat tab next appears.
+    /// and restored when the Chat tab next appears. When `false`,
+    /// the chat resets when the app cold-launches.
     public var persistChatHistory: Bool = defaultPersistChatHistory
 
     /// JSON-encoded `[BonjourChatMessage]` representing the user's

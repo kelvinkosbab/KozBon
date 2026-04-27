@@ -152,12 +152,30 @@ public struct SettingsView: View {
                     }
                 )
             )
+
+            if preferencesStore.persistChatHistory {
+                LabeledContent(
+                    String(localized: Strings.Settings.persistChatHistoryStorageUsed),
+                    value: chatHistoryStorageDescription
+                )
+                .accessibilityElement(children: .combine)
+            }
         } header: {
             Text(chatSectionHeader)
                 .accessibilityAddTraits(.isHeader)
         } footer: {
             Text(Strings.Settings.persistChatHistoryFooter)
         }
+    }
+
+    /// Human-readable size of the persisted chat history blob, formatted
+    /// with the system's localized byte-count style (e.g. "12 KB",
+    /// "0 bytes", "1.2 MB"). Reads zero when nothing has been saved
+    /// yet — that's still informative because it tells the user the
+    /// toggle hasn't actually written anything to disk.
+    private var chatHistoryStorageDescription: String {
+        let bytes = Int64(preferencesStore.chatHistory?.count ?? 0)
+        return bytes.formatted(.byteCount(style: .file))
     }
 
     /// Section header label that matches the platform's chat-tab

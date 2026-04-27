@@ -217,10 +217,10 @@ struct PreferencesStoreTests {
 
     // MARK: - Persist Chat History
 
-    @Test("Fresh store reports `persistChatHistory` as false (default opt-out)")
-    func persistChatHistoryDefaultIsFalse() throws {
+    @Test("Fresh store reports `persistChatHistory` as true (default-on for fresh installs)")
+    func persistChatHistoryDefaultIsTrue() throws {
         let store = try makeStore()
-        #expect(!store.persistChatHistory)
+        #expect(store.persistChatHistory)
     }
 
     @Test("Fresh store reports `chatHistory` as nil (no saved blob)")
@@ -280,13 +280,19 @@ struct PreferencesStoreTests {
         #expect(storeB.chatHistory == blob)
     }
 
-    @Test("`resetToDefaults` clears `persistChatHistory` and `chatHistory`")
+    @Test("`resetToDefaults` restores `persistChatHistory` to the static default and clears `chatHistory`")
     func resetClearsChatHistory() throws {
         let store = try makeStore()
-        store.persistChatHistory = true
-        store.chatHistory = Data("non-empty".utf8)
+        // Set the toggle to a non-default value (`false`, since the
+        // default is `true`) and seed a blob after, so the reset
+        // call has something to revert AND something to wipe.
+        // Note: `persistChatHistory = false` clears the existing
+        // blob via its setter, so we re-seed afterwards to make
+        // sure `resetToDefaults` is what nils the blob.
+        store.persistChatHistory = false
+        store.chatHistory = Data("after-toggle".utf8)
         store.resetToDefaults()
-        #expect(!store.persistChatHistory)
+        #expect(store.persistChatHistory == UserPreferences.defaultPersistChatHistory)
         #expect(store.chatHistory == nil)
     }
 }

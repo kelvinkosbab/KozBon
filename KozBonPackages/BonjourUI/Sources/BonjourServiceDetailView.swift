@@ -355,10 +355,12 @@ private extension BonjourServiceDetailView {
         }
 
         // Device Type — only when `BonjourDeviceIdentifier` resolves
-        // an Apple model (high-confidence TXT lookup) or family
-        // (medium-confidence hostname pattern). Hidden for non-Apple
-        // / unrecognized services so the row doesn't render with an
-        // empty or unhelpful value.
+        // a device. Covers Apple models (high-confidence TXT lookup),
+        // device families from hostnames (medium-confidence —
+        // including non-Apple vendors like Sonos, Roku, Synology),
+        // and DNS-SD service-type fallbacks (low-confidence, e.g.
+        // `_ipp._tcp` → "Printer"). Hidden when no strategy matches
+        // so the row doesn't render with an empty or unhelpful value.
         if let identification = BonjourDeviceIdentifier.identify(service: viewModel.service) {
             TitleDetailStackView(
                 title: String(localized: Strings.DetailRows.deviceType),

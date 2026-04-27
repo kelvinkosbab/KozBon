@@ -8,6 +8,14 @@
 import Foundation
 import BonjourCore
 
+// swiftlint:disable file_length type_body_length
+// The size of this file is dominated by the Apple wire-format model
+// lookup table and the hostname-pattern table — both are data, not
+// logic. Splitting them off into a separate file would make the
+// strategy chain harder to read (you'd lose the visual grouping of
+// "strategy ↔ table it consults") without buying any structural
+// benefit. Same precedent as `MyServiceType+Library.swift`.
+
 // MARK: - DeviceIdentification
 
 /// The result of identifying the device behind a discovered Bonjour
@@ -38,10 +46,10 @@ public struct DeviceIdentification: Sendable, Equatable {
 
     // MARK: - Category
 
-    /// Coarse device category. Apple-focused for now — non-Apple
-    /// devices fall through to ``BonjourDeviceIdentifier``'s
-    /// no-match path. Add new cases here as device-class coverage
-    /// expands.
+    /// Coarse device category. Covers both Apple and the most common
+    /// non-Apple devices we can deterministically identify (printers,
+    /// streaming sticks, smart bulbs, NAS, game consoles). Add new
+    /// cases here as device-class coverage expands.
     public enum Category: String, Sendable, CaseIterable, Codable {
         case phone
         case tablet
@@ -50,6 +58,19 @@ public struct DeviceIdentification: Sendable, Equatable {
         case speaker
         case watch
         case accessory
+        /// Networked printers — IPP, AirPrint, raw socket / PDL.
+        case printer
+        /// Streaming sticks and pucks that plug into a TV — Chromecast,
+        /// Fire TV, Roku, etc. Distinct from `.tv` so the detail row
+        /// reflects the actual product the user owns rather than the
+        /// display it's connected to.
+        case streamingDevice
+        /// Networked storage appliances (Synology, QNAP, etc.).
+        case nas
+        /// Smart bulbs and lighting hubs (Philips Hue, LIFX, etc.).
+        case light
+        /// Game consoles (Xbox, PlayStation, etc.).
+        case gameConsole
 
         /// SF Symbol name suitable for showing next to the device
         /// row in the service detail view.
@@ -62,6 +83,11 @@ public struct DeviceIdentification: Sendable, Equatable {
             case .speaker: "homepod"
             case .watch: "applewatch"
             case .accessory: "shippingbox"
+            case .printer: "printer.fill"
+            case .streamingDevice: "tv.and.mediabox.fill"
+            case .nas: "externaldrive.connected.to.line.below.fill"
+            case .light: "lightbulb.fill"
+            case .gameConsole: "gamecontroller.fill"
             }
         }
     }
@@ -69,17 +95,23 @@ public struct DeviceIdentification: Sendable, Equatable {
     // MARK: - Confidence
 
     public enum Confidence: Sendable, Codable {
-        /// Exact model identifier resolved through Apple's wire-format
-        /// table (e.g., `iPhone16,1` → "iPhone 15 Pro").
+        /// Exact model identifier resolved through a deterministic
+        /// lookup — Apple's wire-format table (e.g.,
+        /// `iPhone16,1` → "iPhone 15 Pro") or a vendor-specific TXT
+        /// schema (e.g., Chromecast `md=Chromecast Ultra`).
         case high
 
-        /// Device family matched but the exact model is unknown
-        /// (e.g., hostname `Kelvins-iPhone.local.` resolves to "iPhone"
-        /// with no generation).
+        /// Device family matched from a hostname or service-name
+        /// keyword but the specific model is unknown (e.g., hostname
+        /// `Kelvins-iPhone.local.` resolves to "iPhone" with no
+        /// generation; `Sonos-Living-Room.local.` resolves to "Sonos
+        /// speaker" with no model).
         case medium
 
-        /// Reserved for future fuzzy strategies. Not currently
-        /// produced by any active path.
+        /// Device class inferred from the DNS-SD service type alone
+        /// (e.g., `_ipp._tcp` → "Printer"). The friendly name is
+        /// generic — we know what *kind* of device it is, not
+        /// which specific model.
         case low
     }
 }
@@ -87,28 +119,39 @@ public struct DeviceIdentification: Sendable, Equatable {
 // MARK: - BonjourDeviceIdentifier
 
 /// Pure-deterministic identifier for the device behind a discovered
-/// Bonjour service. Apple-only in this iteration — other vendors fall
-/// through to a `nil` result and remain available via the AI Insights
-/// long-press menu.
+/// Bonjour service. Covers Apple devices (iPhone / iPad / Mac / Apple
+/// TV / HomePod / Apple Watch) plus the most common non-Apple
+/// devices we can recognize from public TXT-record conventions and
+/// service-type signals (printers, Chromecast, Roku, Fire TV, Sonos,
+/// Synology / QNAP NAS, Hue / LIFX bulbs, Xbox / PlayStation).
 ///
 /// Strategies are tried in priority order; the first match wins:
 ///
-/// 1. **Apple model identifier in a TXT record** (`high` confidence).
+/// 1. **Apple model identifier in a TXT record** (`.high` confidence).
 ///    Looks up keys `model`, `mdl`, and `md` against
 ///    ``BonjourDeviceIdentifier/appleModelLookup`` — Apple's wire-
 ///    format identifier table. Produces e.g. "iPhone 15 Pro Max" from
 ///    `model=iPhone16,2`.
 ///
-/// 2. **Hostname / service name pattern** (`medium` confidence).
-///    Matches Apple device-family keywords ("iphone", "ipad",
-///    "macbook", "apple tv", etc.) in the service's hostname or
-///    advertised name. Produces a family name without a model
-///    generation, e.g. "iPhone" or "Apple TV".
+/// 2. **Vendor-specific TXT extraction** (`.high` confidence).
+///    Reads well-known TXT keys whose semantics are stable per
+///    protocol. Currently covers Chromecast / Google Cast (`md=` on
+///    `_googlecast._tcp` services) and printers (the `ty=` key, or
+///    the `usb_MFG` + `usb_MDL` pair, on IPP / `_pdl-datastream._tcp`
+///    services).
 ///
-/// Future work (not in this commit): vendor-specific TXT extraction
-/// for Sonos / Hue / LIFX / Ecobee / Roku, generic
-/// `manufacturer=`/`model=` extraction for long-tail IoT, and
-/// service-type-based category fallbacks.
+/// 3. **Hostname / service-name pattern** (`.medium` confidence).
+///    Matches device-family keywords ("iphone", "ipad", "macbook",
+///    "sonos", "roku", "synology", etc.) in the service's hostname
+///    or advertised name. Produces a family name without a specific
+///    model — e.g. "iPhone", "Apple TV", "Sonos speaker", "Roku".
+///
+/// 4. **Service-type fallback** (`.low` confidence). When nothing
+///    above matches, the *type* of service alone often reveals the
+///    device class — `_ipp._tcp` is virtually always a printer, and
+///    `_googlecast._tcp` is always a Cast device. The friendly name
+///    is generic ("Printer", "Google Cast device") because we don't
+///    know the specific model.
 public enum BonjourDeviceIdentifier {
 
     // MARK: - Public API
@@ -121,7 +164,8 @@ public enum BonjourDeviceIdentifier {
         identify(
             txtRecords: service.dataRecords,
             hostname: service.hostName,
-            serviceName: service.service.name
+            serviceName: service.service.name,
+            serviceType: service.serviceType.fullType
         )
     }
 
@@ -129,15 +173,32 @@ public enum BonjourDeviceIdentifier {
     /// unit tests (no MainActor / `BonjourService` construction
     /// required) and as the actual workhorse the convenience
     /// overload above delegates to.
+    ///
+    /// - Parameter serviceType: The full DNS-SD service type
+    ///   (e.g. `_ipp._tcp`). Optional so older callers continue to
+    ///   compile, but supplying it unlocks the vendor-TXT and
+    ///   service-type-fallback strategies — recommended for any new
+    ///   call site.
     public static func identify(
         txtRecords: [BonjourService.TxtDataRecord],
         hostname: String,
-        serviceName: String
+        serviceName: String,
+        serviceType: String? = nil
     ) -> DeviceIdentification? {
         if let identification = identifyFromAppleModelTxt(txtRecords: txtRecords) {
             return identification
         }
+        if let identification = identifyFromVendorTxt(
+            txtRecords: txtRecords,
+            serviceType: serviceType
+        ) {
+            return identification
+        }
         if let identification = identifyFromHostnamePattern(hostname: hostname, serviceName: serviceName) {
+            return identification
+        }
+        if let serviceType,
+           let identification = identifyFromServiceType(serviceType: serviceType) {
             return identification
         }
         return nil
@@ -172,6 +233,95 @@ public enum BonjourDeviceIdentifier {
         return nil
     }
 
+    // MARK: - Strategy: Vendor TXT Extraction
+
+    /// Inspects TXT records for vendor-specific signals whose
+    /// semantics are stable per protocol. Each branch is gated on
+    /// either a service-type prefix or a key signature so we don't
+    /// misattribute generic key names.
+    ///
+    /// Today: Chromecast / Google Cast and printers. New entries can
+    /// be added when a vendor's TXT schema is well-documented enough
+    /// to be reliable.
+    static func identifyFromVendorTxt(
+        txtRecords: [BonjourService.TxtDataRecord],
+        serviceType: String?
+    ) -> DeviceIdentification? {
+        // Build a lowercase-keyed lookup once. Multiple branches read
+        // from it, and TXT-record arrays are short so the map cost is
+        // trivial. Use `uniqueKeysWithValues` defensively: if a
+        // service inexplicably advertises duplicate keys, we want the
+        // last one to win rather than crashing — `Dictionary(grouping:)`
+        // would over-engineer for that edge case.
+        var txt: [String: String] = [:]
+        for record in txtRecords {
+            txt[record.key.lowercased()] = record.value
+        }
+
+        let lowerType = serviceType?.lowercased() ?? ""
+
+        // MARK: Chromecast / Google Cast — `md` is the model name.
+        // Gated on the service-type so we don't accidentally
+        // interpret a generic `md` from a HomeKit accessory as a
+        // Cast model name.
+        if lowerType.contains("googlecast"),
+           let model = txt["md"]?.trimmingCharacters(in: .whitespaces),
+           !model.isEmpty {
+            return DeviceIdentification(
+                friendlyName: model,
+                category: .streamingDevice,
+                confidence: .high
+            )
+        }
+
+        // MARK: Printer — `ty` (the human-readable type, used by HP
+        // / Brother / Canon / Epson IPP services) is the cleanest
+        // single signal.
+        if let ty = txt["ty"]?.trimmingCharacters(in: .whitespaces),
+           !ty.isEmpty,
+           printerServiceTypeKeywords.contains(where: lowerType.contains) {
+            return DeviceIdentification(
+                friendlyName: ty,
+                category: .printer,
+                confidence: .high
+            )
+        }
+
+        // MARK: Printer — `usb_MFG` + `usb_MDL` pair (the legacy
+        // pdl-datastream / printer convention). Combine the two
+        // values to get a complete description like
+        // "HP LaserJet Pro M404n".
+        if let mfg = txt["usb_mfg"]?.trimmingCharacters(in: .whitespaces),
+           let mdl = txt["usb_mdl"]?.trimmingCharacters(in: .whitespaces),
+           !mfg.isEmpty, !mdl.isEmpty {
+            // Some printers prefix the manufacturer onto the model
+            // (e.g. `usb_MDL=HP LaserJet…`); drop the duplicate so
+            // we don't render "HP HP LaserJet…".
+            let combined = mdl.lowercased().hasPrefix(mfg.lowercased())
+                ? mdl
+                : "\(mfg) \(mdl)"
+            return DeviceIdentification(
+                friendlyName: combined,
+                category: .printer,
+                confidence: .high
+            )
+        }
+
+        return nil
+    }
+
+    /// Service-type substrings that indicate a printer. Used by the
+    /// vendor-TXT strategy to scope `ty=`/`usb_MFG=`/`usb_MDL=`
+    /// extraction so it only fires on actual printer services.
+    static let printerServiceTypeKeywords: [String] = [
+        "_ipp._tcp",          // AirPrint / IPP
+        "_ipps._tcp",         // IPP over TLS
+        "_printer._tcp",      // LPD
+        "_pdl-datastream._tcp", // raw socket / port 9100
+        "_print._tcp",        // less common but seen
+        "_scanner._tcp"       // multi-function devices advertise both
+    ]
+
     // MARK: - Strategy: Hostname Pattern
 
     /// Falls back to keyword matching on the supplied hostname and
@@ -201,15 +351,81 @@ public enum BonjourDeviceIdentifier {
         return nil
     }
 
+    // MARK: - Strategy: Service-Type Fallback
+
+    /// Last-resort identification using only the DNS-SD service type.
+    /// The friendly name is intentionally generic ("Printer", "Google
+    /// Cast device") because we don't know the specific model — but
+    /// for many service types the *type* alone reveals the device
+    /// class with near-certainty.
+    ///
+    /// Confidence is `.low` to reflect that we're inferring the
+    /// device class from protocol membership rather than from a
+    /// concrete model identifier or a vendor-specific signal.
+    static func identifyFromServiceType(serviceType: String) -> DeviceIdentification? {
+        let lower = serviceType.lowercased()
+        // First match wins — keep more specific entries above more
+        // general ones. (Currently no overlaps; this is room for
+        // future additions like `_amzn-wplay-restful._tcp` before
+        // the generic `_amzn-wplay._tcp`.)
+        for entry in serviceTypeFallbackTable where lower.contains(entry.needle) {
+            return DeviceIdentification(
+                friendlyName: entry.friendlyName,
+                category: entry.category,
+                confidence: .low
+            )
+        }
+        return nil
+    }
+
+    /// Lookup entry for the service-type fallback. Stored as a struct
+    /// rather than a tuple to satisfy SwiftLint's `large_tuple` rule
+    /// (3-tuples are encouraged to be promoted to types) and to give
+    /// the table a self-documenting shape.
+    struct ServiceTypeFallback: Sendable, Equatable {
+        let needle: String
+        let friendlyName: String
+        let category: DeviceIdentification.Category
+    }
+
+    /// Service-type substrings mapped to a generic device-class
+    /// identification. Used by ``identifyFromServiceType(serviceType:)``
+    /// when no higher-confidence strategy matched.
+    static let serviceTypeFallbackTable: [ServiceTypeFallback] = [
+        // Streaming devices
+        .init(needle: "_googlecast._tcp", friendlyName: "Google Cast device", category: .streamingDevice),
+        .init(needle: "_amzn-wplay._tcp", friendlyName: "Fire TV", category: .streamingDevice),
+        .init(needle: "_roku-rcp._tcp", friendlyName: "Roku", category: .streamingDevice),
+        // Speakers
+        .init(needle: "_sonos._tcp", friendlyName: "Sonos speaker", category: .speaker),
+        // Smart lighting
+        .init(needle: "_lifx._tcp", friendlyName: "LIFX bulb", category: .light),
+        .init(needle: "_hue._tcp", friendlyName: "Philips Hue Bridge", category: .light),
+        // Game consoles
+        .init(needle: "_xbox._tcp", friendlyName: "Xbox", category: .gameConsole),
+        .init(needle: "_xboxdvr._tcp", friendlyName: "Xbox", category: .gameConsole),
+        // Printers — checked last because the printer service
+        // types are several and we want the more specific
+        // brand-named entries above to win first.
+        .init(needle: "_ipp._tcp", friendlyName: "Printer", category: .printer),
+        .init(needle: "_ipps._tcp", friendlyName: "Printer", category: .printer),
+        .init(needle: "_printer._tcp", friendlyName: "Printer", category: .printer),
+        .init(needle: "_pdl-datastream._tcp", friendlyName: "Printer", category: .printer),
+        .init(needle: "_scanner._tcp", friendlyName: "Scanner", category: .printer)
+    ]
+
     // MARK: - Hostname Patterns
 
-    /// Apple device-family keyword patterns checked in priority order.
+    /// Device-family keyword patterns checked in priority order.
     /// Each pattern carries the hostname needle (lowercase substring),
     /// the friendly name to show, and the device category.
+    ///
+    /// **Ordering rule:** more specific patterns must come before
+    /// more general ones. Substring matches don't backtrack — if
+    /// `"macbook"` appears before `"macbook pro"`, the generic
+    /// pattern wins and reports the wrong device class.
     static let hostnamePatterns: [HostnamePattern] = [
-        // Compound names first so "macbook" doesn't match before
-        // "macbook pro" gets a chance. We trim spaces in `matches`
-        // so "macbookpro" and "macbook pro" both hit.
+        // MARK: Apple — Macs (compound names first)
         .init(needle: "macbook pro", friendlyName: "MacBook Pro", category: .computer),
         .init(needle: "macbook air", friendlyName: "MacBook Air", category: .computer),
         .init(needle: "macbookpro", friendlyName: "MacBook Pro", category: .computer),
@@ -223,10 +439,12 @@ public enum BonjourDeviceIdentifier {
         .init(needle: "macpro", friendlyName: "Mac Pro", category: .computer),
         .init(needle: "imac", friendlyName: "iMac", category: .computer),
 
+        // MARK: Apple — Mobile
         .init(needle: "iphone", friendlyName: "iPhone", category: .phone),
         .init(needle: "ipad", friendlyName: "iPad", category: .tablet),
         .init(needle: "ipod", friendlyName: "iPod touch", category: .phone),
 
+        // MARK: Apple — Living room / wearables
         .init(needle: "apple tv", friendlyName: "Apple TV", category: .tv),
         .init(needle: "appletv", friendlyName: "Apple TV", category: .tv),
         .init(needle: "apple-tv", friendlyName: "Apple TV", category: .tv),
@@ -240,7 +458,52 @@ public enum BonjourDeviceIdentifier {
         .init(needle: "apple-watch", friendlyName: "Apple Watch", category: .watch),
 
         .init(needle: "airpods", friendlyName: "AirPods", category: .accessory),
-        .init(needle: "airport", friendlyName: "AirPort Base Station", category: .accessory)
+        .init(needle: "airport", friendlyName: "AirPort Base Station", category: .accessory),
+
+        // MARK: Streaming sticks / pucks (TV attachments)
+        .init(needle: "chromecast ultra", friendlyName: "Chromecast Ultra", category: .streamingDevice),
+        .init(needle: "chromecast", friendlyName: "Chromecast", category: .streamingDevice),
+        .init(needle: "fire tv", friendlyName: "Fire TV", category: .streamingDevice),
+        .init(needle: "firetv", friendlyName: "Fire TV", category: .streamingDevice),
+        .init(needle: "roku", friendlyName: "Roku", category: .streamingDevice),
+        .init(needle: "shield tv", friendlyName: "NVIDIA Shield TV", category: .streamingDevice),
+        .init(needle: "shieldtv", friendlyName: "NVIDIA Shield TV", category: .streamingDevice),
+
+        // MARK: Speakers (non-Apple)
+        .init(needle: "sonos", friendlyName: "Sonos speaker", category: .speaker),
+
+        // MARK: NAS
+        .init(needle: "synology", friendlyName: "Synology NAS", category: .nas),
+        .init(needle: "diskstation", friendlyName: "Synology NAS", category: .nas),
+        .init(needle: "qnap", friendlyName: "QNAP NAS", category: .nas),
+        .init(needle: "freenas", friendlyName: "TrueNAS / FreeNAS", category: .nas),
+        .init(needle: "truenas", friendlyName: "TrueNAS", category: .nas),
+
+        // MARK: Smart lighting
+        .init(needle: "philips hue", friendlyName: "Philips Hue Bridge", category: .light),
+        .init(needle: "hue bridge", friendlyName: "Philips Hue Bridge", category: .light),
+        .init(needle: "philipshue", friendlyName: "Philips Hue Bridge", category: .light),
+        .init(needle: "lifx", friendlyName: "LIFX bulb", category: .light),
+
+        // MARK: Game consoles
+        .init(needle: "playstation", friendlyName: "PlayStation", category: .gameConsole),
+        .init(needle: "xbox", friendlyName: "Xbox", category: .gameConsole),
+        .init(needle: "nintendo switch", friendlyName: "Nintendo Switch", category: .gameConsole),
+        .init(needle: "nintendoswitch", friendlyName: "Nintendo Switch", category: .gameConsole),
+
+        // MARK: Cameras & smart home accessories
+        .init(needle: "ring cam", friendlyName: "Ring camera", category: .accessory),
+        .init(needle: "ring-cam", friendlyName: "Ring camera", category: .accessory),
+        .init(needle: "nest cam", friendlyName: "Nest camera", category: .accessory),
+        .init(needle: "nest hub", friendlyName: "Nest Hub", category: .accessory),
+        .init(needle: "wyze", friendlyName: "Wyze device", category: .accessory),
+
+        // MARK: Routers / network gear
+        .init(needle: "eero", friendlyName: "eero router", category: .accessory),
+        .init(needle: "google wifi", friendlyName: "Google Wifi", category: .accessory),
+        .init(needle: "googlewifi", friendlyName: "Google Wifi", category: .accessory),
+        .init(needle: "asus router", friendlyName: "ASUS router", category: .accessory),
+        .init(needle: "netgear", friendlyName: "NETGEAR router", category: .accessory)
     ]
 
     /// Hostname-keyword pattern. Match is case-insensitive (the

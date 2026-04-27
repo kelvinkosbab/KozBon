@@ -107,10 +107,10 @@ struct UserPreferencesTests {
 
     // MARK: - Persist Chat History
 
-    @Test("New `UserPreferences` has `persistChatHistory` false (opt-in feature)")
-    func defaultPersistChatHistoryIsFalse() {
+    @Test("New `UserPreferences` has `persistChatHistory` true (default-on for fresh installs)")
+    func defaultPersistChatHistoryIsTrue() {
         let prefs = UserPreferences()
-        #expect(!prefs.persistChatHistory)
+        #expect(prefs.persistChatHistory)
     }
 
     @Test("New `UserPreferences` has `chatHistory` nil (no saved blob)")
@@ -119,16 +119,26 @@ struct UserPreferencesTests {
         #expect(prefs.chatHistory == nil)
     }
 
-    @Test("Static `defaultPersistChatHistory` is false to preserve the original fresh-slate behavior")
-    func staticDefaultPersistChatHistoryIsFalse() {
-        #expect(!UserPreferences.defaultPersistChatHistory)
+    @Test("Static `defaultPersistChatHistory` is true so returning users get their conversation back")
+    func staticDefaultPersistChatHistoryIsTrue() {
+        #expect(UserPreferences.defaultPersistChatHistory)
     }
 
-    @Test("`persistChatHistory` accepts a write to true and reads it back")
-    func persistChatHistoryCanBeEnabled() {
+    @Test("`persistChatHistory` accepts a write to false and reads it back")
+    func persistChatHistoryCanBeDisabled() {
         let prefs = UserPreferences()
-        prefs.persistChatHistory = true
-        #expect(prefs.persistChatHistory)
+        prefs.persistChatHistory = false
+        #expect(!prefs.persistChatHistory)
+    }
+
+    @Test("Static `maxStoredChatMessages` caps the persisted blob at 200 messages")
+    func maxStoredChatMessagesIs200() {
+        #expect(UserPreferences.maxStoredChatMessages == 200)
+    }
+
+    @Test("Static `maxStoredChatBytes` caps the persisted blob at 1 MiB")
+    func maxStoredChatBytesIs1MiB() {
+        #expect(UserPreferences.maxStoredChatBytes == 1_048_576)
     }
 
     @Test("`chatHistory` accepts a write to a non-nil blob and reads it back")

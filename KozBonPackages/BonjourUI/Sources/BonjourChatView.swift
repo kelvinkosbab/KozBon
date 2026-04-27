@@ -270,12 +270,28 @@ public struct BonjourChatView: View {
     /// `messages.count` and `isGenerating`, both of which change
     /// only on meaningful turn boundaries (not on every streamed
     /// token), so disk I/O stays bounded to ~2 saves per turn.
+    ///
+    /// Messages are trimmed to the persistence caps
+    /// (``UserPreferences/maxStoredChatMessages`` and
+    /// ``UserPreferences/maxStoredChatBytes``) before encoding, so
+    /// the saved blob can't grow unbounded across long
+    /// conversations. The in-memory session is left intact — the
+    /// user keeps full scrollback during the launch; only the
+    /// next-launch restore is bounded.
     private func persistChatHistoryIfNeeded() {
         guard preferencesStore.persistChatHistory,
               let messages = session?.messages else { return }
 
+        let encoder = JSONEncoder()
+        let trimmed = BonjourChatMessage.trimmed(
+            messages: messages,
+            maxCount: UserPreferences.maxStoredChatMessages,
+            maxBytes: UserPreferences.maxStoredChatBytes,
+            encoder: encoder
+        )
+
         do {
-            preferencesStore.chatHistory = try JSONEncoder().encode(messages)
+            preferencesStore.chatHistory = try encoder.encode(trimmed)
         } catch {
             // Encoding failure is non-fatal — there's nowhere
             // meaningful for the user to act on it. The next

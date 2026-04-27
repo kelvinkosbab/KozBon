@@ -323,12 +323,13 @@ struct BroadcastBonjourServiceView: View {
             Text(Strings.Sections.txtRecords)
                 .accessibilityAddTraits(.isHeader)
         } footer: {
-            // Best-practices guidance for the whole form. Rendered in
-            // the last section's footer (rather than a separate empty
-            // section below it) so it sits tight against the TXT
-            // records section instead of adding inset-grouped card
-            // spacing between them.
-            Text(Strings.Guidance.broadcastService)
+            // TXT-record-specific explanation rather than form-wide
+            // tips. The other fields (Service Type, Port, Domain) all
+            // have their own per-field hints in their section footers
+            // now, so this footer can stay focused on the section it
+            // sits under: what TXT records are, when to add them, and
+            // when to leave the list empty.
+            Text(Strings.Guidance.txtRecord)
         }
     }
 

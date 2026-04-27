@@ -11077,37 +11077,78 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "When on, your previous conversation is restored when you reopen the app. The visible history comes back, but the assistant starts each launch without memory of earlier turns — so follow-ups about prior questions may need rephrasing. When off, the chat resets every time the app cold-launches."
+            "value": "Restores your last conversation when you reopen the app, capped to the 200 most recent messages."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cuando está activado, tu conversación anterior se restaura al volver a abrir la app. El historial visible vuelve, pero el asistente inicia cada lanzamiento sin memoria de los turnos anteriores; las preguntas de seguimiento sobre temas previos pueden necesitar reformulación. Cuando está desactivado, el chat se reinicia cada vez que la app arranca en frío."
+            "value": "Restaura tu última conversación al volver a abrir la app, con un límite de los 200 mensajes más recientes."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Lorsque cette option est activée, votre conversation précédente est restaurée lors de la réouverture de l'app. L'historique visible revient, mais l'assistant démarre chaque lancement sans mémoire des échanges précédents — les questions de suivi peuvent donc nécessiter une reformulation. Lorsque désactivée, le chat est réinitialisé à chaque lancement à froid de l'app."
+            "value": "Restaure votre dernière conversation à la réouverture de l'app, dans la limite des 200 messages les plus récents."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Wenn aktiviert, wird deine vorherige Unterhaltung wiederhergestellt, wenn du die App erneut öffnest. Der sichtbare Verlauf kommt zurück, aber der Assistent startet bei jedem Start ohne Erinnerung an frühere Wechsel — Folgefragen zu früheren Themen müssen daher möglicherweise neu formuliert werden. Wenn deaktiviert, wird der Chat bei jedem Kaltstart der App zurückgesetzt."
+            "value": "Stellt deine letzte Unterhaltung beim erneuten Öffnen der App wieder her, begrenzt auf die 200 neuesten Nachrichten."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "オンにすると、アプリを再度開いたときに以前の会話が復元されます。表示されている履歴は戻りますが、アシスタントは起動ごとに以前のやり取りの記憶なしで始まるため、過去の話題に関するフォローアップは言い換えが必要な場合があります。オフのときは、アプリがコールドスタートするたびにチャットがリセットされます。"
+            "value": "アプリを再度開いたときに直近の会話を復元します（最新の 200 件まで）。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "开启时，重新打开应用后您之前的对话会被恢复。可见的历史记录会回来，但助手在每次启动时都不会记得之前的对话——所以涉及先前内容的追问可能需要重新表述。关闭时，每次冷启动应用都会重置聊天。"
+            "value": "重新打开应用时恢复您上次的对话，最多保留最近 200 条消息。"
+          }
+        }
+      }
+    },
+    "settings_persist_chat_history_storage_used": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Storage used"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Almacenamiento usado"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stockage utilisé"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Belegter Speicher"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用中のストレージ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已用存储"
           }
         }
       }
@@ -12916,84 +12957,43 @@
         }
       }
     },
-    "guidance_broadcast_service": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tips: Pick the service type that matches the protocol your service speaks. Use the port it’s actually listening on — standard ports like 80 (HTTP) or 22 (SSH) make discovery easier. Keep the domain “local.” for local-network discovery. TXT records let clients see your service’s capabilities before connecting."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Consejos: Elige el tipo de servicio que coincida con el protocolo que usa tu servicio. Usa el puerto en el que realmente escucha — los puertos estándar como 80 (HTTP) o 22 (SSH) facilitan la detección. Mantén el dominio «local.» para detección en la red local. Los registros TXT permiten a los clientes ver las capacidades del servicio antes de conectarse."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Conseils : Choisissez le type de service correspondant au protocole utilisé. Utilisez le port réellement en écoute — les ports standard comme 80 (HTTP) ou 22 (SSH) facilitent la découverte. Conservez le domaine « local. » pour la découverte sur le réseau local. Les enregistrements TXT permettent aux clients de voir les capacités du service avant de s’y connecter."
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tipps: Wähle den Diensttyp, der zum Protokoll deines Dienstes passt. Verwende den Port, auf dem dein Dienst tatsächlich lauscht — Standardports wie 80 (HTTP) oder 22 (SSH) erleichtern die Erkennung. Behalte die Domain „local.“ für die lokale Netzwerkerkennung bei. TXT-Einträge ermöglichen Clients, die Fähigkeiten deines Dienstes vor der Verbindung einzusehen."
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ヒント: サービスが話すプロトコルに一致するサービスタイプを選択してください。実際にリッスンしているポートを使用します — 80（HTTP）や22（SSH）などの標準ポートを使うと検出が容易になります。ローカルネットワーク検出のためドメインは「local.」のままにしてください。TXTレコードにより、クライアントは接続前にサービスの機能を確認できます。"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "提示：选择与服务所使用协议相匹配的服务类型。使用服务实际监听的端口——使用标准端口（如80 (HTTP) 或22 (SSH)）更便于发现。保持域为「local.」以在本地网络中发现服务。TXT记录让客户端在连接前即可了解服务的功能。"
-          }
-        }
-      }
-    },
     "guidance_txt_record": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "TXT records publish key-value metadata alongside your service so clients can inspect it before connecting. Common uses: model and firmware version, protocol version, supported features, a friendly name, or configuration hints. Keys are short ASCII identifiers; values can be any string."
+            "value": "TXT records are optional key-value metadata broadcast alongside your service. Clients read them before connecting to learn about capabilities — a printer might advertise its color and duplex support, or a media server might list streaming protocols. Keys are short ASCII identifiers; values can be any text. Leave the list empty if your service doesn't need any."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Los registros TXT publican metadatos clave-valor junto con tu servicio para que los clientes puedan inspeccionarlos antes de conectarse. Usos habituales: modelo y versión del firmware, versión del protocolo, funciones admitidas, un nombre descriptivo o pistas de configuración. Las claves son identificadores ASCII cortos; los valores pueden ser cualquier cadena."
+            "value": "Los registros TXT son metadatos opcionales en formato clave-valor que se difunden junto con tu servicio. Los clientes los leen antes de conectarse para conocer las capacidades del servicio: una impresora podría anunciar su soporte de color y dúplex, o un servidor multimedia podría enumerar los protocolos de streaming. Las claves son identificadores ASCII cortos; los valores pueden ser cualquier texto. Deja la lista vacía si tu servicio no necesita ninguno."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les enregistrements TXT publient des métadonnées clé-valeur à côté de votre service, afin que les clients puissent les inspecter avant de se connecter. Utilisations courantes : modèle et version du firmware, version du protocole, fonctionnalités prises en charge, nom convivial ou indications de configuration. Les clés sont de courts identifiants ASCII ; les valeurs peuvent être n’importe quelle chaîne."
+            "value": "Les enregistrements TXT sont des métadonnées clé-valeur facultatives diffusées avec votre service. Les clients les lisent avant de se connecter pour découvrir ses capacités — une imprimante peut annoncer la prise en charge de la couleur et du recto-verso, ou un serveur multimédia peut lister ses protocoles de streaming. Les clés sont de courts identifiants ASCII ; les valeurs peuvent être n’importe quel texte. Laissez la liste vide si votre service n’en a pas besoin."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "TXT-Einträge veröffentlichen Schlüssel-Wert-Metadaten neben deinem Dienst, sodass Clients sie vor der Verbindung einsehen können. Typische Verwendung: Modell und Firmware-Version, Protokollversion, unterstützte Funktionen, ein Anzeigename oder Konfigurationshinweise. Schlüssel sind kurze ASCII-Bezeichner; Werte können beliebige Zeichenfolgen sein."
+            "value": "TXT-Einträge sind optionale Schlüssel-Wert-Metadaten, die zusammen mit deinem Dienst verbreitet werden. Clients lesen sie vor dem Verbinden, um die Fähigkeiten zu erfahren — ein Drucker kann etwa Farb- und Duplex-Unterstützung ankündigen, ein Medienserver seine Streaming-Protokolle auflisten. Schlüssel sind kurze ASCII-Bezeichner; Werte können beliebiger Text sein. Lass die Liste leer, wenn dein Dienst keine benötigt."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "TXTレコードは、サービスとともにキーと値のメタデータを公開し、クライアントが接続前にそれを確認できるようにします。一般的な用途: モデルとファームウェアのバージョン、プロトコルバージョン、サポートされる機能、フレンドリー名、または構成のヒント。キーは短いASCII識別子です。値は任意の文字列にできます。"
+            "value": "TXTレコードは、サービスとともに配信されるオプションのキーと値のメタデータです。クライアントは接続前にこれを読み取り、サービスの機能を確認します。例えば、プリンタはカラーや両面印刷の対応状況を示し、メディアサーバはストリーミングプロトコルを列挙できます。キーは短いASCII識別子で、値は任意のテキストです。サービスに必要なければリストを空のままにしてください。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "TXT记录会与您的服务一起发布键值元数据，使客户端能够在连接前进行检查。常见用途：型号和固件版本、协议版本、支持的功能、友好名称或配置提示。键是简短的ASCII标识符；值可以是任何字符串。"
+            "value": "TXT 记录是与您的服务一起广播的可选键值元数据。客户端会在连接前读取这些信息以了解服务的能力——例如打印机可以宣告其彩色和双面打印支持，媒体服务器可以列出支持的流媒体协议。键是简短的 ASCII 标识符；值可以是任意文本。如果您的服务不需要，请将列表留空。"
           }
         }
       }
@@ -13004,37 +13004,37 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The port your service listens on for incoming connections. For testing, pick any unused value between 1024 and 65535 — ports below 1024 are reserved for system services. This number must match the port your service implementation actually opens, otherwise clients that find the advertisement won't be able to connect."
+            "value": "The port your service listens on. Pick any unused value from 1024–65535 — lower ports are reserved for system services."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "El puerto en el que tu servicio escucha conexiones entrantes. Para pruebas, elige cualquier valor sin usar entre 1024 y 65535: los puertos por debajo de 1024 están reservados para servicios del sistema. Este número debe coincidir con el puerto que abre realmente tu implementación del servicio; de lo contrario, los clientes que encuentren el anuncio no podrán conectarse."
+            "value": "El puerto en el que escucha tu servicio. Elige cualquier valor libre entre 1024 y 65535 — los puertos inferiores están reservados para servicios del sistema."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Le port sur lequel votre service écoute les connexions entrantes. Pour les tests, choisissez une valeur libre entre 1024 et 65535 — les ports inférieurs à 1024 sont réservés aux services système. Ce numéro doit correspondre au port que votre implémentation ouvre réellement, sinon les clients qui découvriront l'annonce ne pourront pas se connecter."
+            "value": "Le port sur lequel votre service écoute. Choisissez une valeur libre entre 1024 et 65535 — les ports inférieurs sont réservés aux services système."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Der Port, an dem dein Dienst eingehende Verbindungen entgegennimmt. Wähle für Tests einen freien Wert zwischen 1024 und 65535 — Ports unter 1024 sind für Systemdienste reserviert. Diese Nummer muss mit dem Port übereinstimmen, den deine Implementierung tatsächlich öffnet, sonst können Clients, die die Ankündigung finden, keine Verbindung herstellen."
+            "value": "Der Port, auf dem dein Dienst lauscht. Wähle einen freien Wert zwischen 1024 und 65535 — niedrigere Ports sind für Systemdienste reserviert."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "サービスが受信接続をリッスンするポートです。テストでは 1024〜65535 の未使用の値を使用してください。1024 未満のポートはシステムサービス用に予約されています。この番号は、実際にサービスが開いているポートと一致している必要があります。一致していないと、広告を見つけたクライアントが接続できません。"
+            "value": "サービスがリッスンするポートです。1024〜65535 の未使用の値を選んでください — それ未満はシステムサービス用に予約されています。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "您的服务用于侦听传入连接的端口。测试时，请选择 1024 到 65535 之间任何未使用的值；低于 1024 的端口保留给系统服务。此数字必须与您的服务实际打开的端口匹配，否则发现该广告的客户端将无法连接。"
+            "value": "您的服务侦听的端口。请选择 1024–65535 之间任何未使用的值——更低的端口为系统服务保留。"
           }
         }
       }
@@ -13045,37 +13045,37 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Use `local.` for normal home and office networks — it's the link-local domain Bonjour uses for multicast discovery. Custom domains only work if your network's DNS server is configured to host DNS-SD records, which most aren't."
+            "value": "Use `local.` for home and office networks. Custom domains only work if your DNS server hosts DNS-SD records — most don't."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Usa `local.` en redes domésticas y de oficina normales: es el dominio de enlace local que Bonjour utiliza para el descubrimiento multidifusión. Los dominios personalizados solo funcionan si el servidor DNS de tu red está configurado para alojar registros DNS-SD, algo poco habitual."
+            "value": "Usa `local.` en redes domésticas y de oficina. Los dominios personalizados solo funcionan si tu servidor DNS aloja registros DNS-SD — la mayoría no."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Utilisez `local.` pour les réseaux domestiques et professionnels classiques : c'est le domaine lien-local que Bonjour utilise pour la découverte par multidiffusion. Les domaines personnalisés ne fonctionnent que si le serveur DNS de votre réseau est configuré pour héberger des enregistrements DNS-SD, ce qui est rarement le cas."
+            "value": "Utilisez `local.` pour les réseaux domestiques et professionnels. Les domaines personnalisés ne fonctionnent que si votre serveur DNS héberge des enregistrements DNS-SD — la plupart ne le font pas."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Verwende `local.` in normalen Heim- und Büronetzwerken — das ist die Link-Local-Domain, die Bonjour für Multicast-Erkennung nutzt. Benutzerdefinierte Domains funktionieren nur, wenn der DNS-Server deines Netzwerks DNS-SD-Einträge hostet, was selten der Fall ist."
+            "value": "Verwende `local.` für Heim- und Büronetzwerke. Benutzerdefinierte Domains funktionieren nur, wenn dein DNS-Server DNS-SD-Einträge hostet — die meisten tun das nicht."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "通常の家庭やオフィスのネットワークでは `local.` を使ってください。これは Bonjour がマルチキャスト検出に使用するリンクローカルドメインです。カスタムドメインは、ネットワークの DNS サーバーが DNS-SD レコードをホストするように設定されている場合にのみ機能します（多くの場合そうなっていません）。"
+            "value": "家庭やオフィスのネットワークでは `local.` を使ってください。カスタムドメインは DNS サーバーが DNS-SD レコードをホストする場合のみ機能します — ほとんどはそうではありません。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "在普通家庭和办公网络中请使用 `local.`，这是 Bonjour 用于多播发现的链路本地域。自定义域名仅在您的网络 DNS 服务器配置为承载 DNS-SD 记录时才有效，而大多数 DNS 服务器并未如此配置。"
+            "value": "家庭和办公网络请使用 `local.`。自定义域名仅在您的 DNS 服务器承载 DNS-SD 记录时才有效——大多数都不会。"
           }
         }
       }

@@ -765,12 +765,11 @@ public enum Strings {
             .init("guidance_create_service_type", bundle: .atURL(Bundle.module.bundleURL))
         }
 
-        /// Best-practice tips for the broadcast-a-service form.
-        public static var broadcastService: LocalizedStringResource {
-            .init("guidance_broadcast_service", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
-        /// Explains what TXT records publish and how clients use them.
+        /// Explains what TXT records are, when clients read them, and
+        /// when it's fine to leave the list empty. Used as the section
+        /// footer under the TXT records list on the broadcast form,
+        /// and as the form-level guidance on the create-TXT-record
+        /// sheet.
         public static var txtRecord: LocalizedStringResource {
             .init("guidance_txt_record", bundle: .atURL(Bundle.module.bundleURL))
         }
@@ -874,6 +873,13 @@ public enum Strings {
         /// launch (so follow-ups won't refer back to prior turns).
         public static var persistChatHistoryFooter: LocalizedStringResource {
             .init("settings_persist_chat_history_footer", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Row label for the "Storage used" indicator under the
+        /// Persist chat history toggle. Shows how much disk space
+        /// the saved conversation currently occupies.
+        public static var persistChatHistoryStorageUsed: LocalizedStringResource {
+            .init("settings_persist_chat_history_storage_used", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         public static var aiExpertiseLevel: LocalizedStringResource {
