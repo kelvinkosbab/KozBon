@@ -69,6 +69,10 @@ public struct PrepareDeleteCustomServiceTypeTool: Tool {
     }
 
     public func call(arguments: Arguments) async throws -> String {
+        guard await broker.reserveToolSlot() else {
+            return "Too many actions in this turn — ask the user to confirm what they want first."
+        }
+
         let cleanFullType = arguments.serviceType
             .trimmingCharacters(in: .whitespacesAndNewlines)
 

@@ -93,6 +93,9 @@ public enum ChatInputValidator {
     /// to refuse. The system prompt also instructs the model to refuse
     /// off-topic queries, but catching them client-side saves time.
     private static let offTopicPatterns: [String] = [
+        // Creative-writing requests — the model should redirect
+        // to networking topics rather than spending tokens
+        // refusing.
         "write me a",
         "write a poem",
         "write a story",
@@ -100,24 +103,92 @@ public enum ChatInputValidator {
         "generate a poem",
         "generate a story",
         "tell me a joke",
+        "tell me a story",
+        "tell me a fun fact",
+
+        // Code-generation requests — the chat is for explaining
+        // services, not as a generic coding assistant.
+        "write a function",
+        "write a script",
+        "implement a",
+        "in python",
+        "in javascript",
+        "in typescript",
+        "in swift",
+        "in rust",
+        "in java",
+        "in c++",
+        "in go",
+        "code example for",
+        "show me code",
+
+        // Weather / news / general knowledge — common test
+        // queries for any chat assistant.
         "what's the weather",
         "what is the weather",
         "weather in",
+        "the weather like",
         "who won",
         "who is the president",
+        "who is the prime minister",
+        "latest news",
+        "what's in the news",
+        "what is the capital of",
+        "how tall is",
+        "when was ",
+
+        // Math / logic puzzles.
         "solve this equation",
         "solve the following",
         "calculate ",
         "what is the meaning of life",
+
+        // Personal advice — out of scope.
+        "should i ",
+        "help me decide",
+        "what do you think about",
+
+        // Translation requests — model is locale-pinned via
+        // system prompt; users shouldn't be using this surface
+        // as a translator.
+        "translate this",
+        "translate the following",
+        "in french",
+        "in spanish",
+        "in german",
+        "in chinese",
+        "in japanese",
+
+        // Recommendation requests.
         "recommend a movie",
         "recommend a book",
         "recommend a recipe",
-        "recipe for"
+        "recipe for",
+
+        // Pasted-conversation patterns — almost always the user
+        // dumping a transcript from another chat to try to
+        // override the assistant's role.
+        "user:\n",
+        "user: ",
+        "assistant:\n",
+        "assistant: ",
+        "human:\n",
+        "human: ",
+        "ai:\n",
+        "ai: "
     ]
 
     // MARK: - Validate
 
     /// Validates the given chat input text.
+    ///
+    /// Pattern matching runs against a Unicode-normalized
+    /// lowercased copy so an attacker can't bypass rejection by
+    /// sprinkling zero-width spaces or Unicode-tag-block characters
+    /// between the letters of a pattern (`i\u{200B}gnore previous
+    /// instructions`). The user keeps their original text in the
+    /// chat history regardless of normalization — only the
+    /// in-flight pattern check operates on the cleaned form.
     ///
     /// - Parameter text: The raw user input.
     /// - Returns: Whether the input should be allowed, or a specific rejection reason.
@@ -132,7 +203,11 @@ public enum ChatInputValidator {
             return .rejected(.tooLong(limit: maxCharacterCount))
         }
 
-        let lowered = trimmed.lowercased()
+        // Normalize Unicode before pattern matching so invisible
+        // payloads (tag block, zero-width space, BIDI overrides,
+        // C0/C1 controls) can't sneak past substring checks.
+        let normalized = PromptInjectionSanitizer.normalizeUnicode(trimmed)
+        let lowered = normalized.lowercased()
 
         for pattern in promptInjectionPatterns where lowered.contains(pattern) {
             return .rejected(.promptInjection)

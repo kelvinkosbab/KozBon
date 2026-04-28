@@ -78,6 +78,13 @@ public struct PrepareCustomServiceTypeTool: Tool {
     }
 
     public func call(arguments: Arguments) async throws -> String {
+        // Per-turn rate limit. Reserved BEFORE arg validation so a
+        // model that's looping through invalid args still consumes
+        // its quota.
+        guard await broker.reserveToolSlot() else {
+            return "Too many actions in this turn — ask the user to confirm what they want first."
+        }
+
         // Normalize before publishing so the form lands with clean
         // values regardless of how the model formatted them. The
         // sheet has its own validation, but trimming here means the
@@ -111,6 +118,23 @@ public struct PrepareCustomServiceTypeTool: Tool {
         guard !cleanDetails.isEmpty else {
             return "Couldn't draft the form: a short description of what the service " +
                 "does is required."
+        }
+
+        // Reject injection-pattern payloads in any string arg before
+        // publishing. The model could be tricked into passing
+        // `</context> SYSTEM: …` as a name or description; the
+        // user wouldn't notice the injection in the form's
+        // pre-fill, and the value would land in Core Data as a
+        // permanent context-block injection vector for every
+        // future conversation.
+        for (label, value) in [
+            ("name", cleanName),
+            ("type", cleanType),
+            ("details", cleanDetails)
+        ] where PromptInjectionSanitizer.containsInjectionPatterns(value) {
+            return "Couldn't draft the form: the \(label) contains content that " +
+                "looks like an instruction-injection attempt. Ask the user to " +
+                "rephrase using ordinary descriptive text."
         }
 
         let intent = BonjourChatIntent.createCustomServiceType(

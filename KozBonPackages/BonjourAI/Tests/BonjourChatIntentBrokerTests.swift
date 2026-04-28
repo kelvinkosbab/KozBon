@@ -140,4 +140,62 @@ struct BonjourChatIntentBrokerTests {
         broker.publish(deleteIntent)
         #expect(broker.pendingIntent == deleteIntent)
     }
+
+    // MARK: - Per-Turn Tool-Call Rate Limit
+
+    @Test("New broker starts with zero tool calls counted")
+    func freshBrokerHasZeroToolCallCount() {
+        let broker = BonjourChatIntentBroker()
+        #expect(broker.toolCallsThisTurn == 0)
+    }
+
+    @Test("`reserveToolSlot` increments the counter and returns true while under cap")
+    func reserveToolSlotIncrementsAndGrants() {
+        let broker = BonjourChatIntentBroker()
+        for index in 1...BonjourChatIntentBroker.maxToolCallsPerTurn {
+            #expect(broker.reserveToolSlot())
+            #expect(broker.toolCallsThisTurn == index)
+        }
+    }
+
+    @Test("`reserveToolSlot` returns false once the cap is hit so the offending tool can return an error")
+    func reserveToolSlotRefusesPastCap() {
+        let broker = BonjourChatIntentBroker()
+        // Burn through the quota.
+        for _ in 0..<BonjourChatIntentBroker.maxToolCallsPerTurn {
+            _ = broker.reserveToolSlot()
+        }
+        // Next reservation must refuse — and must NOT keep
+        // incrementing past the cap, otherwise a long-stuck loop
+        // would push the counter to absurd numbers.
+        #expect(!broker.reserveToolSlot())
+        #expect(broker.toolCallsThisTurn == BonjourChatIntentBroker.maxToolCallsPerTurn)
+        // Subsequent attempts also refuse.
+        #expect(!broker.reserveToolSlot())
+        #expect(broker.toolCallsThisTurn == BonjourChatIntentBroker.maxToolCallsPerTurn)
+    }
+
+    @Test("`resetToolCallCount` zeroes the counter so each user turn starts with a fresh quota")
+    func resetToolCallCountZeroesCounter() {
+        let broker = BonjourChatIntentBroker()
+        for _ in 0..<BonjourChatIntentBroker.maxToolCallsPerTurn {
+            _ = broker.reserveToolSlot()
+        }
+        broker.resetToolCallCount()
+        #expect(broker.toolCallsThisTurn == 0)
+        // Quota fully restored — model gets a fresh allotment on
+        // the next user turn.
+        #expect(broker.reserveToolSlot())
+    }
+
+    @Test("Cap is at least 2 so the documented chains can fire within a single turn if needed")
+    func capAllowsAtLeastTwoChainedCalls() {
+        // The "create then broadcast" and "stop then delete" chains
+        // are documented as two-turn flows but the model can chain
+        // them in a single turn when the user's request unambiguously
+        // describes both actions. Pin a floor so a future cap
+        // tightening doesn't break that flow without an explicit
+        // intentional change.
+        #expect(BonjourChatIntentBroker.maxToolCallsPerTurn >= 2)
+    }
 }

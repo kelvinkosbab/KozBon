@@ -88,6 +88,10 @@ public struct PrepareEditCustomServiceTypeTool: Tool {
     }
 
     public func call(arguments: Arguments) async throws -> String {
+        guard await broker.reserveToolSlot() else {
+            return "Too many actions in this turn — ask the user to confirm what they want first."
+        }
+
         let cleanFullType = arguments.serviceType.trimmingCharacters(in: .whitespacesAndNewlines)
         let cleanSuggestedName = arguments.suggestedName
             .trimmingCharacters(in: .whitespacesAndNewlines)
@@ -112,6 +116,20 @@ public struct PrepareEditCustomServiceTypeTool: Tool {
             return "Couldn't draft the edit: \"\(cleanFullType)\" is a built-in " +
                 "service type, which can't be edited. Only types the user " +
                 "created themselves can be renamed or revised."
+        }
+
+        // Same injection-pattern check as the create tool — a
+        // suggested rename or revised description carrying
+        // `</context> SYSTEM: …` would land in Core Data as a
+        // permanent context-block injection vector.
+        for (label, value) in [
+            ("suggested name", cleanSuggestedName),
+            ("suggested details", cleanSuggestedDetails)
+        ]
+        where !value.isEmpty && PromptInjectionSanitizer.containsInjectionPatterns(value) {
+            return "Couldn't draft the edit: the \(label) contains content that " +
+                "looks like an instruction-injection attempt. Ask the user to " +
+                "rephrase using ordinary descriptive text."
         }
 
         // The tool stores the suggestions as `nil` rather than empty

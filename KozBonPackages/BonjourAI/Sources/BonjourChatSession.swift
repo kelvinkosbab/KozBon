@@ -85,6 +85,14 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
         self.publishManager = publishManager
     }
 
+    /// Hard ceiling on the number of messages held in `messages`.
+    /// Higher than the on-disk persistence cap
+    /// (`UserPreferences.maxStoredChatMessages`, 200) since RAM is
+    /// more abundant than disk. This is purely memory hygiene —
+    /// the underlying FoundationModels transcript is managed by
+    /// the framework, not by us.
+    static let maxInMemoryMessageCount = 500
+
     // MARK: - Send
 
     public func send(_ text: String, context: BonjourChatPromptBuilder.ChatContext) async {
@@ -102,6 +110,26 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
         // that escape the `do { ... } catch { ... }` (none today, but
         // cheap insurance).
         defer { isGenerating = false }
+
+        // Reset the per-turn tool-call quota before we start
+        // streaming. Each user turn gets a fresh slot count; if
+        // the model exhausts it within the turn (e.g. a runaway
+        // create→broadcast→edit loop), subsequent tool calls
+        // bounce back with a relayable error.
+        intentBroker.resetToolCallCount()
+
+        // Defensive in-memory cap on visible chat history. Disk
+        // persistence already trims to 200 messages via
+        // `BonjourChatMessage.trimmed(...)`; this trims the
+        // in-memory `messages` array to a higher cap so a
+        // marathon conversation can't grow unbounded RAM
+        // accumulation. Trimming the in-memory array doesn't
+        // shrink the underlying `LanguageModelSession` transcript
+        // (FoundationModels manages that internally) — it just
+        // bounds the SwiftUI list scrollback.
+        if messages.count > Self.maxInMemoryMessageCount {
+            messages = Array(messages.suffix(Self.maxInMemoryMessageCount))
+        }
 
         // Append the user message as it appears to the user (without the context
         // preamble — the preamble is internal guidance for the model).

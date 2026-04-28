@@ -34,6 +34,25 @@ public final class BonjourChatIntentBroker {
     /// matching sheet.
     public private(set) var pendingIntent: BonjourChatIntent?
 
+    /// Maximum number of tool calls allowed per user turn. Reset
+    /// to zero by ``resetToolCallCount()`` at the start of each
+    /// `BonjourChatSession.send(...)`. Beyond the cap,
+    /// ``reserveToolSlot()`` returns `false` so the offending tool
+    /// can return a relayable error to the model instead of
+    /// publishing an intent.
+    ///
+    /// Picked to comfortably allow the documented chains
+    /// (create→broadcast and stop→delete are two-tool flows split
+    /// across two turns; in-turn chaining is uncommon but possible)
+    /// while still bounding runaway tool-loops if the model gets
+    /// stuck or is prompt-injected.
+    public static let maxToolCallsPerTurn = 3
+
+    /// Number of tool calls already granted in the current turn.
+    /// Read-only externally so callers can't accidentally bypass
+    /// the cap.
+    public private(set) var toolCallsThisTurn: Int = 0
+
     public init() {}
 
     /// Publish a new intent for the chat view to present. Replaces
@@ -50,5 +69,27 @@ public final class BonjourChatIntentBroker {
     /// presentation on the next render.
     public func consume() {
         pendingIntent = nil
+    }
+
+    /// Atomically increments the per-turn tool-call counter and
+    /// returns whether the call is allowed. Tools must invoke this
+    /// before doing any side-effecting work — when it returns
+    /// `false`, the tool must return a relayable error to the model
+    /// instead of publishing an intent, so the model can tell the
+    /// user it didn't act on what was asked.
+    ///
+    /// The counter is reset by ``resetToolCallCount()`` at the
+    /// start of each user turn (see `BonjourChatSession.send(...)`).
+    public func reserveToolSlot() -> Bool {
+        guard toolCallsThisTurn < Self.maxToolCallsPerTurn else { return false }
+        toolCallsThisTurn += 1
+        return true
+    }
+
+    /// Resets the per-turn tool-call counter. Called by the chat
+    /// session at the start of each user turn so the model gets a
+    /// fresh quota every time the user submits a message.
+    public func resetToolCallCount() {
+        toolCallsThisTurn = 0
     }
 }
