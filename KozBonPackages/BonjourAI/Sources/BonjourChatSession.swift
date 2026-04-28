@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import BonjourModels
+import BonjourScanning
 
 #if canImport(FoundationModels)
 import FoundationModels
@@ -36,6 +38,15 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
     public var error: String?
     public var responseLength: BonjourServicePromptBuilder.ResponseLength = .standard
 
+    /// Side channel through which the assistant's tool calls publish
+    /// drafted forms (custom service types, broadcasts) for the chat
+    /// view to present. Held by the session so its lifetime matches
+    /// the conversation's: the broker survives session recreation
+    /// (see ``send(_:context:)``) so a pending unconsumed intent
+    /// isn't dropped when, for example, the response-length
+    /// preference flips mid-conversation.
+    public let intentBroker: BonjourChatIntentBroker
+
     /// The current session. Created lazily on first send and kept alive across turns
     /// so conversation history is preserved.
     private var session: LanguageModelSession?
@@ -48,7 +59,31 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
     /// service context has materially changed.
     private var lastContextBlock: String?
 
-    public init() {}
+    /// The service-type library snapshot used when constructing the
+    /// current session's tools. Re-snapshotted on session recreation
+    /// so the broadcast tool's library check sees newly-added custom
+    /// types without forcing a re-create on every send.
+    private var librarySnapshot: [BonjourServiceType] = []
+
+    /// Optional reference to the app's publish manager. When non-nil,
+    /// the stop-broadcast tool reads its live `publishedServices`
+    /// set to validate which broadcast the user wants to stop. When
+    /// nil (e.g. in tests that don't drive the broadcast tool), the
+    /// stop tool reports an empty broadcast list and the model is
+    /// instructed to relay the lack of active broadcasts to the user.
+    ///
+    /// Held weakly to avoid extending the publish manager's lifetime
+    /// past the chat session — the manager is owned by the app's
+    /// dependency container, not by the session.
+    private weak var publishManager: BonjourPublishManagerProtocol?
+
+    public init(
+        intentBroker: BonjourChatIntentBroker = BonjourChatIntentBroker(),
+        publishManager: BonjourPublishManagerProtocol? = nil
+    ) {
+        self.intentBroker = intentBroker
+        self.publishManager = publishManager
+    }
 
     // MARK: - Send
 
@@ -80,7 +115,20 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
             let instructions = BonjourChatPromptBuilder.systemInstructions(
                 responseLength: responseLength
             )
-            session = LanguageModelSession(instructions: instructions)
+            // Snapshot the library so the broadcast tool can verify
+            // service-type arguments resolve to a real type. Built-ins
+            // are static; custom types are read fresh from the persistent
+            // store. If the user creates a new custom type via the
+            // PrepareCustomServiceTypeTool flow mid-conversation, the
+            // next session recreation (e.g. on a response-length flip)
+            // picks it up — for the most common case of "create then
+            // broadcast" within one turn the model can call both tools
+            // in sequence.
+            librarySnapshot = BonjourServiceType.fetchAll()
+            session = LanguageModelSession(
+                tools: makeTools(library: librarySnapshot),
+                instructions: instructions
+            )
             sessionResponseLengthSnapshot = responseLength
             // Fresh session — treat the next turn as the first turn so context
             // is injected.
@@ -132,6 +180,44 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
         messages.append(BonjourChatMessage(role: .assistant, content: refusalText))
     }
 
+    // MARK: - Tools
+
+    /// Builds the tool list passed to `LanguageModelSession`. Returns
+    /// an empty array when running on a target where the
+    /// `FoundationModels.Tool` symbol isn't ready (i.e. anything
+    /// pre-iOS 26), so older OSes get a chat-only experience without
+    /// crashing at session-construction time. The whole class is
+    /// gated on `iOS 26+` already, but the inner availability check
+    /// pins the dependency on `Tool` itself.
+    ///
+    /// The stop-broadcast tool gets a closure for the published-
+    /// services list rather than a snapshot, so its membership check
+    /// sees the live state at call time. A user who broadcasts a
+    /// service mid-conversation can ask the assistant to stop it
+    /// without forcing a session recreation.
+    private func makeTools(library: [BonjourServiceType]) -> [any Tool] {
+        let publishManagerRef = publishManager
+        return [
+            PrepareCustomServiceTypeTool(broker: intentBroker),
+            PrepareEditCustomServiceTypeTool(
+                broker: intentBroker,
+                library: library
+            ),
+            PrepareDeleteCustomServiceTypeTool(
+                broker: intentBroker,
+                library: library
+            ),
+            PrepareBroadcastTool(broker: intentBroker, library: library),
+            PrepareStopBroadcastTool(
+                broker: intentBroker,
+                publishedServicesProvider: { @MainActor in
+                    guard let publishManagerRef else { return [] }
+                    return Array(publishManagerRef.publishedServices)
+                }
+            )
+        ]
+    }
+
     // MARK: - Reset
 
     public func reset() {
@@ -139,8 +225,13 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
         session = nil
         sessionResponseLengthSnapshot = nil
         lastContextBlock = nil
+        librarySnapshot = []
         error = nil
         isGenerating = false
+        // Drop any pending intent so a stale draft doesn't snap
+        // back open after the user clears the chat. The chat view
+        // will re-publish if the user asks for the same thing again.
+        intentBroker.consume()
     }
 
     // MARK: - Restore

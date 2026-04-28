@@ -257,4 +257,28 @@ struct MockBonjourChatSessionTests {
         #expect(mock.error == nil)
         #expect(!mock.isGenerating)
     }
+
+    // MARK: - Intent Broker
+
+    @Test("Mock session exposes a non-nil `intentBroker` so view-side tests can drive sheet presentation")
+    func mockExposesIntentBroker() {
+        // The chat view observes `session.intentBroker.pendingIntent`
+        // unconditionally; if the mock returned nil here, the view's
+        // `.onChange` would crash. Pin the protocol contract.
+        let mock = MockBonjourChatSession()
+        #expect(mock.intentBroker.pendingIntent == nil)
+    }
+
+    @Test("Mock session accepts a custom broker so a test can share state with assertions")
+    func mockAcceptsInjectedBroker() {
+        let broker = BonjourChatIntentBroker()
+        let mock = MockBonjourChatSession(intentBroker: broker)
+        broker.publish(.createCustomServiceType(
+            name: "Test", type: "test", transport: "tcp", details: "Test details"
+        ))
+        // The session and the test share the same broker instance,
+        // so a publish on one is visible on the other. Lets a test
+        // simulate a tool call in a way the chat view would observe.
+        #expect(mock.intentBroker.pendingIntent != nil)
+    }
 }

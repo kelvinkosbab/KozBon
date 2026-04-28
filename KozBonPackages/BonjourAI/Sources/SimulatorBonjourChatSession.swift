@@ -27,7 +27,17 @@ public final class SimulatorBonjourChatSession: BonjourChatSessionProtocol {
     public var error: String?
     public var responseLength: BonjourServicePromptBuilder.ResponseLength = .standard
 
-    public init() {}
+    /// Broker exposed for protocol conformance. The simulator stub
+    /// never emits intents — tool calls aren't simulated. Holding
+    /// a real broker means previews and dev builds still observe
+    /// the same `pendingIntent`-watching `.onChange` plumbing as
+    /// production, so a regression in that wiring shows up in
+    /// development before it ships.
+    public let intentBroker: BonjourChatIntentBroker
+
+    public init(intentBroker: BonjourChatIntentBroker = BonjourChatIntentBroker()) {
+        self.intentBroker = intentBroker
+    }
 
     // MARK: - BonjourChatSessionProtocol
 

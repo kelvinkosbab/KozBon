@@ -21,6 +21,12 @@ public final class MockBonjourChatSession: BonjourChatSessionProtocol {
     public var error: String?
     public var responseLength: BonjourServicePromptBuilder.ResponseLength = .standard
 
+    /// Broker exposed for protocol conformance. The mock never
+    /// emits intents through it, but tests can call
+    /// ``BonjourChatIntentBroker/publish(_:)`` directly to drive
+    /// view-side intent handling under test.
+    public let intentBroker: BonjourChatIntentBroker
+
     /// The canned reply returned by ``send(_:context:)``.
     public var cannedReply: String
 
@@ -43,8 +49,12 @@ public final class MockBonjourChatSession: BonjourChatSessionProtocol {
     /// The most recent context passed to ``send(_:context:)``.
     public var lastContext: BonjourChatPromptBuilder.ChatContext?
 
-    public init(cannedReply: String = "This is a mock chat response.") {
+    public init(
+        cannedReply: String = "This is a mock chat response.",
+        intentBroker: BonjourChatIntentBroker = BonjourChatIntentBroker()
+    ) {
         self.cannedReply = cannedReply
+        self.intentBroker = intentBroker
     }
 
     // MARK: - BonjourChatSessionProtocol

@@ -16,6 +16,16 @@ import Foundation
 @MainActor
 public protocol BonjourChatSessionProtocol: AnyObject, Observable {
 
+    /// Side channel between assistant tool calls and the chat view's
+    /// sheet presentation. Tools publish intents (drafted forms);
+    /// the chat view observes ``BonjourChatIntentBroker/pendingIntent``
+    /// and presents the matching pre-filled sheet.
+    ///
+    /// Mock and simulator implementations expose a broker too — they
+    /// just don't emit anything into it. The view treats it as an
+    /// opaque dependency.
+    var intentBroker: BonjourChatIntentBroker { get }
+
     /// All messages in the current conversation, in chronological order.
     var messages: [BonjourChatMessage] { get }
 

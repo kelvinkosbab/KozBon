@@ -13,6 +13,16 @@ import BonjourModels
 import BonjourScanning
 import BonjourStorage
 
+// swiftlint:disable file_length
+// One cohesive form view: service-type picker, port + domain
+// inputs, TXT-record list, and the AI Insights long-press menu —
+// each piece reads context (`isCreatingBonjourService`, validation
+// state, the broadcast-form prefill paths used by the chat
+// assistant's `prepareBroadcast` tool) from the surrounding
+// closure-captured state, so splitting across files would force
+// the state through bindings or environment for no structural
+// benefit.
+
 // MARK: - BroadcastBonjourServiceView
 
 // swiftlint:disable:next type_body_length
@@ -90,6 +100,55 @@ struct BroadcastBonjourServiceView: View {
         self.domain = serviceToUpdate.service.domain
         self.port = serviceToUpdate.service.port
         self.dataRecords = serviceToUpdate.dataRecords
+    }
+
+    /// Create-mode init that pre-fills the form with values supplied
+    /// by the chat assistant's `prepareBroadcast` tool. Identical to
+    /// the empty-form `init(isPresented:customPublishedServices:)`
+    /// in every other respect — `isCreatingBonjourService` stays
+    /// `true` so the user can change the service type via the
+    /// regular NavigationLink, and the Done button still routes
+    /// through the publish-new path rather than an update path.
+    ///
+    /// Pre-filled values are loaded into the same `@State` storage
+    /// the user types into, so the form behaves identically once
+    /// it appears: the user can edit, clear, or rebuild any field,
+    /// and the existing per-field validation gates the Done button.
+    init(
+        isPresented: Binding<Bool>,
+        customPublishedServices: Binding<[BonjourService]>,
+        prefilledServiceType: BonjourServiceType?,
+        prefilledPort: Int?,
+        prefilledDomain: String,
+        prefilledDataRecords: [BonjourService.TxtDataRecord]
+    ) {
+        self._isPresented = isPresented
+        self._customPublishedServices = customPublishedServices
+        self.serviceToUpdate = BonjourService(
+            service: .init(
+                domain: Constants.Network.defaultDomain,
+                type: "",
+                name: "",
+                port: 0
+            ),
+            serviceType: BonjourServiceType(
+                name: "",
+                type: "",
+                transportLayer: .tcp
+            )
+        )
+        isCreatingBonjourService = true
+        serviceType = prefilledServiceType
+        // Domain falls back to the default if the caller passed an
+        // empty string — defending against a model that called the
+        // tool without supplying a domain. The form would otherwise
+        // surface an empty-domain validation error the user has to
+        // manually clear.
+        domain = prefilledDomain.isEmpty
+            ? Constants.Network.defaultDomain
+            : prefilledDomain
+        port = prefilledPort
+        dataRecords = prefilledDataRecords
     }
 
     var body: some View {

@@ -49,6 +49,31 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
         self.isCreatingBonjourService = true
     }
 
+    /// Create-mode init pre-filled with values supplied by the chat
+    /// assistant's `prepareCustomServiceType` tool. The form's
+    /// regular validation still gates the Done button, so an empty
+    /// or otherwise-invalid pre-fill simply renders an editable
+    /// form with that text preloaded — exactly what happens when
+    /// the user starts typing themselves.
+    init(
+        isPresented: Binding<Bool>,
+        prefilledName: String,
+        prefilledType: String,
+        prefilledDetails: String
+    ) {
+        self._isPresented = isPresented
+        self.name = prefilledName
+        self.type = prefilledType
+        self.details = prefilledDetails
+        self._serviceTypeToUpdate = .constant(BonjourServiceType(
+            name: "",
+            type: "",
+            transportLayer: .tcp,
+            detail: ""
+        ))
+        self.isCreatingBonjourService = true
+    }
+
     init(
         isPresented: Binding<Bool>,
         serviceToUpdate: Binding<BonjourServiceType>

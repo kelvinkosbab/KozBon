@@ -233,6 +233,12 @@ public enum Strings {
             .init("button_delete", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        /// Destructive action label for the chat-driven "stop
+        /// broadcasting" confirmation dialog.
+        public static var stop: LocalizedStringResource {
+            .init("button_stop", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var ok: LocalizedStringResource {
             .init("button_ok", bundle: .atURL(Bundle.module.bundleURL))
         }
@@ -1053,6 +1059,43 @@ public enum Strings {
 
         public static var errorOffTopic: LocalizedStringResource {
             .init("chat_error_off_topic", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        // MARK: - Destructive Confirmations
+        //
+        // Phrasing intentionally uses "Are you sure you want to…?"
+        // — a question, not a statement — so the user reads the
+        // destructive intent before tapping the red button.
+
+        /// "Are you sure you want to delete the <name> service type?"
+        /// shown when the chat assistant drafts a delete via
+        /// `prepareDeleteCustomServiceType`.
+        public static func confirmDeleteServiceType(_ name: String) -> String {
+            String(
+                format: NSLocalizedString(
+                    "chat_confirm_delete_service_type_format",
+                    bundle: Bundle.module,
+                    comment: ""
+                ),
+                name
+            )
+        }
+
+        /// "Are you sure you want to stop broadcasting <name>?"
+        /// shown when the chat assistant drafts a stop via
+        /// `prepareStopBroadcast`. The name is the user-given
+        /// service name (e.g. "Living Room Speaker"), not the raw
+        /// DNS-SD type, so the dialog reads as a sentence about the
+        /// thing the user knows by name.
+        public static func confirmStopBroadcast(_ name: String) -> String {
+            String(
+                format: NSLocalizedString(
+                    "chat_confirm_stop_broadcast_format",
+                    bundle: Bundle.module,
+                    comment: ""
+                ),
+                name
+            )
         }
     }
 
