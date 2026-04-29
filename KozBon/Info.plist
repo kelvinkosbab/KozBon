@@ -4,12 +4,15 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
-	<key>LSApplicationCategoryType</key>
-	<string>public.app-category.utilities</string>
 	<key>CFBundleDisplayName</key>
 	<string>$(APP_DISPLAY_NAME)</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIcons</key>
+	<dict>
+		<key>CFBundlePrimaryIcon</key>
+		<string>AppIcon</string>
+	</dict>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -22,12 +25,9 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
-	<key>CFBundleIcons</key>
-	<dict>
-		<key>CFBundlePrimaryIcon</key>
-		<string>AppIcon</string>
-	</dict>
-<key>NSBonjourServices</key>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.utilities</string>
+	<key>NSBonjourServices</key>
 	<array>
 		<string>_carplay_ctrl._tcp</string>
 		<string>_udisks-ssh._tcp</string>
@@ -146,7 +146,6 @@
 		<string>_home-assistant._tcp</string>
 		<string>_vnc._tcp</string>
 		<string>_prometheus._tcp</string>
-		<!-- Tier 1 additions: media servers, smart home, mail/calendar, modern dev -->
 		<string>_plex._tcp</string>
 		<string>_jellyfin._tcp</string>
 		<string>_xbmc._tcp</string>
@@ -172,7 +171,6 @@
 		<string>_apple-mobdev3._tcp</string>
 		<string>_lifx._udp</string>
 		<string>_kdeconnect._udp</string>
-		<!-- Tier 2 additions -->
 		<string>_emby._tcp</string>
 		<string>_steam._tcp</string>
 		<string>_minecraft._tcp</string>
@@ -183,7 +181,6 @@
 		<string>_tasmota._tcp</string>
 		<string>_ntp._udp</string>
 		<string>_apple-mobdev2._udp</string>
-		<!-- Tier 3 additions: encrypted DNS, enterprise auth, Linux audio -->
 		<string>_dot._tcp</string>
 		<string>_doh._tcp</string>
 		<string>_kerberos._tcp</string>
