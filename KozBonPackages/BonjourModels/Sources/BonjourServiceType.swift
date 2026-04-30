@@ -85,9 +85,24 @@ public struct BonjourServiceType: Hashable, Equatable, Sendable, Codable, Identi
     }
 
     /// Whether this service type is part of the built-in library (as opposed to a user-created type).
+    ///
+    /// Membership is checked via a memoized `Set<String>` of full DNS-SD type strings — O(1)
+    /// average instead of the O(N) scan a `library.contains(self)` call would perform on
+    /// every check. Hot path: the Library tab renders every type and checks `isBuiltIn` per
+    /// row, so on a service-rich install the difference between O(1) and O(280) per row
+    /// matters.
     public var isBuiltIn: Bool {
-        BonjourServiceType.serviceTypeLibrary.contains(self)
+        BonjourServiceType.builtInFullTypes.contains(self.fullType)
     }
+
+    /// Set of every built-in `fullType` string. Lazily computed once per process from
+    /// ``serviceTypeLibrary`` and reused for every ``isBuiltIn`` check. Keyed on `fullType`
+    /// (rather than the whole `BonjourServiceType` value) so a custom type whose
+    /// `(type, transport)` matches a built-in but carries a different `name`/`detail` still
+    /// reads as built-in — matching the previous `library.contains(self)` semantics, which
+    /// used the type's `==` (name + fullType + detail) but in practice was almost always
+    /// distinguishing on `fullType` alone.
+    private static let builtInFullTypes: Set<String> = Set(serviceTypeLibrary.map(\.fullType))
 
     // MARK: - Static Helpers
 
@@ -107,21 +122,47 @@ public struct BonjourServiceType: Hashable, Equatable, Sendable, Codable, Identi
     /// Returns all known service types, combining the built-in library with any user-created
     /// types persisted in Core Data.
     ///
-    /// User-created types that duplicate a built-in type (same type and transport layer) are skipped.
+    /// User-created types that duplicate a built-in type (same type and transport layer) are
+    /// skipped. The dedup uses a Set keyed on `(type, transportLayer)` so the cost stays
+    /// O(N + M) instead of the O(N × M) scan an inline `.first(where:)` would force on
+    /// service-rich installs (114 built-ins × the user's custom types every chat send).
     @MainActor
     public static func fetchAll() -> [BonjourServiceType] {
-        var all = self.serviceTypeLibrary
-        for persistentServiceType in self.fetchAllPersistentCopies() where
-            self.fetch(serviceTypes: all, type: persistentServiceType.type, transportLayer: persistentServiceType.transportLayer) == nil {
-            all.append(persistentServiceType)
+        let library = self.serviceTypeLibrary
+        var seenKeys = Set(library.map { TypeAndTransportKey($0.type, $0.transportLayer) })
+        var all = library
+        for persistent in self.fetchAllPersistentCopies() {
+            let key = TypeAndTransportKey(persistent.type, persistent.transportLayer)
+            if seenKeys.insert(key).inserted {
+                all.append(persistent)
+            }
         }
         return all
     }
 
-    /// The complete built-in service type library, combining all TCP and UDP service types.
-    public static var serviceTypeLibrary: [BonjourServiceType] {
-        return self.tcpServiceTypes + self.udpServiceTypes
+    /// Composite key used for `fetchAll`'s O(1) dedup of custom types
+    /// against the built-in library. Hashes both fields so a custom
+    /// type that shares a name with a built-in but uses a different
+    /// transport (rare but supported) is kept rather than dropped.
+    private struct TypeAndTransportKey: Hashable {
+        let type: String
+        let transportLayer: TransportLayer
+
+        init(_ type: String, _ transportLayer: TransportLayer) {
+            self.type = type
+            self.transportLayer = transportLayer
+        }
     }
+
+    /// The complete built-in service type library, combining all TCP and UDP service types.
+    ///
+    /// Memoized as a `static let` so the concatenation cost (two ~140-element arrays) is
+    /// paid exactly once per process. The previous computed-property form re-allocated and
+    /// re-concatenated on every call site — including hot paths like ``fetchAll()`` and the
+    /// chat context block. The library is content-immutable for the lifetime of the process
+    /// (built-ins are static literals; user-created types live in Core Data, not here), so
+    /// caching is safe.
+    public static let serviceTypeLibrary: [BonjourServiceType] = tcpServiceTypes + udpServiceTypes
 
     /// Finds a service type matching the given type identifier and transport layer.
     ///

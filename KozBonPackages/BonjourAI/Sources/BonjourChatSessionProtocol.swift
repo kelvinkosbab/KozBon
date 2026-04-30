@@ -38,6 +38,14 @@ public protocol BonjourChatSessionProtocol: AnyObject, Observable {
     /// The desired verbosity of assistant responses.
     var responseLength: BonjourServicePromptBuilder.ResponseLength { get set }
 
+    /// Builds the underlying model session ahead of the user's first
+    /// send so suggestion-tap latency doesn't include the cost of
+    /// model-instruction compilation. Idempotent — once the session
+    /// exists, subsequent calls are no-ops until a preference change
+    /// invalidates it. Mocks default-implement this as a no-op since
+    /// they don't have a real model to warm.
+    func prewarm()
+
     /// Sends a user message and streams the assistant's response.
     ///
     /// - Parameters:
@@ -81,4 +89,15 @@ public protocol BonjourChatSessionProtocol: AnyObject, Observable {
     /// - Parameter messages: The messages to display, in chronological
     ///   order. An empty array is equivalent to ``reset()``.
     func restore(messages: [BonjourChatMessage])
+}
+
+// MARK: - Default Implementations
+
+@MainActor
+public extension BonjourChatSessionProtocol {
+
+    /// Mocks and stub implementations don't have a real model session
+    /// to warm, so the protocol default no-ops. The production
+    /// `BonjourChatSession` overrides this with an actual prewarm.
+    func prewarm() {}
 }

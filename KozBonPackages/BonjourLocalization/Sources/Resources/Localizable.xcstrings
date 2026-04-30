@@ -12307,37 +12307,37 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "I can help with discovered services, the service type library, and how to use KozBon."
+            "value": "Ask about discovered services, the service type library, or how to use KozBon."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Puedo ayudarte con los servicios descubiertos, la biblioteca de tipos de servicio y cómo usar KozBon."
+            "value": "Pregunta sobre los servicios descubiertos, la biblioteca de tipos de servicio o cómo usar KozBon."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Je peux vous aider avec les services découverts, la bibliothèque de types de service et l'utilisation de KozBon."
+            "value": "Posez une question sur les services découverts, la bibliothèque de types de service ou l'utilisation de KozBon."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ich kann dir bei entdeckten Diensten, der Diensttyp-Bibliothek und der Nutzung von KozBon helfen."
+            "value": "Frag nach entdeckten Diensten, der Diensttyp-Bibliothek oder zur Nutzung von KozBon."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "発見されたサービス、サービスタイプライブラリ、KozBonの使い方についてお手伝いします。"
+            "value": "発見されたサービス、サービスタイプライブラリ、KozBon の使い方について質問してください。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "我可以帮助您了解已发现的服务、服务类型库以及如何使用KozBon。"
+            "value": "询问已发现的服务、服务类型库或 KozBon 的使用方法。"
           }
         }
       }

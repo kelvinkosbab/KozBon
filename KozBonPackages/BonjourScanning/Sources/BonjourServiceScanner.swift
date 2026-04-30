@@ -77,6 +77,14 @@ public final class BonjourServiceScanner: BonjourServiceScannerDelegate {
         for browser in self.typeScanners {
             browser.reset()
         }
+        // Clear the array so subsequent `startScan` calls don't
+        // accumulate scanners from prior cycles. Without this,
+        // each refresh on the Discover tab silently doubled the
+        // number of `NetServiceBrowser` instances driving the
+        // network — visible on long-running sessions as
+        // increasing CPU per refresh and memory growth that
+        // never released.
+        self.typeScanners.removeAll(keepingCapacity: true)
         self.didReset()
     }
 

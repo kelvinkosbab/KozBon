@@ -29,6 +29,23 @@ struct AppCore: App {
     @State private var preferencesStore = PreferencesStore()
     @State private var explainer: (any BonjourServiceExplainerProtocol)? = Self.makeExplainer()
 
+    /// App-wide chat session, created once at launch so the chat
+    /// tab's first activation doesn't pay the cost of constructing
+    /// the `BonjourChatSession` (and lazily, on first ``prewarm()``,
+    /// the underlying `LanguageModelSession` with its compiled
+    /// system instructions).
+    ///
+    /// Owning the session at the app level — instead of letting
+    /// `BonjourChatView` construct one on first render — also means
+    /// the session survives tab switches without being torn down,
+    /// and lets us eagerly call ``BonjourChatSessionProtocol/prewarm()``
+    /// in a `.task` on the root scene before the user has navigated
+    /// anywhere. Combined with the deferred prewarm inside the
+    /// chat view's `.onAppear`, this is the difference between
+    /// "first tap on a suggestion takes a beat to start streaming"
+    /// and "first tap streams immediately."
+    @State private var chatSession: (any BonjourChatSessionProtocol)?
+
     /// The single, app-wide services view model.
     ///
     /// Must be shared between the Discover and Chat tabs because
@@ -42,6 +59,9 @@ struct AppCore: App {
         let dependencies = DependencyContainer()
         _dependencies = State(initialValue: dependencies)
         _servicesViewModel = State(initialValue: BonjourServicesViewModel(dependencies: dependencies))
+        _chatSession = State(
+            initialValue: Self.makeChatSession(publishManager: dependencies.bonjourPublishManager)
+        )
     }
 
     /// Creates an AI explainer if the on-device model is available.
@@ -59,6 +79,49 @@ struct AppCore: App {
         #else
         return nil
         #endif
+    }
+
+    /// Creates the app-wide chat session. Returns `nil` on devices
+    /// that can't run the on-device Foundation Model — the chat tab
+    /// is gated on the same support check, so a `nil` session here
+    /// means the chat tab won't surface anyway.
+    ///
+    /// In the iOS Simulator, returns a mock that streams lorem ipsum
+    /// responses so the chat UI can be exercised end-to-end without
+    /// real model hardware.
+    private static func makeChatSession(
+        publishManager: BonjourPublishManagerProtocol
+    ) -> (any BonjourChatSessionProtocol)? {
+        #if targetEnvironment(simulator)
+        return SimulatorBonjourChatSession()
+        #elseif canImport(FoundationModels)
+        if #available(iOS 26, macOS 26, visionOS 26, *) {
+            return BonjourChatSession(publishManager: publishManager)
+        }
+        return nil
+        #else
+        return nil
+        #endif
+    }
+
+    /// Eagerly compiles the chat session's system instructions ahead
+    /// of the user's first interaction with the chat tab so that the
+    /// first suggestion-tap doesn't pay the model-load cost. Gated on
+    /// AI being available AND the user keeping AI features enabled —
+    /// prewarming when the chat tab won't surface would be wasted
+    /// CPU and battery.
+    ///
+    /// Yields once before doing the work so the first frame paints
+    /// (the rest of the tab content) before we hand main back to the
+    /// model for instruction compilation. Without the yield the model
+    /// load lands inside the app's launch path and the splash-to-
+    /// first-frame transition stutters.
+    private func prewarmChatSessionIfEnabled() async {
+        guard AppleIntelligenceSupport.isDeviceSupported,
+              preferencesStore.aiAnalysisEnabled,
+              let chatSession else { return }
+        await Task.yield()
+        chatSession.prewarm()
     }
 
     var body: some Scene {
@@ -142,7 +205,9 @@ struct AppCore: App {
                 .tint(.kozBonBlue)
                 .environment(\.dependencies, dependencies)
                 .environment(\.serviceExplainer, explainer)
+                .environment(\.chatSession, chatSession)
                 .environment(\.preferencesStore, preferencesStore)
+                .task { await prewarmChatSessionIfEnabled() }
             } else {
                 TabView {
                     BonjourScanForServicesView(viewModel: servicesViewModel)
@@ -194,7 +259,9 @@ struct AppCore: App {
                 .tint(.kozBonBlue)
                 .environment(\.dependencies, dependencies)
                 .environment(\.serviceExplainer, explainer)
+                .environment(\.chatSession, chatSession)
                 .environment(\.preferencesStore, preferencesStore)
+                .task { await prewarmChatSessionIfEnabled() }
             }
         }
         #if os(macOS)

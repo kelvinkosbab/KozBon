@@ -102,6 +102,39 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
     /// transcript is managed by the framework, not by us.
     static let maxInMemoryMessageCount = 500
 
+    // MARK: - Prewarm
+
+    /// Builds the underlying `LanguageModelSession` ahead of the user's
+    /// first send so that tap latency on a recommended-prompt button
+    /// (or a hand-typed first message) doesn't include the cost of
+    /// model-instruction compilation. Subsequent calls are a no-op:
+    /// once the session exists, ``send(_:context:)`` reuses it until
+    /// the user changes the response-length preference.
+    ///
+    /// Safe to call from `.onAppear` — if the user changes the
+    /// response-length preference between this call and the first
+    /// send, ``send(_:context:)`` notices the snapshot mismatch and
+    /// rebuilds the session, paying the cost it just saved. That's
+    /// acceptable because preference flips are rare; the common path
+    /// (open tab → tap suggestion) gets the win.
+    ///
+    /// The work is `@MainActor` because `LanguageModelSession` itself
+    /// is. Callers should still wrap this in a `Task { @MainActor in
+    /// await Task.yield(); session.prewarm() }` so the first frame
+    /// paints before the model loads — instruction compilation can
+    /// stall main for a noticeable beat on the first call after a
+    /// cold launch.
+    public func prewarm() {
+        guard session == nil || sessionResponseLengthSnapshot != responseLength else { return }
+        let instructions = BonjourChatPromptBuilder.systemInstructions(
+            responseLength: responseLength
+        )
+        librarySnapshot = BonjourServiceType.fetchAll()
+        session = LanguageModelSession(instructions: instructions)
+        sessionResponseLengthSnapshot = responseLength
+        lastContextBlock = nil
+    }
+
     // MARK: - Send
 
     public func send(_ text: String, context: BonjourChatPromptBuilder.ChatContext) async {
@@ -148,43 +181,26 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
         // preference changes (since it affects the static instructions).
         // Changes to the live context do NOT recreate the session — that
         // would destroy conversation history.
-        if session == nil || sessionResponseLengthSnapshot != responseLength {
-            let instructions = BonjourChatPromptBuilder.systemInstructions(
-                responseLength: responseLength
-            )
-            // Snapshot the library so the broadcast tool can verify
-            // service-type arguments resolve to a real type. Built-ins
-            // are static; custom types are read fresh from the persistent
-            // store. If the user creates a new custom type via the
-            // PrepareCustomServiceTypeTool flow mid-conversation, the
-            // next session recreation (e.g. on a response-length flip)
-            // picks it up — for the most common case of "create then
-            // broadcast" within one turn the model can call both tools
-            // in sequence.
-            librarySnapshot = BonjourServiceType.fetchAll()
-            // Tool registration is intentionally OMITTED here.
-            // The 5-tool surface (create / edit / delete /
-            // broadcast / stop) was costing ~1500 tokens of
-            // schema metadata in every model turn — combined
-            // with the system prompt and context block, that
-            // pushed the on-device Foundation Model past its
-            // ~4K context window on fresh first messages,
-            // producing `exceededContextWindowSize` errors
-            // immediately.
-            //
-            // The tool *implementations* (`BonjourChatIntent`,
-            // `BonjourChatIntentBroker`, `Prepare*Tool.swift`)
-            // are kept in source so re-enabling is one line
-            // when the context budget allows (newer model
-            // generations, or a slimmer per-tool schema).
-            // For now the chat is pure Q&A — actions live in
-            // the existing in-app UI.
-            session = LanguageModelSession(instructions: instructions)
-            sessionResponseLengthSnapshot = responseLength
-            // Fresh session — treat the next turn as the first turn so context
-            // is injected.
-            lastContextBlock = nil
-        }
+        //
+        // The same compile-instructions-and-create-session logic is
+        // exposed as `prewarm()` for `.onAppear` to call ahead of the
+        // user's first tap, so the cost of model-instruction loading
+        // doesn't land inside the suggestion-tap latency.
+        //
+        // Tool registration is intentionally OMITTED. The 5-tool
+        // surface (create / edit / delete / broadcast / stop) was
+        // costing ~1500 tokens of schema metadata in every model turn
+        // — combined with the system prompt and context block, that
+        // pushed the on-device Foundation Model past its ~4K context
+        // window on fresh first messages, producing
+        // `exceededContextWindowSize` errors immediately. The tool
+        // *implementations* (`BonjourChatIntent`,
+        // `BonjourChatIntentBroker`, `Prepare*Tool.swift`) are kept
+        // in source so re-enabling is one line when the context
+        // budget allows (newer model generations, or a slimmer
+        // per-tool schema). For now the chat is pure Q&A — actions
+        // live in the existing in-app UI.
+        prewarm()
 
         // Determine whether to prepend a context preamble.
         let currentContextBlock = BonjourChatPromptBuilder.contextBlock(context: context)

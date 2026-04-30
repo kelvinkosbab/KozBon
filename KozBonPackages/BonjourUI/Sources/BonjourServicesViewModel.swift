@@ -58,19 +58,42 @@ public final class BonjourServicesViewModel: BonjourServiceScannerDelegate {
 
     // MARK: - Computed Properties
 
-    /// Set of keys identifying published services for O(1) lookup.
-    private var publishedServiceKeys: Set<String> {
+    /// Builds a Set of `(hostName | fullType)` keys identifying every
+    /// service the user is currently broadcasting from this device.
+    /// Used by ``flatActiveServices`` and ``sortedPublishedServices``
+    /// to bucket each discovered service into "published by this
+    /// device" vs "discovered on the network".
+    ///
+    /// Computed via a function (not a getter) so call sites
+    /// explicitly bind it to a local — that way each accessor pays
+    /// the construction cost ONCE per call instead of once per
+    /// element in the filter closure. The previous getter-based
+    /// `publishedServiceKeys` rebuilt the entire Set on every
+    /// `.contains` check inside `filter`, turning what should be
+    /// O(N + M) into O(N × M) — visible as Discover-tab scroll jank
+    /// on networks with many published or discovered services.
+    private func makePublishedServiceKeys() -> Set<String> {
         Set(customPublishedServices.map { "\($0.hostName)|\($0.serviceType.fullType)" })
     }
 
     /// Returns whether the given service matches a user-published service.
+    ///
+    /// Internally builds a fresh keys Set on each call. Hot loops
+    /// that need to filter against the published set should compute
+    /// the keys once via ``makePublishedServiceKeys()`` and check
+    /// membership inline; this single-shot helper is intended for
+    /// per-row checks where the cost of one Set construction is
+    /// fine.
     func isPublishedService(_ service: BonjourService) -> Bool {
-        publishedServiceKeys.contains("\(service.hostName)|\(service.serviceType.fullType)")
+        makePublishedServiceKeys().contains("\(service.hostName)|\(service.serviceType.fullType)")
     }
 
     /// Active services that match a user-published service.
     var sortedPublishedServices: [BonjourService] {
-        activeServices.filter { isPublishedService($0) }
+        let publishedKeys = makePublishedServiceKeys()
+        return activeServices.filter {
+            publishedKeys.contains("\($0.hostName)|\($0.serviceType.fullType)")
+        }
     }
 
     /// Active services excluding user-published ones, sorted by the current `sortType`.
@@ -79,7 +102,13 @@ public final class BonjourServicesViewModel: BonjourServiceScannerDelegate {
     /// - Service type sorts cluster services of the same protocol together.
     /// - Defaults to host name A→Z when no sort type is set.
     var flatActiveServices: [BonjourService] {
-        let nonPublished = activeServices.filter { !isPublishedService($0) }
+        // Build the published-keys Set once per call, not once per
+        // element in the filter — see ``makePublishedServiceKeys()``
+        // for the rationale.
+        let publishedKeys = makePublishedServiceKeys()
+        let nonPublished = activeServices.filter {
+            !publishedKeys.contains("\($0.hostName)|\($0.serviceType.fullType)")
+        }
 
         // Filter cases delegate to the shared `BonjourServiceCategory`
         // — the source of truth for which service types belong to

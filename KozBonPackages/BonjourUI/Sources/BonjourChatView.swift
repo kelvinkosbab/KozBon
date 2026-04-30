@@ -305,15 +305,41 @@ public struct BonjourChatView: View {
                 // ancillary work that's safe to defer until the
                 // tab is actually visible.
                 //
-                // Defer to a Task with `Task.yield()` so the
-                // first frame paints before we kick off the
-                // scanner load (~150 NetServiceBrowser inits
-                // worst case). The empty state lands on screen
-                // immediately, then the network scan starts in
-                // the background.
+                // Both calls are deferred to a Task with
+                // `Task.yield()` so the first frame paints
+                // before we run them. They're then issued in
+                // sequence:
+                //
+                //   1. `viewModel.load()` — refreshes the network
+                //      scanner so the chat context has fresh data
+                //      for the next user turn. Has its own
+                //      `isProcessing` guard, so calling it while
+                //      Discover is already scanning is a no-op.
+                //      Worst case: ~150 NetServiceBrowser inits
+                //      on the user's first tab visit.
+                //
+                //   2. `session?.prewarm()` — builds the underlying
+                //      `LanguageModelSession` ahead of the user's
+                //      first tap. Without this, the cost of
+                //      model-instruction compilation lands inside
+                //      the suggestion-button-tap latency and the
+                //      whole UI feels stuck for a beat. Doing it
+                //      here, after the empty state has rendered,
+                //      keeps the cost off the critical
+                //      perceived-latency path.
+                //
+                // A second `Task.yield()` between the two lets
+                // SwiftUI process any layout work the scanner
+                // start triggered (tab toolbar, scan-status
+                // updates) before we hand main back to the model
+                // for instruction compilation. Without the gap
+                // both costs cluster into one ~hundreds-of-ms
+                // stutter visible on tab activation.
                 Task { @MainActor in
                     await Task.yield()
                     viewModel.load()
+                    await Task.yield()
+                    session?.prewarm()
                 }
             }
             // Watch the assistant's intent broker. When a tool call
@@ -779,30 +805,20 @@ public struct BonjourChatView: View {
     /// navigation bar, not in this content block — duplicating it
     /// here would push the suggestions off the first viewport on
     /// compact iPhones and read as visual noise once the title
-    /// collapses inline. The icon + subtitle pair stays as the
-    /// in-content lead-in so the suggestions still have an
-    /// explanatory hook above them.
+    /// collapses inline. A single subtitle line is the lead-in
+    /// above the suggestions so they have one concise hint; the
+    /// previous Apple-Intelligence sparkle glyph was removed
+    /// because the chat surface is the obvious AI surface — the
+    /// glyph was redundant signaling that ate the first ~40 pt
+    /// of the empty-state viewport.
     @ViewBuilder
     private func emptyStateContent(session: any BonjourChatSessionProtocol) -> some View {
         VStack(alignment: .leading, spacing: 20) {
-            // Combine the icon + subtitle into one VoiceOver
-            // element so swipe navigation doesn't treat them as
-            // two unrelated fragments. The icon is decorative
-            // (hidden); the combined element reads as the
-            // subtitle alone, which is the only piece carrying
-            // semantic content here.
-            VStack(alignment: .leading, spacing: 8) {
-                Image.appleIntelligence
-                    .font(.largeTitle)
-                    .foregroundStyle(Color.kozBonBlue)
-                    .accessibilityHidden(true)
-                Text(Strings.Chat.emptySubtitle)
-                    .font(.body)
-                    .foregroundStyle(.secondary)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .accessibilityElement(children: .combine)
-            .accessibilityIdentifier("chat_empty_state")
+            Text(Strings.Chat.emptySubtitle)
+                .font(.body)
+                .foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .accessibilityIdentifier("chat_empty_state")
 
             VStack(spacing: 8) {
                 suggestionButton(
