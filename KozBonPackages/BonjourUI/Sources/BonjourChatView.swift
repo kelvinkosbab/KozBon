@@ -731,22 +731,29 @@ public struct BonjourChatView: View {
         proxy.scrollTo(Self.emptyStateAnchorID, anchor: .top)
     }
 
-    /// Returns an asymmetric insertion transition that visually distinguishes
-    /// user messages (slide in from trailing) from assistant messages (fade in from leading).
+    /// Returns the insertion transition for a newly-inserted message
+    /// bubble. Both user and assistant bubbles slide in from the top
+    /// edge (motion direction: top → bottom) so the chat surface
+    /// reads as a single vertical stream rather than the previous
+    /// asymmetric trailing/leading slide which felt jarring next to
+    /// the typing indicator.
+    ///
+    /// User and assistant differ in scale-anchor side only: user
+    /// bubbles scale from the trailing edge so the corner closest
+    /// to the right-aligned bubble grows last, assistant bubbles
+    /// scale from the leading edge for the same effect on the
+    /// left. The motion vector is identical for both so streaming
+    /// content (the typing indicator inside the assistant bubble)
+    /// inherits the same direction without any extra transition
+    /// overrides on the inner views.
     private func messageInsertionTransition(for role: BonjourChatMessage.Role) -> AnyTransition {
         if reduceMotion {
             return .opacity
         }
-        switch role {
-        case .user:
-            return .move(edge: .trailing)
-                .combined(with: .opacity)
-                .combined(with: .scale(scale: 0.9, anchor: .bottomTrailing))
-        case .assistant:
-            return .move(edge: .leading)
-                .combined(with: .opacity)
-                .combined(with: .scale(scale: 0.95, anchor: .bottomLeading))
-        }
+        let scaleAnchor: UnitPoint = (role == .user) ? .topTrailing : .topLeading
+        return .move(edge: .top)
+            .combined(with: .opacity)
+            .combined(with: .scale(scale: 0.95, anchor: scaleAnchor))
     }
 
     // MARK: - Long-Conversation Banner
@@ -884,17 +891,26 @@ public struct BonjourChatView: View {
                     .accessibilityHidden(true)
             }
             .padding()
-            .background(Color.kozBonBlue.opacity(0.1))
-            .cornerRadius(12)
-            // Explicitly set the hit-test shape to match the visible
-            // pill. `.buttonStyle(.plain)` otherwise follows the label's
-            // intrinsic bounds, which with multi-line text + spacer is
-            // usually correct but can miss tall empty regions on
-            // wrapped suggestions. Matching the shape to the background
-            // keeps the whole card tappable.
-            .contentShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
         }
-        .buttonStyle(.plain)
+        // Custom ButtonStyle (instead of `.plain`) so the card gets
+        // a tactile press animation: subtle scale-down + dimmed tint
+        // + slightly darker background while the finger is down,
+        // snapping back on release. Without this, taps on the
+        // recommended-prompt cards land instantly with no visual
+        // confirmation, which on a chat surface where the
+        // streaming response takes a beat to start can read as
+        // "did I tap it?". The press feedback closes that gap.
+        .buttonStyle(SuggestionCardButtonStyle(reduceMotion: reduceMotion))
+        // Cap Dynamic Type on the suggestion cards. The card's HStack
+        // is `Text + Spacer + chevron`, so at sizes above
+        // `.accessibility2` the multi-line text wraps tall enough
+        // that the trailing chevron either truncates or pushes
+        // off-screen on compact iPhones. Capping at `.accessibility2`
+        // keeps both readable; users at the very largest text sizes
+        // still see scaled-up text and a visible chevron, just not
+        // the full system-max scaling. The rest of the chat surface
+        // (subtitle, bubbles, input) keeps full Dynamic Type.
+        .dynamicTypeSize(...DynamicTypeSize.accessibility2)
         .accessibilityLabel(text)
         .accessibilityHint(String(localized: Strings.Accessibility.chatSuggestionHint))
         .accessibilityIdentifier(identifier)
@@ -992,7 +1008,18 @@ public struct BonjourChatView: View {
             .focused($isInputFocused)
             .disabled(session.isGenerating)
             .accessibilityLabel(String(localized: Strings.Chat.inputPlaceholder))
-            .accessibilityHint(String(localized: Strings.Accessibility.chatInputHint))
+            // Hint flips to the busy variant while the assistant is
+            // streaming a response. Without this, VoiceOver still
+            // announced the generic "type a question" hint after
+            // the field went disabled, leaving users with no
+            // explanation for why their typing wasn't being
+            // accepted. The Send button below uses the same flag
+            // so both controls read consistently.
+            .accessibilityHint(
+                session.isGenerating
+                    ? String(localized: Strings.Accessibility.chatBusyHint)
+                    : String(localized: Strings.Accessibility.chatInputHint)
+            )
             .accessibilityIdentifier("chat_input_field")
             .onSubmit {
                 Task { await sendMessage(inputText, using: session) }
@@ -1054,11 +1081,19 @@ public struct BonjourChatView: View {
             .buttonStyle(.plain)
             .disabled(sendDisabled(session: session))
             .accessibilityLabel(String(localized: Strings.Chat.send))
-            .accessibilityHint(
-                sendDisabled(session: session)
-                    ? String(localized: Strings.Accessibility.chatSendDisabledHint)
-                    : String(localized: Strings.Accessibility.chatSendHint)
-            )
+            // Three-way hint so VoiceOver can explain *why* the
+            // button is in its current state:
+            //
+            //   - generating: "Wait for the response to finish…"
+            //   - empty input: "Type a message to enable this button"
+            //   - enabled: "Sends your message and asks the assistant"
+            //
+            // Previously both disabled cases shared the empty-input
+            // hint, which was actively misleading while the
+            // assistant was still streaming — the user had typed
+            // and submitted, then heard "type a message to
+            // enable" when they tried to fire a follow-up.
+            .accessibilityHint(sendButtonAccessibilityHint(session: session))
             .accessibilityIdentifier("chat_send_button")
         }
         .padding()
@@ -1067,6 +1102,21 @@ public struct BonjourChatView: View {
     private func sendDisabled(session: any BonjourChatSessionProtocol) -> Bool {
         session.isGenerating
             || inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
+    /// Returns the localized VoiceOver hint that matches the Send
+    /// button's current state. Split out so the three-way logic
+    /// (busy vs empty vs enabled) reads as a single guarded switch
+    /// rather than a nested ternary at the call site.
+    private func sendButtonAccessibilityHint(session: any BonjourChatSessionProtocol) -> String {
+        if session.isGenerating {
+            return String(localized: Strings.Accessibility.chatBusyHint)
+        }
+        let trimmedInput = inputText.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmedInput.isEmpty {
+            return String(localized: Strings.Accessibility.chatSendDisabledHint)
+        }
+        return String(localized: Strings.Accessibility.chatSendHint)
     }
 
     // MARK: - Send
@@ -1377,6 +1427,65 @@ public struct BonjourChatView: View {
         return nil
         #else
         return nil
+        #endif
+    }
+}
+
+// MARK: - SuggestionCardButtonStyle
+
+/// Press feedback for the recommended-prompt cards on the chat empty
+/// state. The card scales down to ~97%, the background tint deepens,
+/// and the whole label dims slightly while the finger is down — all
+/// snapping back on release. Tuned to feel like a single press of a
+/// physical key: enough visual difference to confirm the tap, brief
+/// enough not to delay the user's perception of the response
+/// starting to stream.
+///
+/// The `reduceMotion` flag swaps the spring scale for an opacity-only
+/// flicker so users with the system Reduce Motion preference still
+/// get press confirmation without the transform.
+///
+/// On iOS / iPadOS / visionOS the style additionally applies the
+/// system `.hoverEffect()` so pointer-driven (iPad with trackpad)
+/// and gaze-driven (Vision Pro) input gets the same lift/highlight
+/// that the rest of Apple's UI uses on those platforms. Native
+/// macOS doesn't expose `hoverEffect`, so the modifier is gated
+/// out there — mouse hover on macOS still works because the
+/// underlying `Button` provides its own focus ring and a hand
+/// cursor by default.
+///
+/// `.contentShape(...)` on the inner background pins the hit area to
+/// the visible pill rather than the label's intrinsic bounds, so
+/// taps near the multi-line text's empty trailing region still
+/// register on the card. The previous `.plain` button style passed
+/// through the label's bounds, which on wrapped suggestions
+/// silently missed tall empty regions.
+private struct SuggestionCardButtonStyle: ButtonStyle {
+
+    let reduceMotion: Bool
+
+    @ViewBuilder
+    func makeBody(configuration: Configuration) -> some View {
+        let pressed = configuration.isPressed
+        let card = configuration.label
+            .background(
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(Color.kozBonBlue.opacity(pressed ? 0.2 : 0.1))
+            )
+            .contentShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+            .scaleEffect(reduceMotion ? 1.0 : (pressed ? 0.97 : 1.0))
+            .opacity(pressed ? 0.85 : 1.0)
+            .animation(
+                reduceMotion
+                    ? .easeOut(duration: 0.12)
+                    : .spring(response: 0.25, dampingFraction: 0.65),
+                value: pressed
+            )
+
+        #if !os(macOS)
+        card.hoverEffect(.highlight)
+        #else
+        card
         #endif
     }
 }

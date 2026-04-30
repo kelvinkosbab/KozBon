@@ -741,6 +741,16 @@ public enum Strings {
             .init("a11y_chat_send_disabled_hint", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        /// VoiceOver hint announced on the chat compose surface
+        /// (input field and Send button) while the assistant is
+        /// streaming a response. Distinct from the empty-input
+        /// `chatSendDisabledHint` because the user has *already*
+        /// typed and submitted — telling them to "Type a message"
+        /// in this state would be misleading.
+        public static var chatBusyHint: LocalizedStringResource {
+            .init("a11y_chat_busy_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var chatClearHistoryHint: LocalizedStringResource {
             .init("a11y_chat_clear_history_hint", bundle: .atURL(Bundle.module.bundleURL))
         }

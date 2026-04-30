@@ -12793,6 +12793,47 @@
         }
       }
     },
+    "a11y_chat_busy_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wait for the response to finish before sending another message"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Espera a que termine la respuesta antes de enviar otro mensaje"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Attendez la fin de la réponse avant d'envoyer un autre message"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Warte, bis die Antwort fertig ist, bevor du eine weitere Nachricht sendest"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "別のメッセージを送る前に応答が終わるのを待ってください"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请等待响应结束后再发送下一条消息"
+          }
+        }
+      }
+    },
     "a11y_chat_clear_history_hint": {
       "extractionState": "manual",
       "localizations": {
