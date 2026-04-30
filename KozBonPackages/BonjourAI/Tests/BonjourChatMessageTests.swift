@@ -118,10 +118,11 @@ struct BonjourChatMessageTests {
 
     @Test("Multi-message conversation round-trips through JSON encode/decode")
     func conversationJsonRoundTrip() throws {
-        // The chat-persistence path (`persistChatHistory` preference)
-        // serializes the whole `[BonjourChatMessage]` array as a
-        // single Data blob. This pins that the array-level encoding
-        // also round-trips byte-for-byte.
+        // `BonjourChatMessage` keeps `Codable` conformance for tests
+        // and mocks that round-trip messages through JSON to verify
+        // shape stability — pin that the array-level encoding also
+        // round-trips byte-for-byte so a future Codable change
+        // doesn't silently break the contract.
         let conversation: [BonjourChatMessage] = [
             BonjourChatMessage(role: .user, content: "What's _airplay._tcp?"),
             BonjourChatMessage(role: .assistant, content: "AirPlay over TCP — the receiver advertises…"),
@@ -138,91 +139,9 @@ struct BonjourChatMessageTests {
         let data = try JSONEncoder().encode(BonjourChatMessage.Role.user)
         let decoded = try JSONDecoder().decode(BonjourChatMessage.Role.self, from: data)
         #expect(decoded == .user)
-        // Pin the wire format too — this is the contract the
-        // persistence layer relies on, so a future renaming of the
-        // enum cases mustn't silently change what's on disk.
+        // Pin the wire format too — `Role` is part of the public
+        // Codable surface, so a future renaming of the enum cases
+        // mustn't silently change what's encoded.
         #expect(String(data: data, encoding: .utf8) == "\"user\"")
-    }
-
-    // MARK: - Persistence Trimming
-
-    @Test("`trimmed` returns the input unchanged when both caps are well above the input size")
-    func trimmingNoOpWhenWellUnderCaps() {
-        let messages = (0..<10).map { BonjourChatMessage(role: .user, content: "msg \($0)") }
-        let trimmed = BonjourChatMessage.trimmed(
-            messages: messages,
-            maxCount: 100,
-            maxBytes: 1_048_576
-        )
-        #expect(trimmed == messages)
-    }
-
-    @Test("`trimmed` keeps the most recent N messages when the count cap is exceeded")
-    func trimmingByCountKeepsTail() {
-        // The conversation is chronological (oldest first), so the
-        // suffix is what the user is most likely to look back at on
-        // the next launch — that's what we keep.
-        let messages = (0..<50).map { BonjourChatMessage(role: .user, content: "msg \($0)") }
-        let trimmed = BonjourChatMessage.trimmed(
-            messages: messages,
-            maxCount: 10,
-            maxBytes: 1_048_576
-        )
-        #expect(trimmed.count == 10)
-        #expect(trimmed.first?.content == "msg 40")
-        #expect(trimmed.last?.content == "msg 49")
-    }
-
-    @Test("`trimmed` drops oldest messages until the encoded size fits under the byte cap")
-    func trimmingByBytesDropsHead() throws {
-        // Each message has ~1 KB of content, so 20 messages encodes
-        // to noticeably more than a 5 KB cap. The trim must therefore
-        // shed messages from the front (oldest first) until it fits.
-        let oneKBString = String(repeating: "x", count: 1_024)
-        let messages = (0..<20).map { BonjourChatMessage(role: .assistant, content: "\($0):\(oneKBString)") }
-
-        let cap = 5_000
-        let trimmed = BonjourChatMessage.trimmed(
-            messages: messages,
-            maxCount: 1_000,
-            maxBytes: cap
-        )
-
-        let encoded = try JSONEncoder().encode(trimmed)
-        #expect(encoded.count <= cap)
-        #expect(trimmed.count < messages.count)
-        // The newest message must still be present — we dropped from
-        // the head, not the tail.
-        #expect(trimmed.last == messages.last)
-    }
-
-    @Test("`trimmed` returns the empty array when `maxCount` is zero or negative")
-    func trimmingZeroCountReturnsEmpty() {
-        let messages = [BonjourChatMessage(role: .user, content: "anything")]
-        #expect(BonjourChatMessage.trimmed(messages: messages, maxCount: 0, maxBytes: 1_000).isEmpty)
-        #expect(BonjourChatMessage.trimmed(messages: messages, maxCount: -1, maxBytes: 1_000).isEmpty)
-    }
-
-    @Test("`trimmed` returns the empty array when `maxBytes` is zero or negative")
-    func trimmingZeroBytesReturnsEmpty() {
-        let messages = [BonjourChatMessage(role: .user, content: "anything")]
-        #expect(BonjourChatMessage.trimmed(messages: messages, maxCount: 100, maxBytes: 0).isEmpty)
-        #expect(BonjourChatMessage.trimmed(messages: messages, maxCount: 100, maxBytes: -1).isEmpty)
-    }
-
-    @Test("`trimmed` keeps a single oversize message rather than emptying the conversation")
-    func trimmingSingleOversizeMessageIsKept() {
-        // Edge case: one message alone is bigger than the byte cap.
-        // The contract is that we always leave at least one message
-        // — emptying everything would be a worse user experience
-        // than a slightly oversize blob (and the in-memory session
-        // is not affected anyway).
-        let huge = BonjourChatMessage(role: .assistant, content: String(repeating: "y", count: 10_000))
-        let trimmed = BonjourChatMessage.trimmed(
-            messages: [huge],
-            maxCount: 100,
-            maxBytes: 100
-        )
-        #expect(trimmed == [huge])
     }
 }

@@ -31,14 +31,6 @@ public struct SettingsView: View {
                     aiAnalysisSection
                 }
 
-                // Chat persistence is only meaningful when the
-                // chat tab is actually surfaced — otherwise the
-                // toggle is for a feature the user can't reach.
-                if AppleIntelligenceSupport.isDeviceSupported,
-                   preferencesStore.aiAnalysisEnabled {
-                    chatSection
-                }
-
                 displaySection
 
                 resetSection
@@ -134,60 +126,6 @@ public struct SettingsView: View {
         } footer: {
             Text(Strings.Settings.aiAnalysisFooter)
         }
-    }
-
-    // MARK: - Chat Section
-
-    @ViewBuilder
-    private var chatSection: some View {
-        Section {
-            Toggle(
-                String(localized: Strings.Settings.persistChatHistory),
-                isOn: Binding(
-                    get: { preferencesStore.persistChatHistory },
-                    set: { newValue in
-                        withAnimation(reduceMotion ? nil : .default) {
-                            preferencesStore.persistChatHistory = newValue
-                        }
-                    }
-                )
-            )
-
-            if preferencesStore.persistChatHistory {
-                LabeledContent(
-                    String(localized: Strings.Settings.persistChatHistoryStorageUsed),
-                    value: chatHistoryStorageDescription
-                )
-                .accessibilityElement(children: .combine)
-            }
-        } header: {
-            Text(chatSectionHeader)
-                .accessibilityAddTraits(.isHeader)
-        } footer: {
-            Text(Strings.Settings.persistChatHistoryFooter)
-        }
-    }
-
-    /// Human-readable size of the persisted chat history blob, formatted
-    /// with the system's localized byte-count style (e.g. "12 KB",
-    /// "0 bytes", "1.2 MB"). Reads zero when nothing has been saved
-    /// yet — that's still informative because it tells the user the
-    /// toggle hasn't actually written anything to disk.
-    private var chatHistoryStorageDescription: String {
-        let bytes = Int64(preferencesStore.chatHistory?.count ?? 0)
-        return bytes.formatted(.byteCount(style: .file))
-    }
-
-    /// Section header label that matches the platform's chat-tab
-    /// label ("Chat" on iOS, "Explore" on macOS/visionOS) so the
-    /// Preferences row reads consistently with the tab the user
-    /// just tapped over from.
-    private var chatSectionHeader: LocalizedStringResource {
-        #if os(macOS) || os(visionOS)
-        Strings.Tabs.explore
-        #else
-        Strings.Tabs.chat
-        #endif
     }
 
     // MARK: - Display Section

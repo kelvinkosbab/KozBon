@@ -104,48 +104,4 @@ struct UserPreferencesTests {
         prefs.aiResponseLength = "thorough"
         #expect(prefs.aiResponseLength == "thorough")
     }
-
-    // MARK: - Persist Chat History
-
-    @Test("New `UserPreferences` has `persistChatHistory` true (default-on for fresh installs)")
-    func defaultPersistChatHistoryIsTrue() {
-        let prefs = UserPreferences()
-        #expect(prefs.persistChatHistory)
-    }
-
-    @Test("New `UserPreferences` has `chatHistory` nil (no saved blob)")
-    func defaultChatHistoryIsNil() {
-        let prefs = UserPreferences()
-        #expect(prefs.chatHistory == nil)
-    }
-
-    @Test("Static `defaultPersistChatHistory` is true so returning users get their conversation back")
-    func staticDefaultPersistChatHistoryIsTrue() {
-        #expect(UserPreferences.defaultPersistChatHistory)
-    }
-
-    @Test("`persistChatHistory` accepts a write to false and reads it back")
-    func persistChatHistoryCanBeDisabled() {
-        let prefs = UserPreferences()
-        prefs.persistChatHistory = false
-        #expect(!prefs.persistChatHistory)
-    }
-
-    @Test("Static `maxStoredChatMessages` caps the persisted blob at 200 messages")
-    func maxStoredChatMessagesIs200() {
-        #expect(UserPreferences.maxStoredChatMessages == 200)
-    }
-
-    @Test("Static `maxStoredChatBytes` caps the persisted blob at 1 MiB")
-    func maxStoredChatBytesIs1MiB() {
-        #expect(UserPreferences.maxStoredChatBytes == 1_048_576)
-    }
-
-    @Test("`chatHistory` accepts a write to a non-nil blob and reads it back")
-    func chatHistoryCanBeSet() {
-        let prefs = UserPreferences()
-        let blob = Data("{\"messages\":[]}".utf8)
-        prefs.chatHistory = blob
-        #expect(prefs.chatHistory == blob)
-    }
 }

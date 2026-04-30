@@ -799,14 +799,6 @@ public enum Strings {
         }
     }
 
-    // MARK: - Persist Chat (Settings · Chat section)
-    //
-    // Localized labels for the "Persist chat history" Preferences
-    // toggle and its explanatory footer. Stored under `Strings.Settings`
-    // alongside the other Preferences-tab strings (the toggle's section
-    // footer in particular wants to live next to the AI section's
-    // copy so translators see them together).
-
     // MARK: - Settings
 
     public enum Settings {
@@ -865,27 +857,6 @@ public enum Strings {
 
         public static var aiAnalysisFooter: LocalizedStringResource {
             .init("settings_ai_analysis_footer", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
-        /// Toggle label for the "Persist chat history across launches"
-        /// preference (off by default).
-        public static var persistChatHistory: LocalizedStringResource {
-            .init("settings_persist_chat_history", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
-        /// Footer copy under the persist-chat toggle that explains the
-        /// trade-off — the user's visible history is restored, but
-        /// the on-device model's transcript memory is reset on
-        /// launch (so follow-ups won't refer back to prior turns).
-        public static var persistChatHistoryFooter: LocalizedStringResource {
-            .init("settings_persist_chat_history_footer", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
-        /// Row label for the "Storage used" indicator under the
-        /// Persist chat history toggle. Shows how much disk space
-        /// the saved conversation currently occupies.
-        public static var persistChatHistoryStorageUsed: LocalizedStringResource {
-            .init("settings_persist_chat_history_storage_used", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         public static var aiExpertiseLevel: LocalizedStringResource {

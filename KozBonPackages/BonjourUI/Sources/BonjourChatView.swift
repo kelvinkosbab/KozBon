@@ -62,21 +62,34 @@ public struct BonjourChatView: View {
     /// tracker's `tickCount`.
     @State private var sentenceHapticTracker = SentenceHapticTracker()
 
-    /// Set after the first appearance attempts to restore persisted
-    /// chat history, so re-entering the tab (which runs `.task`
-    /// again) doesn't clobber the user's in-progress conversation
-    /// with a stale snapshot from disk.
-    @State private var hasAttemptedRestore = false
+    /// Set once the user's first message in a fresh chat has been
+    /// animated to the top of the viewport. Drives the
+    /// "suggestions scroll up out of view" UX on first send —
+    /// instead of swapping the empty state for a populated
+    /// message list, the unified ScrollView animates the user's
+    /// bubble to land just below the navigation bar.
+    ///
+    /// Reset to `false` when the chat is cleared, so the
+    /// suggestions reveal again and the next first send
+    /// re-runs the same animation.
+    @State private var hasScrolledFirstUserMessage = false
 
-    /// Set after the first time the message list lands on screen
-    /// with a non-empty conversation. Drives the initial
-    /// scroll-to-bottom — without it, a user opening the Chat
-    /// tab after the persisted history has been restored would
-    /// see the TOP of the conversation, which is rarely what
-    /// they want. Subsequent tab re-entries don't re-scroll, so
-    /// a user who scrolled up to read older context isn't
-    /// jumped back to the bottom on every tab switch.
-    @State private var hasPerformedInitialScrollToBottom = false
+    /// Set when the user taps the Clear toolbar button. Bridges
+    /// the toolbar button (in `body`) and the scroll handlers
+    /// in `messageList(session:)` — the toolbar can't reach
+    /// `ScrollViewProxy` directly, so we drive the
+    /// scroll-up-then-clear sequence through this flag.
+    ///
+    /// The orchestration runs in `messageList`'s `.onChange`
+    /// for `pendingClear`: animate the ScrollView up to the
+    /// empty-state anchor *while messages are still in place*,
+    /// then call `session.reset()` once the scroll has played
+    /// out. Without this ordering, `session.reset()` would wipe
+    /// the bubbles before the scroll ran, leaving nothing to
+    /// scroll from — the user would see bubbles vanish
+    /// abruptly and the suggestions appear in place rather
+    /// than a continuous scroll-up.
+    @State private var pendingClear = false
 
     /// Active "create custom service type" intent surfaced from the
     /// chat assistant's `prepareCustomServiceType` tool. Setting
@@ -181,15 +194,18 @@ public struct BonjourChatView: View {
                     )
                 }
             }
-            // Declaring a navigation title — even in inline mode — gives iOS
-            // a real navigation bar to render. Without it the scroll view
-            // rides all the way to the top of the screen, which on iPhone
-            // clips the Dynamic Island and bleeds into the status bar.
-            // With an inline title the iOS 26 Liquid Glass material fades
-            // content behind the bar cleanly as the user scrolls up.
-            .navigationTitle(chatNavigationTitle)
+            // The chat surface uses the page's own intro headline
+            // ("Ask about your network") as its navigation title.
+            // Display mode is `.large` so the title renders at full
+            // height when the user lands on the tab and gracefully
+            // collapses to an inline bar as they scroll up — same
+            // behavior as Mail / Messages. The empty-state intro
+            // section in `emptyStateContent` therefore omits the
+            // title (it would duplicate what the nav bar already
+            // shows) and leads with the subtitle + suggestions.
+            .navigationTitle(String(localized: Strings.Chat.emptyTitle))
             #if !os(macOS)
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarTitleDisplayMode(.large)
             #endif
             // Trailing "Clear" affordance — only surfaces once the
             // user has actually started a conversation. On the
@@ -209,15 +225,17 @@ public struct BonjourChatView: View {
                     ToolbarItem(placement: .primaryAction) {
                         Menu {
                             Button(role: .destructive) {
-                                // Resetting the session clears
-                                // `messages`, which flips the
-                                // `messages.isEmpty` branch in
-                                // `messageList(...)` and animates
-                                // the user back to the empty-state
-                                // landing view with the suggested
-                                // prompts.
-                                session.reset()
+                                // Setting `pendingClear` triggers the
+                                // animated-scroll-then-clear sequence
+                                // in `messageList`. Calling
+                                // `session.reset()` directly here
+                                // would wipe the bubbles before the
+                                // scroll animation could play out —
+                                // the user would see content vanish
+                                // abruptly instead of a continuous
+                                // scroll back up to the suggestions.
                                 isInputFocused = false
+                                pendingClear = true
                             } label: {
                                 Label(
                                     String(localized: Strings.Chat.clearHistory),
@@ -264,20 +282,21 @@ public struct BonjourChatView: View {
             .onChange(of: session?.isGenerating) { _, _ in
                 forwardStreamingStateToHapticTracker()
             }
-            // The Chat conversation persists for the lifetime of the
-            // app process. Switching tabs and coming back lands the
-            // user back on whatever exchange they had going — the same
-            // mental model as Messages, Notes, etc. By default the
-            // conversation is cleared when the OS reclaims the app
-            // from memory (cold launch), but the user can opt into
-            // cross-launch persistence via the "Persist chat history"
-            // toggle in Preferences — in which case the messages are
-            // restored once on first appear (see `restoreChatHistoryIfNeeded`).
+            // The Chat conversation lives only for the lifetime of
+            // the app process. Switching tabs and coming back lands
+            // the user back on whatever exchange they had going —
+            // the same mental model as Messages, Notes, etc. — but
+            // the conversation is intentionally NOT persisted to
+            // disk: a cold launch (or the user killing the app from
+            // the multitasking switcher) starts a fresh chat. This
+            // keeps the on-device model's transcript memory and the
+            // visible UI history aligned, so the assistant never
+            // has to apologize for "not remembering" earlier turns.
             //
-            // `viewModel.load()` keeps the network scanner running so
-            // the chat context has fresh data for the next user turn;
-            // it has its own `isProcessing` guard, so calling it while
-            // Discover is already scanning is a no-op.
+            // `viewModel.load()` keeps the network scanner running
+            // so the chat context has fresh data for the next user
+            // turn; it has its own `isProcessing` guard, so calling
+            // it while Discover is already scanning is a no-op.
             .onAppear {
                 // Session construction has already happened in
                 // `init(viewModel:)` — see the doc comment on
@@ -289,31 +308,12 @@ public struct BonjourChatView: View {
                 // Defer to a Task with `Task.yield()` so the
                 // first frame paints before we kick off the
                 // scanner load (~150 NetServiceBrowser inits
-                // worst case) and JSON decode of any persisted
-                // chat history. Both can run after the empty
-                // state lands on screen — the user wants to see
-                // the suggestion buttons immediately, not wait
-                // for restore to land first.
+                // worst case). The empty state lands on screen
+                // immediately, then the network scan starts in
+                // the background.
                 Task { @MainActor in
                     await Task.yield()
                     viewModel.load()
-                    restoreChatHistoryIfNeeded()
-                }
-            }
-            // Save the current conversation when the user sends or
-            // when an assistant turn completes. Saving on every token
-            // would write to disk ~100 times a second; gating on
-            // `messages.count` (changes only on user-send/assistant-
-            // placeholder/reset) and `isGenerating` flipping false
-            // (the end of an assistant turn) keeps writes to ~2 per
-            // turn. Both checks are no-ops when the persistence
-            // preference is off.
-            .onChange(of: session?.messages.count) { _, _ in
-                persistChatHistoryIfNeeded()
-            }
-            .onChange(of: session?.isGenerating) { _, isGenerating in
-                if isGenerating == false {
-                    persistChatHistoryIfNeeded()
                 }
             }
             // Watch the assistant's intent broker. When a tool call
@@ -470,67 +470,6 @@ public struct BonjourChatView: View {
         }
     }
 
-    // MARK: - Chat History Persistence
-
-    /// Restores a previously-persisted conversation into the active
-    /// session, if the user has opted in via the "Persist chat
-    /// history" preference and a saved blob exists. No-ops in every
-    /// other case (preference off, no saved blob, decoder failure,
-    /// session already populated, or restore already attempted in
-    /// this view's lifetime).
-    ///
-    /// The underlying `LanguageModelSession` is intentionally not
-    /// pre-loaded — see the doc comment on
-    /// `BonjourChatSessionProtocol.restore(messages:)` for the
-    /// rationale and the user-facing trade-off.
-    private func restoreChatHistoryIfNeeded() {
-        guard !hasAttemptedRestore else { return }
-        hasAttemptedRestore = true
-
-        guard preferencesStore.persistChatHistory,
-              let data = preferencesStore.chatHistory,
-              let messages = try? JSONDecoder().decode([BonjourChatMessage].self, from: data),
-              !messages.isEmpty,
-              let session,
-              session.messages.isEmpty else { return }
-
-        session.restore(messages: messages)
-    }
-
-    /// Saves the current conversation to user preferences when
-    /// persistence is enabled. Triggered from `.onChange` hooks on
-    /// `messages.count` and `isGenerating`, both of which change
-    /// only on meaningful turn boundaries (not on every streamed
-    /// token), so disk I/O stays bounded to ~2 saves per turn.
-    ///
-    /// Messages are trimmed to the persistence caps
-    /// (``UserPreferences/maxStoredChatMessages`` and
-    /// ``UserPreferences/maxStoredChatBytes``) before encoding, so
-    /// the saved blob can't grow unbounded across long
-    /// conversations. The in-memory session is left intact — the
-    /// user keeps full scrollback during the launch; only the
-    /// next-launch restore is bounded.
-    private func persistChatHistoryIfNeeded() {
-        guard preferencesStore.persistChatHistory,
-              let messages = session?.messages else { return }
-
-        let encoder = JSONEncoder()
-        let trimmed = BonjourChatMessage.trimmed(
-            messages: messages,
-            maxCount: UserPreferences.maxStoredChatMessages,
-            maxBytes: UserPreferences.maxStoredChatBytes,
-            encoder: encoder
-        )
-
-        do {
-            preferencesStore.chatHistory = try encoder.encode(trimmed)
-        } catch {
-            // Encoding failure is non-fatal — there's nowhere
-            // meaningful for the user to act on it. The next
-            // turn's encode attempt will retry.
-        }
-    }
-
     /// Forwards the current streaming state into the sentence-haptic
     /// tracker. Bails when the last message isn't an assistant turn so
     /// user-submitted messages don't accidentally fire sentence haptics
@@ -545,164 +484,225 @@ public struct BonjourChatView: View {
         )
     }
 
-    /// The localized title shown in the inline navigation bar.
-    ///
-    /// Matches the tab label: "Chat" on iOS, "Explore" on macOS and visionOS
-    /// (where the surface is positioned as a discovery tool rather than a
-    /// messaging thread). Keeping this in sync with `TopLevelDestination.chat`
-    /// is important so the nav bar title and the tab bar label don't disagree.
-    private var chatNavigationTitle: String {
-        #if os(macOS) || os(visionOS)
-        String(localized: Strings.Tabs.explore)
-        #else
-        String(localized: Strings.Tabs.chat)
-        #endif
-    }
-
     // MARK: - Message List
 
-    // The three `.onChange` handlers below all coordinate scroll position
-    // through the same `ScrollViewProxy` captured by `ScrollViewReader`.
-    // Extracting any of them would push the proxy through another
-    // function for no structural benefit, so we disable the length rule
-    // locally — same precedent as the file-level `type_body_length` and
-    // `file_length` disables above.
+    /// Stable ID for the empty-state section. Used as a scroll
+    /// anchor when the chat is cleared so the ScrollView jumps
+    /// back to the top and the suggestions are immediately
+    /// visible again.
+    private static let emptyStateAnchorID = "chat_empty_state_anchor"
+
+    /// The chat surface is a single ScrollView that ALWAYS contains
+    /// the empty-state content (intro + suggestion buttons) plus
+    /// any messages. On first send the ScrollView animates the
+    /// user's bubble to the top of the viewport — the suggestions
+    /// scroll out above. There's no branch swap between an "empty"
+    /// and a "populated" surface anymore, so the transition feels
+    /// continuous instead of an instant page change.
+    ///
+    /// Each `.onChange` handler delegates to a small per-event
+    /// helper below. That keeps this function a thin assembly of
+    /// declarative bindings instead of a nest of inline closures,
+    /// and lets each scroll behavior be documented next to the
+    /// rule that triggers it.
     @ViewBuilder
-    // swiftlint:disable:next function_body_length
     private func messageList(session: any BonjourChatSessionProtocol) -> some View {
-        ZStack {
-            if session.messages.isEmpty {
-                emptyState(session: session)
-                    .transition(.asymmetric(
-                        insertion: .opacity,
-                        removal: .move(edge: .top).combined(with: .opacity)
-                    ))
-            } else {
-                ScrollViewReader { proxy in
-                    ScrollView {
-                        VStack(alignment: .leading, spacing: 12) {
-                            // Passive "long conversation" advisory at
-                            // the top of the message list. Surfaces
-                            // when the accumulated transcript is
-                            // approaching the on-device model's
-                            // context budget (per the heuristic in
-                            // `Array<BonjourChatMessage>.isLongConversation`).
-                            // Honest framing: the model still works,
-                            // the user just gets a hint that
-                            // responses might degrade and they can
-                            // clear if they want a fresh start.
-                            if session.messages.isLongConversation {
-                                longConversationBanner
-                                    .transition(.opacity)
-                            }
-                            ForEach(session.messages) { message in
-                                messageBubble(
-                                    message: message,
-                                    isStreaming: isStreaming(message, in: session)
-                                )
-                                    .id(message.id)
-                                    .transition(.asymmetric(
-                                        insertion: messageInsertionTransition(for: message.role),
-                                        removal: .opacity
-                                    ))
-                            }
-                            if let error = session.error {
-                                Text(error)
-                                    .foregroundStyle(.red)
-                                    .padding(.horizontal)
-                                    .transition(.opacity)
-                                    // Without this, VoiceOver reads the raw
-                                    // error text and users relying on the red
-                                    // color as the error signal are excluded.
-                                    // Matches the `Strings.Accessibility.error`
-                                    // format used throughout the rest of the
-                                    // app (CreateTxtRecordView, BroadcastView).
-                                    .accessibilityLabel(Strings.Accessibility.error(error))
-                            }
-                        }
-                        .padding()
-                    }
-                    // Announce the scroll region to VoiceOver users as
-                    // "Conversation" so they know what they're entering
-                    // when they swipe into it. Also gives UI tests a
-                    // stable handle on the messages collection.
-                    .accessibilityLabel(String(localized: Strings.Accessibility.chatConversation))
-                    .accessibilityIdentifier("chat_message_list")
-                    // `scrollDismissesKeyboard` is unavailable on visionOS —
-                    // the Vision Pro uses a floating virtual keyboard that
-                    // doesn't need an in-scroll-view dismiss gesture.
-                    #if !os(visionOS)
-                    .scrollDismissesKeyboard(.interactively)
-                    #endif
-                    .transition(.opacity)
-                    .onChange(of: session.messages.last?.id) {
-                        withAnimation(reduceMotion ? nil : .easeOut(duration: 0.3)) {
-                            if let last = session.messages.last {
-                                proxy.scrollTo(last.id, anchor: .bottom)
-                            }
-                        }
-                    }
-                    .onChange(of: session.messages.last?.content) {
-                        if let last = session.messages.last {
-                            withAnimation(reduceMotion ? nil : .easeOut(duration: 0.15)) {
-                                proxy.scrollTo(last.id, anchor: .bottom)
-                            }
-                        }
-                    }
-                    // When the user taps into the compose field, scroll the
-                    // latest message to the bottom of the visible region so
-                    // it sits right above the keyboard — without this the
-                    // keyboard slides up and covers whatever the user was
-                    // reading, leaving no context as they type.
-                    //
-                    // A ~300ms delay lets the keyboard's safe-area insets
-                    // propagate before we compute the scroll position;
-                    // scrolling synchronously with the focus change would
-                    // use the pre-keyboard layout and leave the last
-                    // message clipped under the keyboard.
-                    .onChange(of: isInputFocused) { _, focused in
-                        guard focused, let last = session.messages.last else { return }
-                        Task { @MainActor in
-                            try? await Task.sleep(for: .milliseconds(300))
-                            withAnimation(reduceMotion ? nil : .easeOut(duration: 0.25)) {
-                                proxy.scrollTo(last.id, anchor: .bottom)
-                            }
-                        }
-                    }
-                    // First time the populated message list lands
-                    // on screen, jump to the most recent message
-                    // so the user sees where the conversation
-                    // left off — opening Chat after the persisted
-                    // history was restored otherwise lands on
-                    // the FIRST message, which is rarely what
-                    // the user wants.
-                    //
-                    // No animation: the user just navigated INTO
-                    // this view, so an animated scroll would
-                    // feel like the chat is moving away from
-                    // them rather than greeting them at the
-                    // last message.
-                    //
-                    // 50 ms gives the ScrollView one layout pass
-                    // to position its content before we ask it
-                    // to scroll — calling `scrollTo` synchronously
-                    // in `.onAppear` runs against pre-layout
-                    // geometry and silently no-ops on some
-                    // platforms.
-                    .onAppear {
-                        guard !hasPerformedInitialScrollToBottom,
-                              let last = session.messages.last else { return }
-                        hasPerformedInitialScrollToBottom = true
-                        Task { @MainActor in
-                            try? await Task.sleep(for: .milliseconds(50))
-                            proxy.scrollTo(last.id, anchor: .bottom)
-                        }
-                    }
-                }
+        ScrollViewReader { proxy in
+            ScrollView {
+                messageListContent(session: session)
+            }
+            // Announce the scroll region to VoiceOver users as
+            // "Conversation" so they know what they're entering
+            // when they swipe into it. Also gives UI tests a
+            // stable handle on the messages collection.
+            .accessibilityLabel(String(localized: Strings.Accessibility.chatConversation))
+            .accessibilityIdentifier("chat_message_list")
+            // `scrollDismissesKeyboard` is unavailable on visionOS —
+            // the Vision Pro uses a floating virtual keyboard that
+            // doesn't need an in-scroll-view dismiss gesture.
+            #if !os(visionOS)
+            .scrollDismissesKeyboard(.interactively)
+            #endif
+            .onChange(of: session.messages.first?.id) { _, firstId in
+                scrollFirstUserMessageToTop(firstId: firstId, proxy: proxy)
+            }
+            .onChange(of: session.messages.last?.id) { _, _ in
+                scrollLatestMessageToBottom(session: session, proxy: proxy, duration: 0.3)
+            }
+            .onChange(of: session.messages.last?.content) {
+                scrollLatestMessageToBottom(session: session, proxy: proxy, duration: 0.15)
+            }
+            .onChange(of: isInputFocused) { _, focused in
+                scrollLatestMessageAboveKeyboard(focused: focused, session: session, proxy: proxy)
+            }
+            .onChange(of: pendingClear) { _, pending in
+                runPendingClearSequence(pending: pending, session: session, proxy: proxy)
+            }
+            .onChange(of: session.messages.isEmpty) { _, isEmpty in
+                snapToEmptyStateIfNeeded(isEmpty: isEmpty, proxy: proxy)
             }
         }
-        .animation(messageTransitionAnimation, value: session.messages.isEmpty)
         .animation(messageTransitionAnimation, value: session.messages.count)
+    }
+
+    // MARK: - Message List Content
+
+    /// The scrollable content of the chat surface. Always contains
+    /// the empty-state intro + suggestions (so they're available as
+    /// a scroll target both before the first send and after a
+    /// Clear), the optional long-conversation banner, the message
+    /// bubbles themselves, and any error string.
+    @ViewBuilder
+    private func messageListContent(session: any BonjourChatSessionProtocol) -> some View {
+        VStack(alignment: .leading, spacing: 20) {
+            // Empty-state intro and suggestion buttons. Always
+            // present in the layout so they're available as a
+            // scroll target both before the user has sent
+            // anything and after a Clear. The `id` lets
+            // `proxy.scrollTo` jump back here when the chat is
+            // cleared.
+            emptyStateContent(session: session)
+                .id(Self.emptyStateAnchorID)
+
+            // Passive "long conversation" advisory between the
+            // suggestions and the messages, only when the
+            // accumulated transcript is approaching the on-device
+            // model's context budget.
+            if session.messages.isLongConversation {
+                longConversationBanner
+                    .transition(.opacity)
+            }
+
+            ForEach(session.messages) { message in
+                messageBubble(
+                    message: message,
+                    isStreaming: isStreaming(message, in: session)
+                )
+                .id(message.id)
+                .transition(.asymmetric(
+                    insertion: messageInsertionTransition(for: message.role),
+                    removal: .opacity
+                ))
+            }
+
+            if let error = session.error {
+                Text(error)
+                    .foregroundStyle(.red)
+                    .padding(.horizontal)
+                    .transition(.opacity)
+                    // Without this, VoiceOver reads the raw error
+                    // text and users relying on the red color as
+                    // the error signal are excluded. Matches the
+                    // `Strings.Accessibility.error` format used
+                    // throughout the rest of the app
+                    // (CreateTxtRecordView, BroadcastView).
+                    .accessibilityLabel(Strings.Accessibility.error(error))
+            }
+        }
+        .padding()
+    }
+
+    // MARK: - Scroll Coordination
+
+    /// Animates the user's FIRST message in a fresh chat to the top
+    /// of the viewport, so the suggestion buttons scroll off above.
+    /// This is the "browsing → chatting" transition; gated on
+    /// `hasScrolledFirstUserMessage` so it fires exactly once per
+    /// fresh-chat lifetime.
+    private func scrollFirstUserMessageToTop(firstId: UUID?, proxy: ScrollViewProxy) {
+        guard let firstId, !hasScrolledFirstUserMessage else { return }
+        hasScrolledFirstUserMessage = true
+        withAnimation(reduceMotion ? nil : .easeOut(duration: 0.5)) {
+            proxy.scrollTo(firstId, anchor: .top)
+        }
+    }
+
+    /// Scroll-to-bottom for subsequent message arrivals and
+    /// streaming token updates. Gated on `count > 2` so the FIRST
+    /// exchange (user msg + placeholder, possibly streaming) keeps
+    /// the user's bubble pinned at the top — without that gate,
+    /// every streamed token would tug the latest content down into
+    /// view and the user's question would scroll off-screen during
+    /// the first response.
+    private func scrollLatestMessageToBottom(
+        session: any BonjourChatSessionProtocol,
+        proxy: ScrollViewProxy,
+        duration: Double
+    ) {
+        guard session.messages.count > 2,
+              let last = session.messages.last else { return }
+        withAnimation(reduceMotion ? nil : .easeOut(duration: duration)) {
+            proxy.scrollTo(last.id, anchor: .bottom)
+        }
+    }
+
+    /// When the user taps into the compose field, scroll the latest
+    /// message to the bottom of the visible region so it sits right
+    /// above the keyboard. A ~300 ms delay lets the keyboard's
+    /// safe-area insets propagate before we compute the scroll
+    /// position; scrolling synchronously with the focus change
+    /// would use the pre-keyboard layout and leave the last message
+    /// clipped under the keyboard.
+    private func scrollLatestMessageAboveKeyboard(
+        focused: Bool,
+        session: any BonjourChatSessionProtocol,
+        proxy: ScrollViewProxy
+    ) {
+        guard focused, let last = session.messages.last else { return }
+        Task { @MainActor in
+            try? await Task.sleep(for: .milliseconds(300))
+            withAnimation(reduceMotion ? nil : .easeOut(duration: 0.25)) {
+                proxy.scrollTo(last.id, anchor: .bottom)
+            }
+        }
+    }
+
+    /// Runs the toolbar's two-step Clear sequence:
+    ///
+    ///   1. Animate the ScrollView up to the empty-state anchor
+    ///      *while messages are still in place*. The scroll has
+    ///      actual distance to cover (the bubbles are still
+    ///      occupying the layout above the viewport's current
+    ///      position), so the user sees a continuous, smooth
+    ///      scroll up instead of bubbles disappearing in place.
+    ///
+    ///   2. Once the scroll animation has played out, call
+    ///      `session.reset()` to wipe `messages`. The bubbles'
+    ///      opacity-removal transitions overlap with the tail
+    ///      end of the scroll, so the conversation fades away as
+    ///      the suggestions land at the top.
+    ///
+    /// The 450 ms wait matches the scroll animation duration;
+    /// tightening it would clip the scroll's tail, lengthening it
+    /// would leave a perceptible pause before the bubbles finally
+    /// clear.
+    private func runPendingClearSequence(
+        pending: Bool,
+        session: any BonjourChatSessionProtocol,
+        proxy: ScrollViewProxy
+    ) {
+        guard pending else { return }
+        withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.45)) {
+            proxy.scrollTo(Self.emptyStateAnchorID, anchor: .top)
+        }
+        Task { @MainActor in
+            try? await Task.sleep(for: .milliseconds(450))
+            session.reset()
+            hasScrolledFirstUserMessage = false
+            pendingClear = false
+        }
+    }
+
+    /// Defensive fallback for any path that clears `messages`
+    /// directly (rather than going through the toolbar's
+    /// `pendingClear` flow). Resets the first-message flag and
+    /// snaps the ScrollView back to the top — at this point the
+    /// bubbles are already gone, so this scroll is effectively a
+    /// no-op visually but keeps the state consistent.
+    private func snapToEmptyStateIfNeeded(isEmpty: Bool, proxy: ScrollViewProxy) {
+        guard isEmpty, !pendingClear else { return }
+        hasScrolledFirstUserMessage = false
+        proxy.scrollTo(Self.emptyStateAnchorID, anchor: .top)
     }
 
     /// Returns an asymmetric insertion transition that visually distinguishes
@@ -764,80 +764,80 @@ public struct BonjourChatView: View {
         .accessibilityAddTraits(.isStaticText)
     }
 
-    // MARK: - Empty State with Suggestions
+    // MARK: - Empty State Content
 
+    /// The intro + suggestion buttons rendered at the top of the
+    /// chat ScrollView. Always present in the layout (never
+    /// conditionally swapped) so a fresh chat shows them first
+    /// and a populated chat keeps them as scrolled-off-above
+    /// content the user can scroll back to. The wrapping
+    /// ScrollView and its `scrollDismissesKeyboard` modifier live
+    /// on `messageList(session:)` — this function returns just
+    /// the body of the section.
+    ///
+    /// The page title ("Ask about your network") lives in the
+    /// navigation bar, not in this content block — duplicating it
+    /// here would push the suggestions off the first viewport on
+    /// compact iPhones and read as visual noise once the title
+    /// collapses inline. The icon + subtitle pair stays as the
+    /// in-content lead-in so the suggestions still have an
+    /// explanatory hook above them.
     @ViewBuilder
-    private func emptyState(session: any BonjourChatSessionProtocol) -> some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                // Combine the icon + title + subtitle into one VoiceOver
-                // element so swipe navigation doesn't treat them as three
-                // unrelated fragments. The icon is decorative (hidden),
-                // the title carries the `.isHeader` trait so rotor
-                // navigation lets users jump to it, and the combined
-                // element's label is the title + subtitle read together.
-                VStack(alignment: .leading, spacing: 8) {
-                    Image.appleIntelligence
-                        .font(.largeTitle)
-                        .foregroundStyle(Color.kozBonBlue)
-                        .accessibilityHidden(true)
-                    Text(Strings.Chat.emptyTitle)
-                        .font(.title2).bold()
-                        .accessibilityAddTraits(.isHeader)
-                    Text(Strings.Chat.emptySubtitle)
-                        .font(.body)
-                        .foregroundStyle(.secondary)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .accessibilityElement(children: .combine)
-                .accessibilityIdentifier("chat_empty_state")
-
-                VStack(spacing: 8) {
-                    suggestionButton(
-                        text: String(localized: Strings.Chat.suggestion1),
-                        identifier: "chat_suggestion_1",
-                        session: session
-                    )
-                    suggestionButton(
-                        text: String(localized: Strings.Chat.suggestion2),
-                        identifier: "chat_suggestion_2",
-                        session: session
-                    )
-                    suggestionButton(
-                        text: String(localized: Strings.Chat.suggestion3),
-                        identifier: "chat_suggestion_3",
-                        session: session
-                    )
-                    suggestionButton(
-                        text: String(localized: Strings.Chat.suggestion4),
-                        identifier: "chat_suggestion_4",
-                        session: session
-                    )
-                    suggestionButton(
-                        text: String(localized: Strings.Chat.suggestion5),
-                        identifier: "chat_suggestion_5",
-                        session: session
-                    )
-                    suggestionButton(
-                        text: String(localized: Strings.Chat.suggestion6),
-                        identifier: "chat_suggestion_6",
-                        session: session
-                    )
-                }
+    private func emptyStateContent(session: any BonjourChatSessionProtocol) -> some View {
+        VStack(alignment: .leading, spacing: 20) {
+            // Combine the icon + subtitle into one VoiceOver
+            // element so swipe navigation doesn't treat them as
+            // two unrelated fragments. The icon is decorative
+            // (hidden); the combined element reads as the
+            // subtitle alone, which is the only piece carrying
+            // semantic content here.
+            VStack(alignment: .leading, spacing: 8) {
+                Image.appleIntelligence
+                    .font(.largeTitle)
+                    .foregroundStyle(Color.kozBonBlue)
+                    .accessibilityHidden(true)
+                Text(Strings.Chat.emptySubtitle)
+                    .font(.body)
+                    .foregroundStyle(.secondary)
             }
-            .padding()
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .accessibilityElement(children: .combine)
+            .accessibilityIdentifier("chat_empty_state")
+
+            VStack(spacing: 8) {
+                suggestionButton(
+                    text: String(localized: Strings.Chat.suggestion1),
+                    identifier: "chat_suggestion_1",
+                    session: session
+                )
+                suggestionButton(
+                    text: String(localized: Strings.Chat.suggestion2),
+                    identifier: "chat_suggestion_2",
+                    session: session
+                )
+                suggestionButton(
+                    text: String(localized: Strings.Chat.suggestion3),
+                    identifier: "chat_suggestion_3",
+                    session: session
+                )
+                suggestionButton(
+                    text: String(localized: Strings.Chat.suggestion4),
+                    identifier: "chat_suggestion_4",
+                    session: session
+                )
+                suggestionButton(
+                    text: String(localized: Strings.Chat.suggestion5),
+                    identifier: "chat_suggestion_5",
+                    session: session
+                )
+                suggestionButton(
+                    text: String(localized: Strings.Chat.suggestion6),
+                    identifier: "chat_suggestion_6",
+                    session: session
+                )
+            }
         }
-        // Same Messages-style interactive keyboard dismiss the
-        // populated message list uses. The empty state has its own
-        // `ScrollView` for the suggested-prompt buttons, so it
-        // needs the same modifier — otherwise typing in the compose
-        // bar on the landing screen produces a keyboard the user
-        // can't dismiss by swiping. visionOS uses a floating
-        // virtual keyboard that doesn't pair with this gesture, so
-        // gate it out the same way.
-        #if !os(visionOS)
-        .scrollDismissesKeyboard(.interactively)
-        #endif
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     @ViewBuilder
@@ -847,6 +847,16 @@ public struct BonjourChatView: View {
         session: any BonjourChatSessionProtocol
     ) -> some View {
         Button {
+            // Focus the compose field BEFORE dispatching the send.
+            // Setting focus is synchronous; doing it first means
+            // the keyboard slides up alongside the
+            // suggestions-scroll-up animation rather than after
+            // the response has already started streaming. Once
+            // the suggestion's reply lands, the user has the
+            // keyboard already up and the cursor blinking — they
+            // can type a follow-up immediately without first
+            // tapping the input.
+            isInputFocused = true
             Task { await sendMessage(text, using: session) }
         } label: {
             HStack {

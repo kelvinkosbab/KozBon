@@ -97,11 +97,9 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
     }
 
     /// Hard ceiling on the number of messages held in `messages`.
-    /// Higher than the on-disk persistence cap
-    /// (`UserPreferences.maxStoredChatMessages`, 200) since RAM is
-    /// more abundant than disk. This is purely memory hygiene —
-    /// the underlying FoundationModels transcript is managed by
-    /// the framework, not by us.
+    /// Pure memory hygiene — a marathon conversation can't grow
+    /// unbounded RAM accumulation. The underlying FoundationModels
+    /// transcript is managed by the framework, not by us.
     static let maxInMemoryMessageCount = 500
 
     // MARK: - Send

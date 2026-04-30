@@ -66,17 +66,17 @@ public protocol BonjourChatSessionProtocol: AnyObject, Observable {
     func reset()
 
     /// Replaces the visible message history with the supplied
-    /// messages without contacting the model. Used to restore a
-    /// conversation persisted across app launches when the user has
-    /// opted into ``UserPreferences/persistChatHistory``.
+    /// messages without contacting the model. Retained as a
+    /// protocol affordance for tests and previews that want to seed
+    /// a session into a non-empty state; the production app keeps
+    /// chat purely in-memory and never calls this in normal use.
     ///
     /// The underlying `LanguageModelSession` is not pre-loaded with
-    /// these messages — Apple's `FoundationModels` API doesn't expose
-    /// a way to seed transcript content without re-running it through
-    /// the model. The user therefore sees their previous conversation
-    /// rendered above the compose bar, but the model itself starts
-    /// fresh on the next send. This is documented in the
-    /// "Persist chat history" preference's footer.
+    /// these messages — Apple's `FoundationModels` API doesn't
+    /// expose a way to seed transcript content without re-running
+    /// it through the model. The user therefore sees the supplied
+    /// messages rendered above the compose bar, but the model
+    /// itself starts fresh on the next send.
     ///
     /// - Parameter messages: The messages to display, in chronological
     ///   order. An empty array is equivalent to ``reset()``.
