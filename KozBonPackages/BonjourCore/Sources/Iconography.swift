@@ -239,6 +239,12 @@ public enum Iconography {
     /// Chat bubble icon.
     public static let chat = "bubble.left.fill"
 
+    /// Speech bubble with ellipsis — used for the "long
+    /// conversation" advisory banner in the chat view, where it
+    /// signals "lots of back-and-forth has happened" at a
+    /// glance.
+    public static let chatEllipsis = "ellipsis.bubble"
+
     /// Link icon.
     public static let link = "link"
 

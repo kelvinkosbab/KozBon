@@ -1,0 +1,112 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "CFBundleDisplayName" : {
+      "comment" : "Bundle display name",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "KozBon"
+          }
+        }
+      }
+    },
+    "CFBundleName" : {
+      "comment" : "Bundle name",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "KozBon"
+          }
+        }
+      }
+    },
+    "NSLocalNetworkUsageDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KozBon benötigt die Berechtigung, in deiner Nähe nach Bonjour-Diensten zu suchen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KozBon needs permission to scan for nearby Bonjour services."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KozBon necesita permiso para buscar servicios Bonjour cercanos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KozBon a besoin d'accéder au réseau local pour rechercher les services Bonjour à proximité."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KozBonは近くのBonjourサービスをスキャンする許可が必要です。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KozBon 需要权限以扫描附近的 Bonjour 服务。"
+          }
+        }
+      }
+    },
+    "NSSiriUsageDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KozBon nutzt Siri, damit du von überall aus Fragen zu Bonjour-Diensten und zur Verwendung der App stellen kannst — Siri liest die Antwort vor, ohne dass du KozBon öffnen musst."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KozBon uses Siri so you can ask about Bonjour services and how to use the app from anywhere — Siri reads the answer aloud without you having to open KozBon."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KozBon usa Siri para que puedas preguntar sobre servicios Bonjour y cómo usar la app desde cualquier lugar; Siri lee la respuesta en voz alta sin que tengas que abrir KozBon."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KozBon utilise Siri pour que vous puissiez poser des questions sur les services Bonjour et l'utilisation de l'app depuis n'importe où — Siri lit la réponse à voix haute sans que vous ayez à ouvrir KozBon."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KozBonは、Bonjourサービスやアプリの使い方についてどこからでも質問できるようにSiriを使用します。Siriが回答を読み上げるため、KozBonを開く必要はありません。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KozBon 使用 Siri，让您可以在任何地方询问 Bonjour 服务和应用使用方法 — Siri 会朗读答案，您无需打开 KozBon。"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

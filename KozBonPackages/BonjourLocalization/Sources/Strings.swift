@@ -1061,6 +1061,25 @@ public enum Strings {
             .init("chat_error_off_topic", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        // MARK: - Long-Conversation Banner
+
+        /// Title shown in the chat header banner once the
+        /// conversation has accumulated enough transcript that
+        /// the on-device model's context budget may be
+        /// approaching its ceiling. Phrased as a passive
+        /// observation, not an alarm — the model still works,
+        /// the user just gets a hint that responses might
+        /// degrade.
+        public static var longConversationBannerTitle: LocalizedStringResource {
+            .init("chat_long_conversation_title", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Detail shown beneath the banner title. Suggests a
+        /// concrete action (clear chat) without being pushy.
+        public static var longConversationBannerDetail: LocalizedStringResource {
+            .init("chat_long_conversation_detail", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         // MARK: - Destructive Confirmations
         //
         // Phrasing intentionally uses "Are you sure you want to…?"

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		B6CE1D321E1208C1003D4FFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6CE1D311E1208C1003D4FFA /* Assets.xcassets */; };
 		B6CE1D4A1E120AF8003D4FFA /* service-names-port-numbers.csv in Resources */ = {isa = PBXBuildFile; fileRef = B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */; };
+		F6INFO0BF0001 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = F6INFO0FR0001 /* InfoPlist.xcstrings */; };
 		F6240E692A92CF0600951875 /* AppCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E682A92CF0600951875 /* AppCore.swift */; };
 		F690B5FB2561E9B600902DAB /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F690B5FA2561E9B600902DAB /* NetworkExtension.framework */; };
 		F6C472F52C1A1EAB00BBB0F9 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = F6C472F42C1A1EAB00BBB0F9 /* Core */; };
@@ -17,7 +18,6 @@
 		F6C472FB2C1A248000BBB0F9 /* TopLevelDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C472FA2C1A248000BBB0F9 /* TopLevelDestination.swift */; };
 		F6CA76602F3690EF0036BE3B /* DependencyInjectionExamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CA765F2F3690EF0036BE3B /* DependencyInjectionExamples.swift */; };
 		F6CA76682F36915C0036BE3B /* PreviewDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CA76672F36915C0036BE3B /* PreviewDependencies.swift */; };
-		F6SIRI0BF0001 /* AskKozBonIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6SIRI0FR0001 /* AskKozBonIntent.swift */; };
 		F6SIRI0BF0002 /* KozBonAppShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6SIRI0FR0002 /* KozBonAppShortcuts.swift */; };
 		F6SIRI0BF0003 /* BonjourServiceEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6SIRI0FR0003 /* BonjourServiceEntity.swift */; };
 		F6SIRI0BF0004 /* ScanForServicesIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6SIRI0FR0004 /* ScanForServicesIntent.swift */; };
@@ -44,6 +44,7 @@
 		B6CE1D241E1208C1003D4FFA /* KozBon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KozBon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6CE1D311E1208C1003D4FFA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B6CE1D361E1208C1003D4FFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F6INFO0FR0001 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "service-names-port-numbers.csv"; sourceTree = "<group>"; };
 		F6240E682A92CF0600951875 /* AppCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCore.swift; sourceTree = "<group>"; };
 		F62EDC5E255B9D25003E5178 /* KozBon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KozBon.entitlements; sourceTree = "<group>"; };
@@ -52,7 +53,6 @@
 		F6C472FA2C1A248000BBB0F9 /* TopLevelDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopLevelDestination.swift; sourceTree = "<group>"; };
 		F6CA765F2F3690EF0036BE3B /* DependencyInjectionExamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjectionExamples.swift; sourceTree = "<group>"; };
 		F6CA76672F36915C0036BE3B /* PreviewDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewDependencies.swift; sourceTree = "<group>"; };
-		F6SIRI0FR0001 /* AskKozBonIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskKozBonIntent.swift; sourceTree = "<group>"; };
 		F6SIRI0FR0002 /* KozBonAppShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KozBonAppShortcuts.swift; sourceTree = "<group>"; };
 		F6SIRI0FR0003 /* BonjourServiceEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServiceEntity.swift; sourceTree = "<group>"; };
 		F6SIRI0FR0004 /* ScanForServicesIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanForServicesIntent.swift; sourceTree = "<group>"; };
@@ -119,6 +119,7 @@
 				B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */,
 				B6CE1D311E1208C1003D4FFA /* Assets.xcassets */,
 				B6CE1D361E1208C1003D4FFA /* Info.plist */,
+				F6INFO0FR0001 /* InfoPlist.xcstrings */,
 			);
 			path = KozBon;
 			sourceTree = "<group>";
@@ -126,7 +127,6 @@
 		F6SIRI0GR0001 /* AppIntents */ = {
 			isa = PBXGroup;
 			children = (
-				F6SIRI0FR0001 /* AskKozBonIntent.swift */,
 				F6SIRI0FR0002 /* KozBonAppShortcuts.swift */,
 				F6SIRI0FR0003 /* BonjourServiceEntity.swift */,
 				F6SIRI0FR0004 /* ScanForServicesIntent.swift */,
@@ -266,6 +266,7 @@
 			files = (
 				B6CE1D4A1E120AF8003D4FFA /* service-names-port-numbers.csv in Resources */,
 				B6CE1D321E1208C1003D4FFA /* Assets.xcassets in Resources */,
+				F6INFO0BF0001 /* InfoPlist.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,7 +281,6 @@
 				F6C472FB2C1A248000BBB0F9 /* TopLevelDestination.swift in Sources */,
 				F6CA76602F3690EF0036BE3B /* DependencyInjectionExamples.swift in Sources */,
 				F6CA76682F36915C0036BE3B /* PreviewDependencies.swift in Sources */,
-				F6SIRI0BF0001 /* AskKozBonIntent.swift in Sources */,
 				F6SIRI0BF0002 /* KozBonAppShortcuts.swift in Sources */,
 				F6SIRI0BF0003 /* BonjourServiceEntity.swift in Sources */,
 				F6SIRI0BF0004 /* ScanForServicesIntent.swift in Sources */,

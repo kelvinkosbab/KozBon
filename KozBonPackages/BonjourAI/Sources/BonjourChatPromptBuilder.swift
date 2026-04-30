@@ -12,11 +12,9 @@ import BonjourModels
 // swiftlint:disable file_length type_body_length
 // One cohesive prompt-builder enum: the static system instructions,
 // the live context block, the queried-descriptions block, and the
-// per-section formatters all live together because they read each
-// other's output (e.g. `userTurn` composes `contextPreamble` +
-// `queriedDescriptionsBlock`). Splitting across files would force
-// the section helpers to be `internal` and force each split file to
-// re-import the same dependencies.
+// per-section formatters all read each other's output, so splitting
+// across files would force the section helpers to be `internal`
+// for no structural benefit.
 
 // MARK: - BonjourChatPromptBuilder
 
@@ -143,103 +141,48 @@ public enum BonjourChatPromptBuilder {
 
             ## Scope
             You CAN answer questions about:
+            - Bonjour, mDNS, and DNS-SD — what they are, how local-network \
+            service discovery works, what the underlying protocols do
+            - ANY Bonjour service type KozBon recognizes — HTTP, AirPlay, \
+            AirDrop, HomeKit (HAP), Matter, Thread, IPP/AirPrint, SSH, SMB, \
+            Sonos, Spotify Connect, Chromecast, Plex, Jellyfin, mDNS-SD, \
+            and dozens more. Explaining what a protocol does, what kinds of \
+            devices use it, what its TCP/UDP characteristics are, and what \
+            its TXT-record conventions mean is squarely in scope
+            - Smart-home and networking standards more broadly when they're \
+            relevant to service discovery (Matter over Wi-Fi vs. Thread, \
+            HomeKit accessory protocol, AirPlay 2 vs. AirPlay 1, etc.)
             - Services currently discovered on the user's network
             - Services the user is broadcasting from this device
-            - The service type library
-            - How to use KozBon (Discover, Library, Preferences tabs; broadcasting; \
-            filtering and sorting)
+            - The KozBon service type library and its categories
+            - How to use KozBon (Discover, Library, Preferences tabs; \
+            broadcasting; filtering and sorting)
 
-            You CAN ALSO take side-effecting actions on the user's behalf via \
-            tools (see "Tools" section below): drafting a custom service type, \
-            editing or deleting one, drafting a service broadcast, and stopping \
-            an active broadcast. In every case the tool only opens a confirmation \
-            sheet or dialog — the user reviews and taps Done (or the destructive \
-            button) to actually commit the change. Never claim something happened; \
-            the user is the one who confirms.
+            **When in doubt, answer.** If the user's question touches ANY \
+            service-discovery protocol, networking concept, smart-home \
+            standard, or anything in the KozBon library, you should answer \
+            it — even if you're not 100% sure of every detail. Use the \
+            "Likely:" hedge prefix when inferring; only refuse when the \
+            question is clearly unrelated.
 
-            You CANNOT answer unrelated questions (weather, general knowledge, math, \
-            recipes, creative writing, news, etc.).
-
-            ## Tools
-            You have five tools available. Call them when the user clearly asks for \
-            the corresponding action ("create a service type for…", "broadcast a …", \
-            "rename my … type", "delete my … type", "stop broadcasting …"). Do NOT \
-            call any tool speculatively — only when the user has asked.
-
-            All tools open a sheet or confirmation; none of them commit anything by \
-            themselves. The user always confirms via the form's Done button or the \
-            dialog's destructive button. Never claim the action happened — the user \
-            is the one who confirms.
-
-            - **prepareCustomServiceType(name, type, transport, details)** — Drafts a \
-            new custom Bonjour service type and presents a confirmation form. Pick \
-            the `transport` based on the protocol the service speaks (TCP for most \
-            modern services; UDP for lightweight/discovery protocols). The `type` \
-            argument is the bare identifier without underscores or transport \
-            suffix (e.g. "home-media", not "_home-media._tcp"). After the tool \
-            returns, briefly tell the user the form is open for them to review.
-
-            - **prepareEditCustomServiceType(serviceType, suggestedName, suggestedDetails)** \
-            — Opens an existing custom service type in edit mode. The `serviceType` \
-            argument is the canonical "_<type>._<transport>" form. Pass empty \
-            strings for `suggestedName`/`suggestedDetails` unless the user gave a \
-            concrete suggestion — the form opens with the current values for them \
-            to revise either way. The DNS-SD type itself can't be changed in edit \
-            mode; only the display name and description are editable. Refuses for \
-            built-in types (which can't be edited).
-
-            - **prepareDeleteCustomServiceType(serviceType)** — Surfaces a destructive \
-            confirmation dialog asking the user whether to remove one of their \
-            custom service types. The user must tap the dialog's red Delete button \
-            to actually remove the type — your tool call only opens the dialog. \
-            Refuses for built-in types (which can't be deleted).
-
-            - **prepareBroadcast(serviceType, port, domain, txtRecords)** — Drafts a \
-            broadcast and presents a confirmation form. The `serviceType` argument \
-            must match a type in the user's library exactly, in the canonical form \
-            "_<type>._<transport>" (e.g. "_http._tcp"). Use the standard port for \
-            the chosen service type when the user doesn't specify one (80 for HTTP, \
-            443 for HTTPS, 22 for SSH, 631 for IPP, etc.). Default `domain` to \
-            "local." unless the user specifies a custom DNS-SD domain. Pass an \
-            empty `txtRecords` array unless the user has explicitly requested key/ \
-            value metadata. After the tool returns, briefly tell the user the form \
-            is open for them to review.
-
-            - **prepareStopBroadcast(serviceType)** — Surfaces a destructive \
-            confirmation dialog asking the user whether to stop one of their \
-            currently-active broadcasts. The `serviceType` argument is the \
-            canonical "_<type>._<transport>" form. The user must tap the dialog's \
-            red Stop button to actually stop the broadcast.
-
-            ### Tool chaining
-            You can sequence tool calls across turns when the user describes a \
-            multi-step intent. Common chains:
-
-            1. **Create then broadcast** — If the user wants to broadcast a service \
-            type that doesn't exist in the library yet, call \
-            **prepareCustomServiceType FIRST** so they can create it. After they \
-            tap Done in the form, you'll see the new type in the next \
-            `<context>` block; on a follow-up turn (or in the same turn if the \
-            user asks for both), you can then call **prepareBroadcast** with the \
-            new full type. Do not call both tools in a single turn unsolicited — \
-            wait for the user to confirm the create before drafting the broadcast.
-
-            2. **Stop then delete** — If the user wants to remove a custom type \
-            that's currently being broadcast, the broadcast must be stopped \
-            first. Call **prepareStopBroadcast**, wait for them to confirm, then \
-            offer **prepareDeleteCustomServiceType** as a follow-up.
-
-            ### Error handling
-            If a tool returns an error string starting with "Couldn't draft" (or \
-            "Couldn't draft the stop"/"Couldn't draft the deletion"/etc.), relay \
-            the reason to the user in your reply rather than retrying with the \
-            same arguments. The error message itself contains the explanation — \
-            use it.
+            You CANNOT answer questions that are genuinely off-topic — \
+            weather, recipes, creative writing, math problems, current news, \
+            celebrity facts, code generation in arbitrary languages, \
+            translation. CANNOT take direct actions either — for creating, \
+            editing, broadcasting, or stopping services, tell the user to \
+            use the in-app UI (Library tab for service types, Discover tab's \
+            Broadcast button for new broadcasts).
 
             ## Refusal template
-            When asked an off-topic question, reply in a single sentence:
-            "That's outside what I can help with — ask me about your discovered \
-            services, the service type library, or how to broadcast a service."
+            ONLY use this template when the question is clearly off-topic. \
+            A question about a protocol like Matter, Thread, HomeKit, \
+            AirPlay, or any other service the app supports is NEVER \
+            off-topic — answer those questions even if the user isn't \
+            currently seeing that service on their network.
+
+            For genuinely off-topic questions, reply in a single sentence:
+            "That's outside what I can help with — ask me about Bonjour \
+            services, the service type library, or how to use KozBon."
 
             ## Output format
             VOICE: Address the user as "you". Use second person, active voice.
@@ -324,12 +267,16 @@ public enum BonjourChatPromptBuilder {
 
     /// Number of discovered services rendered with full detail (addresses,
     /// TXT records, transport). The rest of the list falls back to a
-    /// compact one-liner. Picked to balance context richness against the
-    /// on-device model's token budget — 10 richly-detailed services
-    /// handles the typical home network where the user is most likely to
-    /// ask about a specific device, while the brief tail still lets the
-    /// model enumerate the full list when asked.
-    private static let richDetailServiceCap = 10
+    /// compact one-liner.
+    ///
+    /// Sized for Apple's on-device Foundation Model context window
+    /// (~4K tokens). Five rich entries × ~100 tokens each = ~500
+    /// tokens of detailed context, leaving room for the system
+    /// prompt (~1500), tool schemas (~1500), brief tail, library
+    /// summary, and the user message. With 10 entries we routinely
+    /// crossed the limit on service-rich networks and threw
+    /// `exceededContextWindowSize` on the user.
+    private static let richDetailServiceCap = 5
 
     /// Hard cap on the total number of discovered services rendered.
     /// Services beyond this are summarized as "...and N more" so the
@@ -515,30 +462,43 @@ public enum BonjourChatPromptBuilder {
         guard !library.isEmpty else {
             return ["Service type library: empty"]
         }
+        // Render the library as PER-CATEGORY COUNTS rather than
+        // full name lists. The original prompt enumerated every
+        // type's display name under its category heading
+        // (~400-800 tokens for a 150+ type library) — that
+        // routinely pushed the on-device model past its context
+        // window after tools and the discovered-services block
+        // were also injected, throwing `exceededContextWindowSize`
+        // on the user. The counts give the model the same
+        // taxonomy shape (which categories exist, how big each
+        // is) at a fraction of the cost.
+        //
+        // When the user mentions a specific type by name, the
+        // `queriedDescriptionsBlock` injects that type's full
+        // description into a `<referenced>` block on the same
+        // turn — so concrete type-by-name questions still get
+        // authoritative answers. The library summary just
+        // tells the model the catalog exists and how it's
+        // shaped.
         var lines: [String] = [
-            "Service type library (\(library.count) types, grouped by category):"
+            "Service type library (\(library.count) types):"
         ]
-        // Types that fell into a category. Used to compute an "Other"
-        // bucket for types we don't explicitly categorize.
-        var categorizedNames = Set<String>()
+        var categorizedTypes = Set<String>()
         for (categoryTitle, typeIDs) in libraryCategoriesInOrder {
-            let matched = library
-                .filter { typeIDs.contains($0.type) }
-                .map(\.name)
-                .sorted()
+            let matched = library.filter { typeIDs.contains($0.type) }
             guard !matched.isEmpty else { continue }
-            matched.forEach { categorizedNames.insert($0) }
-            lines.append("- \(categoryTitle): \(matched.joined(separator: ", "))")
+            matched.forEach { categorizedTypes.insert($0.type) }
+            lines.append("- \(categoryTitle): \(matched.count) types")
         }
-        // Everything else, alphabetized — keeps small/obscure types
-        // discoverable without having to hand-categorize every one.
-        let remaining = library
-            .map(\.name)
-            .filter { !categorizedNames.contains($0) }
-            .sorted()
-        if !remaining.isEmpty {
-            lines.append("- Other: \(remaining.joined(separator: ", "))")
+        let otherCount = library
+            .count(where: { !categorizedTypes.contains($0.type) })
+        if otherCount > 0 {
+            lines.append("- Other: \(otherCount) types")
         }
+        lines.append(
+            "When the user asks about a specific type by name, " +
+            "its full description will be injected separately."
+        )
         return lines
     }
 

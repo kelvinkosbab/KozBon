@@ -190,6 +190,8 @@
 	</array>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>KozBon needs permission to scan for nearby Bonjour services.</string>
+	<key>NSSiriUsageDescription</key>
+	<string>KozBon uses Siri so you can ask about Bonjour services and how to use the app from anywhere — Siri reads the answer aloud without you having to open KozBon.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

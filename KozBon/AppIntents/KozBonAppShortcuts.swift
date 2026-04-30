@@ -10,23 +10,29 @@ import Foundation
 
 // MARK: - KozBonAppShortcuts
 
-/// Registers the suggested phrases for ``AskKozBonIntent`` so users
-/// can invoke it via Siri without first creating a Shortcut by hand.
+/// Registers the suggested phrases for KozBon's App Intents so
+/// users can invoke them via Siri without first creating a
+/// Shortcut by hand.
 ///
 /// The phrases are surfaced in:
 ///
-/// - **Siri voice** — "Hey Siri, ask KozBon …"
+/// - **Siri voice** — "Hey Siri, scan my network with KozBon"
 /// - **Spotlight** — search results for the app
 /// - **Shortcuts app** — pre-built actions in the gallery
 /// - **Action Button** (iPhone 15 Pro+) — assignable target
 /// - **Apple Intelligence** (iOS 26+) — natural-language match
 ///
 /// The `\(.applicationName)` token expands to the localized app
-/// display name at runtime, so Spanish users hear "Pregunta a
-/// KozBon" rather than the English form. The `\(\.$question)`
-/// token interpolates the parameter directly so users can speak
-/// the entire question in one breath ("Ask KozBon what is
-/// _ipp._tcp") instead of waiting for a follow-up dialog.
+/// display name at runtime, so Spanish users hear "Buscar
+/// servicios Bonjour con KozBon" rather than the English form.
+///
+/// The conversational `AskKozBonIntent` (and its supporting
+/// `BonjourSiriPromptBuilder` / `SiriResponsePostProcessor`) was
+/// removed: routing voice questions through the on-device model
+/// for free-form Q&A produced inconsistent answers and made the
+/// Siri experience feel less polished than the in-app chat. Users
+/// who want chat should open the Chat tab; Siri is reserved for
+/// concrete actions (scan, list).
 @available(iOS 18.0, macOS 15.0, visionOS 2.0, *)
 struct KozBonAppShortcuts: AppShortcutsProvider {
 
@@ -36,38 +42,6 @@ struct KozBonAppShortcuts: AppShortcutsProvider {
     static var shortcutTileColor: ShortcutTileColor { .blue }
 
     static var appShortcuts: [AppShortcut] {
-        AppShortcut(
-            intent: AskKozBonIntent(),
-            phrases: [
-                // Phrase ordering matters: Apple ranks by array
-                // position and surfaces the first one most
-                // prominently in Spotlight previews. "Talk to" is
-                // the canonical assistant-invocation pattern
-                // ("Hey Siri, talk to <app>") — leading with it
-                // catches the most natural voice usage.
-                //
-                // After invocation Siri prompts the user for
-                // their question via the `requestValueDialog`
-                // on `AskKozBonIntent.question`.
-                //
-                // Inline-question phrases (e.g. "Ask KozBon
-                // \(\.$question)") are intentionally NOT shipped
-                // here: App Intents requires inline phrase
-                // parameters to be `AppEntity` or `AppEnum`, not
-                // plain `String`. Wrapping the question in a
-                // `QueryAppEntity` for that one feature is
-                // disproportionate scope for Phase 1; users get
-                // the same outcome via the two-step prompt.
-                "Talk to \(.applicationName)",
-                "Ask \(.applicationName)",
-                "Ask \(.applicationName) a question",
-                "Ask \(.applicationName) about my network",
-                "Ask \(.applicationName) about Bonjour"
-            ],
-            shortTitle: "Ask KozBon",
-            systemImageName: "bubble.left.and.bubble.right"
-        )
-
         AppShortcut(
             intent: ScanForServicesIntent(),
             phrases: [

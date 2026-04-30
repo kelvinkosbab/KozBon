@@ -149,6 +149,7 @@ public extension Image {
     // MARK: - Communication
 
     static var chat: Image { Image(systemName: Iconography.chat) }
+    static var chatEllipsis: Image { Image(systemName: Iconography.chatEllipsis) }
     static var link: Image { Image(systemName: Iconography.link) }
     static var people: Image { Image(systemName: Iconography.people) }
 

@@ -35,12 +35,14 @@ public struct BonjourChatView: View {
     @Environment(\.preferencesStore) private var preferencesStore
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    /// Lazily initialized on first appearance so the factory can read
-    /// `viewModel.publishManager` for the stop-broadcast tool. A
-    /// `@State` initial-value expression can't reference `self`,
-    /// so we start nil and hydrate in `.onAppear`. The brief flash
-    /// before the value lands is invisible because `.onAppear` runs
-    /// synchronously before the body becomes visible to the user.
+    /// Initialized synchronously at View-init time via
+    /// ``init(viewModel:)``. Initializing eagerly (rather than
+    /// in `.onAppear`) means the body's first render branch
+    /// already has a non-nil session — no two-render path
+    /// where the user sees the "requires Apple Intelligence"
+    /// `ContentUnavailableView` flash to the chat surface.
+    /// That flash was visible on tab activation as ~hundreds
+    /// of milliseconds of perceived lag.
     @State private var localSession: (any BonjourChatSessionProtocol)?
     @State private var inputText: String = ""
     @FocusState private var isInputFocused: Bool
@@ -65,6 +67,16 @@ public struct BonjourChatView: View {
     /// again) doesn't clobber the user's in-progress conversation
     /// with a stale snapshot from disk.
     @State private var hasAttemptedRestore = false
+
+    /// Set after the first time the message list lands on screen
+    /// with a non-empty conversation. Drives the initial
+    /// scroll-to-bottom — without it, a user opening the Chat
+    /// tab after the persisted history has been restored would
+    /// see the TOP of the conversation, which is rarely what
+    /// they want. Subsequent tab re-entries don't re-scroll, so
+    /// a user who scrolled up to read older context isn't
+    /// jumped back to the bottom on every tab switch.
+    @State private var hasPerformedInitialScrollToBottom = false
 
     /// Active "create custom service type" intent surfaced from the
     /// chat assistant's `prepareCustomServiceType` tool. Setting
@@ -111,8 +123,25 @@ public struct BonjourChatView: View {
     /// same scanner delegate as the Discover tab. See ``BonjourServicesViewModel``
     /// for the rationale — two separate view models would race for the single
     /// `weak var delegate` on `BonjourServiceScanner`.
+    ///
+    /// Initializes ``localSession`` eagerly using the publish manager
+    /// from `viewModel`. Doing this here (rather than deferring to
+    /// `.onAppear`) collapses two SwiftUI render passes into one on
+    /// first tab activation — the body's `if let session` branch
+    /// resolves to the populated chat surface immediately, instead
+    /// of momentarily landing on the empty `ContentUnavailableView`.
     public init(viewModel: BonjourServicesViewModel) {
         self.viewModel = viewModel
+        // `State.init(initialValue:)` is consulted exactly once
+        // when SwiftUI first allocates this view's state storage;
+        // subsequent `init` calls (during parent rebuilds) discard
+        // the new factory result. So `Self.makeSession(...)`
+        // happens once per Chat-tab lifetime — same cost as the
+        // previous lazy path, just paid earlier so the user
+        // doesn't see the empty-state flash.
+        self._localSession = State(
+            initialValue: Self.makeSession(publishManager: viewModel.publishManager)
+        )
     }
 
     /// The active session — injected if available, otherwise a local instance.
@@ -250,17 +279,26 @@ public struct BonjourChatView: View {
             // it has its own `isProcessing` guard, so calling it while
             // Discover is already scanning is a no-op.
             .onAppear {
-                if localSession == nil {
-                    // Construct the session with a reference to the
-                    // app's publish manager so the stop-broadcast
-                    // tool sees the live published-services list at
-                    // call time. The reference is held weakly inside
-                    // the session, so this doesn't extend the
-                    // manager's lifetime past the chat session.
-                    localSession = Self.makeSession(publishManager: viewModel.publishManager)
+                // Session construction has already happened in
+                // `init(viewModel:)` — see the doc comment on
+                // `localSession` for why eager init avoids the
+                // first-render flash. `.onAppear` only runs the
+                // ancillary work that's safe to defer until the
+                // tab is actually visible.
+                //
+                // Defer to a Task with `Task.yield()` so the
+                // first frame paints before we kick off the
+                // scanner load (~150 NetServiceBrowser inits
+                // worst case) and JSON decode of any persisted
+                // chat history. Both can run after the empty
+                // state lands on screen — the user wants to see
+                // the suggestion buttons immediately, not wait
+                // for restore to land first.
+                Task { @MainActor in
+                    await Task.yield()
+                    viewModel.load()
+                    restoreChatHistoryIfNeeded()
                 }
-                viewModel.load()
-                restoreChatHistoryIfNeeded()
             }
             // Save the current conversation when the user sends or
             // when an assistant turn completes. Saving on every token
@@ -543,6 +581,20 @@ public struct BonjourChatView: View {
                 ScrollViewReader { proxy in
                     ScrollView {
                         VStack(alignment: .leading, spacing: 12) {
+                            // Passive "long conversation" advisory at
+                            // the top of the message list. Surfaces
+                            // when the accumulated transcript is
+                            // approaching the on-device model's
+                            // context budget (per the heuristic in
+                            // `Array<BonjourChatMessage>.isLongConversation`).
+                            // Honest framing: the model still works,
+                            // the user just gets a hint that
+                            // responses might degrade and they can
+                            // clear if they want a fresh start.
+                            if session.messages.isLongConversation {
+                                longConversationBanner
+                                    .transition(.opacity)
+                            }
                             ForEach(session.messages) { message in
                                 messageBubble(
                                     message: message,
@@ -617,6 +669,35 @@ public struct BonjourChatView: View {
                             }
                         }
                     }
+                    // First time the populated message list lands
+                    // on screen, jump to the most recent message
+                    // so the user sees where the conversation
+                    // left off — opening Chat after the persisted
+                    // history was restored otherwise lands on
+                    // the FIRST message, which is rarely what
+                    // the user wants.
+                    //
+                    // No animation: the user just navigated INTO
+                    // this view, so an animated scroll would
+                    // feel like the chat is moving away from
+                    // them rather than greeting them at the
+                    // last message.
+                    //
+                    // 50 ms gives the ScrollView one layout pass
+                    // to position its content before we ask it
+                    // to scroll — calling `scrollTo` synchronously
+                    // in `.onAppear` runs against pre-layout
+                    // geometry and silently no-ops on some
+                    // platforms.
+                    .onAppear {
+                        guard !hasPerformedInitialScrollToBottom,
+                              let last = session.messages.last else { return }
+                        hasPerformedInitialScrollToBottom = true
+                        Task { @MainActor in
+                            try? await Task.sleep(for: .milliseconds(50))
+                            proxy.scrollTo(last.id, anchor: .bottom)
+                        }
+                    }
                 }
             }
         }
@@ -640,6 +721,47 @@ public struct BonjourChatView: View {
                 .combined(with: .opacity)
                 .combined(with: .scale(scale: 0.95, anchor: .bottomLeading))
         }
+    }
+
+    // MARK: - Long-Conversation Banner
+
+    /// Subtle informational pill rendered at the top of the
+    /// message list once the accumulated transcript crosses the
+    /// `isLongConversation` heuristic. Designed to be passive —
+    /// no tap action, no dismiss button. The user already has
+    /// the toolbar's Clear button as their action; this just
+    /// signals "you're getting close to where the model may
+    /// degrade".
+    ///
+    /// Uses `.regularMaterial` for a quiet inline-banner feel
+    /// rather than the loud red-error style — the situation is
+    /// informational, not actually broken.
+    private var longConversationBanner: some View {
+        HStack(alignment: .top, spacing: 12) {
+            Image.chatEllipsis
+                .font(.title3)
+                .foregroundStyle(.secondary)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(Strings.Chat.longConversationBannerTitle)
+                    .font(.subheadline).bold()
+                Text(Strings.Chat.longConversationBannerDetail)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            Spacer(minLength: 0)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(.regularMaterial, in: .rect(cornerRadius: 12))
+        .padding(.horizontal, 4)
+        // Combine into a single VoiceOver element with both
+        // strings read together — otherwise users hear "Long
+        // conversation" first, then have to swipe to discover
+        // the explanation.
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(.isStaticText)
     }
 
     // MARK: - Empty State with Suggestions

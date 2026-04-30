@@ -105,16 +105,22 @@ struct BonjourChatPromptBuilderContextTests {
         #expect(block.contains("(2 types"))
     }
 
-    @Test("Library entries are emitted by display name so the model can reference them")
-    func contextBlockIncludesLibraryNames() {
+    @Test("Library section advertises the deferred description-injection mechanism so the model knows specific types are queryable")
+    func contextBlockExplainsQueriedDescriptionFallback() {
+        // The library section moved from full name lists to
+        // per-category counts to fit the on-device model's
+        // context window. The model still needs to know that
+        // specific types ARE queryable when the user mentions
+        // one — the deferred-injection note signals that the
+        // `<referenced>` block carries authoritative type
+        // descriptions on demand.
         let library = [
             makeServiceType(name: "HTTP", type: "http"),
             makeServiceType(name: "SSH", type: "ssh")
         ]
         let context = BonjourChatPromptBuilder.ChatContext(serviceTypeLibrary: library)
         let block = BonjourChatPromptBuilder.contextBlock(context: context)
-        #expect(block.contains("HTTP"))
-        #expect(block.contains("SSH"))
+        #expect(block.contains("full description will be injected separately"))
     }
 
     // MARK: - Context Block — Large Lists
@@ -228,11 +234,13 @@ struct BonjourChatPromptBuilderContextTests {
 
     // MARK: - Context Block: Grouped Library
 
-    @Test("Library renders known types under category headings so the model has explicit taxonomy")
+    @Test("Library renders category headings so the model has explicit taxonomy shape")
     func libraryListsCategoriesWhenTypesMatch() {
-        // Types that belong in known categories should render under
-        // their category heading so the model doesn't have to infer
-        // taxonomy from names alone.
+        // Types that belong in known categories should surface
+        // their category heading + count, so the model knows the
+        // taxonomy exists without paying for the full name list
+        // (the on-device model's context window can't afford
+        // ~150 names — that's what triggered the size cap fix).
         let library = [
             makeServiceType(name: "AirPlay", type: "airplay"),
             makeServiceType(name: "HomeKit", type: "hap"),
@@ -245,17 +253,58 @@ struct BonjourChatPromptBuilderContextTests {
         #expect(block.contains("Printers & Scanners"))
     }
 
-    @Test("Library uses an `Other:` bucket for types outside any predefined category")
-    func libraryBucketsUncategorizedTypesUnderOther() {
-        // Types not in any predefined category must still appear so the
-        // model knows they exist. An "Other" bucket catches them.
+    @Test("Library reports per-category counts so the model knows the taxonomy shape")
+    func libraryReportsPerCategoryCounts() {
+        // Each present category surfaces with its type count.
+        // This replaces the previous full name list — saves
+        // hundreds of tokens for libraries with 100+ entries
+        // while keeping the taxonomy visible to the model.
         let library = [
-            makeServiceType(name: "Obscure", type: "some-unknown-proto")
+            makeServiceType(name: "AirPlay", type: "airplay"),
+            makeServiceType(name: "AirDrop", type: "airdrop"),
+            makeServiceType(name: "IPP", type: "ipp")
         ]
         let context = BonjourChatPromptBuilder.ChatContext(serviceTypeLibrary: library)
         let block = BonjourChatPromptBuilder.contextBlock(context: context)
-        #expect(block.contains("Other:"))
-        #expect(block.contains("Obscure"))
+        #expect(block.contains("Apple Devices: 2 types"))
+        #expect(block.contains("Printers & Scanners: 1 types"))
+    }
+
+    @Test("Library uses an `Other:` bucket for types outside any predefined category")
+    func libraryBucketsUncategorizedTypesUnderOther() {
+        // Types not in any predefined category must still surface
+        // as a count under "Other" so the model knows they exist
+        // — the queriedDescriptionsBlock can pull in the full
+        // description on demand if the user names one.
+        let library = [
+            makeServiceType(name: "Obscure", type: "some-unknown-proto"),
+            makeServiceType(name: "Custom", type: "another-novel-proto")
+        ]
+        let context = BonjourChatPromptBuilder.ChatContext(serviceTypeLibrary: library)
+        let block = BonjourChatPromptBuilder.contextBlock(context: context)
+        #expect(block.contains("Other: 2 types"))
+    }
+
+    // MARK: - Context Block: Token-Budget Discipline
+
+    @Test("Library section omits individual type names — guards against context-window blow-up on large libraries")
+    func libraryDoesNotEnumerateNames() {
+        // Pin the token-saving choice: the library has 150+ types
+        // in production and listing all names was pushing the
+        // on-device model past its context window, throwing
+        // `exceededContextWindowSize`. The fix replaced names
+        // with per-category counts. If a future change re-adds
+        // name enumeration, this test catches it.
+        let library = [
+            makeServiceType(name: "UniquelyNamedTypeForTesting", type: "unique-test-type")
+        ]
+        let context = BonjourChatPromptBuilder.ChatContext(serviceTypeLibrary: library)
+        let block = BonjourChatPromptBuilder.contextBlock(context: context)
+        // The unique name MUST NOT appear in the library
+        // section. (It might appear elsewhere if injected via
+        // discovered/published services in other tests, but
+        // not here — we only built a library entry.)
+        #expect(!block.contains("UniquelyNamedTypeForTesting"))
     }
 
     // MARK: - Injection-Resistance for Discovered Service Names

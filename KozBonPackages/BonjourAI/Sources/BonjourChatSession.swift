@@ -6,8 +6,19 @@
 //
 
 import Foundation
+import OSLog
 import BonjourModels
 import BonjourScanning
+
+/// Subsystem-scoped logger. Errors thrown by the on-device model
+/// surface in Console.app under the `com.kozinga.KozBon` subsystem
+/// with category `BonjourChatSession`. Used purely for diagnostics —
+/// users see the localized error text in the chat surface, not the
+/// raw error description.
+private let chatSessionLogger = Logger(
+    subsystem: "com.kozinga.KozBon",
+    category: "BonjourChatSession"
+)
 
 #if canImport(FoundationModels)
 import FoundationModels
@@ -153,10 +164,24 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
             // broadcast" within one turn the model can call both tools
             // in sequence.
             librarySnapshot = BonjourServiceType.fetchAll()
-            session = LanguageModelSession(
-                tools: makeTools(library: librarySnapshot),
-                instructions: instructions
-            )
+            // Tool registration is intentionally OMITTED here.
+            // The 5-tool surface (create / edit / delete /
+            // broadcast / stop) was costing ~1500 tokens of
+            // schema metadata in every model turn — combined
+            // with the system prompt and context block, that
+            // pushed the on-device Foundation Model past its
+            // ~4K context window on fresh first messages,
+            // producing `exceededContextWindowSize` errors
+            // immediately.
+            //
+            // The tool *implementations* (`BonjourChatIntent`,
+            // `BonjourChatIntentBroker`, `Prepare*Tool.swift`)
+            // are kept in source so re-enabling is one line
+            // when the context budget allows (newer model
+            // generations, or a slimmer per-tool schema).
+            // For now the chat is pure Q&A — actions live in
+            // the existing in-app UI.
+            session = LanguageModelSession(instructions: instructions)
             sessionResponseLengthSnapshot = responseLength
             // Fresh session — treat the next turn as the first turn so context
             // is injected.
@@ -189,8 +214,39 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
                 }
             }
         } catch {
+            // Diagnostics: capture the actual error in OSLog so we
+            // can see what `LanguageModelSession` is throwing
+            // under various failure modes (context overflow,
+            // guardrail block, transient resource pressure,
+            // assets-not-yet-downloaded, etc.). The user sees
+            // only the localized description rendered as an
+            // error banner.
+            //
+            // A previous iteration tried to auto-recover from
+            // context-overflow errors by string-matching the
+            // error description and silently resetting the
+            // session. That misfired because the description
+            // patterns we matched on overlap with unrelated
+            // failure modes — every error ended up routed
+            // through the recovery path, and users lost
+            // the ability to chat at all. Until we have
+            // empirical evidence about what overflow errors
+            // actually look like (this OSLog will give us
+            // that), we keep the catch path simple: surface
+            // the error, let the user decide whether to retry
+            // or clear the chat.
+            chatSessionLogger.error(
+                """
+                streamResponse failed — \
+                kind: \(String(describing: error), privacy: .public), \
+                description: \(error.localizedDescription, privacy: .public)
+                """
+            )
             self.error = error.localizedDescription
-            // Remove the empty assistant placeholder on error.
+            // Remove the empty assistant placeholder on error so
+            // the chat doesn't show a perpetually-empty bubble.
+            // The user's own message stays in `messages` — they
+            // can see what they asked.
             messages.removeAll { $0.id == assistantId }
         }
         // `isGenerating = false` is handled by the `defer` at the top.
@@ -206,44 +262,6 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
         // it may start drifting toward the rejected topic in follow-ups.
         messages.append(BonjourChatMessage(role: .user, content: userMessage))
         messages.append(BonjourChatMessage(role: .assistant, content: refusalText))
-    }
-
-    // MARK: - Tools
-
-    /// Builds the tool list passed to `LanguageModelSession`. Returns
-    /// an empty array when running on a target where the
-    /// `FoundationModels.Tool` symbol isn't ready (i.e. anything
-    /// pre-iOS 26), so older OSes get a chat-only experience without
-    /// crashing at session-construction time. The whole class is
-    /// gated on `iOS 26+` already, but the inner availability check
-    /// pins the dependency on `Tool` itself.
-    ///
-    /// The stop-broadcast tool gets a closure for the published-
-    /// services list rather than a snapshot, so its membership check
-    /// sees the live state at call time. A user who broadcasts a
-    /// service mid-conversation can ask the assistant to stop it
-    /// without forcing a session recreation.
-    private func makeTools(library: [BonjourServiceType]) -> [any Tool] {
-        let publishManagerRef = publishManager
-        return [
-            PrepareCustomServiceTypeTool(broker: intentBroker),
-            PrepareEditCustomServiceTypeTool(
-                broker: intentBroker,
-                library: library
-            ),
-            PrepareDeleteCustomServiceTypeTool(
-                broker: intentBroker,
-                library: library
-            ),
-            PrepareBroadcastTool(broker: intentBroker, library: library),
-            PrepareStopBroadcastTool(
-                broker: intentBroker,
-                publishedServicesProvider: { @MainActor in
-                    guard let publishManagerRef else { return [] }
-                    return Array(publishManagerRef.publishedServices)
-                }
-            )
-        ]
     }
 
     // MARK: - Reset

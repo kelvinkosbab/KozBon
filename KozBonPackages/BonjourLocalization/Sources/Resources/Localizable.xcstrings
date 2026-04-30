@@ -13613,6 +13613,88 @@
         }
       }
     },
+    "chat_long_conversation_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Long conversation"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conversación larga"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conversation longue"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lange Unterhaltung"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "長い会話"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "长时间会话"
+          }
+        }
+      }
+    },
+    "chat_long_conversation_detail": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Responses may degrade as the assistant runs out of room. Consider clearing to start fresh."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Las respuestas pueden deteriorarse a medida que el asistente se queda sin espacio. Considera borrar para empezar de cero."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La qualité des réponses peut diminuer à mesure que l'assistant manque de place. Envisagez d'effacer pour repartir à zéro."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Antworten können nachlassen, wenn dem Assistenten der Platz ausgeht. Erwäge, den Verlauf zu löschen und neu zu beginnen."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アシスタントの容量が少なくなると応答の質が低下することがあります。一度クリアしてやり直すこともご検討ください。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "当助手空间不足时，回答质量可能下降。建议清空后重新开始。"
+          }
+        }
+      }
+    },
     "chat_suggestion_4": {
       "extractionState": "manual",
       "localizations": {
