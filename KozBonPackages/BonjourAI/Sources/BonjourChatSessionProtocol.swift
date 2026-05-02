@@ -46,10 +46,32 @@ public protocol BonjourChatSessionProtocol: AnyObject, Observable {
     /// they don't have a real model to warm.
     func prewarm()
 
-    /// Sends a user message and streams the assistant's response.
+    /// Appends a user message to ``messages`` synchronously, without
+    /// triggering any model work or fresh-scan plumbing. The chat
+    /// view calls this the instant the user taps a suggestion or hits
+    /// Send, so the user's bubble shows up immediately — *before*
+    /// any awaits that build the model context (e.g.
+    /// `BonjourOneShotScanner.run` for live-state questions). The
+    /// subsequent ``send(_:context:)`` call must NOT re-append; it
+    /// adds the assistant placeholder and starts streaming.
+    ///
+    /// Implementations are expected to append a
+    /// `BonjourChatMessage(role: .user, content: text)` to their
+    /// `messages` array.
+    func appendUserMessage(_ text: String)
+
+    /// Streams the assistant's response to a user message that's
+    /// already in ``messages``.
+    ///
+    /// Callers must invoke ``appendUserMessage(_:)`` first so the
+    /// user's bubble is visible without waiting on this method's
+    /// awaits. `send` then appends the assistant placeholder and
+    /// runs the model.
     ///
     /// - Parameters:
-    ///   - text: The user's message text (trimmed, non-empty).
+    ///   - text: The user's message text (trimmed, non-empty), as
+    ///     passed to ``appendUserMessage(_:)``. Used to compose the
+    ///     model prompt; not appended to ``messages`` again.
     ///   - context: A snapshot of the user's current services and library.
     func send(_ text: String, context: BonjourChatPromptBuilder.ChatContext) async
 

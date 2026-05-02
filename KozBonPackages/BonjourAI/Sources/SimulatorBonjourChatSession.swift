@@ -41,6 +41,17 @@ public final class SimulatorBonjourChatSession: BonjourChatSessionProtocol {
 
     // MARK: - BonjourChatSessionProtocol
 
+    /// Appends the user's message immediately so the bubble lands on
+    /// screen before any awaits. The mock session has no model to
+    /// warm or scan to run, so the latency saving here is small —
+    /// but the contract has to match the production session so the
+    /// chat view's call sequence is the same on every implementation.
+    public func appendUserMessage(_ text: String) {
+        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return }
+        messages.append(BonjourChatMessage(role: .user, content: trimmed))
+    }
+
     public func send(_ text: String, context: BonjourChatPromptBuilder.ChatContext) async {
         let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
@@ -53,7 +64,7 @@ public final class SimulatorBonjourChatSession: BonjourChatSessionProtocol {
         // user can't fire a follow-up.
         defer { isGenerating = false }
 
-        messages.append(BonjourChatMessage(role: .user, content: trimmed))
+        // User message already appended via `appendUserMessage(_:)`.
 
         let assistantId = UUID()
         messages.append(BonjourChatMessage(id: assistantId, role: .assistant, content: ""))

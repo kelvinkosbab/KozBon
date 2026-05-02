@@ -33,6 +33,11 @@ public final class MockBonjourChatSession: BonjourChatSessionProtocol {
     /// The number of times ``send(_:context:)`` has been called.
     public var sendCallCount = 0
 
+    /// The number of times ``appendUserMessage(_:)`` has been called.
+    /// Tests can assert on this to verify the chat view appends the
+    /// user bubble synchronously before awaiting fresh-scan + send.
+    public var appendUserMessageCallCount = 0
+
     /// The number of times ``reset()`` has been called.
     public var resetCallCount = 0
 
@@ -59,6 +64,13 @@ public final class MockBonjourChatSession: BonjourChatSessionProtocol {
 
     // MARK: - BonjourChatSessionProtocol
 
+    public func appendUserMessage(_ text: String) {
+        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return }
+        appendUserMessageCallCount += 1
+        messages.append(BonjourChatMessage(role: .user, content: trimmed))
+    }
+
     public func send(_ text: String, context: BonjourChatPromptBuilder.ChatContext) async {
         let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
@@ -68,7 +80,12 @@ public final class MockBonjourChatSession: BonjourChatSessionProtocol {
         error = nil
         isGenerating = true
 
-        messages.append(BonjourChatMessage(role: .user, content: trimmed))
+        // User message already appended via `appendUserMessage(_:)`.
+        // The assistant bubble is appended here so tests that
+        // exercise `send` directly without first calling
+        // `appendUserMessage` see only an assistant message —
+        // which is the same pattern the production session
+        // follows.
         messages.append(BonjourChatMessage(role: .assistant, content: cannedReply))
 
         isGenerating = false

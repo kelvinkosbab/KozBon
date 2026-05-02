@@ -135,6 +135,32 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
         lastContextBlock = nil
     }
 
+    // MARK: - Append User Message
+
+    /// Appends the user's message to ``messages`` synchronously. The
+    /// chat view calls this the instant the user taps Send so the
+    /// bubble lands on screen before any awaits — the subsequent
+    /// `send(_:context:)` call expects this message to already be
+    /// the last one in the array and will NOT re-append it.
+    ///
+    /// Trims whitespace internally to match the previous in-`send`
+    /// behavior. Empty/whitespace-only inputs are a no-op so callers
+    /// can pass raw input without an extra guard.
+    public func appendUserMessage(_ text: String) {
+        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return }
+
+        // Defensive in-memory cap on visible chat history (see
+        // `maxInMemoryMessageCount` for the rationale). Lifted up
+        // here from `send` so the cap applies on *append*, not on
+        // the model invocation that comes later.
+        if messages.count >= Self.maxInMemoryMessageCount {
+            messages = Array(messages.suffix(Self.maxInMemoryMessageCount - 1))
+        }
+
+        messages.append(BonjourChatMessage(role: .user, content: trimmed))
+    }
+
     // MARK: - Send
 
     public func send(_ text: String, context: BonjourChatPromptBuilder.ChatContext) async {
@@ -160,22 +186,13 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
         // bounce back with a relayable error.
         intentBroker.resetToolCallCount()
 
-        // Defensive in-memory cap on visible chat history. Disk
-        // persistence already trims to 200 messages via
-        // `BonjourChatMessage.trimmed(...)`; this trims the
-        // in-memory `messages` array to a higher cap so a
-        // marathon conversation can't grow unbounded RAM
-        // accumulation. Trimming the in-memory array doesn't
-        // shrink the underlying `LanguageModelSession` transcript
-        // (FoundationModels manages that internally) — it just
-        // bounds the SwiftUI list scrollback.
-        if messages.count > Self.maxInMemoryMessageCount {
-            messages = Array(messages.suffix(Self.maxInMemoryMessageCount))
-        }
-
-        // Append the user message as it appears to the user (without the context
-        // preamble — the preamble is internal guidance for the model).
-        messages.append(BonjourChatMessage(role: .user, content: trimmed))
+        // The user message has already been appended by
+        // `appendUserMessage(_:)` — re-appending here would produce
+        // a duplicate bubble. We don't assert on `messages.last`
+        // because the caller might have appended local rejections
+        // or other messages between the user-append and `send`
+        // calls; the contract is just "the user message is
+        // somewhere in `messages`," not "it's the last one."
 
         // Build or reuse the session. Only recreate when the response-length
         // preference changes (since it affects the static instructions).

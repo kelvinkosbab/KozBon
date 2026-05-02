@@ -13824,37 +13824,37 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "How can I create my own service type to broadcast?"
+            "value": "What devices are on my network?"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "¿Cómo puedo crear mi propio tipo de servicio para emitir?"
+            "value": "¿Qué dispositivos hay en mi red?"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Comment puis-je créer mon propre type de service à diffuser ?"
+            "value": "Quels appareils sont sur mon réseau ?"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Wie kann ich einen eigenen Diensttyp zum Senden erstellen?"
+            "value": "Welche Geräte sind in meinem Netzwerk?"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "ブロードキャスト用に独自のサービスタイプを作成するには？"
+            "value": "私のネットワークにはどんなデバイスがありますか？"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "如何创建我自己的服务类型来广播？"
+            "value": "我的网络上有哪些设备？"
           }
         }
       }

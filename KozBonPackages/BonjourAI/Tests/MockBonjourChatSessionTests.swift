@@ -33,11 +33,56 @@ struct MockBonjourChatSessionTests {
         #expect(mock.resetCallCount == 0)
     }
 
+    // MARK: - Append User Message
+
+    @Test("`appendUserMessage` adds the user bubble synchronously without invoking `send`")
+    func appendUserMessageAppendsSynchronously() {
+        // Pin the latency-fix contract: tapping a suggestion or
+        // pressing Send appends the user bubble immediately, before
+        // any awaits run. The chat view calls this method first,
+        // then awaits fresh-scan + send — `appendUserMessage` itself
+        // must never await or call into the model.
+        let mock = MockBonjourChatSession()
+        mock.appendUserMessage("Hello")
+        #expect(mock.messages.count == 1)
+        #expect(mock.messages[0].role == .user)
+        #expect(mock.messages[0].content == "Hello")
+        #expect(mock.appendUserMessageCallCount == 1)
+        #expect(mock.sendCallCount == 0, "appendUserMessage must not invoke send")
+    }
+
+    @Test("`appendUserMessage` trims whitespace, matching the production session's behavior")
+    func appendUserMessageTrimsWhitespace() {
+        let mock = MockBonjourChatSession()
+        mock.appendUserMessage("  hello  ")
+        #expect(mock.messages[0].content == "hello")
+    }
+
+    @Test("`appendUserMessage` is a no-op for empty / whitespace-only input")
+    func appendUserMessageIgnoresEmptyInput() {
+        let mock = MockBonjourChatSession()
+        mock.appendUserMessage("")
+        mock.appendUserMessage("   \n\t  ")
+        #expect(mock.messages.isEmpty)
+        #expect(mock.appendUserMessageCallCount == 0)
+    }
+
     // MARK: - Send
 
-    @Test("`send` appends both the user message and the canned assistant reply in order")
-    func sendAppendsUserAndAssistantMessages() async {
+    @Test("`appendUserMessage` + `send` together produce a user bubble and the canned assistant reply")
+    func appendThenSendAppendsBothMessages() async {
+        // The realistic chat-view flow:
+        //   1. View calls `appendUserMessage(text)` — bubble lands.
+        //   2. View awaits `buildChatContext(forMessage: text)`.
+        //   3. View awaits `session.send(text, context:)` — assistant
+        //      placeholder appended, model streams, isGenerating
+        //      transitions back.
+        //
+        // `send` no longer appends the user message itself — that's
+        // moved to `appendUserMessage` so the bubble shows up before
+        // the awaits run.
         let mock = MockBonjourChatSession(cannedReply: "Test reply")
+        mock.appendUserMessage("Hello")
         await mock.send("Hello", context: emptyContext)
         #expect(mock.messages.count == 2)
         #expect(mock.messages[0].role == .user)
@@ -49,7 +94,9 @@ struct MockBonjourChatSessionTests {
     @Test("`sendCallCount` increments once per `send` invocation, regardless of context")
     func sendIncrementsCallCount() async {
         let mock = MockBonjourChatSession()
+        mock.appendUserMessage("One")
         await mock.send("One", context: emptyContext)
+        mock.appendUserMessage("Two")
         await mock.send("Two", context: emptyContext)
         #expect(mock.sendCallCount == 2)
     }
@@ -69,17 +116,11 @@ struct MockBonjourChatSessionTests {
         #expect(mock.sendCallCount == 0)
     }
 
-    @Test("`send` trims surrounding whitespace before storing the user message")
-    func sendTrimsWhitespace() async {
-        let mock = MockBonjourChatSession()
-        await mock.send("  hello  ", context: emptyContext)
-        #expect(mock.messages[0].content == "hello")
-    }
-
     @Test("`send` records the most recent context so tests can assert what was passed")
     func sendStoresLastContext() async {
         let mock = MockBonjourChatSession()
         let context = BonjourChatPromptBuilder.ChatContext()
+        mock.appendUserMessage("Hi")
         await mock.send("Hi", context: context)
         #expect(mock.lastContext != nil)
     }
@@ -89,6 +130,7 @@ struct MockBonjourChatSessionTests {
     @Test("`reset` clears the message history and bumps `resetCallCount`")
     func resetClearsMessages() async {
         let mock = MockBonjourChatSession()
+        mock.appendUserMessage("Hello")
         await mock.send("Hello", context: emptyContext)
         #expect(!mock.messages.isEmpty)
 
@@ -111,6 +153,7 @@ struct MockBonjourChatSessionTests {
     @Test("Custom `cannedReply` controls the assistant content the mock returns from `send`")
     func cannedReplyCanBeCustomized() async {
         let mock = MockBonjourChatSession(cannedReply: "Custom reply")
+        mock.appendUserMessage("Hi")
         await mock.send("Hi", context: emptyContext)
         #expect(mock.messages.last?.content == "Custom reply")
     }
@@ -120,9 +163,10 @@ struct MockBonjourChatSessionTests {
     @Test("Three sends produce six messages in user/assistant alternating order")
     func multipleTurnsAllAppearInHistory() async {
         let mock = MockBonjourChatSession(cannedReply: "ack")
-        await mock.send("First question", context: emptyContext)
-        await mock.send("Second question", context: emptyContext)
-        await mock.send("Third question", context: emptyContext)
+        for question in ["First question", "Second question", "Third question"] {
+            mock.appendUserMessage(question)
+            await mock.send(question, context: emptyContext)
+        }
 
         #expect(mock.messages.count == 6)
         #expect(mock.messages[0].role == .user)
@@ -137,8 +181,10 @@ struct MockBonjourChatSessionTests {
     @Test("`reset` after multiple turns wipes the entire history, not just the latest pair")
     func resetAfterMultipleTurnsClearsEverything() async {
         let mock = MockBonjourChatSession()
-        await mock.send("Q1", context: emptyContext)
-        await mock.send("Q2", context: emptyContext)
+        for question in ["Q1", "Q2"] {
+            mock.appendUserMessage(question)
+            await mock.send(question, context: emptyContext)
+        }
         #expect(mock.messages.count == 4)
 
         mock.reset()
@@ -203,6 +249,7 @@ struct MockBonjourChatSessionTests {
             userMessage: "calculate 2+2",
             refusalText: "Off topic"
         )
+        mock.appendUserMessage("What is AirPlay?")
         await mock.send("What is AirPlay?", context: emptyContext)
 
         #expect(mock.messages.count == 4)
@@ -233,6 +280,7 @@ struct MockBonjourChatSessionTests {
         // on `session.messages.isEmpty`), but if it did the
         // semantics should be deterministic — replace, don't merge.
         let mock = MockBonjourChatSession()
+        mock.appendUserMessage("live question")
         await mock.send("live question", context: emptyContext)
         #expect(mock.messages.count == 2)
 

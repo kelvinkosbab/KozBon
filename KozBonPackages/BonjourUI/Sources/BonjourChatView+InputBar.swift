@@ -202,6 +202,18 @@ extension BonjourChatView {
             return
         }
 
+        // Append the user's bubble to the visible conversation
+        // synchronously, BEFORE any awaits. The fresh-scan path inside
+        // `buildChatContext(forMessage:)` can stall for ~3 seconds on
+        // live-state questions, and the production `session.send` was
+        // previously what appended this message — meaning the user's
+        // bubble didn't appear until after both awaits resolved. That
+        // looked like the chat surface was frozen post-tap. Splitting
+        // append from send via the protocol's
+        // `appendUserMessage(_:)` puts the bubble on screen the moment
+        // SwiftUI runs its next render pass.
+        session.appendUserMessage(trimmed)
+
         let context = await buildChatContext(forMessage: trimmed)
 
         // Response length is derived from the user's Detail level
