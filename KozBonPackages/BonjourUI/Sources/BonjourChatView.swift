@@ -1158,13 +1158,7 @@ public struct BonjourChatView: View {
             return
         }
 
-        let context = BonjourChatPromptBuilder.ChatContext(
-            discoveredServices: viewModel.flatActiveServices,
-            publishedServices: viewModel.sortedPublishedServices,
-            serviceTypeLibrary: BonjourServiceType.fetchAll(),
-            lastScanTime: viewModel.lastScanTime,
-            isScanning: viewModel.serviceScanner.isProcessing
-        )
+        let context = await buildChatContext(forMessage: trimmed)
 
         // Response length is derived from the user's Detail level
         // preference now — the standalone "Response length" picker was
@@ -1177,6 +1171,64 @@ public struct BonjourChatView: View {
         session.responseLength = detailLevel.responseLength
 
         await session.send(trimmed, context: context)
+    }
+
+    /// Builds the `ChatContext` the assistant sees for the user's
+    /// current message. When the message looks like a question about
+    /// live network state ("what's on my network?", "list devices",
+    /// "scan", and similar), runs a fresh `BonjourOneShotScanner`
+    /// pass first so the assistant answers from current data instead
+    /// of whatever the continuous scanner happened to have collected.
+    /// Otherwise — for concept questions ("what is Matter?", "explain
+    /// HomeKit") — passes through the cached
+    /// ``BonjourServicesViewModel/flatActiveServices`` snapshot,
+    /// which is what the chat used before fresh-scan-on-demand
+    /// existed.
+    ///
+    /// The fresh-scan path takes ~3 s of additional latency before the
+    /// model starts streaming — the typing indicator covers it. The
+    /// detector ``ChatScanIntentDetector/wantsFreshScan(message:)`` is
+    /// deliberately lenient because a false positive only costs that
+    /// 3 s, while a false negative means the assistant answers a live-
+    /// state question with stale data. We err toward more scanning.
+    ///
+    /// A fresh `BonjourServiceScanner` instance is used per scan
+    /// rather than the shared one driving Discover, so the chat's
+    /// snapshot doesn't disturb Discover's continuous observation —
+    /// they run in parallel for the ~3 s window. Same isolation
+    /// pattern the Siri intents (`ScanForServicesIntent`,
+    /// `ListDiscoveredServicesIntent`) use.
+    private func buildChatContext(
+        forMessage message: String
+    ) async -> BonjourChatPromptBuilder.ChatContext {
+        let library = BonjourServiceType.fetchAll()
+        let publishedServices = viewModel.sortedPublishedServices
+
+        if ChatScanIntentDetector.wantsFreshScan(message: message) {
+            let runner = BonjourOneShotScanner(scanner: BonjourServiceScanner())
+            let freshServices = await runner.run(
+                publishedServices: viewModel.publishManager.publishedServices
+            )
+            return BonjourChatPromptBuilder.ChatContext(
+                discoveredServices: freshServices,
+                publishedServices: publishedServices,
+                serviceTypeLibrary: library,
+                // The just-completed scan is by definition the most
+                // recent; pin `lastScanTime` to now so the assistant's
+                // freshness-aware phrasing reads as "data is fresh"
+                // rather than "data may be stale."
+                lastScanTime: Date(),
+                isScanning: false
+            )
+        }
+
+        return BonjourChatPromptBuilder.ChatContext(
+            discoveredServices: viewModel.flatActiveServices,
+            publishedServices: publishedServices,
+            serviceTypeLibrary: library,
+            lastScanTime: viewModel.lastScanTime,
+            isScanning: viewModel.serviceScanner.isProcessing
+        )
     }
 
     /// Returns a localized error message for the given validation rejection reason.
