@@ -32,8 +32,28 @@ public final class BonjourService: NSObject, @preconcurrency NetServiceDelegate 
     /// The service type metadata (name, type string, transport layer).
     public let serviceType: BonjourServiceType
 
-    /// A stable identifier derived from the `NetService` hash at initialization time.
-    public nonisolated let serviceIdentifier: Int
+    /// DNS-SD logical identity for this service: `name|type|domain`,
+    /// captured once at init time. Used as the basis for ``id``,
+    /// ``hash``, and ``isEqual(_:)``.
+    ///
+    /// The DNS-SD spec guarantees that the `(name, type, domain)`
+    /// tuple uniquely identifies a service on a network — two
+    /// physical NetService instances with the same tuple represent
+    /// the SAME service, even if they were discovered through
+    /// different network interfaces, IP families, or scanner
+    /// restarts. The previous identity (`NetService.hashValue`)
+    /// was pointer-based, so it produced a fresh integer per
+    /// instance even when the underlying logical service was
+    /// identical — the chat surface and Discover tab saw the same
+    /// device duplicated several times whenever Bonjour emitted
+    /// per-interface or post-restart re-discovery callbacks.
+    ///
+    /// Cached as a `nonisolated let` so `hash` / `isEqual(_:)` /
+    /// `id` (all required to be nonisolated by their respective
+    /// protocols) can read it without crossing the
+    /// `@MainActor` boundary that protects the underlying
+    /// `NetService` delegate state.
+    public nonisolated let logicalIdentity: String
 
     /// Resolved IP addresses for this service. Empty until `resolve()` or `resolveAddresses()` completes.
     public private(set) var addresses: [InternetAddress] = []
@@ -60,9 +80,38 @@ public final class BonjourService: NSObject, @preconcurrency NetServiceDelegate 
     ) {
         self.service = service
         self.serviceType = serviceType
-        self.serviceIdentifier = service.hashValue
+        // Compose the DNS-SD identity tuple at construction time.
+        // `NetService.name` / `.type` / `.domain` are populated
+        // before the browser hands the instance to us — they're
+        // discovery-time properties, not resolve-time properties,
+        // so reading them here is safe even for an unresolved
+        // service. The pipe separator is a character that can't
+        // legally appear in any of the three components, so the
+        // composition is unambiguous.
+        self.logicalIdentity = "\(service.name)|\(service.type)|\(service.domain)"
         super.init()
         self.service.delegate = self
+    }
+
+    // MARK: - NSObject Identity Overrides
+
+    /// Hash by DNS-SD logical identity rather than NSObject's
+    /// pointer-based default. Required for `Set<BonjourService>`
+    /// (used by both `BonjourServiceScanner` and
+    /// `BonjourServiceTypeScanner`) to dedup logical duplicates
+    /// emitted by per-interface or post-restart re-discovery
+    /// callbacks.
+    public override nonisolated var hash: Int {
+        logicalIdentity.hashValue
+    }
+
+    /// Equality by DNS-SD logical identity. Two `BonjourService`
+    /// wrappers for the same `(name, type, domain)` tuple compare
+    /// equal regardless of underlying `NetService` instance, so
+    /// dedup paths see them as one service.
+    public override func isEqual(_ object: Any?) -> Bool {
+        guard let other = object as? BonjourService else { return false }
+        return self.logicalIdentity == other.logicalIdentity
     }
 
     /// The human-readable hostname derived from the service's advertised host, with domain and punctuation stripped.
@@ -258,7 +307,14 @@ public enum PublishError: Swift.Error {
 // MARK: - Identifiable
 
 extension BonjourService: Identifiable {
-    public nonisolated var id: Int {
-        serviceIdentifier
+
+    /// SwiftUI / dedup identifier — the DNS-SD logical identity
+    /// (`name|type|domain`). Stable for the lifetime of any
+    /// `BonjourService` wrapping a NetService that represents the
+    /// same logical service, so `ForEach` and `firstIndex(where:)`
+    /// dedup paths collapse per-interface and post-restart
+    /// duplicates correctly.
+    public nonisolated var id: String {
+        logicalIdentity
     }
 }
