@@ -134,4 +134,72 @@ struct ChatScanIntentDetectorTests {
         let message = "Hey, could you please tell me what services are on my network right now? Thanks!"
         #expect(ChatScanIntentDetector.wantsFreshScan(message: message))
     }
+
+    // MARK: - Localization
+
+    /// Pin that every ship language has SOME coverage in the
+    /// detector. Each test below exercises a representative
+    /// possessive phrasing and a representative action verb for
+    /// the language — if either path regresses (e.g. someone
+    /// drops the language's section in a refactor), the test
+    /// catches it before non-English users silently lose the
+    /// fresh-scan behavior.
+
+    @Test("Spanish triggers fresh scan on possessive and action phrases")
+    func spanishTriggers() {
+        // Possessive — "what services are on my network?"
+        #expect(ChatScanIntentDetector.wantsFreshScan(message: "¿Qué servicios hay en mi red?"))
+        // Action verb — "scan now"
+        #expect(ChatScanIntentDetector.wantsFreshScan(message: "Escanear ahora por favor"))
+        // Counting — "how many devices?"
+        #expect(ChatScanIntentDetector.wantsFreshScan(message: "¿Cuántos dispositivos hay?"))
+    }
+
+    @Test("French triggers fresh scan on possessive and action phrases")
+    func frenchTriggers() {
+        #expect(ChatScanIntentDetector.wantsFreshScan(message: "Quels services sont sur mon réseau ?"))
+        #expect(ChatScanIntentDetector.wantsFreshScan(message: "Peux-tu scanner maintenant ?"))
+        #expect(ChatScanIntentDetector.wantsFreshScan(message: "Combien de services y a-t-il ?"))
+    }
+
+    @Test("German triggers fresh scan on possessive and action phrases")
+    func germanTriggers() {
+        #expect(ChatScanIntentDetector.wantsFreshScan(message: "Welche Dienste sind in meinem Netzwerk?"))
+        #expect(ChatScanIntentDetector.wantsFreshScan(message: "Bitte neu scannen"))
+        #expect(ChatScanIntentDetector.wantsFreshScan(message: "Wie viele Geräte gibt es?"))
+    }
+
+    @Test("Japanese triggers fresh scan on possessive and action phrases")
+    func japaneseTriggers() {
+        // "What services are on my network?"
+        #expect(ChatScanIntentDetector.wantsFreshScan(message: "私のネットワーク上にはどんなサービスがありますか？"))
+        // "Please scan"
+        #expect(ChatScanIntentDetector.wantsFreshScan(message: "スキャンしてください"))
+        // "How many devices are there?"
+        #expect(ChatScanIntentDetector.wantsFreshScan(message: "デバイスはいくつありますか？"))
+    }
+
+    @Test("Simplified Chinese triggers fresh scan on possessive and action phrases")
+    func simplifiedChineseTriggers() {
+        // "What services are on my network?"
+        #expect(ChatScanIntentDetector.wantsFreshScan(message: "我的网络上有什么服务？"))
+        // "Please scan now"
+        #expect(ChatScanIntentDetector.wantsFreshScan(message: "请扫描"))
+        // "How many devices are there?"
+        #expect(ChatScanIntentDetector.wantsFreshScan(message: "有多少设备？"))
+    }
+
+    @Test("Combined phrase list spans all six ship languages")
+    func phraseListIsLocalizedAcrossSixLanguages() {
+        // Defensive check that no language list got accidentally
+        // emptied during a refactor. Each must contribute SOME
+        // entries; the exact count is intentionally not pinned so
+        // additions don't break the test.
+        #expect(!ChatScanIntentDetector.englishPhrases.isEmpty)
+        #expect(!ChatScanIntentDetector.spanishPhrases.isEmpty)
+        #expect(!ChatScanIntentDetector.frenchPhrases.isEmpty)
+        #expect(!ChatScanIntentDetector.germanPhrases.isEmpty)
+        #expect(!ChatScanIntentDetector.japanesePhrases.isEmpty)
+        #expect(!ChatScanIntentDetector.simplifiedChinesePhrases.isEmpty)
+    }
 }

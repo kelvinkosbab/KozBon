@@ -28,11 +28,15 @@ import Foundation
 /// the worse failure mode, so the phrase list bias toward over-
 /// matching.
 ///
-/// English-only by design today. The 6 languages we ship would
-/// each need their own phrase list to match comparably; a future
-/// iteration can layer those in. Until then, non-English
-/// questions fall back to the cached-snapshot path, which is no
-/// worse than the pre-detector behavior.
+/// Localized for the six languages KozBon ships in: English,
+/// Spanish, French, German, Japanese, and Simplified Chinese.
+/// Phrases from every language are checked against every input —
+/// users typing English on a Spanish device, or mixing languages
+/// in a single sentence, still get the fresh-scan path. Cross-
+/// language false positives are theoretically possible but rare
+/// in practice because the high-signal phrases are deliberately
+/// distinctive (verbs and possessive constructions don't usually
+/// appear as substrings of unrelated words across languages).
 public enum ChatScanIntentDetector {
 
     // MARK: - Public API
@@ -55,19 +59,26 @@ public enum ChatScanIntentDetector {
         return false
     }
 
-    // MARK: - Phrase List
+    // MARK: - Phrase Lists
 
-    /// Phrases that strongly indicate the user wants live network
-    /// state. Stored already lowercased since ``wantsFreshScan(message:)``
-    /// lowercases its input.
-    ///
-    /// Grouped by signal type for readability — possessive +
-    /// state-noun phrasings, "what's around" question stems,
-    /// action verbs implying "look right now," and listing/showing
-    /// requests. The lookup is a linear contains-scan; with ~60
-    /// phrases and chat messages that are usually under 200
-    /// characters, the cost is negligible per send.
-    static let matchPhrases: [String] = [
+    /// All localized phrase lists concatenated into a single array
+    /// so ``wantsFreshScan(message:)`` does one linear scan per
+    /// invocation. The per-language lists below are the
+    /// authoritative source — this combined array is constructed
+    /// once at process start.
+    static let matchPhrases: [String] =
+        englishPhrases
+        + spanishPhrases
+        + frenchPhrases
+        + germanPhrases
+        + japanesePhrases
+        + simplifiedChinesePhrases
+
+    /// English phrases. Grouped by signal type for readability —
+    /// possessive + state-noun phrasings, "what's around" question
+    /// stems, action verbs implying "look right now," and listing/
+    /// showing requests.
+    static let englishPhrases: [String] = [
         // Possessive + state nouns: the strongest signal that the
         // user is asking about THEIR network, not the concept of
         // networks in general.
@@ -143,5 +154,158 @@ public enum ChatScanIntentDetector {
         "find thread",
         "find sonos",
         "find spotify"
+    ]
+
+    /// Spanish phrases. Mirrors the English coverage with the
+    /// possessive-state-noun, what's-out-there, action-verb, and
+    /// listing groupings. "Escanear" / "buscar" are the strongest
+    /// imperatives; "mi red" / "mis dispositivos" carry the
+    /// possessive signal.
+    static let spanishPhrases: [String] = [
+        "mi red",
+        "mis servicios",
+        "mis dispositivos",
+        "qué hay en",
+        "qué está conectado",
+        "qué servicios",
+        "qué dispositivos",
+        "cuántos servicios",
+        "cuántos dispositivos",
+        "escanear",
+        "escaneo",
+        "actualizar",
+        "descubrir",
+        "descubiertos",
+        "listar servicios",
+        "listar dispositivos",
+        "mostrar servicios",
+        "mostrar dispositivos",
+        "buscar servicios",
+        "buscar dispositivos",
+        "buscar impresoras",
+        "en la red",
+        "en mi red",
+        "transmitiendo"
+    ]
+
+    /// French phrases. "Scanner" overlaps with English "scan" but
+    /// French speakers using the verb still want a scan, so the
+    /// match is correct either way. "Mon réseau" and "mes
+    /// appareils" carry the possessive signal.
+    static let frenchPhrases: [String] = [
+        "mon réseau",
+        "mes services",
+        "mes appareils",
+        "quels services",
+        "quels appareils",
+        "combien de services",
+        "combien d'appareils",
+        "qu'est-ce qu'il y a",
+        "qu'y a-t-il",
+        "est connecté",
+        "scanner",
+        "rafraîchir",
+        "actualiser",
+        "découvrir",
+        "découverts",
+        "lister les services",
+        "lister les appareils",
+        "afficher les services",
+        "afficher les appareils",
+        "trouver des services",
+        "trouver des appareils",
+        "trouver des imprimantes",
+        "sur le réseau",
+        "sur mon réseau",
+        "diffuse"
+    ]
+
+    /// German phrases. "Mein Netzwerk" / "meine Geräte" carry the
+    /// possessive signal. German compounds mean "scan" appears in
+    /// "scannen", "neu scannen", etc. — substring matching catches
+    /// those automatically.
+    static let germanPhrases: [String] = [
+        "mein netzwerk",
+        "meine dienste",
+        "meine geräte",
+        "welche dienste",
+        "welche geräte",
+        "wie viele dienste",
+        "wie viele geräte",
+        "ist verbunden",
+        "scannen",
+        "neu scannen",
+        "aktualisieren",
+        "entdecken",
+        "entdeckte",
+        "auflisten",
+        "dienste anzeigen",
+        "geräte anzeigen",
+        "drucker finden",
+        "geräte finden",
+        "im netzwerk",
+        "in meinem netzwerk",
+        "sendet"
+    ]
+
+    /// Japanese phrases. Japanese sentences don't use spaces between
+    /// words, so substring matching is the natural fit. Phrases use
+    /// katakana for loanwords ("スキャン" = scan, "サービス" =
+    /// service) and kanji/kana for native vocabulary.
+    static let japanesePhrases: [String] = [
+        "ネットワーク",
+        "サービス",
+        "デバイス",
+        "機器",
+        "スキャン",
+        "再スキャン",
+        "更新",
+        "リスト",
+        "表示",
+        "見せて",
+        "探して",
+        "見つけて",
+        "発見",
+        "ブロードキャスト",
+        "接続",
+        "いくつ",
+        "いくつの",
+        "私のネットワーク",
+        "私のサービス",
+        "私のデバイス",
+        "ネットワーク上",
+        "ネットワークに"
+    ]
+
+    /// Simplified Chinese phrases. Like Japanese, no inter-word
+    /// spaces, so substring matching works directly. Possessive
+    /// uses "我的" ("my"); action verbs lead with "扫描" (scan),
+    /// "刷新" (refresh), "查找" (find).
+    static let simplifiedChinesePhrases: [String] = [
+        "我的网络",
+        "我的服务",
+        "我的设备",
+        "什么服务",
+        "什么设备",
+        "哪些服务",
+        "哪些设备",
+        "多少服务",
+        "多少设备",
+        "扫描",
+        "重新扫描",
+        "刷新",
+        "发现",
+        "已发现",
+        "列出服务",
+        "列出设备",
+        "显示服务",
+        "显示设备",
+        "查找",
+        "查找服务",
+        "查找设备",
+        "查找打印机",
+        "网络上",
+        "在网络上",
+        "广播"
     ]
 }
