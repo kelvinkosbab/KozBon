@@ -84,16 +84,29 @@ extension BonjourChatView {
         session: any BonjourChatSessionProtocol
     ) -> some View {
         Button {
-            // Focus the compose field BEFORE dispatching the send.
-            // Setting focus is synchronous; doing it first means
-            // the keyboard slides up alongside the
-            // suggestions-scroll-up animation rather than after
-            // the response has already started streaming. Once
-            // the suggestion's reply lands, the user has the
-            // keyboard already up and the cursor blinking — they
-            // can type a follow-up immediately without first
-            // tapping the input.
-            isInputFocused = true
+            // Fire the submit haptic SYNCHRONOUSLY in the Button
+            // action so the user feels the tap the instant it
+            // registers. Previously this lived inside `sendMessage`
+            // (run from the async `Task` below), so the haptic
+            // fired a few render cycles late — combined with the
+            // press animation getting interrupted by the immediate
+            // ScrollView scroll and (formerly) keyboard activation,
+            // it left the user wondering whether their tap had been
+            // detected at all. Incrementing here lifts the haptic
+            // out of the async path and onto the same synchronous
+            // run that triggers the press animation, so feel and
+            // sight land together.
+            submitCount &+= 1
+            // Don't pre-focus the compose field. The previous
+            // pattern called `isInputFocused = true` here so the
+            // keyboard would be up by the time the response started
+            // streaming — but on touch devices that triggered a
+            // ~250 ms keyboard slide-up animation on top of the
+            // suggestions-scroll-up and the bubble-insert, drowning
+            // out the press animation and adding perceived latency
+            // before any visible feedback. Most users want to read
+            // the response first and only then type a follow-up;
+            // they can tap the input manually when they're ready.
             Task { await sendMessage(text, using: session) }
         } label: {
             HStack {
@@ -167,18 +180,39 @@ private struct SuggestionCardButtonStyle: ButtonStyle {
     @ViewBuilder
     func makeBody(configuration: Configuration) -> some View {
         let pressed = configuration.isPressed
+        // Press feedback values tuned together so a quick tap
+        // (~80 ms — most taps don't hold long enough to see a
+        // full settle animation) still produces a visible squish:
+        //
+        //   - scale 0.94 (was 0.97) — 6% reduction is large enough
+        //     to register at a glance even when the surrounding
+        //     ScrollView is scrolling messages into place.
+        //   - opacity 0.70 (was 0.85) — pairs the scale with a
+        //     dimming pulse, so the press reads as a deliberate
+        //     "depress" rather than a subtle hover state.
+        //   - background tint 0.25 (was 0.2) — slightly deeper
+        //     ink while pressed for the same reason.
+        //   - spring response 0.18 (was 0.25) — faster
+        //     attack/release so the visual change starts right
+        //     when the finger lands and unwinds promptly on
+        //     release. Damping stays low enough to look elastic
+        //     without feeling jittery.
+        //
+        // Reduce Motion swaps the spring scale for an opacity-
+        // only flicker; the new values still apply (so reduce-
+        // motion users get the dimming and tint shift).
         let card = configuration.label
             .background(
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(Color.kozBonBlue.opacity(pressed ? 0.2 : 0.1))
+                    .fill(Color.kozBonBlue.opacity(pressed ? 0.25 : 0.1))
             )
             .contentShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-            .scaleEffect(reduceMotion ? 1.0 : (pressed ? 0.97 : 1.0))
-            .opacity(pressed ? 0.85 : 1.0)
+            .scaleEffect(reduceMotion ? 1.0 : (pressed ? 0.94 : 1.0))
+            .opacity(pressed ? 0.70 : 1.0)
             .animation(
                 reduceMotion
                     ? .easeOut(duration: 0.12)
-                    : .spring(response: 0.25, dampingFraction: 0.65),
+                    : .spring(response: 0.18, dampingFraction: 0.6),
                 value: pressed
             )
 

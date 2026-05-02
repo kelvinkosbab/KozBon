@@ -66,6 +66,12 @@ extension BonjourChatView {
             )
             .accessibilityIdentifier("chat_input_field")
             .onSubmit {
+                // Synchronous haptic — see the suggestion-button
+                // action in `BonjourChatView+EmptyState.swift` for
+                // the rationale. Lifting the increment out of the
+                // async `sendMessage` path lets feel and sight land
+                // together when the user hits Return.
+                submitCount &+= 1
                 Task { await sendMessage(inputText, using: session) }
             }
             // No keyboard-accessory "Done" button. The `scrollDismissesKeyboard
@@ -93,6 +99,10 @@ extension BonjourChatView {
             // feedback for free. Older systems fall back to the solid
             // `.kozBonBlue` fill so the primary action still reads.
             Button {
+                // Synchronous haptic — see the suggestion-button
+                // action for the rationale. Same pattern as
+                // `.onSubmit` above.
+                submitCount &+= 1
                 Task { await sendMessage(inputText, using: session) }
             } label: {
                 Image.arrowUp
@@ -171,15 +181,14 @@ extension BonjourChatView {
         let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
 
-        // EVERY send tap gets tactile + visual feedback BEFORE validation
-        // runs. Previously a client-side validator rejection silently
-        // dropped the input — no haptic, input stayed, keyboard stayed,
-        // and on an empty chat the `session.error` that was set was
-        // invisible behind the empty-state view. The tap read as broken.
-        // Now every tap: fires the submit haptic, clears the input,
-        // dismisses the keyboard. What happens next depends on
-        // validation, but the tap is never lost.
-        submitCount &+= 1
+        // The submit haptic and input-text clear are driven by
+        // callers (suggestion button action, send-button action,
+        // TextField `.onSubmit`) — they fire `submitCount &+= 1`
+        // synchronously the instant the user taps, which is what
+        // makes the press animation, haptic, and (on the input
+        // bar) text clear all land on the same render frame.
+        // Doing it here would re-introduce the original bug
+        // where the haptic ran one Task hop late.
         withAnimation(reduceMotion ? nil : .easeOut(duration: 0.2)) {
             inputText = ""
         }
