@@ -916,6 +916,28 @@ public enum Strings {
         public static var resetFooter: LocalizedStringResource {
             .init("settings_reset_footer", bundle: .atURL(Bundle.module.bundleURL))
         }
+
+        // MARK: - About
+
+        /// Section header for the About block at the bottom of the
+        /// Preferences form — version, build, and similar metadata.
+        public static var about: LocalizedStringResource {
+            .init("settings_about", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Row label for the marketing version
+        /// (`CFBundleShortVersionString`, e.g. "4.2").
+        public static var version: LocalizedStringResource {
+            .init("settings_version", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Row label for the build number (`CFBundleVersion`,
+        /// e.g. "114"). Distinct from ``version`` so users can copy
+        /// either piece independently and so VoiceOver reads each
+        /// row with its own descriptive label.
+        public static var buildNumber: LocalizedStringResource {
+            .init("settings_build_number", bundle: .atURL(Bundle.module.bundleURL))
+        }
     }
 
     // MARK: - Insights

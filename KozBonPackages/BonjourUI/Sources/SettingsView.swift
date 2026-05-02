@@ -34,6 +34,8 @@ public struct SettingsView: View {
                 displaySection
 
                 resetSection
+
+                aboutSection
             }
             .formStyle(.grouped)
             #if os(macOS)
@@ -172,6 +174,45 @@ public struct SettingsView: View {
             .accessibilityHint(String(localized: Strings.Accessibility.resetHint))
         } footer: {
             Text(Strings.Settings.resetFooter)
+        }
+    }
+
+    // MARK: - About Section
+
+    /// Read-only metadata about the running build — marketing version
+    /// (`CFBundleShortVersionString`) and build number
+    /// (`CFBundleVersion`). Surfaced as separate ``LabeledContent``
+    /// rows so each piece carries its own VoiceOver label and
+    /// monospaced-digit value column. The combined "4.2 (114)" form
+    /// available as ``AppVersion/formatted`` is intentionally not
+    /// used here — splitting into rows lets users scan, copy via
+    /// long-press selection, and identify whichever piece a bug
+    /// report or TestFlight crash dump is asking for, without
+    /// having to mentally parse a parenthetical.
+    @ViewBuilder
+    private var aboutSection: some View {
+        Section {
+            LabeledContent(
+                String(localized: Strings.Settings.version),
+                value: AppVersion.marketing
+            )
+            // `monospacedDigit()` keeps the value column aligned across
+            // both rows even when the marketing and build strings have
+            // different proportional widths — without it, "4.2" and
+            // "114" land at slightly different x positions on the
+            // grouped-form's trailing edge.
+            .monospacedDigit()
+            .accessibilityElement(children: .combine)
+
+            LabeledContent(
+                String(localized: Strings.Settings.buildNumber),
+                value: AppVersion.build
+            )
+            .monospacedDigit()
+            .accessibilityElement(children: .combine)
+        } header: {
+            Text(Strings.Settings.about)
+                .accessibilityAddTraits(.isHeader)
         }
     }
 
