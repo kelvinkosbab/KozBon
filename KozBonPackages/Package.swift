@@ -103,7 +103,21 @@ let package = Package(
     )
     + makeTargets(
         name: "BonjourAI",
-        dependencies: ["BonjourCore", "BonjourModels", "BonjourLocalization", "BonjourStorage"],
+        // BonjourScanning is a real dependency: `BonjourChatSession`
+        // imports `BonjourPublishManagerProtocol` from it so the
+        // stop-broadcast tool can query the user's active broadcasts.
+        // SPM compiled this fine in non-archive builds because the
+        // workspace happened to surface the module transitively, but
+        // archive builds (with stricter dependency-scan validation)
+        // promoted the missing-explicit-dependency warning to an
+        // error. Listing it here is the canonical fix.
+        dependencies: [
+            "BonjourCore",
+            "BonjourModels",
+            "BonjourLocalization",
+            "BonjourScanning",
+            "BonjourStorage"
+        ],
         hasTests: true,
         testDependencies: [
             .byName(name: "BonjourCore"),
