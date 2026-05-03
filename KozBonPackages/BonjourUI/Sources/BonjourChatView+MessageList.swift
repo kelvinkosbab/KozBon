@@ -15,9 +15,10 @@ import BonjourModels
 
 extension BonjourChatView {
 
-    /// Stable ID for the empty-state section. Used as a scroll anchor
-    /// when the chat is cleared so the ScrollView jumps back to the
-    /// top and the suggestions are immediately visible again.
+    /// Stable ID for the empty-state section. Used as a scroll
+    /// anchor when the chat is cleared so the ScrollView jumps
+    /// back to the top and the suggestions are immediately
+    /// visible again.
     static let emptyStateAnchorID = "chat_empty_state_anchor"
 
     /// The chat surface is a single ScrollView that ALWAYS contains
@@ -29,11 +30,21 @@ extension BonjourChatView {
     /// continuous instead of an instant page change.
     ///
     /// Each `.onChange` handler delegates to a small per-event
-    /// helper below. That keeps this function a thin assembly of
-    /// declarative bindings instead of a nest of inline closures,
-    /// and lets each scroll behavior be documented next to the
-    /// rule that triggers it.
+    /// helper on `BonjourChatViewModel`. That keeps this
+    /// function a thin assembly of declarative bindings instead
+    /// of a nest of inline closures, and lets each scroll
+    /// behavior be documented next to the rule that triggers it.
+    /// The helpers mutate VM state
+    /// (`hasScrolledFirstUserMessage`, `pendingClear`) and so
+    /// live on the VM where they're testable.
+    ///
+    /// `function_body_length` is disabled locally because the
+    /// six `.onChange` modifiers are an intrinsically chained
+    /// expression — splitting just for line count would shatter
+    /// the modifier chain into per-handler helpers that thread
+    /// `proxy` through generics for no structural benefit.
     @ViewBuilder
+    // swiftlint:disable:next function_body_length
     func messageList(session: any BonjourChatSessionProtocol) -> some View {
         ScrollViewReader { proxy in
             ScrollView {
@@ -45,37 +56,69 @@ extension BonjourChatView {
             // stable handle on the messages collection.
             .accessibilityLabel(String(localized: Strings.Accessibility.chatConversation))
             .accessibilityIdentifier("chat_message_list")
-            // `scrollDismissesKeyboard` is unavailable on visionOS —
-            // the Vision Pro uses a floating virtual keyboard that
-            // doesn't need an in-scroll-view dismiss gesture.
+            // `scrollDismissesKeyboard` is unavailable on visionOS
+            // — the Vision Pro uses a floating virtual keyboard
+            // that doesn't need an in-scroll-view dismiss gesture.
             #if !os(visionOS)
             .scrollDismissesKeyboard(.interactively)
             #endif
             .onChange(of: session.messages.first?.id) { _, firstId in
-                scrollFirstUserMessageToTop(firstId: firstId, proxy: proxy)
+                viewModel.scrollFirstUserMessageToTop(
+                    firstId: firstId,
+                    proxy: proxy,
+                    reduceMotion: reduceMotion
+                )
             }
             .onChange(of: session.messages.last?.id) { _, _ in
-                scrollLatestMessageToBottom(session: session, proxy: proxy, duration: 0.3)
+                viewModel.scrollLatestMessageToBottom(
+                    session: session,
+                    proxy: proxy,
+                    duration: 0.3,
+                    reduceMotion: reduceMotion
+                )
             }
             .onChange(of: session.messages.last?.content) {
-                scrollLatestMessageToBottom(session: session, proxy: proxy, duration: 0.15)
+                viewModel.scrollLatestMessageToBottom(
+                    session: session,
+                    proxy: proxy,
+                    duration: 0.15,
+                    reduceMotion: reduceMotion
+                )
             }
             .onChange(of: isInputFocused) { _, focused in
-                scrollLatestMessageAboveKeyboard(focused: focused, session: session, proxy: proxy)
+                viewModel.scrollLatestMessageAboveKeyboard(
+                    focused: focused,
+                    session: session,
+                    proxy: proxy,
+                    reduceMotion: reduceMotion
+                )
             }
-            .onChange(of: pendingClear) { _, pending in
-                runPendingClearSequence(pending: pending, session: session, proxy: proxy)
+            .onChange(of: viewModel.pendingClear) { _, pending in
+                viewModel.runPendingClearSequence(
+                    pending: pending,
+                    session: session,
+                    proxy: proxy,
+                    anchorID: Self.emptyStateAnchorID,
+                    reduceMotion: reduceMotion
+                )
             }
             .onChange(of: session.messages.isEmpty) { _, isEmpty in
-                snapToEmptyStateIfNeeded(isEmpty: isEmpty, proxy: proxy)
+                viewModel.snapToEmptyStateIfNeeded(
+                    isEmpty: isEmpty,
+                    proxy: proxy,
+                    anchorID: Self.emptyStateAnchorID
+                )
             }
         }
-        .animation(messageTransitionAnimation, value: session.messages.count)
+        .animation(
+            viewModel.messageTransitionAnimation(reduceMotion: reduceMotion),
+            value: session.messages.count
+        )
     }
 
     /// The scrollable content of the chat surface. Always contains
-    /// the empty-state intro + suggestions (so they're available as
-    /// a scroll target both before the first send and after a
+    /// the empty-state intro + suggestions (so they're available
+    /// as a scroll target both before the first send and after a
     /// Clear), the optional long-conversation banner, the message
     /// bubbles themselves, and any error string.
     @ViewBuilder
@@ -106,7 +149,10 @@ extension BonjourChatView {
                 )
                 .id(message.id)
                 .transition(.asymmetric(
-                    insertion: messageInsertionTransition(for: message.role),
+                    insertion: viewModel.messageInsertionTransition(
+                        for: message.role,
+                        reduceMotion: reduceMotion
+                    ),
                     removal: .opacity
                 ))
             }
@@ -118,142 +164,11 @@ extension BonjourChatView {
                     .transition(.opacity)
                     // Without this, VoiceOver reads the raw error
                     // text and users relying on the red color as
-                    // the error signal are excluded. Matches the
-                    // `Strings.Accessibility.error` format used
-                    // throughout the rest of the app
-                    // (CreateTxtRecordView, BroadcastView).
+                    // the error signal are excluded.
                     .accessibilityLabel(Strings.Accessibility.error(error))
             }
         }
         .padding()
-    }
-
-    // MARK: - Scroll Coordination
-
-    /// Animates the user's FIRST message in a fresh chat to the top
-    /// of the viewport, so the suggestion buttons scroll off above.
-    /// This is the "browsing → chatting" transition; gated on
-    /// `hasScrolledFirstUserMessage` so it fires exactly once per
-    /// fresh-chat lifetime.
-    fileprivate func scrollFirstUserMessageToTop(firstId: UUID?, proxy: ScrollViewProxy) {
-        guard let firstId, !hasScrolledFirstUserMessage else { return }
-        hasScrolledFirstUserMessage = true
-        withAnimation(reduceMotion ? nil : .easeOut(duration: 0.5)) {
-            proxy.scrollTo(firstId, anchor: .top)
-        }
-    }
-
-    /// Scroll-to-bottom for subsequent message arrivals and
-    /// streaming token updates. Gated on `count > 2` so the FIRST
-    /// exchange (user msg + placeholder, possibly streaming) keeps
-    /// the user's bubble pinned at the top — without that gate,
-    /// every streamed token would tug the latest content down into
-    /// view and the user's question would scroll off-screen during
-    /// the first response.
-    fileprivate func scrollLatestMessageToBottom(
-        session: any BonjourChatSessionProtocol,
-        proxy: ScrollViewProxy,
-        duration: Double
-    ) {
-        guard session.messages.count > 2,
-              let last = session.messages.last else { return }
-        withAnimation(reduceMotion ? nil : .easeOut(duration: duration)) {
-            proxy.scrollTo(last.id, anchor: .bottom)
-        }
-    }
-
-    /// When the user taps into the compose field, scroll the latest
-    /// message to the bottom of the visible region so it sits right
-    /// above the keyboard. A ~300 ms delay lets the keyboard's
-    /// safe-area insets propagate before we compute the scroll
-    /// position; scrolling synchronously with the focus change
-    /// would use the pre-keyboard layout and leave the last message
-    /// clipped under the keyboard.
-    fileprivate func scrollLatestMessageAboveKeyboard(
-        focused: Bool,
-        session: any BonjourChatSessionProtocol,
-        proxy: ScrollViewProxy
-    ) {
-        guard focused, let last = session.messages.last else { return }
-        Task { @MainActor in
-            try? await Task.sleep(for: .milliseconds(300))
-            withAnimation(reduceMotion ? nil : .easeOut(duration: 0.25)) {
-                proxy.scrollTo(last.id, anchor: .bottom)
-            }
-        }
-    }
-
-    /// Runs the toolbar's two-step Clear sequence:
-    ///
-    ///   1. Animate the ScrollView up to the empty-state anchor
-    ///      *while messages are still in place*. The scroll has
-    ///      actual distance to cover (the bubbles are still
-    ///      occupying the layout above the viewport's current
-    ///      position), so the user sees a continuous, smooth
-    ///      scroll up instead of bubbles disappearing in place.
-    ///
-    ///   2. Once the scroll animation has played out, call
-    ///      `session.reset()` to wipe `messages`. The bubbles'
-    ///      opacity-removal transitions overlap with the tail
-    ///      end of the scroll, so the conversation fades away as
-    ///      the suggestions land at the top.
-    ///
-    /// The 450 ms wait matches the scroll animation duration;
-    /// tightening it would clip the scroll's tail, lengthening it
-    /// would leave a perceptible pause before the bubbles finally
-    /// clear.
-    fileprivate func runPendingClearSequence(
-        pending: Bool,
-        session: any BonjourChatSessionProtocol,
-        proxy: ScrollViewProxy
-    ) {
-        guard pending else { return }
-        withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.45)) {
-            proxy.scrollTo(Self.emptyStateAnchorID, anchor: .top)
-        }
-        Task { @MainActor in
-            try? await Task.sleep(for: .milliseconds(450))
-            session.reset()
-            hasScrolledFirstUserMessage = false
-            pendingClear = false
-        }
-    }
-
-    /// Defensive fallback for any path that clears `messages`
-    /// directly (rather than going through the toolbar's
-    /// `pendingClear` flow). Resets the first-message flag and
-    /// snaps the ScrollView back to the top — at this point the
-    /// bubbles are already gone, so this scroll is effectively a
-    /// no-op visually but keeps the state consistent.
-    fileprivate func snapToEmptyStateIfNeeded(isEmpty: Bool, proxy: ScrollViewProxy) {
-        guard isEmpty, !pendingClear else { return }
-        hasScrolledFirstUserMessage = false
-        proxy.scrollTo(Self.emptyStateAnchorID, anchor: .top)
-    }
-
-    /// Returns the insertion transition for a newly-inserted message
-    /// bubble. Both user and assistant bubbles slide in from the top
-    /// edge (motion direction: top → bottom) so the chat surface
-    /// reads as a single vertical stream rather than the previous
-    /// asymmetric trailing/leading slide which felt jarring next to
-    /// the typing indicator.
-    ///
-    /// User and assistant differ in scale-anchor side only: user
-    /// bubbles scale from the trailing edge so the corner closest
-    /// to the right-aligned bubble grows last, assistant bubbles
-    /// scale from the leading edge for the same effect on the
-    /// left. The motion vector is identical for both so streaming
-    /// content (the typing indicator inside the assistant bubble)
-    /// inherits the same direction without any extra transition
-    /// overrides on the inner views.
-    fileprivate func messageInsertionTransition(for role: BonjourChatMessage.Role) -> AnyTransition {
-        if reduceMotion {
-            return .opacity
-        }
-        let scaleAnchor: UnitPoint = (role == .user) ? .topTrailing : .topLeading
-        return .move(edge: .top)
-            .combined(with: .opacity)
-            .combined(with: .scale(scale: 0.95, anchor: scaleAnchor))
     }
 
     // MARK: - Long-Conversation Banner
@@ -265,10 +180,6 @@ extension BonjourChatView {
     /// the toolbar's Clear button as their action; this just
     /// signals "you're getting close to where the model may
     /// degrade".
-    ///
-    /// Uses `.regularMaterial` for a quiet inline-banner feel
-    /// rather than the loud red-error style — the situation is
-    /// informational, not actually broken.
     fileprivate var longConversationBanner: some View {
         HStack(alignment: .top, spacing: 12) {
             Image.chatEllipsis
@@ -318,9 +229,10 @@ extension BonjourChatView {
                         MarkdownContentView(message.content)
                     }
 
-                    // Always show the typing indicator while this assistant message
-                    // is still being generated — even after the first tokens have
-                    // arrived. The model can pause mid-response, and without a
+                    // Always show the typing indicator while this
+                    // assistant message is still being generated —
+                    // even after the first tokens have arrived. The
+                    // model can pause mid-response, and without a
                     // visible indicator the chat looks frozen.
                     if isStreaming {
                         TypingIndicator()
@@ -341,11 +253,14 @@ extension BonjourChatView {
         }
     }
 
-    /// Returns whether the given message is the one currently being streamed.
-    ///
-    /// True when the session is actively generating and this is the last message
-    /// in the conversation and it's from the assistant.
-    fileprivate func isStreaming(_ message: BonjourChatMessage, in session: any BonjourChatSessionProtocol) -> Bool {
+    /// Returns whether the given message is the one currently
+    /// being streamed. True when the session is actively
+    /// generating and this is the last message in the
+    /// conversation and it's from the assistant.
+    fileprivate func isStreaming(
+        _ message: BonjourChatMessage,
+        in session: any BonjourChatSessionProtocol
+    ) -> Bool {
         guard session.isGenerating else { return false }
         guard message.role == .assistant else { return false }
         return session.messages.last?.id == message.id

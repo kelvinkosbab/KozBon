@@ -86,28 +86,26 @@ extension BonjourChatView {
         Button {
             // Fire the submit haptic SYNCHRONOUSLY in the Button
             // action so the user feels the tap the instant it
-            // registers. Previously this lived inside `sendMessage`
-            // (run from the async `Task` below), so the haptic
-            // fired a few render cycles late — combined with the
-            // press animation getting interrupted by the immediate
-            // ScrollView scroll and (formerly) keyboard activation,
-            // it left the user wondering whether their tap had been
-            // detected at all. Incrementing here lifts the haptic
-            // out of the async path and onto the same synchronous
-            // run that triggers the press animation, so feel and
-            // sight land together.
-            submitCount &+= 1
-            // Don't pre-focus the compose field. The previous
-            // pattern called `isInputFocused = true` here so the
-            // keyboard would be up by the time the response started
-            // streaming — but on touch devices that triggered a
-            // ~250 ms keyboard slide-up animation on top of the
-            // suggestions-scroll-up and the bubble-insert, drowning
-            // out the press animation and adding perceived latency
-            // before any visible feedback. Most users want to read
-            // the response first and only then type a follow-up;
-            // they can tap the input manually when they're ready.
-            Task { await sendMessage(text, using: session) }
+            // registers. The VM's `sendMessage` is async; doing
+            // this from inside the async path would fire the
+            // haptic a few render cycles late, by which time the
+            // press animation has been interrupted by the
+            // ScrollView scroll-up.
+            viewModel.submitCount &+= 1
+            // Don't pre-focus the compose field. Triggering a
+            // ~250 ms keyboard slide-up on top of the
+            // suggestions-scroll-up and the bubble-insert drowns
+            // out the press animation and adds perceived latency.
+            // Users tap the input manually when they're ready
+            // to type a follow-up.
+            Task {
+                await viewModel.sendMessage(
+                    text,
+                    using: session,
+                    preferencesStore: preferencesStore,
+                    reduceMotion: reduceMotion
+                )
+            }
         } label: {
             HStack {
                 Text(text)
