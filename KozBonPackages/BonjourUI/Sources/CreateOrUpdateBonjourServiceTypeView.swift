@@ -13,40 +13,31 @@ import BonjourModels
 
 // MARK: - CreateOrUpdateBonjourServiceTypeView
 
+/// Sheet that creates or edits a custom Bonjour service type.
+/// The form's input state, error strings, and validation
+/// pipeline live on ``CreateOrUpdateBonjourServiceTypeViewModel``;
+/// the View is a thin presenter that binds the controls to the
+/// VM, forwards `@Environment(\.accessibilityReduceMotion)`
+/// into the validate call, and applies the validated result to
+/// the Core Data persistent store and the parent's
+/// `serviceTypeToUpdate` binding.
 struct CreateOrUpdateBonjourServiceTypeView: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @Binding private var isPresented: Bool
     @Binding private var serviceTypeToUpdate: BonjourServiceType
-
-    @State private var name: String
-    @State private var nameError: String?
-    @State private var type: String
-    @State private var typeError: String?
-    @State private var details: String
-    @State private var detailsError: String?
-
-    /// Whether the form has valid inputs for creating or updating a service type.
-    private var isFormValid: Bool {
-        !name.trimmed.isEmpty && !type.trimmed.isEmpty && !details.trimmed.isEmpty
-    }
-
-    private var isCreatingBonjourService: Bool
-    private let selectedTransportLayer: TransportLayer = .tcp
+    @State private var viewModel: CreateOrUpdateBonjourServiceTypeViewModel
 
     init(isPresented: Binding<Bool>) {
         self._isPresented = isPresented
-        self.name = ""
-        self.type = ""
-        self.details = ""
         self._serviceTypeToUpdate = .constant(BonjourServiceType(
             name: "",
             type: "",
             transportLayer: .tcp,
             detail: ""
         ))
-        self.isCreatingBonjourService = true
+        self._viewModel = State(initialValue: .empty())
     }
 
     /// Create-mode init pre-filled with values supplied by the chat
@@ -62,16 +53,17 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
         prefilledDetails: String
     ) {
         self._isPresented = isPresented
-        self.name = prefilledName
-        self.type = prefilledType
-        self.details = prefilledDetails
         self._serviceTypeToUpdate = .constant(BonjourServiceType(
             name: "",
             type: "",
             transportLayer: .tcp,
             detail: ""
         ))
-        self.isCreatingBonjourService = true
+        self._viewModel = State(initialValue: .prefilled(
+            name: prefilledName,
+            type: prefilledType,
+            details: prefilledDetails
+        ))
     }
 
     init(
@@ -79,25 +71,23 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
         serviceToUpdate: Binding<BonjourServiceType>
     ) {
         self._isPresented = isPresented
-        self.name = serviceToUpdate.wrappedValue.name
-        self.type = serviceToUpdate.wrappedValue.type
-        self.details = serviceToUpdate.wrappedValue.detail ?? ""
         self._serviceTypeToUpdate = serviceToUpdate
-        self.isCreatingBonjourService = false
+        self._viewModel = State(initialValue: .editing(serviceToUpdate.wrappedValue))
     }
 
     var body: some View {
+        @Bindable var bindable = viewModel
         NavigationStack {
             List {
                 Section {
-                    TextField(String(localized: Strings.Placeholders.serviceName), text: $name)
+                    TextField(String(localized: Strings.Placeholders.serviceName), text: $bindable.name)
                         .accessibilityLabel(String(localized: Strings.Accessibility.serviceName))
                         .accessibilityHint(String(localized: Strings.Accessibility.serviceNameHint))
                 } header: {
                     Text(Strings.Sections.serviceName)
                         .accessibilityAddTraits(.isHeader)
                 } footer: {
-                    if let nameError {
+                    if let nameError = viewModel.nameError {
                         Text(verbatim: nameError)
                             .foregroundStyle(.red)
                             .accessibilityLabel(Strings.Accessibility.error(nameError))
@@ -105,37 +95,37 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                 }
 
                 Section {
-                    TextField(String(localized: Strings.Placeholders.typeDefinition), text: $type)
+                    TextField(String(localized: Strings.Placeholders.typeDefinition), text: $bindable.type)
                         .accessibilityLabel(String(localized: Strings.Accessibility.bonjourType))
                         .accessibilityHint(String(localized: Strings.Accessibility.bonjourTypeHint))
-                        .disabled(!isCreatingBonjourService)
+                        .disabled(!viewModel.isCreatingBonjourService)
                         .disableAutocorrection(true)
                         #if !os(macOS)
                         .autocapitalization(.none)
                         #endif
                         .onSubmit {
-                            doneButtonSelected()
+                            commit()
                         }
                 } header: {
                     Text(Strings.Sections.bonjourType)
                         .accessibilityAddTraits(.isHeader)
                 } footer: {
-                    if let typeError, type.isEmpty {
+                    if let typeError = viewModel.typeError, viewModel.type.isEmpty {
                         Text(verbatim: typeError)
                             .foregroundStyle(.red)
                             .accessibilityLabel(Strings.Accessibility.error(typeError))
 
-                    } else if let typeError, !type.isEmpty {
-                        Text(verbatim: "\(fullType) · \(typeError)")
+                    } else if let typeError = viewModel.typeError, !viewModel.type.isEmpty {
+                        Text(verbatim: "\(viewModel.fullType) · \(typeError)")
                             .foregroundStyle(.red)
-                            .accessibilityLabel(Strings.Accessibility.error("\(typeError) for \(fullType)"))
+                            .accessibilityLabel(Strings.Accessibility.error("\(typeError) for \(viewModel.fullType)"))
 
-                    } else if !type.isEmpty {
-                        Text(verbatim: fullType)
+                    } else if !viewModel.type.isEmpty {
+                        Text(verbatim: viewModel.fullType)
                             .foregroundStyle(Color.kozBonBlue)
 
-                    } else if !isCreatingBonjourService {
-                        Text(verbatim: fullType)
+                    } else if !viewModel.isCreatingBonjourService {
+                        Text(verbatim: viewModel.fullType)
                             .foregroundStyle(Color.kozBonBlue)
                     }
                 }
@@ -143,14 +133,14 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                 Section {
                     TextField(
                         String(localized: Strings.Placeholders.additionalInformation),
-                        text: $details,
+                        text: $bindable.details,
                         axis: .vertical
                     )
                     .lineLimit(3...8)
                     .accessibilityLabel(String(localized: Strings.Accessibility.additionalDetails))
                     .accessibilityHint(String(localized: Strings.Accessibility.additionalDetailsHint))
                     .onSubmit {
-                        doneButtonSelected()
+                        commit()
                     }
                 } header: {
                     Text(Strings.Sections.additionalDetails)
@@ -165,7 +155,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                     // visible gap that inset-grouped card spacing
                     // introduces between sections.
                     VStack(alignment: .leading, spacing: 8) {
-                        if let detailsError {
+                        if let detailsError = viewModel.detailsError {
                             Text(verbatim: detailsError)
                                 .foregroundStyle(.red)
                                 .accessibilityLabel(Strings.Accessibility.error(detailsError))
@@ -180,7 +170,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
             .navigationBarTitleDisplayMode(.inline)
             #endif
             .navigationTitle(
-                isCreatingBonjourService
+                viewModel.isCreatingBonjourService
                     ? String(localized: Strings.NavigationTitles.createServiceType)
                     : String(localized: Strings.NavigationTitles.editServiceType)
             )
@@ -196,29 +186,21 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
 
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
-                        doneButtonSelected()
+                        commit()
                     } label: {
                         Label(String(localized: Strings.Buttons.done), systemImage: Iconography.confirm)
                     }
-                    .disabled(!isFormValid)
-                    .accessibilityHint(isFormValid ? "" : String(localized: Strings.Accessibility.formIncompleteHint))
+                    .disabled(!viewModel.isFormValid)
+                    .accessibilityHint(
+                        viewModel.isFormValid
+                            ? ""
+                            : String(localized: Strings.Accessibility.formIncompleteHint)
+                    )
                     .keyboardShortcut(.defaultAction)
                 }
             }
-            .onChange(of: [name, type, details]) {
-                withAnimation(reduceMotion ? nil : .default) {
-                    if !name.trimmed.isEmpty {
-                        nameError = nil
-                    }
-
-                    if !type.trimmed.isEmpty {
-                        typeError = nil
-                    }
-
-                    if !details.trimmed.isEmpty {
-                        detailsError = nil
-                    }
-                }
+            .onChange(of: [viewModel.name, viewModel.type, viewModel.details]) {
+                viewModel.clearErrorsOnEdit(reduceMotion: reduceMotion)
             }
         }
         #if os(macOS) || os(visionOS)
@@ -228,66 +210,22 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
         #endif
     }
 
-    var fullType: String {
-        "_\(type)._\(selectedTransportLayer.string)"
-    }
-
-    private func doneButtonSelected() {
-
-        let transportLayer = selectedTransportLayer
-        let name = name.trimmed
-        let type = type.trimmed
-        let details = details.trimmed
-
-        withAnimation(reduceMotion ? nil : .default) {
-            nameError = nil
-            typeError = nil
-            detailsError = nil
-        }
-
-        guard !name.isEmpty else {
-            withAnimation(reduceMotion ? nil : .default) {
-                nameError = String(localized: Strings.Errors.nameRequired)
-            }
+    /// Validates via the VM and, on success, performs the Core
+    /// Data side effects (delete the previous persistent copy
+    /// in update mode, save the new one) and dismisses the
+    /// sheet. The deletePersistentCopy on the bound
+    /// `serviceTypeToUpdate` is keyed on the *original*
+    /// `(type, transport)` pair — that's the row Core Data
+    /// will find. In create mode the bound value is the empty
+    /// placeholder, so the lookup returns nil and the delete
+    /// no-ops, matching the original code's behavior.
+    private func commit() {
+        guard let inputs = viewModel.validate(reduceMotion: reduceMotion) else {
             return
         }
-
-        guard !type.isEmpty else {
-            withAnimation(reduceMotion ? nil : .default) {
-                typeError = String(localized: Strings.Errors.typeRequired)
-            }
-            return
-        }
-
-        guard !details.isEmpty else {
-            withAnimation(reduceMotion ? nil : .default) {
-                detailsError = String(localized: Strings.Errors.detailsRequired)
-            }
-            return
-        }
-
-        if isCreatingBonjourService {
-            guard !BonjourServiceType.exists(type: type, transportLayer: transportLayer) else {
-                withAnimation(reduceMotion ? nil : .default) {
-                    typeError = String(localized: Strings.Errors.alreadyExists)
-                }
-                return
-            }
-        }
-
-        // Create the service type
         serviceTypeToUpdate.deletePersistentCopy()
-        let serviceType = BonjourServiceType(
-            name: name,
-            type: type,
-            transportLayer: transportLayer,
-            detail: details
-        )
-
-        // Save a persistent copy of the service type
-        serviceType.savePersistentCopy()
-
-        serviceTypeToUpdate = serviceType
+        inputs.serviceType.savePersistentCopy()
+        serviceTypeToUpdate = inputs.serviceType
         isPresented = false
     }
 }
