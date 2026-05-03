@@ -13,19 +13,18 @@ import BonjourModels
 import BonjourScanning
 import BonjourStorage
 
-// swiftlint:disable file_length
 // One cohesive form view: service-type picker, port + domain
 // inputs, TXT-record list, and the AI Insights long-press menu —
-// each piece reads context (`isCreatingBonjourService`, validation
-// state, the broadcast-form prefill paths used by the chat
-// assistant's `prepareBroadcast` tool) from the surrounding
-// closure-captured state, so splitting across files would force
-// the state through bindings or environment for no structural
-// benefit.
+// each piece reads context (`isCreatingBonjourService`,
+// validation state, the broadcast-form prefill paths used by
+// the chat assistant's `prepareBroadcast` tool) from the view
+// model's state, so splitting across files would force the
+// state through bindings or environment for no structural
+// benefit. Form state, validation, and the publish call moved
+// to `BroadcastBonjourServiceViewModel`.
 
 // MARK: - BroadcastBonjourServiceView
 
-// swiftlint:disable:next type_body_length
 struct BroadcastBonjourServiceView: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -34,32 +33,16 @@ struct BroadcastBonjourServiceView: View {
 
     @Binding private var isPresented: Bool
     @Binding private var customPublishedServices: [BonjourService]
-    private var serviceToUpdate: BonjourService
 
-    @State private var serviceType: BonjourServiceType?
-    @State private var serviceTypeError: String?
-    @State private var port: Int?
-    @State private var portError: String?
-    @State private var domain: String = Constants.Network.defaultDomain
-    @State private var dataRecords: [BonjourService.TxtDataRecord]
-    @State private var domainError: String?
+    @State private var viewModel: BroadcastBonjourServiceViewModel
     @State private var isCreateTxtRecordViewPresented = false
 
     /// Drives the Apple Intelligence Insights sheet from the
-    /// service-type row's long-press menu.
+    /// service-type row's long-press menu. Stays on the View
+    /// because the Insights sheet is a UI-presentation concern,
+    /// not a piece of form state — the VM doesn't need to know
+    /// about it.
     @State private var serviceTypeToExplain: BonjourServiceType?
-
-    /// Whether the form has valid inputs for broadcasting a service.
-    private var isFormValid: Bool {
-        serviceType != nil &&
-        port != nil &&
-        (port ?? 0) >= Constants.Network.minimumPort &&
-        (port ?? 0) <= Constants.Network.maximumPort &&
-        !domain.trimmed.isEmpty
-    }
-
-    private var isCreatingBonjourService: Bool
-    private let selectedTransportLayer: TransportLayer = .tcp
 
     init(
         isPresented: Binding<Bool>,
@@ -67,24 +50,7 @@ struct BroadcastBonjourServiceView: View {
     ) {
         self._isPresented = isPresented
         self._customPublishedServices = customPublishedServices
-        self.serviceToUpdate = BonjourService(
-            service: .init(
-                domain: Constants.Network.defaultDomain,
-                type: "",
-                name: "",
-                port: 0
-            ),
-            serviceType: BonjourServiceType(
-                name: "",
-                type: "",
-                transportLayer: .tcp
-            )
-        )
-        isCreatingBonjourService = true
-        serviceType = nil
-        domain = Constants.Network.defaultDomain
-        port = nil
-        dataRecords = []
+        self._viewModel = State(initialValue: .empty())
     }
 
     init(
@@ -94,26 +60,14 @@ struct BroadcastBonjourServiceView: View {
     ) {
         self._isPresented = isPresented
         self._customPublishedServices = customPublishedServices
-        self.serviceToUpdate = serviceToUpdate
-        isCreatingBonjourService = false
-        self.serviceType = serviceToUpdate.serviceType
-        self.domain = serviceToUpdate.service.domain
-        self.port = serviceToUpdate.service.port
-        self.dataRecords = serviceToUpdate.dataRecords
+        self._viewModel = State(initialValue: .editing(serviceToUpdate))
     }
 
-    /// Create-mode init that pre-fills the form with values supplied
-    /// by the chat assistant's `prepareBroadcast` tool. Identical to
-    /// the empty-form `init(isPresented:customPublishedServices:)`
-    /// in every other respect — `isCreatingBonjourService` stays
-    /// `true` so the user can change the service type via the
-    /// regular NavigationLink, and the Done button still routes
-    /// through the publish-new path rather than an update path.
-    ///
-    /// Pre-filled values are loaded into the same `@State` storage
-    /// the user types into, so the form behaves identically once
-    /// it appears: the user can edit, clear, or rebuild any field,
-    /// and the existing per-field validation gates the Done button.
+    /// Create-mode init that pre-fills the form with values
+    /// supplied by the chat assistant's `prepareBroadcast`
+    /// tool. Routes through ``BroadcastBonjourServiceViewModel/prefilled(serviceType:port:domain:dataRecords:)``
+    /// so the empty-domain → default-domain fallback lives in
+    /// one place.
     init(
         isPresented: Binding<Bool>,
         customPublishedServices: Binding<[BonjourService]>,
@@ -124,42 +78,20 @@ struct BroadcastBonjourServiceView: View {
     ) {
         self._isPresented = isPresented
         self._customPublishedServices = customPublishedServices
-        self.serviceToUpdate = BonjourService(
-            service: .init(
-                domain: Constants.Network.defaultDomain,
-                type: "",
-                name: "",
-                port: 0
-            ),
-            serviceType: BonjourServiceType(
-                name: "",
-                type: "",
-                transportLayer: .tcp
-            )
-        )
-        isCreatingBonjourService = true
-        serviceType = prefilledServiceType
-        // Domain falls back to the default if the caller passed an
-        // empty string — defending against a model that called the
-        // tool without supplying a domain. The form would otherwise
-        // surface an empty-domain validation error the user has to
-        // manually clear.
-        domain = prefilledDomain.isEmpty
-            ? Constants.Network.defaultDomain
-            : prefilledDomain
-        port = prefilledPort
-        dataRecords = prefilledDataRecords
+        self._viewModel = State(initialValue: .prefilled(
+            serviceType: prefilledServiceType,
+            port: prefilledPort,
+            domain: prefilledDomain,
+            dataRecords: prefilledDataRecords
+        ))
     }
 
     var body: some View {
         NavigationStack {
             List {
                 serviceTypeSection()
-
                 portNumberSection()
-
                 serviceDomainSection()
-
                 txtRecordsSection()
             }
             .contentMarginsBasedOnSizeClass()
@@ -180,19 +112,20 @@ struct BroadcastBonjourServiceView: View {
 
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
-                        doneButtonSelected()
+                        commit()
                     } label: {
                         Label(String(localized: Strings.Buttons.done), systemImage: Iconography.confirm)
                     }
-                    .disabled(!isFormValid)
+                    .disabled(!viewModel.isFormValid)
                     .keyboardShortcut(.defaultAction)
                     .accessibilityIdentifier("broadcast_done_button")
                 }
             }
             .sheet(isPresented: $isCreateTxtRecordViewPresented) {
+                @Bindable var bindable = viewModel
                 CreateTxtRecordView(
                     isPresented: $isCreateTxtRecordViewPresented,
-                    txtDataRecords: $dataRecords
+                    txtDataRecords: $bindable.dataRecords
                 )
             }
         }
@@ -211,9 +144,11 @@ struct BroadcastBonjourServiceView: View {
 
     // MARK: - Service Type Section
 
+    @ViewBuilder
     private func serviceTypeSection() -> some View {
+        @Bindable var bindable = viewModel
         Section {
-            if !isCreatingBonjourService, let serviceType {
+            if !viewModel.isCreatingBonjourService, let serviceType = viewModel.serviceType {
                 BlueSectionItemIconTitleDetailView(
                     imageSystemName: serviceType.imageSystemName,
                     title: serviceType.name,
@@ -222,12 +157,12 @@ struct BroadcastBonjourServiceView: View {
                 .contextMenu { aiInsightsContextMenu(for: serviceType) }
             } else {
                 NavigationLink {
-                    SelectServiceTypeView(selectedServiceType: $serviceType)
+                    SelectServiceTypeView(selectedServiceType: $bindable.serviceType)
                 } label: {
                     BlueSectionItemIconTitleDetailView(
-                        imageSystemName: serviceType?.imageSystemName,
-                        title: serviceType?.name ?? String(localized: Strings.Placeholders.selectServiceType),
-                        detail: serviceType?.fullType
+                        imageSystemName: viewModel.serviceType?.imageSystemName,
+                        title: viewModel.serviceType?.name ?? String(localized: Strings.Placeholders.selectServiceType),
+                        detail: viewModel.serviceType?.fullType
                     )
                 }
                 .listRowBackground(
@@ -242,7 +177,7 @@ struct BroadcastBonjourServiceView: View {
                 .contextMenu {
                     // Skip the menu before a selection — empty menus consume
                     // the long-press gesture without showing anything.
-                    if let serviceType {
+                    if let serviceType = viewModel.serviceType {
                         aiInsightsContextMenu(for: serviceType)
                     }
                 }
@@ -251,28 +186,26 @@ struct BroadcastBonjourServiceView: View {
             Text(Strings.Sections.serviceType)
                 .accessibilityAddTraits(.isHeader)
         } footer: {
-            if let serviceTypeError {
+            if let serviceTypeError = viewModel.serviceTypeError {
                 Text(verbatim: serviceTypeError)
                     .foregroundStyle(.red)
                     .accessibilityLabel(Strings.Accessibility.error(serviceTypeError))
             }
         }
-        .onChange(of: [serviceType]) {
-            withAnimation(reduceMotion ? nil : .default) {
-                if serviceType != nil {
-                    serviceTypeError = nil
-                }
-            }
+        .onChange(of: [viewModel.serviceType]) {
+            viewModel.clearServiceTypeErrorIfResolved(reduceMotion: reduceMotion)
         }
     }
 
     // MARK: - Port Number Section
 
+    @ViewBuilder
     private func portNumberSection() -> some View {
+        @Bindable var bindable = viewModel
         Section {
             TextField(
                 String(localized: Strings.Placeholders.servicePortNumber),
-                value: $port,
+                value: $bindable.port,
                 format: .number
             )
             #if !os(macOS)
@@ -281,18 +214,18 @@ struct BroadcastBonjourServiceView: View {
             // macOS hover tooltip; other platforms ignore `.help`.
             .help(Text(Strings.Guidance.servicePortHint))
             .onSubmit {
-                doneButtonSelected()
+                commit()
             }
             .accessibilityLabel(String(localized: Strings.Accessibility.portNumber))
             .accessibilityHint(Strings.Accessibility.portHint(min: Constants.Network.minimumPort, max: Constants.Network.maximumPort))
-            .accessibilityValue(port.map { "\($0)" } ?? "")
+            .accessibilityValue(viewModel.port.map { "\($0)" } ?? "")
 
         } header: {
             Text(Strings.Sections.portNumber)
                 .accessibilityAddTraits(.isHeader)
         } footer: {
             // Dual-purpose footer: red error when validation fails, hint otherwise.
-            if let portError {
+            if let portError = viewModel.portError {
                 Text(verbatim: portError)
                     .foregroundStyle(.red)
                     .accessibilityLabel(Strings.Accessibility.error(portError))
@@ -300,26 +233,24 @@ struct BroadcastBonjourServiceView: View {
                 Text(Strings.Guidance.servicePortHint)
             }
         }
-        .onChange(of: [port]) {
-            withAnimation(reduceMotion ? nil : .default) {
-                if port != nil {
-                    portError = nil
-                }
-            }
+        .onChange(of: [viewModel.port]) {
+            viewModel.clearPortErrorIfResolved(reduceMotion: reduceMotion)
         }
     }
 
     // MARK: - Service Domain Section
 
+    @ViewBuilder
     private func serviceDomainSection() -> some View {
+        @Bindable var bindable = viewModel
         Section {
-            TextField(String(localized: Strings.Placeholders.serviceDomain), text: $domain)
+            TextField(String(localized: Strings.Placeholders.serviceDomain), text: $bindable.domain)
                 .accessibilityLabel(String(localized: Strings.Accessibility.serviceDomain))
                 .accessibilityHint(String(localized: Strings.Accessibility.serviceDomainHint))
                 // macOS hover tooltip; other platforms ignore `.help`.
                 .help(Text(Strings.Guidance.serviceDomainHint))
                 .onSubmit {
-                    doneButtonSelected()
+                    commit()
                 }
                 .disabled(false)
         } header: {
@@ -327,7 +258,7 @@ struct BroadcastBonjourServiceView: View {
                 .accessibilityAddTraits(.isHeader)
         } footer: {
             // Dual-purpose footer: red error when validation fails, hint otherwise.
-            if let domainError {
+            if let domainError = viewModel.domainError {
                 Text(verbatim: domainError)
                     .foregroundStyle(.red)
                     .accessibilityLabel(Strings.Accessibility.error(domainError))
@@ -335,32 +266,29 @@ struct BroadcastBonjourServiceView: View {
                 Text(Strings.Guidance.serviceDomainHint)
             }
         }
-        .onChange(of: [domain]) {
-            withAnimation(reduceMotion ? nil : .default) {
-                if !domain.isEmpty {
-                    domainError = nil
-                }
-            }
+        .onChange(of: [viewModel.domain]) {
+            viewModel.clearDomainErrorIfResolved(reduceMotion: reduceMotion)
         }
     }
 
     // MARK: - TXT Records Section
 
+    @ViewBuilder
     private func txtRecordsSection() -> some View {
         Section {
-            ForEach(dataRecords, id: \.key) { dataRecord in
+            ForEach(viewModel.dataRecords, id: \.key) { dataRecord in
                 TitleDetailStackView(
                     title: dataRecord.key,
                     detail: dataRecord.value
                 )
                 .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                     Button(role: .destructive) {
-                        let indexToRemove = dataRecords.firstIndex { record in
+                        let indexToRemove = viewModel.dataRecords.firstIndex { record in
                             record.key == dataRecord.key
                         }
                         if let indexToRemove {
-                            _ = withAnimation(reduceMotion ? nil : .default) {
-                                dataRecords.remove(at: indexToRemove)
+                            withAnimation(reduceMotion ? nil : .default) {
+                                viewModel.dataRecords.remove(at: indexToRemove)
                             }
                         }
                     } label: {
@@ -392,121 +320,30 @@ struct BroadcastBonjourServiceView: View {
         }
     }
 
-    // MARK: - Validated Inputs
-
-    /// The validated, ready-to-publish form values returned by
-    /// ``validateForm()``. Bundling them in a struct keeps the
-    /// `doneButtonSelected` body short and makes the Task closure
-    /// receive a single value instead of capturing five.
-    private struct ValidatedInputs {
-        let serviceType: BonjourServiceType
-        let port: Int
-        let domain: String
-    }
-
     // MARK: - Done Action
 
-    private func doneButtonSelected() {
-        clearAllErrors()
-        guard let inputs = validateForm() else { return }
-        publish(inputs: inputs)
-    }
-
-    /// Validates every field on the form, animating the appropriate
-    /// inline error if anything is missing or out of range. Returns
-    /// `nil` after surfacing the first failure so the caller knows
-    /// not to proceed with a publish.
-    private func validateForm() -> ValidatedInputs? {
-        guard let serviceType else {
-            withAnimation(reduceMotion ? nil : .default) {
-                serviceTypeError = String(localized: Strings.Errors.serviceTypeRequired)
-            }
-            return nil
-        }
-
-        guard let port else {
-            withAnimation(reduceMotion ? nil : .default) {
-                portError = String(localized: Strings.Errors.portNumberRequired)
-            }
-            return nil
-        }
-
-        guard port >= Constants.Network.minimumPort else {
-            withAnimation(reduceMotion ? nil : .default) {
-                portError = Strings.Errors.portMin(Constants.Network.minimumPort)
-            }
-            return nil
-        }
-
-        guard port <= Constants.Network.maximumPort else {
-            withAnimation(reduceMotion ? nil : .default) {
-                portError = Strings.Errors.portMax(Constants.Network.maximumPort)
-            }
-            return nil
-        }
-
-        let trimmedDomain = domain.trimmed
-        guard !trimmedDomain.isEmpty else {
-            withAnimation(reduceMotion ? nil : .default) {
-                domainError = String(localized: Strings.Errors.domainRequired)
-            }
-            return nil
-        }
-
-        return ValidatedInputs(
-            serviceType: serviceType,
-            port: port,
-            domain: trimmedDomain
-        )
-    }
-
-    /// Publishes the validated inputs and updates the parent
-    /// view's published-services list with the new or replaced
-    /// service. Wraps the network call in an animated Task so
-    /// the list change reads as a smooth append/replace and any
-    /// publish error surfaces inline on the form.
-    private func publish(inputs: ValidatedInputs) {
+    /// Validates via the VM, awaits the publish call, applies
+    /// the upserted array to the parent's binding, and dismisses
+    /// the sheet on success. The Task is fire-and-forget at the
+    /// SwiftUI body level — `commit` returns immediately so the
+    /// button action is sync; the dismissal happens inside the
+    /// Task once the publish settles.
+    private func commit() {
         Task {
-            do {
-                let publishedService = try await dependencies.bonjourPublishManager.publish(
-                    name: inputs.serviceType.name,
-                    type: inputs.serviceType.type,
-                    port: inputs.port,
-                    domain: inputs.domain,
-                    transportLayer: selectedTransportLayer,
-                    detail: inputs.serviceType.localizedDetail ?? "N/A"
+            viewModel.clearAllErrors(reduceMotion: reduceMotion)
+            guard let inputs = viewModel.validate(reduceMotion: reduceMotion) else { return }
+            guard let published = await viewModel.publish(
+                inputs: inputs,
+                publishManager: dependencies.bonjourPublishManager,
+                reduceMotion: reduceMotion
+            ) else { return }
+            withAnimation(reduceMotion ? nil : .default) {
+                customPublishedServices = viewModel.upsert(
+                    published,
+                    into: customPublishedServices
                 )
-
-                publishedService.updateTXTRecords(dataRecords)
-                upsert(publishedService)
                 isPresented = false
-            } catch {
-                serviceTypeError = Strings.Errors.publishFailed(error.localizedDescription)
             }
-        }
-    }
-
-    /// Inserts or replaces `service` in the parent view's
-    /// `customPublishedServices` binding, with a respect-Reduce-Motion
-    /// animation on the change.
-    private func upsert(_ service: BonjourService) {
-        withAnimation(reduceMotion ? nil : .default) {
-            if let index = customPublishedServices.firstIndex(of: service) {
-                customPublishedServices[index] = service
-            } else {
-                customPublishedServices.append(service)
-            }
-        }
-    }
-
-    /// Clears all three inline errors with a single Reduce-Motion-aware
-    /// animation. Called at the top of every submit so a re-tap after
-    /// fixing one field clears the stale message.
-    private func clearAllErrors() {
-        withAnimation(reduceMotion ? nil : .default) {
-            serviceTypeError = nil
-            portError = nil
-            domainError = nil
         }
     }
 
