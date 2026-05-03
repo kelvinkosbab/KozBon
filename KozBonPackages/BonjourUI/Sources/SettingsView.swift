@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 import BonjourAI
 import BonjourCore
 import BonjourLocalization
@@ -21,6 +22,17 @@ public struct SettingsView: View {
     @Environment(\.preferencesStore) private var preferencesStore
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var isResetConfirmationPresented = false
+
+    /// Cached "the user has at least one persisted custom service
+    /// type" flag. Refreshed on `.onAppear` and on every Core Data
+    /// `NSManagedObjectContextDidSave` notification, so the
+    /// `isAtDefaults` check (and therefore the visibility of the
+    /// Reset to Defaults section) reacts in near-realtime when the
+    /// Library tab — or the chat assistant's intent flow, or any
+    /// future surface — adds or deletes a custom type. The cached
+    /// flag also keeps the `isAtDefaults` computation off the
+    /// Core Data fetch path on every body re-evaluation.
+    @State private var hasCustomServiceTypes: Bool = false
 
     public init() {}
 
@@ -42,14 +54,55 @@ public struct SettingsView: View {
             .frame(width: 400)
             #endif
             .navigationTitle(String(localized: Strings.NavigationTitles.settings))
+            // Refresh the cached custom-types flag on first
+            // appearance so the Reset to Defaults section's
+            // visibility is correct the moment the form lands.
+            .onAppear { refreshCustomServiceTypesState() }
+            // Listen for any Core Data save in the process. KozBon
+            // has a single Core Data stack (the custom-service-type
+            // store) so every `NSManagedObjectContextDidSave` here
+            // is from that store; SwiftData (used for preferences)
+            // doesn't post these notifications. This catches:
+            //
+            //   - the Library tab's create/delete flows
+            //   - the chat assistant's `prepareCustomServiceType` /
+            //     `prepareDeleteCustomServiceType` intents
+            //   - the Reset to Defaults action itself (after which
+            //     the section needs to disappear)
+            //
+            // Especially relevant on macOS where Settings runs in
+            // its own window scene — a user can edit the Library
+            // in one window and Settings in another, and we want
+            // the section to flip visibility without a manual
+            // refresh. iOS / iPadOS / visionOS reach the same
+            // surface via tab switching, which already triggers
+            // `.onAppear`, but the listener is harmless there
+            // (notifications are debounced into a single state
+            // update per save).
+            .onReceive(
+                NotificationCenter.default.publisher(for: .NSManagedObjectContextDidSave)
+            ) { _ in
+                withAnimation(reduceMotion ? nil : .default) {
+                    refreshCustomServiceTypesState()
+                }
+            }
             .alert(
                 String(localized: Strings.Settings.resetToDefaults),
                 isPresented: $isResetConfirmationPresented
             ) {
                 Button(String(localized: Strings.Buttons.cancel), role: .cancel) {}
                 Button(String(localized: Strings.Settings.reset), role: .destructive) {
-                    preferencesStore.resetToDefaults()
-                    BonjourServiceType.deleteAllPersistentCopies()
+                    // Wrap the state mutations in `withAnimation`
+                    // so the reset section fades out smoothly once
+                    // `isAtDefaults` flips to true. Without this,
+                    // the section vanishes instantly the moment
+                    // the alert dismisses, which reads as the
+                    // form having a glitch instead of as a
+                    // deliberate "everything's clean now" cue.
+                    withAnimation(reduceMotion ? nil : .default) {
+                        preferencesStore.resetToDefaults()
+                        BonjourServiceType.deleteAllPersistentCopies()
+                    }
                 }
             } message: {
                 Text(Strings.Settings.resetConfirmationMessage)
@@ -163,18 +216,59 @@ public struct SettingsView: View {
 
     // MARK: - Reset Section
 
+    /// The destructive "Reset to defaults" affordance only surfaces
+    /// when there's *something* to reset — at least one preference
+    /// differs from its documented default, OR at least one
+    /// user-created custom service type is persisted in Core Data.
+    /// Hiding the section in the all-defaults case keeps the form
+    /// short and prevents users from accidentally reaching for a
+    /// destructive button that would do nothing visible.
     @ViewBuilder
     private var resetSection: some View {
-        Section {
-            Button(role: .destructive) {
-                isResetConfirmationPresented = true
-            } label: {
-                Text(Strings.Settings.resetToDefaults)
+        if !isAtDefaults {
+            Section {
+                Button(role: .destructive) {
+                    isResetConfirmationPresented = true
+                } label: {
+                    Text(Strings.Settings.resetToDefaults)
+                }
+                .accessibilityHint(String(localized: Strings.Accessibility.resetHint))
+            } footer: {
+                Text(Strings.Settings.resetFooter)
             }
-            .accessibilityHint(String(localized: Strings.Accessibility.resetHint))
-        } footer: {
-            Text(Strings.Settings.resetFooter)
         }
+    }
+
+    /// Whether every preference tracked by the reset action is at
+    /// its documented default value AND no custom service types
+    /// are persisted. The four preference comparisons read from
+    /// the `@Observable` `preferencesStore`, which triggers a
+    /// re-render when any preference changes; the custom-types
+    /// half reads the cached ``hasCustomServiceTypes`` flag,
+    /// which is refreshed on `.onAppear` and on every
+    /// `NSManagedObjectContextDidSave` notification. Net result:
+    /// the Reset to Defaults section reacts to changes from any
+    /// surface — the Library tab, the chat assistant's intent
+    /// flow, the reset action itself — within a single render
+    /// cycle of the underlying mutation, on every platform
+    /// including macOS multi-window setups where Settings can be
+    /// open in parallel with Library.
+    private var isAtDefaults: Bool {
+        preferencesStore.aiAnalysisEnabled == UserPreferences.defaultAIAnalysisEnabled
+            && preferencesStore.aiExpertiseLevel == UserPreferences.defaultAIExpertiseLevel
+            && preferencesStore.aiResponseLength == UserPreferences.defaultAIResponseLength
+            && preferencesStore.defaultSortOrder == UserPreferences.defaultSortOrder
+            && !hasCustomServiceTypes
+    }
+
+    /// Re-queries the Core Data custom-types store and updates
+    /// ``hasCustomServiceTypes``. Cheap (the store is typically
+    /// empty or a handful of rows) but cached behind `@State` so
+    /// it doesn't run on every body evaluation. Called from
+    /// `.onAppear` and from the `NSManagedObjectContextDidSave`
+    /// publisher.
+    private func refreshCustomServiceTypesState() {
+        hasCustomServiceTypes = !BonjourServiceType.fetchAllPersistentCopies().isEmpty
     }
 
     // MARK: - About Section

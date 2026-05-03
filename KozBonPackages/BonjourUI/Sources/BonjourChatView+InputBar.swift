@@ -18,44 +18,51 @@ extension BonjourChatView {
 
     @ViewBuilder
     func inputBar(session: any BonjourChatSessionProtocol) -> some View {
-        HStack(alignment: .bottom, spacing: 8) {
-            // `.roundedBorder` renders a system-fixed height that looked too
-            // thin for a chat surface. Switch to `.plain` and draw our own
-            // padded capsule so the field has the same comfortable touch
-            // depth as an iMessage compose bar, and so it grows cleanly
-            // when the user types a multi-line message.
-            //
-            // On iOS 26+ the `.glassOrMaterialBackground` helper applies
-            // Liquid Glass; older systems get `.ultraThinMaterial` instead.
-            // Either way there is no solid tinted fill — the field
-            // visually rides on top of whatever sits behind the compose
-            // bar (the streaming chat messages blur through it cleanly).
-            // Single-line (no `axis: .vertical`). iOS treats return as a
-            // newline on a vertical TextField even with `.submitLabel(.send)`,
-            // which is why the keyboard's Send key was producing a stray
-            // `\n` in the input instead of submitting. Without the vertical
-            // axis, `.onSubmit` fires on return as expected and the Send
-            // label on the keyboard actually submits. Users who need to
-            // send a long question can still type one — the field scrolls
-            // horizontally and the send button remains reachable.
+        // Single shared rounded-rectangle that holds both the
+        // TextField and the Send button — same Messages / Mail
+        // pattern, where the send affordance lives on the trailing
+        // edge inside the field rather than as a separate sibling
+        // widget.
+        //
+        // Previously the TextField and Send button were two
+        // siblings in an HStack with their own backgrounds, which
+        // meant the field had to share horizontal real estate with
+        // a 56×40 capsule — eating ~64 pt of usable typing width
+        // on every iPhone width. Folding the button inside the
+        // field's container claws that space back, gives the bar
+        // a more iMessage-y feel, and keeps a single Liquid Glass
+        // surface where there used to be two competing materials.
+        //
+        // Single-line (no `axis: .vertical`) — iOS treats return
+        // as a newline on a vertical TextField even with
+        // `.submitLabel(.send)`, which is why the keyboard's Send
+        // key was producing a stray `\n` in the input instead of
+        // submitting. Without the vertical axis, `.onSubmit` fires
+        // on return as expected. Long messages still scroll
+        // horizontally inside the field; the trailing send button
+        // stays reachable because it's pinned to the container's
+        // edge, not to the text content.
+        HStack(alignment: .center, spacing: .space8) {
             TextField(
                 String(localized: Strings.Chat.inputPlaceholder),
                 text: $inputText
             )
             .textFieldStyle(.plain)
-            .padding(.horizontal, .space14)
-            .padding(.vertical, .space10)
-            .glassOrMaterialBackground(
-                in: RoundedRectangle(cornerRadius: .radius20, style: .continuous)
-            )
             .submitLabel(.send)
             .focused($isInputFocused)
             .disabled(session.isGenerating)
-            .accessibilityLabel(String(localized: Strings.Chat.inputPlaceholder))
-            // Hint flips to the busy variant while the assistant is
-            // streaming a response. Without this, VoiceOver still
-            // announced the generic "type a question" hint after
-            // the field went disabled, leaving users with no
+            // Short, dedicated VoiceOver label ("Message") matching
+            // Apple's pattern in Mail / Messages. The visible
+            // placeholder ("Ask about your network…") is still
+            // shown to sighted users via the TextField's first
+            // argument, but its trailing ellipsis reads awkwardly
+            // when announced aloud — `.accessibilityLabel` overrides
+            // the placeholder fallback for VoiceOver.
+            .accessibilityLabel(String(localized: Strings.Accessibility.chatInputLabel))
+            // Hint flips to the busy variant while the assistant
+            // is streaming a response. Without this, VoiceOver
+            // still announced the generic "type a question" hint
+            // after the field went disabled, leaving users with no
             // explanation for why their typing wasn't being
             // accepted. The Send button below uses the same flag
             // so both controls read consistently.
@@ -69,35 +76,38 @@ extension BonjourChatView {
                 // Synchronous haptic — see the suggestion-button
                 // action in `BonjourChatView+EmptyState.swift` for
                 // the rationale. Lifting the increment out of the
-                // async `sendMessage` path lets feel and sight land
-                // together when the user hits Return.
+                // async `sendMessage` path lets feel and sight
+                // land together when the user hits Return.
                 submitCount &+= 1
                 Task { await sendMessage(inputText, using: session) }
             }
-            // No keyboard-accessory "Done" button. The `scrollDismissesKeyboard
-            // (.interactively)` modifier on the message list already lets the
-            // user dismiss the keyboard by dragging the chat downward, and
-            // tapping `return` / the send button both dispatch the message.
-            // A persistent "Done" bar above the keyboard was redundant and
-            // competed visually with the compose UI.
+            // No keyboard-accessory "Done" button. The
+            // `scrollDismissesKeyboard(.interactively)` modifier
+            // on the message list already lets the user dismiss
+            // the keyboard by dragging the chat downward, and
+            // tapping `return` / the send button both dispatch
+            // the message. A persistent "Done" bar above the
+            // keyboard was redundant and competed visually with
+            // the compose UI.
 
-            // Fixed-size capsule send button. The height matches the single-
-            // line text field height (`.size40` ≈ vertical padding + body line
-            // height), so in the common one-line case the field and the button
-            // read as a matched pair. The HStack's `alignment: .bottom` then
-            // pins the button to the bottom of the text field when the user
-            // composes a multi-line message — same behavior as iMessage.
+            // Capsule send button anchored to the trailing edge
+            // inside the shared container. Sized 44 pt × 32 pt
+            // (~1.4:1 width-to-height) so it reads as a
+            // deliberate horizontal pill — recognizably "send"
+            // rather than an undifferentiated circular icon, and
+            // with enough surface area for the arrow glyph to
+            // anchor visually inside the brand-blue fill. The
+            // surrounding container's `.space8` trailing pad and
+            // `.space6` vertical pad give the capsule comfortable
+            // breathing room from the rounded-rect edges.
             //
-            // Width is deliberately larger than height (`.size56` × `.size40`,
-            // ~1.4:1) to give the capsule its horizontal pill shape rather
-            // than appearing as a circle.
-            //
-            // On iOS 26+ the background is a *tinted* Liquid Glass capsule
-            // (`.glassEffect(.regular.tint(.kozBonBlue).interactive())`),
-            // which preserves the brand color while participating in the
-            // glass layer hierarchy and getting system press/hover
-            // feedback for free. Older systems fall back to the solid
-            // `.kozBonBlue` fill so the primary action still reads.
+            // On iOS 26+ the background is a *tinted* Liquid
+            // Glass capsule (via `.glassOrTintedBackground`),
+            // which preserves the brand color while participating
+            // in the glass layer hierarchy and getting system
+            // press/hover feedback for free. Older systems fall
+            // back to a solid `.kozBonBlue` fill so the primary
+            // action still reads.
             Button {
                 // Synchronous haptic — see the suggestion-button
                 // action for the rationale. Same pattern as
@@ -106,25 +116,26 @@ extension BonjourChatView {
                 Task { await sendMessage(inputText, using: session) }
             } label: {
                 Image.arrowUp
-                    .font(.headline.weight(.bold))
+                    .font(.footnote.weight(.bold))
                     .foregroundStyle(.white)
-                    // The glyph is purely decorative — the Button's own
-                    // a11y label ("Send") is what VoiceOver should
-                    // announce. Hiding the Image keeps the tree clean
-                    // and prevents the SF Symbol default name from ever
+                    // The glyph is purely decorative — the
+                    // Button's own a11y label ("Send") is what
+                    // VoiceOver should announce. Hiding the
+                    // Image keeps the tree clean and prevents
+                    // the SF Symbol default name from ever
                     // leaking through in edge cases.
                     .accessibilityHidden(true)
-                    .frame(width: .size56, height: .size40)
+                    .frame(width: .size44, height: .size32)
                     .glassOrTintedBackground(tint: .kozBonBlue, in: Capsule())
-                    // Make the entire `.size56 × .size40` capsule tappable,
-                    // not just the tiny intrinsic-size arrow glyph at its
-                    // center. `.buttonStyle(.plain)` defaults to hit-
-                    // testing the label's intrinsic content — with a small
-                    // `Image` inside a much larger `.frame`, most of the
-                    // visually-filled pill was NOT tappable, and taps near
-                    // the capsule edges silently missed. This was the
-                    // "follow-up send doesn't work" symptom: users were
-                    // hitting the pill, not the glyph.
+                    // Make the entire 44×32 capsule tappable,
+                    // not just the tiny intrinsic-size arrow
+                    // glyph at its center. `.buttonStyle(.plain)`
+                    // defaults to hit-testing the label's
+                    // intrinsic content — with a small `Image`
+                    // inside a much larger `.frame`, most of the
+                    // visually-filled capsule would NOT be
+                    // tappable, and taps near the edges would
+                    // silently miss.
                     .contentShape(Capsule())
                     .opacity(sendDisabled(session: session) ? 0.4 : 1.0)
                     .animation(
@@ -142,14 +153,64 @@ extension BonjourChatView {
             //   - empty input: "Type a message to enable this button"
             //   - enabled: "Sends your message and asks the assistant"
             //
-            // Previously both disabled cases shared the empty-input
-            // hint, which was actively misleading while the
-            // assistant was still streaming — the user had typed
-            // and submitted, then heard "type a message to
-            // enable" when they tried to fire a follow-up.
+            // Previously both disabled cases shared the
+            // empty-input hint, which was actively misleading
+            // while the assistant was still streaming — the user
+            // had typed and submitted, then heard "type a
+            // message to enable" when they tried to fire a
+            // follow-up.
             .accessibilityHint(sendButtonAccessibilityHint(session: session))
             .accessibilityIdentifier("chat_send_button")
+            // Cap Dynamic Type on the Send capsule. The 44 × 32 pt
+            // frame is fixed, so at `.accessibility5` the SF
+            // Symbol scales past the available space and clips
+            // against the capsule's rounded ends. Capping at
+            // `.accessibility2` keeps the glyph proportional to
+            // the capsule while still respecting larger-than-
+            // default text sizes — the rest of the chat surface
+            // (TextField content, message bubbles) keeps full
+            // Dynamic Type since their layouts adapt naturally.
+            .dynamicTypeSize(...DynamicTypeSize.accessibility2)
+            // Press-and-hold magnification for users with low
+            // vision (Settings → Accessibility → Larger Text →
+            // "Larger Accessibility Sizes" → "Show Larger Content
+            // Views"). The magnified view shows the full button
+            // label and current state at high contrast — useful
+            // because the capsule is small relative to the rest
+            // of the chat surface.
+            .accessibilityShowsLargeContentViewer()
+            // Pointer / gaze hover effect on every platform that
+            // supports it (iPad with trackpad, Vision Pro, iOS
+            // pre-26 where Liquid Glass's interactive flag isn't
+            // available). On iOS 26+ `glassOrTintedBackground`'s
+            // interactive Liquid Glass already provides hover —
+            // this modifier layers cleanly on top there. macOS
+            // doesn't expose `.hoverEffect`, so the modifier is
+            // gated out.
+            #if !os(macOS)
+            .hoverEffect(.highlight)
+            #endif
         }
+        // Inner padding of the shared field container.
+        // - Leading uses `.space14` for comfortable text inset.
+        // - Trailing uses `.space8` to give the Send capsule a
+        //   bit of breathing room from the rounded-rect edge —
+        //   matching the leading inset's "lift off the wall"
+        //   feel rather than tucking the button right against
+        //   the right edge.
+        // - Vertical `.space6` × 2 + 32 pt button = 44 pt total
+        //   container height. Slightly taller than the previous
+        //   40 pt layout so the capsule sits with a visible
+        //   margin top and bottom rather than crowding the
+        //   field's edges.
+        .padding(.leading, .space14)
+        .padding(.trailing, .space8)
+        .padding(.vertical, .space6)
+        .glassOrMaterialBackground(
+            in: RoundedRectangle(cornerRadius: .radius20, style: .continuous)
+        )
+        // Outer page-level padding stays symmetric so the rounded
+        // container is the same distance from both screen edges.
         .padding()
     }
 

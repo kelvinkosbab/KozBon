@@ -729,6 +729,18 @@ public enum Strings {
             .init("a11y_chat_assistant_thinking", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        /// VoiceOver label for the chat compose `TextField`. A short
+        /// noun ("Message") matching Apple's pattern in Mail and
+        /// Messages — the visible placeholder ("Ask about your
+        /// network…") is *visual* placeholder copy and includes a
+        /// trailing ellipsis that reads awkwardly aloud. The
+        /// dedicated label gives VoiceOver users a clean noun and
+        /// preserves the placeholder's role as a typing hint for
+        /// sighted users.
+        public static var chatInputLabel: LocalizedStringResource {
+            .init("a11y_chat_input_label", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var chatInputHint: LocalizedStringResource {
             .init("a11y_chat_input_hint", bundle: .atURL(Bundle.module.bundleURL))
         }
