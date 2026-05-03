@@ -54,14 +54,18 @@ A multi-platform Apple app for discovering, broadcasting, and understanding Bonj
 
 - **Swift 6.2** with strict concurrency (`Sendable`, `@MainActor`, structured concurrency, `defer`-guarded state resets)
 - **SwiftUI** with MVVM, `@Observable` view models, `NavigationSplitView` for adaptive list-detail layouts
-- **8 modular SPM packages** in `KozBonPackages/` — `BonjourCore`, `BonjourStorage`, `BonjourLocalization`, `BonjourModels`, `BonjourScanning`, `BonjourAI`, `BonjourUI`, plus the app target. (`BonjourStorage` owns both the SwiftData preferences container and the legacy Core Data custom-service-type store, so all persistence lives in one module.)
+- **Modular SPM packages** in `KozBonPackages/`, plus the app target:
+  - **`BonjourCore`** — shared value types, constants, and utilities (`Constants`, `TransportLayer`, `InternetAddress`, `Logger`, `Clipboard`). Re-exports `Core` from `BasicSwiftUtilities` so downstream modules pick up `Logger` / `Loggable` without an explicit import.
+  - **`BonjourStorage`** — all persistence in one module: the SwiftData preferences container (`PreferencesStore`, `UserPreferences`) and the legacy Core Data custom-service-type store (`CustomServiceType`, `MyCoreDataStack`, `MyDataManagerObject`).
+  - **`BonjourLocalization`** — localized strings (6 languages) backed by a String Catalog (`.xcstrings`). Type-safe `Strings` enum at call sites; no `NSLocalizedString` literals scattered through the views.
+  - **`BonjourModels`** — domain models and the 110+-entry service-type library (`BonjourServiceType`, `BonjourService`, `BonjourServiceSortType`); per-type icon / category / detail metadata.
+  - **`BonjourScanning`** — Bonjour discovery and publishing (`BonjourServiceScanner`, `MyBonjourPublishManager`) with their protocol abstractions and mocks; `DependencyContainer` for environment-injected DI.
+  - **`BonjourAI`** — on-device AI built on FoundationModels: explainer for service-detail Insights, multi-turn chat session with tool-calling, prompt builders (`BonjourServicePromptBuilder`, `BonjourChatPromptBuilder`), input validator, and the intent broker that bridges tool calls to view-model side effects.
+  - **`BonjourUI`** — every SwiftUI view, view model, and the design-system primitives consumed by every screen (semantic `CGFloat` tokens, the `Image.xxx` SF-Symbol façade, `glassOrMaterialBackground` / `glassOrTintedBackground` Liquid-Glass-with-fallback helpers).
 - **Dependency injection** via `DependencyContainer` + SwiftUI environment; shared `BonjourServicesViewModel` at the app root so all tabs see the same scanner delegate
-- **Core Data** for persistent custom service types
-- **SwiftData** for user preferences
 - **FoundationModels** (iOS 26 / macOS 26) for on-device AI with graceful fallback on ineligible devices
-- **Design system** in `BonjourUI` — semantic `CGFloat` tokens (`.space16`, `.size16`, `.radius12`, `.stroke1`), `Image.xxx` SF-Symbol façade (no raw `Image(systemName: "…")` at call sites), `glassOrMaterialBackground` and `glassOrTintedBackground` helpers for Liquid-Glass-with-fallback
 - **HapticFeedback** provider injected via environment so view models can request haptics without direct UIKit dependencies
-- **Swift Testing** — 439 tests across 33 suites covering prompt-quality invariants, view-model logic, state machines (sentence haptic tracker, broadcast publish flow), design-token value pins, haptic mocks, scanner delegate flows, and chat-session rejection paths
+- **Swift Testing** for unit coverage of prompt-quality invariants, view-model logic, state machines (sentence haptic tracker, broadcast publish flow), design-token value pins, haptic mocks, scanner delegate flows, and chat-session rejection paths
 - **SwiftLint** — project-wide rules plus a custom rule forbidding literal SF Symbol strings in favor of the `Image.xxx` façade
 - **CI** — GitHub Actions workflows for iOS build+test, SPM package tests, SwiftLint, and multi-platform (macOS + visionOS) builds
 

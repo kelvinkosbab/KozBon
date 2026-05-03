@@ -12,18 +12,20 @@ import BonjourModels
 
 // MARK: - CreateTxtRecordView
 
+/// Sheet that creates or edits a single TXT record on a
+/// broadcast. The form's input state, error strings, and
+/// validation pipeline live on ``CreateTxtRecordViewModel`` —
+/// the View is a thin presenter that binds the controls to the
+/// VM, forwards `@Environment(\.accessibilityReduceMotion)`
+/// into the validate-and-commit call, and applies the VM's
+/// returned array to the parent's `txtDataRecords` binding.
 struct CreateTxtRecordView: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @Binding private var isPresented: Bool
     @Binding private var txtDataRecords: [BonjourService.TxtDataRecord]
-    private let txtRecordToUpdate: BonjourService.TxtDataRecord?
-
-    @State private var key: String
-    @State private var keyError: String?
-    @State private var value: String
-    @State private var valueError: String?
+    @State private var viewModel: CreateTxtRecordViewModel
 
     init(
         isPresented: Binding<Bool>,
@@ -31,9 +33,7 @@ struct CreateTxtRecordView: View {
     ) {
         self._isPresented = isPresented
         self._txtDataRecords = txtDataRecords
-        key = ""
-        value = ""
-        txtRecordToUpdate = nil
+        self._viewModel = State(initialValue: .empty())
     }
 
     init(
@@ -43,30 +43,29 @@ struct CreateTxtRecordView: View {
     ) {
         self._isPresented = isPresented
         self._txtDataRecords = txtDataRecords
-        key = txtRecordToUpdate.key
-        value = txtRecordToUpdate.value
-        self.txtRecordToUpdate = txtRecordToUpdate
+        self._viewModel = State(initialValue: .editing(txtRecordToUpdate))
     }
 
     var body: some View {
+        @Bindable var bindable = viewModel
         NavigationStack {
             List {
                 Section {
                     TextField(
                         String(localized: Strings.Placeholders.txtRecordKey),
-                        text: $key
+                        text: $bindable.key
                     )
                     .accessibilityLabel(String(localized: Strings.Accessibility.txtRecordKey))
                     .accessibilityHint(String(localized: Strings.Accessibility.txtRecordKeyHint))
                     .onSubmit {
-                        doneButtonSelected()
+                        commit()
                     }
 
                 } header: {
                     Text(Strings.Sections.recordKey)
                         .accessibilityAddTraits(.isHeader)
                 } footer: {
-                    if let keyError {
+                    if let keyError = viewModel.keyError {
                         Text(verbatim: keyError)
                             .foregroundStyle(.red)
                             .accessibilityLabel(Strings.Accessibility.error(keyError))
@@ -76,12 +75,12 @@ struct CreateTxtRecordView: View {
                 Section {
                     TextField(
                         String(localized: Strings.Placeholders.txtRecordValue),
-                        text: $value
+                        text: $bindable.value
                     )
                     .accessibilityLabel(String(localized: Strings.Accessibility.txtRecordValue))
                     .accessibilityHint(String(localized: Strings.Accessibility.txtRecordValueHint))
                     .onSubmit {
-                        doneButtonSelected()
+                        commit()
                     }
 
                 } header: {
@@ -95,7 +94,7 @@ struct CreateTxtRecordView: View {
                     // it in a separate section would add inset-grouped
                     // card spacing between the fields and the footnote.
                     VStack(alignment: .leading, spacing: 8) {
-                        if let valueError {
+                        if let valueError = viewModel.valueError {
                             Text(verbatim: valueError)
                                 .foregroundStyle(.red)
                                 .accessibilityLabel(Strings.Accessibility.error(valueError))
@@ -120,23 +119,15 @@ struct CreateTxtRecordView: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
-                        doneButtonSelected()
+                        commit()
                     } label: {
                         Label(String(localized: Strings.Buttons.done), systemImage: Iconography.confirm)
                     }
                     .keyboardShortcut(.defaultAction)
                 }
             }
-            .onChange(of: [key, value]) {
-                withAnimation(reduceMotion ? nil : .default) {
-                    if keyError != nil {
-                        keyError = nil
-                    }
-
-                    if valueError != nil {
-                        valueError = nil
-                    }
-                }
+            .onChange(of: [viewModel.key, viewModel.value]) {
+                viewModel.clearErrorsOnEdit(reduceMotion: reduceMotion)
             }
         }
         #if os(macOS) || os(visionOS)
@@ -148,48 +139,19 @@ struct CreateTxtRecordView: View {
         #endif
     }
 
-    private func doneButtonSelected() {
-
-        let key = key.trimmed
-        let value = value.trimmed
-
+    /// Validates via the VM, applies the returned array to the
+    /// parent's binding, and dismisses the sheet on success.
+    /// Wrapped in a single `withAnimation` so the array update
+    /// and the sheet dismissal land together.
+    private func commit() {
+        guard let updated = viewModel.submit(
+            currentRecords: txtDataRecords,
+            reduceMotion: reduceMotion
+        ) else {
+            return
+        }
         withAnimation(reduceMotion ? nil : .default) {
-            keyError = nil
-            valueError = nil
-        }
-
-        guard !key.isEmpty else {
-            withAnimation(reduceMotion ? nil : .default) {
-                keyError = String(localized: Strings.Errors.txtKeyRequired)
-            }
-            return
-        }
-
-        guard !value.isEmpty else {
-            withAnimation(reduceMotion ? nil : .default) {
-                valueError = String(localized: Strings.Errors.txtValueRequired)
-            }
-            return
-        }
-
-        // Check for duplicate key (unless we're updating the same record)
-        let isDuplicate = txtDataRecords.contains { $0.key == key }
-        guard txtRecordToUpdate != nil || !isDuplicate else {
-            withAnimation(reduceMotion ? nil : .default) {
-                keyError = String(localized: Strings.Errors.txtKeyDuplicate)
-            }
-            return
-        }
-
-        withAnimation(reduceMotion ? nil : .default) {
-            let newRecord = BonjourService.TxtDataRecord(key: key, value: value)
-            let oldIndex = txtDataRecords.firstIndex { $0.key == txtRecordToUpdate?.key }
-            if let oldIndex {
-                txtDataRecords[oldIndex] = newRecord
-            } else {
-                txtDataRecords.append(newRecord)
-            }
-
+            txtDataRecords = updated
             isPresented = false
         }
     }
