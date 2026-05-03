@@ -28,6 +28,25 @@ public final class MyCoreDataStack {
 
     private init() {}
 
+    /// Whether the bundled Core Data model (`iDiscover.momd`) is
+    /// reachable in the package's resource bundle.
+    ///
+    /// `false` under `swift test` from the SPM CLI — the Swift
+    /// Package Manager doesn't compile `.xcdatamodeld` files, so
+    /// the bundle ships without the resolved `.momd`. `true` in
+    /// the app, in `xcodebuild test` runs, and in any context
+    /// where Xcode's build pipeline produced the bundle.
+    ///
+    /// Tests that exercise paths reaching ``mainContext``
+    /// short-circuit on `false` to avoid the fatal error in
+    /// ``persistentContainer``'s lazy initializer.
+    public static var isBundledModelAvailable: Bool {
+        Bundle.module.url(
+            forResource: "iDiscover",
+            withExtension: "momd"
+        ) != nil
+    }
+
     // MARK: - Store Properties
 
     private let persistentContainerName = "iDiscover"

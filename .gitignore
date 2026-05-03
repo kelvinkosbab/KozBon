@@ -21,6 +21,7 @@ DerivedData/
 # Claude Code local settings and plans
 .claude/settings.local.json
 .claude/plans/
+.claude/scheduled_tasks.lock
 
 # Editor temp files
 *.swp
