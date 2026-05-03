@@ -27,6 +27,7 @@ swift test --package-path KozBonPackages
 
 - **Swift 6.2** with strict concurrency checking (`SWIFT_STRICT_CONCURRENCY = complete`)
 - **SwiftUI** with MVVM pattern, targeting iOS 18.6+, macOS 15.6+, tvOS 18.0+, watchOS 11.0+, visionOS 2.0+
+  - View-model conventions are documented in [`.claude/rules/mvvm.md`](.claude/rules/mvvm.md) — when to use a VM, `@State` vs `@Bindable` ownership, dependency-plumbing rules, splitting large VMs across companion files
 - **Modular SPM packages** via `KozBonPackages/` local package in the Xcode workspace
 - **Dependency Injection** via `DependencyContainer` (in `BonjourScanning` module) using SwiftUI environment (`@Environment(\.dependencies)`)
 - **Core Data** for persistence (`iDiscover.xcdatamodeld`) — all Core Data access is `@MainActor` via `viewContext`
