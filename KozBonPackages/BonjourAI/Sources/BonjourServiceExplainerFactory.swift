@@ -11,10 +11,28 @@ import Foundation
 import FoundationModels
 #endif
 
+// MARK: - BonjourServiceExplainerFactoryProtocol
+
+/// Abstraction over the choice of
+/// `BonjourServiceExplainerProtocol` implementation for the
+/// current build environment.
+///
+/// Defined as a protocol so consumers (`AppCore`, future
+/// surfaces) can inject the factory rather than reach into a
+/// static namespace. Production uses
+/// ``BonjourServiceExplainerFactory``; tests substitute a mock.
+public protocol BonjourServiceExplainerFactoryProtocol: Sendable {
+
+    /// Returns the explainer for the current build environment,
+    /// or `nil` if the device can't run on-device AI.
+    @MainActor
+    func makeForCurrentEnvironment() -> (any BonjourServiceExplainerProtocol)?
+}
+
 // MARK: - BonjourServiceExplainerFactory
 
-/// Picks the `BonjourServiceExplainerProtocol` implementation
-/// appropriate for the current build environment.
+/// Production implementation of
+/// ``BonjourServiceExplainerFactoryProtocol``.
 ///
 /// - **Simulator builds** → ``SimulatorBonjourServiceExplainer``,
 ///   which streams lorem ipsum so the Insights UI can be exercised
@@ -25,18 +43,15 @@ import FoundationModels
 ///   which the app's environment plumbing treats as "Insights
 ///   unavailable" so the long-press menu silently omits the action.
 ///
-/// Lives in `BonjourAI` rather than the app target because the
-/// platform / availability gates are an `BonjourAI` concern —
-/// the module owns both impls and can decide which one to hand
-/// out. Callers (the app, tests, future surfaces) just ask for
-/// "the explainer for this environment" and get back the right
-/// one.
-public enum BonjourServiceExplainerFactory {
+/// Stateless — see the matching note on
+/// ``BonjourChatSessionFactory`` for why the type is a struct
+/// rather than a static enum namespace.
+public struct BonjourServiceExplainerFactory: BonjourServiceExplainerFactoryProtocol {
 
-    /// Returns the explainer for the current build environment, or
-    /// `nil` if the device can't run on-device AI.
+    public init() {}
+
     @MainActor
-    public static func makeForCurrentEnvironment() -> (any BonjourServiceExplainerProtocol)? {
+    public func makeForCurrentEnvironment() -> (any BonjourServiceExplainerProtocol)? {
         #if targetEnvironment(simulator)
         return SimulatorBonjourServiceExplainer()
         #elseif canImport(FoundationModels)

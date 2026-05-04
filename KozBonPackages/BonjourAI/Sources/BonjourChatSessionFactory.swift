@@ -12,10 +12,44 @@ import BonjourScanning
 import FoundationModels
 #endif
 
+// MARK: - BonjourChatSessionFactoryProtocol
+
+/// Abstraction over the choice of `BonjourChatSessionProtocol`
+/// implementation for the current build environment.
+///
+/// Defined as a protocol — rather than just exposing the
+/// production type's static methods directly — so that
+/// `AppCore` (and any future consumer that wires a chat surface)
+/// receives the factory as an injected dependency instead of
+/// reaching into a static namespace. Production code uses
+/// ``BonjourChatSessionFactory``; tests can substitute a mock
+/// that returns a stub session and tracks `prewarmIfEnabled`
+/// calls.
+public protocol BonjourChatSessionFactoryProtocol: Sendable {
+
+    /// Returns the chat session for the current build
+    /// environment, or `nil` if the device can't run on-device
+    /// AI.
+    @MainActor
+    func makeForCurrentEnvironment(
+        publishManager: any BonjourPublishManagerProtocol
+    ) -> (any BonjourChatSessionProtocol)?
+
+    /// Eagerly compiles the session's system instructions so
+    /// the user's first interaction with the chat tab doesn't
+    /// pay the model-load cost. No-ops when AI isn't available,
+    /// when the user has turned AI features off, or when the
+    /// caller passed a nil session.
+    @MainActor
+    func prewarmIfEnabled(
+        session: (any BonjourChatSessionProtocol)?,
+        aiAnalysisEnabled: Bool
+    ) async
+}
+
 // MARK: - BonjourChatSessionFactory
 
-/// Picks the `BonjourChatSessionProtocol` implementation
-/// appropriate for the current build environment.
+/// Production implementation of ``BonjourChatSessionFactoryProtocol``.
 ///
 /// - **Simulator builds** → ``SimulatorBonjourChatSession``,
 ///   which streams lorem ipsum so the chat UI can be exercised
@@ -26,18 +60,18 @@ import FoundationModels
 ///   plumbing treats as "chat unavailable" so the chat tab
 ///   doesn't surface.
 ///
-/// Mirrors ``BonjourServiceExplainerFactory`` — same rationale
-/// for living in `BonjourAI` rather than the app target.
-public enum BonjourChatSessionFactory {
+/// The struct holds no state — it's a stateless namespace that
+/// happens to be an instance type so consumers can inject it as
+/// a dependency. A single shared instance is fine for the whole
+/// app's lifetime; the production default in AppCore creates
+/// one and never replaces it.
+public struct BonjourChatSessionFactory: BonjourChatSessionFactoryProtocol {
 
-    /// Returns the session for the current build environment, or
-    /// `nil` if the device can't run on-device AI.
-    ///
-    /// The publish manager is held weakly by the real session, so
-    /// the factory's argument doesn't extend its lifetime.
+    public init() {}
+
     @MainActor
-    public static func makeForCurrentEnvironment(
-        publishManager: BonjourPublishManagerProtocol
+    public func makeForCurrentEnvironment(
+        publishManager: any BonjourPublishManagerProtocol
     ) -> (any BonjourChatSessionProtocol)? {
         #if targetEnvironment(simulator)
         return SimulatorBonjourChatSession()
@@ -51,29 +85,13 @@ public enum BonjourChatSessionFactory {
         #endif
     }
 
-    /// Eagerly compiles the chat session's system instructions so
-    /// the user's first interaction with the chat tab doesn't pay
-    /// the model-load cost. No-ops when AI isn't available on this
-    /// device, when the user has turned AI features off, or when
-    /// the caller passed a nil session — prewarming a chat tab
-    /// that won't surface would just waste CPU and battery.
-    ///
-    /// Yields once before doing the work so the first frame paints
-    /// (the rest of the tab content) before we hand main back to the
-    /// model for instruction compilation. Without the yield the model
-    /// load lands inside the app's launch path and the splash-to-
-    /// first-frame transition stutters.
-    ///
-    /// - Parameters:
-    ///   - session: The session returned by
-    ///     ``makeForCurrentEnvironment(publishManager:)``, or `nil`
-    ///     on devices that don't support on-device AI.
-    ///   - aiAnalysisEnabled: The user's "AI features" preference
-    ///     value, read from the app's preferences store. Forwarded
-    ///     in by the View so the factory stays free of any
-    ///     SwiftUI-environment dependencies.
+    /// Yields once before doing the work so the first frame
+    /// paints (the rest of the tab content) before we hand main
+    /// back to the model for instruction compilation. Without
+    /// the yield the model load lands inside the app's launch
+    /// path and the splash-to-first-frame transition stutters.
     @MainActor
-    public static func prewarmIfEnabled(
+    public func prewarmIfEnabled(
         session: (any BonjourChatSessionProtocol)?,
         aiAnalysisEnabled: Bool
     ) async {

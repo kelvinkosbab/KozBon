@@ -18,12 +18,27 @@ import BonjourStorage
 @main
 struct AppCore: App {
 
+    // MARK: - Injected Factories
+
+    /// Factory for the on-device AI explainer. Held as a stored
+    /// property so the production default can be swapped (e.g.,
+    /// in a test harness or a developer-mode build) without
+    /// touching the rest of `AppCore`. The protocol is the real
+    /// dependency edge — `AppCore` never reaches into a static
+    /// namespace.
+    private let explainerFactory: any BonjourServiceExplainerFactoryProtocol
+
+    /// Factory for the on-device AI chat session. Same rationale
+    /// as ``explainerFactory``. The factory's
+    /// ``BonjourChatSessionFactoryProtocol/prewarmIfEnabled(session:aiAnalysisEnabled:)``
+    /// is also called from this app's root `.task` modifier.
+    private let chatSessionFactory: any BonjourChatSessionFactoryProtocol
+
     // MARK: - Dependencies
 
     @State private var dependencies: DependencyContainer
     @State private var preferencesStore = PreferencesStore()
-    @State private var explainer: (any BonjourServiceExplainerProtocol)? =
-        BonjourServiceExplainerFactory.makeForCurrentEnvironment()
+    @State private var explainer: (any BonjourServiceExplainerProtocol)?
 
     /// App-wide chat session, created once at launch so the chat
     /// tab's first activation doesn't pay the cost of constructing
@@ -51,12 +66,44 @@ struct AppCore: App {
     /// services — see ``BonjourServicesViewModel`` for the full explanation.
     @State private var servicesViewModel: BonjourServicesViewModel
 
+    /// Production initializer — uses the default ``DependencyContainer``,
+    /// the default ``BonjourServiceExplainerFactory``, and the default
+    /// ``BonjourChatSessionFactory``. The designated init below
+    /// accepts each as an injectable parameter; this convenience
+    /// just calls through with production defaults.
+    ///
+    /// `App` types instantiated by `@main` can't accept arguments
+    /// from the runtime, so the practical "injection" here happens
+    /// at compile time: a developer who needs different behavior
+    /// (a stub factory in a SwiftUI Preview, an alternate
+    /// dependency container in a test harness) calls the
+    /// designated init explicitly from their entry point.
     init() {
-        let dependencies = DependencyContainer()
+        self.init(
+            dependencies: DependencyContainer(),
+            explainerFactory: BonjourServiceExplainerFactory(),
+            chatSessionFactory: BonjourChatSessionFactory()
+        )
+    }
+
+    /// Designated init — every dependency is supplied. Tests,
+    /// previews, and developer-mode entry points use this form;
+    /// the no-arg ``init()`` calls through with production
+    /// defaults.
+    init(
+        dependencies: DependencyContainer,
+        explainerFactory: any BonjourServiceExplainerFactoryProtocol,
+        chatSessionFactory: any BonjourChatSessionFactoryProtocol
+    ) {
+        self.explainerFactory = explainerFactory
+        self.chatSessionFactory = chatSessionFactory
         _dependencies = State(initialValue: dependencies)
-        _servicesViewModel = State(initialValue: BonjourServicesViewModel(dependencies: dependencies))
+        _servicesViewModel = State(
+            initialValue: BonjourServicesViewModel(dependencies: dependencies)
+        )
+        _explainer = State(initialValue: explainerFactory.makeForCurrentEnvironment())
         _chatSession = State(
-            initialValue: BonjourChatSessionFactory.makeForCurrentEnvironment(
+            initialValue: chatSessionFactory.makeForCurrentEnvironment(
                 publishManager: dependencies.bonjourPublishManager
             )
         )
@@ -146,7 +193,7 @@ struct AppCore: App {
                 .environment(\.chatSession, chatSession)
                 .environment(\.preferencesStore, preferencesStore)
                 .task {
-                    await BonjourChatSessionFactory.prewarmIfEnabled(
+                    await chatSessionFactory.prewarmIfEnabled(
                         session: chatSession,
                         aiAnalysisEnabled: preferencesStore.aiAnalysisEnabled
                     )
@@ -205,7 +252,7 @@ struct AppCore: App {
                 .environment(\.chatSession, chatSession)
                 .environment(\.preferencesStore, preferencesStore)
                 .task {
-                    await BonjourChatSessionFactory.prewarmIfEnabled(
+                    await chatSessionFactory.prewarmIfEnabled(
                         session: chatSession,
                         aiAnalysisEnabled: preferencesStore.aiAnalysisEnabled
                     )
