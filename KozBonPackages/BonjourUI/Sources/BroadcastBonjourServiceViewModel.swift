@@ -19,21 +19,18 @@ import BonjourScanning
 /// the upsert helper that decides whether the published service
 /// is a fresh entry or a replacement of an existing broadcast.
 ///
-/// The publish manager is *not* captured at init even though
-/// it's nominally long-lived — `BroadcastBonjourServiceView`
-/// reads it from `@Environment(\.dependencies)` once per body
-/// evaluation and forwards it into ``publish`` at call time,
-/// matching the same pattern `BonjourChatViewModel.sendMessage`
-/// uses for `preferencesStore` and `reduceMotion`. That keeps
-/// the VM testable with a single `@MainActor` mock parameter
-/// and avoids holding a reference into the SwiftUI environment
-/// from a `@Observable` class.
+/// The publish manager is captured at init as a long-lived
+/// dependency. The View reads it from its own initializer
+/// (forwarded by the parent that constructs the sheet) — no
+/// `@Environment(\.dependencies)` reach-through required, and
+/// the VM's surface stays explicit about what it needs to do
+/// its job.
 ///
 /// Three factories collapse the original View's three inits:
-/// ``empty()`` for a blank create-mode form, ``editing(_:)``
-/// for the edit-existing-broadcast path, and
-/// ``prefilled(serviceType:port:domain:dataRecords:)`` for
-/// the chat assistant's `prepareBroadcast` tool. Edit mode
+/// ``empty(publishManager:)`` for a blank create-mode form,
+/// ``editing(_:publishManager:)`` for the edit-existing-broadcast
+/// path, and ``prefilled(serviceType:port:domain:dataRecords:publishManager:)``
+/// for the chat assistant's `prepareBroadcast` tool. Edit mode
 /// pins `isCreatingBonjourService = false`; both create paths
 /// stay in create mode so the Done button routes through the
 /// publish-new flow rather than an update path.
@@ -88,6 +85,14 @@ final class BroadcastBonjourServiceViewModel {
     /// the type-picker filter, so the form stays single-axis.
     let selectedTransportLayer: TransportLayer = .tcp
 
+    /// The publish manager used by ``publish(inputs:reduceMotion:)``
+    /// to advertise the validated service on the network. Held
+    /// at init rather than passed to ``publish`` per call so the
+    /// VM's surface stays "give me everything I need to do the
+    /// whole job" instead of "give me everything except this one
+    /// long-lived dep that I'll borrow from you each time."
+    let publishManager: any BonjourPublishManagerProtocol
+
     // MARK: - Init
 
     private init(
@@ -95,26 +100,31 @@ final class BroadcastBonjourServiceViewModel {
         port: Int?,
         domain: String,
         dataRecords: [BonjourService.TxtDataRecord],
-        isCreatingBonjourService: Bool
+        isCreatingBonjourService: Bool,
+        publishManager: any BonjourPublishManagerProtocol
     ) {
         self.serviceType = serviceType
         self.port = port
         self.domain = domain
         self.dataRecords = dataRecords
         self.isCreatingBonjourService = isCreatingBonjourService
+        self.publishManager = publishManager
     }
 
     // MARK: - Factories
 
     /// Create-mode VM with no service type selected, no port,
     /// the default domain, and an empty TXT-record list.
-    static func empty() -> BroadcastBonjourServiceViewModel {
+    static func empty(
+        publishManager: any BonjourPublishManagerProtocol
+    ) -> BroadcastBonjourServiceViewModel {
         BroadcastBonjourServiceViewModel(
             serviceType: nil,
             port: nil,
             domain: Constants.Network.defaultDomain,
             dataRecords: [],
-            isCreatingBonjourService: true
+            isCreatingBonjourService: true,
+            publishManager: publishManager
         )
     }
 
@@ -124,31 +134,34 @@ final class BroadcastBonjourServiceViewModel {
     /// so the type row reads as a static label rather than a
     /// navigation link.
     static func editing(
-        _ service: BonjourService
+        _ service: BonjourService,
+        publishManager: any BonjourPublishManagerProtocol
     ) -> BroadcastBonjourServiceViewModel {
         BroadcastBonjourServiceViewModel(
             serviceType: service.serviceType,
             port: service.service.port,
             domain: service.service.domain,
             dataRecords: service.dataRecords,
-            isCreatingBonjourService: false
+            isCreatingBonjourService: false,
+            publishManager: publishManager
         )
     }
 
     /// Create-mode VM pre-filled with values from the chat
     /// assistant's `prepareBroadcast` tool call. Identical to
-    /// ``empty()`` except for the staged values; mode stays
-    /// "create" so the user can change the service type via
-    /// the regular `NavigationLink`, and the Done button still
-    /// routes through the publish-new path. An empty domain
-    /// from the model falls back to the default so the form
-    /// doesn't surface a domain-required error before the user
-    /// has touched anything.
+    /// ``empty(publishManager:)`` except for the staged values;
+    /// mode stays "create" so the user can change the service
+    /// type via the regular `NavigationLink`, and the Done
+    /// button still routes through the publish-new path. An
+    /// empty domain from the model falls back to the default so
+    /// the form doesn't surface a domain-required error before
+    /// the user has touched anything.
     static func prefilled(
         serviceType: BonjourServiceType?,
         port: Int?,
         domain: String,
-        dataRecords: [BonjourService.TxtDataRecord]
+        dataRecords: [BonjourService.TxtDataRecord],
+        publishManager: any BonjourPublishManagerProtocol
     ) -> BroadcastBonjourServiceViewModel {
         let resolvedDomain = domain.isEmpty
             ? Constants.Network.defaultDomain
@@ -158,7 +171,8 @@ final class BroadcastBonjourServiceViewModel {
             port: port,
             domain: resolvedDomain,
             dataRecords: dataRecords,
-            isCreatingBonjourService: true
+            isCreatingBonjourService: true,
+            publishManager: publishManager
         )
     }
 
@@ -261,9 +275,6 @@ final class BroadcastBonjourServiceViewModel {
     /// - Parameters:
     ///   - inputs: Validated form values from
     ///     ``validate(reduceMotion:)``.
-    ///   - publishManager: The publish manager to call. The
-    ///     View reads this from `@Environment(\.dependencies)`
-    ///     and forwards it.
     ///   - reduceMotion: Forwarded into the error-mutation
     ///     animation.
     /// - Returns: The published `BonjourService` on success
@@ -271,7 +282,6 @@ final class BroadcastBonjourServiceViewModel {
     ///   surfacing the error.
     func publish(
         inputs: ValidatedInputs,
-        publishManager: any BonjourPublishManagerProtocol,
         reduceMotion: Bool
     ) async -> BonjourService? {
         do {

@@ -71,7 +71,8 @@ extension BonjourChatView {
                         prefilledServiceType: intent.serviceType,
                         prefilledPort: intent.port,
                         prefilledDomain: intent.domain,
-                        prefilledDataRecords: intent.dataRecords
+                        prefilledDataRecords: intent.dataRecords,
+                        publishManager: viewModel.services.publishManager
                     )
                 }
             }

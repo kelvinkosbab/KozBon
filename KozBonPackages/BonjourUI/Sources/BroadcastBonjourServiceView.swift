@@ -28,7 +28,6 @@ import BonjourStorage
 struct BroadcastBonjourServiceView: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.dependencies) private var dependencies
     @Environment(\.preferencesStore) private var preferencesStore
 
     @Binding private var isPresented: Bool
@@ -46,26 +45,32 @@ struct BroadcastBonjourServiceView: View {
 
     init(
         isPresented: Binding<Bool>,
-        customPublishedServices: Binding<[BonjourService]>
+        customPublishedServices: Binding<[BonjourService]>,
+        publishManager: any BonjourPublishManagerProtocol
     ) {
         self._isPresented = isPresented
         self._customPublishedServices = customPublishedServices
-        self._viewModel = State(initialValue: .empty())
+        self._viewModel = State(
+            initialValue: .empty(publishManager: publishManager)
+        )
     }
 
     init(
         isPresented: Binding<Bool>,
         serviceToUpdate: BonjourService,
-        customPublishedServices: Binding<[BonjourService]>
+        customPublishedServices: Binding<[BonjourService]>,
+        publishManager: any BonjourPublishManagerProtocol
     ) {
         self._isPresented = isPresented
         self._customPublishedServices = customPublishedServices
-        self._viewModel = State(initialValue: .editing(serviceToUpdate))
+        self._viewModel = State(
+            initialValue: .editing(serviceToUpdate, publishManager: publishManager)
+        )
     }
 
     /// Create-mode init that pre-fills the form with values
     /// supplied by the chat assistant's `prepareBroadcast`
-    /// tool. Routes through ``BroadcastBonjourServiceViewModel/prefilled(serviceType:port:domain:dataRecords:)``
+    /// tool. Routes through ``BroadcastBonjourServiceViewModel/prefilled(serviceType:port:domain:dataRecords:publishManager:)``
     /// so the empty-domain → default-domain fallback lives in
     /// one place.
     init(
@@ -74,7 +79,8 @@ struct BroadcastBonjourServiceView: View {
         prefilledServiceType: BonjourServiceType?,
         prefilledPort: Int?,
         prefilledDomain: String,
-        prefilledDataRecords: [BonjourService.TxtDataRecord]
+        prefilledDataRecords: [BonjourService.TxtDataRecord],
+        publishManager: any BonjourPublishManagerProtocol
     ) {
         self._isPresented = isPresented
         self._customPublishedServices = customPublishedServices
@@ -82,7 +88,8 @@ struct BroadcastBonjourServiceView: View {
             serviceType: prefilledServiceType,
             port: prefilledPort,
             domain: prefilledDomain,
-            dataRecords: prefilledDataRecords
+            dataRecords: prefilledDataRecords,
+            publishManager: publishManager
         ))
     }
 
@@ -334,7 +341,6 @@ struct BroadcastBonjourServiceView: View {
             guard let inputs = viewModel.validate(reduceMotion: reduceMotion) else { return }
             guard let published = await viewModel.publish(
                 inputs: inputs,
-                publishManager: dependencies.bonjourPublishManager,
                 reduceMotion: reduceMotion
             ) else { return }
             withAnimation(reduceMotion ? nil : .default) {

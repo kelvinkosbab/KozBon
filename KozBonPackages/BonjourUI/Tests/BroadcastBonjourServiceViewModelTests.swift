@@ -13,6 +13,15 @@ import BonjourModels
 import BonjourScanning
 @testable import BonjourUI
 
+// File-level disable: the suite's body lands at 301 lines (1
+// over the rule's 300-line default) because of the helper trio
+// + 26 tests covering factories, form gating, validation,
+// publish success/failure, upsert, and the per-field
+// error-clear helpers. Splitting just for line count would
+// shatter the suite's thematic grouping for no structural
+// benefit.
+// swiftlint:disable type_body_length
+
 // MARK: - BroadcastBonjourServiceViewModelTests
 
 /// Pin the validate-and-publish pipeline that drives the
@@ -61,11 +70,45 @@ struct BroadcastBonjourServiceViewModelTests {
         )
     }
 
+    /// Most tests don't care which publish manager backs the VM — they
+    /// exercise validation, form-state, and per-field error helpers
+    /// that never call `publish`. Default to a fresh mock so the
+    /// factory's required `publishManager:` parameter stays out of
+    /// each test's signal-to-noise.
+    private func makeEmpty(
+        publishManager: MockBonjourPublishManager = MockBonjourPublishManager()
+    ) -> BroadcastBonjourServiceViewModel {
+        BroadcastBonjourServiceViewModel.empty(publishManager: publishManager)
+    }
+
+    private func makeEditing(
+        _ service: BonjourService,
+        publishManager: MockBonjourPublishManager = MockBonjourPublishManager()
+    ) -> BroadcastBonjourServiceViewModel {
+        BroadcastBonjourServiceViewModel.editing(service, publishManager: publishManager)
+    }
+
+    private func makePrefilled(
+        serviceType: BonjourServiceType?,
+        port: Int?,
+        domain: String,
+        dataRecords: [BonjourService.TxtDataRecord] = [],
+        publishManager: MockBonjourPublishManager = MockBonjourPublishManager()
+    ) -> BroadcastBonjourServiceViewModel {
+        BroadcastBonjourServiceViewModel.prefilled(
+            serviceType: serviceType,
+            port: port,
+            domain: domain,
+            dataRecords: dataRecords,
+            publishManager: publishManager
+        )
+    }
+
     // MARK: - Factories
 
     @Test("`empty()` produces a create-mode VM with no selection, no port, default domain, and no records")
     func emptyFactoryStartsBlank() {
-        let vm = BroadcastBonjourServiceViewModel.empty()
+        let vm = makeEmpty()
         #expect(vm.serviceType == nil)
         #expect(vm.port == nil)
         #expect(vm.domain == Constants.Network.defaultDomain)
@@ -80,7 +123,7 @@ struct BroadcastBonjourServiceViewModelTests {
     @Test("`editing(_:)` pre-fills from the existing broadcast and pins update mode")
     func editingFactoryPrefills() {
         let service = anyService(name: "Living Room TV", port: 7000)
-        let vm = BroadcastBonjourServiceViewModel.editing(service)
+        let vm = makeEditing(service)
         #expect(vm.serviceType?.name == "Living Room TV")
         #expect(vm.port == 7000)
         #expect(vm.domain == Constants.Network.defaultDomain)
@@ -91,7 +134,7 @@ struct BroadcastBonjourServiceViewModelTests {
     func prefilledFactoryStaysInCreateMode() {
         let serviceType = anyServiceType()
         let records = [BonjourService.TxtDataRecord(key: "color", value: "blue")]
-        let vm = BroadcastBonjourServiceViewModel.prefilled(
+        let vm = makePrefilled(
             serviceType: serviceType,
             port: 8080,
             domain: "local.",
@@ -109,11 +152,10 @@ struct BroadcastBonjourServiceViewModelTests {
         // The chat assistant's tool can fail to supply a domain;
         // an empty string would otherwise surface a domain-required
         // error before the user has touched anything.
-        let vm = BroadcastBonjourServiceViewModel.prefilled(
+        let vm = makePrefilled(
             serviceType: anyServiceType(),
             port: 8080,
-            domain: "",
-            dataRecords: []
+            domain: ""
         )
         #expect(vm.domain == Constants.Network.defaultDomain)
     }
@@ -122,7 +164,7 @@ struct BroadcastBonjourServiceViewModelTests {
 
     @Test("`isFormValid` is false until every gating condition is satisfied")
     func formValidGating() {
-        let vm = BroadcastBonjourServiceViewModel.empty()
+        let vm = makeEmpty()
         #expect(!vm.isFormValid)
 
         // Need: service type, port, port-in-range, non-empty domain.
@@ -137,7 +179,7 @@ struct BroadcastBonjourServiceViewModelTests {
 
     @Test("`isFormValid` is false when the port is below the minimum")
     func formValidFalseBelowMinPort() {
-        let vm = BroadcastBonjourServiceViewModel.empty()
+        let vm = makeEmpty()
         vm.serviceType = anyServiceType()
         vm.port = Constants.Network.minimumPort - 1
         #expect(!vm.isFormValid)
@@ -145,7 +187,7 @@ struct BroadcastBonjourServiceViewModelTests {
 
     @Test("`isFormValid` is false when the port is above the maximum")
     func formValidFalseAboveMaxPort() {
-        let vm = BroadcastBonjourServiceViewModel.empty()
+        let vm = makeEmpty()
         vm.serviceType = anyServiceType()
         vm.port = Constants.Network.maximumPort + 1
         #expect(!vm.isFormValid)
@@ -153,7 +195,7 @@ struct BroadcastBonjourServiceViewModelTests {
 
     @Test("`isFormValid` is false when the domain is whitespace-only")
     func formValidFalseEmptyDomain() {
-        let vm = BroadcastBonjourServiceViewModel.empty()
+        let vm = makeEmpty()
         vm.serviceType = anyServiceType()
         vm.port = 8080
         vm.domain = "   "
@@ -164,7 +206,7 @@ struct BroadcastBonjourServiceViewModelTests {
 
     @Test("`validate` returns nil and surfaces a service-type-required error when no type is selected")
     func validateRejectsNoServiceType() {
-        let vm = BroadcastBonjourServiceViewModel.empty()
+        let vm = makeEmpty()
         vm.port = 8080
         let result = vm.validate(reduceMotion: true)
         #expect(result == nil)
@@ -175,7 +217,7 @@ struct BroadcastBonjourServiceViewModelTests {
 
     @Test("`validate` returns nil and surfaces a port-required error when port is nil (type set)")
     func validateRejectsNilPort() {
-        let vm = BroadcastBonjourServiceViewModel.empty()
+        let vm = makeEmpty()
         vm.serviceType = anyServiceType()
         let result = vm.validate(reduceMotion: true)
         #expect(result == nil)
@@ -184,7 +226,7 @@ struct BroadcastBonjourServiceViewModelTests {
 
     @Test("`validate` returns nil and surfaces a port-min error when port is below the minimum")
     func validateRejectsPortBelowMin() {
-        let vm = BroadcastBonjourServiceViewModel.empty()
+        let vm = makeEmpty()
         vm.serviceType = anyServiceType()
         vm.port = Constants.Network.minimumPort - 1
         let result = vm.validate(reduceMotion: true)
@@ -198,7 +240,7 @@ struct BroadcastBonjourServiceViewModelTests {
 
     @Test("`validate` returns nil and surfaces a port-max error when port is above the maximum")
     func validateRejectsPortAboveMax() {
-        let vm = BroadcastBonjourServiceViewModel.empty()
+        let vm = makeEmpty()
         vm.serviceType = anyServiceType()
         vm.port = Constants.Network.maximumPort + 1
         let result = vm.validate(reduceMotion: true)
@@ -208,7 +250,7 @@ struct BroadcastBonjourServiceViewModelTests {
 
     @Test("`validate` returns nil and surfaces a domain-required error when the domain is whitespace-only")
     func validateRejectsEmptyDomain() {
-        let vm = BroadcastBonjourServiceViewModel.empty()
+        let vm = makeEmpty()
         vm.serviceType = anyServiceType()
         vm.port = 8080
         vm.domain = "   "
@@ -221,7 +263,7 @@ struct BroadcastBonjourServiceViewModelTests {
 
     @Test("`validate` returns trimmed inputs when every field is valid")
     func validateSucceedsAndTrimsDomain() {
-        let vm = BroadcastBonjourServiceViewModel.empty()
+        let vm = makeEmpty()
         vm.serviceType = anyServiceType()
         vm.port = 8080
         vm.domain = "  local.  "
@@ -235,19 +277,15 @@ struct BroadcastBonjourServiceViewModelTests {
 
     @Test("`publish` returns the published service on success and leaves errors clear")
     func publishSucceeds() async {
-        let vm = BroadcastBonjourServiceViewModel.empty()
+        let mock = MockBonjourPublishManager()
+        let vm = makeEmpty(publishManager: mock)
         vm.serviceType = anyServiceType()
         vm.port = 8080
-        let mock = MockBonjourPublishManager()
         guard let inputs = vm.validate(reduceMotion: true) else {
             #expect(Bool(false), "Validate should have succeeded")
             return
         }
-        let published = await vm.publish(
-            inputs: inputs,
-            publishManager: mock,
-            reduceMotion: true
-        )
+        let published = await vm.publish(inputs: inputs, reduceMotion: true)
         #expect(published != nil)
         #expect(mock.publishCallCount == 1)
         #expect(mock.lastPublishedServiceName == "HTTP")
@@ -256,22 +294,18 @@ struct BroadcastBonjourServiceViewModelTests {
 
     @Test("`publish` surfaces a publish-failed error on `serviceTypeError` when the manager throws")
     func publishFailureSurfacesError() async {
-        let vm = BroadcastBonjourServiceViewModel.empty()
-        vm.serviceType = anyServiceType()
-        vm.port = 8080
         let mock = MockBonjourPublishManager()
         mock.shouldSucceed = false
         mock.errorToThrow = MockError.publishFailed
+        let vm = makeEmpty(publishManager: mock)
+        vm.serviceType = anyServiceType()
+        vm.port = 8080
         let inputs = BroadcastBonjourServiceViewModel.ValidatedInputs(
             serviceType: anyServiceType(),
             port: 8080,
             domain: "local."
         )
-        let published = await vm.publish(
-            inputs: inputs,
-            publishManager: mock,
-            reduceMotion: true
-        )
+        let published = await vm.publish(inputs: inputs, reduceMotion: true)
         #expect(published == nil)
         #expect(vm.serviceTypeError != nil)
     }
@@ -285,20 +319,16 @@ struct BroadcastBonjourServiceViewModelTests {
         // but we CAN observe that publish completed and that the
         // returned service's name matches — proving the chain
         // reached `updateTXTRecords`.
-        let vm = BroadcastBonjourServiceViewModel.empty()
+        let mock = MockBonjourPublishManager()
+        let vm = makeEmpty(publishManager: mock)
         vm.serviceType = anyServiceType()
         vm.port = 8080
         vm.dataRecords = [BonjourService.TxtDataRecord(key: "color", value: "blue")]
-        let mock = MockBonjourPublishManager()
         guard let inputs = vm.validate(reduceMotion: true) else {
             #expect(Bool(false), "Validate should have succeeded")
             return
         }
-        let published = await vm.publish(
-            inputs: inputs,
-            publishManager: mock,
-            reduceMotion: true
-        )
+        let published = await vm.publish(inputs: inputs, reduceMotion: true)
         #expect(published != nil)
     }
 
@@ -306,7 +336,7 @@ struct BroadcastBonjourServiceViewModelTests {
 
     @Test("`upsert` appends the service when the list doesn't already contain it")
     func upsertAppendsNewService() {
-        let vm = BroadcastBonjourServiceViewModel.empty()
+        let vm = makeEmpty()
         let existing = anyService(name: "OldOne", port: 1234)
         let fresh = anyService(name: "NewOne", port: 5678)
         let result = vm.upsert(fresh, into: [existing])
@@ -318,7 +348,7 @@ struct BroadcastBonjourServiceViewModelTests {
 
     @Test("`upsert` replaces in place when the service is already in the list")
     func upsertReplacesExistingService() {
-        let vm = BroadcastBonjourServiceViewModel.empty()
+        let vm = makeEmpty()
         // BonjourService's Equatable keys on the underlying
         // service identifier — if we publish the same logical
         // service twice, upsert should replace it in place
@@ -332,7 +362,7 @@ struct BroadcastBonjourServiceViewModelTests {
 
     @Test("`clearAllErrors` zeroes all three inline errors")
     func clearAllErrorsZeroesEverything() {
-        let vm = BroadcastBonjourServiceViewModel.empty()
+        let vm = makeEmpty()
         vm.serviceTypeError = "stale"
         vm.portError = "stale"
         vm.domainError = "stale"
@@ -346,7 +376,7 @@ struct BroadcastBonjourServiceViewModelTests {
 
     @Test("`clearServiceTypeErrorIfResolved` is a no-op when the type is still nil")
     func clearServiceTypeErrorNoOpWhileNil() {
-        let vm = BroadcastBonjourServiceViewModel.empty()
+        let vm = makeEmpty()
         vm.serviceTypeError = "still required"
         vm.clearServiceTypeErrorIfResolved(reduceMotion: true)
         #expect(vm.serviceTypeError == "still required")
@@ -354,7 +384,7 @@ struct BroadcastBonjourServiceViewModelTests {
 
     @Test("`clearServiceTypeErrorIfResolved` clears the error once a type has been selected")
     func clearServiceTypeErrorClearsOnSelection() {
-        let vm = BroadcastBonjourServiceViewModel.empty()
+        let vm = makeEmpty()
         vm.serviceTypeError = "stale"
         vm.serviceType = anyServiceType()
         vm.clearServiceTypeErrorIfResolved(reduceMotion: true)
@@ -363,7 +393,7 @@ struct BroadcastBonjourServiceViewModelTests {
 
     @Test("`clearPortErrorIfResolved` is a no-op when port is still nil")
     func clearPortErrorNoOpWhileNil() {
-        let vm = BroadcastBonjourServiceViewModel.empty()
+        let vm = makeEmpty()
         vm.portError = "still required"
         vm.clearPortErrorIfResolved(reduceMotion: true)
         #expect(vm.portError == "still required")
@@ -371,7 +401,7 @@ struct BroadcastBonjourServiceViewModelTests {
 
     @Test("`clearPortErrorIfResolved` clears the error once a port has been entered")
     func clearPortErrorClearsOnEntry() {
-        let vm = BroadcastBonjourServiceViewModel.empty()
+        let vm = makeEmpty()
         vm.portError = "stale"
         vm.port = 8080
         vm.clearPortErrorIfResolved(reduceMotion: true)
@@ -380,7 +410,7 @@ struct BroadcastBonjourServiceViewModelTests {
 
     @Test("`clearDomainErrorIfResolved` is a no-op when the domain is still empty")
     func clearDomainErrorNoOpWhileEmpty() {
-        let vm = BroadcastBonjourServiceViewModel.empty()
+        let vm = makeEmpty()
         vm.domain = ""
         vm.domainError = "still required"
         vm.clearDomainErrorIfResolved(reduceMotion: true)
@@ -389,7 +419,7 @@ struct BroadcastBonjourServiceViewModelTests {
 
     @Test("`clearDomainErrorIfResolved` clears the error once the domain is non-empty")
     func clearDomainErrorClearsOnEntry() {
-        let vm = BroadcastBonjourServiceViewModel.empty()
+        let vm = makeEmpty()
         vm.domainError = "stale"
         vm.domain = "local."
         vm.clearDomainErrorIfResolved(reduceMotion: true)

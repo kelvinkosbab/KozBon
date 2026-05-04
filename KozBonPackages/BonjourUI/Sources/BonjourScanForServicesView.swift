@@ -168,7 +168,8 @@ public struct BonjourScanForServicesView: View {
             NavigationStack {
                 BroadcastBonjourServiceView(
                     isPresented: $viewModel.isBroadcastBonjourServicePresented,
-                    customPublishedServices: $viewModel.customPublishedServices
+                    customPublishedServices: $viewModel.customPublishedServices,
+                    publishManager: viewModel.publishManager
                 )
             }
         }
