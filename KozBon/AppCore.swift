@@ -10,13 +10,8 @@ import CoreUI
 import BonjourUI
 import BonjourModels
 import BonjourScanning
-import BonjourLocalization
 import BonjourAI
 import BonjourStorage
-
-#if canImport(FoundationModels)
-import FoundationModels
-#endif
 
 // MARK: - AppCore
 
@@ -27,7 +22,8 @@ struct AppCore: App {
 
     @State private var dependencies: DependencyContainer
     @State private var preferencesStore = PreferencesStore()
-    @State private var explainer: (any BonjourServiceExplainerProtocol)? = Self.makeExplainer()
+    @State private var explainer: (any BonjourServiceExplainerProtocol)? =
+        BonjourServiceExplainerFactory.makeForCurrentEnvironment()
 
     /// App-wide chat session, created once at launch so the chat
     /// tab's first activation doesn't pay the cost of constructing
@@ -60,68 +56,10 @@ struct AppCore: App {
         _dependencies = State(initialValue: dependencies)
         _servicesViewModel = State(initialValue: BonjourServicesViewModel(dependencies: dependencies))
         _chatSession = State(
-            initialValue: Self.makeChatSession(publishManager: dependencies.bonjourPublishManager)
+            initialValue: BonjourChatSessionFactory.makeForCurrentEnvironment(
+                publishManager: dependencies.bonjourPublishManager
+            )
         )
-    }
-
-    /// Creates an AI explainer if the on-device model is available.
-    ///
-    /// In the iOS Simulator, returns a mock that streams lorem ipsum responses
-    /// so the UI can be tested end-to-end without a real AI device.
-    private static func makeExplainer() -> (any BonjourServiceExplainerProtocol)? {
-        #if targetEnvironment(simulator)
-        return SimulatorBonjourServiceExplainer()
-        #elseif canImport(FoundationModels)
-        if #available(iOS 26, macOS 26, visionOS 26, *) {
-            return BonjourServiceExplainer()
-        }
-        return nil
-        #else
-        return nil
-        #endif
-    }
-
-    /// Creates the app-wide chat session. Returns `nil` on devices
-    /// that can't run the on-device Foundation Model — the chat tab
-    /// is gated on the same support check, so a `nil` session here
-    /// means the chat tab won't surface anyway.
-    ///
-    /// In the iOS Simulator, returns a mock that streams lorem ipsum
-    /// responses so the chat UI can be exercised end-to-end without
-    /// real model hardware.
-    private static func makeChatSession(
-        publishManager: BonjourPublishManagerProtocol
-    ) -> (any BonjourChatSessionProtocol)? {
-        #if targetEnvironment(simulator)
-        return SimulatorBonjourChatSession()
-        #elseif canImport(FoundationModels)
-        if #available(iOS 26, macOS 26, visionOS 26, *) {
-            return BonjourChatSession(publishManager: publishManager)
-        }
-        return nil
-        #else
-        return nil
-        #endif
-    }
-
-    /// Eagerly compiles the chat session's system instructions ahead
-    /// of the user's first interaction with the chat tab so that the
-    /// first suggestion-tap doesn't pay the model-load cost. Gated on
-    /// AI being available AND the user keeping AI features enabled —
-    /// prewarming when the chat tab won't surface would be wasted
-    /// CPU and battery.
-    ///
-    /// Yields once before doing the work so the first frame paints
-    /// (the rest of the tab content) before we hand main back to the
-    /// model for instruction compilation. Without the yield the model
-    /// load lands inside the app's launch path and the splash-to-
-    /// first-frame transition stutters.
-    private func prewarmChatSessionIfEnabled() async {
-        guard AppleIntelligenceSupport.isDeviceSupported,
-              preferencesStore.aiAnalysisEnabled,
-              let chatSession else { return }
-        await Task.yield()
-        chatSession.prewarm()
     }
 
     var body: some Scene {
@@ -207,7 +145,12 @@ struct AppCore: App {
                 .environment(\.serviceExplainer, explainer)
                 .environment(\.chatSession, chatSession)
                 .environment(\.preferencesStore, preferencesStore)
-                .task { await prewarmChatSessionIfEnabled() }
+                .task {
+                    await BonjourChatSessionFactory.prewarmIfEnabled(
+                        session: chatSession,
+                        aiAnalysisEnabled: preferencesStore.aiAnalysisEnabled
+                    )
+                }
             } else {
                 TabView {
                     BonjourScanForServicesView(viewModel: servicesViewModel)
@@ -261,7 +204,12 @@ struct AppCore: App {
                 .environment(\.serviceExplainer, explainer)
                 .environment(\.chatSession, chatSession)
                 .environment(\.preferencesStore, preferencesStore)
-                .task { await prewarmChatSessionIfEnabled() }
+                .task {
+                    await BonjourChatSessionFactory.prewarmIfEnabled(
+                        session: chatSession,
+                        aiAnalysisEnabled: preferencesStore.aiAnalysisEnabled
+                    )
+                }
             }
         }
         #if os(macOS)
@@ -294,85 +242,3 @@ struct AppCore: App {
 
     }
 }
-
-// MARK: - AppCommands
-
-#if os(macOS)
-private struct AppCommands: Commands {
-
-    @FocusedBinding(\.isBroadcastServicePresented) private var isBroadcastServicePresented
-    @FocusedBinding(\.isCreateServiceTypePresented) private var isCreateServiceTypePresented
-    @FocusedValue(\.refreshScan) private var refreshScan
-
-    var body: some Commands {
-        CommandGroup(after: .newItem) {
-            Button(String(localized: Strings.Buttons.broadcastService)) {
-                isBroadcastServicePresented = true
-            }
-            .disabled(isBroadcastServicePresented == nil)
-            .keyboardShortcut("n", modifiers: [.command, .shift])
-
-            Button(String(localized: Strings.Buttons.createCustomServiceType)) {
-                isCreateServiceTypePresented = true
-            }
-            .disabled(isCreateServiceTypePresented == nil)
-            .keyboardShortcut("t", modifiers: [.command, .shift])
-
-            Divider()
-
-            Button(String(localized: Strings.Buttons.refresh)) {
-                refreshScan?()
-            }
-            .disabled(refreshScan == nil)
-            .keyboardShortcut("r", modifiers: .command)
-        }
-
-        // Replace the system Help menu (which only ever offered "Search"
-        // by default) with curated links the user can reach for when
-        // KozBon shows them something they don't recognize. Items are
-        // grouped: app-level resources (source, vendor narrative, the
-        // human-readable IANA registry, Apple's port reference) above
-        // the divider; protocol specs below. The links open in the
-        // user's default browser via `Link`, which renders as a regular
-        // menu item on macOS.
-        //
-        // The URLs are hardcoded constants known to be valid — the
-        // force-unwraps can't fail at runtime, and `Link`'s API requires
-        // a non-optional `URL`. The disables are scoped to this block.
-        // swiftlint:disable force_unwrapping
-        CommandGroup(replacing: .help) {
-            Link(
-                String(localized: Strings.Help.kozbonOnGitHub),
-                destination: URL(string: "https://github.com/kelvinkosbab/KozBon")!
-            )
-
-            Divider()
-
-            Link(
-                String(localized: Strings.Help.aboutBonjour),
-                destination: URL(string: "https://developer.apple.com/bonjour/")!
-            )
-            Link(
-                String(localized: Strings.Help.ianaServiceRegistry),
-                destination: URL(string: "https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml")!
-            )
-            Link(
-                String(localized: Strings.Help.applePortsReference),
-                destination: URL(string: "https://support.apple.com/HT202944")!
-            )
-
-            Divider()
-
-            Link(
-                String(localized: Strings.Help.mdnsSpecification),
-                destination: URL(string: "https://datatracker.ietf.org/doc/html/rfc6762")!
-            )
-            Link(
-                String(localized: Strings.Help.dnssdSpecification),
-                destination: URL(string: "https://datatracker.ietf.org/doc/html/rfc6763")!
-            )
-        }
-        // swiftlint:enable force_unwrapping
-    }
-}
-#endif

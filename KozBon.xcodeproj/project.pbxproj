@@ -11,6 +11,7 @@
 		B6CE1D4A1E120AF8003D4FFA /* service-names-port-numbers.csv in Resources */ = {isa = PBXBuildFile; fileRef = B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */; };
 		F6INFO0BF0001 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = F6INFO0FR0001 /* InfoPlist.xcstrings */; };
 		F6240E692A92CF0600951875 /* AppCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E682A92CF0600951875 /* AppCore.swift */; };
+		F6A11CC0DE5000000000A1B3 /* AppCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A11CC0DE5000000000A1B2 /* AppCommands.swift */; };
 		F690B5FB2561E9B600902DAB /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F690B5FA2561E9B600902DAB /* NetworkExtension.framework */; };
 		F6C472F52C1A1EAB00BBB0F9 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = F6C472F42C1A1EAB00BBB0F9 /* Core */; };
 		F6C472F72C1A1EAB00BBB0F9 /* CoreStorage in Frameworks */ = {isa = PBXBuildFile; productRef = F6C472F62C1A1EAB00BBB0F9 /* CoreStorage */; };
@@ -47,6 +48,7 @@
 		F6INFO0FR0001 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "service-names-port-numbers.csv"; sourceTree = "<group>"; };
 		F6240E682A92CF0600951875 /* AppCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCore.swift; sourceTree = "<group>"; };
+		F6A11CC0DE5000000000A1B2 /* AppCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCommands.swift; sourceTree = "<group>"; };
 		F62EDC5E255B9D25003E5178 /* KozBon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KozBon.entitlements; sourceTree = "<group>"; };
 		F6781EF72694C5F6009B79F7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F690B5FA2561E9B600902DAB /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
@@ -113,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				F6240E682A92CF0600951875 /* AppCore.swift */,
+				F6A11CC0DE5000000000A1B2 /* AppCommands.swift */,
 				F6C472FA2C1A248000BBB0F9 /* TopLevelDestination.swift */,
 				F6C473002C1A4D7400BBB0F9 /* BonjourNearbyServices */,
 				F6SIRI0GR0001 /* AppIntents */,
@@ -278,6 +281,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F6240E692A92CF0600951875 /* AppCore.swift in Sources */,
+				F6A11CC0DE5000000000A1B3 /* AppCommands.swift in Sources */,
 				F6C472FB2C1A248000BBB0F9 /* TopLevelDestination.swift in Sources */,
 				F6CA76602F3690EF0036BE3B /* DependencyInjectionExamples.swift in Sources */,
 				F6CA76682F36915C0036BE3B /* PreviewDependencies.swift in Sources */,
