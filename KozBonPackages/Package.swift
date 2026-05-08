@@ -34,8 +34,7 @@ func makeTargets(
     dependencies: [Target.Dependency] = [],
     hasResources: Bool = false,
     hasTests: Bool = false,
-    testDependencies: [Target.Dependency] = [],
-    testExcludes: [String] = []
+    testDependencies: [Target.Dependency] = []
 ) -> [Target] {
     var targets: [Target] = [
         .target(
@@ -52,7 +51,6 @@ func makeTargets(
                 name: "\(name)Tests",
                 dependencies: [.byName(name: name)] + testDependencies,
                 path: "\(name)/Tests",
-                exclude: testExcludes,
                 swiftSettings: sharedSwiftSettings
             )
         )
@@ -136,16 +134,18 @@ let package = Package(
         dependencies: ["BonjourCore"],
         // BonjourStorage owns both the SwiftData preferences container
         // and the legacy Core Data store (`iDiscover.xcdatamodeld`) for
-        // user-defined service types. The SwiftData tests run fine
-        // under `swift test` *and* `xcodebuild test`. The Core Data
-        // tests need `.xcdatamodeld` compiled to `.momd`, which only
-        // Xcode does — so `CustomServiceTypeTests.swift` is excluded
-        // from the SPM test target and runs via `xcodebuild test`
-        // exclusively. The path is Tests-relative, so the post-reorg
-        // `CoreData/` subfolder needs to be in the exclude pattern.
+        // user-defined service types. SwiftData tests run fine under
+        // both runtimes. The Core Data tests need `.xcdatamodeld`
+        // compiled to `.momd` — only Xcode does that — so under
+        // `swift test` from the SPM CLI, `MyCoreDataStack` can't load
+        // the model. Each Core Data test guards on
+        // `MyCoreDataStack.isBundledModelAvailable` and skips silently
+        // when the model isn't reachable, so the SPM test target
+        // builds without `testExcludes` and runs the same source file
+        // under both `swift test` (where it skips) and
+        // `xcodebuild test` (where it asserts).
         hasResources: true,
-        hasTests: true,
-        testExcludes: ["CoreData/CustomServiceTypeTests.swift"]
+        hasTests: true
     )
     + makeTargets(
         name: "BonjourUI",
