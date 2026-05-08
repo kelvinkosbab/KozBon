@@ -134,10 +134,11 @@ let package = Package(
         // tests need `.xcdatamodeld` compiled to `.momd`, which only
         // Xcode does — so `CustomServiceTypeTests.swift` is excluded
         // from the SPM test target and runs via `xcodebuild test`
-        // exclusively.
+        // exclusively. The path is Tests-relative, so the post-reorg
+        // `CoreData/` subfolder needs to be in the exclude pattern.
         hasTests: true,
         resources: [.process("Resources")],
-        testExcludes: ["CustomServiceTypeTests.swift"]
+        testExcludes: ["CoreData/CustomServiceTypeTests.swift"]
     )
     + makeTargets(
         name: "BonjourUI",
