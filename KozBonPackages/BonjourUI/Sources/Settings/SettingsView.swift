@@ -54,6 +54,22 @@ public struct SettingsView: View {
             .frame(width: 400)
             #endif
             .navigationTitle(String(localized: Strings.NavigationTitles.settings))
+            // Drive the Reset to Defaults section's appear/disappear
+            // animation declaratively. `.animation(_:value:)` watches
+            // `isAtDefaults` and runs the same transition regardless
+            // of which preference flipped — the AI toggle, the
+            // expertise level menu, the sort order menu, or a
+            // custom-service-type create/delete elsewhere in the app.
+            // Without this every mutation point would have to
+            // remember to wrap in `withAnimation`, which was easy to
+            // forget when adding a new preference and produced an
+            // instant pop instead of the smooth fade users expect.
+            //
+            // The companion `value: aiAnalysisEnabled` modifier
+            // animates the conditional AI Expertise row inside the
+            // AI Analysis section the same way.
+            .animation(reduceMotion ? nil : .default, value: isAtDefaults)
+            .animation(reduceMotion ? nil : .default, value: preferencesStore.aiAnalysisEnabled)
             // Refresh the cached custom-types flag on first
             // appearance so the Reset to Defaults section's
             // visibility is correct the moment the form lands.
@@ -82,9 +98,7 @@ public struct SettingsView: View {
             .onReceive(
                 NotificationCenter.default.publisher(for: .NSManagedObjectContextDidSave)
             ) { _ in
-                withAnimation(reduceMotion ? nil : .default) {
-                    refreshCustomServiceTypesState()
-                }
+                refreshCustomServiceTypesState()
             }
             .alert(
                 String(localized: Strings.Settings.resetToDefaults),
@@ -92,17 +106,8 @@ public struct SettingsView: View {
             ) {
                 Button(String(localized: Strings.Buttons.cancel), role: .cancel) {}
                 Button(String(localized: Strings.Settings.reset), role: .destructive) {
-                    // Wrap the state mutations in `withAnimation`
-                    // so the reset section fades out smoothly once
-                    // `isAtDefaults` flips to true. Without this,
-                    // the section vanishes instantly the moment
-                    // the alert dismisses, which reads as the
-                    // form having a glitch instead of as a
-                    // deliberate "everything's clean now" cue.
-                    withAnimation(reduceMotion ? nil : .default) {
-                        preferencesStore.resetToDefaults()
-                        BonjourServiceType.deleteAllPersistentCopies()
-                    }
+                    preferencesStore.resetToDefaults()
+                    BonjourServiceType.deleteAllPersistentCopies()
                 }
             } message: {
                 Text(Strings.Settings.resetConfirmationMessage)
@@ -119,11 +124,7 @@ public struct SettingsView: View {
                 String(localized: Strings.Settings.aiAnalysisEnabled),
                 isOn: Binding(
                     get: { preferencesStore.aiAnalysisEnabled },
-                    set: { newValue in
-                        withAnimation(reduceMotion ? nil : .default) {
-                            preferencesStore.aiAnalysisEnabled = newValue
-                        }
-                    }
+                    set: { preferencesStore.aiAnalysisEnabled = $0 }
                 )
             )
             .accessibilityHint(String(localized: Strings.Accessibility.toggleAIHint))
@@ -329,7 +330,21 @@ public struct SettingsView: View {
     @ViewBuilder
     private func sortMenuButton(for sortType: BonjourServiceSortType) -> some View {
         Button {
-            preferencesStore.defaultSortOrder = sortType.id
+            // Normalize: when the user picks the fallback sort
+            // (`hostNameAsc`), persist the documented empty-string
+            // default instead of the explicit id. Both produce the
+            // same effective sort, but persisting `"hostNameAsc"`
+            // would make `isAtDefaults` think the user changed
+            // away from default — and the Reset to Defaults
+            // section would stay visible after the user picked
+            // the same option that was already showing as
+            // selected. Keeping the store canonical (`""` always
+            // means "default") avoids that surprise without
+            // leaking the fallback equivalence into every
+            // `defaultSortOrder` consumer.
+            preferencesStore.defaultSortOrder = sortType.id == BonjourServiceSortType.hostNameAsc.id
+                ? UserPreferences.defaultSortOrder
+                : sortType.id
         } label: {
             if effectiveSortId == sortType.id {
                 Label(sortType.title, systemImage: Iconography.selected)
