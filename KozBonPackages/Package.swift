@@ -18,15 +18,23 @@ let sharedSwiftSettings: [SwiftSetting] = [
 /// ```
 /// {name}/
 ///     Sources/
-///     Tests/       (if hasTests is true)
+///         Resources/   (if hasResources is true)
+///     Tests/           (if hasTests is true)
+///         Resources/   (if hasTestResources is true)
 /// ```
+///
+/// Resources are picked up automatically via `.process("Resources")`
+/// when the corresponding boolean is set — callers don't pass an
+/// explicit `[Resource]` array. The convention is that any package
+/// that needs to ship resources uses a `Resources/` subfolder, which
+/// keeps both the manifest and the on-disk layout uniform.
 func makeTargets(
     name: String,
     dependencies: [Target.Dependency] = [],
+    hasResources: Bool = false,
     hasTests: Bool = false,
-    resources: [Resource]? = nil,
+    hasTestResources: Bool = false,
     testDependencies: [Target.Dependency] = [],
-    testResources: [Resource]? = nil,
     testExcludes: [String] = []
 ) -> [Target] {
     var targets: [Target] = [
@@ -34,7 +42,7 @@ func makeTargets(
             name: name,
             dependencies: dependencies,
             path: "\(name)/Sources",
-            resources: resources,
+            resources: hasResources ? [.process("Resources")] : nil,
             swiftSettings: sharedSwiftSettings
         )
     ]
@@ -45,7 +53,7 @@ func makeTargets(
                 dependencies: [.byName(name: name)] + testDependencies,
                 path: "\(name)/Tests",
                 exclude: testExcludes,
-                resources: testResources,
+                resources: hasTestResources ? [.process("Resources")] : nil,
                 swiftSettings: sharedSwiftSettings
             )
         )
@@ -84,7 +92,7 @@ let package = Package(
     )
     + makeTargets(
         name: "BonjourLocalization",
-        resources: [.process("Resources")]
+        hasResources: true
     )
     + makeTargets(
         name: "BonjourModels",
@@ -136,8 +144,8 @@ let package = Package(
         // from the SPM test target and runs via `xcodebuild test`
         // exclusively. The path is Tests-relative, so the post-reorg
         // `CoreData/` subfolder needs to be in the exclude pattern.
+        hasResources: true,
         hasTests: true,
-        resources: [.process("Resources")],
         testExcludes: ["CoreData/CustomServiceTypeTests.swift"]
     )
     + makeTargets(
