@@ -177,20 +177,18 @@ public final class MockHapticFeedback: HapticFeedbackProviding {
 
 // MARK: - Environment Injection
 
-private struct HapticFeedbackKey: @preconcurrency EnvironmentKey {
-    @MainActor static var defaultValue: any HapticFeedbackProviding {
-        SystemHapticFeedback()
-    }
-}
-
 public extension EnvironmentValues {
 
     /// The haptic-feedback provider for the current view hierarchy. Read
     /// via `@Environment(\.hapticFeedback)` in views; override in tests,
     /// previews, or feature flags by applying
     /// `.environment(\.hapticFeedback, MockHapticFeedback())`.
-    var hapticFeedback: any HapticFeedbackProviding {
-        get { self[HapticFeedbackKey.self] }
-        set { self[HapticFeedbackKey.self] = newValue }
-    }
+    ///
+    /// The default uses `MainActor.assumeIsolated` because
+    /// `SystemHapticFeedback.init` is main-actor-isolated and
+    /// `@Entry`'s macro generates the default-value site in a
+    /// nonisolated context. SwiftUI always evaluates environment
+    /// values on the main actor in practice, so the runtime
+    /// check never trips.
+    @Entry var hapticFeedback: any HapticFeedbackProviding = MainActor.assumeIsolated { SystemHapticFeedback() }
 }

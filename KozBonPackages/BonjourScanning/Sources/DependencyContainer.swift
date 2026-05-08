@@ -61,18 +61,19 @@ extension DependencyContainer {
     }
 }
 
-// MARK: - Environment Key
-
-private struct DependencyContainerKey: @preconcurrency EnvironmentKey {
-    @MainActor static let defaultValue = DependencyContainer()
-}
+// MARK: - Environment Values
 
 public extension EnvironmentValues {
     /// The application's dependency container, accessible via `@Environment(\.dependencies)`.
-    var dependencies: DependencyContainer {
-        get { self[DependencyContainerKey.self] }
-        set { self[DependencyContainerKey.self] = newValue }
-    }
+    ///
+    /// The default uses `MainActor.assumeIsolated` because the
+    /// production `DependencyContainer.init()` is main-actor-isolated
+    /// (it constructs the live `BonjourServiceScanner` and
+    /// `BonjourPublishManager`) and `@Entry`'s macro generates the
+    /// default-value site in a nonisolated context. SwiftUI always
+    /// evaluates environment values on the main actor in practice,
+    /// so the runtime check never trips.
+    @Entry var dependencies: DependencyContainer = MainActor.assumeIsolated { DependencyContainer() }
 }
 
 // MARK: - View Extension

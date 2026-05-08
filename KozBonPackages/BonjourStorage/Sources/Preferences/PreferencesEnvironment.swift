@@ -7,18 +7,19 @@
 
 import SwiftUI
 
-// MARK: - Environment Key
-
-private struct PreferencesStoreKey: @preconcurrency EnvironmentKey {
-    @MainActor static let defaultValue = PreferencesStore()
-}
+// MARK: - Environment Values
 
 public extension EnvironmentValues {
     /// The app's preferences store, accessible via `@Environment(\.preferencesStore)`.
-    var preferencesStore: PreferencesStore {
-        get { self[PreferencesStoreKey.self] }
-        set { self[PreferencesStoreKey.self] = newValue }
-    }
+    ///
+    /// The default uses `MainActor.assumeIsolated` because
+    /// `PreferencesStore.init` is main-actor-isolated and the
+    /// `@Entry` macro generates the default-value site in a
+    /// nonisolated context. SwiftUI always evaluates environment
+    /// values on the main actor in practice, so the runtime check
+    /// never trips — but the type system can't see that, hence
+    /// the explicit hop.
+    @Entry var preferencesStore: PreferencesStore = MainActor.assumeIsolated { PreferencesStore() }
 }
 
 // MARK: - View Extension
