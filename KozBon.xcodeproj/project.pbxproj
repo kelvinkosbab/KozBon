@@ -17,8 +17,6 @@
 		F6C472F72C1A1EAB00BBB0F9 /* CoreStorage in Frameworks */ = {isa = PBXBuildFile; productRef = F6C472F62C1A1EAB00BBB0F9 /* CoreStorage */; };
 		F6C472F92C1A1EAB00BBB0F9 /* CoreUI in Frameworks */ = {isa = PBXBuildFile; productRef = F6C472F82C1A1EAB00BBB0F9 /* CoreUI */; };
 		F6C472FB2C1A248000BBB0F9 /* TopLevelDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C472FA2C1A248000BBB0F9 /* TopLevelDestination.swift */; };
-		F6CA76602F3690EF0036BE3B /* DependencyInjectionExamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CA765F2F3690EF0036BE3B /* DependencyInjectionExamples.swift */; };
-		F6CA76682F36915C0036BE3B /* PreviewDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CA76672F36915C0036BE3B /* PreviewDependencies.swift */; };
 		F6SIRI0BF0002 /* KozBonAppShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6SIRI0FR0002 /* KozBonAppShortcuts.swift */; };
 		F6SIRI0BF0003 /* BonjourServiceEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6SIRI0FR0003 /* BonjourServiceEntity.swift */; };
 		F6SIRI0BF0004 /* ScanForServicesIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6SIRI0FR0004 /* ScanForServicesIntent.swift */; };
@@ -53,8 +51,6 @@
 		F6781EF72694C5F6009B79F7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F690B5FA2561E9B600902DAB /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		F6C472FA2C1A248000BBB0F9 /* TopLevelDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopLevelDestination.swift; sourceTree = "<group>"; };
-		F6CA765F2F3690EF0036BE3B /* DependencyInjectionExamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjectionExamples.swift; sourceTree = "<group>"; };
-		F6CA76672F36915C0036BE3B /* PreviewDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewDependencies.swift; sourceTree = "<group>"; };
 		F6SIRI0FR0002 /* KozBonAppShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KozBonAppShortcuts.swift; sourceTree = "<group>"; };
 		F6SIRI0FR0003 /* BonjourServiceEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServiceEntity.swift; sourceTree = "<group>"; };
 		F6SIRI0FR0004 /* ScanForServicesIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanForServicesIntent.swift; sourceTree = "<group>"; };
@@ -117,7 +113,6 @@
 				F6240E682A92CF0600951875 /* AppCore.swift */,
 				F6A11CC0DE5000000000A1B2 /* AppCommands.swift */,
 				F6C472FA2C1A248000BBB0F9 /* TopLevelDestination.swift */,
-				F6C473002C1A4D7400BBB0F9 /* BonjourNearbyServices */,
 				F6SIRI0GR0001 /* AppIntents */,
 				B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */,
 				B6CE1D311E1208C1003D4FFA /* Assets.xcassets */,
@@ -144,15 +139,6 @@
 				F690B5FA2561E9B600902DAB /* NetworkExtension.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		F6C473002C1A4D7400BBB0F9 /* BonjourNearbyServices */ = {
-			isa = PBXGroup;
-			children = (
-				F6CA765F2F3690EF0036BE3B /* DependencyInjectionExamples.swift */,
-				F6CA76672F36915C0036BE3B /* PreviewDependencies.swift */,
-			);
-			path = BonjourNearbyServices;
 			sourceTree = "<group>";
 		};
 		F6TESTS0GR0001 /* KozBonTests */ = {
@@ -283,8 +269,6 @@
 				F6240E692A92CF0600951875 /* AppCore.swift in Sources */,
 				F6A11CC0DE5000000000A1B3 /* AppCommands.swift in Sources */,
 				F6C472FB2C1A248000BBB0F9 /* TopLevelDestination.swift in Sources */,
-				F6CA76602F3690EF0036BE3B /* DependencyInjectionExamples.swift in Sources */,
-				F6CA76682F36915C0036BE3B /* PreviewDependencies.swift in Sources */,
 				F6SIRI0BF0002 /* KozBonAppShortcuts.swift in Sources */,
 				F6SIRI0BF0003 /* BonjourServiceEntity.swift in Sources */,
 				F6SIRI0BF0004 /* ScanForServicesIntent.swift in Sources */,

@@ -59,6 +59,34 @@ extension DependencyContainer {
             bonjourPublishManager: publishManager
         )
     }
+
+    /// Creates a dependency container configured for SwiftUI
+    /// previews. Composes ``MockBonjourServiceScanner`` and
+    /// ``MockBonjourPublishManager`` and exposes one extra knob —
+    /// `simulateScanning` — that flips the scanner's
+    /// `isProcessing` flag so a preview can render the
+    /// "scanning…" state without going through any async setup.
+    ///
+    /// Lives in `BonjourScanning` rather than the app target so
+    /// every package that wants to ship a `#Preview` block can
+    /// reach for the same factory without re-defining its own
+    /// mock plumbing.
+    @MainActor
+    public static func preview(
+        simulateScanning: Bool = false
+    ) -> DependencyContainer {
+        let scanner = MockBonjourServiceScanner()
+        let publishManager = MockBonjourPublishManager()
+
+        if simulateScanning {
+            scanner.isProcessing = true
+        }
+
+        return DependencyContainer(
+            bonjourServiceScanner: scanner,
+            bonjourPublishManager: publishManager
+        )
+    }
 }
 
 // MARK: - Environment Values

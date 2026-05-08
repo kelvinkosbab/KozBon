@@ -316,3 +316,19 @@ struct AIServiceExplanationSheetModifier: ViewModifier {
     }
 }
 #endif
+
+// MARK: - Previews
+
+#Preview("Bonjour Scan View - Empty") {
+    let deps = DependencyContainer.preview()
+    NavigationStack {
+        BonjourScanForServicesView(viewModel: BonjourServicesViewModel(dependencies: deps))
+    }
+}
+
+#Preview("Bonjour Scan View - Scanning") {
+    let deps = DependencyContainer.preview(simulateScanning: true)
+    NavigationStack {
+        BonjourScanForServicesView(viewModel: BonjourServicesViewModel(dependencies: deps))
+    }
+}
