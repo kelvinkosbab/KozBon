@@ -12,14 +12,20 @@ let sharedSwiftSettings: [SwiftSetting] = [
 
 // MARK: - Target Helpers
 
-/// Creates a source target and optionally a test target for a module.
+/// Creates a source target and a test target for a module.
+///
+/// Every package in `KozBonPackages/` ships tests — there's no
+/// `hasTests` flag because the absence of a test surface for a
+/// given module is a problem to fix, not a configuration to
+/// support. Adding a new package starts with creating its
+/// `Tests/` folder alongside `Sources/`.
 ///
 /// Assumes the directory layout:
 /// ```
 /// {name}/
 ///     Sources/
 ///         Resources/   (if hasResources is true)
-///     Tests/           (if hasTests is true)
+///     Tests/
 /// ```
 ///
 /// Resources are picked up automatically via `.process("Resources")`
@@ -33,29 +39,23 @@ func makeTargets(
     name: String,
     dependencies: [Target.Dependency] = [],
     hasResources: Bool = false,
-    hasTests: Bool = false,
     testDependencies: [Target.Dependency] = []
 ) -> [Target] {
-    var targets: [Target] = [
+    [
         .target(
             name: name,
             dependencies: dependencies,
             path: "\(name)/Sources",
             resources: hasResources ? [.process("Resources")] : nil,
             swiftSettings: sharedSwiftSettings
+        ),
+        .testTarget(
+            name: "\(name)Tests",
+            dependencies: [.byName(name: name)] + testDependencies,
+            path: "\(name)/Tests",
+            swiftSettings: sharedSwiftSettings
         )
     ]
-    if hasTests {
-        targets.append(
-            .testTarget(
-                name: "\(name)Tests",
-                dependencies: [.byName(name: name)] + testDependencies,
-                path: "\(name)/Tests",
-                swiftSettings: sharedSwiftSettings
-            )
-        )
-    }
-    return targets
 }
 
 // MARK: - Package
@@ -84,8 +84,7 @@ let package = Package(
     ],
     targets: makeTargets(
         name: "BonjourCore",
-        dependencies: [.product(name: "Core", package: "Core")],
-        hasTests: true
+        dependencies: [.product(name: "Core", package: "Core")]
     )
     + makeTargets(
         name: "BonjourLocalization",
@@ -94,13 +93,11 @@ let package = Package(
     + makeTargets(
         name: "BonjourModels",
         dependencies: ["BonjourCore", "BonjourStorage", "BonjourLocalization"],
-        hasTests: true,
         testDependencies: [.byName(name: "BonjourCore")]
     )
     + makeTargets(
         name: "BonjourScanning",
         dependencies: ["BonjourCore", "BonjourModels"],
-        hasTests: true,
         testDependencies: [
             .byName(name: "BonjourCore"),
             .byName(name: "BonjourModels")
@@ -123,7 +120,6 @@ let package = Package(
             "BonjourScanning",
             "BonjourStorage"
         ],
-        hasTests: true,
         testDependencies: [
             .byName(name: "BonjourCore"),
             .byName(name: "BonjourModels")
@@ -144,8 +140,7 @@ let package = Package(
         // builds without `testExcludes` and runs the same source file
         // under both `swift test` (where it skips) and
         // `xcodebuild test` (where it asserts).
-        hasResources: true,
-        hasTests: true
+        hasResources: true
     )
     + makeTargets(
         name: "BonjourUI",
@@ -158,7 +153,6 @@ let package = Package(
             "BonjourStorage",
             .product(name: "CoreUI", package: "Core")
         ],
-        hasTests: true,
         testDependencies: [
             .byName(name: "BonjourCore"),
             .byName(name: "BonjourModels"),
