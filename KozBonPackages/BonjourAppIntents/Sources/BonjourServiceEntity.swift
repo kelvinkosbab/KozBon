@@ -27,7 +27,7 @@ import BonjourModels
 /// **port** — projected to plain `String`/`Int` so the values
 /// travel through Shortcuts cleanly.
 @available(iOS 18.0, macOS 15.0, visionOS 2.0, *)
-struct BonjourServiceEntity: AppEntity, Sendable, Hashable {
+public struct BonjourServiceEntity: AppEntity, Sendable, Hashable {
 
     // MARK: - Identity
 
@@ -36,13 +36,13 @@ struct BonjourServiceEntity: AppEntity, Sendable, Hashable {
     /// life of a single scan but not across launches — the
     /// `EntityQuery` below treats lookups by id as ephemeral
     /// matches against a recent snapshot.
-    let id: String
+    public let id: String
 
     // MARK: - Display Fields
 
     /// User-facing service name (e.g. "Living Room TV"). What
     /// Siri reads aloud and what Shortcuts shows in the picker.
-    let name: String
+    public let name: String
 
     /// Voice-friendly version of ``name``. For most services
     /// this is identical to `name`. For auto-generated
@@ -58,14 +58,14 @@ struct BonjourServiceEntity: AppEntity, Sendable, Hashable {
     /// "copy to clipboard" / "send via SMS" steps), while the
     /// voice-rendering path wants the friendly form. Two
     /// fields, two consumers.
-    let voiceFriendlyName: String
+    public let voiceFriendlyName: String
 
     /// Full DNS-SD service type (e.g. `_airplay._tcp`). Surface
     /// the wire form rather than a friendly name because
     /// Shortcuts users plumbing this through to a "tap to copy"
     /// or "send via Mac" step probably want the canonical
     /// identifier.
-    let serviceType: String
+    public let serviceType: String
 
     /// Voice- and UI-friendly display name for the service type
     /// (e.g. "AirPlay" rather than `_airplay._tcp`). Captured at
@@ -78,21 +78,21 @@ struct BonjourServiceEntity: AppEntity, Sendable, Hashable {
     /// Falls back to the wire `serviceType` when the service's
     /// type record has no display name (custom types created
     /// without one, or rare malformed entries).
-    let serviceTypeDisplayName: String
+    public let serviceTypeDisplayName: String
 
     /// Resolved hostname (`SomeMac.local.`) or the literal
     /// sentinel `"NA"` when the service hasn't resolved yet.
     /// Mirrors `BonjourService.hostName` semantics.
-    let hostname: String
+    public let hostname: String
 
     /// Service port. `0` if the service hasn't resolved a port
     /// yet — the runtime model exposes `Int32`, which we widen
     /// to `Int` for Shortcuts.
-    let port: Int
+    public let port: Int
 
     // MARK: - AppEntity
 
-    static let typeDisplayRepresentation = TypeDisplayRepresentation(
+    public static let typeDisplayRepresentation = TypeDisplayRepresentation(
         name: "Bonjour Service",
         numericFormat: "\(placeholder: .int) Bonjour services"
     )
@@ -101,14 +101,14 @@ struct BonjourServiceEntity: AppEntity, Sendable, Hashable {
     /// previews show "AirPlay" rather than "_airplay._tcp" —
     /// the latter is read aloud terribly when a Shortcut step
     /// pipes the entity into "Speak Text".
-    var displayRepresentation: DisplayRepresentation {
+    public var displayRepresentation: DisplayRepresentation {
         DisplayRepresentation(
             title: "\(name)",
             subtitle: "\(serviceTypeDisplayName)"
         )
     }
 
-    static let defaultQuery = BonjourServiceEntityQuery()
+    public static let defaultQuery = BonjourServiceEntityQuery()
 
     // MARK: - Initialization From Runtime Model
 
@@ -117,7 +117,7 @@ struct BonjourServiceEntity: AppEntity, Sendable, Hashable {
     /// resulting entity is `Sendable` and can be returned across
     /// the App Intents boundary.
     @MainActor
-    init(from service: BonjourService) {
+    public init(from service: BonjourService) {
         // `BonjourService.id` is `Int` (the cached
         // `NetService.hashValue`). App Intents `EntityIdentifier`
         // requires the id type to be `Hashable & Sendable`; any of
@@ -164,9 +164,11 @@ struct BonjourServiceEntity: AppEntity, Sendable, Hashable {
 /// but for Phase 2 the empty default is honest about the
 /// transient nature of Bonjour state.
 @available(iOS 18.0, macOS 15.0, visionOS 2.0, *)
-struct BonjourServiceEntityQuery: EntityQuery {
+public struct BonjourServiceEntityQuery: EntityQuery {
 
-    func entities(for identifiers: [BonjourServiceEntity.ID]) async throws -> [BonjourServiceEntity] {
+    public init() {}
+
+    public func entities(for identifiers: [BonjourServiceEntity.ID]) async throws -> [BonjourServiceEntity] {
         // Bonjour discoveries don't persist across sessions, so a
         // lookup by id from a Shortcut step run hours later
         // wouldn't find anything useful. Return empty rather than
@@ -175,7 +177,7 @@ struct BonjourServiceEntityQuery: EntityQuery {
         []
     }
 
-    func suggestedEntities() async throws -> [BonjourServiceEntity] {
+    public func suggestedEntities() async throws -> [BonjourServiceEntity] {
         // Same reasoning — no stable suggestions to surface.
         []
     }

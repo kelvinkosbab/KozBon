@@ -29,11 +29,11 @@ import BonjourScanning
 /// `ListDiscoveredServicesIntent` is data-first ("give me the
 /// list").
 @available(iOS 18.0, macOS 15.0, visionOS 2.0, *)
-struct ListDiscoveredServicesIntent: AppIntent {
+public struct ListDiscoveredServicesIntent: AppIntent {
 
-    static let title: LocalizedStringResource = "List Discovered Services"
+    public static let title: LocalizedStringResource = "List Discovered Services"
 
-    static let description = IntentDescription(
+    public static let description = IntentDescription(
         "Lists Bonjour services discovered on your local network. Use this in Shortcuts to feed the list of services into the next step.",
         searchKeywords: Self.spotlightSearchKeywords
     )
@@ -47,7 +47,7 @@ struct ListDiscoveredServicesIntent: AppIntent {
         "kozbon"
     ]
 
-    static let openAppWhenRun: Bool = false
+    public static let openAppWhenRun: Bool = false
 
     /// Maximum number of service names read aloud in the voice
     /// summary. Beyond this, the dialog says "and N others" so
@@ -55,8 +55,10 @@ struct ListDiscoveredServicesIntent: AppIntent {
     /// value contains the full list regardless.
     private static let voiceNameCap = 3
 
+    public init() {}
+
     @MainActor
-    func perform() async throws
+    public func perform() async throws
         -> some IntentResult & ReturnsValue<[BonjourServiceEntity]> & ProvidesDialog {
         let runner = BonjourOneShotScanner(scanner: BonjourServiceScanner())
         let services = await runner.run()

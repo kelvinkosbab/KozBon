@@ -34,14 +34,14 @@ import Foundation
 /// who want chat should open the Chat tab; Siri is reserved for
 /// concrete actions (scan, list).
 @available(iOS 18.0, macOS 15.0, visionOS 2.0, *)
-struct KozBonAppShortcuts: AppShortcutsProvider {
+public struct KozBonAppShortcuts: AppShortcutsProvider {
 
     /// Tint applied to the Shortcut's icon in the Shortcuts app.
     /// Matches the app's brand blue so the icon reads as a
     /// first-party Shortcut rather than a generic system one.
-    static var shortcutTileColor: ShortcutTileColor { .blue }
+    public static var shortcutTileColor: ShortcutTileColor { .blue }
 
-    static var appShortcuts: [AppShortcut] {
+    public static var appShortcuts: [AppShortcut] {
         AppShortcut(
             intent: ScanForServicesIntent(),
             phrases: [

@@ -27,11 +27,11 @@ import BonjourScanning
 /// at the cost of running a separate ~3-second scan per
 /// invocation — well within Siri's intent budget.
 @available(iOS 18.0, macOS 15.0, visionOS 2.0, *)
-struct ScanForServicesIntent: AppIntent {
+public struct ScanForServicesIntent: AppIntent {
 
-    static let title: LocalizedStringResource = "Scan for Bonjour Services"
+    public static let title: LocalizedStringResource = "Scan for Bonjour Services"
 
-    static let description = IntentDescription(
+    public static let description = IntentDescription(
         "Scans for Bonjour services on your local network for a few seconds and tells you how many were found.",
         searchKeywords: Self.spotlightSearchKeywords
     )
@@ -49,10 +49,12 @@ struct ScanForServicesIntent: AppIntent {
     /// the visual list can ask Siri to open KozBon separately, or
     /// use ``ListDiscoveredServicesIntent`` to get structured
     /// results into a Shortcut.
-    static let openAppWhenRun: Bool = false
+    public static let openAppWhenRun: Bool = false
+
+    public init() {}
 
     @MainActor
-    func perform() async throws -> some IntentResult & ProvidesDialog {
+    public func perform() async throws -> some IntentResult & ProvidesDialog {
         let runner = BonjourOneShotScanner(scanner: BonjourServiceScanner())
         let services = await runner.run()
 

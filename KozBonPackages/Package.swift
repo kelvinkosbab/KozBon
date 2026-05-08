@@ -76,7 +76,8 @@ let package = Package(
         .library(name: "BonjourLocalization", targets: ["BonjourLocalization"]),
         .library(name: "BonjourAI", targets: ["BonjourAI"]),
         .library(name: "BonjourStorage", targets: ["BonjourStorage"]),
-        .library(name: "BonjourUI", targets: ["BonjourUI"])
+        .library(name: "BonjourUI", targets: ["BonjourUI"]),
+        .library(name: "BonjourAppIntents", targets: ["BonjourAppIntents"])
     ],
     dependencies: [
         .package(url: "https://github.com/kelvinkosbab/Core.git", branch: "main"),
@@ -157,6 +158,24 @@ let package = Package(
             .byName(name: "BonjourCore"),
             .byName(name: "BonjourModels"),
             .byName(name: "BonjourScanning")
+        ]
+    )
+    + makeTargets(
+        name: "BonjourAppIntents",
+        // The two `AppIntent`s use `BonjourOneShotScanner` from
+        // `BonjourScanning` to drive the in-process scan, the
+        // `BonjourService.voiceCategoricalSummary()` helper from
+        // `BonjourAI` for the spoken breakdown, and
+        // `BonjourService` / `BonjourServiceType` types from
+        // `BonjourModels` for the entity projection.
+        dependencies: [
+            "BonjourAI",
+            "BonjourModels",
+            "BonjourScanning"
+        ],
+        testDependencies: [
+            .byName(name: "BonjourCore"),
+            .byName(name: "BonjourModels")
         ]
     )
 )

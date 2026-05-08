@@ -17,10 +17,7 @@
 		F6C472F72C1A1EAB00BBB0F9 /* CoreStorage in Frameworks */ = {isa = PBXBuildFile; productRef = F6C472F62C1A1EAB00BBB0F9 /* CoreStorage */; };
 		F6C472F92C1A1EAB00BBB0F9 /* CoreUI in Frameworks */ = {isa = PBXBuildFile; productRef = F6C472F82C1A1EAB00BBB0F9 /* CoreUI */; };
 		F6C472FB2C1A248000BBB0F9 /* TopLevelDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C472FA2C1A248000BBB0F9 /* TopLevelDestination.swift */; };
-		F6SIRI0BF0002 /* KozBonAppShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6SIRI0FR0002 /* KozBonAppShortcuts.swift */; };
-		F6SIRI0BF0003 /* BonjourServiceEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6SIRI0FR0003 /* BonjourServiceEntity.swift */; };
-		F6SIRI0BF0004 /* ScanForServicesIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6SIRI0FR0004 /* ScanForServicesIntent.swift */; };
-		F6SIRI0BF0005 /* ListDiscoveredServicesIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6SIRI0FR0005 /* ListDiscoveredServicesIntent.swift */; };
+		F6KOZPKG0BF0006 /* BonjourAppIntents in Frameworks */ = {isa = PBXBuildFile; productRef = F6KOZPKG0PD0006 /* BonjourAppIntents */; };
 		F6KOZPKG0BF0001 /* BonjourCore in Frameworks */ = {isa = PBXBuildFile; productRef = F6KOZPKG0PD0001 /* BonjourCore */; };
 		F6KOZPKG0BF0002 /* BonjourStorage in Frameworks */ = {isa = PBXBuildFile; productRef = F6KOZPKG0PD0002 /* BonjourStorage */; };
 		F6KOZPKG0BF0003 /* BonjourModels in Frameworks */ = {isa = PBXBuildFile; productRef = F6KOZPKG0PD0003 /* BonjourModels */; };
@@ -51,10 +48,6 @@
 		F6781EF72694C5F6009B79F7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F690B5FA2561E9B600902DAB /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		F6C472FA2C1A248000BBB0F9 /* TopLevelDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopLevelDestination.swift; sourceTree = "<group>"; };
-		F6SIRI0FR0002 /* KozBonAppShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KozBonAppShortcuts.swift; sourceTree = "<group>"; };
-		F6SIRI0FR0003 /* BonjourServiceEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServiceEntity.swift; sourceTree = "<group>"; };
-		F6SIRI0FR0004 /* ScanForServicesIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanForServicesIntent.swift; sourceTree = "<group>"; };
-		F6SIRI0FR0005 /* ListDiscoveredServicesIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDiscoveredServicesIntent.swift; sourceTree = "<group>"; };
 		F6TESTS0FR0008 /* KozBonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KozBonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6TESTS0FR0009 /* TopLevelDestinationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopLevelDestinationTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -73,6 +66,7 @@
 				F6KOZPKG0BF0003 /* BonjourModels in Frameworks */,
 				F6KOZPKG0BF0004 /* BonjourScanning in Frameworks */,
 				F6KOZPKG0BF0005 /* BonjourUI in Frameworks */,
+				F6KOZPKG0BF0006 /* BonjourAppIntents in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,24 +107,12 @@
 				F6240E682A92CF0600951875 /* AppCore.swift */,
 				F6A11CC0DE5000000000A1B2 /* AppCommands.swift */,
 				F6C472FA2C1A248000BBB0F9 /* TopLevelDestination.swift */,
-				F6SIRI0GR0001 /* AppIntents */,
 				B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */,
 				B6CE1D311E1208C1003D4FFA /* Assets.xcassets */,
 				B6CE1D361E1208C1003D4FFA /* Info.plist */,
 				F6INFO0FR0001 /* InfoPlist.xcstrings */,
 			);
 			path = KozBon;
-			sourceTree = "<group>";
-		};
-		F6SIRI0GR0001 /* AppIntents */ = {
-			isa = PBXGroup;
-			children = (
-				F6SIRI0FR0002 /* KozBonAppShortcuts.swift */,
-				F6SIRI0FR0003 /* BonjourServiceEntity.swift */,
-				F6SIRI0FR0004 /* ScanForServicesIntent.swift */,
-				F6SIRI0FR0005 /* ListDiscoveredServicesIntent.swift */,
-			);
-			path = AppIntents;
 			sourceTree = "<group>";
 		};
 		F690B5F92561E9B600902DAB /* Frameworks */ = {
@@ -174,6 +156,7 @@
 				F6KOZPKG0PD0003 /* BonjourModels */,
 				F6KOZPKG0PD0004 /* BonjourScanning */,
 				F6KOZPKG0PD0005 /* BonjourUI */,
+				F6KOZPKG0PD0006 /* BonjourAppIntents */,
 			);
 			productName = iDiscover;
 			productReference = B6CE1D241E1208C1003D4FFA /* KozBon.app */;
@@ -269,10 +252,6 @@
 				F6240E692A92CF0600951875 /* AppCore.swift in Sources */,
 				F6A11CC0DE5000000000A1B3 /* AppCommands.swift in Sources */,
 				F6C472FB2C1A248000BBB0F9 /* TopLevelDestination.swift in Sources */,
-				F6SIRI0BF0002 /* KozBonAppShortcuts.swift in Sources */,
-				F6SIRI0BF0003 /* BonjourServiceEntity.swift in Sources */,
-				F6SIRI0BF0004 /* ScanForServicesIntent.swift in Sources */,
-				F6SIRI0BF0005 /* ListDiscoveredServicesIntent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -609,6 +588,10 @@
 		F6KOZPKG0PD0005 /* BonjourUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BonjourUI;
+		};
+		F6KOZPKG0PD0006 /* BonjourAppIntents */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BonjourAppIntents;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
