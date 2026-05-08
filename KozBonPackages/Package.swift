@@ -20,20 +20,20 @@ let sharedSwiftSettings: [SwiftSetting] = [
 ///     Sources/
 ///         Resources/   (if hasResources is true)
 ///     Tests/           (if hasTests is true)
-///         Resources/   (if hasTestResources is true)
 /// ```
 ///
 /// Resources are picked up automatically via `.process("Resources")`
-/// when the corresponding boolean is set — callers don't pass an
-/// explicit `[Resource]` array. The convention is that any package
-/// that needs to ship resources uses a `Resources/` subfolder, which
-/// keeps both the manifest and the on-disk layout uniform.
+/// when `hasResources` is true — callers don't pass an explicit
+/// `[Resource]` array. Any package that needs to ship resources uses
+/// a `Sources/Resources/` subfolder, keeping both the manifest and
+/// the on-disk layout uniform. No package currently needs *test*
+/// resources; if one ever does, add a `hasTestResources: Bool` flag
+/// and a matching `Tests/Resources/` directory.
 func makeTargets(
     name: String,
     dependencies: [Target.Dependency] = [],
     hasResources: Bool = false,
     hasTests: Bool = false,
-    hasTestResources: Bool = false,
     testDependencies: [Target.Dependency] = [],
     testExcludes: [String] = []
 ) -> [Target] {
@@ -53,7 +53,6 @@ func makeTargets(
                 dependencies: [.byName(name: name)] + testDependencies,
                 path: "\(name)/Tests",
                 exclude: testExcludes,
-                resources: hasTestResources ? [.process("Resources")] : nil,
                 swiftSettings: sharedSwiftSettings
             )
         )
