@@ -42,6 +42,17 @@ public final class BonjourServicesViewModel: BonjourServiceScannerDelegate {
     /// The current sort order applied to service lists.
     var sortType: BonjourServiceSortType?
 
+    /// The user's current search query. Empty string means
+    /// "show everything"; otherwise composes with the current
+    /// sort/filter to narrow the visible service lists. Matches
+    /// case-insensitively against the service's user-facing name,
+    /// resolved hostname, friendly service-type name, and the
+    /// wire `_type._transport` form — the same fields the user is
+    /// most likely to remember when looking for a specific
+    /// service. Mirrors the Library tab's search behavior so both
+    /// surfaces feel consistent.
+    var searchText: String = ""
+
     /// An error message to display when a scan operation fails.
     var scanError: String?
 
@@ -88,12 +99,15 @@ public final class BonjourServicesViewModel: BonjourServiceScannerDelegate {
         makePublishedServiceKeys().contains("\(service.hostName)|\(service.serviceType.fullType)")
     }
 
-    /// Active services that match a user-published service.
+    /// Active services that match a user-published service. Composes
+    /// with ``searchText`` so a search that doesn't hit the user's
+    /// own broadcasts hides them from the published section.
     var sortedPublishedServices: [BonjourService] {
         let publishedKeys = makePublishedServiceKeys()
-        return activeServices.filter {
+        let published = activeServices.filter {
             publishedKeys.contains("\($0.hostName)|\($0.serviceType.fullType)")
         }
+        return applySearchFilter(published)
     }
 
     /// Active services excluding user-published ones, sorted by the current `sortType`.
@@ -101,6 +115,9 @@ public final class BonjourServicesViewModel: BonjourServiceScannerDelegate {
     /// - Host name sorts cluster services from the same device together.
     /// - Service type sorts cluster services of the same protocol together.
     /// - Defaults to host name A→Z when no sort type is set.
+    /// - Search filter composes with sort/category — applied first so
+    ///   the sort comparator only sees matching services, mirroring
+    ///   the Library tab's behavior.
     var flatActiveServices: [BonjourService] {
         // Build the published-keys Set once per call, not once per
         // element in the filter — see ``makePublishedServiceKeys()``
@@ -109,12 +126,13 @@ public final class BonjourServicesViewModel: BonjourServiceScannerDelegate {
         let nonPublished = activeServices.filter {
             !publishedKeys.contains("\($0.hostName)|\($0.serviceType.fullType)")
         }
+        let searchFiltered = applySearchFilter(nonPublished)
 
         // Filter cases delegate to the shared `BonjourServiceCategory`
         // — the source of truth for which service types belong to
         // each bucket. Sort cases handle ordering inline.
         if let category = sortType?.category {
-            return nonPublished
+            return searchFiltered
                 .filter(category.matches)
                 .sorted {
                     ($0.service.name, $0.serviceType.name) < ($1.service.name, $1.serviceType.name)
@@ -123,25 +141,42 @@ public final class BonjourServicesViewModel: BonjourServiceScannerDelegate {
 
         switch sortType {
         case .hostNameAsc, nil:
-            return nonPublished.sorted {
+            return searchFiltered.sorted {
                 ($0.service.name, $0.serviceType.name) < ($1.service.name, $1.serviceType.name)
             }
         case .hostNameDesc:
-            return nonPublished.sorted {
+            return searchFiltered.sorted {
                 ($1.service.name, $0.serviceType.name) < ($0.service.name, $1.serviceType.name)
             }
         case .serviceNameAsc:
-            return nonPublished.sorted {
+            return searchFiltered.sorted {
                 ($0.serviceType.name, $0.service.name) < ($1.serviceType.name, $1.service.name)
             }
         case .serviceNameDesc:
-            return nonPublished.sorted {
+            return searchFiltered.sorted {
                 ($1.serviceType.name, $0.service.name) < ($0.serviceType.name, $1.service.name)
             }
         case .smartHome, .appleDevices, .mediaAndStreaming, .printersAndScanners, .remoteAccess:
             // Unreachable — the `category` branch above covers these.
             // The exhaustive switch is here to satisfy the compiler.
             return []
+        }
+    }
+
+    /// Filters a service list down to those whose user-facing name,
+    /// resolved hostname, friendly service-type name, or wire
+    /// `_type._transport` form contains ``searchText`` (case-
+    /// insensitive). Returns the input unchanged when the search
+    /// query is empty so the no-search common path stays O(N) +
+    /// nothing instead of O(N) + a per-element predicate
+    /// evaluation.
+    private func applySearchFilter(_ services: [BonjourService]) -> [BonjourService] {
+        guard !searchText.isEmpty else { return services }
+        return services.filter { service in
+            service.service.name.containsIgnoreCase(searchText)
+                || service.hostName.containsIgnoreCase(searchText)
+                || service.serviceType.name.containsIgnoreCase(searchText)
+                || service.serviceType.fullType.containsIgnoreCase(searchText)
         }
     }
 

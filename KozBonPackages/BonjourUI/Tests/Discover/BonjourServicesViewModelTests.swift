@@ -12,6 +12,16 @@ import BonjourModels
 import BonjourScanning
 @testable import BonjourUI
 
+// File-level disable: the suite covers the full lifecycle of
+// `BonjourServicesViewModel` (initial state, scan delegate
+// callbacks, sort, search, published-vs-active partitioning,
+// edge cases, error surfacing, initial-load gating) and lands
+// just over the rule's 300-line default. Splitting just for
+// line count would shatter the thematic grouping and break the
+// "one suite per VM" pattern the rest of the BonjourUI tests
+// follow.
+// swiftlint:disable type_body_length
+
 // MARK: - BonjourServicesViewModelTests
 
 @Suite("BonjourServicesViewModel")
@@ -167,6 +177,95 @@ struct BonjourServicesViewModelTests {
         let first = try #require(typeNames.first)
         let last = try #require(typeNames.last)
         #expect(first >= last)
+    }
+
+    // MARK: - Search Filtering
+
+    @Test("Empty `searchText` is the no-search baseline — every service stays visible")
+    func searchEmptyShowsAllServices() {
+        let (viewModel, _) = makeViewModel()
+        viewModel.didAdd(service: makeService(name: "Living Room TV", type: "airplay"))
+        viewModel.didAdd(service: makeService(name: "MacBook", type: "ssh"))
+        #expect(viewModel.searchText.isEmpty)
+        #expect(viewModel.flatActiveServices.count == 2)
+    }
+
+    @Test("Search text matches against the service's user-facing name (substring, case-insensitive)")
+    func searchMatchesServiceName() {
+        let (viewModel, _) = makeViewModel()
+        viewModel.didAdd(service: makeService(name: "Living Room TV", type: "airplay"))
+        viewModel.didAdd(service: makeService(name: "MacBook", type: "ssh"))
+        viewModel.searchText = "living"
+        #expect(viewModel.flatActiveServices.count == 1)
+        #expect(viewModel.flatActiveServices.first?.service.name == "Living Room TV")
+    }
+
+    @Test("Search text matches against the friendly service-type name (e.g. `airplay`)")
+    func searchMatchesServiceTypeName() {
+        let (viewModel, _) = makeViewModel()
+        viewModel.didAdd(service: makeService(name: "Living Room TV", type: "airplay"))
+        viewModel.didAdd(service: makeService(name: "MacBook", type: "ssh"))
+        viewModel.searchText = "airplay"
+        #expect(viewModel.flatActiveServices.count == 1)
+        #expect(viewModel.flatActiveServices.first?.serviceType.type == "airplay")
+    }
+
+    @Test("Search text matches against the wire `_type._transport` form for power-user lookups")
+    func searchMatchesFullType() {
+        let (viewModel, _) = makeViewModel()
+        viewModel.didAdd(service: makeService(name: "Living Room TV", type: "airplay"))
+        viewModel.searchText = "_airplay._tcp"
+        #expect(viewModel.flatActiveServices.count == 1)
+    }
+
+    @Test("Search filters `sortedPublishedServices` so the user's own broadcasts hide on a no-hit query")
+    func searchFiltersPublishedServices() {
+        let (viewModel, _) = makeViewModel()
+        let myService = makeService(name: "My Web Server", type: "http")
+        viewModel.customPublishedServices.append(myService)
+        viewModel.didAdd(service: myService)
+
+        // Baseline: published service is visible.
+        #expect(viewModel.sortedPublishedServices.count == 1)
+
+        // Search for something that doesn't match — published list hides.
+        viewModel.searchText = "zzz"
+        #expect(viewModel.sortedPublishedServices.isEmpty)
+
+        // Search for something that matches — published list shows again.
+        viewModel.searchText = "web"
+        #expect(viewModel.sortedPublishedServices.count == 1)
+    }
+
+    @Test("Search composes with sort — only matching services pass through the comparator")
+    func searchComposesWithSort() {
+        let (viewModel, _) = makeViewModel()
+        viewModel.didAdd(service: makeService(name: "Zebra", type: "http"))
+        viewModel.didAdd(service: makeService(name: "Alpha", type: "ssh"))
+        viewModel.didAdd(service: makeService(name: "Bravo Other", type: "ipp"))
+        viewModel.sort(sortType: .hostNameAsc)
+        viewModel.searchText = "ra"
+        // Matches: "Zebra" (contains "ra") and "Bravo Other" (contains "ra").
+        // Alpha is filtered out.
+        let names = viewModel.flatActiveServices.map(\.service.name)
+        #expect(names == ["Bravo Other", "Zebra"])
+    }
+
+    @Test("Search is case-insensitive — uppercase query matches lowercase content")
+    func searchIsCaseInsensitive() {
+        let (viewModel, _) = makeViewModel()
+        viewModel.didAdd(service: makeService(name: "Living Room TV", type: "airplay"))
+        viewModel.searchText = "LIVING"
+        #expect(viewModel.flatActiveServices.count == 1)
+    }
+
+    @Test("Search yielding zero matches leaves both visible lists empty")
+    func searchWithNoMatchesShowsEmpty() {
+        let (viewModel, _) = makeViewModel()
+        viewModel.didAdd(service: makeService(name: "Living Room TV", type: "airplay"))
+        viewModel.searchText = "xyz-nonexistent"
+        #expect(viewModel.flatActiveServices.isEmpty)
+        #expect(viewModel.sortedPublishedServices.isEmpty)
     }
 
     // MARK: - Published vs Active Filtering

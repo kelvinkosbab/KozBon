@@ -63,17 +63,26 @@ public struct BonjourScanForServicesView: View {
             .navigationSplitViewColumnWidth(min: 280, ideal: 320)
             #endif
             .overlay {
+                // The custom overlays only fire when there's no
+                // search query active. When the user is typing,
+                // SwiftUI's `.searchable` modifier provides its
+                // own "No Results" overlay — deferring to that
+                // keeps the search-empty experience consistent
+                // with the Library tab and with the rest of the
+                // platform.
                 if viewModel.isInitialLoad {
                     ProgressView {
                         Text(Strings.Buttons.scanningForServices)
                     }
                 } else if viewModel.flatActiveServices.isEmpty,
-                          let sortType = viewModel.sortType, sortType.isFilter {
+                          let sortType = viewModel.sortType, sortType.isFilter,
+                          viewModel.searchText.isEmpty {
                     ContentUnavailableView(
                         Strings.EmptyStates.noFilteredServices(sortType.title),
                         systemImage: sortType.iconName
                     )
-                } else if viewModel.flatActiveServices.isEmpty {
+                } else if viewModel.flatActiveServices.isEmpty,
+                          viewModel.searchText.isEmpty {
                     EmptyStateOverlayView(
                         image: nil,
                         title: self.viewModel.noActiveServicesString,
@@ -96,6 +105,7 @@ public struct BonjourScanForServicesView: View {
                 }
             }
             .navigationTitle(String(localized: Strings.NavigationTitles.nearbyServices))
+            .searchable(text: $viewModel.searchText, prompt: String(localized: Strings.Placeholders.search))
             .refreshable {
                 guard !self.viewModel.serviceScanner.isProcessing else {
                     return
