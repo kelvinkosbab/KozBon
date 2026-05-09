@@ -4,6 +4,26 @@ A multi-platform Apple app for discovering, broadcasting, and understanding Bonj
 
 📲 [Download on the App Store](https://apps.apple.com/app/kozbon/id1193790136)
 
+## Quick start
+
+Get KozBon running locally in under a minute:
+
+```bash
+git clone https://github.com/kelvinkosbab/KozBon.git
+cd KozBon
+open KozBon.xcworkspace
+```
+
+Then `⌘R` in Xcode against an iOS / macOS / visionOS destination. The first run will scan your local network and surface every Bonjour service in reach.
+
+To run the SPM package tests (no simulator needed, ~1 second):
+
+```bash
+swift test --package-path KozBonPackages
+```
+
+For full build commands per platform, see [Build](#build) below. For contribution guidelines, see [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
 ## Features
 
 ### Discover & broadcast
