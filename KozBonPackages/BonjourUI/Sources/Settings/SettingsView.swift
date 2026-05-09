@@ -180,7 +180,24 @@ public struct SettingsView: View {
             Text(Strings.Settings.aiAnalysis)
                 .accessibilityAddTraits(.isHeader)
         } footer: {
-            Text(Strings.Settings.aiAnalysisFooter)
+            // When Apple Intelligence is currently unavailable for an
+            // actionable reason (turned off in iOS Settings, model
+            // still downloading, etc.), surface the localized message
+            // above the regular footer copy so the user understands
+            // why the toggle below has no effect. `unavailabilityReason`
+            // is `nil` when AI is fully available or when the device
+            // can't run it at all (in which case this section is
+            // hidden by `isDeviceSupported` upstream), so this notice
+            // only fires for the "capable hardware, not currently
+            // working" middle state.
+            VStack(alignment: .leading, spacing: 8) {
+                if let reason = AppleIntelligenceSupport.unavailabilityReason {
+                    Text(verbatim: reason)
+                        .foregroundStyle(.orange)
+                        .accessibilityAddTraits(.isStaticText)
+                }
+                Text(Strings.Settings.aiAnalysisFooter)
+            }
         }
     }
 

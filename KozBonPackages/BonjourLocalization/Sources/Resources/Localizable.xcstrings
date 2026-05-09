@@ -11153,6 +11153,129 @@
         }
       }
     },
+    "settings_ai_unavailable_not_enabled": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence is currently turned off. Open Settings → Apple Intelligence & Siri to turn it on."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence está desactivado. Abre Ajustes → Apple Intelligence y Siri para activarlo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence est actuellement désactivé. Ouvrez Réglages → Apple Intelligence et Siri pour l'activer."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence ist derzeit ausgeschaltet. Öffnen Sie Einstellungen → Apple Intelligence & Siri, um es einzuschalten."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence は現在オフになっています。「設定」→「Apple Intelligence と Siri」でオンにしてください。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence 当前已关闭。请打开「设置」→「Apple Intelligence 与 Siri」开启。"
+          }
+        }
+      }
+    },
+    "settings_ai_unavailable_model_downloading": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Apple Intelligence model is still downloading. AI features will become available once the download completes."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El modelo de Apple Intelligence aún se está descargando. Las funciones de IA estarán disponibles cuando finalice la descarga."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le modèle Apple Intelligence est encore en cours de téléchargement. Les fonctionnalités d'IA seront disponibles une fois le téléchargement terminé."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Das Apple-Intelligence-Modell wird noch geladen. KI-Funktionen sind verfügbar, sobald der Download abgeschlossen ist."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence モデルはダウンロード中です。ダウンロードが完了すると、AI 機能を利用できるようになります。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence 模型正在下载中。下载完成后，AI 功能将可用。"
+          }
+        }
+      }
+    },
+    "settings_ai_unavailable_other": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence isn't available right now. Try again in a moment."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence no está disponible en este momento. Inténtalo de nuevo en un momento."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence n'est pas disponible pour le moment. Réessayez dans un instant."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence ist derzeit nicht verfügbar. Versuchen Sie es gleich noch einmal."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence は現在利用できません。しばらくしてからもう一度お試しください。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence 目前不可用。请稍后再试。"
+          }
+        }
+      }
+    },
     "button_update": {
       "extractionState": "manual",
       "localizations": {

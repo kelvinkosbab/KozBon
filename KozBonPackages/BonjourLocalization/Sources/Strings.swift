@@ -881,6 +881,18 @@ public enum Strings {
             .init("settings_ai_analysis_footer", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        public static var aiUnavailableNotEnabled: LocalizedStringResource {
+            .init("settings_ai_unavailable_not_enabled", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var aiUnavailableModelDownloading: LocalizedStringResource {
+            .init("settings_ai_unavailable_model_downloading", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var aiUnavailableOther: LocalizedStringResource {
+            .init("settings_ai_unavailable_other", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var aiExpertiseLevel: LocalizedStringResource {
             .init("settings_ai_expertise_level", bundle: .atURL(Bundle.module.bundleURL))
         }

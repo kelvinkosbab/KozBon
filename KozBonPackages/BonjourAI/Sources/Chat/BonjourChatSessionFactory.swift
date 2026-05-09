@@ -95,7 +95,14 @@ public struct BonjourChatSessionFactory: BonjourChatSessionFactoryProtocol {
         session: (any BonjourChatSessionProtocol)?,
         aiAnalysisEnabled: Bool
     ) async {
-        guard AppleIntelligenceSupport.isDeviceSupported,
+        // Gate on the precise `.available` state rather than the
+        // looser `isDeviceSupported`. Prewarming when Apple
+        // Intelligence is currently disabled or the model is still
+        // downloading would silently fail in
+        // `LanguageModelSession.init` and waste main-thread time
+        // for nothing. The Settings AI section surfaces a CTA in
+        // those middle states; here we just skip the prewarm.
+        guard AppleIntelligenceSupport.availability == .available,
               aiAnalysisEnabled,
               let session else { return }
         await Task.yield()
