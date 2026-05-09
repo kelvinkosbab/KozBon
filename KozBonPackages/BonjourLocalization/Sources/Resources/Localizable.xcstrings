@@ -11118,37 +11118,37 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "When enabled, you can long press on a discovered service to get an on-device explanation of what it does and how to interact with it. Everything runs privately on your device — no data is sent to external servers."
+            "value": "When enabled, you can long-press a discovered service for an on-device explanation, and the Chat tab is available for conversations about your network. Everything runs privately on your device — no data is sent to external servers."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cuando está activado, puedes mantener presionado un servicio descubierto para obtener una explicación en el dispositivo sobre qué hace y cómo interactuar con él. Todo se ejecuta de forma privada en tu dispositivo, sin enviar datos a servidores externos."
+            "value": "Cuando está activado, puedes mantener presionado un servicio descubierto para obtener una explicación en el dispositivo, y la pestaña Chat está disponible para conversar sobre tu red. Todo se ejecuta de forma privada en tu dispositivo, sin enviar datos a servidores externos."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Lorsque cette option est activée, vous pouvez appuyer longuement sur un service découvert pour obtenir une explication sur l'appareil de ce qu'il fait et comment interagir avec lui. Tout s'exécute en privé sur votre appareil — aucune donnée n'est envoyée à des serveurs externes."
+            "value": "Lorsque cette option est activée, vous pouvez appuyer longuement sur un service découvert pour obtenir une explication sur l'appareil, et l'onglet Chat est disponible pour des conversations à propos de votre réseau. Tout s'exécute en privé sur votre appareil — aucune donnée n'est envoyée à des serveurs externes."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Wenn aktiviert, können Sie lange auf einen entdeckten Dienst drücken, um eine Erklärung zu erhalten, was er tut und wie Sie damit interagieren können. Alles läuft privat auf Ihrem Gerät — keine Daten werden an externe Server gesendet."
+            "value": "Wenn aktiviert, können Sie lange auf einen entdeckten Dienst drücken, um eine Erklärung auf dem Gerät zu erhalten, und der Chat-Tab steht für Gespräche über Ihr Netzwerk zur Verfügung. Alles läuft privat auf Ihrem Gerät — keine Daten werden an externe Server gesendet."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "有効にすると、発見したサービスを長押しして、そのサービスの内容や操作方法についてデバイス上の説明を確認できます。すべてデバイス上でプライベートに実行され、外部サーバーにデータは送信されません。"
+            "value": "有効にすると、発見したサービスを長押ししてデバイス上の説明を確認でき、Chatタブでネットワークについての会話を行えます。すべてデバイス上でプライベートに実行され、外部サーバーにデータは送信されません。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "启用后，您可以长按已发现的服务，获取设备端对其功能和交互方式的说明。所有内容均在您的设备上私密运行，不会向外部服务器发送任何数据。"
+            "value": "启用后，您可以长按已发现的服务以获取设备端的说明，并可使用「聊天」标签就您的网络进行对话。所有内容均在您的设备上私密运行，不会向外部服务器发送任何数据。"
           }
         }
       }
