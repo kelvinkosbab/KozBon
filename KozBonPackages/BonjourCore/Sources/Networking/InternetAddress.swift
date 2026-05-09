@@ -23,13 +23,21 @@ public struct InternetAddress: Equatable, Sendable {
     /// The version supported for sending data over the internet or other network.
     public let `protocol`: `Protocol`
 
-    /// Constructor.
+    /// Creates an `InternetAddress` from its three components.
     ///
-    /// - Parameter ip: A unique string of characters that identifies each computer using the Internet Protocol to
-    /// communicate over a network.
-    /// - Parameter port: A way to identify a specific process to which an internet or other network message is
-    /// to be forwarded when it arrives at a server.
-    /// - Parameter protocol: The version supported for sending data over the internet or other network.
+    /// All values are stored verbatim — no validation that the IP
+    /// string actually parses, the port is in range, or the
+    /// protocol matches the IP family. Callers (typically
+    /// `BonjourService.addresses`) construct these from
+    /// already-validated `NetService` data.
+    ///
+    /// - Parameters:
+    ///   - ip: The IP address string. For `.v4` this is dotted-decimal
+    ///     (`192.0.2.1`); for `.v6` this is colon-hex
+    ///     (`fe80::1%en0` is acceptable).
+    ///   - port: The TCP/UDP port number. `0` means "no port" by
+    ///     Bonjour convention but is otherwise a valid value.
+    ///   - protocol: The IP version family this address belongs to.
     public init(
         ip: String,
         port: Int,
