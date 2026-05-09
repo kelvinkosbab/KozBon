@@ -76,6 +76,13 @@ public final class BonjourServiceExplainer: BonjourServiceExplainerProtocol {
 
             let stream = session.streamResponse(to: prompt)
             for try await partial in stream {
+                // Cooperative cancellation — see the matching note
+                // in `BonjourChatSession.send`. Dismissing the
+                // Insights sheet mid-stream cancels the surrounding
+                // Task; without this check the model keeps
+                // generating into a no-longer-visible explanation
+                // and ties up the session for the next long-press.
+                if Task.isCancelled { break }
                 explanation = partial.content
             }
         } catch {
@@ -107,6 +114,9 @@ public final class BonjourServiceExplainer: BonjourServiceExplainerProtocol {
 
             let stream = session.streamResponse(to: prompt)
             for try await partial in stream {
+                // See note above — same cancellation discipline for
+                // the service-type explainer path.
+                if Task.isCancelled { break }
                 explanation = partial.content
             }
         } catch {

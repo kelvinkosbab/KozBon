@@ -268,6 +268,13 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
             )
             let stream = session.streamResponse(to: turnToSend, options: options)
             for try await partial in stream {
+                // Cooperative cancellation. Without this check, a user
+                // who navigates away from the chat tab mid-stream
+                // leaves the model generating into the placeholder
+                // bubble — the session stays busy, the UI stays
+                // generating, and the next turn blocks until the
+                // first one runs out of tokens.
+                if Task.isCancelled { break }
                 if let index = messages.firstIndex(where: { $0.id == assistantId }) {
                     messages[index].content = partial.content
                 }

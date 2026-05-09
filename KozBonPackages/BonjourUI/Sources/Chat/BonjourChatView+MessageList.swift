@@ -242,9 +242,19 @@ extension BonjourChatView {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.vertical, 4)
-                .accessibilityElement(children: message.content.isEmpty ? .contain : .combine)
+                // Gate the label swap on `!isStreaming`, NOT on
+                // whether content is empty. The previous form
+                // flipped to the partial content as soon as the
+                // first token arrived, which made VoiceOver
+                // re-announce the bubble on every label mutation
+                // during the stream — a stutter pattern. Keep the
+                // localized "thinking" label until the stream
+                // finishes, then swap once to the final content.
+                // See `apple-accessibility-best-practices.md` →
+                // Streaming AI Text.
+                .accessibilityElement(children: isStreaming ? .contain : .combine)
                 .accessibilityLabel(
-                    message.content.isEmpty
+                    isStreaming
                         ? String(localized: Strings.Accessibility.chatAssistantThinking)
                         : Strings.Accessibility.chatAssistantMessage(message.content)
                 )
