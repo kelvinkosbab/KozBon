@@ -162,8 +162,16 @@ extension BonjourChatPromptBuilder {
                 maxLength: PromptInjectionSanitizer.serviceNameMaxLength
             )
             let transport = service.serviceType.transportLayer.string.lowercased()
+            // Numbered (`1.`, `2.`, …) rather than bullet-prefixed
+            // (`-`) so the model has an explicit integer index to
+            // count against. Combined with the count header
+            // (`Discovered services (5):`) and the system-prompt
+            // ENUMERATION RULES, this gives the model a clear
+            // stopping target — "5 of 5, stop" — instead of an
+            // unbounded bullet list that small on-device models
+            // can run away on.
             lines.append(
-                "- \(cleanName) · \(cleanFullType) · " +
+                "\(index + 1). \(cleanName) · \(cleanFullType) · " +
                 "\(transport) · host: \(cleanHostName)"
             )
             if index < richDetailServiceCap {
@@ -194,7 +202,7 @@ extension BonjourChatPromptBuilder {
         }
         if context.discoveredServices.count > briefDetailServiceCap {
             let remainder = context.discoveredServices.count - briefDetailServiceCap
-            lines.append("- ...and \(remainder) more")
+            lines.append("...and \(remainder) more")
         }
         return lines
     }
@@ -205,7 +213,12 @@ extension BonjourChatPromptBuilder {
             return ["Published services from this device: none"]
         }
         var lines: [String] = ["Published services from this device (\(context.publishedServices.count)):"]
-        for service in context.publishedServices {
+        // Numbered for the same reason `discoveredServicesLines`
+        // numbers its output — explicit indices give the model a
+        // stopping target. Even when only a single service is
+        // published, the consistent numbering keeps the model's
+        // enumeration discipline stable across both lists.
+        for (index, service) in context.publishedServices.enumerated() {
             // The user broadcast these from this device, but they
             // could still contain content that confuses the model
             // — apply the same sanitization for consistency with
@@ -215,7 +228,7 @@ extension BonjourChatPromptBuilder {
                 maxLength: PromptInjectionSanitizer.serviceNameMaxLength
             )
             let cleanFullType = PromptInjectionSanitizer.sanitize(service.serviceType.fullType)
-            lines.append("- \(cleanName) · \(cleanFullType)")
+            lines.append("\(index + 1). \(cleanName) · \(cleanFullType)")
         }
         return lines
     }

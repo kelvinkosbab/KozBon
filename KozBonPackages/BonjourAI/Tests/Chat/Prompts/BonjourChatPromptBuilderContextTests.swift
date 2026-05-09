@@ -71,6 +71,25 @@ struct BonjourChatPromptBuilderContextTests {
         #expect(block.contains("(3)"))
     }
 
+    @Test("Discovered services are numbered (`1.`, `2.`, …) so the model has explicit stop indices")
+    func contextBlockNumbersDiscoveredServices() {
+        // Numbered indices are part of the chat-runaway defenses
+        // documented in `BonjourChatSession.maximumResponseTokensPerTurn`
+        // and the system prompt's `ENUMERATION RULES`. Bullet
+        // prefixes (`-`) don't give the model a count to compare
+        // against; numbered prefixes do.
+        let services = [
+            makeService(name: "First", type: "http"),
+            makeService(name: "Second", type: "http"),
+            makeService(name: "Third", type: "http")
+        ]
+        let context = BonjourChatPromptBuilder.ChatContext(discoveredServices: services)
+        let block = BonjourChatPromptBuilder.contextBlock(context: context)
+        #expect(block.contains("1. First"))
+        #expect(block.contains("2. Second"))
+        #expect(block.contains("3. Third"))
+    }
+
     // MARK: - Context Block — Published Services
 
     @Test("Empty published list renders as `Published services from this device: none`")
@@ -86,6 +105,22 @@ struct BonjourChatPromptBuilderContextTests {
         let context = BonjourChatPromptBuilder.ChatContext(publishedServices: services)
         let block = BonjourChatPromptBuilder.contextBlock(context: context)
         #expect(block.contains("My Web Server"))
+    }
+
+    @Test("Published services are numbered to match the discovered-list enumeration discipline")
+    func contextBlockNumbersPublishedServices() {
+        // Same rationale as the discovered-list numbering test:
+        // explicit `1.`/`2.` indices give the model a stopping
+        // target and compose with the system prompt's
+        // ENUMERATION RULES.
+        let services = [
+            makeService(name: "Alpha", type: "http"),
+            makeService(name: "Beta", type: "ssh")
+        ]
+        let context = BonjourChatPromptBuilder.ChatContext(publishedServices: services)
+        let block = BonjourChatPromptBuilder.contextBlock(context: context)
+        #expect(block.contains("1. Alpha"))
+        #expect(block.contains("2. Beta"))
     }
 
     // MARK: - Context Block — Library

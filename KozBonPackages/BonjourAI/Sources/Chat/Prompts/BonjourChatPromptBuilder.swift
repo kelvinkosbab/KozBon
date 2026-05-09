@@ -142,6 +142,19 @@ public enum BonjourChatPromptBuilder {
             - Remember previous turns in the conversation. The user may ask follow-up \
             questions that build on earlier answers.
 
+            ENUMERATION RULES (apply when listing services or types from <context>):
+            - List each item EXACTLY ONCE. Never repeat a service name, hostname, \
+            type identifier, or library entry. If the same service shows up in your \
+            output twice, that's a bug in your output — don't do it.
+            - The <context> block declares the count of items at the start of each \
+            section (e.g. "Discovered services (5):"). Your list must contain that \
+            exact count of items. After listing item N of N, you are done — stop.
+            - The discovered-services list is numbered (1., 2., …). Use the same \
+            numbering in your output and stop when you reach the final number.
+            - After the list, write at most one short summary sentence, then stop. \
+            Do not start a second pass over the same list, and do not re-list any \
+            item you've already mentioned.
+
             ---
 
             You are KozBon's on-device assistant. You help the user understand Bonjour \

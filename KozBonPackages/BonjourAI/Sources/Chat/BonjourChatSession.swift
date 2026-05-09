@@ -102,6 +102,26 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
     /// transcript is managed by the framework, not by us.
     static let maxInMemoryMessageCount = 500
 
+    /// Hard ceiling on the number of tokens the model may emit per
+    /// turn. Caps the blast radius when the model enters a
+    /// generation loop — e.g. listing the same service repeatedly
+    /// because the on-device model lost its stopping signal — so
+    /// runaway output is bounded long before it can exhaust the
+    /// ~4K context window and throw `exceededContextWindowSize`.
+    ///
+    /// Sized for the typical chat answer shape: a few paragraphs
+    /// of prose, or a numbered list of up to ~50 discovered
+    /// services with one summary sentence. 2048 tokens lands
+    /// comfortably above any legitimate response we've measured
+    /// while still bounding the runaway case.
+    ///
+    /// The complementary defenses live in the prompt: the
+    /// system-prompt ENUMERATION RULES tell the model to list each
+    /// item exactly once and stop at the declared count, and the
+    /// context block uses numbered lists (1., 2., …) so the model
+    /// has explicit indices to count against.
+    static let maximumResponseTokensPerTurn = 2048
+
     // MARK: - Prewarm
 
     /// Builds the underlying `LanguageModelSession` ahead of the user's
@@ -238,7 +258,15 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
         guard let session = session else { return }
 
         do {
-            let stream = session.streamResponse(to: turnToSend)
+            // Bound output via `maximumResponseTokens` so a model
+            // generation loop can't fill the context window before
+            // the framework signals end-of-turn. See
+            // `maximumResponseTokensPerTurn` for the rationale and
+            // the complementary prompt-side defenses.
+            let options = GenerationOptions(
+                maximumResponseTokens: Self.maximumResponseTokensPerTurn
+            )
+            let stream = session.streamResponse(to: turnToSend, options: options)
             for try await partial in stream {
                 if let index = messages.firstIndex(where: { $0.id == assistantId }) {
                     messages[index].content = partial.content

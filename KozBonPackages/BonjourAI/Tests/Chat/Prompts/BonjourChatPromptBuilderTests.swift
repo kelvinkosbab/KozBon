@@ -71,6 +71,23 @@ struct BonjourChatPromptBuilderTests {
         #expect(instructions.contains("follow-up"))
     }
 
+    @Test("System instructions ship anti-runaway ENUMERATION RULES so the model can't repeat list items")
+    func systemInstructionsHasEnumerationRules() {
+        // Pin the prompt-side runaway defenses introduced after a
+        // user-reported generation loop where every discovered
+        // service was duplicated until the on-device model
+        // exceeded its context window. The complementary defenses
+        // are the numbered context lists (see the context-block
+        // suite) and the per-turn output cap on
+        // `BonjourChatSession.maximumResponseTokensPerTurn`.
+        // Removing any one of them weakens the chat against the
+        // same failure mode.
+        let instructions = BonjourChatPromptBuilder.systemInstructions()
+        #expect(instructions.contains("ENUMERATION RULES"))
+        #expect(instructions.contains("EXACTLY ONCE"))
+        #expect(instructions.contains("when you reach the final number"))
+    }
+
     // MARK: - Prompt Quality Invariants
     //
     // Pin the chat-specific rules introduced in the prompt audit. Each
