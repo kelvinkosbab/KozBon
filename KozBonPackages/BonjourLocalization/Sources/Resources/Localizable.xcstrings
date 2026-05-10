@@ -10333,47 +10333,6 @@
         }
       }
     },
-    "a11y_refresh_hint": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Refresh the service scan"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Actualizar el escaneo de servicios"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Actualiser l'analyse des services"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dienstsuche aktualisieren"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "サービススキャンを更新"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "刷新服务扫描"
-          }
-        }
-      }
-    },
     "button_explain_with_ai": {
       "extractionState": "manual",
       "localizations": {
@@ -11727,7 +11686,7 @@
         }
       }
     },
-    "service_detail_meshcop": {
+    "Thread Mesh Commissioning Protocol for Thread border routers such as Apple TV and HomePod. TXT records expose the Thread network name, channel, and PAN ID.": {
       "extractionState": "manual",
       "localizations": {
         "en": {
@@ -11768,7 +11727,7 @@
         }
       }
     },
-    "service_detail_matterc": {
+    "A Matter device in commissioning mode, actively advertising its availability for pairing and setup on the local network.": {
       "extractionState": "manual",
       "localizations": {
         "en": {
@@ -11809,7 +11768,7 @@
         }
       }
     },
-    "service_detail_matterd": {
+    "A Matter commissioner device capable of onboarding new Matter accessories onto the smart home network.": {
       "extractionState": "manual",
       "localizations": {
         "en": {
