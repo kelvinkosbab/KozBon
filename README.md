@@ -59,7 +59,7 @@ For full build commands per platform, see [Build](#build) below. For contributio
 - **Markdown rendering** for streaming responses with code, headings, and lists
 - **Pull-to-refresh** scanning on iPhone and iPad
 - **Accessibility** — VoiceOver labels and hints on every interactive element, region labels, heading traits, `.accessibilityIdentifier` for UI tests, Reduce Motion support, Dynamic Type throughout
-- **Localized** in English, Spanish, French, German, Japanese, and Simplified Chinese with locale-appropriate typography
+- **Localized** in English, Spanish, French, German, Japanese, Simplified Chinese, Arabic, and Hebrew — with right-to-left layout mirroring for Arabic and Hebrew
 
 ## Platform support
 
@@ -77,7 +77,7 @@ For full build commands per platform, see [Build](#build) below. For contributio
 - **Modular SPM packages** in `KozBonPackages/`, plus the app target:
   - **`BonjourCore`** — shared value types, constants, and utilities (`Constants`, `TransportLayer`, `InternetAddress`, `Logger`, `Clipboard`). Re-exports `Core` from `BasicSwiftUtilities` so downstream modules pick up `Logger` / `Loggable` without an explicit import.
   - **`BonjourStorage`** — all persistence in one module: the SwiftData preferences container (`PreferencesStore`, `UserPreferences`) and the legacy Core Data custom-service-type store (`CustomServiceType`, `MyCoreDataStack`, `MyDataManagerObject`).
-  - **`BonjourLocalization`** — localized strings (6 languages) backed by a String Catalog (`.xcstrings`). Type-safe `Strings` enum at call sites; no `NSLocalizedString` literals scattered through the views.
+  - **`BonjourLocalization`** — localized strings (8 languages including Arabic and Hebrew) backed by a String Catalog (`.xcstrings`). Type-safe `Strings` enum at call sites; no `NSLocalizedString` literals scattered through the views.
   - **`BonjourModels`** — domain models and the 110+-entry service-type library (`BonjourServiceType`, `BonjourService`, `BonjourServiceSortType`); per-type icon / category / detail metadata.
   - **`BonjourScanning`** — Bonjour discovery and publishing (`BonjourServiceScanner`, `MyBonjourPublishManager`) with their protocol abstractions and mocks; `DependencyContainer` for environment-injected DI.
   - **`BonjourAI`** — on-device AI built on FoundationModels: explainer for service-detail Insights, multi-turn chat session with tool-calling, prompt builders (`BonjourServicePromptBuilder`, `BonjourChatPromptBuilder`), input validator, and the intent broker that bridges tool calls to view-model side effects.

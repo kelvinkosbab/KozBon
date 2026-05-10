@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Search bar on the Discover tab — case-insensitive substring filter against service name, hostname, friendly type name, and `_type._tcp` wire form. Composes with the existing sort/category filter.
 - Settings → Insights footer now surfaces a localized notice when Apple Intelligence is in an actionable unavailable state ("turned off in Settings", "model still downloading"), so users on capable hardware know what to do when AI features don't respond.
 - Insights footer copy now mentions the Chat tab as well as long-press service explanations, since the toggle gates both.
+- Arabic and Hebrew translations across the entire string catalog (395 keys × 2 languages = 790 new translations covering UI labels, navigation, accessibility text, error messages, and the full service-type protocol-description library). Layout mirrors automatically for these right-to-left locales; the diagonal arrow on chat suggestion cards now flips to point in the user's reading direction.
 
 ### Changed
 

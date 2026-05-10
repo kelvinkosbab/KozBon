@@ -31,7 +31,7 @@ swift test --package-path KozBonPackages
 - **Modular SPM packages** via `KozBonPackages/` local package in the Xcode workspace
 - **Dependency Injection** via `DependencyContainer` (in `BonjourScanning` module) using SwiftUI environment (`@Environment(\.dependencies)`)
 - **Core Data** for persistence (`iDiscover.xcdatamodeld`) — all Core Data access is `@MainActor` via `viewContext`
-- **Localization** via `BonjourLocalization` module with String Catalog (`.xcstrings`) — 6 languages supported
+- **Localization** via `BonjourLocalization` module with String Catalog (`.xcstrings`) — 8 languages supported, including right-to-left (Arabic, Hebrew)
 - Protocol-based abstractions: `BonjourServiceScannerProtocol`, `BonjourPublishManagerProtocol`
 
 ## Project Structure
@@ -58,7 +58,7 @@ Each module follows the `{name}/Sources` and `{name}/Tests` layout:
 |--------|---------|-----------|
 | **BonjourCore** | Value types, constants, utilities | `Constants`, `TransportLayer`, `InternetAddress`, `Logger`, `Clipboard` |
 | **BonjourStorage** | Persistence — SwiftData preferences + Core Data custom-service-type store | `PreferencesStore`, `UserPreferences`, `CustomServiceType`, `MyCoreDataStack`, `MyDataManagerObject` |
-| **BonjourLocalization** | Localized strings (6 languages) | `Strings` enum, `Localizable.xcstrings` |
+| **BonjourLocalization** | Localized strings (8 languages, including RTL: ar, he) | `Strings` enum, `Localizable.xcstrings` |
 | **BonjourModels** | Domain models and service library | `BonjourServiceType`, `BonjourService`, `BonjourServiceSortType` |
 | **BonjourScanning** | Network discovery and publishing | `BonjourServiceScanner`, `MyBonjourPublishManager`, `DependencyContainer`, mocks |
 | **BonjourAI** | On-device AI explainer + chat (FoundationModels) | `BonjourServicePromptBuilder`, `BonjourChatPromptBuilder`, `BonjourServiceExplainer`, `BonjourChatSession` |
@@ -126,11 +126,12 @@ BonjourCore → Core (BasicSwiftUtilities)
 
 - **Module**: `BonjourLocalization` in `KozBonPackages/`
 - **Format**: String Catalog (`.xcstrings`) — JSON-based, supports plurals and format strings
-- **Languages**: English (base), Spanish, French, German, Japanese, Chinese (Simplified)
+- **Languages**: English (base), Spanish, French, German, Japanese, Chinese (Simplified), Arabic, Hebrew
+- **RTL support**: Arabic and Hebrew are right-to-left. The app relies on SwiftUI's automatic mirroring — `HStack`, `.leading` / `.trailing` padding and alignment, `Spacer()`, and direction-aware SF Symbols all flip without manual intervention. Apply `.flipsForRightToLeftLayoutDirection(true)` on directional symbols whose meaning depends on direction (e.g. the diagonal `arrow.up.right` on chat suggestion cards). **Never** use absolute `Edge.left` / `.right` padding, `Alignment.left` / `.right`, or `.offset(x:)` without sign-flipping by `@Environment(\.layoutDirection)` — they don't mirror.
 - **Access pattern**: `Text(Strings.NavigationTitles.nearbyServices)` or `String(localized: Strings.Errors.portMin)`
 - **Format strings**: Use methods like `Strings.Errors.portMin(value)` for runtime interpolation
 - **Service descriptions**: Use `serviceType.localizedDetail` (not `.detail`) — looks up translations from the String Catalog
-- **Adding new strings**: Add the key to `Strings.swift`, add the entry with all 6 translations to `Localizable.xcstrings`, validate JSON
+- **Adding new strings**: Add the key to `Strings.swift`, add the entry with all 8 translations (including `ar` and `he`) to `Localizable.xcstrings`, validate JSON. `scripts/validate-localizations.py` enforces locale completeness in CI.
 - **Never use `NSLocalizedString`** — all strings go through the `Strings` enum for type safety
 
 ## SwiftLint
