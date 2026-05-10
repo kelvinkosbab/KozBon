@@ -39,6 +39,18 @@
             "state": "translated",
             "value": "附近"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قريبة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בקרבת מקום"
+          }
         }
       }
     },
@@ -79,6 +91,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "广播服务"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بث خدمة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שדר שירות"
           }
         }
       }
@@ -121,6 +145,18 @@
             "state": "translated",
             "value": "资料库"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المكتبة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ספרייה"
+          }
         }
       }
     },
@@ -161,6 +197,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "创建 Txt 记录"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إنشاء سجل TXT"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "צור רשומת TXT"
           }
         }
       }
@@ -203,6 +251,18 @@
             "state": "translated",
             "value": "创建服务类型"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إنشاء نوع خدمة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "צור סוג שירות"
+          }
         }
       }
     },
@@ -243,6 +303,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "编辑服务类型"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعديل نوع الخدمة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ערוך סוג שירות"
           }
         }
       }
@@ -285,6 +357,18 @@
             "state": "translated",
             "value": "您的偏好设置"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تفضيلاتك"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ההעדפות שלך"
+          }
         }
       }
     },
@@ -325,6 +409,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "发现"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الاكتشاف"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "גילוי"
           }
         }
       }
@@ -367,6 +463,18 @@
             "state": "translated",
             "value": "资料库"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المكتبة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ספרייה"
+          }
         }
       }
     },
@@ -407,6 +515,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "已发布"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المنشورة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פורסם"
           }
         }
       }
@@ -449,6 +569,18 @@
             "state": "translated",
             "value": "信息"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المعلومات"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מידע"
+          }
         }
       }
     },
@@ -489,6 +621,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "IP 地址"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عناوين IP"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "כתובות IP"
           }
         }
       }
@@ -531,6 +675,18 @@
             "state": "translated",
             "value": "TXT 记录"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "سجلات TXT"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "רשומות TXT"
+          }
         }
       }
     },
@@ -571,6 +727,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "服务类型"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نوع الخدمة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סוג שירות"
           }
         }
       }
@@ -613,6 +781,18 @@
             "state": "translated",
             "value": "端口号"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "رقم المنفذ"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מספר יציאה"
+          }
         }
       }
     },
@@ -653,6 +833,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "服务域"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نطاق الخدمة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "תחום השירות"
           }
         }
       }
@@ -695,6 +887,18 @@
             "state": "translated",
             "value": "自定义服务类型"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أنواع الخدمات المخصصة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סוגי שירות מותאמים אישית"
+          }
         }
       }
     },
@@ -735,6 +939,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "内置服务类型"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أنواع الخدمات المضمّنة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סוגי שירות מובנים"
           }
         }
       }
@@ -777,6 +993,18 @@
             "state": "translated",
             "value": "记录键"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مفتاح السجل"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מפתח רשומה"
+          }
         }
       }
     },
@@ -817,6 +1045,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "记录值"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قيمة السجل"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ערך רשומה"
           }
         }
       }
@@ -859,6 +1099,18 @@
             "state": "translated",
             "value": "服务名称"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسم الخدمة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שם השירות"
+          }
         }
       }
     },
@@ -899,6 +1151,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Bonjour 类型"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نوع Bonjour"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סוג Bonjour"
           }
         }
       }
@@ -941,6 +1205,18 @@
             "state": "translated",
             "value": "其他详情"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تفاصيل إضافية"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פרטים נוספים"
+          }
         }
       }
     },
@@ -981,6 +1257,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "名称"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الاسم"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שם"
           }
         }
       }
@@ -1023,6 +1311,18 @@
             "state": "translated",
             "value": "主机名"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسم المضيف"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שם מארח"
+          }
         }
       }
     },
@@ -1063,6 +1363,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "完整类型"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "النوع الكامل"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סוג מלא"
           }
         }
       }
@@ -1105,6 +1417,18 @@
             "state": "translated",
             "value": "类型"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "النوع"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סוג"
+          }
         }
       }
     },
@@ -1145,6 +1469,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "传输层"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "طبقة النقل"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שכבת תעבורה"
           }
         }
       }
@@ -1187,6 +1523,18 @@
             "state": "translated",
             "value": "域"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "النطاق"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "תחום"
+          }
         }
       }
     },
@@ -1227,6 +1575,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "协议信息"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "معلومات البروتوكول"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מידע על פרוטוקול"
           }
         }
       }
@@ -1269,6 +1629,18 @@
             "state": "translated",
             "value": "详情"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "التفاصيل"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פרטים"
+          }
         }
       }
     },
@@ -1309,6 +1681,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "设备类型"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نوع الجهاز"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סוג מכשיר"
           }
         }
       }
@@ -1351,6 +1735,18 @@
             "state": "translated",
             "value": "服务名称"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسم الخدمة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שם השירות"
+          }
         }
       }
     },
@@ -1391,6 +1787,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "创建"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إنشاء"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "צור"
           }
         }
       }
@@ -1433,6 +1841,18 @@
             "state": "translated",
             "value": "取消"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إلغاء"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בטל"
+          }
         }
       }
     },
@@ -1473,6 +1893,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "完成"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تم"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סיום"
           }
         }
       }
@@ -1515,6 +1947,18 @@
             "state": "translated",
             "value": "排序"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ترتيب"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מיין"
+          }
         }
       }
     },
@@ -1555,6 +1999,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "添加 TXT 记录"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إضافة سجل TXT"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הוסף רשומת TXT"
           }
         }
       }
@@ -1597,6 +2053,18 @@
             "state": "translated",
             "value": "移除"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إزالة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הסר"
+          }
         }
       }
     },
@@ -1637,6 +2105,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "编辑"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعديل"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ערוך"
           }
         }
       }
@@ -1679,6 +2159,18 @@
             "state": "translated",
             "value": "删除"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حذف"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מחק"
+          }
         }
       }
     },
@@ -1719,6 +2211,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "停止"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إيقاف"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "עצור"
           }
         }
       }
@@ -1761,6 +2265,18 @@
             "state": "translated",
             "value": "确定要删除服务类型「%@」吗？"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هل أنت متأكد أنك تريد حذف نوع الخدمة %@؟"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "האם אתה בטוח שברצונך למחוק את סוג השירות %@?"
+          }
         }
       }
     },
@@ -1801,6 +2317,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "确定要停止广播「%@」吗？"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هل أنت متأكد أنك تريد إيقاف بث %@؟"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "האם אתה בטוח שברצונך להפסיק לשדר את %@?"
           }
         }
       }
@@ -1843,6 +2371,18 @@
             "state": "translated",
             "value": "好"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "موافق"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אישור"
+          }
         }
       }
     },
@@ -1883,6 +2423,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "广播 Bonjour 服务"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بث خدمة Bonjour"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שדר שירות Bonjour"
           }
         }
       }
@@ -1925,6 +2477,18 @@
             "state": "translated",
             "value": "广播"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بث"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שדר"
+          }
         }
       }
     },
@@ -1965,6 +2529,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "创建服务类型"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إنشاء نوع خدمة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "צור סוג שירות"
           }
         }
       }
@@ -2007,6 +2583,18 @@
             "state": "translated",
             "value": "创建自定义服务类型"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إنشاء نوع خدمة مخصص"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "צור סוג שירות מותאם אישית"
+          }
         }
       }
     },
@@ -2047,6 +2635,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "广播服务"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بث الخدمة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שדר שירות"
           }
         }
       }
@@ -2089,6 +2689,18 @@
             "state": "translated",
             "value": "拷贝主机名"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نسخ اسم المضيف"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "העתק שם מארח"
+          }
         }
       }
     },
@@ -2129,6 +2741,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "拷贝 IP 地址"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نسخ عنوان IP"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "העתק כתובת IP"
           }
         }
       }
@@ -2171,6 +2795,18 @@
             "state": "translated",
             "value": "拷贝服务类型"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نسخ نوع الخدمة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "העתק סוג שירות"
+          }
         }
       }
     },
@@ -2211,6 +2847,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "拷贝地址"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نسخ العنوان"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "העתק כתובת"
           }
         }
       }
@@ -2253,6 +2901,18 @@
             "state": "translated",
             "value": "仅拷贝 IP"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نسخ IP فقط"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "העתק רק IP"
+          }
         }
       }
     },
@@ -2293,6 +2953,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "拷贝记录"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نسخ السجل"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "העתק רשומה"
           }
         }
       }
@@ -2335,6 +3007,18 @@
             "state": "translated",
             "value": "拷贝值"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نسخ القيمة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "העתק ערך"
+          }
         }
       }
     },
@@ -2375,6 +3059,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "拷贝完整类型"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نسخ النوع الكامل"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "העתק סוג מלא"
           }
         }
       }
@@ -2417,6 +3113,18 @@
             "state": "translated",
             "value": "拷贝名称"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نسخ الاسم"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "העתק שם"
+          }
         }
       }
     },
@@ -2457,6 +3165,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "拷贝详情"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نسخ التفاصيل"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "העתק פרטים"
           }
         }
       }
@@ -2499,6 +3219,18 @@
             "state": "translated",
             "value": "在新窗口中打开"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "فتح في نافذة جديدة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פתח בחלון חדש"
+          }
         }
       }
     },
@@ -2539,6 +3271,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "选择要广播的服务类型"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختر نوع خدمة للبث"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחר סוג שירות לשידור"
           }
         }
       }
@@ -2581,6 +3325,18 @@
             "state": "translated",
             "value": "服务端口号"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "رقم منفذ الخدمة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מספר יציאת השירות"
+          }
         }
       }
     },
@@ -2621,6 +3377,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "服务域"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نطاق الخدمة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "תחום השירות"
           }
         }
       }
@@ -2663,6 +3431,18 @@
             "state": "translated",
             "value": "TXT 记录键"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مفتاح سجل TXT"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מפתח רשומת TXT"
+          }
         }
       }
     },
@@ -2703,6 +3483,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "TXT 记录值"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قيمة سجل TXT"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ערך רשומת TXT"
           }
         }
       }
@@ -2745,6 +3537,18 @@
             "state": "translated",
             "value": "服务名称"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسم الخدمة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שם השירות"
+          }
         }
       }
     },
@@ -2785,6 +3589,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "类型定义"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعريف النوع"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הגדרת סוג"
           }
         }
       }
@@ -2827,6 +3643,18 @@
             "state": "translated",
             "value": "描述此服务的功能…"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "صف ما تفعله هذه الخدمة..."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "תאר מה השירות הזה עושה..."
+          }
         }
       }
     },
@@ -2867,6 +3695,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "搜索 ..."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ابحث عن..."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "חפש..."
           }
         }
       }
@@ -2909,6 +3749,18 @@
             "state": "translated",
             "value": "需要服务类型"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نوع الخدمة مطلوب"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "נדרש סוג שירות"
+          }
         }
       }
     },
@@ -2949,6 +3801,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "需要端口号"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "رقم المنفذ مطلوب"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "נדרש מספר יציאה"
           }
         }
       }
@@ -2991,6 +3855,18 @@
             "state": "translated",
             "value": "端口号不能小于 %lld"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يجب أن يكون رقم المنفذ %lld على الأقل"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מספר היציאה חייב להיות לפחות %lld"
+          }
         }
       }
     },
@@ -3031,6 +3907,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "端口号不能大于 %lld"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يجب أن يكون رقم المنفذ %lld أو أقل"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מספר היציאה חייב להיות %lld או פחות"
           }
         }
       }
@@ -3073,6 +3961,18 @@
             "state": "translated",
             "value": "需要域"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "النطاق مطلوب"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "נדרש תחום"
+          }
         }
       }
     },
@@ -3113,6 +4013,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "发布服务失败: %@"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "فشل نشر الخدمة: %@"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פרסום השירות נכשל: %@"
           }
         }
       }
@@ -3155,6 +4067,18 @@
             "state": "translated",
             "value": "需要 TXT 记录键"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مفتاح سجل TXT مطلوب"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "נדרש מפתח לרשומת TXT"
+          }
         }
       }
     },
@@ -3195,6 +4119,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "需要 TXT 记录值"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قيمة سجل TXT مطلوبة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "נדרש ערך לרשומת TXT"
           }
         }
       }
@@ -3237,6 +4173,18 @@
             "state": "translated",
             "value": "具有此键的记录已存在"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يوجد سجل بهذا المفتاح بالفعل"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "כבר קיימת רשומה עם המפתח הזה"
+          }
         }
       }
     },
@@ -3277,6 +4225,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "需要名称"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الاسم مطلوب"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "נדרש שם"
           }
         }
       }
@@ -3319,6 +4279,18 @@
             "state": "translated",
             "value": "需要类型"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "النوع مطلوب"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "נדרש סוג"
+          }
         }
       }
     },
@@ -3359,6 +4331,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "需要详情"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "التفاصيل مطلوبة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "נדרשים פרטים"
           }
         }
       }
@@ -3401,6 +4385,18 @@
             "state": "translated",
             "value": "已存在"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "موجود مسبقًا"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "כבר קיים"
+          }
         }
       }
     },
@@ -3441,6 +4437,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "没有活跃的 Bonjour 服务"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا توجد خدمات Bonjour نشطة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אין שירותי Bonjour פעילים"
           }
         }
       }
@@ -3483,6 +4491,18 @@
             "state": "translated",
             "value": "选择服务"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختر خدمة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחר שירות"
+          }
         }
       }
     },
@@ -3523,6 +4543,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "选择附近的服务以查看其详情。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختر خدمة قريبة لعرض تفاصيلها."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחר שירות בקרבת מקום כדי לצפות בפרטיו."
           }
         }
       }
@@ -3565,6 +4597,18 @@
             "state": "translated",
             "value": "选择服务类型"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختر نوع خدمة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחר סוג שירות"
+          }
         }
       }
     },
@@ -3605,6 +4649,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "选择服务类型以查看其详情。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختر نوع خدمة لعرض تفاصيله."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחר סוג שירות כדי לצפות בפרטיו."
           }
         }
       }
@@ -3647,6 +4703,18 @@
             "state": "translated",
             "value": "主机名 A → Z"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسم المضيف أ → ي"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שם מארח א → ת"
+          }
         }
       }
     },
@@ -3687,6 +4755,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "主机名 Z → A"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسم المضيف ي → أ"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שם מארח ת → א"
           }
         }
       }
@@ -3729,6 +4809,18 @@
             "state": "translated",
             "value": "扫描错误"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خطأ في الفحص"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שגיאת סריקה"
+          }
         }
       }
     },
@@ -3769,6 +4861,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "确定要删除此服务类型吗？"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هل أنت متأكد أنك تريد حذف نوع الخدمة هذا؟"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "האם אתה בטוח שברצונך למחוק את סוג השירות הזה?"
           }
         }
       }
@@ -3811,6 +4915,18 @@
             "state": "translated",
             "value": "创建"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إنشاء"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "צור"
+          }
         }
       }
     },
@@ -3851,6 +4967,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "创建或广播新服务"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إنشاء أو بث خدمة جديدة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "צור או שדר שירות חדש"
           }
         }
       }
@@ -3893,6 +5021,18 @@
             "state": "translated",
             "value": "创建自定义服务类型"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إنشاء نوع خدمة مخصص"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "צור סוג שירות מותאם אישית"
+          }
         }
       }
     },
@@ -3933,6 +5073,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "端口号"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "رقم المنفذ"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מספר יציאה"
           }
         }
       }
@@ -3975,6 +5127,18 @@
             "state": "translated",
             "value": "服务域"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نطاق الخدمة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "תחום השירות"
+          }
         }
       }
     },
@@ -4015,6 +5179,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "输入服务的域，默认为 local"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أدخل نطاق الخدمة، الافتراضي هو local"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הזן את התחום של השירות, ברירת המחדל היא local"
           }
         }
       }
@@ -4057,6 +5233,18 @@
             "state": "translated",
             "value": "双击以添加新的 TXT 记录"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "انقر نقرًا مزدوجًا لإضافة سجل TXT جديد"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הקש פעמיים כדי להוסיף רשומת TXT חדשה"
+          }
         }
       }
     },
@@ -4097,6 +5285,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "双击以编辑此记录"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "انقر نقرًا مزدوجًا لتعديل هذا السجل"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הקש פעמיים כדי לערוך את הרשומה הזו"
           }
         }
       }
@@ -4139,6 +5339,18 @@
             "state": "translated",
             "value": "长按以拷贝地址"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اضغط مطوّلاً لنسخ العنوان"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הקש ארוכות כדי להעתיק את הכתובת"
+          }
         }
       }
     },
@@ -4179,6 +5391,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "长按以拷贝记录"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اضغط مطوّلاً لنسخ السجل"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הקש ארוכות כדי להעתיק את הרשומה"
           }
         }
       }
@@ -4221,6 +5445,18 @@
             "state": "translated",
             "value": "TXT 记录键"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مفتاح سجل TXT"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מפתח של רשומת TXT"
+          }
         }
       }
     },
@@ -4261,6 +5497,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "输入此 TXT 记录的键"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أدخل المفتاح لسجل TXT هذا"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הזן את המפתח עבור רשומת ה-TXT הזו"
           }
         }
       }
@@ -4303,6 +5551,18 @@
             "state": "translated",
             "value": "TXT 记录值"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قيمة سجل TXT"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ערך של רשומת TXT"
+          }
         }
       }
     },
@@ -4343,6 +5603,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "输入此 TXT 记录的值"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أدخل القيمة لسجل TXT هذا"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הזן את הערך עבור רשומת ה-TXT הזו"
           }
         }
       }
@@ -4385,6 +5657,18 @@
             "state": "translated",
             "value": "服务名称"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسم الخدمة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שם השירות"
+          }
         }
       }
     },
@@ -4425,6 +5709,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "输入此服务类型的显示名称"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أدخل اسم عرض لنوع الخدمة هذا"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הזן שם תצוגה עבור סוג השירות הזה"
           }
         }
       }
@@ -4467,6 +5763,18 @@
             "state": "translated",
             "value": "Bonjour 类型"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نوع Bonjour"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סוג Bonjour"
+          }
         }
       }
     },
@@ -4507,6 +5815,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "输入 Bonjour 类型标识符，例如 http 或 ssh"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أدخل معرّف نوع Bonjour، مثل http أو ssh"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הזן את מזהה סוג ה-Bonjour, לדוגמה http או ssh"
           }
         }
       }
@@ -4549,6 +5869,18 @@
             "state": "translated",
             "value": "其他详情"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تفاصيل إضافية"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פרטים נוספים"
+          }
         }
       }
     },
@@ -4589,6 +5921,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "输入此服务类型的描述"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أدخل وصفًا لنوع الخدمة هذا"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הזן תיאור עבור סוג שירות זה"
           }
         }
       }
@@ -4631,6 +5975,18 @@
             "state": "translated",
             "value": "已选择"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "محدد"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "נבחר"
+          }
         }
       }
     },
@@ -4671,6 +6027,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "未选择"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "غير محدد"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "לא נבחר"
           }
         }
       }
@@ -4713,6 +6081,18 @@
             "state": "translated",
             "value": "双击以选择此服务类型"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "انقر نقرًا مزدوجًا لاختيار نوع الخدمة هذا"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הקש פעמיים כדי לבחור את סוג השירות הזה"
+          }
         }
       }
     },
@@ -4753,6 +6133,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "双击以编辑此服务类型"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "انقر نقرًا مزدوجًا لتعديل نوع الخدمة هذا"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הקש פעמיים כדי לערוך את סוג השירות הזה"
           }
         }
       }
@@ -4795,6 +6187,18 @@
             "state": "translated",
             "value": "双击以删除此服务类型"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "انقر نقرًا مزدوجًا لحذف نوع الخدمة هذا"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הקש פעמיים כדי למחוק את סוג השירות הזה"
+          }
         }
       }
     },
@@ -4835,6 +6239,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "查看 %@ 的详情"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عرض تفاصيل %@"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "צפה בפרטים עבור %@"
           }
         }
       }
@@ -4877,6 +6293,18 @@
             "state": "translated",
             "value": "输入服务端口号，范围为 %lld 到 %lld"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أدخل رقم منفذ الخدمة، بين %lld و %lld"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הזן את מספר היציאה של השירות, בין %lld ל-%lld"
+          }
         }
       }
     },
@@ -4917,6 +6345,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "错误: %@"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خطأ: %@"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שגיאה: %@"
           }
         }
       }
@@ -4959,6 +6399,18 @@
             "state": "translated",
             "value": "移除 %@"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إزالة %@"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הסר %@"
+          }
         }
       }
     },
@@ -4999,6 +6451,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "编辑 %@"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعديل %@"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ערוך %@"
           }
         }
       }
@@ -5041,6 +6505,18 @@
             "state": "translated",
             "value": "删除 %@"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حذف %@"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מחק %@"
+          }
         }
       }
     },
@@ -5081,6 +6557,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "长按以拷贝 %@"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اضغط مطوّلاً لنسخ %@"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הקש ארוכות כדי להעתיק %@"
           }
         }
       }
@@ -5123,6 +6611,18 @@
             "state": "translated",
             "value": "附近的 %@"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ القريبة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ בקרבת מקום"
+          }
         }
       }
     },
@@ -5163,6 +6663,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "服务"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الخدمات"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירותים"
           }
         }
       }
@@ -5205,6 +6717,18 @@
             "state": "translated",
             "value": "复制类型"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نسخ النوع"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "העתק סוג"
+          }
         }
       }
     },
@@ -5245,6 +6769,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "扫描"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الفحص"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סריקה"
           }
         }
       }
@@ -5287,6 +6823,18 @@
             "state": "translated",
             "value": "启动时扫描服务"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "البحث عن الخدمات عند التشغيل"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סרוק שירותים בהפעלה"
+          }
         }
       }
     },
@@ -5327,6 +6875,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "显示"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "العرض"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "תצוגה"
           }
         }
       }
@@ -5369,6 +6929,18 @@
             "state": "translated",
             "value": "服务排序方式"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ترتيب الخدمات"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סדר מיון השירותים"
+          }
         }
       }
     },
@@ -5409,6 +6981,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "无"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بدون"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ללא"
           }
         }
       }
@@ -5451,6 +7035,18 @@
             "state": "translated",
             "value": "主机名 (A → Z)"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسم المضيف (أ → ي)"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שם מארח (א → ת)"
+          }
         }
       }
     },
@@ -5491,6 +7087,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "主机名 (Z → A)"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسم المضيف (ي → أ)"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שם מארח (ת → א)"
           }
         }
       }
@@ -10084,6 +11692,18 @@
             "state": "translated",
             "value": "服务类型 A → Z"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نوع الخدمة أ → ي"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סוג שירות א → ת"
+          }
         }
       }
     },
@@ -10124,6 +11744,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "服务类型 Z → A"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نوع الخدمة ي → أ"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סוג שירות ת → א"
           }
         }
       }
@@ -10166,6 +11798,18 @@
             "state": "translated",
             "value": "服务名 (A → Z)"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسم الخدمة (أ → ي)"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שם השירות (א → ת)"
+          }
         }
       }
     },
@@ -10206,6 +11850,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "服务名 (Z → A)"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسم الخدمة (ي → أ)"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שם השירות (ת → א)"
           }
         }
       }
@@ -10248,6 +11904,18 @@
             "state": "translated",
             "value": "开始扫描"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بدء الفحص"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "התחל לסרוק"
+          }
         }
       }
     },
@@ -10288,6 +11956,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "刷新"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تحديث"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "רענן"
           }
         }
       }
@@ -10330,6 +12010,18 @@
             "state": "translated",
             "value": "清除自定义服务类型"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مسح أنواع الخدمات المخصصة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "נקה סוגי שירות מותאמים אישית"
+          }
         }
       }
     },
@@ -10370,6 +12062,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "洞察"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "رؤى"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "תובנות"
           }
         }
       }
@@ -10412,6 +12116,18 @@
             "state": "translated",
             "value": "洞察"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "رؤى"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "תובנות"
+          }
         }
       }
     },
@@ -10452,6 +12168,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "正在生成说明..."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جارٍ إنشاء الشرح..."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "יוצר הסבר..."
           }
         }
       }
@@ -10494,6 +12222,18 @@
             "state": "translated",
             "value": "获取此服务的洞察"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "احصل على رؤى حول هذه الخدمة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "קבל תובנות לגבי השירות הזה"
+          }
         }
       }
     },
@@ -10534,6 +12274,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "技术性"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تقني"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "טכני"
           }
         }
       }
@@ -10576,6 +12328,18 @@
             "state": "translated",
             "value": "洞察"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "رؤى"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "תובנות"
+          }
         }
       }
     },
@@ -10616,6 +12380,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "启用洞察"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تفعيل الرؤى"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הפעל תובנות"
           }
         }
       }
@@ -10658,6 +12434,18 @@
             "state": "translated",
             "value": "详细程度"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مستوى التفاصيل"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "רמת פירוט"
+          }
         }
       }
     },
@@ -10698,6 +12486,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "更多详情"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تفاصيل أكثر"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "יותר פרטים"
           }
         }
       }
@@ -10740,6 +12540,18 @@
             "state": "translated",
             "value": "更少详情"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تفاصيل أقل"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פחות פרטים"
+          }
         }
       }
     },
@@ -10780,6 +12592,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "恢复默认设置"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إعادة تعيين إلى الافتراضي"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אפס לברירת מחדל"
           }
         }
       }
@@ -10822,6 +12646,18 @@
             "state": "translated",
             "value": "重置"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إعادة تعيين"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אפס"
+          }
         }
       }
     },
@@ -10862,6 +12698,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "这将把所有设置恢复为默认值，并删除所有自定义服务类型。此操作无法撤消。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "سيؤدي ذلك إلى إعادة تعيين جميع الإعدادات إلى القيم الافتراضية وإزالة أي أنواع خدمات مخصصة. لا يمكن التراجع عن هذا الإجراء."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פעולה זו תאפס את כל ההגדרות לערכי ברירת המחדל ותסיר סוגי שירות מותאמים אישית. לא ניתן לבטל פעולה זו."
           }
         }
       }
@@ -10904,6 +12752,18 @@
             "state": "translated",
             "value": "偏好设置"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "التفضيلات"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "העדפות"
+          }
         }
       }
     },
@@ -10944,6 +12804,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "主机名 A → Z"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسم المضيف أ → ي"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שם מארח א → ת"
           }
         }
       }
@@ -10986,6 +12858,18 @@
             "state": "translated",
             "value": "深入的网络详情"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تفاصيل شبكية متعمّقة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פרטי רשת מעמיקים"
+          }
         }
       }
     },
@@ -11026,6 +12910,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "基本"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أساسي"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בסיסי"
           }
         }
       }
@@ -11068,6 +12964,18 @@
             "state": "translated",
             "value": "快速易懂的概览"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نظرة عامة سريعة وسهلة الفهم"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סקירה מהירה וקלה להבנה"
+          }
         }
       }
     },
@@ -11108,6 +13016,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "启用后，您可以长按已发现的服务以获取设备端的说明，并可使用「聊天」标签就您的网络进行对话。所有内容均在您的设备上私密运行，不会向外部服务器发送任何数据。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عند التفعيل، يمكنك الضغط مطوّلاً على خدمة مكتشفة للحصول على شرح على الجهاز، وتصبح علامة تبويب المحادثة متاحة للحديث عن شبكتك. يعمل كل شيء بشكل خاص على جهازك — لا يتم إرسال أي بيانات إلى خوادم خارجية."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "כאשר תכונה זו מופעלת, ניתן ללחוץ ארוכות על שירות שהתגלה כדי לקבל הסבר על-גבי המכשיר, וכרטיסיית הצ'אט זמינה לשיחות על הרשת שלך. הכל פועל באופן פרטי על המכשיר — לא נשלחים נתונים לשרתים חיצוניים."
           }
         }
       }
@@ -11150,6 +13070,18 @@
             "state": "translated",
             "value": "Apple Intelligence 当前已关闭。请打开「设置」→「Apple Intelligence 与 Siri」开启。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence معطّل حاليًا. افتح الإعدادات ← Apple Intelligence و Siri لتفعيله."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence כבוי כעת. פתח את הגדרות ← Apple Intelligence ו-Siri כדי להפעיל אותו."
+          }
         }
       }
     },
@@ -11190,6 +13122,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Apple Intelligence 模型正在下载中。下载完成后，AI 功能将可用。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ما زال يتم تنزيل نموذج Apple Intelligence. ستصبح ميزات الذكاء الاصطناعي متاحة بمجرد اكتمال التنزيل."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מודל Apple Intelligence עדיין מורד. תכונות הבינה המלאכותית יהפכו לזמינות עם השלמת ההורדה."
           }
         }
       }
@@ -11232,6 +13176,18 @@
             "state": "translated",
             "value": "Apple Intelligence 目前不可用。请稍后再试。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence غير متاح الآن. حاول مجددًا بعد قليل."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence אינו זמין כרגע. נסה שוב בעוד רגע."
+          }
         }
       }
     },
@@ -11272,6 +13228,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "更新"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تحديث"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "עדכן"
           }
         }
       }
@@ -11314,6 +13282,18 @@
             "state": "translated",
             "value": "正在扫描服务…"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جارٍ البحث عن الخدمات..."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סורק שירותים..."
+          }
         }
       }
     },
@@ -11354,6 +13334,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "复制%@"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نسخ %@"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "העתק %@"
           }
         }
       }
@@ -11396,6 +13388,18 @@
             "state": "translated",
             "value": "复制记录"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نسخ السجل"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "העתק רשומה"
+          }
         }
       }
     },
@@ -11436,6 +13440,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "仅复制值"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نسخ القيمة فقط"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "העתק רק את הערך"
           }
         }
       }
@@ -11478,6 +13494,18 @@
             "state": "translated",
             "value": "编辑记录"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعديل السجل"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ערוך רשומה"
+          }
         }
       }
     },
@@ -11518,6 +13546,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "删除记录"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حذف السجل"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מחק רשומה"
           }
         }
       }
@@ -11560,6 +13600,18 @@
             "state": "translated",
             "value": "双击以删除此TXT记录"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "انقر نقرًا مزدوجًا لحذف سجل TXT هذا"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הקש פעמיים כדי למחוק את רשומת ה-TXT הזו"
+          }
         }
       }
     },
@@ -11600,6 +13652,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "启用或禁用已发现服务的设备端说明"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يفعّل أو يعطّل الشروحات على الجهاز للخدمات المكتشفة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מפעיל או מבטל הסברים על-גבי המכשיר עבור שירותים שהתגלו"
           }
         }
       }
@@ -11642,6 +13706,18 @@
             "state": "translated",
             "value": "将所有偏好设置恢复为默认值并删除自定义服务类型"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يعيد جميع التفضيلات إلى القيم الافتراضية ويزيل أنواع الخدمات المخصصة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מאפס את כל ההעדפות לערכי ברירת המחדל ומסיר סוגי שירות מותאמים אישית"
+          }
         }
       }
     },
@@ -11682,6 +13758,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "填写所有必填项以启用此按钮"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أكمل جميع الحقول المطلوبة لتفعيل هذا الزر"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מלא את כל השדות הנדרשים כדי להפעיל את הכפתור"
           }
         }
       }
@@ -11847,6 +13935,18 @@
             "state": "translated",
             "value": "智能家居"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المنزل الذكي"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בית חכם"
+          }
         }
       }
     },
@@ -11887,6 +13987,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "控制“发现”标签页中已发现服务的排列方式。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يتحكم في كيفية تنظيم الخدمات المكتشفة في علامة تبويب الاكتشاف."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שולט באופן שבו השירותים שהתגלו מאורגנים בכרטיסיית הגילוי."
           }
         }
       }
@@ -11929,6 +14041,18 @@
             "state": "translated",
             "value": "这将把所有设置恢复为初始值，并删除您创建的所有自定义服务类型。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "سيؤدي ذلك إلى استعادة جميع الإعدادات إلى قيمها الأصلية وإزالة أي أنواع خدمات مخصصة قمت بإنشائها."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פעולה זו תשחזר את כל ההגדרות לערכים המקוריים שלהן ותסיר סוגי שירות מותאמים אישית שיצרת."
+          }
         }
       }
     },
@@ -11969,6 +14093,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "关于"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حول التطبيق"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אודות"
           }
         }
       }
@@ -12011,6 +14147,18 @@
             "state": "translated",
             "value": "版本"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الإصدار"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "גרסה"
+          }
         }
       }
     },
@@ -12051,6 +14199,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "构建版本"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "البنية"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Build"
           }
         }
       }
@@ -12093,6 +14253,18 @@
             "state": "translated",
             "value": "Apple 设备"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أجهزة Apple"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מכשירי Apple"
+          }
         }
       }
     },
@@ -12133,6 +14305,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "媒体与流媒体"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الوسائط والبث"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מדיה והזרמה"
           }
         }
       }
@@ -12175,6 +14359,18 @@
             "state": "translated",
             "value": "打印机与扫描仪"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الطابعات والماسحات"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מדפסות וסורקים"
+          }
         }
       }
     },
@@ -12215,6 +14411,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "远程访问"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الوصول عن بُعد"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "גישה מרחוק"
           }
         }
       }
@@ -12257,6 +14465,18 @@
             "state": "translated",
             "value": "未找到与%@相关的服务"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لم يتم العثور على خدمات متعلقة بـ %@"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "לא נמצאו שירותים הקשורים ל-%@"
+          }
         }
       }
     },
@@ -12297,6 +14517,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "启用Apple Intelligence"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تفعيل Apple Intelligence"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הפעל את Apple Intelligence"
           }
         }
       }
@@ -12339,6 +14571,18 @@
             "state": "translated",
             "value": "聊天"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "محادثة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "צ'אט"
+          }
         }
       }
     },
@@ -12379,6 +14623,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "询问KozBon"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسأل KozBon"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שאל את KozBon"
           }
         }
       }
@@ -12421,6 +14677,18 @@
             "state": "translated",
             "value": "询问有关您网络的问题..."
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسأل عن شبكتك..."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שאל על הרשת שלך..."
+          }
         }
       }
     },
@@ -12461,6 +14729,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "发送"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إرسال"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שלח"
           }
         }
       }
@@ -12503,6 +14783,18 @@
             "state": "translated",
             "value": "询问您的网络"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسأل عن شبكتك"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שאל על הרשת שלך"
+          }
         }
       }
     },
@@ -12543,6 +14835,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "询问已发现的服务、服务类型库或 KozBon 的使用方法。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسأل عن الخدمات المكتشفة، أو مكتبة أنواع الخدمات، أو كيفية استخدام KozBon."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שאל על שירותים שהתגלו, על ספריית סוגי השירותים, או על איך להשתמש ב-KozBon."
           }
         }
       }
@@ -12585,6 +14889,18 @@
             "state": "translated",
             "value": "清除聊天"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مسح المحادثة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "נקה צ'אט"
+          }
         }
       }
     },
@@ -12625,6 +14941,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "我的网络上有哪些服务？"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ما الخدمات الموجودة على شبكتي؟"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אילו שירותים נמצאים ברשת שלי?"
           }
         }
       }
@@ -12667,6 +14995,18 @@
             "state": "translated",
             "value": "如何广播我自己的服务？"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "كيف أبث خدمتي الخاصة؟"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "איך אני משדר שירות משלי?"
+          }
         }
       }
     },
@@ -12707,6 +15047,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "什么是Matter / Thread？"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ما هو Matter / Thread؟"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מה זה Matter / Thread?"
           }
         }
       }
@@ -12749,6 +15101,18 @@
             "state": "translated",
             "value": "当用户长按“洞察”时，将使用此描述来解释您的服务。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "سيُستخدم هذا الوصف لشرح خدمتك عندما يضغط المستخدمون مطوّلاً على «رؤى»."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "התיאור הזה ישמש להסביר את השירות שלך כאשר משתמשים יקישו ארוכות על «תובנות»."
+          }
         }
       }
     },
@@ -12789,6 +15153,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "您说: %@"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قلت: %@"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אמרת: %@"
           }
         }
       }
@@ -12831,6 +15207,18 @@
             "state": "translated",
             "value": "助手回复: %@"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "رد المساعد: %@"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "המסייע השיב: %@"
+          }
         }
       }
     },
@@ -12871,6 +15259,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "助手正在思考"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المساعد يفكّر"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "המסייע חושב"
           }
         }
       }
@@ -12913,6 +15313,18 @@
             "state": "translated",
             "value": "消息"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "رسالة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הודעה"
+          }
         }
       }
     },
@@ -12953,6 +15365,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "输入关于您的网络或KozBon应用的问题"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اكتب سؤالًا عن شبكتك أو عن تطبيق KozBon"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "כתוב שאלה על הרשת שלך או על אפליקציית KozBon"
           }
         }
       }
@@ -12995,6 +15419,18 @@
             "state": "translated",
             "value": "将您的消息发送给助手"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يرسل رسالتك إلى المساعد"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שולח את ההודעה שלך למסייע"
+          }
         }
       }
     },
@@ -13035,6 +15471,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "输入消息以启用此按钮"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اكتب رسالة لتفعيل هذا الزر"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "כתוב הודעה כדי להפעיל את הכפתור הזה"
           }
         }
       }
@@ -13077,6 +15525,18 @@
             "state": "translated",
             "value": "请等待响应结束后再发送下一条消息"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "انتظر انتهاء الرد قبل إرسال رسالة أخرى"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "המתן לסיום התשובה לפני שליחת הודעה נוספת"
+          }
         }
       }
     },
@@ -13117,6 +15577,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "删除所有消息并开始新的对话"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يحذف جميع الرسائل ويبدأ محادثة جديدة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מסיר את כל ההודעות ומתחיל שיחה חדשה"
           }
         }
       }
@@ -13159,6 +15631,18 @@
             "state": "translated",
             "value": "将此建议问题发送给助手"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يرسل هذا السؤال المقترح إلى المساعد"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שולח את השאלה המוצעת הזו למסייע"
+          }
         }
       }
     },
@@ -13199,6 +15683,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "对话"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "محادثة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שיחה"
           }
         }
       }
@@ -13241,6 +15737,18 @@
             "state": "translated",
             "value": "提示：使用简短、易读的名称（例如「Web服务器」）。类型请遵循IANA服务名称格式——仅使用小写字母、数字和连字符。应用会自动添加开头的下划线和传输层后缀。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نصائح: استخدم اسمًا قصيرًا وسهل القراءة (مثل «خادم ويب»). للنوع، اتبع تنسيق اسم خدمة IANA — أحرف صغيرة وأرقام وشرطات فقط. يضيف التطبيق تلقائيًا الشرطة السفلية الافتتاحية ولاحقة طبقة النقل."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "טיפים: השתמש בשם קצר וקריא (לדוגמה, «שרת ווב»). עבור הסוג, פעל לפי תבנית שם שירות IANA — אותיות קטנות, ספרות ומקפים בלבד. האפליקציה מוסיפה אוטומטית את הקו התחתון המוביל ואת סיומת שכבת התעבורה."
+          }
         }
       }
     },
@@ -13281,6 +15789,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "TXT 记录是与您的服务一起广播的可选键值元数据。客户端会在连接前读取这些信息以了解服务的能力——例如打印机可以宣告其彩色和双面打印支持，媒体服务器可以列出支持的流媒体协议。键是简短的 ASCII 标识符；值可以是任意文本。如果您的服务不需要，请将列表留空。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "سجلات TXT هي بيانات وصفية اختيارية بصيغة مفتاح-قيمة تُبثّ مع خدمتك. تقرأها العملاء قبل الاتصال لمعرفة الإمكانيات — قد تعلن الطابعة عن دعمها للألوان والطباعة على الوجهين، أو قد يسرد خادم الوسائط بروتوكولات البث. المفاتيح معرّفات ASCII قصيرة؛ والقيم يمكن أن تكون أي نص. اترك القائمة فارغة إذا كانت خدمتك لا تحتاج إلى أي منها."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "רשומות TXT הן מטא-נתונים אופציונליים בצמדי מפתח-ערך המשודרים יחד עם השירות שלך. לקוחות קוראים אותן לפני התחברות כדי ללמוד על יכולות — מדפסת עשויה לפרסם תמיכה בצבע ובדו-צדדי, או ששרת מדיה ירשום פרוטוקולי הזרמה. המפתחות הם מזהי ASCII קצרים; הערכים יכולים להיות כל טקסט. השאר את הרשימה ריקה אם השירות שלך לא צריך אף אחת מהן."
           }
         }
       }
@@ -13323,6 +15843,18 @@
             "state": "translated",
             "value": "您的服务侦听的端口。请选择 1024–65535 之间任何未使用的值——更低的端口为系统服务保留。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المنفذ الذي تستمع عليه خدمتك. اختر أي قيمة غير مستخدمة من 1024 إلى 65535 — المنافذ الأدنى محجوزة لخدمات النظام."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "היציאה שעליה השירות שלך מקשיב. בחר ערך פנוי כלשהו בטווח 1024–65535 — יציאות נמוכות יותר שמורות לשירותי המערכת."
+          }
         }
       }
     },
@@ -13363,6 +15895,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "其他设备搜索此服务时用户看到的名称——例如打印机选择器中的「客厅打印机」。这是面向用户的显示名称，不是其他应用查找时使用的技术标识符。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الاسم الذي يراه المستخدمون عند البحث عن هذه الخدمة من أجهزة أخرى — مثلًا «طابعة غرفة المعيشة» في قائمة اختيار طابعة. هذا هو اسم العرض، وليس المعرّف التقني الذي تبحث عنه التطبيقات الأخرى."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "השם שמשתמשים רואים כשהם מחפשים את השירות הזה ממכשירים אחרים — לדוגמה, «מדפסת הסלון» בבורר מדפסות. זהו שם התצוגה הידידותי, לא המזהה הטכני שאפליקציות אחרות מחפשות."
           }
         }
       }
@@ -13405,6 +15949,18 @@
             "state": "translated",
             "value": "其他设备查找此类服务时使用的协议标识符。各类应用会搜索特定类型——网络浏览器搜索 `_http._tcp`，AirPlay 接收器搜索 `_airplay._tcp`。不搜索你所发布的确切类型的设备将看不到你的服务。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "معرّف البروتوكول الذي تبحث عنه الأجهزة الأخرى للعثور على خدمات من هذا النوع. تبحث التطبيقات عن نوع محدد — تبحث متصفحات الويب عن `_http._tcp`، ومستقبلات AirPlay عن `_airplay._tcp`. الأجهزة التي لا تبحث عن النوع نفسه الذي تنشره لن ترى خدمتك."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מזהה הפרוטוקול שמכשירים אחרים מחפשים כדי למצוא שירותים מהסוג הזה. אפליקציות מחפשות סוג ספציפי — דפדפני אינטרנט מחפשים את `_http._tcp`, מקלטי AirPlay את `_airplay._tcp`. מכשירים שאינם מחפשים בדיוק את הסוג שאתה מפרסם לא יראו את השירות שלך."
+          }
         }
       }
     },
@@ -13445,6 +16001,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "家庭和办公网络请使用 `local.`。自定义域名仅在您的 DNS 服务器承载 DNS-SD 记录时才有效——大多数都不会。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "استخدم `local.` للشبكات المنزلية والمكتبية. لا تعمل النطاقات المخصصة إلا إذا كان خادم DNS لديك يستضيف سجلات DNS-SD — ومعظمها لا يفعل ذلك."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "השתמש ב-`local.` ברשתות ביתיות ומשרדיות. תחומים מותאמים אישית פועלים רק אם שרת ה-DNS שלך מארח רשומות DNS-SD — רובם לא."
           }
         }
       }
@@ -13487,6 +16055,18 @@
             "state": "translated",
             "value": "回复长度"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "طول الرد"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אורך התגובה"
+          }
         }
       }
     },
@@ -13527,6 +16107,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "简短直接的回答"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إجابات قصيرة ومباشرة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "תשובות קצרות וקולעות"
           }
         }
       }
@@ -13569,6 +16161,18 @@
             "state": "translated",
             "value": "适合大多数情况的均衡详细程度"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تفاصيل متوازنة لمعظم الحالات"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פירוט מאוזן לרוב המצבים"
+          }
         }
       }
     },
@@ -13609,6 +16213,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "包含示例和上下文的全面回答"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شامل مع أمثلة وسياق"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מקיף עם דוגמאות והקשר"
           }
         }
       }
@@ -13651,6 +16267,18 @@
             "state": "translated",
             "value": "简短"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "موجز"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "תמציתי"
+          }
         }
       }
     },
@@ -13691,6 +16319,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "标准"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قياسي"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סטנדרטי"
           }
         }
       }
@@ -13733,6 +16373,18 @@
             "state": "translated",
             "value": "详尽"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شامل"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מקיף"
+          }
         }
       }
     },
@@ -13773,6 +16425,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "您的消息太长了。请保持在%lld字符以内。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "رسالتك طويلة جدًا. يرجى إبقاؤها أقل من %lld حرفًا."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ההודעה שלך ארוכה מדי. אנא הקפד שתהיה קצרה מ-%lld תווים."
           }
         }
       }
@@ -13815,6 +16479,18 @@
             "state": "translated",
             "value": "我无法处理此请求。我的设计用于回答关于Bonjour服务和KozBon应用的问题。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا يمكنني معالجة هذا الطلب. أنا مصمم للإجابة على أسئلة حول خدمات Bonjour وتطبيق KozBon."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אני לא יכול לעבד את הבקשה הזו. אני מתוכנן לענות על שאלות בנוגע לשירותי Bonjour ולאפליקציית KozBon."
+          }
         }
       }
     },
@@ -13855,6 +16531,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "我只能帮助处理Bonjour服务和KozBon应用相关的问题。您想了解您网络的什么内容？"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يمكنني فقط المساعدة في خدمات Bonjour وتطبيق KozBon. ماذا تريد أن تعرف عن شبكتك؟"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אני יכול לעזור רק עם שירותי Bonjour ואפליקציית KozBon. מה תרצה לדעת על הרשת שלך?"
           }
         }
       }
@@ -13897,6 +16585,18 @@
             "state": "translated",
             "value": "长时间会话"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "محادثة طويلة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שיחה ארוכה"
+          }
         }
       }
     },
@@ -13937,6 +16637,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "当助手空间不足时，回答质量可能下降。建议清空后重新开始。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قد تتدهور الردود مع نفاد المساحة لدى المساعد. فكّر في المسح لبدء محادثة جديدة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ייתכן שהתשובות יידרדרו ככל שהמסייע ייגמר לו המקום. שקול לנקות כדי להתחיל מחדש."
           }
         }
       }
@@ -13979,6 +16691,18 @@
             "state": "translated",
             "value": "我的网络上有哪些Apple设备？"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ما أجهزة Apple الموجودة على شبكتي؟"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אילו מכשירי Apple נמצאים ברשת שלי?"
+          }
         }
       }
     },
@@ -14019,6 +16743,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "有哪些可用的媒体服务？"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ما خدمات الوسائط المتاحة؟"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אילו שירותי מדיה זמינים?"
           }
         }
       }
@@ -14061,6 +16797,18 @@
             "state": "translated",
             "value": "我的网络上有哪些设备？"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ما الأجهزة الموجودة على شبكتي؟"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אילו מכשירים נמצאים ברשת שלי?"
+          }
         }
       }
     },
@@ -14101,6 +16849,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "探索"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "استكشاف"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "גלה"
           }
         }
       }
@@ -14143,6 +16903,18 @@
             "state": "translated",
             "value": "在 GitHub 上查看 KozBon"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBon على GitHub"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBon ב-GitHub"
+          }
         }
       }
     },
@@ -14183,6 +16955,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "IANA 服务名称注册表"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "سجل أسماء خدمات IANA"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מרשם שמות שירותים של IANA"
           }
         }
       }
@@ -14225,6 +17009,18 @@
             "state": "translated",
             "value": "按类别筛选"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تصفية حسب الفئة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סנן לפי קטגוריה"
+          }
         }
       }
     },
@@ -14265,6 +17061,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "所有类别"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جميع الفئات"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "כל הקטגוריות"
           }
         }
       }
@@ -14307,6 +17115,18 @@
             "state": "translated",
             "value": "%@ 中没有服务"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا توجد خدمات في %@"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אין שירותים ב-%@"
+          }
         }
       }
     },
@@ -14347,6 +17167,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "请选择其他类别，或清除筛选以查看所有服务。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختر فئة مختلفة أو امسح التصفية لرؤية جميع الخدمات."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחר קטגוריה אחרת או נקה את הסינון כדי לראות את כל השירותים."
           }
         }
       }
@@ -14389,6 +17221,18 @@
             "state": "translated",
             "value": "关于 Bonjour"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حول Bonjour"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אודות Bonjour"
+          }
         }
       }
     },
@@ -14429,6 +17273,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Apple 软件使用的 TCP/UDP 端口"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "منافذ TCP/UDP المستخدمة من قبل برامج Apple"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "יציאות TCP/UDP בשימוש תוכנות Apple"
           }
         }
       }
@@ -14471,6 +17327,18 @@
             "state": "translated",
             "value": "mDNS 规范 (RFC 6762)"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مواصفات mDNS (RFC 6762)"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מפרט mDNS (RFC 6762)"
+          }
         }
       }
     },
@@ -14511,6 +17379,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "DNS-SD 规范 (RFC 6763)"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مواصفات DNS-SD (RFC 6763)"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מפרט DNS-SD (RFC 6763)"
           }
         }
       }

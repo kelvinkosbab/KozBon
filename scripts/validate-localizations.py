@@ -50,11 +50,16 @@ LIBRARY_PATH = (
     / "KozBonPackages/BonjourModels/Sources/ServiceType/MyServiceType+Library.swift"
 )
 
-# The six languages KozBon ships in. Adding a new language means adding
+# The languages KozBon ships in. Adding a new language means adding
 # entries to every existing key in the catalog AND extending this set;
 # the validator will then start failing for any key still missing the
 # new locale, which is exactly what we want.
-EXPECTED_LOCALES = frozenset({"en", "es", "fr", "de", "ja", "zh-Hans"})
+#
+# `ar` (Arabic) and `he` (Hebrew) are right-to-left — adding them at the
+# string-catalog layer is the first step; mirroring SwiftUI layout
+# (`.environment(\.layoutDirection, .rightToLeft)`, directional symbol
+# flipping, leading/trailing audits) is the second.
+EXPECTED_LOCALES = frozenset({"en", "es", "fr", "de", "ja", "zh-Hans", "ar", "he"})
 
 
 def load_catalog() -> dict | None:
