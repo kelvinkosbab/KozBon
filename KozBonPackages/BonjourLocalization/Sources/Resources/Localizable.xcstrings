@@ -7141,6 +7141,18 @@
             "state": "translated",
             "value": "用于从平板电脑或移动设备控制Photoshop的Adobe Photoshop远程导航服务。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة التنقل عن بُعد في Adobe Photoshop للتحكم في Photoshop من جهاز لوحي أو هاتف محمول."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות ניווט מרחוק של Adobe Photoshop לשליטה ב-Photoshop ממכשיר טאבלט או נייד."
+          }
         }
       }
     },
@@ -7181,6 +7193,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "AirDroid无线设备管理应用，用于在移动设备和电脑之间进行文件传输和远程访问。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تطبيق AirDroid لإدارة الأجهزة لاسلكيًا لنقل الملفات والوصول عن بُعد بين الأجهزة المحمولة والحواسيب."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אפליקציית AirDroid לניהול מכשירים אלחוטי, להעברת קבצים וגישה מרחוק בין מכשירים ניידים למחשבים."
           }
         }
       }
@@ -7223,6 +7247,18 @@
             "state": "translated",
             "value": "AirPlay、QuickTime Streaming Server（QTSS）、流媒体播放器"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirPlay و QuickTime Streaming Server (QTSS) ومشغّلات الوسائط المتدفقة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirPlay, QuickTime Streaming Server (QTSS), ונגני מדיה בהזרמה"
+          }
         }
       }
     },
@@ -7263,6 +7299,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "也称为AirTunes。AirPort Express基站会广播此服务。iTunes从iTunes 4.6开始浏览此服务。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يُعرف أيضًا باسم AirTunes. تعلن AirPort Express Base Station عن هذه الخدمة. يبحث iTunes عن هذه الخدمة بدءًا من iTunes 4.6."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ידוע גם בשם AirTunes. תחנת הבסיס AirPort Express מפרסמת את השירות הזה. iTunes מחפש את השירות הזה החל מ-iTunes 4.6."
           }
         }
       }
@@ -7305,6 +7353,18 @@
             "state": "translated",
             "value": "也称为iPhoto照片共享。iPhoto从iPhoto 4.0开始广播和浏览DPAP服务器。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يُعرف أيضًا باسم iPhoto Photo Sharing. يعلن iPhoto عن خوادم DPAP ويبحث عنها بدءًا من iPhoto 4.0."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ידוע גם בשם iPhoto Photo Sharing. iPhoto מפרסם ומחפש שרתי DPAP החל מ-iPhoto 4.0."
+          }
         }
       }
     },
@@ -7345,6 +7405,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "也称为iTunes音乐共享。iTunes从iTunes 4.0开始广播和浏览DAAP服务器。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يُعرف أيضًا باسم iTunes Music Sharing. يعلن iTunes عن خوادم DAAP ويبحث عنها بدءًا من iTunes 4.0."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ידוע גם בשם iTunes Music Sharing. iTunes מפרסם ומחפש שרתי DAAP החל מ-iTunes 4.0."
           }
         }
       }
@@ -7387,6 +7459,18 @@
             "state": "translated",
             "value": "Amazon无线播放服务，用于发现和流式传输到Amazon Echo、Fire TV及其他支持Alexa的设备。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة التشغيل اللاسلكي من Amazon لاكتشاف Amazon Echo و Fire TV وغيرها من أجهزة Alexa والبث إليها."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות הזרמה אלחוטית של Amazon לגילוי ולהזרמה אל Amazon Echo, Fire TV ושאר מכשירי Alexa."
+          }
         }
       }
     },
@@ -7427,6 +7511,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Android TV Remote服务，用于从手机和平板电脑发现和控制Android TV设备。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة التحكم عن بُعد في Android TV لاكتشاف أجهزة Android TV والتحكم بها من الهواتف المحمولة والأجهزة اللوحية."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות שלט רחוק של Android TV לגילוי ולשליטה במכשירי Android TV מטלפונים וטאבלטים."
           }
         }
       }
@@ -7469,6 +7565,18 @@
             "state": "translated",
             "value": "Apache Subversion版本控制系统，用于跟踪文件和目录的更改。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نظام التحكم بالإصدارات Apache Subversion لتتبع التغييرات في الملفات والمجلدات."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מערכת בקרת גרסאות Apache Subversion למעקב אחר שינויים בקבצים ובתיקיות."
+          }
         }
       }
     },
@@ -7509,6 +7617,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Apple AirDrop点对点文件共享服务，用于在附近的Apple设备之间无线传输文件、照片和链接。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة Apple AirDrop لمشاركة الملفات نِدًا لنِد لنقل الملفات والصور والروابط لاسلكيًا بين أجهزة Apple القريبة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות שיתוף קבצים עמית-לעמית של Apple AirDrop להעברה אלחוטית של קבצים, תמונות וקישורים בין מכשירי Apple סמוכים."
           }
         }
       }
@@ -7551,6 +7671,18 @@
             "state": "translated",
             "value": "Apple CarPlay控制协议，用于iPhone与兼容车载主机之间的无线CarPlay连接。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بروتوكول التحكم في Apple CarPlay لاتصالات CarPlay اللاسلكية بين iPhone وأنظمة الترفيه المتوافقة في السيارات."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פרוטוקול שליטה של Apple CarPlay לחיבורי CarPlay אלחוטיים בין iPhone למערכות מולטימדיה תואמות ברכב."
+          }
         }
       }
     },
@@ -7591,6 +7723,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Apple Continuity服务，用于在Apple设备之间无缝切换，包括Handoff和通用控制。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة Apple Continuity للانتقال السلس بين أجهزة Apple، بما في ذلك Handoff و Universal Control."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות Apple Continuity למעבר חלק בין מכשירי Apple, כולל Handoff ו-Universal Control."
           }
         }
       }
@@ -7633,6 +7777,18 @@
             "state": "translated",
             "value": "Apple HomeKit服务，用于在本地网络上发现和控制智能家居配件。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة Apple HomeKit لاكتشاف ملحقات المنزل الذكي والتحكم بها على الشبكة المحلية."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות Apple HomeKit לגילוי ושליטה באביזרי בית חכם ברשת המקומית."
+          }
         }
       }
     },
@@ -7673,6 +7829,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Apple Keynote演示文稿共享和远程控制服务。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة Apple Keynote لمشاركة العروض التقديمية والتحكم عن بُعد."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות Apple Keynote לשיתוף מצגות ולשליטה מרחוק."
           }
         }
       }
@@ -7715,6 +7883,18 @@
             "state": "translated",
             "value": "Apple MIDI Network Session协议，用于通过本地网络在设备之间发送MIDI消息，供音乐制作应用和乐器使用。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بروتوكول Apple MIDI Network Session لإرسال رسائل MIDI بين الأجهزة عبر شبكة محلية، تستخدمه تطبيقات وأدوات إنتاج الموسيقى."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פרוטוקול Apple MIDI Network Session לשליחת הודעות MIDI בין מכשירים ברשת מקומית, נמצא בשימוש על ידי אפליקציות וכלים להפקת מוזיקה."
+          }
         }
       }
     },
@@ -7755,6 +7935,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Apple Mobile Device协议，用于iOS设备与macOS之间的同步、调试和管理通信。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بروتوكول Apple Mobile Device للتواصل بين أجهزة iOS و macOS لأغراض المزامنة والتصحيح والإدارة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פרוטוקול Apple Mobile Device לתקשורת בין מכשירי iOS ל-macOS לצורכי סנכרון, איתור באגים וניהול."
           }
         }
       }
@@ -7797,6 +7989,18 @@
             "state": "translated",
             "value": "Apple Mobile Device协议版本2，用于iOS设备与macOS之间的增强通信。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بروتوكول Apple Mobile Device الإصدار 2 لاتصال محسّن بين أجهزة iOS و macOS."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פרוטוקול Apple Mobile Device גרסה 2 לתקשורת משופרת בין מכשירי iOS ל-macOS."
+          }
         }
       }
     },
@@ -7837,6 +8041,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Apple远程调试服务，包括用于远程GPU调试和图形应用程序性能分析的OpenGL Profiler。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمات Apple Remote Debug بما فيها OpenGL Profiler لتصحيح GPU عن بُعد وتحليل أداء تطبيقات الرسومات."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירותי Apple Remote Debug כולל OpenGL Profiler לאיתור באגי GPU מרחוק וניתוח ביצועים של אפליקציות גרפיקה."
           }
         }
       }
@@ -7879,6 +8095,18 @@
             "state": "translated",
             "value": "Apple Remote Desktop 2.0或更高版本"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Remote Desktop 2.0 أو أحدث"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Remote Desktop 2.0 או חדש יותר"
+          }
         }
       }
     },
@@ -7919,6 +8147,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Apple Remote Desktop管理服务，用于远程控制和管理Mac电脑。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة إدارة Apple Remote Desktop للتحكم عن بُعد في أجهزة Mac وإدارتها."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות הניהול של Apple Remote Desktop לשליטה מרחוק ולניהול מחשבי Mac."
           }
         }
       }
@@ -7961,6 +8201,18 @@
             "state": "translated",
             "value": "Apple TV（第2代）发现服务，支持AirPlay和Netflix流媒体。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة اكتشاف Apple TV (الجيل الثاني) مع دعم AirPlay وبث Netflix."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות גילוי של Apple TV (דור שני) עם תמיכה ב-AirPlay ובהזרמת Netflix."
+          }
         }
       }
     },
@@ -8001,6 +8253,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Apple TV（第3代）发现服务，支持1080p视频。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة اكتشاف Apple TV (الجيل الثالث) مع دعم الفيديو بدقة 1080p."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות גילוי של Apple TV (דור שלישי) עם תמיכה בווידאו 1080p."
           }
         }
       }
@@ -8043,6 +8307,18 @@
             "state": "translated",
             "value": "Apple TV（第4代）发现服务，支持tvOS应用和Siri Remote。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة اكتشاف Apple TV (الجيل الرابع) مع دعم تطبيقات tvOS و Siri Remote."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות גילוי של Apple TV (דור רביעי) עם תמיכה באפליקציות tvOS וב-Siri Remote."
+          }
         }
       }
     },
@@ -8083,6 +8359,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Apple TV Media Remote协议，用于从iOS设备和Mac控制Apple TV的播放、导航和输入。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بروتوكول Apple TV Media Remote للتحكم في تشغيل Apple TV والتنقل والإدخال من أجهزة iOS و Mac."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פרוטוקול Apple TV Media Remote לשליטה בהפעלה, ניווט וקלט של Apple TV ממכשירי iOS ומחשבי Mac."
           }
         }
       }
@@ -8125,6 +8413,18 @@
             "state": "translated",
             "value": "Apple TV iTunes Store发现，用于直接在Apple TV上浏览和购买内容。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اكتشاف Apple TV iTunes Store لتصفح المحتوى وشرائه مباشرة على Apple TV."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "גילוי Apple TV iTunes Store לעיון ולרכישת תוכן ישירות ב-Apple TV."
+          }
         }
       }
     },
@@ -8165,6 +8465,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Apple TV配对服务，用于在Apple TV和遥控设备之间建立安全连接。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة إقران Apple TV لإنشاء اتصالات آمنة بين Apple TV وأجهزة التحكم عن بُعد."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות צימוד של Apple TV ליצירת חיבורים מאובטחים בין Apple TV למכשירי שלט רחוק."
           }
         }
       }
@@ -8207,6 +8519,18 @@
             "state": "translated",
             "value": "Apple Time Capsule网络备份设备，用于无线Time Machine备份。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جهاز Apple Time Capsule لعمل نسخ احتياطية لاسلكية عبر Time Machine."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "התקן הגיבוי הרשתי Apple Time Capsule לגיבויי Time Machine אלחוטיים."
+          }
         }
       }
     },
@@ -8247,6 +8571,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Apple Wi-Fi Sync，用于将iOS设备与macOS上的iTunes或Finder进行无线同步。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Wi-Fi Sync لمزامنة أجهزة iOS لاسلكيًا مع iTunes أو Finder على macOS."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Wi-Fi Sync לסנכרון אלחוטי של מכשירי iOS עם iTunes או Finder ב-macOS."
           }
         }
       }
@@ -8289,6 +8625,18 @@
             "state": "translated",
             "value": "Apple共享iTunes/Music资料库，用于发现本地网络上的共享媒体资料库。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مكتبة Apple iTunes/Music المشتركة لاكتشاف مكتبات الوسائط المشتركة على الشبكة المحلية."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ספריית Apple iTunes/Music משותפת לגילוי ספריות מדיה משותפות ברשת המקומית."
+          }
         }
       }
     },
@@ -8329,6 +8677,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Apple的Bonjour Sleep Proxy服务是零配置网络的开源组件，旨在帮助降低联网电子设备的功耗。充当Sleep Proxy服务器的设备将代替已进入低功耗模式的兼容设备响应Multicast DNS查询。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة Apple Bonjour Sleep Proxy هي مكوّن مفتوح المصدر [1] لشبكات بدون تهيئة، مصمَّم للمساعدة في تقليل استهلاك الطاقة في الأجهزة الإلكترونية المتصلة بالشبكة. [2] يستجيب الجهاز الذي يعمل كخادم وكيل سُبات لاستعلامات Multicast DNS بالنيابة عن جهاز آخر متوافق دخل في وضع توفير الطاقة. يبقى الجهاز في وضع توفير الطاقة نائمًا بينما يردّ خادم وكيل السبات على أي استعلامات Multicast DNS."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות Apple Bonjour Sleep Proxy הוא רכיב קוד פתוח [1] של רישות ללא הגדרות תצורה, שמיועד לסייע בהפחתת צריכת החשמל של מכשירים אלקטרוניים מחוברים לרשת. [2] מכשיר שפועל כשרת sleep proxy יענה לשאילתות Multicast DNS עבור מכשיר תואם אחר שעבר למצב חיסכון בחשמל. המכשיר במצב החיסכון נשאר ישן בעוד שרת ה-sleep proxy עונה לכל שאילתות ה-Multicast DNS."
           }
         }
       }
@@ -8371,6 +8731,18 @@
             "state": "translated",
             "value": "Beats Transfer协议，用于发现和配置Beats音频产品，包括头戴式耳机、耳塞和扬声器。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beats Transfer Protocol لاكتشاف منتجات الصوت من Beats وتهيئتها، بما في ذلك السمّاعات والسمّاعات الداخلية ومكبّرات الصوت."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beats Transfer Protocol לגילוי ולהגדרה של מוצרי האודיו של Beats כולל אוזניות, אוזניות-תוך-אוזן ורמקולים."
+          }
         }
       }
     },
@@ -8411,6 +8783,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "CoAP是一种为受限IoT设备和低功耗网络设计的轻量级协议，类似于HTTP但针对机器对机器通信进行了优化。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CoAP هو بروتوكول خفيف الوزن مصمَّم لأجهزة إنترنت الأشياء المحدودة الموارد والشبكات منخفضة الطاقة، يشبه HTTP لكنه محسَّن للتواصل بين الآلات."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CoAP הוא פרוטוקול קל-משקל המיועד למכשירי IoT מוגבלי-משאבים ולרשתות בעלות צריכת חשמל נמוכה, דומה ל-HTTP אך מותאם לתקשורת מכונה-למכונה."
           }
         }
       }
@@ -8453,6 +8837,18 @@
             "state": "translated",
             "value": "DNS-based Service Discovery（DNS-SD）是用于枚举网络上可用Bonjour服务类型的元查询协议。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DNS-based Service Discovery (DNS-SD) هو بروتوكول الاستعلام الفوقي المستخدم لتعداد أنواع خدمات Bonjour المتاحة على الشبكة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DNS-based Service Discovery (DNS-SD) הוא פרוטוקול המטא-שאילתה המשמש למניית סוגי שירותי Bonjour הזמינים ברשת."
+          }
         }
       }
     },
@@ -8493,6 +8889,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "用于将主机名解析为IP地址的域名系统服务。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة Domain Name System لتحويل أسماء المضيفين إلى عناوين IP."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות Domain Name System לתרגום שמות מארחים לכתובות IP."
           }
         }
       }
@@ -8535,6 +8943,18 @@
             "state": "translated",
             "value": "ES File Explorer文件共享服务，用于在移动设备和电脑之间进行无线文件传输。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة مشاركة الملفات في ES File Explorer لنقل الملفات لاسلكيًا بين الأجهزة المحمولة والحواسيب."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות שיתוף קבצים של ES File Explorer להעברה אלחוטית של קבצים בין מכשירים ניידים למחשבים."
+          }
         }
       }
     },
@@ -8575,6 +8995,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "可扩展消息与呈现协议（XMPP），用于即时消息和在线状态信息。以前称为Jabber。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Extensible Messaging and Presence Protocol (XMPP) للرسائل الفورية ومعلومات التواجد. كان يُعرف سابقًا باسم Jabber."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Extensible Messaging and Presence Protocol (XMPP) להודעות מיידיות ולמידע נוכחות. ידוע בעבר בשם Jabber."
           }
         }
       }
@@ -8617,6 +9049,18 @@
             "state": "translated",
             "value": "用于访问分布式版本控制仓库的Git协议。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بروتوكول Git للوصول إلى مستودعات التحكم بالإصدارات الموزَّعة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פרוטוקול Git לגישה למאגרי בקרת גרסאות מבוזרים."
+          }
         }
       }
     },
@@ -8657,6 +9101,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "用于唤醒设备的GoPro专有协议"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بروتوكول GoPro الخاص لإيقاظ الأجهزة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פרוטוקול ייעודי של GoPro להעיר מכשירים"
           }
         }
       }
@@ -8699,6 +9155,18 @@
             "state": "translated",
             "value": "GoPro专有Web协议，用于通过本地网络进行设备配置、固件更新和媒体管理。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بروتوكول الويب الخاص من GoPro لتهيئة الأجهزة وتحديثات البرامج الثابتة وإدارة الوسائط عبر الشبكة المحلية."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פרוטוקול הווב הייעודי של GoPro להגדרת מכשירים, עדכוני קושחה וניהול מדיה ברשת המקומית."
+          }
         }
       }
     },
@@ -8739,6 +9207,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "用于设置和配置的Google Chromecast设备发现。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اكتشاف جهاز Google Chromecast لإعداده وتهيئته."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "גילוי מכשיר Google Chromecast להתקנה ולהגדרה."
           }
         }
       }
@@ -8781,6 +9261,18 @@
             "state": "translated",
             "value": "在备用端口（通常为8080）上运行的HTTP服务。被许多Web应用程序、开发服务器和IoT设备使用。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة HTTP تعمل على منفذ بديل (غالبًا 8080). تستخدمها كثير من تطبيقات الويب وخوادم التطوير وأجهزة إنترنت الأشياء."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות HTTP הפועל על יציאה חלופית (לרוב 8080). בשימוש אפליקציות ווב רבות, שרתי פיתוח ומכשירי IoT."
+          }
         }
       }
     },
@@ -8821,6 +9313,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "HTTPS（基于TLS的HTTP），用于安全的Web通信。被Web浏览器、App Store、iCloud、FaceTime及大多数需要加密连接的Apple服务使用。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HTTPS (HTTP عبر TLS) للاتصال الآمن على الويب. تستخدمه متصفحات الويب و App Store و iCloud و FaceTime ومعظم خدمات Apple التي تتطلب اتصالات مشفَّرة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HTTPS (HTTP מעל TLS) לתקשורת ווב מאובטחת. בשימוש דפדפנים, App Store, iCloud, FaceTime ורוב שירותי Apple הדורשים חיבורים מוצפנים."
           }
         }
       }
@@ -8863,6 +9367,18 @@
             "state": "translated",
             "value": "Home Assistant开源家庭自动化平台，用于本地智能家居控制和监控。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Home Assistant هو منصة مفتوحة المصدر لأتمتة المنزل للتحكم في المنزل الذكي ومراقبته محليًا."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Home Assistant היא פלטפורמת אוטומציה ביתית בקוד פתוח לשליטה ולניטור של בית חכם באופן מקומי."
+          }
         }
       }
     },
@@ -8903,6 +9419,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "HomeKit使用HomeKit Accessory Protocol（HAP），运行在BLE/Bluetooth Smart或HTTP/TCP/IP协议栈之上。如果配件不直接支持HAP，则需要网关。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يتحدث HomeKit بروتوكول HomeKit Accessory Protocol (HAP) الذي يعمل فوق BLE/Bluetooth Smart أو مكدّس HTTP/TCP/IP. إذا لم يدعم الملحق HAP مباشرة، فستلزم بوابة وسيطة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HomeKit מדבר HomeKit Accessory Protocol (HAP), הפועל מעל BLE/Bluetooth Smart או מעל מחסנית HTTP/TCP/IP. אם אביזר אינו תומך ב-HAP ישירות, נדרש gateway."
           }
         }
       }
@@ -8945,6 +9473,18 @@
             "state": "translated",
             "value": "Hunter Douglas PowerView Hub 2.0，用于通过本地网络控制电动窗帘和百叶窗。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunter Douglas PowerView Hub 2.0 للتحكم في ستائر النوافذ الكهربائية عبر الشبكة المحلية."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunter Douglas PowerView Hub 2.0 לשליטה בווילונות ובתריסים חשמליים ברשת המקומית."
+          }
         }
       }
     },
@@ -8985,6 +9525,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "基于HTTPS的IPP，用于安全的网络打印。大多数现代网络打印机会同时广播此服务和标准IPP。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IPP عبر HTTPS للطباعة الآمنة عبر الشبكة. تعلن معظم الطابعات الشبكية الحديثة عن هذه الخدمة إلى جانب IPP القياسي."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IPP מעל HTTPS להדפסה רשתית מאובטחת. רוב המדפסות הרשתיות המודרניות מפרסמות את השירות הזה לצד IPP הסטנדרטי."
           }
         }
       }
@@ -9027,6 +9579,18 @@
             "state": "translated",
             "value": "如果启用了Telnet，xinetd将从Mac OS X 10.3开始通过Bonjour广播该服务。终端应用程序从Mac OS X 10.3开始浏览Telnet服务器。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إذا تم تفعيل Telnet، فسيعلن عنه xinetd عبر Bonjour بدءًا من Mac OS X 10.3. يبحث تطبيق Terminal عن خوادم Telnet بدءًا من Mac OS X 10.3."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אם Telnet מופעל, xinetd יפרסם אותו דרך Bonjour החל מ-Mac OS X 10.3. אפליקציית Terminal מחפשת שרתי Telnet החל מ-Mac OS X 10.3."
+          }
         }
       }
     },
@@ -9067,6 +9631,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Jenkins CI/CD自动化服务器，用于软件项目的持续集成和持续交付。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خادم Jenkins للأتمتة CI/CD للتكامل المستمر والتسليم المستمر لمشاريع البرمجيات."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שרת אוטומציה Jenkins ל-CI/CD לשילוב מתמשך ולמסירה מתמשכת של פרויקטי תוכנה."
           }
         }
       }
@@ -9109,6 +9685,18 @@
             "state": "translated",
             "value": "KeynoteAccess用于在使用Keynote Remote控制幻灯片时发送远程请求/响应"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يُستخدم KeynoteAccess لإرسال الطلبات والردود عن بُعد عند التحكم في عرض شرائح باستخدام Keynote Remote"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KeynoteAccess משמש לשליחת בקשות ותשובות מרחוק בעת שליטה במצגת באמצעות Keynote Remote"
+          }
         }
       }
     },
@@ -9149,6 +9737,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "KeynotePairing用于将Keynote Remote与Keynote配对"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يُستخدم KeynotePairing لإقران Keynote Remote بـ Keynote"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KeynotePairing משמש לצימוד Keynote Remote עם Keynote"
           }
         }
       }
@@ -9191,6 +9791,18 @@
             "state": "translated",
             "value": "轻量级目录访问协议，用于通过网络访问和维护分布式目录信息服务。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lightweight Directory Access Protocol للوصول إلى خدمات معلومات الدليل الموزَّعة وصيانتها عبر الشبكة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lightweight Directory Access Protocol לגישה ולתחזוקה של שירותי מידע ספרייה מבוזרים על-פני רשת."
+          }
         }
       }
     },
@@ -9231,6 +9843,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Linux设备广播服务，常被Ubuntu和Raspberry Pi设备用于在网络上宣告其存在。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة إعلان أجهزة Linux، تستخدمها أجهزة Ubuntu و Raspberry Pi غالبًا للإعلان عن وجودها على الشبكة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות פרסום של מכשירי Linux, שמשמש בדרך כלל מכשירי Ubuntu ו-Raspberry Pi להכריז על נוכחותם ברשת."
           }
         }
       }
@@ -9273,6 +9897,18 @@
             "state": "translated",
             "value": "Mac OS X Server从Mac OS X 10.3开始广播此服务。Server Admin从Mac OS X Server 10.3开始浏览此服务。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تُعلن أجهزة Mac OS X Server عن هذه الخدمة بدءًا من Mac OS X 10.3. يبحث Server Admin عن هذه الخدمة بدءًا من Mac OS X Server 10.3."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מחשבי Mac OS X Server מפרסמים את השירות הזה החל מ-Mac OS X 10.3. Server Admin מחפש את השירות הזה החל מ-Mac OS X Server 10.3."
+          }
         }
       }
     },
@@ -9313,6 +9949,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Matter（前身为Project CHIP）是由Apple、Google、Amazon和Samsung支持的统一智能家居连接标准，用于可互操作的IoT设备。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Matter (سابقًا Project CHIP) هو معيار اتصال موحَّد للمنزل الذكي تدعمه Apple و Google و Amazon و Samsung لأجهزة إنترنت الأشياء المتوافقة فيما بينها."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Matter (לשעבר Project CHIP) הוא תקן קישוריות מאוחד לבית חכם הנתמך על ידי Apple, Google, Amazon ו-Samsung עבור מכשירי IoT הפועלים יחד."
           }
         }
       }
@@ -9355,6 +10003,18 @@
             "state": "translated",
             "value": "MediaRemoteTV是一种基于TCP的协议，使用长度前缀的protobuf编码消息在客户端和服务器之间通信。Apple TV充当服务器，客户端可以连接以发出各种命令（播放、键盘、语音、游戏控制器等）。所有消息在客户端与Apple TV之间协商配对后加密。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MediaRemoteTV هو بروتوكول قائم على TCP يستخدم رسائل protobuf ذات بادئة طول للتواصل بين العميل والخادم. يعمل Apple TV كخادم ويمكن للعملاء الاتصال به لإصدار أوامر متعددة (التشغيل ولوحة المفاتيح والصوت ووحدة تحكم الألعاب وغيرها). جميع الرسائل مشفَّرة بعد التفاوض على إقران بين العميل و Apple TV. لمزيد من المعلومات، تفضّل بزيارة https://github.com/jeanregisser/mediaremotetv-protocol/tree/master/communication."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MediaRemoteTV הוא פרוטוקול מבוסס TCP המשתמש בהודעות protobuf עם תחילית אורך לתקשורת בין הלקוח לשרת. ה-Apple TV משמש כשרת והלקוחות יכולים להתחבר אליו כדי לשלוח פקודות שונות (השמעה, מקלדת, קול, בקר משחק וכו'). כל ההודעות מוצפנות לאחר משא ומתן על הצימוד בין הלקוח ל-Apple TV. למידע נוסף ראו https://github.com/jeanregisser/mediaremotetv-protocol/tree/master/communication."
+          }
         }
       }
     },
@@ -9395,6 +10055,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "消息队列遥测传输（MQTT）是一种在IoT和家庭自动化系统中广泛使用的轻量级消息协议。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Message Queuing Telemetry Transport (MQTT) هو بروتوكول رسائل خفيف الوزن مستخدم على نطاق واسع في أنظمة إنترنت الأشياء وأتمتة المنزل."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Message Queuing Telemetry Transport (MQTT) הוא פרוטוקול הודעות קל-משקל בשימוש נרחב במערכות IoT ובאוטומציה ביתית."
           }
         }
       }
@@ -9437,6 +10109,18 @@
             "state": "translated",
             "value": "Microsoft远程桌面协议，用于远程访问Windows桌面和服务器。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Microsoft Remote Desktop Protocol للوصول عن بُعد إلى أجهزة وخوادم Windows."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Microsoft Remote Desktop Protocol לגישה מרחוק למחשבי Windows ולשרתי Windows."
+          }
         }
       }
     },
@@ -9477,6 +10161,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "用于网络可访问数据库服务的MySQL关系数据库服务器。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خادم قواعد بيانات MySQL العلائقي لخدمات قواعد البيانات المتاحة عبر الشبكة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שרת בסיס נתונים יחסי MySQL לשירותי בסיסי נתונים נגישים ברשת."
           }
         }
       }
@@ -9519,6 +10215,18 @@
             "state": "translated",
             "value": "NVIDIA Shield Android TV发现服务，用于在本地网络上识别Shield TV设备。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة اكتشاف NVIDIA Shield Android TV لتحديد أجهزة Shield TV على الشبكة المحلية."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות גילוי של NVIDIA Shield Android TV לזיהוי מכשירי Shield TV ברשת המקומית."
+          }
         }
       }
     },
@@ -9559,6 +10267,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "NVIDIA Shield GameStream服务，用于通过本地网络将PC游戏流式传输到NVIDIA Shield设备。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة NVIDIA Shield GameStream لبث ألعاب PC إلى أجهزة NVIDIA Shield عبر الشبكة المحلية."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות NVIDIA Shield GameStream להזרמת משחקי PC למכשירי NVIDIA Shield ברשת המקומית."
           }
         }
       }
@@ -9601,6 +10321,18 @@
             "state": "translated",
             "value": "NetBIOS数据报服务，用于本地网络上设备之间的无连接消息传递。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة NetBIOS Datagram للمراسلة بدون اتصال بين الأجهزة على الشبكات المحلية."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות NetBIOS Datagram להעברת מסרים ללא חיבור בין מכשירים ברשתות מקומיות."
+          }
         }
       }
     },
@@ -9641,6 +10373,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "NetBIOS名称服务，用于在本地网络上将NetBIOS名称解析为IP地址。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة NetBIOS Name لتحويل أسماء NetBIOS إلى عناوين IP على الشبكات المحلية."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות NetBIOS Name לתרגום שמות NetBIOS לכתובות IP ברשתות מקומיות."
           }
         }
       }
@@ -9683,6 +10427,18 @@
             "state": "translated",
             "value": "NetBIOS会话服务，用于通过TCP/IP网络进行传统的Windows文件和打印机共享。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة NetBIOS Session لمشاركة الملفات والطابعات القديمة في Windows عبر شبكات TCP/IP."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות NetBIOS Session לשיתוף קבצים ומדפסות מדור Windows ישן על-פני רשתות TCP/IP."
+          }
         }
       }
     },
@@ -9723,6 +10479,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Netgear ReadyNAS网络存储设备发现和管理。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اكتشاف وإدارة أجهزة التخزين المتصلة بالشبكة Netgear ReadyNAS."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "גילוי וניהול של התקני אחסון ברשת מסוג Netgear ReadyNAS."
           }
         }
       }
@@ -9765,6 +10533,18 @@
             "state": "translated",
             "value": "网络扫描仪发现服务，用于在本地网络上定位扫描仪和多功能设备。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة اكتشاف الماسحات الضوئية الشبكية لتحديد الماسحات والأجهزة متعددة الوظائف على الشبكة المحلية."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות גילוי סורקים רשתיים לאיתור סורקים ומכשירים רב-תכליתיים ברשת המקומית."
+          }
         }
       }
     },
@@ -9805,6 +10585,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "OmniGroup应用同步服务，被OmniGraffle、OmniOutliner及其他OmniGroup生产力应用使用。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة مزامنة تطبيقات OmniGroup المستخدمة في OmniGraffle و OmniOutliner وغيرها من تطبيقات الإنتاجية من OmniGroup."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות סנכרון של אפליקציות OmniGroup, בשימוש OmniGraffle, OmniOutliner ושאר אפליקציות הפרודוקטיביות של OmniGroup."
           }
         }
       }
@@ -9847,6 +10639,18 @@
             "state": "translated",
             "value": "Open Directory从Mac OS X 10.2开始广播此服务。Workgroup Manager从Mac OS X Server 10.2开始浏览此服务。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يعلن Open Directory عن هذه الخدمة بدءًا من Mac OS X 10.2. يبحث Workgroup Manager عن هذه الخدمة بدءًا من Mac OS X Server 10.2."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Directory מפרסם את השירות הזה החל מ-Mac OS X 10.2. Workgroup Manager מחפש את השירות הזה החל מ-Mac OS X Server 10.2."
+          }
         }
       }
     },
@@ -9887,6 +10691,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "原始Apple TV发现服务，用于在本地网络上识别第一代Apple TV设备。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة اكتشاف Apple TV الأصلية لتحديد أجهزة Apple TV من الجيل الأول على الشبكة المحلية."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות הגילוי המקורי של Apple TV לזיהוי מכשירי Apple TV מהדור הראשון ברשת המקומית."
           }
         }
       }
@@ -9929,6 +10745,18 @@
             "state": "translated",
             "value": "Physical Web（Eddystone）信标发现服务，用于与附近广播URL的Bluetooth LE信标进行交互。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة اكتشاف منارات Physical Web (Eddystone) للتفاعل مع منارات Bluetooth LE القريبة التي تبث عناوين URL."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות גילוי משואות Physical Web (Eddystone) לאינטראקציה עם משואות Bluetooth LE קרובות שמשדרות כתובות URL."
+          }
         }
       }
     },
@@ -9969,6 +10797,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "图片传输协议，用于通过网络从数码相机和其他成像设备传输图像。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Picture Transfer Protocol لنقل الصور من الكاميرات الرقمية وغيرها من أجهزة التصوير عبر الشبكة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Picture Transfer Protocol להעברת תמונות ממצלמות דיגיטליות וממכשירי הדמיה אחרים על-פני רשת."
           }
         }
       }
@@ -10011,6 +10851,18 @@
             "state": "translated",
             "value": "PostgreSQL关系数据库服务器。当配置bonjour = on时，PostgreSQL支持基于Bonjour的服务发现。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خادم قواعد بيانات PostgreSQL العلائقي. يدعم PostgreSQL اكتشاف الخدمات عبر Bonjour عند تهيئته بـ bonjour = on."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שרת בסיס נתונים יחסי PostgreSQL. PostgreSQL תומך בגילוי שירותים מבוסס Bonjour כשמוגדר עם bonjour = on."
+          }
         }
       }
     },
@@ -10051,6 +10903,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Print Center从Mac OS X 10.2开始浏览IPP打印机。有关创建Bonjour打印机的更多信息，请参阅Bonjour打印规范。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يبحث Print Center عن طابعات IPP بدءًا من Mac OS X 10.2. للمزيد من المعلومات حول إنشاء طابعة Bonjour، يرجى الاطلاع على Bonjour Printing Specification."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Print Center מחפש מדפסות IPP החל מ-Mac OS X 10.2. למידע נוסף על יצירת מדפסת Bonjour, ראו את Bonjour Printing Specification."
           }
         }
       }
@@ -10093,6 +10957,18 @@
             "state": "translated",
             "value": "Print Center从Mac OS X 10.2开始浏览LPR打印机。有关创建Bonjour打印机的更多信息，请参阅Bonjour打印规范。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يبحث Print Center عن طابعات LPR بدءًا من Mac OS X 10.2. للمزيد من المعلومات حول إنشاء طابعة Bonjour، يرجى الاطلاع على Bonjour Printing Specification."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Print Center מחפש מדפסות LPR החל מ-Mac OS X 10.2. למידע נוסף על יצירת מדפסת Bonjour, ראו את Bonjour Printing Specification."
+          }
         }
       }
     },
@@ -10133,6 +11009,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Print Center从Mac OS X 10.2开始浏览PDL Data Stream打印机。有关创建Bonjour打印机的更多信息，请参阅Bonjour打印规范。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يبحث Print Center عن طابعات PDL Data Stream بدءًا من Mac OS X 10.2. للمزيد من المعلومات حول إنشاء طابعة Bonjour، يرجى الاطلاع على Bonjour Printing Specification."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Print Center מחפש מדפסות PDL Data Stream החל מ-Mac OS X 10.2. למידע נוסף על יצירת מדפסת Bonjour, ראו את Bonjour Printing Specification."
           }
         }
       }
@@ -10175,6 +11063,18 @@
             "state": "translated",
             "value": "Prometheus系统监控和警报工具包，用于从配置的目标收集和查询指标。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prometheus هو مجموعة أدوات لمراقبة الأنظمة وإطلاق التنبيهات، تستخدم لجمع المقاييس والاستعلام عنها من الأهداف المُهيَّأة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prometheus היא ערכת כלים לניטור מערכות ולהתראות, לאיסוף ושאילתת מטריקות מיעדים שהוגדרו."
+          }
         }
       }
     },
@@ -10215,6 +11115,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "音频/视频内容流媒体协议"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بروتوكول لبث محتوى الصوت / الفيديو"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פרוטוקול להזרמת תוכן אודיו / וידאו"
           }
         }
       }
@@ -10257,6 +11169,18 @@
             "state": "translated",
             "value": "RFB（远程帧缓冲）是一种用于远程访问图形用户界面的简单协议。由于它在帧缓冲级别工作，适用于所有窗口系统和应用程序，包括Microsoft Windows、macOS和X Window System。RFB是Virtual Network Computing（VNC）及其衍生产品使用的协议。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "RFB (remote framebuffer) هو بروتوكول بسيط للوصول عن بُعد إلى واجهات المستخدم الرسومية. لأنه يعمل على مستوى المخزن المؤقت للإطار، فهو يصلح لجميع أنظمة النوافذ والتطبيقات، بما في ذلك Microsoft Windows و macOS و X Window System. RFB هو البروتوكول المستخدم في Virtual Network Computing (VNC) ومشتقاتها."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "RFB (remote framebuffer) הוא פרוטוקול פשוט לגישה מרחוק לממשקי משתמש גרפיים. בגלל שהוא פועל ברמת ה-framebuffer הוא תקף לכל מערכות החלונות ולכל היישומים, כולל Microsoft Windows, macOS ו-X Window System. RFB הוא הפרוטוקול בשימוש Virtual Network Computing (VNC) ובנגזרותיו."
+          }
         }
       }
     },
@@ -10297,6 +11221,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Roku External Control Protocol（ECP），用于在本地网络上发现和控制Roku流媒体设备。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Roku External Control Protocol (ECP) لاكتشاف أجهزة بث Roku والتحكم بها على الشبكة المحلية."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Roku External Control Protocol (ECP) לגילוי ולשליטה במכשירי הזרמה של Roku ברשת המקומית."
           }
         }
       }
@@ -10339,6 +11275,18 @@
             "state": "translated",
             "value": "SMB2/SMB3文件共享协议，被现代Windows系统使用，相比原始SMB协议具有更好的性能和安全性。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بروتوكول مشاركة الملفات SMB2/SMB3 تستخدمه أنظمة Windows الحديثة لأداء وأمان محسَّنين مقارنةً ببروتوكول SMB الأصلي."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פרוטוקול שיתוף קבצים SMB2/SMB3 בשימוש מערכות Windows מודרניות לביצועים ולאבטחה משופרים לעומת פרוטוקול SMB המקורי."
+          }
         }
       }
     },
@@ -10379,6 +11327,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "通过SSH连接进行安全文件传输的SSH文件传输协议。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SSH File Transfer Protocol لنقل الملفات بأمان عبر اتصال SSH."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SSH File Transfer Protocol להעברת קבצים מאובטחת על-פני חיבור SSH."
           }
         }
       }
@@ -10421,6 +11381,18 @@
             "state": "translated",
             "value": "基于HTTPS的安全eSCL（AirScan）扫描仪协议，用于免驱动网络扫描。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بروتوكول الماسحات الآمن eSCL (AirScan) عبر HTTPS للمسح الشبكي بدون حاجة إلى برامج تشغيل."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פרוטוקול הסורקים המאובטח eSCL (AirScan) מעל HTTPS לסריקה רשתית ללא דרייברים."
+          }
         }
       }
     },
@@ -10461,6 +11433,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Server Message Block（SMB）是macOS自OS X 10.9 Mavericks以来的默认文件共享协议，取代了AFP。也被Windows和Linux/Samba用于网络文件共享。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Server Message Block (SMB) هو بروتوكول مشاركة الملفات الافتراضي في macOS منذ OS X 10.9 Mavericks، حيث حلّ محل AFP. يستخدمه أيضًا Windows و Linux/Samba لمشاركة الملفات عبر الشبكة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Server Message Block (SMB) הוא פרוטוקול שיתוף הקבצים ברירת המחדל ב-macOS מאז OS X 10.9 Mavericks, והחליף את AFP. בשימוש גם Windows ו-Linux/Samba לשיתוף קבצים ברשת."
           }
         }
       }
@@ -10503,6 +11487,18 @@
             "state": "translated",
             "value": "与Google Cast相关的服务，这是一项实现多屏体验的技术。详情请参阅developers.google.com/cast"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة متعلقة بـ Google Cast وهي تقنية لتمكين تجارب متعددة الشاشات. راجع developers.google.com/cast لمزيد من التفاصيل"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות הקשור ל-Google Cast, טכנולוגיה לאפשור חוויות מרובות-מסכים. ראו developers.google.com/cast לפרטים נוספים"
+          }
         }
       }
     },
@@ -10543,6 +11539,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "与Google Expeditions相关的服务，这是一项通过本地无线网络实现多参与者虚拟实地考察体验的技术。详情请参阅http://g.co/expeditions"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة متعلقة بـ Google Expeditions وهي تقنية لتمكين تجارب رحلات ميدانية افتراضية متعددة المشاركين عبر شبكة لاسلكية محلية. راجع http://g.co/expeditions لمزيد من التفاصيل"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות הקשור ל-Google Expeditions, טכנולוגיה לאפשור חוויות סיורים וירטואליים מרובי-משתתפים על-פני רשת אלחוטית מקומית. ראו http://g.co/expeditions לפרטים נוספים"
           }
         }
       }
@@ -10585,6 +11593,18 @@
             "state": "translated",
             "value": "简单服务发现协议，被UPnP设备用于在本地网络上宣告和发现服务。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple Service Discovery Protocol تستخدمه أجهزة UPnP للإعلان عن الخدمات واكتشافها على الشبكة المحلية."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple Service Discovery Protocol בשימוש מכשירי UPnP להכרזה על שירותים ולגילויָם ברשת המקומית."
+          }
         }
       }
     },
@@ -10625,6 +11645,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sketch设计应用镜像服务，用于在iOS设备上实时预览设计。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة عكس تطبيق Sketch للتصميم لمعاينة التصاميم على أجهزة iOS في الوقت الفعلي."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות מראָה של אפליקציית העיצוב Sketch לתצוגה מקדימה של עיצובים על מכשירי iOS בזמן אמת."
           }
         }
       }
@@ -10667,6 +11699,18 @@
             "state": "translated",
             "value": "Sonos无线扬声器发现和控制协议。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بروتوكول اكتشاف مكبّرات الصوت اللاسلكية والتحكم بها من Sonos."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פרוטוקול גילוי ושליטה לרמקולים אלחוטיים של Sonos."
+          }
         }
       }
     },
@@ -10707,6 +11751,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Spotify Connect服务，用于发现和向支持Spotify的扬声器、电视及其他设备流式传输音乐。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة Spotify Connect لاكتشاف الموسيقى وبثّها إلى مكبّرات الصوت والتلفزيونات والأجهزة الأخرى الداعمة لـ Spotify."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות Spotify Connect לגילוי ולהזרמת מוזיקה לרמקולים, לטלוויזיות ולמכשירים אחרים שתומכים ב-Spotify."
           }
         }
       }
@@ -10749,6 +11805,18 @@
             "state": "translated",
             "value": "Finder从Mac OS X 10.2开始浏览NFS服务器。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يبحث Finder عن خوادم NFS بدءًا من Mac OS X 10.2."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finder מחפש שרתי NFS החל מ-Mac OS X 10.2."
+          }
         }
       }
     },
@@ -10789,6 +11857,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Finder会浏览WebDAV服务器，但由于一个错误（r. 3171023），双击已发现的服务器无法连接。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يبحث Finder عن خوادم WebDAV، لكن بسبب خطأ (r. 3171023) فإن النقر المزدوج على خادم مكتشف يفشل في الاتصال."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finder מחפש שרתי WebDAV, אך בגלל באג (r. 3171023) לחיצה כפולה על שרת שהתגלה נכשלת בחיבור."
           }
         }
       }
@@ -10831,6 +11911,18 @@
             "state": "translated",
             "value": "Touchable应用服务，用于将iOS设备作为Ableton Live等音乐制作软件的遥控器。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة تطبيق Touchable لاستخدام جهاز iOS كوحدة تحكم عن بُعد لبرامج إنتاج الموسيقى مثل Ableton Live."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות אפליקציית Touchable לשימוש במכשיר iOS כשלט רחוק עבור תוכנות הפקת מוזיקה כמו Ableton Live."
+          }
         }
       }
     },
@@ -10871,6 +11963,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Apple设备使用的未公开AirPlay 2服务类型，用于增强音频流媒体和多房间播放。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نوع خدمة AirPlay 2 غير موثّق تستخدمه أجهزة Apple لبث صوتي محسَّن وتشغيل في غرف متعددة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סוג שירות AirPlay 2 לא מתועד בשימוש מכשירי Apple להזרמת אודיו משופרת ולהשמעה במספר חדרים."
           }
         }
       }
@@ -10913,6 +12017,18 @@
             "state": "translated",
             "value": "被Apple设备用于Continuity功能，包括iPhone、iPad、Mac和Apple Watch之间的Handoff、通用剪贴板和自动解锁。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تستخدمه أجهزة Apple لميزات Continuity بما في ذلك Handoff و Universal Clipboard و Auto Unlock بين iPhone و iPad و Mac و Apple Watch."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בשימוש מכשירי Apple לתכונות Continuity, כולל Handoff, Universal Clipboard ו-Auto Unlock בין iPhone, iPad, Mac ו-Apple Watch."
+          }
         }
       }
     },
@@ -10953,6 +12069,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "从Mac OS X 10.2.2开始在共享偏好设置面板中的FTP访问中使用。Finder从Mac OS X 10.3开始浏览FTP服务器。终端应用程序也从Mac OS X 10.3开始浏览FTP服务器。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يستخدمه FTP Access في لوحة تفضيلات المشاركة بدءًا من Mac OS X 10.2.2. يبحث Finder عن خوادم FTP بدءًا من Mac OS X 10.3. يبحث تطبيق Terminal أيضًا عن خوادم FTP بدءًا من Mac OS X 10.3."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בשימוש FTP Access בחלונית ההעדפות 'שיתוף' החל מ-Mac OS X 10.2.2. Finder מחפש שרתי FTP החל מ-Mac OS X 10.3. גם אפליקציית Terminal מחפשת שרתי FTP החל מ-Mac OS X 10.3."
           }
         }
       }
@@ -10995,6 +12123,18 @@
             "state": "translated",
             "value": "从Mac OS X Server 10.3开始被Open Directory密码服务器使用。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يستخدمه Open Directory Password Server بدءًا من Mac OS X Server 10.3."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בשימוש Open Directory Password Server החל מ-Mac OS X Server 10.3."
+          }
         }
       }
     },
@@ -11035,6 +12175,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "从Mac OS X 10.2开始在共享偏好设置面板中的个人文件共享中使用。Finder从Mac OS X 10.2开始浏览AFP服务器。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يستخدمه Personal File Sharing في لوحة تفضيلات المشاركة بدءًا من Mac OS X 10.2. يبحث Finder عن خوادم AFP بدءًا من Mac OS X 10.2."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בשימוש Personal File Sharing בחלונית ההעדפות 'שיתוף' החל מ-Mac OS X 10.2. Finder מחפש שרתי AFP החל מ-Mac OS X 10.2."
           }
         }
       }
@@ -11077,6 +12229,18 @@
             "state": "translated",
             "value": "从Mac OS X 10.2.4开始在共享偏好设置面板中的个人Web共享中使用，用于广播用户的Sites文件夹。Safari可用于浏览Web服务器。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يستخدمه Personal Web Sharing في لوحة تفضيلات المشاركة للإعلان عن مجلدات Sites الخاصة بالمستخدم بدءًا من Mac OS X 10.2.4. يمكن استخدام Safari للبحث عن خوادم الويب."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בשימוש Personal Web Sharing בחלונית ההעדפות 'שיתוף' לפרסום תיקיות Sites של המשתמש החל מ-Mac OS X 10.2.4. ניתן להשתמש ב-Safari כדי לחפש שרתי ווב."
+          }
         }
       }
     },
@@ -11117,6 +12281,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "从Mac OS X 10.2开始在共享偏好设置面板中的远程Apple Events中使用。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يستخدمه Remote AppleEvents في لوحة تفضيلات المشاركة بدءًا من Mac OS X 10.2."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בשימוש Remote AppleEvents בחלונית ההעדפות 'שיתוף' החל מ-Mac OS X 10.2."
           }
         }
       }
@@ -11159,6 +12335,18 @@
             "state": "translated",
             "value": "从Mac OS X 10.3开始在共享偏好设置面板中的远程登录中使用。终端应用程序从Mac OS X 10.3开始浏览SSH服务器。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يستخدمه Remote Login في لوحة تفضيلات المشاركة بدءًا من Mac OS X 10.3. يبحث تطبيق Terminal عن خوادم SSH بدءًا من Mac OS X 10.3."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בשימוש Remote Login בחלונית ההעדפות 'שיתוף' החל מ-Mac OS X 10.3. אפליקציית Terminal מחפשת שרתי SSH החל מ-Mac OS X 10.3."
+          }
         }
       }
     },
@@ -11199,6 +12387,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "被Xcode的分布式构建功能使用。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يستخدمه Xcode في ميزة Distributed Builds الخاصة به."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בשימוש Xcode בתכונת Distributed Builds שלו."
           }
         }
       }
@@ -11241,6 +12441,18 @@
             "state": "translated",
             "value": "被Mac OS X 10.2附带的iChat 1.0使用。随着iChat AV中\"presence\"服务的引入，此服务已被弃用。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يستخدمه iChat 1.0 الذي شُحن مع Mac OS X 10.2. هذه الخدمة قديمة الآن مع تقديم خدمة \"presence\" في iChat AV. انظر أدناه."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בשימוש iChat 1.0 שיצא עם Mac OS X 10.2. השירות הזה הוצא משימוש עם הצגת שירות ה-\"presence\" ב-iChat AV. ראו להלן."
+          }
         }
       }
     },
@@ -11281,6 +12493,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "被Mac OS X 10.3附带的iChat AV使用。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يستخدمه iChat AV الذي شُحن مع Mac OS X 10.3."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בשימוש iChat AV שיצא עם Mac OS X 10.3."
           }
         }
       }
@@ -11323,6 +12547,18 @@
             "state": "translated",
             "value": "从Mac OS X 10.2开始被AirPort管理实用工具使用，用于定位和配置AirPort基站（双以太网）和AirPort Extreme基站。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يستخدمه AirPort Admin Utility بدءًا من Mac OS X 10.2 لتحديد موقع AirPort Base Station (Dual Ethernet) و AirPort Extreme Base Station وتهيئتها."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בשימוש AirPort Admin Utility החל מ-Mac OS X 10.2 לאיתור ולהגדרה של AirPort Base Station (Dual Ethernet) ושל AirPort Extreme Base Station."
+          }
         }
       }
     },
@@ -11363,6 +12599,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "被AirPort Extreme基站用于共享USB打印机。打印机设置实用工具从Mac OS X 10.3开始浏览使用Remote I/O USB Printer Protocol的AirPort Extreme共享USB打印机。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تستخدمه AirPort Extreme Base Station لمشاركة طابعات USB. يبحث Printer Setup Utility عن طابعات USB المشتركة عبر AirPort Extreme التي تستخدم Remote I/O USB Printer Protocol بدءًا من Mac OS X 10.3."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בשימוש AirPort Extreme Base Station לשיתוף מדפסות USB. Printer Setup Utility מחפש מדפסות USB משותפות של AirPort Extreme שמשתמשות ב-Remote I/O USB Printer Protocol החל מ-Mac OS X 10.3."
           }
         }
       }
@@ -11405,6 +12653,18 @@
             "state": "translated",
             "value": "被图像捕捉应用程序用于在Mac OS X 10.3中共享相机。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يستخدمه تطبيق Image Capture لمشاركة الكاميرات في Mac OS X 10.3."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בשימוש אפליקציית Image Capture לשיתוף מצלמות ב-Mac OS X 10.3."
+          }
         }
       }
     },
@@ -11445,6 +12705,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "被Xserve RAID管理实用工具用于定位和配置Xserve RAID硬件。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تستخدمه Xserve RAID Admin Utility لتحديد موقع أجهزة Xserve RAID وتهيئتها."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בשימוש Xserve RAID Admin Utility לאיתור ולהגדרה של חומרת Xserve RAID."
           }
         }
       }
@@ -11487,6 +12759,18 @@
             "state": "translated",
             "value": "VNC远程桌面访问协议。RFB的替代服务类型，常由VNC服务器实现广播。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بروتوكول الوصول إلى سطح المكتب عن بُعد VNC. نوع خدمة بديل لـ RFB، تعلن عنه شائعًا تنفيذات خوادم VNC."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פרוטוקול גישה לשולחן עבודה מרחוק VNC. סוג שירות חלופי ל-RFB, נפוץ בפרסום על ידי מימושי שרתי VNC."
+          }
         }
       }
     },
@@ -11527,6 +12811,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Wi-Fi通话服务，用于通过Wi-Fi网络而非蜂窝网络拨打和接听电话。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة Wi-Fi Calling لإجراء واستقبال المكالمات الهاتفية عبر شبكة Wi-Fi بدلاً من شبكة الجوال."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות Wi-Fi Calling לביצוע ולקבלת שיחות טלפון על-פני רשת Wi-Fi במקום סלולר."
           }
         }
       }
@@ -11569,6 +12865,18 @@
             "state": "translated",
             "value": "eSCL（AirScan）扫描仪协议，用于免驱动网络扫描。大多数现代网络扫描仪和多功能打印机支持此协议。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بروتوكول الماسحات eSCL (AirScan) للمسح الشبكي بدون برامج تشغيل. يدعمه معظم الماسحات الضوئية المتصلة بالشبكة والطابعات متعددة الوظائف الحديثة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פרוטוקול הסורקים eSCL (AirScan) לסריקה רשתית ללא דרייברים. נתמך על ידי רוב הסורקים הרשתיים והמדפסות הרב-תכליתיות המודרניים."
+          }
         }
       }
     },
@@ -11610,6 +12918,18 @@
             "state": "translated",
             "value": "iTunes Home Sharing，用于在同一网络上的授权电脑和Apple设备之间流式传输音乐、电影和电视节目。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iTunes Home Sharing لبث الموسيقى والأفلام والبرامج التلفزيونية بين الحواسيب المعتمدة وأجهزة Apple على الشبكة نفسها."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iTunes Home Sharing להזרמת מוזיקה, סרטים ותוכניות טלוויזיה בין מחשבים מורשים ומכשירי Apple באותה רשת."
+          }
         }
       }
     },
@@ -11650,6 +12970,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "macOS设备信息广播，用于在本地网络上识别Mac电脑。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بث معلومات أجهزة macOS لتحديد أجهزة Mac على الشبكة المحلية."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שידור מידע על מכשירי macOS לזיהוי מחשבי Mac ברשת המקומית."
           }
         }
       }
@@ -13812,6 +15144,18 @@
             "state": "translated",
             "value": "用于Apple TV和HomePod等Thread边界路由器的Thread Mesh调试协议。TXT记录包含Thread网络名称、通道和PAN ID。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بروتوكول Thread Mesh Commissioning لموجِّهات حدود Thread مثل Apple TV و HomePod. تكشف سجلات TXT عن اسم شبكة Thread والقناة و PAN ID."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פרוטוקול Thread Mesh Commissioning עבור ראוטרי שוליים של Thread כגון Apple TV ו-HomePod. רשומות TXT חושפות את שם רשת ה-Thread, את הערוץ ואת ה-PAN ID."
+          }
         }
       }
     },
@@ -13853,6 +15197,18 @@
             "state": "translated",
             "value": "处于调试模式的Matter设备，正在本地网络上主动广播其配对和设置可用性。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جهاز Matter في وضع التشغيل، يعلن بنشاط عن توفره للإقران والإعداد على الشبكة المحلية."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מכשיר Matter במצב הקצאה, שמשדר באופן פעיל את זמינותו לצימוד ולהתקנה ברשת המקומית."
+          }
         }
       }
     },
@@ -13893,6 +15249,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "能够将新的Matter配件加入智能家居网络的Matter调试器设备。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جهاز Matter commissioner قادر على إضافة ملحقات Matter جديدة إلى شبكة المنزل الذكي."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מכשיר Matter commissioner שמסוגל לצרף אביזרי Matter חדשים לרשת הבית החכם."
           }
         }
       }
@@ -17433,6 +18801,18 @@
             "state": "translated",
             "value": "通过TLS的CalDAV日历共享——CalDAV的现代加密变体。当两个端点同时广播时，邮件和日历客户端优先使用此选项。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مشاركة تقويم CalDAV عبر TLS — النسخة الحديثة المشفّرة من CalDAV. تفضّل عملاء البريد والتقويم هذه عند الإعلان عن كلا نقطتي الاتصال."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שיתוף לוח שנה של CalDAV מעל TLS — הגרסה המודרנית והמוצפנת של CalDAV. לקוחות דואר ולוח שנה מעדיפים אותה כשמפורסמות שתי נקודות הקצה."
+          }
         }
       }
     },
@@ -17473,6 +18853,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "CalDAV是Apple Calendar、Fastmail、Nextcloud和大多数其他日历服务使用的标准日历共享协议。其服务发现在RFC 6764中定义。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CalDAV هو البروتوكول القياسي لمشاركة التقاويم المستخدم من قِبل Apple Calendar و Fastmail و Nextcloud ومعظم خدمات التقويم الأخرى. مُعرَّف لاكتشاف الخدمات في RFC 6764."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CalDAV הוא הפרוטוקול הסטנדרטי לשיתוף לוחות שנה בו משתמשים Apple Calendar, Fastmail, Nextcloud ורוב שירותי לוחות השנה האחרים. מוגדר עבור גילוי שירותים ב-RFC 6764."
           }
         }
       }
@@ -17515,6 +18907,18 @@
             "state": "translated",
             "value": "通过TLS的CardDAV联系人共享——CardDAV的现代加密变体。当两个端点同时广播时，邮件和日历客户端优先使用此选项。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مشاركة جهات الاتصال CardDAV عبر TLS — النسخة الحديثة المشفّرة من CardDAV. تفضّل عملاء البريد والتقويم هذه عند الإعلان عن كلا نقطتي الاتصال."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שיתוף אנשי קשר של CardDAV מעל TLS — הגרסה המודרנית והמוצפנת של CardDAV. לקוחות דואר ולוח שנה מעדיפים אותה כשמפורסמות שתי נקודות הקצה."
+          }
         }
       }
     },
@@ -17555,6 +18959,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "CardDAV是Apple Contacts、Fastmail、Nextcloud和大多数其他通讯录服务使用的标准联系人共享协议。其服务发现在RFC 6764中定义。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CardDAV هو البروتوكول القياسي لمشاركة جهات الاتصال المستخدم من قِبل Apple Contacts و Fastmail و Nextcloud ومعظم خدمات دفاتر العناوين الأخرى. مُعرَّف لاكتشاف الخدمات في RFC 6764."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CardDAV הוא הפרוטוקול הסטנדרטי לשיתוף אנשי קשר בו משתמשים Apple Contacts, Fastmail, Nextcloud ורוב שירותי ספרי הכתובות האחרים. מוגדר עבור גילוי שירותים ב-RFC 6764."
           }
         }
       }
@@ -17597,6 +19013,18 @@
             "state": "translated",
             "value": "DNS over HTTPS是一种加密DNS变体，将查询封装在HTTPS中，使其与常规网络流量难以区分。Apple Private Relay、Firefox和一些本地解析器使用此协议。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DNS over HTTPS هو متغيّر مشفَّر من DNS يغلف الاستعلامات داخل HTTPS بحيث لا يمكن تمييزها عن حركة الويب العادية. يستخدمه Apple Private Relay و Firefox وبعض المحلِّلات المحلية."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DNS over HTTPS הוא וריאנט מוצפן של DNS שעוטף שאילתות בתוך HTTPS כך שאי אפשר להבחין ביניהן לבין תעבורת ווב רגילה. בשימוש Apple Private Relay, Firefox וכמה רזולברים מקומיים."
+          }
         }
       }
     },
@@ -17637,6 +19065,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "DNS over TLS是DNS的加密变体，保护查询免受本地网络和ISP的窃听。注重隐私的解析器和一些家用路由器使用此协议。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DNS over TLS هو متغيّر مشفَّر من DNS يحمي الاستعلامات من التنصّت على الشبكة المحلية ومزوّد الإنترنت. يستخدمه المحلِّلات الحريصة على الخصوصية وبعض موجِّهات المنازل."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DNS over TLS הוא וריאנט מוצפן של DNS המגן על שאילתות מפני האזנה ברשת המקומית ובספק האינטרנט. בשימוש רזולברים שמקפידים על פרטיות וכמה ראוטרים ביתיים."
           }
         }
       }
@@ -17679,6 +19119,18 @@
             "state": "translated",
             "value": "Ecobee智能恒温器是一款联网HVAC控制器，与Apple Home、Amazon Alexa和Google Home集成，可远程调度温度并监控能耗。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "منظّم حرارة Ecobee الذكي، وحدة تحكم متصلة بالتدفئة والتكييف تتكامل مع Apple Home و Amazon Alexa و Google Home لجدولة درجة الحرارة ومراقبة الطاقة عن بُعد."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "תרמוסטט חכם Ecobee, בקר HVAC מחובר שמשתלב עם Apple Home, Amazon Alexa ו-Google Home לתזמון טמפרטורה ולניטור צריכת אנרגיה מרחוק."
+          }
         }
       }
     },
@@ -17719,6 +19171,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Emby Media Server是一款个人媒体服务器，可将视频、音乐和直播电视流式传输到手机、电视和游戏机上的应用。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Emby Media Server هو خادم وسائط شخصي لبث الفيديو والموسيقى والتلفزيون المباشر إلى التطبيقات على الهواتف والتلفزيونات وأجهزة الألعاب."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Emby Media Server הוא שרת מדיה אישי להזרמת וידאו, מוזיקה וטלוויזיה חיה לאפליקציות בטלפונים, בטלוויזיות ובקונסולות משחק."
           }
         }
       }
@@ -17761,6 +19225,18 @@
             "state": "translated",
             "value": "HashiCorp Consul是一个服务网格和服务发现平台。某些Consul部署通过mDNS注册代理端点，让客户端无需静态配置即可发现它们。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HashiCorp Consul هو منصة شبكات الخدمات واكتشاف الخدمات. تُسجِّل بعض عمليات نشر Consul نقاط نهاية الوكلاء عبر mDNS كي يجدها العملاء دون تهيئة ثابتة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HashiCorp Consul הוא פלטפורמת service-mesh ו-service-discovery. חלק מפריסות Consul רושמות נקודות קצה של סוכנים דרך mDNS כדי שלקוחות ימצאו אותן ללא הגדרה סטטית."
+          }
         }
       }
     },
@@ -17801,6 +19277,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "通过TLS的IMAP——IMAP的加密变体。邮件客户端（Apple Mail、Thunderbird等）在发现时会优先使用此选项。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IMAP عبر TLS — النسخة المشفَّرة من IMAP. تفضّل عملاء البريد (Apple Mail و Thunderbird وغيرها) هذه عند اكتشافها."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IMAP מעל TLS — הגרסה המוצפנת של IMAP. לקוחות דואר (Apple Mail, Thunderbird וכו') מעדיפים אותה כשמתגלית."
           }
         }
       }
@@ -17843,6 +19331,18 @@
             "state": "translated",
             "value": "Internet Message Access Protocol是将消息保留在服务器上的标准邮件检索协议。其服务发现在RFC 6186中定义。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Internet Message Access Protocol — البروتوكول القياسي لاسترجاع البريد الذي يُبقي الرسائل على الخادم. مُعرَّف لاكتشاف الخدمات في RFC 6186."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Internet Message Access Protocol — הפרוטוקול הסטנדרטי לאחזור דואר ששומר את ההודעות בשרת. מוגדר עבור גילוי שירותים ב-RFC 6186."
+          }
         }
       }
     },
@@ -17883,6 +19383,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Jellyfin是一款开源媒体服务器，可将个人视频、音乐和照片库流式传输到本地网络中的客户端。是Plex和Emby的免费社区运营替代方案。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jellyfin هو خادم وسائط مفتوح المصدر لبث مكتبات الفيديو والموسيقى والصور الشخصية إلى العملاء على الشبكة المحلية. هو البديل المجاني الذي يديره المجتمع لـ Plex و Emby."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jellyfin הוא שרת מדיה בקוד פתוח להזרמת ספריות וידאו, מוזיקה ותמונות אישיות ללקוחות ברשת המקומית. זוהי החלופה החינמית והקהילתית ל-Plex ו-Emby."
           }
         }
       }
@@ -17925,6 +19437,18 @@
             "state": "translated",
             "value": "KDE Connect是一种跨平台配对协议，将手机（Android、iOS）与Linux/Windows/macOS桌面连接起来，实现剪贴板共享、通知镜像和文件传输。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KDE Connect هو بروتوكول إقران متعدد المنصات يربط الهواتف (Android و iOS) بأنظمة سطح المكتب Linux/Windows/macOS لمشاركة الحافظة وعكس الإشعارات ونقل الملفات."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KDE Connect הוא פרוטוקול צימוד חוצה-פלטפורמות שמחבר טלפונים (Android, iOS) למחשבי Linux/Windows/macOS לשיתוף לוח גזירים, מראָה של התראות והעברת קבצים."
+          }
         }
       }
     },
@@ -17965,6 +19489,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "通过UDP的Kerberos身份验证——最早的Kerberos传输方式，部分KDC仍在与TCP变体并行使用。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مصادقة Kerberos عبر UDP — وسيلة النقل الأصلية لـ Kerberos، ما زالت تستخدمها بعض KDCs إلى جانب نسخة TCP."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אימות Kerberos מעל UDP — שכבת התעבורה המקורית של Kerberos, עדיין בשימוש חלק מה-KDCs לצד הווריאנט של TCP."
           }
         }
       }
@@ -18007,6 +19543,18 @@
             "state": "translated",
             "value": "Kerberos是macOS、Active Directory和众多企业登录系统使用的网络身份验证协议。在RFC 4120中定义，mDNS服务发现在RFC 4120/6763中定义。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kerberos هو بروتوكول مصادقة الشبكة المستخدم في macOS و Active Directory والعديد من أنظمة تسجيل الدخول المؤسسية. مُعرَّف في RFC 4120 مع اكتشاف خدمة mDNS في RFC 4120/6763."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kerberos הוא פרוטוקול אימות הרשת בשימוש macOS, Active Directory ומערכות התחברות ארגוניות רבות. מוגדר ב-RFC 4120 עם גילוי שירות mDNS ב-RFC 4120/6763."
+          }
         }
       }
     },
@@ -18047,6 +19595,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Klipper是一款高性能3D打印机固件，在Raspberry Pi上与打印机的微控制器并行运行。通常与Mainsail或Fluidd的Web界面搭配使用。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klipper هو برنامج ثابت عالي الأداء لطابعات ثلاثية الأبعاد يعمل على Raspberry Pi إلى جانب المتحكم الدقيق للطابعة. كثيرًا ما يُستخدم مع واجهات الويب Mainsail أو Fluidd."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klipper היא קושחה בעלת ביצועים גבוהים למדפסות תלת-ממד שפועלת על Raspberry Pi לצד הבקר המיקרו של המדפסת. לעיתים קרובות בשילוב עם ממשקי הווב Mainsail או Fluidd."
           }
         }
       }
@@ -18089,6 +19649,18 @@
             "state": "translated",
             "value": "Kodi（前身为XBMC）是一款开源媒体中心，用于播放本地和流媒体内容。常见于Raspberry Pi、越狱的Apple TV和专用家庭影院PC。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kodi (سابقًا XBMC) هو مركز وسائط مفتوح المصدر لتشغيل الوسائط المحلية والمتدفقة. شائع على Raspberry Pi وأجهزة Apple TV التي تم الفرار من قيدها وحواسيب المسرح المنزلي المخصصة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kodi (לשעבר XBMC) הוא מרכז מדיה בקוד פתוח להשמעת מדיה מקומית ובהזרמה. נפוץ על Raspberry Pi, על Apple TV עם ג'יילברייק ועל מחשבי הום-תיאטר ייעודיים."
+          }
         }
       }
     },
@@ -18129,6 +19701,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "LIFX智能灯泡是Wi-Fi连接的可变色灯光，在本地网络中广播自身，以便通过LIFX应用和智能家居中枢进行控制。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مصابيح LIFX الذكية، مصابيح Wi-Fi متغيرة الألوان تُعلن عن نفسها على الشبكة المحلية للتحكم بها من تطبيق LIFX ومراكز المنزل الذكي."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "נורות חכמות LIFX, תאורת Wi-Fi משנת-צבעים שמכריזה על עצמה ברשת המקומית לצורך שליטה דרך אפליקציית LIFX ומרכזיות בית חכם."
           }
         }
       }
@@ -18171,6 +19755,18 @@
             "state": "translated",
             "value": "Minecraft局域网游戏广播。当玩家将世界开放给局域网时，游戏会广播其存在，使同一网络上的其他Minecraft实例无需输入IP即可加入。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إعلان ألعاب Minecraft على الشبكة المحلية. عندما يفتح اللاعب عالمه على LAN، تبث اللعبة وجودها بحيث يمكن لنُسخ Minecraft الأخرى على الشبكة نفسها الانضمام دون كتابة عنوان IP."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פרסום משחק LAN של Minecraft. כשהשחקן פותח את העולם שלו ל-LAN, המשחק משדר את נוכחותו כך שמופעי Minecraft אחרים באותה רשת יכולים להצטרף ללא הקלדת כתובת IP."
+          }
         }
       }
     },
@@ -18211,6 +19807,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Network Time Protocol——用于在联网设备之间保持时钟同步。一些本地NTP服务器（基于路由器或Apple TV）会通过Bonjour广播自身。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Network Time Protocol — يُستخدم لإبقاء ساعات الأجهزة المتصلة بالشبكة متزامنة. تُعلن بعض خوادم NTP المحلية (على الموجّهات أو على Apple TV) عن نفسها عبر Bonjour."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Network Time Protocol — משמש לסנכרון שעונים בין מכשירים מחוברים לרשת. חלק משרתי NTP מקומיים (מבוססי ראוטר או Apple TV) מפרסמים את עצמם דרך Bonjour."
           }
         }
       }
@@ -18253,6 +19861,18 @@
             "state": "translated",
             "value": "在iOS 17及更高版本设备上出现的Apple iOS设备同步协议的较新变体。与v1（`_apple-mobdev._tcp`）和v2（`_apple-mobdev2._tcp`）服务一起用于Finder/iTunes的Wi-Fi同步。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "متغيّر أحدث من بروتوكول مزامنة أجهزة iOS من Apple يظهر على أجهزة iOS 17 وما بعدها. يُستخدم إلى جانب الخدمتين v1 (`_apple-mobdev._tcp`) و v2 (`_apple-mobdev2._tcp`) لمزامنة Wi-Fi مع Finder/iTunes."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "וריאנט חדש יותר של פרוטוקול הסנכרון של Apple למכשירי iOS, מופיע במכשירי iOS 17 ומעלה. בשימוש לצד שירותי v1 (`_apple-mobdev._tcp`) ו-v2 (`_apple-mobdev2._tcp`) לסנכרון Wi-Fi עם Finder/iTunes."
+          }
         }
       }
     },
@@ -18293,6 +19913,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "OctoPrint是一款桌面3D打印机的Web控制器——通常是运行OctoPrint服务器的Raspberry Pi，通过USB连接到打印机。可启动打印、监控进度并串流摄像头视频。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OctoPrint هو وحدة تحكم قائمة على الويب لطابعات سطح المكتب ثلاثية الأبعاد — عادةً Raspberry Pi يشغّل خادم OctoPrint متصلاً بالطابعة عبر USB. يتيح للمستخدم بدء الطباعة ومراقبة التقدم وبث فيديو الكاميرا."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OctoPrint הוא בקר מבוסס-ווב למדפסות תלת-ממד שולחניות — בדרך כלל Raspberry Pi המריץ את שרת OctoPrint ומחובר למדפסת ב-USB. מאפשר למשתמש להתחיל הדפסות, לעקוב אחר התקדמות ולהזרים וידאו ממצלמה."
           }
         }
       }
@@ -18335,6 +19967,18 @@
             "state": "translated",
             "value": "通过TLS的POP3——用于检索邮件的POP3加密变体。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "POP3 عبر TLS — النسخة المشفَّرة من POP3 لاسترجاع البريد."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "POP3 מעל TLS — הגרסה המוצפנת של POP3 לאחזור דואר."
+          }
         }
       }
     },
@@ -18375,6 +20019,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Philips Hue智能照明桥接器是将Philips Hue灯泡和配件连接到本地Wi-Fi网络并允许应用控制它们的中枢。通常是家庭中部署最多的智能家居中枢。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جسر الإضاءة الذكية Philips Hue هو المركز الذي يربط مصابيح وملحقات Philips Hue بشبكة Wi-Fi المحلية ويسمح للتطبيقات بالتحكم بها. غالبًا ما يكون مركز المنزل الذكي الأكثر انتشارًا في المنازل."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "גשר התאורה החכמה Philips Hue הוא הרכזת המחברת את נורות ואביזרי Philips Hue לרשת ה-Wi-Fi המקומית ומאפשרת לאפליקציות לשלוט בהם. לרוב מרכזיית הבית-החכם הנפוצה ביותר במשק בית."
           }
         }
       }
@@ -18417,6 +20073,18 @@
             "state": "translated",
             "value": "Pi-hole是在Raspberry Pi或类似设备上运行的网络级DNS广告拦截器。部分安装会通过mDNS广播其管理端点以便发现。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pi-hole هو حاجب إعلانات قائم على DNS على مستوى الشبكة يعمل على Raspberry Pi أو ما شابه. تعلن بعض التركيبات عن نقطة نهاية الإدارة عبر mDNS لتسهيل الاكتشاف."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pi-hole הוא חוסם פרסומות ברמת הרשת מבוסס-DNS שפועל על Raspberry Pi או דומה לו. חלק מההתקנות מפרסמות את נקודת הקצה הניהולית דרך mDNS לגילוי קל."
+          }
         }
       }
     },
@@ -18457,6 +20125,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Plex Media Server是一款自托管媒体库，可向本地网络及其外部的客户端流式传输电影、电视、音乐和照片。Plex在LAN上还使用一个单独的基于UDP的组发现协议。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plex Media Server هو مكتبة وسائط ذاتية الاستضافة تبث الأفلام والمسلسلات والموسيقى والصور إلى العملاء على الشبكة المحلية وخارجها. يستخدم Plex أيضًا بروتوكول اكتشاف مجموعات منفصلًا قائمًا على UDP على LAN."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plex Media Server היא ספריית מדיה בהוסטינג עצמי שמזרימה סרטים, טלוויזיה, מוזיקה ותמונות ללקוחות ברשת המקומית ומחוצה לה. Plex גם משתמש בפרוטוקול גילוי קבוצות נפרד מבוסס-UDP ב-LAN."
           }
         }
       }
@@ -18499,6 +20179,18 @@
             "state": "translated",
             "value": "Post Office Protocol v3——一种传统的邮件检索协议，下载消息并（通常）将其从服务器删除。已基本被IMAP取代，但服务发现仍在RFC 6186中定义。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Post Office Protocol v3 — بروتوكول قديم لاسترجاع البريد يقوم بتنزيل الرسائل و(عادةً) حذفها من الخادم. حلّ محله IMAP إلى حد كبير، لكنه لا يزال مُعرَّفًا في RFC 6186 لاكتشاف الخدمات."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Post Office Protocol v3 — פרוטוקול ישן יותר לאחזור דואר שמוריד את ההודעות ו(בדרך כלל) מוחק אותן מהשרת. הוחלף ברובו על ידי IMAP, אך עדיין מוגדר ב-RFC 6186 לצורך גילוי שירותים."
+          }
         }
       }
     },
@@ -18539,6 +20231,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "PulseAudio是Linux的音频服务器。一些Linux系统通过Bonjour广播其PulseAudio服务器，以便其他机器可以在本地网络上将音频路由到或从中传出。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PulseAudio هو خادم الصوت في Linux. تعلن بعض أنظمة Linux عن خادم PulseAudio عبر Bonjour حتى يمكن لأجهزة أخرى توجيه الصوت إليها أو منها عبر الشبكة المحلية."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PulseAudio הוא שרת האודיו של Linux. חלק ממערכות Linux מפרסמות את שרת ה-PulseAudio שלהן דרך Bonjour כדי שמכשירים אחרים יוכלו לנתב אליהם או מהם אודיו על-פני הרשת המקומית."
           }
         }
       }
@@ -18581,6 +20285,18 @@
             "state": "translated",
             "value": "Redis是一种内存型键值数据存储，在现代应用栈中广泛用作缓存、消息代理和临时数据库。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redis هو مخزن بيانات في الذاكرة بنمط مفتاح-قيمة يُستخدم على نطاق واسع كذاكرة تخزين مؤقت ووسيط رسائل وقاعدة بيانات مؤقتة في حزم التطبيقات الحديثة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redis הוא מאגר נתוני מפתח-ערך בזיכרון בשימוש נרחב כמטמון, מתווך הודעות ובסיס נתונים זמני בערימות יישומים מודרניות."
+          }
         }
       }
     },
@@ -18621,6 +20337,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "SMTP Submission——邮件客户端通过其提供商发送消息时使用的经过身份验证的邮件提交协议。其服务发现在RFC 6186中定义。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP Submission — بروتوكول إرسال البريد الموثَّق الذي تستخدمه عملاء البريد لإرسال الرسائل عبر مزوّدها. مُعرَّف لاكتشاف الخدمات في RFC 6186."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP Submission — פרוטוקול שליחת דואר מאומת בו משתמשים לקוחות דואר לשליחת הודעות דרך הספק שלהם. מוגדר עבור גילוי שירותים ב-RFC 6186."
           }
         }
       }
@@ -18663,6 +20391,18 @@
             "state": "translated",
             "value": "通过TLS的SMTP——用于发送邮件的SMTP加密变体。如今不如`submission`流程常见，但仍可在一些邮件服务器上看到。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP عبر TLS — النسخة المشفَّرة من SMTP لإرسال البريد. أقل شيوعًا اليوم من تدفق `submission`، لكنه ما زال موجودًا على بعض خوادم البريد."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP מעל TLS — הגרסה המוצפנת של SMTP לשליחת דואר. פחות נפוץ היום מהזרימה של `submission`, אך עדיין מופיע אצל חלק משרתי הדואר."
+          }
         }
       }
     },
@@ -18703,6 +20443,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "通过UDP的Session Initiation Protocol——SIP信令的最初传输方式，至今仍被本地网络中的VoIP电话和PBX系统广泛使用。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Session Initiation Protocol عبر UDP — وسيلة النقل الأصلية لإشارات SIP، ما زالت تُستخدم على نطاق واسع في هواتف VoIP وأنظمة PBX على الشبكة المحلية."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Session Initiation Protocol מעל UDP — שכבת התעבורה המקורית של איתות SIP, עדיין בשימוש נרחב על ידי טלפוני VoIP ומערכות PBX ברשת המקומית."
           }
         }
       }
@@ -18745,6 +20497,18 @@
             "state": "translated",
             "value": "Session Initiation Protocol——协商语音和视频通话的信令协议。被VoIP电话、Apple FaceTime音频回退和企业通话系统使用。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Session Initiation Protocol — بروتوكول الإشارات الذي يتفاوض على المكالمات الصوتية والمرئية. يستخدمه هواتف VoIP وحالات التراجع الصوتي في Apple FaceTime وأنظمة الاتصال المؤسسية."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Session Initiation Protocol — פרוטוקול האיתות שמנהל משא ומתן על שיחות קול ווידאו. בשימוש טלפוני VoIP, גיבויי שמע של Apple FaceTime ומערכות שיחות תאגידיות."
+          }
         }
       }
     },
@@ -18785,6 +20549,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Simple Mail Transfer Protocol——用于发送外发邮件。邮件客户端通常对经过身份验证的用户发起邮件使用`submission`变体。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple Mail Transfer Protocol — يُستخدم لإرسال البريد الصادر. تستخدم عملاء البريد عادةً نسخة `submission` للبريد الموثَّق الصادر من المستخدم."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple Mail Transfer Protocol — משמש לשליחת דואר יוצא. לקוחות דואר משתמשים בדרך כלל בווריאנט `submission` עבור דואר מאומת שמקורו במשתמש."
           }
         }
       }
@@ -18827,6 +20603,18 @@
             "state": "translated",
             "value": "Simple Network Management Protocol——用于监控和配置交换机、打印机、UPS等网络设备的老牌协议。最常见于企业网络。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple Network Management Protocol — البروتوكول العريق لمراقبة وتهيئة أجهزة الشبكة مثل المبدّلات والطابعات و UPSes. يُرى غالبًا في شبكات الأعمال."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple Network Management Protocol — הפרוטוקול הוותיק לניטור ולהגדרה של מכשירי רשת כמו מתגים, מדפסות ו-UPS. נפוץ במיוחד ברשתות עסקיות."
+          }
         }
       }
     },
@@ -18867,6 +20655,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Syncthing是一款开源的对等文件同步工具，可在本地网络和互联网上的设备之间镜像文件夹。常用作Dropbox或iCloud Drive的自托管替代方案。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Syncthing هو أداة مفتوحة المصدر لمزامنة الملفات نِدًا لنِد تنسخ المجلدات بين الأجهزة عبر الشبكة المحلية والإنترنت. يُستخدم غالبًا كبديل ذاتي الاستضافة لـ Dropbox أو iCloud Drive."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Syncthing הוא כלי סנכרון קבצים עמית-לעמית בקוד פתוח שמשקף תיקיות בין מכשירים על-פני הרשת המקומית והאינטרנט. בשימוש לעיתים קרובות כחלופה בהוסטינג עצמי ל-Dropbox או ל-iCloud Drive."
           }
         }
       }
@@ -18909,6 +20709,18 @@
             "state": "translated",
             "value": "Tasmota是面向基于ESP8266/ESP32的智能家居设备（Sonoff、Shelly等）的开源固件。常用于刷写市售智能插座、开关和灯泡，以实现纯本地控制。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tasmota هو برنامج ثابت مفتوح المصدر لأجهزة المنزل الذكي القائمة على ESP8266/ESP32 (Sonoff و Shelly وغيرها). يُستخدم عادةً لبرمجة المقابس الذكية والمفاتيح والمصابيح الجاهزة لتعمل بتحكّم محلي فقط."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tasmota היא קושחה בקוד פתוח למכשירי בית חכם מבוססי ESP8266/ESP32 (Sonoff, Shelly וכו'). בשימוש נפוץ לצריבת שקעים חכמים, מתגים ונורות מוכנים מהמדף לשליטה מקומית בלבד."
+          }
         }
       }
     },
@@ -18949,6 +20761,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Apple iOS Wi-Fi同步协议的UDP伴随版本。部分iOS设备在与macOS Finder配对时，会同时广播TCP和UDP变体。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مُكمِّل UDP لبروتوكول مزامنة Wi-Fi لأجهزة iOS من Apple. تعلن بعض أجهزة iOS عن نسختي TCP و UDP أثناء الإقران مع Finder على macOS."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "המקבילה ל-UDP של פרוטוקול הסנכרון של Apple ל-Wi-Fi במכשירי iOS. חלק ממכשירי iOS מפרסמים גם את הווריאנט של TCP וגם של UDP בעת צימוד עם Finder ב-macOS."
           }
         }
       }
@@ -18991,6 +20815,18 @@
             "state": "translated",
             "value": "Valve的Steam主机内串流服务，由Steam Link客户端（以及手机、平板和Apple TV上的Steam应用）用来通过局域网串流PC游戏。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خدمة Steam in-home streaming من Valve يستخدمها عملاء Steam Link (وتطبيق Steam على الهواتف والأجهزة اللوحية و Apple TV) لبث ألعاب PC عبر LAN."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירות הזרמת בית של Steam מבית Valve, בשימוש לקוחות Steam Link (ואפליקציית Steam בטלפונים, בטאבלטים וב-Apple TV) להזרמת משחקי PC על-פני LAN."
+          }
         }
       }
     },
@@ -19032,6 +20868,18 @@
             "state": "translated",
             "value": "Warpinator是来自Linux Mint的跨平台文件共享工具。受AirDrop启发，可在本地网络上的Linux、Windows、macOS和Android之间使用。"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Warpinator هو أداة مشاركة الملفات متعددة المنصات من Linux Mint. مستوحاة من AirDrop وتعمل بين Linux و Windows و macOS و Android عبر الشبكة المحلية."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Warpinator הוא כלי שיתוף קבצים חוצה-פלטפורמות מבית Linux Mint. בהשראת AirDrop, פועל בין Linux, Windows, macOS ו-Android על-פני הרשת המקומית."
+          }
         }
       }
     },
@@ -19072,6 +20920,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "gRPC是一种基于HTTP/2构建的现代远程过程调用框架。微服务和开发者工具有时会在本地开发期间通过Bonjour广播gRPC端点。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "gRPC هو إطار عمل حديث لاستدعاء الإجراءات عن بُعد مبني على HTTP/2. تعلن الخدمات المصغّرة وأدوات المطوّرين أحيانًا عن نقاط نهاية gRPC عبر Bonjour أثناء التطوير المحلي."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "gRPC הוא מסגרת מודרנית של קריאות פרוצדורה מרוחקות הבנויה על HTTP/2. שירותי מיקרו וכלי פיתוח מפרסמים מדי פעם נקודות קצה של gRPC דרך Bonjour במהלך פיתוח מקומי."
           }
         }
       }
