@@ -112,6 +112,14 @@ extension BonjourChatView {
                     .multilineTextAlignment(.leading)
                 Spacer()
                 Image.arrowUpRight
+                    // Diagonal trailing affordance — must mirror under
+                    // right-to-left locales (Arabic, Hebrew) so it
+                    // continues to point AWAY from the text and toward
+                    // the leading edge in the user's reading direction.
+                    // Without this, the arrow points back into the
+                    // text in RTL, reading as a "go back" hint instead
+                    // of "send forward".
+                    .flipsForRightToLeftLayoutDirection(true)
                     .foregroundStyle(.secondary)
                     .accessibilityHidden(true)
             }
