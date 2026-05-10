@@ -793,6 +793,25 @@ public enum Strings {
             .init("guidance_create_service_type", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        /// Field-level hint for the create-service-type form's Service
+        /// name field. Explains that this is the human-readable display
+        /// label users see when browsing — distinct from the technical
+        /// identifier other apps look up. Surfaced as the section
+        /// footer (always visible).
+        public static var serviceNameHint: LocalizedStringResource {
+            .init("guidance_service_name_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Field-level hint for the create-service-type form's Bonjour
+        /// type field. Explains that this is the protocol identifier
+        /// other devices look up to discover services of this kind, and
+        /// that only apps browsing for this exact type will see the
+        /// published service. Surfaced as the section footer (always
+        /// visible).
+        public static var bonjourTypeHint: LocalizedStringResource {
+            .init("guidance_bonjour_type_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         /// Explains what TXT records are, when clients read them, and
         /// when it's fine to leave the list empty. Used as the section
         /// footer under the TXT records list on the broadcast form,

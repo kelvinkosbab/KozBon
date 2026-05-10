@@ -13326,6 +13326,88 @@
         }
       }
     },
+    "guidance_service_name_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The label users see when browsing for this service from other devices — for example, “Living Room Printer” in a Choose Printer picker. This is the friendly display name, not the technical identifier other apps look up."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El nombre que ven los usuarios al buscar este servicio desde otros dispositivos — por ejemplo, «Impresora Salón» en un selector de impresora. Es el nombre legible, no el identificador técnico que buscan otras aplicaciones."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le nom que les utilisateurs voient lorsqu'ils recherchent ce service depuis d'autres appareils — par exemple, « Imprimante salon » dans un sélecteur d'imprimante. C'est le nom convivial, pas l'identifiant technique que recherchent les autres applications."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Name, den Benutzer sehen, wenn sie von anderen Geräten nach diesem Dienst suchen — zum Beispiel „Wohnzimmer-Drucker“ in einem Drucker-Auswahldialog. Der lesbare Anzeigename, nicht der technische Identifier, nach dem andere Apps suchen."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "他のデバイスからこのサービスを検索したときにユーザーに表示される名前です — 例えばプリンター選択ダイアログの「リビングのプリンター」など。他のアプリが検索する技術的な識別子ではなく、人間が読みやすい表示名です。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "其他设备搜索此服务时用户看到的名称——例如打印机选择器中的「客厅打印机」。这是面向用户的显示名称，不是其他应用查找时使用的技术标识符。"
+          }
+        }
+      }
+    },
+    "guidance_bonjour_type_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The protocol identifier other devices look up to find services of this kind. Apps browse for a specific type — web browsers look for `_http._tcp`, AirPlay receivers for `_airplay._tcp`. Devices that aren't browsing for the exact type you publish won't see your service."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El identificador de protocolo que otros dispositivos buscan para encontrar servicios de este tipo. Las apps buscan un tipo específico — los navegadores web buscan `_http._tcp`, los receptores AirPlay buscan `_airplay._tcp`. Los dispositivos que no busquen exactamente el tipo que publicas no verán tu servicio."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L'identifiant de protocole que les autres appareils recherchent pour trouver des services de ce type. Les apps recherchent un type spécifique — les navigateurs web cherchent `_http._tcp`, les récepteurs AirPlay cherchent `_airplay._tcp`. Les appareils qui ne recherchent pas exactement le type que vous publiez ne verront pas votre service."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Protokoll-Identifier, nach dem andere Geräte suchen, um Dienste dieser Art zu finden. Apps suchen nach einem bestimmten Typ — Webbrowser nach `_http._tcp`, AirPlay-Empfänger nach `_airplay._tcp`. Geräte, die nicht genau den von dir veröffentlichten Typ suchen, sehen deinen Dienst nicht."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "他のデバイスがこの種のサービスを見つけるために検索するプロトコル識別子です。各アプリは特定のタイプを検索します — Webブラウザは `_http._tcp`、AirPlayレシーバーは `_airplay._tcp` を探します。あなたが公開した正確なタイプを検索しないデバイスからは、このサービスは見えません。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "其他设备查找此类服务时使用的协议标识符。各类应用会搜索特定类型——网络浏览器搜索 `_http._tcp`，AirPlay 接收器搜索 `_airplay._tcp`。不搜索你所发布的确切类型的设备将看不到你的服务。"
+          }
+        }
+      }
+    },
     "guidance_service_domain_hint": {
       "extractionState": "manual",
       "localizations": {

@@ -87,10 +87,18 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                     Text(Strings.Sections.serviceName)
                         .accessibilityAddTraits(.isHeader)
                 } footer: {
-                    if let nameError = viewModel.nameError {
-                        Text(verbatim: nameError)
-                            .foregroundStyle(.red)
-                            .accessibilityLabel(Strings.Accessibility.error(nameError))
+                    // Always show the field hint; layer the validation
+                    // error on top when present. Stacked in a VStack
+                    // (same pattern as the details section below) to
+                    // keep both lines readable instead of one
+                    // shadowing the other.
+                    VStack(alignment: .leading, spacing: 8) {
+                        if let nameError = viewModel.nameError {
+                            Text(verbatim: nameError)
+                                .foregroundStyle(.red)
+                                .accessibilityLabel(Strings.Accessibility.error(nameError))
+                        }
+                        Text(Strings.Guidance.serviceNameHint)
                     }
                 }
 
@@ -110,23 +118,34 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                     Text(Strings.Sections.bonjourType)
                         .accessibilityAddTraits(.isHeader)
                 } footer: {
-                    if let typeError = viewModel.typeError, viewModel.type.isEmpty {
-                        Text(verbatim: typeError)
-                            .foregroundStyle(.red)
-                            .accessibilityLabel(Strings.Accessibility.error(typeError))
+                    // Two lines of footer content:
+                    //   1. Validation error or `_type._transport`
+                    //      preview (mutually exclusive — preview is
+                    //      blue, error is red).
+                    //   2. The discovery-semantic hint, always shown.
+                    // The preview/error sits above the hint so the
+                    // user's typing-feedback line stays adjacent to
+                    // the field; the hint is reference text below.
+                    VStack(alignment: .leading, spacing: 8) {
+                        if let typeError = viewModel.typeError, viewModel.type.isEmpty {
+                            Text(verbatim: typeError)
+                                .foregroundStyle(.red)
+                                .accessibilityLabel(Strings.Accessibility.error(typeError))
 
-                    } else if let typeError = viewModel.typeError, !viewModel.type.isEmpty {
-                        Text(verbatim: "\(viewModel.fullType) · \(typeError)")
-                            .foregroundStyle(.red)
-                            .accessibilityLabel(Strings.Accessibility.error("\(typeError) for \(viewModel.fullType)"))
+                        } else if let typeError = viewModel.typeError, !viewModel.type.isEmpty {
+                            Text(verbatim: "\(viewModel.fullType) · \(typeError)")
+                                .foregroundStyle(.red)
+                                .accessibilityLabel(Strings.Accessibility.error("\(typeError) for \(viewModel.fullType)"))
 
-                    } else if !viewModel.type.isEmpty {
-                        Text(verbatim: viewModel.fullType)
-                            .foregroundStyle(Color.kozBonBlue)
+                        } else if !viewModel.type.isEmpty {
+                            Text(verbatim: viewModel.fullType)
+                                .foregroundStyle(Color.kozBonBlue)
 
-                    } else if !viewModel.isCreatingBonjourService {
-                        Text(verbatim: viewModel.fullType)
-                            .foregroundStyle(Color.kozBonBlue)
+                        } else if !viewModel.isCreatingBonjourService {
+                            Text(verbatim: viewModel.fullType)
+                                .foregroundStyle(Color.kozBonBlue)
+                        }
+                        Text(Strings.Guidance.bonjourTypeHint)
                     }
                 }
 
