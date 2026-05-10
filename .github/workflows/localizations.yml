@@ -1,0 +1,56 @@
+name: Localizations
+
+# Validate the String Catalog stays in sync with the Swift code that
+# consumes it. The script enforces four hard rules:
+#
+#   - `Localizable.xcstrings` is valid JSON.
+#   - Every catalog entry has a translation in all 6 expected locales.
+#   - Every key referenced by `Strings.swift` exists in the catalog,
+#     and no catalog entry is unreferenced. `Strings.swift` drift would
+#     return the literal key as the user-visible string at runtime —
+#     a hard regression — and orphan entries are dead translations
+#     no one consumes.
+#   - Every `detail: "..."` literal in the service-type library exists
+#     as a catalog key. Drift here downgrades non-English users to
+#     English for that one service.
+#
+# Triggers on PRs that touch any input the validator reads — the
+# catalog itself, `Strings.swift`, the service-type library — plus
+# pushes to main as a backstop.
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'KozBonPackages/BonjourLocalization/**'
+      - 'KozBonPackages/BonjourModels/Sources/ServiceType/MyServiceType+Library.swift'
+      - 'scripts/validate-localizations.py'
+      - '.github/workflows/localizations.yml'
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'KozBonPackages/BonjourLocalization/**'
+      - 'KozBonPackages/BonjourModels/Sources/ServiceType/MyServiceType+Library.swift'
+      - 'scripts/validate-localizations.py'
+      - '.github/workflows/localizations.yml'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate Localizable.xcstrings
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show Python Version
+        # ubuntu-latest ships with Python 3 — the script uses only the
+        # standard library so no setup-python step is needed.
+        run: python3 --version
+
+      - name: Validate
+        run: python3 scripts/validate-localizations.py
