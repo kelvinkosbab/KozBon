@@ -1,0 +1,99 @@
+name: Release
+
+# Cuts a GitHub Release whenever a `vMAJOR.MINOR[.PATCH]` tag is pushed
+# (e.g. `v4.3`, `v4.3.1`, `v5.0`). The body is extracted from the
+# matching `## [VERSION]` section of `CHANGELOG.md` so the release
+# page on GitHub stays in sync with the curated changelog. The tag
+# itself is the source of truth for the version number — no parallel
+# `MARKETING_VERSION` lookup, no Info.plist parsing, no chance for
+# the tag and the release notes to drift.
+#
+# The workflow does NOT build, sign, or upload any artifacts. KozBon
+# distributes through the App Store; GitHub Releases are purely a
+# changelog surface for users browsing the repo.
+#
+# To cut a release:
+#   1. Update CHANGELOG.md — promote `[Unreleased]` to `[X.Y]` with
+#      today's ISO date, add new `[Unreleased]` skeleton at the top,
+#      bump the comparison links at the bottom.
+#   2. Bump `MARKETING_VERSION` in the Xcode project to match.
+#   3. Land both via PR to main.
+#   4. `git tag vX.Y && git push origin vX.Y` from main once merged.
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    permissions:
+      # `softprops/action-gh-release` writes to the Releases API.
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          set -euo pipefail
+          # github.ref looks like `refs/tags/v4.3`. Strip to `4.3`.
+          tag='${{ github.ref_name }}'
+          version="${tag#v}"
+          echo "tag=${tag}" >> "$GITHUB_OUTPUT"
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+          echo "Extracting release notes for version ${version} (tag ${tag})"
+
+      - name: Extract release notes from CHANGELOG.md
+        id: notes
+        run: |
+          set -euo pipefail
+          version='${{ steps.version.outputs.version }}'
+          # Pull everything between `## [VERSION]` and either the next
+          # `## [` heading OR the trailing `[X]: url` reference-link
+          # footer that lives below the last release block. Both signal
+          # end-of-section.
+          awk -v ver="${version}" '
+            $0 ~ "^## \\[" ver "\\]" { found=1; next }
+            found && /^## \[/ { exit }
+            found && /^\[[^]]+\]:[[:space:]]/ { exit }
+            found { print }
+          ' CHANGELOG.md > release-notes.md
+
+          if [ ! -s release-notes.md ]; then
+            echo "::error::No `## [${version}]` section found in CHANGELOG.md."
+            echo "Add the entry before pushing the tag, then re-tag." >&2
+            exit 1
+          fi
+
+          # Trim leading and trailing blank lines so the GitHub Release
+          # body doesn't open with whitespace.
+          awk 'NF { p=1 } p { print }' release-notes.md \
+            | tac | awk 'NF { p=1 } p { print }' | tac \
+            > release-notes.trimmed.md
+          mv release-notes.trimmed.md release-notes.md
+
+          echo "----- Release notes preview -----"
+          cat release-notes.md
+          echo "---------------------------------"
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: KozBon ${{ steps.version.outputs.version }}
+          body_path: release-notes.md
+          # Pre-releases are explicit (`v1.0-beta1` etc.) — keep the
+          # default `prerelease: false` for the standard `vMAJOR.MINOR`
+          # tag pattern this workflow listens for.
+          draft: false
+          prerelease: false
