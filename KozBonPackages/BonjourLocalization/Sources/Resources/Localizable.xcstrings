@@ -14432,6 +14432,1687 @@
           }
         }
       }
+    },
+    "CalDAV calendar sharing over TLS — the modern, encrypted variant of CalDAV. Mail-and-calendar clients prefer this when both endpoints are advertised.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CalDAV calendar sharing over TLS — the modern, encrypted variant of CalDAV. Mail-and-calendar clients prefer this when both endpoints are advertised."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compartición de calendarios CalDAV sobre TLS — la variante moderna y cifrada de CalDAV. Los clientes de correo y calendario prefieren esta cuando se anuncian ambos extremos."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Partage de calendrier CalDAV sur TLS — la variante moderne et chiffrée de CalDAV. Les clients de messagerie et de calendrier préfèrent celle-ci lorsque les deux points de terminaison sont annoncés."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CalDAV-Kalenderfreigabe über TLS — die moderne, verschlüsselte Variante von CalDAV. Mail- und Kalender-Clients bevorzugen diese, wenn beide Endpunkte angekündigt werden."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TLS経由のCalDAVカレンダー共有 — CalDAVの最新の暗号化バリアントです。両方のエンドポイントがアドバタイズされている場合、メールおよびカレンダークライアントはこちらを優先します。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通过TLS的CalDAV日历共享——CalDAV的现代加密变体。当两个端点同时广播时，邮件和日历客户端优先使用此选项。"
+          }
+        }
+      }
+    },
+    "CalDAV, the standard calendar-sharing protocol used by Apple Calendar, Fastmail, Nextcloud, and most other calendar services. Defined for service discovery in RFC 6764.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CalDAV, the standard calendar-sharing protocol used by Apple Calendar, Fastmail, Nextcloud, and most other calendar services. Defined for service discovery in RFC 6764."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CalDAV, el protocolo estándar de compartición de calendarios utilizado por Apple Calendar, Fastmail, Nextcloud y la mayoría de los demás servicios de calendario. Definido para el descubrimiento de servicios en RFC 6764."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CalDAV, le protocole standard de partage de calendrier utilisé par Apple Calendar, Fastmail, Nextcloud et la plupart des autres services de calendrier. Défini pour la découverte de services dans RFC 6764."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CalDAV, das Standard-Kalenderfreigabeprotokoll, das von Apple Calendar, Fastmail, Nextcloud und den meisten anderen Kalenderdiensten verwendet wird. Die Dienstsuche ist in RFC 6764 definiert."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CalDAVは、Apple Calendar、Fastmail、Nextcloud、その他ほとんどのカレンダーサービスで使用される標準のカレンダー共有プロトコルです。サービス検出はRFC 6764で定義されています。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CalDAV是Apple Calendar、Fastmail、Nextcloud和大多数其他日历服务使用的标准日历共享协议。其服务发现在RFC 6764中定义。"
+          }
+        }
+      }
+    },
+    "CardDAV contacts sharing over TLS — the modern, encrypted variant of CardDAV. Mail-and-calendar clients prefer this when both endpoints are advertised.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CardDAV contacts sharing over TLS — the modern, encrypted variant of CardDAV. Mail-and-calendar clients prefer this when both endpoints are advertised."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compartición de contactos CardDAV sobre TLS — la variante moderna y cifrada de CardDAV. Los clientes de correo y calendario prefieren esta cuando se anuncian ambos extremos."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Partage de contacts CardDAV sur TLS — la variante moderne et chiffrée de CardDAV. Les clients de messagerie et de calendrier préfèrent celle-ci lorsque les deux points de terminaison sont annoncés."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CardDAV-Kontaktfreigabe über TLS — die moderne, verschlüsselte Variante von CardDAV. Mail- und Kalender-Clients bevorzugen diese, wenn beide Endpunkte angekündigt werden."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TLS経由のCardDAV連絡先共有 — CardDAVの最新の暗号化バリアントです。両方のエンドポイントがアドバタイズされている場合、メールおよびカレンダークライアントはこちらを優先します。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通过TLS的CardDAV联系人共享——CardDAV的现代加密变体。当两个端点同时广播时，邮件和日历客户端优先使用此选项。"
+          }
+        }
+      }
+    },
+    "CardDAV, the standard contacts-sharing protocol used by Apple Contacts, Fastmail, Nextcloud, and most other address-book services. Defined for service discovery in RFC 6764.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CardDAV, the standard contacts-sharing protocol used by Apple Contacts, Fastmail, Nextcloud, and most other address-book services. Defined for service discovery in RFC 6764."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CardDAV, el protocolo estándar de compartición de contactos utilizado por Apple Contacts, Fastmail, Nextcloud y la mayoría de los demás servicios de libreta de direcciones. Definido para el descubrimiento de servicios en RFC 6764."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CardDAV, le protocole standard de partage de contacts utilisé par Apple Contacts, Fastmail, Nextcloud et la plupart des autres services de carnet d'adresses. Défini pour la découverte de services dans RFC 6764."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CardDAV, das Standard-Kontaktfreigabeprotokoll, das von Apple Contacts, Fastmail, Nextcloud und den meisten anderen Adressbuchdiensten verwendet wird. Die Dienstsuche ist in RFC 6764 definiert."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CardDAVは、Apple Contacts、Fastmail、Nextcloud、その他ほとんどのアドレス帳サービスで使用される標準の連絡先共有プロトコルです。サービス検出はRFC 6764で定義されています。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CardDAV是Apple Contacts、Fastmail、Nextcloud和大多数其他通讯录服务使用的标准联系人共享协议。其服务发现在RFC 6764中定义。"
+          }
+        }
+      }
+    },
+    "DNS over HTTPS, an encrypted DNS variant that wraps queries in HTTPS so they're indistinguishable from regular web traffic. Used by Apple Private Relay, Firefox, and some local resolvers.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DNS over HTTPS, an encrypted DNS variant that wraps queries in HTTPS so they're indistinguishable from regular web traffic. Used by Apple Private Relay, Firefox, and some local resolvers."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DNS sobre HTTPS, una variante de DNS cifrada que envuelve las consultas en HTTPS para que sean indistinguibles del tráfico web normal. Utilizado por Apple Private Relay, Firefox y algunos resolutores locales."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DNS sur HTTPS, une variante de DNS chiffrée qui encapsule les requêtes dans HTTPS afin qu'elles soient indiscernables du trafic web ordinaire. Utilisé par Apple Private Relay, Firefox et certains résolveurs locaux."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DNS über HTTPS, eine verschlüsselte DNS-Variante, die Abfragen in HTTPS verpackt, sodass sie von regulärem Web-Traffic nicht zu unterscheiden sind. Wird von Apple Private Relay, Firefox und einigen lokalen Resolvern verwendet."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DNS over HTTPSは、クエリをHTTPSにラップして通常のWebトラフィックと区別できないようにする暗号化DNSバリアントです。Apple Private Relay、Firefox、一部のローカルリゾルバーで使用されます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DNS over HTTPS是一种加密DNS变体，将查询封装在HTTPS中，使其与常规网络流量难以区分。Apple Private Relay、Firefox和一些本地解析器使用此协议。"
+          }
+        }
+      }
+    },
+    "DNS over TLS, an encrypted variant of DNS that protects queries from eavesdropping on the local network and ISP. Used by privacy-conscious resolvers and some home routers.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DNS over TLS, an encrypted variant of DNS that protects queries from eavesdropping on the local network and ISP. Used by privacy-conscious resolvers and some home routers."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DNS sobre TLS, una variante cifrada de DNS que protege las consultas frente a escuchas en la red local y el ISP. Utilizado por resolutores que priorizan la privacidad y algunos routers domésticos."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DNS sur TLS, une variante chiffrée de DNS qui protège les requêtes contre l'écoute clandestine sur le réseau local et chez le FAI. Utilisé par les résolveurs soucieux de la confidentialité et certains routeurs domestiques."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DNS über TLS, eine verschlüsselte DNS-Variante, die Abfragen vor Abhören im lokalen Netzwerk und beim Provider schützt. Wird von datenschutzbewussten Resolvern und einigen Heimroutern verwendet."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DNS over TLSは、ローカルネットワークやISPでの盗聴からクエリを保護するDNSの暗号化バリアントです。プライバシーを重視するリゾルバーや一部のホームルーターで使用されます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DNS over TLS是DNS的加密变体，保护查询免受本地网络和ISP的窃听。注重隐私的解析器和一些家用路由器使用此协议。"
+          }
+        }
+      }
+    },
+    "Ecobee smart thermostat, a connected HVAC controller that integrates with Apple Home, Amazon Alexa, and Google Home for remote temperature scheduling and energy monitoring.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ecobee smart thermostat, a connected HVAC controller that integrates with Apple Home, Amazon Alexa, and Google Home for remote temperature scheduling and energy monitoring."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Termostato inteligente Ecobee, un controlador de climatización conectado que se integra con Apple Home, Amazon Alexa y Google Home para programar temperaturas y monitorizar el consumo energético de forma remota."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thermostat intelligent Ecobee, un contrôleur de chauffage et climatisation connecté qui s'intègre avec Apple Home, Amazon Alexa et Google Home pour la programmation à distance de la température et le suivi de la consommation énergétique."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ecobee-Smart-Thermostat, ein vernetzter HLK-Regler, der sich mit Apple Home, Amazon Alexa und Google Home integriert, um Temperaturen aus der Ferne zu planen und den Energieverbrauch zu überwachen."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ecobeeスマートサーモスタットは、Apple Home、Amazon Alexa、Google Homeと連携する空調コントローラーで、温度の遠隔スケジューリングとエネルギーモニタリングが可能です。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ecobee智能恒温器是一款联网HVAC控制器，与Apple Home、Amazon Alexa和Google Home集成，可远程调度温度并监控能耗。"
+          }
+        }
+      }
+    },
+    "Emby Media Server, a personal media server for streaming videos, music, and live TV to apps on phones, TVs, and game consoles.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Emby Media Server, a personal media server for streaming videos, music, and live TV to apps on phones, TVs, and game consoles."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Emby Media Server, un servidor multimedia personal para transmitir vídeos, música y TV en directo a aplicaciones en teléfonos, televisores y consolas."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Emby Media Server, un serveur multimédia personnel pour diffuser des vidéos, de la musique et la télévision en direct vers des applications sur téléphones, téléviseurs et consoles de jeu."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Emby Media Server, ein persönlicher Medienserver zum Streamen von Videos, Musik und Live-TV an Apps auf Smartphones, Fernsehern und Spielekonsolen."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Emby Media Serverは、動画、音楽、ライブTVをスマートフォン、テレビ、ゲーム機のアプリにストリーミングするパーソナルメディアサーバーです。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Emby Media Server是一款个人媒体服务器，可将视频、音乐和直播电视流式传输到手机、电视和游戏机上的应用。"
+          }
+        }
+      }
+    },
+    "HashiCorp Consul, a service-mesh and service-discovery platform. Some Consul deployments register agent endpoints via mDNS so clients can find them without static configuration.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HashiCorp Consul, a service-mesh and service-discovery platform. Some Consul deployments register agent endpoints via mDNS so clients can find them without static configuration."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HashiCorp Consul, una plataforma de malla y descubrimiento de servicios. Algunas implantaciones de Consul registran los extremos de sus agentes mediante mDNS para que los clientes los encuentren sin configuración estática."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HashiCorp Consul, une plateforme de service mesh et de découverte de services. Certains déploiements Consul enregistrent les points de terminaison d'agent via mDNS afin que les clients les trouvent sans configuration statique."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HashiCorp Consul, eine Service-Mesh- und Service-Discovery-Plattform. Einige Consul-Bereitstellungen registrieren Agent-Endpunkte über mDNS, damit Clients sie ohne statische Konfiguration finden."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HashiCorp Consulは、サービスメッシュおよびサービスディスカバリのプラットフォームです。一部のConsulデプロイメントでは、クライアントが静的設定なしで見つけられるよう、エージェントのエンドポイントをmDNSで登録します。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HashiCorp Consul是一个服务网格和服务发现平台。某些Consul部署通过mDNS注册代理端点，让客户端无需静态配置即可发现它们。"
+          }
+        }
+      }
+    },
+    "IMAP over TLS — the encrypted variant of IMAP. Mail clients (Apple Mail, Thunderbird, etc.) prefer this when discovered.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IMAP over TLS — the encrypted variant of IMAP. Mail clients (Apple Mail, Thunderbird, etc.) prefer this when discovered."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IMAP sobre TLS — la variante cifrada de IMAP. Los clientes de correo (Apple Mail, Thunderbird, etc.) la prefieren cuando se descubre."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IMAP sur TLS — la variante chiffrée d'IMAP. Les clients de messagerie (Apple Mail, Thunderbird, etc.) la préfèrent lorsqu'elle est détectée."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IMAP über TLS — die verschlüsselte Variante von IMAP. Mail-Clients (Apple Mail, Thunderbird usw.) bevorzugen diese, wenn sie erkannt wird."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TLS経由のIMAP — IMAPの暗号化バリアントです。メールクライアント（Apple Mail、Thunderbirdなど）は検出されるとこちらを優先します。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通过TLS的IMAP——IMAP的加密变体。邮件客户端（Apple Mail、Thunderbird等）在发现时会优先使用此选项。"
+          }
+        }
+      }
+    },
+    "Internet Message Access Protocol — the standard mail-retrieval protocol that keeps the messages on the server. Defined for service discovery in RFC 6186.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Internet Message Access Protocol — the standard mail-retrieval protocol that keeps the messages on the server. Defined for service discovery in RFC 6186."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Internet Message Access Protocol — el protocolo estándar de recuperación de correo que mantiene los mensajes en el servidor. Definido para el descubrimiento de servicios en RFC 6186."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Internet Message Access Protocol — le protocole standard de récupération de courrier qui conserve les messages sur le serveur. Défini pour la découverte de services dans RFC 6186."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Internet Message Access Protocol — das Standardprotokoll zum Abrufen von E-Mails, das die Nachrichten auf dem Server belässt. Die Dienstsuche ist in RFC 6186 definiert."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Internet Message Access Protocolは、メッセージをサーバー上に残す標準のメール取得プロトコルです。サービス検出はRFC 6186で定義されています。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Internet Message Access Protocol是将消息保留在服务器上的标准邮件检索协议。其服务发现在RFC 6186中定义。"
+          }
+        }
+      }
+    },
+    "Jellyfin, an open-source media server for streaming personal video, music, and photo libraries to clients on the local network. The free, community-run alternative to Plex and Emby.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jellyfin, an open-source media server for streaming personal video, music, and photo libraries to clients on the local network. The free, community-run alternative to Plex and Emby."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jellyfin, un servidor multimedia de código abierto para transmitir bibliotecas personales de vídeo, música y fotos a clientes de la red local. La alternativa gratuita y dirigida por la comunidad a Plex y Emby."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jellyfin, un serveur multimédia open source pour diffuser des bibliothèques personnelles de vidéos, de musique et de photos vers les clients du réseau local. L'alternative gratuite et communautaire à Plex et Emby."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jellyfin, ein Open-Source-Medienserver zum Streamen persönlicher Video-, Musik- und Fotobibliotheken an Clients im lokalen Netzwerk. Die kostenlose, von der Community betriebene Alternative zu Plex und Emby."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jellyfinは、個人の動画、音楽、写真ライブラリをローカルネットワーク上のクライアントにストリーミングするオープンソースのメディアサーバーです。PlexやEmbyに代わる無料でコミュニティ運営の選択肢です。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jellyfin是一款开源媒体服务器，可将个人视频、音乐和照片库流式传输到本地网络中的客户端。是Plex和Emby的免费社区运营替代方案。"
+          }
+        }
+      }
+    },
+    "KDE Connect, the cross-platform pairing protocol that links phones (Android, iOS) with Linux/Windows/macOS desktops for shared clipboards, notification mirroring, and file transfer.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KDE Connect, the cross-platform pairing protocol that links phones (Android, iOS) with Linux/Windows/macOS desktops for shared clipboards, notification mirroring, and file transfer."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KDE Connect, el protocolo de emparejamiento multiplataforma que enlaza teléfonos (Android, iOS) con escritorios Linux/Windows/macOS para compartir el portapapeles, replicar notificaciones y transferir archivos."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KDE Connect, le protocole d'appairage multiplateforme qui relie les téléphones (Android, iOS) aux bureaux Linux/Windows/macOS pour partager le presse-papiers, refléter les notifications et transférer des fichiers."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KDE Connect, das plattformübergreifende Pairing-Protokoll, das Smartphones (Android, iOS) mit Linux-, Windows- und macOS-Desktops verbindet, um Zwischenablagen zu teilen, Benachrichtigungen zu spiegeln und Dateien zu übertragen."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KDE Connectは、スマートフォン（Android、iOS）とLinux/Windows/macOSデスクトップをペアリングするクロスプラットフォームプロトコルで、クリップボード共有、通知ミラーリング、ファイル転送を可能にします。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KDE Connect是一种跨平台配对协议，将手机（Android、iOS）与Linux/Windows/macOS桌面连接起来，实现剪贴板共享、通知镜像和文件传输。"
+          }
+        }
+      }
+    },
+    "Kerberos authentication over UDP — the original Kerberos transport, still used by some KDCs alongside the TCP variant.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kerberos authentication over UDP — the original Kerberos transport, still used by some KDCs alongside the TCP variant."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Autenticación Kerberos sobre UDP — el transporte original de Kerberos, aún utilizado por algunos KDCs junto con la variante TCP."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Authentification Kerberos sur UDP — le transport Kerberos d'origine, encore utilisé par certains KDC aux côtés de la variante TCP."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kerberos-Authentifizierung über UDP — der ursprüngliche Kerberos-Transport, der von einigen KDCs neben der TCP-Variante immer noch verwendet wird."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "UDP経由のKerberos認証 — 元々のKerberosトランスポートで、一部のKDCではTCPバリアントと並行して現在も使用されています。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通过UDP的Kerberos身份验证——最早的Kerberos传输方式，部分KDC仍在与TCP变体并行使用。"
+          }
+        }
+      }
+    },
+    "Kerberos, the network authentication protocol used by macOS, Active Directory, and many enterprise login systems. Defined in RFC 4120 with mDNS service discovery in RFC 4120/6763.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kerberos, the network authentication protocol used by macOS, Active Directory, and many enterprise login systems. Defined in RFC 4120 with mDNS service discovery in RFC 4120/6763."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kerberos, el protocolo de autenticación de red utilizado por macOS, Active Directory y muchos sistemas de inicio de sesión empresariales. Definido en RFC 4120, con descubrimiento de servicios mDNS en RFC 4120/6763."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kerberos, le protocole d'authentification réseau utilisé par macOS, Active Directory et de nombreux systèmes de connexion d'entreprise. Défini dans RFC 4120, avec la découverte de services mDNS dans RFC 4120/6763."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kerberos, das Netzwerk-Authentifizierungsprotokoll, das von macOS, Active Directory und vielen Unternehmens-Anmeldesystemen verwendet wird. Definiert in RFC 4120, mDNS-Dienstsuche in RFC 4120/6763."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kerberosは、macOS、Active Directory、多くの企業ログインシステムで使用されるネットワーク認証プロトコルです。RFC 4120で定義され、mDNSサービス検出はRFC 4120/6763で定義されています。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kerberos是macOS、Active Directory和众多企业登录系统使用的网络身份验证协议。在RFC 4120中定义，mDNS服务发现在RFC 4120/6763中定义。"
+          }
+        }
+      }
+    },
+    "Klipper, a high-performance 3D-printer firmware that runs on a Raspberry Pi alongside the printer's microcontroller. Often paired with the Mainsail or Fluidd web UIs.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klipper, a high-performance 3D-printer firmware that runs on a Raspberry Pi alongside the printer's microcontroller. Often paired with the Mainsail or Fluidd web UIs."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klipper, un firmware de impresora 3D de alto rendimiento que se ejecuta en una Raspberry Pi junto al microcontrolador de la impresora. A menudo se combina con las interfaces web Mainsail o Fluidd."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klipper, un firmware haute performance pour imprimantes 3D qui s'exécute sur un Raspberry Pi aux côtés du microcontrôleur de l'imprimante. Souvent associé aux interfaces web Mainsail ou Fluidd."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klipper, eine leistungsstarke 3D-Drucker-Firmware, die auf einem Raspberry Pi neben dem Mikrocontroller des Druckers läuft. Häufig in Kombination mit den Web-Oberflächen Mainsail oder Fluidd."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klipperは、プリンターのマイコンと並行してRaspberry Pi上で動作する高性能な3Dプリンター用ファームウェアです。MainsailやFluiddのWeb UIと組み合わせて使用されることが多いです。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klipper是一款高性能3D打印机固件，在Raspberry Pi上与打印机的微控制器并行运行。通常与Mainsail或Fluidd的Web界面搭配使用。"
+          }
+        }
+      }
+    },
+    "Kodi (formerly XBMC), an open-source media center for playing local and streamed media. Commonly seen on Raspberry Pi, Apple TV jailbreaks, and dedicated home-theater PCs.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kodi (formerly XBMC), an open-source media center for playing local and streamed media. Commonly seen on Raspberry Pi, Apple TV jailbreaks, and dedicated home-theater PCs."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kodi (anteriormente XBMC), un centro multimedia de código abierto para reproducir contenido local y en streaming. Común en Raspberry Pi, en Apple TV con jailbreak y en PCs dedicados a cine en casa."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kodi (anciennement XBMC), un centre multimédia open source pour lire les médias locaux et en streaming. Couramment vu sur Raspberry Pi, Apple TV jailbreakés et PC dédiés au cinéma maison."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kodi (früher XBMC), ein Open-Source-Mediacenter zur Wiedergabe lokaler und gestreamter Medien. Häufig auf Raspberry Pi, gejailbreakten Apple TVs und dedizierten Home-Theater-PCs zu finden."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kodi（旧XBMC）は、ローカルおよびストリーミングメディアを再生するオープンソースのメディアセンターです。Raspberry Pi、ジェイルブレイクされたApple TV、ホームシアター専用PCでよく見られます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kodi（前身为XBMC）是一款开源媒体中心，用于播放本地和流媒体内容。常见于Raspberry Pi、越狱的Apple TV和专用家庭影院PC。"
+          }
+        }
+      }
+    },
+    "LIFX smart bulbs, Wi-Fi-connected color-changing lights that announce themselves on the local network for control by the LIFX app and smart-home hubs.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LIFX smart bulbs, Wi-Fi-connected color-changing lights that announce themselves on the local network for control by the LIFX app and smart-home hubs."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bombillas inteligentes LIFX, luces conectadas por Wi-Fi con cambio de color que se anuncian en la red local para ser controladas por la aplicación LIFX y los hubs domóticos."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ampoules connectées LIFX, des lampes à changement de couleur reliées en Wi-Fi qui s'annoncent sur le réseau local pour être contrôlées par l'application LIFX et les hubs domotiques."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LIFX-Smart-Lampen, WLAN-vernetzte farbwechselnde Leuchten, die sich im lokalen Netzwerk ankündigen, um von der LIFX-App und Smart-Home-Hubs gesteuert zu werden."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LIFXスマート電球は、Wi-Fi接続のカラーチェンジ照明で、LIFXアプリやスマートホームハブから制御できるよう、ローカルネットワーク上に自身をアドバタイズします。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LIFX智能灯泡是Wi-Fi连接的可变色灯光，在本地网络中广播自身，以便通过LIFX应用和智能家居中枢进行控制。"
+          }
+        }
+      }
+    },
+    "Minecraft LAN-game advertisement. When a player opens their world to LAN, the game broadcasts its presence so other Minecraft instances on the same network can join without typing an IP.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Minecraft LAN-game advertisement. When a player opens their world to LAN, the game broadcasts its presence so other Minecraft instances on the same network can join without typing an IP."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anuncio de partida LAN de Minecraft. Cuando un jugador abre su mundo a la LAN, el juego difunde su presencia para que otras instancias de Minecraft en la misma red puedan unirse sin escribir una IP."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Annonce de partie LAN Minecraft. Lorsqu'un joueur ouvre son monde au réseau local, le jeu diffuse sa présence afin que d'autres instances de Minecraft sur le même réseau puissent rejoindre la partie sans saisir d'IP."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Minecraft-LAN-Spiel-Ankündigung. Wenn ein Spieler seine Welt für das LAN öffnet, gibt das Spiel seine Präsenz bekannt, damit andere Minecraft-Instanzen im selben Netzwerk beitreten können, ohne eine IP einzugeben."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MinecraftのLANゲームアドバタイズメント。プレイヤーが自分の世界をLANに公開すると、ゲームが自身の存在をブロードキャストし、同じネットワーク上の他のMinecraftインスタンスがIPを入力せずに参加できるようになります。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Minecraft局域网游戏广播。当玩家将世界开放给局域网时，游戏会广播其存在，使同一网络上的其他Minecraft实例无需输入IP即可加入。"
+          }
+        }
+      }
+    },
+    "Network Time Protocol — used to keep clocks synchronized across networked devices. Some local NTP servers (router-based, AppleTV-based) advertise themselves over Bonjour.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Network Time Protocol — used to keep clocks synchronized across networked devices. Some local NTP servers (router-based, AppleTV-based) advertise themselves over Bonjour."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Network Time Protocol — utilizado para mantener sincronizados los relojes entre dispositivos en red. Algunos servidores NTP locales (basados en router o en AppleTV) se anuncian mediante Bonjour."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Network Time Protocol — utilisé pour synchroniser les horloges entre appareils en réseau. Certains serveurs NTP locaux (intégrés à un routeur, à un Apple TV) s'annoncent via Bonjour."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Network Time Protocol — wird verwendet, um Uhren zwischen vernetzten Geräten zu synchronisieren. Einige lokale NTP-Server (in Routern oder im Apple TV) kündigen sich über Bonjour an."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Network Time Protocolは、ネットワーク機器間で時刻を同期するために使用されます。一部のローカルNTPサーバー（ルーターやApple TVベース）は、Bonjour経由で自身をアドバタイズします。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Network Time Protocol——用于在联网设备之间保持时钟同步。一些本地NTP服务器（基于路由器或Apple TV）会通过Bonjour广播自身。"
+          }
+        }
+      }
+    },
+    "Newer variant of Apple's iOS-device sync protocol seen on iOS 17+ devices. Used alongside the v1 (`_apple-mobdev._tcp`) and v2 (`_apple-mobdev2._tcp`) services for Wi-Fi sync with Finder/iTunes.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Newer variant of Apple's iOS-device sync protocol seen on iOS 17+ devices. Used alongside the v1 (`_apple-mobdev._tcp`) and v2 (`_apple-mobdev2._tcp`) services for Wi-Fi sync with Finder/iTunes."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Variante más reciente del protocolo de sincronización de dispositivos iOS de Apple, visible en dispositivos iOS 17 y posteriores. Se utiliza junto con los servicios v1 (`_apple-mobdev._tcp`) y v2 (`_apple-mobdev2._tcp`) para la sincronización Wi-Fi con Finder/iTunes."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Variante plus récente du protocole de synchronisation des appareils iOS d'Apple, visible sur les appareils iOS 17 et suivants. Utilisée aux côtés des services v1 (`_apple-mobdev._tcp`) et v2 (`_apple-mobdev2._tcp`) pour la synchronisation Wi-Fi avec Finder/iTunes."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neuere Variante des iOS-Gerätesynchronisationsprotokolls von Apple, zu sehen auf Geräten mit iOS 17+. Wird zusammen mit den v1- (`_apple-mobdev._tcp`) und v2-Diensten (`_apple-mobdev2._tcp`) für die Wi-Fi-Synchronisation mit Finder/iTunes verwendet."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iOS 17以降のデバイスで見られるAppleのiOSデバイス同期プロトコルの新しいバリアントです。Finder/iTunesとのWi-Fi同期で、v1（`_apple-mobdev._tcp`）およびv2（`_apple-mobdev2._tcp`）サービスと併用されます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在iOS 17及更高版本设备上出现的Apple iOS设备同步协议的较新变体。与v1（`_apple-mobdev._tcp`）和v2（`_apple-mobdev2._tcp`）服务一起用于Finder/iTunes的Wi-Fi同步。"
+          }
+        }
+      }
+    },
+    "OctoPrint, a web-based controller for desktop 3D printers — typically a Raspberry Pi running the OctoPrint server attached to the printer over USB. Lets the user start prints, monitor progress, and stream camera video.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OctoPrint, a web-based controller for desktop 3D printers — typically a Raspberry Pi running the OctoPrint server attached to the printer over USB. Lets the user start prints, monitor progress, and stream camera video."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OctoPrint, un controlador web para impresoras 3D de escritorio — habitualmente una Raspberry Pi que ejecuta el servidor OctoPrint conectada a la impresora por USB. Permite iniciar impresiones, monitorizar el progreso y transmitir vídeo de cámara."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OctoPrint, un contrôleur web pour imprimantes 3D de bureau — généralement un Raspberry Pi exécutant le serveur OctoPrint et relié à l'imprimante en USB. Permet de lancer des impressions, suivre la progression et diffuser la vidéo de la caméra."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OctoPrint, eine webbasierte Steuerung für Desktop-3D-Drucker — typischerweise ein Raspberry Pi, der den OctoPrint-Server ausführt und per USB mit dem Drucker verbunden ist. Ermöglicht das Starten von Drucken, das Überwachen des Fortschritts und das Streamen von Kameravideo."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OctoPrintは、デスクトップ3DプリンターのWebベースのコントローラーです — 通常はRaspberry Pi上でOctoPrintサーバーを実行し、USBでプリンターに接続します。印刷の開始、進捗の監視、カメラ映像のストリーミングが可能です。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OctoPrint是一款桌面3D打印机的Web控制器——通常是运行OctoPrint服务器的Raspberry Pi，通过USB连接到打印机。可启动打印、监控进度并串流摄像头视频。"
+          }
+        }
+      }
+    },
+    "POP3 over TLS — the encrypted variant of POP3 for retrieving mail.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "POP3 over TLS — the encrypted variant of POP3 for retrieving mail."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "POP3 sobre TLS — la variante cifrada de POP3 para recuperar correo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "POP3 sur TLS — la variante chiffrée de POP3 pour la récupération du courrier."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "POP3 über TLS — die verschlüsselte Variante von POP3 zum Abrufen von E-Mails."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TLS経由のPOP3 — メールを取得するためのPOP3の暗号化バリアントです。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通过TLS的POP3——用于检索邮件的POP3加密变体。"
+          }
+        }
+      }
+    },
+    "Philips Hue smart-lighting bridge, the hub that connects Philips Hue bulbs and accessories to the local Wi-Fi network and lets apps control them. Often the most-deployed smart-home hub in a household.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Philips Hue smart-lighting bridge, the hub that connects Philips Hue bulbs and accessories to the local Wi-Fi network and lets apps control them. Often the most-deployed smart-home hub in a household."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puente de iluminación inteligente Philips Hue, el hub que conecta las bombillas y accesorios Philips Hue a la red Wi-Fi local y permite que las aplicaciones los controlen. A menudo es el hub domótico más implantado en el hogar."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pont d'éclairage intelligent Philips Hue, le hub qui relie les ampoules et accessoires Philips Hue au réseau Wi-Fi local et permet aux applications de les contrôler. Souvent le hub domotique le plus déployé dans un foyer."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Philips-Hue-Smart-Lighting-Bridge, der Hub, der Philips-Hue-Lampen und Zubehör mit dem lokalen WLAN verbindet und es Apps ermöglicht, sie zu steuern. Oft der am häufigsten eingesetzte Smart-Home-Hub in einem Haushalt."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Philips Hueスマート照明ブリッジは、Philips Hueの電球やアクセサリをローカルWi-Fiネットワークに接続し、アプリから制御できるようにするハブです。家庭内で最も多く導入されているスマートホームハブの一つです。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Philips Hue智能照明桥接器是将Philips Hue灯泡和配件连接到本地Wi-Fi网络并允许应用控制它们的中枢。通常是家庭中部署最多的智能家居中枢。"
+          }
+        }
+      }
+    },
+    "Pi-hole, a network-level DNS-based ad blocker that runs on a Raspberry Pi or similar. Some installations advertise their admin endpoint via mDNS for easy discovery.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pi-hole, a network-level DNS-based ad blocker that runs on a Raspberry Pi or similar. Some installations advertise their admin endpoint via mDNS for easy discovery."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pi-hole, un bloqueador de anuncios basado en DNS a nivel de red que se ejecuta en una Raspberry Pi o similar. Algunas instalaciones anuncian su punto de administración mediante mDNS para facilitar su descubrimiento."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pi-hole, un bloqueur de publicités basé sur DNS au niveau du réseau qui s'exécute sur un Raspberry Pi ou similaire. Certaines installations annoncent leur point d'administration via mDNS pour en faciliter la découverte."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pi-hole, ein netzwerkweiter, DNS-basierter Werbeblocker, der auf einem Raspberry Pi oder Ähnlichem läuft. Einige Installationen kündigen ihren Admin-Endpunkt über mDNS an, um die Auffindbarkeit zu erleichtern."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pi-holeは、Raspberry Piなどで動作するネットワークレベルのDNSベースの広告ブロッカーです。一部のインストールでは、検出しやすくするために管理エンドポイントをmDNSでアドバタイズします。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pi-hole是在Raspberry Pi或类似设备上运行的网络级DNS广告拦截器。部分安装会通过mDNS广播其管理端点以便发现。"
+          }
+        }
+      }
+    },
+    "Plex Media Server, a self-hosted media library that streams movies, TV, music, and photos to clients on the local network and beyond. Plex also uses a separate UDP-based group discovery protocol on the LAN.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plex Media Server, a self-hosted media library that streams movies, TV, music, and photos to clients on the local network and beyond. Plex also uses a separate UDP-based group discovery protocol on the LAN."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plex Media Server, una biblioteca multimedia autoalojada que transmite películas, series, música y fotos a clientes en la red local y más allá. Plex también utiliza un protocolo independiente de descubrimiento de grupo basado en UDP en la LAN."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plex Media Server, une médiathèque auto-hébergée qui diffuse films, séries, musique et photos vers les clients du réseau local et au-delà. Plex utilise également un protocole distinct de découverte de groupe basé sur UDP sur le LAN."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plex Media Server, eine selbst gehostete Medienbibliothek, die Filme, Serien, Musik und Fotos an Clients im lokalen Netzwerk und darüber hinaus streamt. Plex verwendet im LAN außerdem ein separates, UDP-basiertes Gruppen-Erkennungsprotokoll."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plex Media Serverは、映画、TV番組、音楽、写真をローカルネットワークおよびその外のクライアントにストリーミングするセルフホスト型メディアライブラリです。PlexはLAN上で別途UDPベースのグループ検出プロトコルも使用します。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plex Media Server是一款自托管媒体库，可向本地网络及其外部的客户端流式传输电影、电视、音乐和照片。Plex在LAN上还使用一个单独的基于UDP的组发现协议。"
+          }
+        }
+      }
+    },
+    "Post Office Protocol v3 — a legacy mail-retrieval protocol that downloads messages and (typically) deletes them from the server. Largely superseded by IMAP, but still defined in RFC 6186 for service discovery.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Post Office Protocol v3 — a legacy mail-retrieval protocol that downloads messages and (typically) deletes them from the server. Largely superseded by IMAP, but still defined in RFC 6186 for service discovery."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Post Office Protocol v3 — un protocolo heredado de recuperación de correo que descarga los mensajes y (habitualmente) los elimina del servidor. Reemplazado en gran medida por IMAP, pero aún definido en RFC 6186 para descubrimiento de servicios."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Post Office Protocol v3 — un protocole de récupération de courrier hérité qui télécharge les messages et (généralement) les supprime du serveur. Largement supplanté par IMAP, mais toujours défini dans RFC 6186 pour la découverte de services."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Post Office Protocol v3 — ein veraltetes Mail-Abrufprotokoll, das Nachrichten herunterlädt und (üblicherweise) vom Server löscht. Weitgehend durch IMAP ersetzt, aber für die Dienstsuche weiterhin in RFC 6186 definiert."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Post Office Protocol v3は、メッセージをダウンロードし、（通常は）サーバーから削除する従来のメール取得プロトコルです。ほぼIMAPに取って代わられていますが、サービス検出は依然としてRFC 6186で定義されています。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Post Office Protocol v3——一种传统的邮件检索协议，下载消息并（通常）将其从服务器删除。已基本被IMAP取代，但服务发现仍在RFC 6186中定义。"
+          }
+        }
+      }
+    },
+    "PulseAudio, the Linux audio server. Some Linux systems advertise their PulseAudio server over Bonjour so other machines can route audio to or from them over the local network.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PulseAudio, the Linux audio server. Some Linux systems advertise their PulseAudio server over Bonjour so other machines can route audio to or from them over the local network."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PulseAudio, el servidor de audio de Linux. Algunos sistemas Linux anuncian su servidor PulseAudio mediante Bonjour para que otros equipos puedan enrutar audio hacia o desde ellos por la red local."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PulseAudio, le serveur audio de Linux. Certains systèmes Linux annoncent leur serveur PulseAudio via Bonjour afin que d'autres machines puissent acheminer du son vers ou depuis eux sur le réseau local."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PulseAudio, der Linux-Audioserver. Einige Linux-Systeme kündigen ihren PulseAudio-Server über Bonjour an, damit andere Rechner Audio über das lokale Netzwerk zu oder von ihnen leiten können."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PulseAudioはLinuxのオーディオサーバーです。一部のLinuxシステムでは、ローカルネットワーク上で他のマシンとの間でオーディオをルーティングできるよう、PulseAudioサーバーをBonjourでアドバタイズします。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PulseAudio是Linux的音频服务器。一些Linux系统通过Bonjour广播其PulseAudio服务器，以便其他机器可以在本地网络上将音频路由到或从中传出。"
+          }
+        }
+      }
+    },
+    "Redis, an in-memory key-value data store widely used as a cache, message broker, and ephemeral database in modern application stacks.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redis, an in-memory key-value data store widely used as a cache, message broker, and ephemeral database in modern application stacks."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redis, un almacén de datos clave-valor en memoria muy utilizado como caché, broker de mensajes y base de datos efímera en pilas de aplicaciones modernas."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redis, un magasin de données clé-valeur en mémoire largement utilisé comme cache, courtier de messages et base de données éphémère dans les piles applicatives modernes."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redis, ein In-Memory-Key-Value-Datenspeicher, der in modernen Anwendungs-Stacks häufig als Cache, Message Broker und kurzlebige Datenbank eingesetzt wird."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redisは、キャッシュ、メッセージブローカー、一時データベースとして現代のアプリケーションスタックで広く使用されているインメモリのキーバリューデータストアです。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redis是一种内存型键值数据存储，在现代应用栈中广泛用作缓存、消息代理和临时数据库。"
+          }
+        }
+      }
+    },
+    "SMTP Submission — the authenticated mail-submission protocol used by mail clients to send messages through their provider. Defined for service discovery in RFC 6186.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP Submission — the authenticated mail-submission protocol used by mail clients to send messages through their provider. Defined for service discovery in RFC 6186."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP Submission — el protocolo autenticado de envío de correo que utilizan los clientes para enviar mensajes a través de su proveedor. Definido para descubrimiento de servicios en RFC 6186."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP Submission — le protocole authentifié de soumission de courrier utilisé par les clients de messagerie pour envoyer des messages via leur fournisseur. Défini pour la découverte de services dans RFC 6186."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP Submission — das authentifizierte Mail-Submission-Protokoll, das von Mail-Clients verwendet wird, um Nachrichten über ihren Anbieter zu versenden. Die Dienstsuche ist in RFC 6186 definiert."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP Submissionは、メールクライアントがプロバイダ経由でメッセージを送信するために使用する認証付きのメール送信プロトコルです。サービス検出はRFC 6186で定義されています。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP Submission——邮件客户端通过其提供商发送消息时使用的经过身份验证的邮件提交协议。其服务发现在RFC 6186中定义。"
+          }
+        }
+      }
+    },
+    "SMTP over TLS — the encrypted variant of SMTP for sending mail. Less common today than the `submission` flow, but still seen on some mail servers.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP over TLS — the encrypted variant of SMTP for sending mail. Less common today than the `submission` flow, but still seen on some mail servers."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP sobre TLS — la variante cifrada de SMTP para enviar correo. Hoy es menos habitual que el flujo `submission`, pero sigue apareciendo en algunos servidores de correo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP sur TLS — la variante chiffrée de SMTP pour l'envoi de courrier. Aujourd'hui moins courante que le flux `submission`, mais encore présente sur certains serveurs de messagerie."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP über TLS — die verschlüsselte SMTP-Variante zum Versenden von E-Mails. Heute weniger verbreitet als der `submission`-Fluss, aber auf einigen Mail-Servern weiterhin zu finden."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TLS経由のSMTP — メール送信用のSMTPの暗号化バリアントです。現在は`submission`フローほど一般的ではありませんが、一部のメールサーバーでは依然として見られます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通过TLS的SMTP——用于发送邮件的SMTP加密变体。如今不如`submission`流程常见，但仍可在一些邮件服务器上看到。"
+          }
+        }
+      }
+    },
+    "Session Initiation Protocol over UDP — the original transport for SIP signaling, still widely used by VoIP phones and PBX systems on the local network.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Session Initiation Protocol over UDP — the original transport for SIP signaling, still widely used by VoIP phones and PBX systems on the local network."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Session Initiation Protocol sobre UDP — el transporte original para la señalización SIP, aún ampliamente utilizado por teléfonos VoIP y centralitas en la red local."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Session Initiation Protocol sur UDP — le transport d'origine pour la signalisation SIP, toujours largement utilisé par les téléphones VoIP et les PBX sur le réseau local."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Session Initiation Protocol über UDP — der ursprüngliche Transport für SIP-Signalisierung, der von VoIP-Telefonen und PBX-Anlagen im lokalen Netzwerk weiterhin häufig genutzt wird."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "UDP経由のSession Initiation Protocol — SIPシグナリングの元々のトランスポートで、ローカルネットワーク上のVoIP電話やPBXシステムで現在も広く使用されています。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通过UDP的Session Initiation Protocol——SIP信令的最初传输方式，至今仍被本地网络中的VoIP电话和PBX系统广泛使用。"
+          }
+        }
+      }
+    },
+    "Session Initiation Protocol — the signaling protocol that negotiates voice and video calls. Used by VoIP phones, Apple FaceTime audio fallbacks, and corporate calling systems.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Session Initiation Protocol — the signaling protocol that negotiates voice and video calls. Used by VoIP phones, Apple FaceTime audio fallbacks, and corporate calling systems."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Session Initiation Protocol — el protocolo de señalización que negocia llamadas de voz y vídeo. Utilizado por teléfonos VoIP, las alternativas de audio de Apple FaceTime y sistemas de telefonía corporativa."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Session Initiation Protocol — le protocole de signalisation qui négocie les appels vocaux et vidéo. Utilisé par les téléphones VoIP, les replis audio d'Apple FaceTime et les systèmes téléphoniques d'entreprise."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Session Initiation Protocol — das Signalisierungsprotokoll, das Sprach- und Videoanrufe aushandelt. Wird von VoIP-Telefonen, den Audio-Fallbacks von Apple FaceTime und unternehmensweiten Anrufsystemen verwendet."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Session Initiation Protocolは、音声およびビデオ通話をネゴシエートするシグナリングプロトコルです。VoIP電話、Apple FaceTimeの音声フォールバック、企業の通話システムなどで使用されます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Session Initiation Protocol——协商语音和视频通话的信令协议。被VoIP电话、Apple FaceTime音频回退和企业通话系统使用。"
+          }
+        }
+      }
+    },
+    "Simple Mail Transfer Protocol — used for sending outgoing mail. Mail clients typically use the `submission` variant for authenticated user-originated mail.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple Mail Transfer Protocol — used for sending outgoing mail. Mail clients typically use the `submission` variant for authenticated user-originated mail."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple Mail Transfer Protocol — utilizado para enviar correo saliente. Los clientes de correo suelen usar la variante `submission` para los mensajes autenticados originados por el usuario."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple Mail Transfer Protocol — utilisé pour envoyer le courrier sortant. Les clients de messagerie utilisent généralement la variante `submission` pour le courrier authentifié émis par l'utilisateur."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple Mail Transfer Protocol — wird zum Senden ausgehender E-Mails verwendet. Mail-Clients nutzen typischerweise die `submission`-Variante für authentifizierte, vom Benutzer ausgehende Nachrichten."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple Mail Transfer Protocolは、送信メールに使用されます。メールクライアントは、ユーザーが送信する認証済みメールには通常`submission`バリアントを使用します。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple Mail Transfer Protocol——用于发送外发邮件。邮件客户端通常对经过身份验证的用户发起邮件使用`submission`变体。"
+          }
+        }
+      }
+    },
+    "Simple Network Management Protocol — the long-standing protocol for monitoring and configuring network devices like switches, printers, and UPSes. Most often seen in business networks.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple Network Management Protocol — the long-standing protocol for monitoring and configuring network devices like switches, printers, and UPSes. Most often seen in business networks."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple Network Management Protocol — el protocolo veterano para monitorizar y configurar dispositivos de red como switches, impresoras y SAIs. Se ve sobre todo en redes empresariales."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple Network Management Protocol — le protocole de longue date pour surveiller et configurer des équipements réseau comme les commutateurs, imprimantes et onduleurs. Surtout présent dans les réseaux d'entreprise."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple Network Management Protocol — das seit langem etablierte Protokoll zur Überwachung und Konfiguration von Netzwerkgeräten wie Switches, Druckern und USVs. Am häufigsten in Unternehmensnetzwerken zu finden."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple Network Management Protocolは、スイッチ、プリンター、UPSなどのネットワーク機器を監視・設定するための長年使われているプロトコルです。主にビジネスネットワークで見られます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple Network Management Protocol——用于监控和配置交换机、打印机、UPS等网络设备的老牌协议。最常见于企业网络。"
+          }
+        }
+      }
+    },
+    "Syncthing, an open-source peer-to-peer file-sync tool that mirrors folders between devices over the local network and the internet. Often used as a self-hosted alternative to Dropbox or iCloud Drive.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Syncthing, an open-source peer-to-peer file-sync tool that mirrors folders between devices over the local network and the internet. Often used as a self-hosted alternative to Dropbox or iCloud Drive."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Syncthing, una herramienta de código abierto de sincronización de archivos entre pares que replica carpetas entre dispositivos a través de la red local e internet. Suele utilizarse como alternativa autoalojada a Dropbox o iCloud Drive."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Syncthing, un outil open source de synchronisation de fichiers en pair-à-pair qui réplique les dossiers entre appareils via le réseau local et internet. Souvent utilisé comme alternative auto-hébergée à Dropbox ou iCloud Drive."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Syncthing, ein quelloffenes Peer-to-Peer-Datei-Synchronisationstool, das Ordner zwischen Geräten über das lokale Netzwerk und das Internet spiegelt. Wird häufig als selbst gehostete Alternative zu Dropbox oder iCloud Drive verwendet."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Syncthingは、ローカルネットワークおよびインターネット経由でデバイス間のフォルダを同期するオープンソースのピアツーピアファイル同期ツールです。DropboxやiCloud Driveに代わるセルフホスト型の選択肢としてよく使用されます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Syncthing是一款开源的对等文件同步工具，可在本地网络和互联网上的设备之间镜像文件夹。常用作Dropbox或iCloud Drive的自托管替代方案。"
+          }
+        }
+      }
+    },
+    "Tasmota, an open-source firmware for ESP8266/ESP32-based smart-home devices (Sonoff, Shelly, etc.). Commonly used to flash off-the-shelf smart plugs, switches, and bulbs for local-only control.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tasmota, an open-source firmware for ESP8266/ESP32-based smart-home devices (Sonoff, Shelly, etc.). Commonly used to flash off-the-shelf smart plugs, switches, and bulbs for local-only control."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tasmota, un firmware de código abierto para dispositivos domóticos basados en ESP8266/ESP32 (Sonoff, Shelly, etc.). Se utiliza habitualmente para flashear enchufes, interruptores y bombillas inteligentes comerciales con vistas a un control puramente local."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tasmota, un firmware open source pour les appareils domotiques basés sur ESP8266/ESP32 (Sonoff, Shelly, etc.). Couramment utilisé pour flasher des prises, interrupteurs et ampoules connectés grand public afin de les contrôler uniquement en local."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tasmota, eine Open-Source-Firmware für Smart-Home-Geräte auf Basis von ESP8266/ESP32 (Sonoff, Shelly usw.). Wird häufig verwendet, um handelsübliche smarte Steckdosen, Schalter und Lampen für rein lokale Steuerung zu flashen."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tasmotaは、ESP8266/ESP32ベースのスマートホームデバイス（Sonoff、Shellyなど）向けのオープンソースファームウェアです。市販のスマートプラグ、スイッチ、電球をローカルのみで制御できるようにフラッシュする用途で広く使われています。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tasmota是面向基于ESP8266/ESP32的智能家居设备（Sonoff、Shelly等）的开源固件。常用于刷写市售智能插座、开关和灯泡，以实现纯本地控制。"
+          }
+        }
+      }
+    },
+    "UDP companion to Apple's iOS Wi-Fi-sync protocol. Some iOS devices advertise both the TCP and UDP variants while pairing with macOS Finder.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "UDP companion to Apple's iOS Wi-Fi-sync protocol. Some iOS devices advertise both the TCP and UDP variants while pairing with macOS Finder."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Complemento UDP del protocolo de sincronización Wi-Fi de iOS de Apple. Algunos dispositivos iOS anuncian tanto la variante TCP como la UDP al emparejarse con Finder en macOS."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compagnon UDP du protocole de synchronisation Wi-Fi iOS d'Apple. Certains appareils iOS annoncent à la fois les variantes TCP et UDP lors de l'appairage avec le Finder de macOS."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "UDP-Pendant zu Apples iOS-WLAN-Synchronisationsprotokoll. Einige iOS-Geräte kündigen beim Pairing mit dem macOS Finder sowohl die TCP- als auch die UDP-Variante an."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AppleのiOS Wi-Fi同期プロトコルのUDP版コンパニオンです。一部のiOSデバイスはmacOS Finderとペアリングする際、TCPとUDPの両方のバリアントをアドバタイズします。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple iOS Wi-Fi同步协议的UDP伴随版本。部分iOS设备在与macOS Finder配对时，会同时广播TCP和UDP变体。"
+          }
+        }
+      }
+    },
+    "Valve's Steam in-home streaming service used by Steam Link clients (and the Steam app on phones, tablets, and Apple TV) to stream PC games over the LAN.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Valve's Steam in-home streaming service used by Steam Link clients (and the Steam app on phones, tablets, and Apple TV) to stream PC games over the LAN."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Servicio de Steam In-Home Streaming de Valve, utilizado por los clientes Steam Link (y la aplicación Steam en teléfonos, tabletas y Apple TV) para transmitir juegos de PC por la LAN."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Service de streaming domestique Steam de Valve, utilisé par les clients Steam Link (et l'application Steam sur téléphones, tablettes et Apple TV) pour diffuser des jeux PC sur le LAN."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Valves Steam-In-Home-Streaming-Dienst, der von Steam-Link-Clients (und der Steam-App auf Smartphones, Tablets und Apple TV) genutzt wird, um PC-Spiele über das LAN zu streamen."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ValveのSteamホームストリーミングサービスは、Steam Linkクライアント（およびスマートフォン、タブレット、Apple TV上のSteamアプリ）がLAN経由でPCゲームをストリーミングするために使用されます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Valve的Steam主机内串流服务，由Steam Link客户端（以及手机、平板和Apple TV上的Steam应用）用来通过局域网串流PC游戏。"
+          }
+        }
+      }
+    },
+    "Warpinator, the cross-platform file-sharing tool from Linux Mint. Inspired by AirDrop and works between Linux, Windows, macOS, and Android over the local network.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Warpinator, the cross-platform file-sharing tool from Linux Mint. Inspired by AirDrop and works between Linux, Windows, macOS, and Android over the local network."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Warpinator, la herramienta multiplataforma de intercambio de archivos de Linux Mint. Inspirada en AirDrop, funciona entre Linux, Windows, macOS y Android a través de la red local."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Warpinator, l'outil multiplateforme de partage de fichiers de Linux Mint. Inspiré d'AirDrop, il fonctionne entre Linux, Windows, macOS et Android sur le réseau local."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Warpinator, das plattformübergreifende Dateifreigabe-Tool von Linux Mint. An AirDrop angelehnt und funktioniert zwischen Linux, Windows, macOS und Android über das lokale Netzwerk."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Warpinatorは、Linux Mintのクロスプラットフォームファイルシェアリングツールです。AirDropに着想を得ており、ローカルネットワーク経由でLinux、Windows、macOS、Android間で動作します。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Warpinator是来自Linux Mint的跨平台文件共享工具。受AirDrop启发，可在本地网络上的Linux、Windows、macOS和Android之间使用。"
+          }
+        }
+      }
+    },
+    "gRPC, a modern remote-procedure-call framework built on HTTP/2. Microservices and developer tools occasionally advertise gRPC endpoints over Bonjour during local development.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "gRPC, a modern remote-procedure-call framework built on HTTP/2. Microservices and developer tools occasionally advertise gRPC endpoints over Bonjour during local development."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "gRPC, un framework moderno de llamadas a procedimientos remotos construido sobre HTTP/2. Algunos microservicios y herramientas para desarrolladores anuncian sus extremos gRPC mediante Bonjour durante el desarrollo local."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "gRPC, un framework moderne d'appel de procédure distante bâti sur HTTP/2. Certains microservices et outils de développement annoncent leurs points de terminaison gRPC via Bonjour pendant le développement local."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "gRPC, ein modernes Remote-Procedure-Call-Framework auf Basis von HTTP/2. Microservices und Entwicklerwerkzeuge kündigen gRPC-Endpunkte gelegentlich über Bonjour an, etwa während der lokalen Entwicklung."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "gRPCはHTTP/2上に構築された現代的なリモートプロシージャコールフレームワークです。マイクロサービスや開発者ツールでは、ローカル開発時にgRPCエンドポイントをBonjourでアドバタイズすることがあります。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "gRPC是一种基于HTTP/2构建的现代远程过程调用框架。微服务和开发者工具有时会在本地开发期间通过Bonjour广播gRPC端点。"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
