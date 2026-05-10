@@ -19,8 +19,25 @@ public protocol MyDataManagerObject {
 
     /// Optional sort descriptors applied by default when fetching entities of this type.
     ///
-    /// Return `nil` to use no particular ordering.
+    /// Return `nil` to use no particular ordering. The protocol provides a default
+    /// of `nil` via the unconstrained extension below, so conformers that don't
+    /// need a default sort don't have to declare anything — this also keeps them
+    /// free of the Sendable workaround that a stored `static let` would force,
+    /// since `[NSSortDescriptor]?` isn't `Sendable` (Foundation gap).
     static var sortDescriptors: [NSSortDescriptor]? { get }
+}
+
+public extension MyDataManagerObject {
+
+    /// Default `nil` — fetches use no particular ordering unless the conformer
+    /// overrides this with a type-specific set, or callers pass `sortDescriptors:`
+    /// directly into `fetchMany` / `fetchAll`.
+    ///
+    /// The protocol is `@MainActor`-isolated, so this computed property runs on
+    /// the main actor and never has to satisfy a cross-actor `Sendable` check on
+    /// its return type — that's why the default lives here as a computed property
+    /// instead of as a `static let` on each conformer.
+    static var sortDescriptors: [NSSortDescriptor]? { nil }
 }
 
 public extension MyDataManagerObject where Self: NSManagedObject {
