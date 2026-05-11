@@ -196,8 +196,21 @@ private struct SuggestionCardButtonStyle: ButtonStyle {
         //   - opacity 0.70 (was 0.85) — pairs the scale with a
         //     dimming pulse, so the press reads as a deliberate
         //     "depress" rather than a subtle hover state.
-        //   - background tint 0.25 (was 0.2) — slightly deeper
-        //     ink while pressed for the same reason.
+        //   - background tint resting 0.18 / pressed 0.32 (was
+        //     0.10 / 0.25). The previous 0.10 resting tint was
+        //     barely visible against the chat surface, so the six
+        //     suggestion cards ran together as one tinted blob.
+        //     Bumping the resting state to 0.18 gives each card a
+        //     defined boundary without making the tint loud; the
+        //     pressed state moves to 0.32 to preserve the +0.14
+        //     visible delta on tap so the press still reads as a
+        //     deliberate "depress."
+        //   - subtle stroke at resting 0.20 — sharpens the card
+        //     boundary further on light backgrounds (where the
+        //     blue fill on white reads as the lightest of grays
+        //     without an edge). The stroke uses the same brand
+        //     tint as the fill so it composites cleanly in both
+        //     light and dark modes.
         //   - spring response 0.18 (was 0.25) — faster
         //     attack/release so the visual change starts right
         //     when the finger lands and unwinds promptly on
@@ -210,7 +223,11 @@ private struct SuggestionCardButtonStyle: ButtonStyle {
         let card = configuration.label
             .background(
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(Color.kozBonBlue.opacity(pressed ? 0.25 : 0.1))
+                    .fill(Color.kozBonBlue.opacity(pressed ? 0.32 : 0.18))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .strokeBorder(Color.kozBonBlue.opacity(0.20), lineWidth: 1)
+                    )
             )
             .contentShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
             .scaleEffect(reduceMotion ? 1.0 : (pressed ? 0.94 : 1.0))
