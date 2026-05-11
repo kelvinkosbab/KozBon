@@ -168,6 +168,65 @@ public final class MockBonjourPublishManager: BonjourPublishManagerProtocol {
     }
 }
 
+// MARK: - Mock Network Connectivity Monitor
+
+/// Mock implementation of ``NetworkConnectivityMonitorProtocol`` for
+/// tests and SwiftUI previews. Connectivity state is settable so a
+/// test can simulate joining / leaving Wi-Fi without involving
+/// `NWPathMonitor` or the OS network stack.
+///
+/// Setting ``isOnLocalNetwork`` synchronously fires
+/// ``NetworkConnectivityMonitorDelegate/networkConnectivityDidChange(isOnLocalNetwork:)``
+/// on the registered delegate when the value differs from the
+/// previous one — same external contract as the production
+/// monitor, just without the async path-monitor hop.
+@MainActor
+public final class MockNetworkConnectivityMonitor: NetworkConnectivityMonitorProtocol {
+
+    public weak var delegate: NetworkConnectivityMonitorDelegate?
+
+    public var isOnLocalNetwork: Bool {
+        get { _isOnLocalNetwork }
+        set {
+            guard newValue != _isOnLocalNetwork else { return }
+            _isOnLocalNetwork = newValue
+            delegate?.networkConnectivityDidChange(isOnLocalNetwork: newValue)
+        }
+    }
+    private var _isOnLocalNetwork: Bool
+
+    // Test tracking properties
+
+    /// The number of times ``start()`` has been called.
+    public var startCallCount = 0
+
+    /// The number of times ``stop()`` has been called.
+    public var stopCallCount = 0
+
+    /// - Parameter initialIsOnLocalNetwork: Seed value for
+    ///   ``isOnLocalNetwork`` before any explicit mutation. Defaults
+    ///   to `true` to match the production monitor's optimistic
+    ///   initial state.
+    public init(initialIsOnLocalNetwork: Bool = true) {
+        self._isOnLocalNetwork = initialIsOnLocalNetwork
+    }
+
+    public func start() {
+        startCallCount += 1
+    }
+
+    public func stop() {
+        stopCallCount += 1
+    }
+
+    /// Resets call counts and connectivity state to defaults.
+    public func reset() {
+        startCallCount = 0
+        stopCallCount = 0
+        _isOnLocalNetwork = true
+    }
+}
+
 // MARK: - Test Error
 
 /// Simple error type for simulating failures in mock dependencies during tests.

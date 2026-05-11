@@ -201,4 +201,82 @@ struct MockDependenciesTests {
         #expect(manager.shouldSucceed)
         #expect(manager.errorToThrow == nil)
     }
+
+    // MARK: - MockNetworkConnectivityMonitor Tests
+
+    @Test("Mock connectivity defaults to optimistic `isOnLocalNetwork=true`")
+    func connectivityDefaultsToOptimisticTrue() {
+        let monitor = MockNetworkConnectivityMonitor()
+        #expect(monitor.isOnLocalNetwork)
+    }
+
+    @Test("Mock connectivity honors a `false` seed at init time")
+    func connectivitySeedHonored() {
+        let monitor = MockNetworkConnectivityMonitor(initialIsOnLocalNetwork: false)
+        #expect(!monitor.isOnLocalNetwork)
+    }
+
+    @Test("Mock connectivity increments `startCallCount` once per `start` call")
+    func connectivityStartIncrementsCount() {
+        let monitor = MockNetworkConnectivityMonitor()
+        monitor.start()
+        monitor.start()
+        #expect(monitor.startCallCount == 2)
+    }
+
+    @Test("Mock connectivity increments `stopCallCount` once per `stop` call")
+    func connectivityStopIncrementsCount() {
+        let monitor = MockNetworkConnectivityMonitor()
+        monitor.stop()
+        monitor.stop()
+        monitor.stop()
+        #expect(monitor.stopCallCount == 3)
+    }
+
+    @Test("Setting `isOnLocalNetwork` to a new value fires the delegate exactly once")
+    func connectivitySetterFiresDelegateOnChange() {
+        let monitor = MockNetworkConnectivityMonitor()
+        let delegate = TestConnectivityDelegate()
+        monitor.delegate = delegate
+
+        monitor.isOnLocalNetwork = false
+        #expect(delegate.receivedValues == [false])
+
+        monitor.isOnLocalNetwork = true
+        #expect(delegate.receivedValues == [false, true])
+    }
+
+    @Test("Setting `isOnLocalNetwork` to the same value is a no-op for the delegate")
+    func connectivitySetterSkipsDelegateWhenUnchanged() {
+        let monitor = MockNetworkConnectivityMonitor(initialIsOnLocalNetwork: false)
+        let delegate = TestConnectivityDelegate()
+        monitor.delegate = delegate
+
+        monitor.isOnLocalNetwork = false  // same as initial — no fire
+        #expect(delegate.receivedValues.isEmpty)
+    }
+
+    @Test("Mock connectivity `reset` returns counters and value to defaults")
+    func connectivityResetReturnsToDefaults() {
+        let monitor = MockNetworkConnectivityMonitor(initialIsOnLocalNetwork: false)
+        monitor.start()
+        monitor.stop()
+        monitor.reset()
+        #expect(monitor.startCallCount == 0)
+        #expect(monitor.stopCallCount == 0)
+        #expect(monitor.isOnLocalNetwork)
+    }
+}
+
+// MARK: - TestConnectivityDelegate
+
+/// Records connectivity-change values so tests can assert call shape
+/// and ordering.
+@MainActor
+final class TestConnectivityDelegate: NetworkConnectivityMonitorDelegate {
+    var receivedValues: [Bool] = []
+
+    func networkConnectivityDidChange(isOnLocalNetwork: Bool) {
+        receivedValues.append(isOnLocalNetwork)
+    }
 }
