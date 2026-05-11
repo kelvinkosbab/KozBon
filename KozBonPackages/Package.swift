@@ -78,17 +78,12 @@ let package = Package(
         .library(name: "BonjourStorage", targets: ["BonjourStorage"]),
         .library(name: "BonjourUI", targets: ["BonjourUI"]),
         .library(name: "BonjourAppIntents", targets: ["BonjourAppIntents"]),
-        .library(name: "AppCore", targets: ["AppCore"])
+        .library(name: "AppCore", targets: ["AppCore"]),
+        .library(name: "LocalNetworkMonitor", targets: ["LocalNetworkMonitor"])
     ],
     dependencies: [
         .package(url: "https://github.com/kelvinkosbab/Core.git", branch: "main"),
-        .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", from: "0.63.2"),
-        // Path-based dependency on the sibling package extracted out of
-        // `BonjourScanning`. Living next to KozBonPackages keeps the
-        // development workflow local; switching to a tagged remote URL
-        // is a one-line change when LocalNetworkMonitor moves to its
-        // own repository.
-        .package(path: "../LocalNetworkMonitor")
+        .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", from: "0.63.2")
     ],
     targets: makeTargets(
         name: "BonjourCore",
@@ -104,17 +99,19 @@ let package = Package(
         testDependencies: [.byName(name: "BonjourCore")]
     )
     + makeTargets(
+        name: "LocalNetworkMonitor"
+    )
+    + makeTargets(
         name: "BonjourScanning",
         dependencies: [
             "BonjourCore",
             "BonjourModels",
-            // Local-network reachability lives in its own sibling
-            // package now — see `../LocalNetworkMonitor`. The
-            // `MockLocalNetworkMonitor` is re-exported via that
-            // package's `LocalNetworkMonitor` module, so test
-            // targets that link `BonjourScanning` get the mock for
-            // free.
-            .product(name: "LocalNetworkMonitor", package: "LocalNetworkMonitor")
+            // Local-network reachability is a sibling target in this
+            // same package. `MockLocalNetworkMonitor` is re-exported
+            // via `BonjourScanning/Sources/Exports.swift`, so any
+            // module that imports `BonjourScanning` automatically
+            // sees the monitor types.
+            "LocalNetworkMonitor"
         ],
         testDependencies: [
             .byName(name: "BonjourCore"),
