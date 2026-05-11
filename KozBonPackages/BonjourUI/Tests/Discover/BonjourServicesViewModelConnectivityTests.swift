@@ -23,11 +23,11 @@ struct BonjourServicesViewModelConnectivityTests {
     func vmSeedsConnectivityFromMonitor() {
         let scanner = MockBonjourServiceScanner()
         let publishManager = MockBonjourPublishManager()
-        let connectivity = MockNetworkConnectivityMonitor(initialIsOnLocalNetwork: false)
+        let connectivity = MockLocalNetworkMonitor(initialIsOnLocalNetwork: false)
         let viewModel = BonjourServicesViewModel(
             serviceScanner: scanner,
             publishManager: publishManager,
-            networkConnectivityMonitor: connectivity
+            localNetworkMonitor: connectivity
         )
         #expect(!viewModel.isOnLocalNetwork)
     }
@@ -39,7 +39,7 @@ struct BonjourServicesViewModelConnectivityTests {
         let viewModel = BonjourServicesViewModel(
             serviceScanner: scanner,
             publishManager: publishManager,
-            networkConnectivityMonitor: MockNetworkConnectivityMonitor()
+            localNetworkMonitor: MockLocalNetworkMonitor()
         )
         #expect(viewModel.isOnLocalNetwork)
     }
@@ -48,11 +48,11 @@ struct BonjourServicesViewModelConnectivityTests {
     func vmRegistersAsConnectivityDelegate() {
         let scanner = MockBonjourServiceScanner()
         let publishManager = MockBonjourPublishManager()
-        let connectivity = MockNetworkConnectivityMonitor()
+        let connectivity = MockLocalNetworkMonitor()
         let viewModel = BonjourServicesViewModel(
             serviceScanner: scanner,
             publishManager: publishManager,
-            networkConnectivityMonitor: connectivity
+            localNetworkMonitor: connectivity
         )
         #expect(connectivity.delegate === viewModel)
     }
@@ -61,11 +61,11 @@ struct BonjourServicesViewModelConnectivityTests {
     func vmStartsMonitorAtInit() {
         let scanner = MockBonjourServiceScanner()
         let publishManager = MockBonjourPublishManager()
-        let connectivity = MockNetworkConnectivityMonitor()
+        let connectivity = MockLocalNetworkMonitor()
         _ = BonjourServicesViewModel(
             serviceScanner: scanner,
             publishManager: publishManager,
-            networkConnectivityMonitor: connectivity
+            localNetworkMonitor: connectivity
         )
         #expect(connectivity.startCallCount == 1)
     }
@@ -74,11 +74,11 @@ struct BonjourServicesViewModelConnectivityTests {
     func vmReflectsConnectivityChanges() {
         let scanner = MockBonjourServiceScanner()
         let publishManager = MockBonjourPublishManager()
-        let connectivity = MockNetworkConnectivityMonitor()
+        let connectivity = MockLocalNetworkMonitor()
         let viewModel = BonjourServicesViewModel(
             serviceScanner: scanner,
             publishManager: publishManager,
-            networkConnectivityMonitor: connectivity
+            localNetworkMonitor: connectivity
         )
 
         #expect(viewModel.isOnLocalNetwork)

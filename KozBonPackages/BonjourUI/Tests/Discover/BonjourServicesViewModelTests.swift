@@ -36,7 +36,7 @@ struct BonjourServicesViewModelTests {
         let viewModel = BonjourServicesViewModel(
             serviceScanner: scanner,
             publishManager: publishManager,
-            networkConnectivityMonitor: MockNetworkConnectivityMonitor()
+            localNetworkMonitor: MockLocalNetworkMonitor()
         )
         return (viewModel, scanner)
     }
@@ -394,11 +394,11 @@ struct BonjourServicesViewModelTests {
     func initWithDependenciesResolvesScannerAndPublishManager() {
         let scanner = MockBonjourServiceScanner()
         let publishManager = MockBonjourPublishManager()
-        let connectivity = MockNetworkConnectivityMonitor()
+        let connectivity = MockLocalNetworkMonitor()
         let container = DependencyContainer(
             bonjourServiceScanner: scanner,
             bonjourPublishManager: publishManager,
-            networkConnectivityMonitor: connectivity
+            localNetworkMonitor: connectivity
         )
 
         let viewModel = BonjourServicesViewModel(dependencies: container)
@@ -435,14 +435,14 @@ struct BonjourServicesViewModelTests {
         let first = BonjourServicesViewModel(
             serviceScanner: scanner,
             publishManager: publishManager,
-            networkConnectivityMonitor: MockNetworkConnectivityMonitor()
+            localNetworkMonitor: MockLocalNetworkMonitor()
         )
         #expect(scanner.delegate === first)
 
         let second = BonjourServicesViewModel(
             serviceScanner: scanner,
             publishManager: publishManager,
-            networkConnectivityMonitor: MockNetworkConnectivityMonitor()
+            localNetworkMonitor: MockLocalNetworkMonitor()
         )
 
         // The scanner's `weak var delegate` is a single pointer — creating a
@@ -461,12 +461,12 @@ struct BonjourServicesViewModelTests {
         let first = BonjourServicesViewModel(
             serviceScanner: scanner,
             publishManager: publishManager,
-            networkConnectivityMonitor: MockNetworkConnectivityMonitor()
+            localNetworkMonitor: MockLocalNetworkMonitor()
         )
         let second = BonjourServicesViewModel(
             serviceScanner: scanner,
             publishManager: publishManager,
-            networkConnectivityMonitor: MockNetworkConnectivityMonitor()
+            localNetworkMonitor: MockLocalNetworkMonitor()
         )
 
         // Simulate the scanner reporting a discovered service to its current

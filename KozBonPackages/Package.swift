@@ -81,7 +81,13 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/kelvinkosbab/Core.git", branch: "main"),
-        .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", from: "0.63.2")
+        .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", from: "0.63.2"),
+        // Path-based dependency on the sibling package extracted out of
+        // `BonjourScanning`. Living next to KozBonPackages keeps the
+        // development workflow local; switching to a tagged remote URL
+        // is a one-line change when LocalNetworkMonitor moves to its
+        // own repository.
+        .package(path: "../LocalNetworkMonitor")
     ],
     targets: makeTargets(
         name: "BonjourCore",
@@ -98,7 +104,17 @@ let package = Package(
     )
     + makeTargets(
         name: "BonjourScanning",
-        dependencies: ["BonjourCore", "BonjourModels"],
+        dependencies: [
+            "BonjourCore",
+            "BonjourModels",
+            // Local-network reachability lives in its own sibling
+            // package now — see `../LocalNetworkMonitor`. The
+            // `MockLocalNetworkMonitor` is re-exported via that
+            // package's `LocalNetworkMonitor` module, so test
+            // targets that link `BonjourScanning` get the mock for
+            // free.
+            .product(name: "LocalNetworkMonitor", package: "LocalNetworkMonitor")
+        ],
         testDependencies: [
             .byName(name: "BonjourCore"),
             .byName(name: "BonjourModels")

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import BonjourModels
+import LocalNetworkMonitor
 
 // MARK: - DependencyContainer
 
@@ -15,7 +16,7 @@ import BonjourModels
 /// Provides protocol-based access to the scanner, publish manager, and
 /// network-connectivity monitor. The production `init()` creates fresh
 /// instances. Tests and previews use the custom
-/// `init(bonjourServiceScanner:bonjourPublishManager:networkConnectivityMonitor:)`
+/// `init(bonjourServiceScanner:bonjourPublishManager:localNetworkMonitor:)`
 /// with mock implementations.
 public final class DependencyContainer: Sendable {
 
@@ -32,7 +33,11 @@ public final class DependencyContainer: Sendable {
     /// nothing" from "you're not on Wi-Fi so scanning can't find
     /// anything" — two empty states the user benefits from
     /// distinguishing.
-    public let networkConnectivityMonitor: any NetworkConnectivityMonitorProtocol
+    ///
+    /// Backed by the standalone `LocalNetworkMonitor` package
+    /// (`../LocalNetworkMonitor`), so the same primitive can be
+    /// reused by any other app that needs local-link reachability.
+    public let localNetworkMonitor: any LocalNetworkMonitorProtocol
 
     // MARK: - Initialization
 
@@ -41,18 +46,18 @@ public final class DependencyContainer: Sendable {
     public init() {
         self.bonjourServiceScanner = BonjourServiceScanner()
         self.bonjourPublishManager = BonjourPublishManager()
-        self.networkConnectivityMonitor = NetworkConnectivityMonitor()
+        self.localNetworkMonitor = LocalNetworkMonitor()
     }
 
     /// Creates a dependency container with custom services (useful for testing or previews).
     public init(
         bonjourServiceScanner: any BonjourServiceScannerProtocol,
         bonjourPublishManager: any BonjourPublishManagerProtocol,
-        networkConnectivityMonitor: any NetworkConnectivityMonitorProtocol
+        localNetworkMonitor: any LocalNetworkMonitorProtocol
     ) {
         self.bonjourServiceScanner = bonjourServiceScanner
         self.bonjourPublishManager = bonjourPublishManager
-        self.networkConnectivityMonitor = networkConnectivityMonitor
+        self.localNetworkMonitor = localNetworkMonitor
     }
 }
 
@@ -65,12 +70,12 @@ extension DependencyContainer {
     public static func mock(
         scanner: MockBonjourServiceScanner = MockBonjourServiceScanner(),
         publishManager: MockBonjourPublishManager = MockBonjourPublishManager(),
-        connectivity: MockNetworkConnectivityMonitor = MockNetworkConnectivityMonitor()
+        localNetwork: MockLocalNetworkMonitor = MockLocalNetworkMonitor()
     ) -> DependencyContainer {
         return DependencyContainer(
             bonjourServiceScanner: scanner,
             bonjourPublishManager: publishManager,
-            networkConnectivityMonitor: connectivity
+            localNetworkMonitor: localNetwork
         )
     }
 
@@ -92,7 +97,7 @@ extension DependencyContainer {
     ) -> DependencyContainer {
         let scanner = MockBonjourServiceScanner()
         let publishManager = MockBonjourPublishManager()
-        let connectivity = MockNetworkConnectivityMonitor(
+        let localNetwork = MockLocalNetworkMonitor(
             initialIsOnLocalNetwork: simulateOnLocalNetwork
         )
 
@@ -103,7 +108,7 @@ extension DependencyContainer {
         return DependencyContainer(
             bonjourServiceScanner: scanner,
             bonjourPublishManager: publishManager,
-            networkConnectivityMonitor: connectivity
+            localNetworkMonitor: localNetwork
         )
     }
 }

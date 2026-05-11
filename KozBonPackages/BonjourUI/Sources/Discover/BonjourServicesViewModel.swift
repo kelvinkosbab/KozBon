@@ -26,7 +26,7 @@ import BonjourScanning
 /// discovered services.
 @MainActor
 @Observable
-public final class BonjourServicesViewModel: BonjourServiceScannerDelegate, NetworkConnectivityMonitorDelegate {
+public final class BonjourServicesViewModel: BonjourServiceScannerDelegate, LocalNetworkMonitorDelegate {
 
     // MARK: - Properties
 
@@ -64,10 +64,10 @@ public final class BonjourServicesViewModel: BonjourServiceScannerDelegate, Netw
     /// cellular-only or offline path, and that's actionable feedback
     /// the user can resolve.
     ///
-    /// Updated via the ``NetworkConnectivityMonitorDelegate`` callback
-    /// from the injected ``networkConnectivityMonitor``. Optimistically
-    /// `true` at init so the UI doesn't flash the no-Wi-Fi state in
-    /// the brief window before the first path update arrives.
+    /// Updated via the ``LocalNetworkMonitorDelegate`` callback from
+    /// the injected ``localNetworkMonitor``. Optimistically `true` at
+    /// init so the UI doesn't flash the no-Wi-Fi state in the brief
+    /// window before the first path update arrives.
     private(set) var isOnLocalNetwork: Bool = true
 
     /// Whether the broadcast service sheet is currently presented.
@@ -213,36 +213,36 @@ public final class BonjourServicesViewModel: BonjourServiceScannerDelegate, Netw
     /// connectivity state onto ``isOnLocalNetwork``, and starts the
     /// monitor at init so the path is observed for the VM's whole
     /// lifetime (which spans the app session).
-    let networkConnectivityMonitor: NetworkConnectivityMonitorProtocol
+    let localNetworkMonitor: LocalNetworkMonitorProtocol
 
     // MARK: - Init
 
     /// Creates a new view model with the given service scanner, publish
-    /// manager, and network connectivity monitor.
+    /// manager, and local-network monitor.
     public init(
         serviceScanner: BonjourServiceScannerProtocol,
         publishManager: BonjourPublishManagerProtocol,
-        networkConnectivityMonitor: NetworkConnectivityMonitorProtocol
+        localNetworkMonitor: LocalNetworkMonitorProtocol
     ) {
         self.serviceScanner = serviceScanner
         self.publishManager = publishManager
-        self.networkConnectivityMonitor = networkConnectivityMonitor
+        self.localNetworkMonitor = localNetworkMonitor
         self.serviceScanner.delegate = self
-        self.networkConnectivityMonitor.delegate = self
+        self.localNetworkMonitor.delegate = self
         // Seed the observed flag from the monitor's current value so a
         // mock seeded `false` at construction is honored without
         // waiting for a delegate callback.
-        self.isOnLocalNetwork = self.networkConnectivityMonitor.isOnLocalNetwork
-        self.networkConnectivityMonitor.start()
+        self.isOnLocalNetwork = self.localNetworkMonitor.isOnLocalNetwork
+        self.localNetworkMonitor.start()
     }
 
     /// Convenience initializer that resolves the scanner, publish
-    /// manager, and connectivity monitor from a ``DependencyContainer``.
+    /// manager, and local-network monitor from a ``DependencyContainer``.
     public convenience init(dependencies: DependencyContainer) {
         self.init(
             serviceScanner: dependencies.bonjourServiceScanner,
             publishManager: dependencies.bonjourPublishManager,
-            networkConnectivityMonitor: dependencies.networkConnectivityMonitor
+            localNetworkMonitor: dependencies.localNetworkMonitor
         )
     }
 
@@ -329,13 +329,13 @@ public final class BonjourServicesViewModel: BonjourServiceScannerDelegate, Netw
         }
     }
 
-    // MARK: - NetworkConnectivityMonitorDelegate
+    // MARK: - LocalNetworkMonitorDelegate
 
     /// Mirrors the monitor's new value onto the view-model's observed
     /// flag, animating the transition so the empty-state swap (no-Wi-Fi
     /// view ↔ no-services view) doesn't jump-cut. The empty-state
     /// branching in ``BonjourScanForServicesView`` consumes this flag.
-    public func networkConnectivityDidChange(isOnLocalNetwork: Bool) {
+    public func localNetworkMonitor(didChangeIsOnLocalNetwork isOnLocalNetwork: Bool) {
         withAnimation {
             self.isOnLocalNetwork = isOnLocalNetwork
         }

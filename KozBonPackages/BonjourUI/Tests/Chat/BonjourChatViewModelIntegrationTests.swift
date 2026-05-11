@@ -69,7 +69,7 @@ struct BonjourChatViewModelIntegrationTests {
         let services = BonjourServicesViewModel(
             serviceScanner: scanner,
             publishManager: publishManager,
-            networkConnectivityMonitor: MockNetworkConnectivityMonitor()
+            localNetworkMonitor: MockLocalNetworkMonitor()
         )
         return (services, scanner, publishManager)
     }
