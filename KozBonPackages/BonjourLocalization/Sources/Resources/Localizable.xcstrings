@@ -13310,49 +13310,49 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Start scanning"
+            "value": "Scan nearby"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Iniciar escaneo"
+            "value": "Buscar cerca"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Lancer l'analyse"
+            "value": "Rechercher à proximité"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Scan starten"
+            "value": "In der Nähe suchen"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "スキャン開始"
+            "value": "近くをスキャン"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "开始扫描"
+            "value": "扫描附近"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "بدء الفحص"
+            "value": "فحص الأجهزة القريبة"
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "התחל לסרוק"
+            "value": "סרוק בקרבת מקום"
           }
         }
       }
