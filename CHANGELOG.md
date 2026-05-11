@@ -13,12 +13,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Settings → Insights footer now surfaces a localized notice when Apple Intelligence is in an actionable unavailable state ("turned off in Settings", "model still downloading"), so users on capable hardware know what to do when AI features don't respond.
 - Insights footer copy now mentions the Chat tab as well as long-press service explanations, since the toggle gates both.
 - Arabic and Hebrew translations across the entire string catalog (395 keys × 2 languages = 790 new translations covering UI labels, navigation, accessibility text, error messages, and the full service-type protocol-description library). Layout mirrors automatically for these right-to-left locales; the diagonal arrow on chat suggestion cards now flips to point in the user's reading direction.
+- Distinct "Not connected to Wi-Fi" empty state on the Discover tab. When the device is on cellular-only or offline, Bonjour discovery can't reach anything from there; the new state explains the cause (with the `wifi.slash` symbol and locale-specific copy) instead of leaving users staring at the generic "no services found" message and a "Start Scanning" button that wouldn't help.
+- Field-level guidance on the create-custom-service-type form. The "Service name" footer now explains the field is the human-readable display label users see when browsing; the "Bonjour type" footer explains it's the protocol identifier other devices look up to discover services of this kind, with `_http._tcp` / `_airplay._tcp` as concrete examples and a note about exact-type matching.
 
 ### Changed
 
 - Reset to Defaults section in Preferences animates in/out smoothly when any preference changes, not just the AI toggle.
 - Picking the default sort option ("Host name ascending") in Preferences no longer makes the Reset to Defaults button appear — the persisted state stays canonical (`""` = default).
 - Chat assistant accessibility label keeps the localized "thinking…" text until the response stream finishes, then swaps once to the final content. Previously the label updated on every streamed token, which made VoiceOver re-announce the bubble repeatedly.
+- Chat responses now render numbered Markdown lists (`1.`, `2.`, …) as proper enumerated items in addition to the existing bullet (`-`) and heading (`#`/`##`/`###`) support. The Foundation Model's discovered-services responses always arrived as numbered lists; previously the renderer dropped them back to plain paragraphs, which is what made "What's on my network?" read as a wall of text. Paired with a tightened FORMATTING section in the chat system prompt that includes a worked example so the model has a clean format to mirror.
+- Discover empty-state CTA reads "Scan nearby" (was "Start scanning") in all 8 locales — shorter, friendlier, and pairs better with the Discover tab's "Nearby" name in the nav.
+- The "This description will be used to explain your service when users long press 'Insights'" footnote on the Additional Details field of the create-service-type form now only renders when AI Insights is enabled in Preferences. When the feature is disabled, mentioning it was misleading — pointing at an affordance the user can't actually use.
 
 ### Fixed
 
