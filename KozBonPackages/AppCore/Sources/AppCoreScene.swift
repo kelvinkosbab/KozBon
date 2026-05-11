@@ -1,6 +1,6 @@
 //
-//  AppCore.swift
-//  KozBon
+//  AppCoreScene.swift
+//  AppCore
 //
 //  Copyright © 2016-present Kozinga. All rights reserved.
 //
@@ -13,19 +13,24 @@ import BonjourScanning
 import BonjourAI
 import BonjourStorage
 
-// MARK: - AppCore
+// MARK: - AppCoreScene
 
 /// Root scene for the KozBon app. Thin presenter — every
 /// dependency, factory wiring, async prewarm, and the AI-tab
 /// gating decision lives on ``AppCoreViewModel``. This struct's
 /// job is the SwiftUI scene tree (tab definitions, environment
 /// injection, the platform-conditional Settings / Window scenes).
-@main
-struct AppCore: App {
+///
+/// Lives in the `AppCore` package; the Xcode app target's `@main`
+/// entry point (`KozBonApp`) is a one-line shim that just returns
+/// `AppCoreScene()` from its body. That split keeps the
+/// executable target free of business logic — everything testable
+/// lives in the package and runs under `swift test`.
+public struct AppCoreScene: Scene {
 
     /// The single, app-session-lived view model. Owns every
-    /// dependency the scenes read. `@State` because `AppCore` is
-    /// the natural owner — see the doc comment on
+    /// dependency the scenes read. `@State` because `AppCoreScene`
+    /// is the natural owner — see the doc comment on
     /// ``AppCoreViewModel`` for the lifetime rationale.
     @State private var viewModel: AppCoreViewModel
 
@@ -36,13 +41,11 @@ struct AppCore: App {
     /// accepts each as an injectable parameter; this convenience
     /// just calls through with production defaults.
     ///
-    /// `App` types instantiated by `@main` can't accept arguments
-    /// from the runtime, so the practical "injection" here happens
-    /// at compile time: a developer who needs different behavior
-    /// (a stub factory in a SwiftUI Preview, an alternate
-    /// dependency container in a test harness) calls the
-    /// designated init explicitly from their entry point.
-    init() {
+    /// The Xcode app target's `@main` shim calls this no-arg form.
+    /// Tests, previews, and developer-mode entry points construct
+    /// `AppCoreScene` via the designated init below with stubbed
+    /// factories.
+    public init() {
         self.init(
             dependencies: DependencyContainer(),
             explainerFactory: BonjourServiceExplainerFactory(),
@@ -54,7 +57,7 @@ struct AppCore: App {
     /// previews, and developer-mode entry points use this form;
     /// the no-arg ``init()`` calls through with production
     /// defaults.
-    init(
+    public init(
         dependencies: DependencyContainer,
         explainerFactory: any BonjourServiceExplainerFactoryProtocol,
         chatSessionFactory: any BonjourChatSessionFactoryProtocol
@@ -66,7 +69,7 @@ struct AppCore: App {
         ))
     }
 
-    var body: some Scene {
+    public var body: some Scene {
         WindowGroup {
             if #available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *) {
                 TabView {

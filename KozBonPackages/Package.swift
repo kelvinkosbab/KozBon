@@ -77,7 +77,8 @@ let package = Package(
         .library(name: "BonjourAI", targets: ["BonjourAI"]),
         .library(name: "BonjourStorage", targets: ["BonjourStorage"]),
         .library(name: "BonjourUI", targets: ["BonjourUI"]),
-        .library(name: "BonjourAppIntents", targets: ["BonjourAppIntents"])
+        .library(name: "BonjourAppIntents", targets: ["BonjourAppIntents"]),
+        .library(name: "AppCore", targets: ["AppCore"])
     ],
     dependencies: [
         .package(url: "https://github.com/kelvinkosbab/Core.git", branch: "main"),
@@ -192,6 +193,31 @@ let package = Package(
         testDependencies: [
             .byName(name: "BonjourCore"),
             .byName(name: "BonjourModels")
+        ]
+    )
+    + makeTargets(
+        name: "AppCore",
+        // The app target's `@main` shim imports only `AppCore`. Every
+        // piece of business logic, scene definition, dependency
+        // wiring, tab plumbing, and macOS-commands configuration
+        // lives here, so this target needs to see every Bonjour
+        // module the scene tree touches. `CoreUI` is reached via
+        // BonjourUI's transitive re-export (`.product` would be
+        // explicit, but every other target consumes it the same way).
+        dependencies: [
+            "BonjourCore",
+            "BonjourModels",
+            "BonjourScanning",
+            "BonjourLocalization",
+            "BonjourAI",
+            "BonjourStorage",
+            "BonjourUI",
+            .product(name: "CoreUI", package: "Core")
+        ],
+        testDependencies: [
+            .byName(name: "BonjourCore"),
+            .byName(name: "BonjourLocalization"),
+            .byName(name: "BonjourUI")
         ]
     )
 )

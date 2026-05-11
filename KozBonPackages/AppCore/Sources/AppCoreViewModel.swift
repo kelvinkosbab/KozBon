@@ -1,6 +1,6 @@
 //
 //  AppCoreViewModel.swift
-//  KozBon
+//  AppCore
 //
 //  Copyright © 2016-present Kozinga. All rights reserved.
 //
