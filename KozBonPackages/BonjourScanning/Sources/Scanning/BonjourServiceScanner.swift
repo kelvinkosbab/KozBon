@@ -124,7 +124,7 @@ public final class BonjourServiceScanner: BonjourServiceScannerDelegate {
             self.typeScanners.append(serviceBrowser)
         }
 
-        self.logger.info("Starting scan with \(self.typeScanners.count) type scanners")
+        self.logger.debug("Starting scan with \(self.typeScanners.count) type scanners")
 
         for scanner in self.typeScanners {
             scanner.startScan()

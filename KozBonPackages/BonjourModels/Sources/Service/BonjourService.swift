@@ -137,7 +137,12 @@ public final class BonjourService: NSObject, @preconcurrency NetServiceDelegate 
 
     /// Stops all active resolution and publishing operations, then invokes the callback when stopped.
     public func stop(didStop: (() -> Void)? = nil) {
-        logger.debug("Stopping service", censored: "\(self)")
+        // Lifecycle event — user-initiated, fires once per action. The
+        // symmetric `Service did not publish` failure path logs at
+        // `.error`; treating success / stop as `.info` keeps lifecycle
+        // events visible in operational logs at the same severity as
+        // the failure they pair with.
+        logger.info("Stopping service", censored: "\(self)")
         self.isStopping = true
         self.isResolving = false
         self.isPublishing = false
@@ -150,7 +155,7 @@ public final class BonjourService: NSObject, @preconcurrency NetServiceDelegate 
     // MARK: - NetServiceDelegate - Stopping
 
     public func netServiceDidStop(_ sender: NetService) {
-        logger.debug("Service did stop", censored: "\(sender)")
+        logger.info("Service did stop", censored: "\(sender)")
         self.isStopping = false
         self.didStop?()
         self.didStop = nil
@@ -228,7 +233,7 @@ public final class BonjourService: NSObject, @preconcurrency NetServiceDelegate 
     // MARK: - NetServiceDelegate - Publishing
 
     public func netServiceWillPublish(_ sender: NetService) {
-        logger.debug("Service will publish", censored: "\(sender)")
+        logger.info("Service will publish", censored: "\(sender)")
 
         // For some reason the `didPublish` callback isn't being called. This is a temp hack
         // to allow for the continuation to resume after a short delay
@@ -239,7 +244,7 @@ public final class BonjourService: NSObject, @preconcurrency NetServiceDelegate 
     }
 
     public func netServiceDidPublish(_ sender: NetService) {
-        logger.debug("Service did publish", censored: "\(sender)")
+        logger.info("Service did publish", censored: "\(sender)")
         self.isPublishing = false
         self.publishContinuation?.resume()
         self.publishContinuation = nil

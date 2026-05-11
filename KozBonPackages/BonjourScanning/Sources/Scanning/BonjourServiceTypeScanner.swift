@@ -59,7 +59,7 @@ public final class BonjourServiceTypeScanner: NSObject, @preconcurrency NetServi
     public func startScan() {
 
         guard self.state != .searching else {
-            self.logger.info("Already searching. Do nothing.")
+            self.logger.debug("Already searching. Do nothing.")
             return
         }
 
