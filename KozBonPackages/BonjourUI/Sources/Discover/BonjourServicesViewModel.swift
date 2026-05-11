@@ -26,7 +26,7 @@ import BonjourScanning
 /// discovered services.
 @MainActor
 @Observable
-public final class BonjourServicesViewModel: BonjourServiceScannerDelegate {
+public final class BonjourServicesViewModel: BonjourServiceScannerDelegate, NetworkConnectivityMonitorDelegate {
 
     // MARK: - Properties
 
@@ -55,6 +55,20 @@ public final class BonjourServicesViewModel: BonjourServiceScannerDelegate {
 
     /// An error message to display when a scan operation fails.
     var scanError: String?
+
+    /// Whether the device currently has a satisfied Wi-Fi or Ethernet
+    /// network path. Drives the Discover tab's empty-state branching:
+    /// when there are no discovered services AND this is `false`, the
+    /// view shows a "not on Wi-Fi" message instead of the generic
+    /// "no services found" — Bonjour can't discover anything from a
+    /// cellular-only or offline path, and that's actionable feedback
+    /// the user can resolve.
+    ///
+    /// Updated via the ``NetworkConnectivityMonitorDelegate`` callback
+    /// from the injected ``networkConnectivityMonitor``. Optimistically
+    /// `true` at init so the UI doesn't flash the no-Wi-Fi state in
+    /// the brief window before the first path update arrives.
+    private(set) var isOnLocalNetwork: Bool = true
 
     /// Whether the broadcast service sheet is currently presented.
     var isBroadcastBonjourServicePresented = false {
@@ -194,27 +208,41 @@ public final class BonjourServicesViewModel: BonjourServiceScannerDelegate {
     /// The publish manager used to broadcast services and track published service types.
     let publishManager: BonjourPublishManagerProtocol
 
+    /// Monitor that reports whether the device is on Wi-Fi or wired
+    /// Ethernet. The VM subscribes as its delegate, mirrors the
+    /// connectivity state onto ``isOnLocalNetwork``, and starts the
+    /// monitor at init so the path is observed for the VM's whole
+    /// lifetime (which spans the app session).
+    let networkConnectivityMonitor: NetworkConnectivityMonitorProtocol
+
     // MARK: - Init
 
-    /// Creates a new view model with the given service scanner and publish manager.
-    ///
-    /// - Parameter serviceScanner: The scanner to use for discovering services.
-    /// - Parameter publishManager: The publish manager to use.
+    /// Creates a new view model with the given service scanner, publish
+    /// manager, and network connectivity monitor.
     public init(
         serviceScanner: BonjourServiceScannerProtocol,
-        publishManager: BonjourPublishManagerProtocol
+        publishManager: BonjourPublishManagerProtocol,
+        networkConnectivityMonitor: NetworkConnectivityMonitorProtocol
     ) {
         self.serviceScanner = serviceScanner
         self.publishManager = publishManager
+        self.networkConnectivityMonitor = networkConnectivityMonitor
         self.serviceScanner.delegate = self
+        self.networkConnectivityMonitor.delegate = self
+        // Seed the observed flag from the monitor's current value so a
+        // mock seeded `false` at construction is honored without
+        // waiting for a delegate callback.
+        self.isOnLocalNetwork = self.networkConnectivityMonitor.isOnLocalNetwork
+        self.networkConnectivityMonitor.start()
     }
 
-    /// Convenience initializer that resolves the scanner and publish manager
-    /// from a ``DependencyContainer``.
+    /// Convenience initializer that resolves the scanner, publish
+    /// manager, and connectivity monitor from a ``DependencyContainer``.
     public convenience init(dependencies: DependencyContainer) {
         self.init(
             serviceScanner: dependencies.bonjourServiceScanner,
-            publishManager: dependencies.bonjourPublishManager
+            publishManager: dependencies.bonjourPublishManager,
+            networkConnectivityMonitor: dependencies.networkConnectivityMonitor
         )
     }
 
@@ -298,6 +326,18 @@ public final class BonjourServicesViewModel: BonjourServiceScannerDelegate {
     public func didFailWithError(description: String) {
         withAnimation {
             self.scanError = description
+        }
+    }
+
+    // MARK: - NetworkConnectivityMonitorDelegate
+
+    /// Mirrors the monitor's new value onto the view-model's observed
+    /// flag, animating the transition so the empty-state swap (no-Wi-Fi
+    /// view ↔ no-services view) doesn't jump-cut. The empty-state
+    /// branching in ``BonjourScanForServicesView`` consumes this flag.
+    public func networkConnectivityDidChange(isOnLocalNetwork: Bool) {
+        withAnimation {
+            self.isOnLocalNetwork = isOnLocalNetwork
         }
     }
 }

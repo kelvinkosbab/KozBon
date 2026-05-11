@@ -35,7 +35,8 @@ struct BonjourServicesViewModelTests {
         let publishManager = MockBonjourPublishManager()
         let viewModel = BonjourServicesViewModel(
             serviceScanner: scanner,
-            publishManager: publishManager
+            publishManager: publishManager,
+            networkConnectivityMonitor: MockNetworkConnectivityMonitor()
         )
         return (viewModel, scanner)
     }
@@ -393,9 +394,11 @@ struct BonjourServicesViewModelTests {
     func initWithDependenciesResolvesScannerAndPublishManager() {
         let scanner = MockBonjourServiceScanner()
         let publishManager = MockBonjourPublishManager()
+        let connectivity = MockNetworkConnectivityMonitor()
         let container = DependencyContainer(
             bonjourServiceScanner: scanner,
-            bonjourPublishManager: publishManager
+            bonjourPublishManager: publishManager,
+            networkConnectivityMonitor: connectivity
         )
 
         let viewModel = BonjourServicesViewModel(dependencies: container)
@@ -431,13 +434,15 @@ struct BonjourServicesViewModelTests {
 
         let first = BonjourServicesViewModel(
             serviceScanner: scanner,
-            publishManager: publishManager
+            publishManager: publishManager,
+            networkConnectivityMonitor: MockNetworkConnectivityMonitor()
         )
         #expect(scanner.delegate === first)
 
         let second = BonjourServicesViewModel(
             serviceScanner: scanner,
-            publishManager: publishManager
+            publishManager: publishManager,
+            networkConnectivityMonitor: MockNetworkConnectivityMonitor()
         )
 
         // The scanner's `weak var delegate` is a single pointer — creating a
@@ -455,11 +460,13 @@ struct BonjourServicesViewModelTests {
 
         let first = BonjourServicesViewModel(
             serviceScanner: scanner,
-            publishManager: publishManager
+            publishManager: publishManager,
+            networkConnectivityMonitor: MockNetworkConnectivityMonitor()
         )
         let second = BonjourServicesViewModel(
             serviceScanner: scanner,
-            publishManager: publishManager
+            publishManager: publishManager,
+            networkConnectivityMonitor: MockNetworkConnectivityMonitor()
         )
 
         // Simulate the scanner reporting a discovered service to its current
@@ -472,5 +479,76 @@ struct BonjourServicesViewModelTests {
         // the Chat tab (initialized later) could still see services.
         #expect(second.flatActiveServices.count == 1)
         #expect(first.flatActiveServices.isEmpty)
+    }
+
+    // MARK: - Network Connectivity
+
+    @Test("VM seeds `isOnLocalNetwork` from the monitor's initial value")
+    func vmSeedsConnectivityFromMonitor() {
+        let scanner = MockBonjourServiceScanner()
+        let publishManager = MockBonjourPublishManager()
+        let connectivity = MockNetworkConnectivityMonitor(initialIsOnLocalNetwork: false)
+        let viewModel = BonjourServicesViewModel(
+            serviceScanner: scanner,
+            publishManager: publishManager,
+            networkConnectivityMonitor: connectivity
+        )
+        #expect(!viewModel.isOnLocalNetwork)
+    }
+
+    @Test("VM defaults `isOnLocalNetwork` to `true` when monitor reports `true`")
+    func vmDefaultsToOptimisticTrue() {
+        let scanner = MockBonjourServiceScanner()
+        let publishManager = MockBonjourPublishManager()
+        let viewModel = BonjourServicesViewModel(
+            serviceScanner: scanner,
+            publishManager: publishManager,
+            networkConnectivityMonitor: MockNetworkConnectivityMonitor()
+        )
+        #expect(viewModel.isOnLocalNetwork)
+    }
+
+    @Test("VM registers itself as the monitor's delegate at init")
+    func vmRegistersAsConnectivityDelegate() {
+        let scanner = MockBonjourServiceScanner()
+        let publishManager = MockBonjourPublishManager()
+        let connectivity = MockNetworkConnectivityMonitor()
+        let viewModel = BonjourServicesViewModel(
+            serviceScanner: scanner,
+            publishManager: publishManager,
+            networkConnectivityMonitor: connectivity
+        )
+        #expect(connectivity.delegate === viewModel)
+    }
+
+    @Test("VM calls `start()` on the monitor at init")
+    func vmStartsMonitorAtInit() {
+        let scanner = MockBonjourServiceScanner()
+        let publishManager = MockBonjourPublishManager()
+        let connectivity = MockNetworkConnectivityMonitor()
+        _ = BonjourServicesViewModel(
+            serviceScanner: scanner,
+            publishManager: publishManager,
+            networkConnectivityMonitor: connectivity
+        )
+        #expect(connectivity.startCallCount == 1)
+    }
+
+    @Test("`isOnLocalNetwork` mirrors connectivity changes reported by the monitor")
+    func vmReflectsConnectivityChanges() {
+        let scanner = MockBonjourServiceScanner()
+        let publishManager = MockBonjourPublishManager()
+        let connectivity = MockNetworkConnectivityMonitor()
+        let viewModel = BonjourServicesViewModel(
+            serviceScanner: scanner,
+            publishManager: publishManager,
+            networkConnectivityMonitor: connectivity
+        )
+
+        #expect(viewModel.isOnLocalNetwork)
+        connectivity.isOnLocalNetwork = false
+        #expect(!viewModel.isOnLocalNetwork)
+        connectivity.isOnLocalNetwork = true
+        #expect(viewModel.isOnLocalNetwork)
     }
 }
