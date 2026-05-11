@@ -15,59 +15,23 @@ import BonjourStorage
 
 // MARK: - AppCore
 
+/// Root scene for the KozBon app. Thin presenter — every
+/// dependency, factory wiring, async prewarm, and the AI-tab
+/// gating decision lives on ``AppCoreViewModel``. This struct's
+/// job is the SwiftUI scene tree (tab definitions, environment
+/// injection, the platform-conditional Settings / Window scenes).
 @main
 struct AppCore: App {
 
-    // MARK: - Injected Factories
+    /// The single, app-session-lived view model. Owns every
+    /// dependency the scenes read. `@State` because `AppCore` is
+    /// the natural owner — see the doc comment on
+    /// ``AppCoreViewModel`` for the lifetime rationale.
+    @State private var viewModel: AppCoreViewModel
 
-    /// Factory for the on-device AI explainer. Held as a stored
-    /// property so the production default can be swapped (e.g.,
-    /// in a test harness or a developer-mode build) without
-    /// touching the rest of `AppCore`. The protocol is the real
-    /// dependency edge — `AppCore` never reaches into a static
-    /// namespace.
-    private let explainerFactory: any BonjourServiceExplainerFactoryProtocol
-
-    /// Factory for the on-device AI chat session. Same rationale
-    /// as ``explainerFactory``. The factory's
-    /// ``BonjourChatSessionFactoryProtocol/prewarmIfEnabled(session:aiAnalysisEnabled:)``
-    /// is also called from this app's root `.task` modifier.
-    private let chatSessionFactory: any BonjourChatSessionFactoryProtocol
-
-    // MARK: - Dependencies
-
-    @State private var dependencies: DependencyContainer
-    @State private var preferencesStore = PreferencesStore()
-    @State private var explainer: (any BonjourServiceExplainerProtocol)?
-
-    /// App-wide chat session, created once at launch so the chat
-    /// tab's first activation doesn't pay the cost of constructing
-    /// the `BonjourChatSession` (and lazily, on first ``prewarm()``,
-    /// the underlying `LanguageModelSession` with its compiled
-    /// system instructions).
-    ///
-    /// Owning the session at the app level — instead of letting
-    /// `BonjourChatView` construct one on first render — also means
-    /// the session survives tab switches without being torn down,
-    /// and lets us eagerly call ``BonjourChatSessionProtocol/prewarm()``
-    /// in a `.task` on the root scene before the user has navigated
-    /// anywhere. Combined with the deferred prewarm inside the
-    /// chat view's `.onAppear`, this is the difference between
-    /// "first tap on a suggestion takes a beat to start streaming"
-    /// and "first tap streams immediately."
-    @State private var chatSession: (any BonjourChatSessionProtocol)?
-
-    /// The single, app-wide services view model.
-    ///
-    /// Must be shared between the Discover and Chat tabs because
-    /// `BonjourServiceScanner` exposes one `weak var delegate`. If each tab
-    /// created its own view model, the tabs would race to register themselves
-    /// as the delegate and one tab would silently show zero discovered
-    /// services — see ``BonjourServicesViewModel`` for the full explanation.
-    @State private var servicesViewModel: BonjourServicesViewModel
-
-    /// Production initializer — uses the default ``DependencyContainer``,
-    /// the default ``BonjourServiceExplainerFactory``, and the default
+    /// Production initializer — uses the default
+    /// ``DependencyContainer``, the default
+    /// ``BonjourServiceExplainerFactory``, and the default
     /// ``BonjourChatSessionFactory``. The designated init below
     /// accepts each as an injectable parameter; this convenience
     /// just calls through with production defaults.
@@ -95,18 +59,11 @@ struct AppCore: App {
         explainerFactory: any BonjourServiceExplainerFactoryProtocol,
         chatSessionFactory: any BonjourChatSessionFactoryProtocol
     ) {
-        self.explainerFactory = explainerFactory
-        self.chatSessionFactory = chatSessionFactory
-        _dependencies = State(initialValue: dependencies)
-        _servicesViewModel = State(
-            initialValue: BonjourServicesViewModel(dependencies: dependencies)
-        )
-        _explainer = State(initialValue: explainerFactory.makeForCurrentEnvironment())
-        _chatSession = State(
-            initialValue: chatSessionFactory.makeForCurrentEnvironment(
-                publishManager: dependencies.bonjourPublishManager
-            )
-        )
+        _viewModel = State(initialValue: AppCoreViewModel(
+            dependencies: dependencies,
+            explainerFactory: explainerFactory,
+            chatSessionFactory: chatSessionFactory
+        ))
     }
 
     var body: some Scene {
@@ -114,7 +71,7 @@ struct AppCore: App {
             if #available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *) {
                 TabView {
                     Tab {
-                        BonjourScanForServicesView(viewModel: servicesViewModel)
+                        BonjourScanForServicesView(viewModel: viewModel.servicesViewModel)
                     } label: {
                         Label {
                             Text(verbatim: TopLevelDestination.bonjour.titleString)
@@ -151,8 +108,7 @@ struct AppCore: App {
                     }
                     #endif
 
-                    if AppleIntelligenceSupport.isDeviceSupported,
-                       preferencesStore.aiAnalysisEnabled {
+                    if viewModel.shouldShowChatTab {
                         // On iOS/visionOS, `role: .search` places this tab at the trailing
                         // edge with the Liquid Glass separation treatment. On macOS the
                         // system overrides the custom icon with a magnifying glass for
@@ -160,7 +116,7 @@ struct AppCore: App {
                         // the Apple Intelligence icon intact.
                         #if os(macOS)
                         Tab {
-                            BonjourChatView(viewModel: servicesViewModel)
+                            BonjourChatView(viewModel: viewModel.servicesViewModel)
                         } label: {
                             Label {
                                 Text(verbatim: TopLevelDestination.chat.titleString)
@@ -170,7 +126,7 @@ struct AppCore: App {
                         }
                         #else
                         Tab(role: .search) {
-                            BonjourChatView(viewModel: servicesViewModel)
+                            BonjourChatView(viewModel: viewModel.servicesViewModel)
                         } label: {
                             Label {
                                 Text(verbatim: TopLevelDestination.chat.titleString)
@@ -188,19 +144,16 @@ struct AppCore: App {
                 .tabViewStyle(.sidebarAdaptable)
                 #endif
                 .tint(.kozBonBlue)
-                .environment(\.dependencies, dependencies)
-                .environment(\.serviceExplainer, explainer)
-                .environment(\.chatSession, chatSession)
-                .environment(\.preferencesStore, preferencesStore)
+                .environment(\.dependencies, viewModel.dependencies)
+                .environment(\.serviceExplainer, viewModel.explainer)
+                .environment(\.chatSession, viewModel.chatSession)
+                .environment(\.preferencesStore, viewModel.preferencesStore)
                 .task {
-                    await chatSessionFactory.prewarmIfEnabled(
-                        session: chatSession,
-                        aiAnalysisEnabled: preferencesStore.aiAnalysisEnabled
-                    )
+                    await viewModel.prewarmChatSession()
                 }
             } else {
                 TabView {
-                    BonjourScanForServicesView(viewModel: servicesViewModel)
+                    BonjourScanForServicesView(viewModel: viewModel.servicesViewModel)
                         .tabItem {
                             Label {
                                 Text(verbatim: TopLevelDestination.bonjour.titleString)
@@ -218,9 +171,8 @@ struct AppCore: App {
                             }
                         }
 
-                    if AppleIntelligenceSupport.isDeviceSupported,
-                       preferencesStore.aiAnalysisEnabled {
-                        BonjourChatView(viewModel: servicesViewModel)
+                    if viewModel.shouldShowChatTab {
+                        BonjourChatView(viewModel: viewModel.servicesViewModel)
                             .tabItem {
                                 Label {
                                     Text(verbatim: TopLevelDestination.chat.titleString)
@@ -247,15 +199,12 @@ struct AppCore: App {
                 .frame(minWidth: 800, minHeight: 500)
                 #endif
                 .tint(.kozBonBlue)
-                .environment(\.dependencies, dependencies)
-                .environment(\.serviceExplainer, explainer)
-                .environment(\.chatSession, chatSession)
-                .environment(\.preferencesStore, preferencesStore)
+                .environment(\.dependencies, viewModel.dependencies)
+                .environment(\.serviceExplainer, viewModel.explainer)
+                .environment(\.chatSession, viewModel.chatSession)
+                .environment(\.preferencesStore, viewModel.preferencesStore)
                 .task {
-                    await chatSessionFactory.prewarmIfEnabled(
-                        session: chatSession,
-                        aiAnalysisEnabled: preferencesStore.aiAnalysisEnabled
-                    )
+                    await viewModel.prewarmChatSession()
                 }
             }
         }
