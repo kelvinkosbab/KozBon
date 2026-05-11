@@ -14,6 +14,9 @@ import SwiftUI
 /// Supports:
 /// - `# `, `## `, `### ` headings
 /// - `- ` and `* ` bullet lists
+/// - `1. `, `2. `, `42. ` ordered (numbered) lists. The chat assistant's
+///   discovered-services prompt mirrors the context block's numbering,
+///   so this is the natural shape its lists arrive in.
 /// - Inline `**bold**`, `*italic*`, and `` `code` `` via `AttributedString`
 ///
 /// Used for AI-generated responses in both `ServiceExplanationSheet` and `BonjourChatView`.
@@ -92,10 +95,47 @@ public struct MarkdownContentView: View {
             // lines is what fixes the streaming flash.
             bulletText(String(line.dropFirst(2)))
                 .font(.body)
+        } else if let (number, rest) = Self.parseOrderedListPrefix(line) {
+            // Ordered (`1. `, `2. `, …) list line. The chat
+            // assistant's discovered-services responses arrive in this
+            // shape because the context block uses numbered lists and
+            // the system prompt asks the model to mirror that
+            // numbering. Without this branch they rendered as plain
+            // paragraphs run together, which was the readability
+            // problem this view was extended to fix.
+            orderedText(number: number, content: rest)
+                .font(.body)
         } else {
             inlineText(line)
                 .font(.body)
         }
+    }
+
+    /// Detects an ordered-list prefix at the start of a line.
+    ///
+    /// Matches `<integer>. <space>` or `<integer>) <space>` (e.g.
+    /// `"1. "`, `"42. "`, `"3) "`). Caps the integer at 4 digits so a
+    /// stray "1234567." in service-detail prose isn't mis-classified
+    /// as a list marker. Returns the parsed number and the remaining
+    /// content, or `nil` if the line isn't an ordered-list item.
+    ///
+    /// Internal-but-static so it can be exercised directly by the
+    /// renderer's tests without spinning up SwiftUI.
+    static func parseOrderedListPrefix(_ line: String) -> (number: Int, rest: String)? {
+        var index = line.startIndex
+        var digits = ""
+        while index < line.endIndex, line[index].isNumber, digits.count < 4 {
+            digits.append(line[index])
+            index = line.index(after: index)
+        }
+        guard !digits.isEmpty, let number = Int(digits) else { return nil }
+        guard index < line.endIndex,
+              line[index] == "." || line[index] == ")"
+        else { return nil }
+        let afterMarker = line.index(after: index)
+        guard afterMarker < line.endIndex, line[afterMarker] == " " else { return nil }
+        let restStart = line.index(after: afterMarker)
+        return (number, String(line[restStart...]))
     }
 
     /// Renders a single line of text with inline Markdown (bold, italic, code).
@@ -122,5 +162,27 @@ public struct MarkdownContentView: View {
             content = AttributedString(text)
         }
         return Text(bullet + content)
+    }
+
+    /// Renders an ordered-list line ("1. Foo", "2. Bar") as a single
+    /// `Text`: a secondary-colored "<number>.  " marker followed by
+    /// the line's inline Markdown content, joined as one
+    /// `AttributedString`. Same single-`Text` shape as `bulletText`
+    /// so SwiftUI's diff stays cheap during token-by-token streaming.
+    ///
+    /// The marker uses two trailing spaces (matching `bulletText`'s
+    /// `"•  "`) so the columns of glyph + content stay roughly
+    /// aligned across the two list types in a mixed-format response.
+    private func orderedText(number: Int, content text: String) -> Text {
+        var marker = AttributedString("\(number).  ")
+        marker.foregroundColor = .secondary
+
+        let content: AttributedString
+        if let attributed = try? AttributedString(markdown: text) {
+            content = attributed
+        } else {
+            content = AttributedString(text)
+        }
+        return Text(marker + content)
     }
 }
