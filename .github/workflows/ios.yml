@@ -1,17 +1,20 @@
 name: Native CI
 
-# Build and test the app on every Apple platform that can host the test
-# bundle from CI. The matrix has two rows today:
+# Build the app on every Apple platform that CI can host. The matrix
+# has two rows today:
 #
-#   - iOS Simulator (iPhone 17 Pro) — original surface, hosts the bulk
-#     of the snapshot- and view-driven tests.
-#   - macOS — same workspace, same scheme, runs the platform-agnostic
-#     unit tests and catches macOS-specific compile issues that the
-#     iOS build would miss (e.g. AppKit availability, NSWindow types).
+#   - iOS Simulator (iPhone 17 Pro)
+#   - macOS — same workspace, same scheme. Catches AppKit-availability
+#     and macOS-specific compile issues that the iOS build would miss.
 #
-# visionOS isn't on the matrix because the visionOS Simulator can't
-# host XCTest in headless CI yet; that platform stays in
-# `multiplatform-build.yml` (build-only).
+# visionOS lives in `multiplatform-build.yml` (build-only there too).
+#
+# This workflow used to also run `xcodebuild test`, but every test in
+# the project now lives in Swift Package targets (the `KozBon` app
+# target has zero tests since `TopLevelDestinationTests` moved into the
+# `AppCore` package). The package test suites run under `spm-tests.yml`
+# via `swift test`. Running `xcodebuild test` against the app scheme
+# now would just exercise a no-op test phase, so we drop it.
 
 on:
   push:
@@ -24,8 +27,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-and-test:
-    name: Build & Test (${{ matrix.platform }})
+  build:
+    name: Build (${{ matrix.platform }})
     runs-on: macos-26
     strategy:
       fail-fast: false
@@ -62,17 +65,9 @@ jobs:
 
       - name: Build
         run: |
-          xcodebuild build-for-testing \
+          xcodebuild build \
             -workspace KozBon.xcworkspace \
             -scheme KozBon \
             -destination '${{ matrix.destination }}' \
             -skipPackagePluginValidation \
-            | xcpretty --color || exit "${PIPESTATUS[0]}"
-
-      - name: Test
-        run: |
-          xcodebuild test-without-building \
-            -workspace KozBon.xcworkspace \
-            -scheme KozBon \
-            -destination '${{ matrix.destination }}' \
             | xcpretty --color || exit "${PIPESTATUS[0]}"

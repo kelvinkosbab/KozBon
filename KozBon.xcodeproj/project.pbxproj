@@ -24,16 +24,6 @@
 		F6KOZPKG0BF0005 /* BonjourUI in Frameworks */ = {isa = PBXBuildFile; productRef = F6KOZPKG0PD0005 /* BonjourUI */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		F6TESTS0CI0001 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B6CE1D1C1E1208C1003D4FFA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B6CE1D231E1208C1003D4FFA;
-			remoteInfo = KozBon;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		B6CE1D241E1208C1003D4FFA /* KozBon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KozBon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6CE1D311E1208C1003D4FFA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -44,7 +34,6 @@
 		F62EDC5E255B9D25003E5178 /* KozBon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KozBon.entitlements; sourceTree = "<group>"; };
 		F6781EF72694C5F6009B79F7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F690B5FA2561E9B600902DAB /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
-		F6TESTS0FR0008 /* KozBonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KozBonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,13 +55,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F6TESTS0FP0001 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -82,7 +64,6 @@
 				F62EDC5E255B9D25003E5178 /* KozBon.entitlements */,
 				F6781EF72694C5F6009B79F7 /* README.md */,
 				B6CE1D261E1208C1003D4FFA /* KozBon */,
-				F6TESTS0GR0001 /* KozBonTests */,
 				B6CE1D251E1208C1003D4FFA /* Products */,
 				F690B5F92561E9B600902DAB /* Frameworks */,
 			);
@@ -92,7 +73,6 @@
 			isa = PBXGroup;
 			children = (
 				B6CE1D241E1208C1003D4FFA /* KozBon.app */,
-				F6TESTS0FR0008 /* KozBonTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -115,13 +95,6 @@
 				F690B5FA2561E9B600902DAB /* NetworkExtension.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		F6TESTS0GR0001 /* KozBonTests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = KozBonTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -156,23 +129,6 @@
 			productReference = B6CE1D241E1208C1003D4FFA /* KozBon.app */;
 			productType = "com.apple.product-type.application";
 		};
-		F6TESTS0NT0001 /* KozBonTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F6TESTS0CL0001 /* Build configuration list for PBXNativeTarget "KozBonTests" */;
-			buildPhases = (
-				F6TESTS0SP0001 /* Sources */,
-				F6TESTS0FP0001 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				F6TESTS0TD0001 /* PBXTargetDependency */,
-			);
-			name = KozBonTests;
-			productName = KozBonTests;
-			productReference = F6TESTS0FR0008 /* KozBonTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -189,12 +145,6 @@
 						DevelopmentTeam = 6SS93B87P2;
 						LastSwiftMigration = 1220;
 						ProvisioningStyle = Automatic;
-					};
-					F6TESTS0NT0001 = {
-						CreatedOnToolsVersion = 16.0;
-						DevelopmentTeam = 6SS93B87P2;
-						ProvisioningStyle = Automatic;
-						TestTargetID = B6CE1D231E1208C1003D4FFA;
 					};
 				};
 			};
@@ -220,7 +170,6 @@
 			projectRoot = "";
 			targets = (
 				B6CE1D231E1208C1003D4FFA /* KozBon */,
-				F6TESTS0NT0001 /* KozBonTests */,
 			);
 		};
 /* End PBXProject section */
@@ -247,22 +196,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F6TESTS0SP0001 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		F6TESTS0TD0001 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B6CE1D231E1208C1003D4FFA /* KozBon */;
-			targetProxy = F6TESTS0CI0001 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		B6CE1D371E1208C1003D4FFA /* Debug */ = {
@@ -453,54 +387,6 @@
 			};
 			name = Release;
 		};
-		F6TESTS0BC0001 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6SS93B87P2;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
-				MACOSX_DEPLOYMENT_TARGET = 15.6;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.kozinga.KozBonTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_VERSION = 6.2;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KozBon.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/KozBon";
-				XROS_DEPLOYMENT_TARGET = 26.0;
-			};
-			name = Debug;
-		};
-		F6TESTS0BC0002 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6SS93B87P2;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
-				MACOSX_DEPLOYMENT_TARGET = 15.6;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.kozinga.KozBonTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_VERSION = 6.2;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KozBon.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/KozBon";
-				XROS_DEPLOYMENT_TARGET = 26.0;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -518,15 +404,6 @@
 			buildConfigurations = (
 				B6CE1D3A1E1208C1003D4FFA /* Debug */,
 				B6CE1D3B1E1208C1003D4FFA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F6TESTS0CL0001 /* Build configuration list for PBXNativeTarget "KozBonTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F6TESTS0BC0001 /* Debug */,
-				F6TESTS0BC0002 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
