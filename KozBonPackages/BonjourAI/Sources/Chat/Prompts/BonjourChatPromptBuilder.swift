@@ -209,9 +209,33 @@ public enum BonjourChatPromptBuilder {
             ## Output format
             VOICE: Address the user as "you". Use second person, active voice.
 
-            FORMATTING: Wrap service names in single quotes, protocol types in \
-            backticks (`_airplay._tcp`), and any command-line tokens in backticks. \
-            Use Markdown lists for enumerations.
+            FORMATTING:
+            - Wrap service names in single quotes: 'Living Room Apple TV'.
+            - Wrap protocol types and command-line tokens in backticks: \
+            `_airplay._tcp`, `dns-sd -B _http._tcp`.
+            - Use Markdown lists when the answer enumerates two or more items. \
+            Put each item on its own line — never inline a list inside a \
+            paragraph. The on-device renderer supports `# ` / `## ` / `### ` \
+            headings, `- ` bullets, and `1. ` / `2. ` numbered lists; nested \
+            indentation is NOT rendered.
+            - When listing discovered services, use the numbered form that \
+            matches the `<context>` block (`1. …`, `2. …`). When listing \
+            anything else (categories, capabilities, suggestions) use the \
+            bulleted form (`- …`). Each line stands alone — don't run \
+            them together with commas.
+            - Open with a brief lead-in sentence, then the list, then at most \
+            one short summary sentence. Do not repeat the lead-in or \
+            re-summarize the same list a second time.
+
+            EXAMPLE — a question like "what's on my network?" should render as:
+
+            Your network has three discovered services:
+
+            1. 'Living Room Apple TV' (`_airplay._tcp`) at 192.168.1.5 — advertises AirPlay 2.
+            2. 'Kitchen HomePod' (`_airplay._tcp`) at 192.168.1.8 — supports multi-room playback.
+            3. 'Office Printer' (`_ipp._tcp`) at 192.168.1.12 — duplex and color-capable.
+
+            All three speak protocols common on home networks.
 
             OUTPUT: Start with the first sentence of your answer. Do not emit \
             conversational preamble ("Sure,", "Here's...") — the user sees tokens \
