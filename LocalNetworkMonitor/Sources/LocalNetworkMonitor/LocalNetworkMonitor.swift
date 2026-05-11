@@ -30,11 +30,15 @@ import os
 ///
 /// ## Threading
 ///
-/// `NWPathMonitor` delivers path updates on a dispatch queue we
-/// provide (a dedicated serial queue). The classification step
-/// (`Wi-Fi or Ethernet?`) runs there; results are then hopped to the
-/// main actor before mutating state or notifying the delegate. From
-/// the consumer's perspective the API is entirely `@MainActor`.
+/// `NWPathMonitor.start(queue:)` requires a `DispatchQueue` — that
+/// part of Apple's API isn't async-await-native and there's no way
+/// around it. What we *can* do (and do here) is keep dispatch queues
+/// confined to that single API requirement and read path updates back
+/// through an `AsyncStream`, so the rest of the class is pure Swift
+/// Concurrency: a structured `Task` iterating `for await path in …`
+/// and calling `@MainActor` methods directly. No manual `Task {
+/// @MainActor in … }` hops, no dedicated queue we have to name or
+/// maintain.
 @MainActor
 public final class LocalNetworkMonitor: LocalNetworkMonitorProtocol {
 
@@ -50,15 +54,13 @@ public final class LocalNetworkMonitor: LocalNetworkMonitorProtocol {
 
     private let pathMonitor = NWPathMonitor()
 
-    /// Dedicated serial queue for `NWPathMonitor` callbacks. The
-    /// monitor delivers path updates on this queue; we hop to the
-    /// main actor before mutating state or notifying the delegate.
-    private let monitorQueue = DispatchQueue(
-        label: "com.kozinga.LocalNetworkMonitor",
-        qos: .utility
-    )
-
-    private var isStarted: Bool = false
+    /// The structured consumer task. Owns the `AsyncStream`'s lifetime
+    /// — cancelling this task ends the `for await` loop, which finishes
+    /// the stream via `defer`, which in turn invokes the stream's
+    /// `onTermination` to cancel the underlying `NWPathMonitor`.
+    /// ``stop()`` is a single `monitorTask?.cancel()` away from a clean
+    /// shutdown.
+    private var monitorTask: Task<Void, Never>?
 
     private let logger = Logger(
         subsystem: "com.kozinga.LocalNetworkMonitor",
@@ -70,35 +72,72 @@ public final class LocalNetworkMonitor: LocalNetworkMonitorProtocol {
     public init() {}
 
     deinit {
-        // Best-effort cleanup if a caller forgot to stop us. `cancel()`
-        // is documented as safe to call from any thread.
+        // Best-effort cleanup if a caller forgot to stop us. `Task.cancel`
+        // and `NWPathMonitor.cancel()` are both documented safe to call
+        // from any context.
+        monitorTask?.cancel()
         pathMonitor.cancel()
     }
 
     // MARK: - Lifecycle
 
     public func start() {
-        guard !isStarted else { return }
-        isStarted = true
+        guard monitorTask == nil else { return }
 
-        pathMonitor.pathUpdateHandler = { [weak self] path in
-            // NWPathMonitor invokes this on `monitorQueue` (a non-main
-            // actor context). Decide the new value here, where we can
-            // touch the immutable `NWPath` directly, then hop to the
-            // main actor for any state / delegate work.
-            let newValue = Self.isLocalNetworkPath(path)
-            Task { @MainActor [weak self] in
+        // Build the bridge: the path monitor's callback yields into
+        // `continuation`; the structured task below iterates `stream`
+        // with `for await`. `bufferingNewest(1)` is correct because
+        // we only care about the *latest* path — if a burst of updates
+        // arrives faster than we drain, dropping stale intermediate
+        // ones is fine; the final-state classification is what matters.
+        let (stream, continuation) = AsyncStream<NWPath>.makeStream(
+            bufferingPolicy: .bufferingNewest(1)
+        )
+
+        // When the stream is dropped (Task cancellation, or
+        // explicit `continuation.finish()` below), cancel the
+        // underlying path monitor. Belt-and-suspenders alongside the
+        // `stop()` path; covers the case where the owning
+        // `LocalNetworkMonitor` is released without `stop()` being
+        // called.
+        continuation.onTermination = { [pathMonitor] _ in
+            pathMonitor.cancel()
+        }
+
+        // The framework still demands a `DispatchQueue` here, but we
+        // don't manage one — `.global(qos: .utility)` is the system's
+        // shared pool. The closure runs there, yields into the stream,
+        // and that's the last we see of dispatch.
+        pathMonitor.pathUpdateHandler = { path in
+            continuation.yield(path)
+        }
+        pathMonitor.start(queue: .global(qos: .utility))
+
+        // Structured consumption. The Task inherits the enclosing
+        // `@MainActor` isolation, but `Self.isLocalNetworkPath(_:)`
+        // is `nonisolated` (a pure function on `NWPath`) so the
+        // classification doesn't pin the main actor for long. The
+        // resulting `handlePathUpdate` call is already on the main
+        // actor — no hop needed.
+        monitorTask = Task { [weak self] in
+            defer { continuation.finish() }
+            for await path in stream {
+                let newValue = Self.isLocalNetworkPath(path)
                 self?.handlePathUpdate(isOnLocalNetwork: newValue)
             }
         }
-        pathMonitor.start(queue: monitorQueue)
+
         logger.info("Started — initial optimistic state: isOnLocalNetwork=true")
     }
 
     public func stop() {
-        guard isStarted else { return }
-        isStarted = false
-        pathMonitor.cancel()
+        guard monitorTask != nil else { return }
+        // Cancelling the task ends `for await`, which fires the
+        // stream's `onTermination` (cancels the path monitor) and
+        // the `defer { continuation.finish() }` (drops the stream).
+        // The whole chain unwinds from one `cancel()`.
+        monitorTask?.cancel()
+        monitorTask = nil
         logger.info("Stopped")
     }
 
@@ -110,11 +149,10 @@ public final class LocalNetworkMonitor: LocalNetworkMonitorProtocol {
     /// excluded: the carrier strips mDNS traffic, so even an
     /// otherwise-online iPhone won't discover anything from there.
     ///
-    /// `nonisolated` because it's called from `pathUpdateHandler`,
-    /// which runs on the dedicated `monitorQueue` (a non-main-actor
-    /// context). The function is pure — it only reads immutable
-    /// properties of the passed-in `NWPath` — so no isolation is
-    /// needed.
+    /// `nonisolated` because it's a pure function on `NWPath` — both
+    /// the framework's `pathUpdateHandler` (non-main-actor) and the
+    /// main-actor consumer task call into it without crossing
+    /// isolation boundaries.
     ///
     /// Internal so test code can drive the classifier directly with
     /// synthetic `NWPath` values, but not exposed publicly because
