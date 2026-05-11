@@ -439,6 +439,20 @@ public enum Strings {
             .init("empty_no_active_services", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        /// Title for the Discover-tab empty state shown when the device
+        /// isn't on a Wi-Fi or Ethernet network. Bonjour can't traverse
+        /// cellular or offline paths, so this surfaces a distinct,
+        /// actionable empty state instead of the generic "no services".
+        public static var noLocalNetworkTitle: LocalizedStringResource {
+            .init("empty_no_local_network_title", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Description body paired with ``noLocalNetworkTitle``. Explains
+        /// why no services are showing and what to do about it.
+        public static var noLocalNetworkDescription: LocalizedStringResource {
+            .init("empty_no_local_network_description", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var selectService: LocalizedStringResource {
             .init("empty_select_service", bundle: .atURL(Bundle.module.bundleURL))
         }

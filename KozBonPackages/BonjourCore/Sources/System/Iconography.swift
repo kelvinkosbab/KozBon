@@ -283,4 +283,9 @@ public enum Iconography {
 
     /// Wi-Fi icon (default fallback for unknown service types).
     public static let wifi = "wifi"
+
+    /// Wi-Fi-off icon. Used by the Discover tab's empty state when the
+    /// device isn't on a local network — Bonjour discovery can't reach
+    /// anything from cellular-only or offline paths.
+    public static let wifiSlash = "wifi.slash"
 }

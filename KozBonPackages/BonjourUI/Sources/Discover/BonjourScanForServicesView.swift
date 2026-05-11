@@ -74,6 +74,22 @@ public struct BonjourScanForServicesView: View {
                     ProgressView {
                         Text(Strings.Buttons.scanningForServices)
                     }
+                } else if !viewModel.isOnLocalNetwork,
+                          viewModel.flatActiveServices.isEmpty,
+                          viewModel.sortedPublishedServices.isEmpty,
+                          viewModel.searchText.isEmpty {
+                    // No local network (Wi-Fi or Ethernet) AND nothing
+                    // to show — Bonjour discovery can't reach anything
+                    // from cellular-only or offline paths, so the
+                    // generic "no services" copy would be confusing.
+                    // Filter / search overrides come after this so the
+                    // "fix Wi-Fi" message stays the top-priority signal
+                    // when it's the root cause.
+                    ContentUnavailableView(
+                        String(localized: Strings.EmptyStates.noLocalNetworkTitle),
+                        systemImage: Iconography.wifiSlash,
+                        description: Text(Strings.EmptyStates.noLocalNetworkDescription)
+                    )
                 } else if viewModel.flatActiveServices.isEmpty,
                           let sortType = viewModel.sortType, sortType.isFilter,
                           viewModel.searchText.isEmpty {
@@ -338,6 +354,17 @@ struct AIServiceExplanationSheetModifier: ViewModifier {
 
 #Preview("Bonjour Scan View - Scanning") {
     let deps = DependencyContainer.preview(simulateScanning: true)
+    NavigationStack {
+        BonjourScanForServicesView(viewModel: BonjourServicesViewModel(dependencies: deps))
+    }
+}
+
+#Preview("Bonjour Scan View - No Wi-Fi") {
+    // Validates the "Not connected to Wi-Fi" empty state without
+    // needing to drop the simulator's network. `simulateOnLocalNetwork`
+    // seeds the mock monitor as offline, the VM picks that up at init,
+    // and the empty-state overlay branches into the no-Wi-Fi copy.
+    let deps = DependencyContainer.preview(simulateOnLocalNetwork: false)
     NavigationStack {
         BonjourScanForServicesView(viewModel: BonjourServicesViewModel(dependencies: deps))
     }

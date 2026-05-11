@@ -4453,6 +4453,112 @@
         }
       }
     },
+    "empty_no_local_network_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not connected to Wi-Fi"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No conectado a Wi-Fi"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pas de connexion Wi-Fi"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nicht mit WLAN verbunden"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wi-Fiに接続されていません"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未连接到 Wi-Fi"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "غير متصل بشبكة Wi-Fi"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "לא מחובר ל-Wi-Fi"
+          }
+        }
+      }
+    },
+    "empty_no_local_network_description": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bonjour services live on the local network. Connect to Wi-Fi (or Ethernet on Mac) to discover what's nearby."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Los servicios Bonjour viven en la red local. Conéctate a Wi-Fi (o Ethernet en Mac) para descubrir lo que hay cerca."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les services Bonjour vivent sur le réseau local. Connectez-vous au Wi-Fi (ou à l'Ethernet sur Mac) pour découvrir ce qui se trouve à proximité."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bonjour-Dienste leben im lokalen Netzwerk. Verbinde dich mit WLAN (oder mit Ethernet auf dem Mac), um zu sehen, was in der Nähe ist."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bonjourサービスはローカルネットワーク上で動作します。Wi-Fi（Macの場合はイーサネット）に接続して、近くにあるものを検出してください。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bonjour 服务运行在本地网络上。请连接 Wi-Fi（在 Mac 上可使用以太网），以便发现附近的服务。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعمل خدمات Bonjour على الشبكة المحلية. اتصل بشبكة Wi-Fi (أو Ethernet على جهاز Mac) لاكتشاف ما هو موجود في الجوار."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירותי Bonjour פועלים על הרשת המקומית. התחבר ל-Wi-Fi (או ל-Ethernet במחשבי Mac) כדי לגלות מה נמצא בקרבת מקום."
+          }
+        }
+      }
+    },
     "empty_select_service": {
       "extractionState": "manual",
       "localizations": {
