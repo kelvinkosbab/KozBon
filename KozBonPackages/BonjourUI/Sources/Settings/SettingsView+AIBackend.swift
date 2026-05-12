@@ -41,16 +41,24 @@ extension SettingsView {
             Text(Strings.Settings.aiBackendSection)
                 .accessibilityAddTraits(.isHeader)
         } footer: {
-            // Footer copy adapts to the selected backend so the
-            // privacy story is correct for whichever path the user
-            // is on. On-device gets the unchanged "everything runs
-            // privately" reassurance; cloud gets a clear disclosure
-            // that requests are sent to Anthropic.
-            switch preferencesStore.aiBackend {
-            case .appleIntelligence:
-                Text(Strings.Settings.aiBackendAppleSubtitle)
-            case .anthropic:
-                Text(Strings.Settings.aiCloudFooter)
+            // Two-paragraph footer: a stable description of what
+            // the AI is responsible for (applies to either
+            // backend) followed by a backend-specific privacy
+            // disclosure. The previous version surfaced the per-
+            // backend privacy line as the whole footer, which
+            // implicitly conveyed "AI is for privacy" rather
+            // than "AI explains your services and runs the Chat
+            // tab" — the purpose-first split makes both halves
+            // legible.
+            VStack(alignment: .leading, spacing: 8) {
+                Text(Strings.Settings.aiBackendSectionPurpose)
+
+                switch preferencesStore.aiBackend {
+                case .appleIntelligence:
+                    Text(Strings.Settings.aiBackendApplePrivacy)
+                case .anthropic:
+                    Text(Strings.Settings.aiCloudFooter)
+                }
             }
         }
     }

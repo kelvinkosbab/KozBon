@@ -1020,6 +1020,25 @@ public enum Strings {
             .init("settings_ai_cloud_footer", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        /// Backend-agnostic description of what the AI is
+        /// responsible for. Rendered as the first paragraph of
+        /// the AI Backend section footer so the user understands
+        /// which surfaces the picker affects, regardless of which
+        /// backend is selected.
+        public static var aiBackendSectionPurpose: LocalizedStringResource {
+            .init("settings_ai_backend_section_purpose", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// On-device privacy disclosure rendered as the second
+        /// paragraph of the AI Backend section footer when Apple
+        /// Intelligence is selected. Pairs with
+        /// ``aiBackendSectionPurpose`` so the user gets a
+        /// what-it-does + privacy-posture pair regardless of
+        /// backend.
+        public static var aiBackendApplePrivacy: LocalizedStringResource {
+            .init("settings_ai_backend_apple_privacy", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         /// "Sign in to Claude" — button label on the AI Backend row
         /// when no API key is configured for Anthropic.
         public static var aiCloudSignIn: LocalizedStringResource {

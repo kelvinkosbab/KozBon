@@ -21260,49 +21260,49 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "On-device. Private. Default."
+            "value": "On-device by default. No data leaves your device."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "En el dispositivo. Privado. Predeterminado."
+            "value": "En el dispositivo de forma predeterminada. Ningún dato sale del dispositivo."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sur l'appareil. Privé. Par défaut."
+            "value": "Sur l'appareil par défaut. Aucune donnée ne quitte l'appareil."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Auf dem Gerät. Privat. Standard."
+            "value": "Standardmäßig auf dem Gerät. Keine Daten verlassen Ihr Gerät."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "デバイス上で実行。プライベート。デフォルト。"
+            "value": "デフォルトでデバイス上で実行。データはデバイスから出ません。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "在设备上运行。私密。默认。"
+            "value": "默认在设备上运行。数据不会离开您的设备。"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "على الجهاز. خاص. الافتراضي."
+            "value": "افتراضيًا على الجهاز. لا تغادر أي بيانات جهازك."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "במכשיר. פרטי. ברירת מחדל."
+            "value": "כברירת מחדל במכשיר. שום נתונים לא יוצאים מהמכשיר שלך."
           }
         }
       }
@@ -21313,49 +21313,49 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cloud, via your own Anthropic account."
+            "value": "Cloud, via your own Anthropic account. Larger context window."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nube, mediante tu propia cuenta de Anthropic."
+            "value": "Nube, mediante tu propia cuenta de Anthropic. Ventana de contexto más amplia."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cloud, via votre propre compte Anthropic."
+            "value": "Cloud, via votre propre compte Anthropic. Fenêtre contextuelle plus large."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cloud, über Ihr eigenes Anthropic-Konto."
+            "value": "Cloud, über Ihr eigenes Anthropic-Konto. Größeres Kontextfenster."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "クラウド経由。ご自身の Anthropic アカウントを使用します。"
+            "value": "クラウド経由、ご自身の Anthropic アカウントを使用。より広いコンテキストウィンドウ。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "云端，通过您自己的 Anthropic 账户。"
+            "value": "云端，通过您自己的 Anthropic 账户。更大的上下文窗口。"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "السحابة، عبر حساب Anthropic الخاص بك."
+            "value": "السحابة، عبر حساب Anthropic الخاص بك. نافذة سياق أكبر."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "ענן, באמצעות חשבון Anthropic האישי שלך."
+            "value": "ענן, באמצעות חשבון Anthropic האישי שלך. חלון הקשר גדול יותר."
           }
         }
       }
@@ -22161,49 +22161,49 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Most capable. Slower, higher per-token cost."
+            "value": "Most capable. 200K context window. Best for deep reasoning about complex networks."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "El más capaz. Más lento, mayor coste por token."
+            "value": "El más capaz. Ventana de contexto de 200K. Ideal para razonamientos profundos sobre redes complejas."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Le plus performant. Plus lent, coût par jeton plus élevé."
+            "value": "Le plus performant. Fenêtre contextuelle de 200K. Idéal pour un raisonnement approfondi sur des réseaux complexes."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Am leistungsfähigsten. Langsamer, höhere Kosten pro Token."
+            "value": "Am leistungsfähigsten. 200K-Kontextfenster. Ideal für tiefgehende Analysen komplexer Netzwerke."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "最も高性能。応答は遅め、トークンあたりのコストは高め。"
+            "value": "最も高性能。200K のコンテキストウィンドウ。複雑なネットワークの詳細な推論に最適。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "能力最强。速度较慢，每个 Token 成本较高。"
+            "value": "能力最强。200K 上下文窗口。最适合对复杂网络进行深入推理。"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "الأكثر قدرة. أبطأ وأعلى تكلفة لكل رمز."
+            "value": "الأكثر قدرة. نافذة سياق بحجم 200 ألف. الأنسب للتفكير العميق في الشبكات المعقدة."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "החזק ביותר. איטי יותר, עלות גבוהה יותר לכל אסימון."
+            "value": "החזק ביותר. חלון הקשר של 200K. הטוב ביותר לניתוח עמוק של רשתות מורכבות."
           }
         }
       }
@@ -22214,49 +22214,49 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Balanced. Recommended for most users."
+            "value": "Balanced. 200K context window. Recommended for most questions about your network."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Equilibrado. Recomendado para la mayoría de usuarios."
+            "value": "Equilibrado. Ventana de contexto de 200K. Recomendado para la mayoría de preguntas sobre tu red."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Équilibré. Recommandé pour la plupart des utilisateurs."
+            "value": "Équilibré. Fenêtre contextuelle de 200K. Recommandé pour la plupart des questions sur votre réseau."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ausgewogen. Empfohlen für die meisten Nutzer."
+            "value": "Ausgewogen. 200K-Kontextfenster. Empfohlen für die meisten Fragen zu Ihrem Netzwerk."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "バランス型。多くのユーザーに推奨。"
+            "value": "バランス型。200K のコンテキストウィンドウ。ネットワークに関するほとんどの質問に推奨。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "均衡。推荐大多数用户使用。"
+            "value": "均衡。200K 上下文窗口。推荐用于您网络的大多数问题。"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "متوازن. موصى به لمعظم المستخدمين."
+            "value": "متوازن. نافذة سياق بحجم 200 ألف. موصى به لمعظم الأسئلة حول شبكتك."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "מאוזן. מומלץ לרוב המשתמשים."
+            "value": "מאוזן. חלון הקשר של 200K. מומלץ לרוב השאלות על הרשת שלך."
           }
         }
       }
@@ -22267,49 +22267,49 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Fastest, lowest cost. Best for short answers."
+            "value": "Fastest, lowest cost. 200K context window. Best for quick service explanations."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "El más rápido y económico. Ideal para respuestas breves."
+            "value": "El más rápido y económico. Ventana de contexto de 200K. Ideal para explicaciones rápidas de servicios."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Le plus rapide et le moins cher. Idéal pour des réponses courtes."
+            "value": "Le plus rapide et le moins cher. Fenêtre contextuelle de 200K. Idéal pour des explications rapides de services."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Am schnellsten und günstigsten. Ideal für kurze Antworten."
+            "value": "Am schnellsten und günstigsten. 200K-Kontextfenster. Ideal für schnelle Diensterklärungen."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "最速・最安。短い回答に最適。"
+            "value": "最速・最安。200K のコンテキストウィンドウ。サービスの簡潔な説明に最適。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "速度最快、成本最低。最适合简短回答。"
+            "value": "速度最快、成本最低。200K 上下文窗口。最适合快速服务说明。"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "الأسرع والأقل تكلفة. الأنسب للإجابات القصيرة."
+            "value": "الأسرع والأقل تكلفة. نافذة سياق بحجم 200 ألف. الأنسب للشروحات السريعة للخدمات."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "המהיר ביותר ובעלות הנמוכה ביותר. הטוב ביותר לתשובות קצרות."
+            "value": "המהיר ביותר ובעלות הנמוכה ביותר. חלון הקשר של 200K. הטוב ביותר להסברים מהירים על שירותים."
           }
         }
       }
@@ -22469,6 +22469,112 @@
           "stringUnit": {
             "state": "translated",
             "value": "מסיר את מפתח ה‑API של Anthropic שלך ממחזיק המפתחות של המכשיר."
+          }
+        }
+      }
+    },
+    "settings_ai_backend_section_purpose": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Powers the long-press Insights explanations of discovered services and the Chat tab's conversational assistant."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activa las explicaciones de Insights al mantener pulsado un servicio descubierto y el asistente conversacional de la pestaña Chat."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alimente les explications d'Insights lors d'un appui long sur les services découverts et l'assistant conversationnel de l'onglet Chat."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Treibt die Insights-Erklärungen beim Längerdrücken auf entdeckte Dienste und den dialogorientierten Assistenten im Chat-Tab an."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "発見したサービスを長押ししたときの Insights による説明と、Chat タブの対話アシスタントを支えます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "为长按已发现服务时的 Insights 说明以及聊天标签中的对话助手提供支持。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يشغّل شروحات Insights عند الضغط مطوّلاً على الخدمات المكتشفة ومساعد المحادثة في علامة تبويب Chat."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מפעיל את הסברי Insights בלחיצה ארוכה על שירותים שהתגלו ואת עוזר השיחה בכרטיסיית Chat."
+          }
+        }
+      }
+    },
+    "settings_ai_backend_apple_privacy": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence runs entirely on this device — no data leaves your device."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence se ejecuta completamente en este dispositivo: ningún dato sale del dispositivo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence s'exécute entièrement sur cet appareil — aucune donnée ne quitte votre appareil."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence läuft vollständig auf diesem Gerät — keine Daten verlassen Ihr Gerät."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence は完全にこのデバイス上で動作します — データはデバイスから出ません。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence 完全在本设备上运行 —— 数据不会离开您的设备。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يعمل Apple Intelligence بالكامل على هذا الجهاز — لا تغادر أي بيانات جهازك."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence פועל כולו במכשיר זה — שום נתונים לא יוצאים מהמכשיר שלך."
           }
         }
       }
