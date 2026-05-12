@@ -21,16 +21,6 @@ public enum BonjourServiceBrowserState: Sendable {
     /// The scanner is actively browsing the network for services.
     case searching
 
-    /// A localized, lowercase display name for the current state.
-    public var string: String {
-        switch self {
-        case .stopped:
-            NSLocalizedString("Stopped", comment: "Stopped browser state string")
-        case .searching:
-            NSLocalizedString("Searching", comment: "Searching browser state string")
-        }
-    }
-
     /// Whether the scanner is in the ``stopped`` state.
     public var isStopped: Bool {
         self == .stopped

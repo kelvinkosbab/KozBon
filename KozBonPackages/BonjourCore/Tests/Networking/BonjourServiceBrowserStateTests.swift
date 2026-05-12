@@ -13,16 +13,6 @@ import Testing
 @Suite("BonjourServiceBrowserState")
 struct BonjourServiceBrowserStateTests {
 
-    @Test("`.stopped.string` is populated so the status row never renders blank")
-    func stoppedStringIsNotEmpty() {
-        #expect(!BonjourServiceBrowserState.stopped.string.isEmpty)
-    }
-
-    @Test("`.searching.string` is populated so the status row never renders blank")
-    func searchingStringIsNotEmpty() {
-        #expect(!BonjourServiceBrowserState.searching.string.isEmpty)
-    }
-
     @Test("`.stopped.isStopped` is true")
     func stoppedIsStopped() {
         #expect(BonjourServiceBrowserState.stopped.isStopped)
