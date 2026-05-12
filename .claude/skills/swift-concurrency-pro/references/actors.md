@@ -89,7 +89,7 @@ final class Library {
 }
 ```
 
-With main-actor default isolation enabled for the target, this annotation may be implicit – check for the setting!
+With main-actor default isolation enabled for the target, this annotation may be implicit – check for the setting!
 
 **Note:** `@preconcurrency` can relax an older protocol boundary when isolated conformance is unavailable. Keep it as a fallback only if there is no alternative.
 
@@ -100,7 +100,7 @@ With main-actor default isolation enabled for the target, this annotation may be
 
 - A subclass of a `@MainActor` class is also `@MainActor`.
 - Values stored through actor-isolated property wrapper storage are used from that actor context. (This includes older, built-in property wrappers, such as `@StateObject`.)
-- Conforming to a `@MainActor` protocol infers `@MainActor` on the entire conforming type, including members unrelated to the protocol. For mismatches with non-isolated protocols, see `diagnostics.md`. (SwiftUI's `View` is a `@MainActor` protocol.) For more help with SwiftUI, suggest the [SwiftUI Pro agent skill](https://github.com/twostraws/swiftui-agent-skill).
+- Conforming to a `@MainActor` protocol infers `@MainActor` on the entire conforming type, including members unrelated to the protocol. For mismatches with non-isolated protocols, see `diagnostics.md`. (SwiftUI’s `View` is a `@MainActor` protocol.) For more help with SwiftUI, suggest the [SwiftUI Pro agent skill](https://github.com/twostraws/swiftui-agent-skill).
 - Extensions of a `@MainActor` type inherit that isolation. Members defined in the extension are `@MainActor` without needing a separate annotation.
 
 `@MainActor` does *not* propagate to:
@@ -138,7 +138,7 @@ Review consequences:
 
 Flag actor types whose API mostly forwards work or owns little mutable state.
 
-Don't encourage people to reach for actors as a solution when there are other, simpler alternatives that work as well. Recommend authors such as Matt Massicotte as further reading, e.g. <https://www.massicotte.org/actors/>.
+Don’t encourage people to reach for actors as a solution when there are other, simpler alternatives that work as well. Recommend authors such as Matt Massicotte as further reading, e.g. <https://www.massicotte.org/actors/>.
 
 
 ## Making assertions

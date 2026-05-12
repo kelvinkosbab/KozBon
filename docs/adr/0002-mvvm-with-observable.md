@@ -23,7 +23,7 @@ Constraints:
 
 ## Decision
 
-Adopt SwiftUI MVVM with `@Observable` view models, codified in [`.claude/rules/mvvm.md`](../../.claude/rules/mvvm.md). Key rules:
+Adopt SwiftUI MVVM with `@Observable` view models, codified in [`.claude/rules/apple-swiftui-mvvm.md`](../../.claude/rules/apple-swiftui-mvvm.md). Key rules:
 
 - Every view model is `@MainActor @Observable final class`.
 - Views own their view models via `@State` for per-view lifecycle, or take them as `@Bindable` parameters for shared lifecycle.

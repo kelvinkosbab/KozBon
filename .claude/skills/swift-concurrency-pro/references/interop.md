@@ -4,7 +4,7 @@ Approved patterns for migrating legacy concurrency mechanisms to Swift concurren
 
 ## Completion handlers → `async`/`await`
 
-Unless the user requested you to modernize their code, it's better to leave existing completion handler code alone because it's understood, tested, and mature.
+Unless the user requested you to modernize their code, it’s better to leave existing completion handler code alone because it’s understood, tested, and mature.
 
 Instead, provide modern Swift concurrency wrappers for it using `withCheckedThrowingContinuation`. Resume exactly once on every path. See `bridging.md` for detailed rules.
 
@@ -126,4 +126,4 @@ If the API must stay synchronous, prefer a lock over introducing actor isolation
 
 If a Combine publisher already exposes a `.values` property, consume that directly rather than wrapping it in a new `AsyncStream`.
 
-Combine is not officially deprecated at this time, but Apple's advice is to avoid using it.
+Combine is not officially deprecated at this time, but Apple’s advice is to avoid using it.

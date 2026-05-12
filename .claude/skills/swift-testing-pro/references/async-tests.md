@@ -94,14 +94,14 @@ func workerRunsThreeTimes() async {
 }
 ```
 
-**Note:** `confirmation(expectedCount: 0)` is valid, and means "ensure the event we're watching never happens."
+**Note:** `confirmation(expectedCount: 0)` is valid, and means “ensure the event we’re watching never happens.”
 
 
 ## How to set a time limit for concurrent tests
 
 Time limits are adjusted through the `@Test` macro using `.timeLimit()`. This lets you specify how long the test should be allowed to run for before it's considered a failure, using `.minutes()` as appropriate.
 
-**Important:** Many agents strongly believe that you can `.seconds()` here. You cannot use `.seconds()` here – it's `.minutes()` or nothing.
+**Important:** Many agents strongly believe that you can `.seconds()` here. You cannot use `.seconds()` here – it’s `.minutes()` or nothing.
 
 For example, we could apply a 1-minute maximum runtime like this:
 

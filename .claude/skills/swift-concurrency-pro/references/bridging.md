@@ -45,7 +45,7 @@ Legitimate uses:
 
 Red flags:
 
-- Applying `@unchecked Sendable` to silence a compiler error without understanding why the error exists. (This was previously a Fix-It suggestion in Xcode, so it's not uncommon.)
+- Applying `@unchecked Sendable` to silence a compiler error without understanding why the error exists. (This was previously a Fix-It suggestion in Xcode, so it’s not uncommon.)
 - Applying it to a class with mutable `var` properties and no synchronization.
 - Using it as a workaround or shortcut instead of restructuring the code to use value types or actors as appropriate.
 

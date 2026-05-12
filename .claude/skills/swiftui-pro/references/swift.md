@@ -12,7 +12,7 @@
 - When `import SwiftUI` is already in a file, you do not need to add `import UIKit` or `import AppKit` to access things like `UIImage` or `NSImage` – they are imported automatically on the appropriate platform.
 - When dealing with the names of people, strongly prefer to use `PersonNameComponents` with modern formatting over simple string interpolation such as `Text("\(firstName) \(lastName)")`.
 - If a given type of data is repeatedly sorted using an identical closure, e.g. `books.sorted { $0.author < $1.author }`, prefer to make the type in question conform to `Comparable` so the sort order is centralized.
-- Prefer to avoid manual date formatting strings if possible. If manual date formatting *is* used for user display, at least make sure to use "y" rather than "yyyy" for years, so the year value is correct in all localizations. If the purpose is data exchange with an API, this rule does not apply.
+- Prefer to avoid manual date formatting strings if possible. If manual date formatting *is* used for user display, at least make sure to use “y” rather than “yyyy” for years, so the year value is correct in all localizations. If the purpose is data exchange with an API, this rule does not apply.
 - When trying to convert a string to a date, prefer the modern `Date` initializer API such as `Date(myString, strategy: .iso8601)`.
 - Flag instances where errors triggered by a user action are swallowed silently, e.g. using `print(error.localizedDescription)` rather than showing an alert or similar.
 - Prefer `if let value {` shorthand over `if let value = value {`.

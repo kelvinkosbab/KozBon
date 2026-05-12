@@ -1,15 +1,101 @@
-# Structured Concurrency Guide Summary
+# Structured concurrency
 
-This document provides best practices for Swift's structured concurrency features:
+## `async let` vs task groups
 
-**`async let` vs Task Groups**: Use `async let` for "a fixed number of independent operations that return different types," while task groups suit "a dynamic number of operations of the same type."
+Use `async let` when you have a fixed number of independent operations that return different types, e.g. fetching the news, the weather, and an app update at the same time. Use task groups when you have a dynamic number of operations of the same type, e.g. downloading all images in an array of URLs.
 
-**Avoid Unstructured Tasks in Loops**: The guide emphasizes that using unstructured tasks in loops is problematic because they lack "cancellation propagation" and have "no way to await all results." Task groups are the preferred alternative.
 
-**`withDiscardingTaskGroup`**: For fire-and-forget operations, this variant "avoids accumulating unused results in memory."
+## Task groups over loops
 
-**Concurrency Limits**: Task groups "launch all child tasks eagerly," which may be undesirable. The document demonstrates manual concurrency limiting by starting tasks in batches and launching new ones as previous tasks complete.
+It’s generally a bad idea to use unstructured tasks in a loop; prefer task groups.
 
-**Error Handling**: When a child task throws, "the group cancels all remaining children." To preserve partial results, catch errors within each task rather than at the group level.
+```swift
+// WRONG: No cancellation propagation, no way to await all results, leaked tasks on failure.
+for url in urls {
+    Task { try await fetch(url) }
+}
 
-**Type Inference**: While Swift typically infers task group types for simple values like strings and URLs, complex types like tuples containing Result types require explicit type specification.
+// RIGHT: Structured, cancellable, collects results.
+let results = try await withThrowingTaskGroup { group in
+    for url in urls {
+        group.addTask { try await fetch(url) }
+    }
+
+    var collected = [Data]()
+    for try await result in group {
+        collected.append(result)
+    }
+    return collected
+}
+```
+
+
+## `withDiscardingTaskGroup` (Swift 5.9+)
+
+When child tasks don't return meaningful results (fire-and-forget), use `withDiscardingTaskGroup` instead of `withTaskGroup`. It avoids accumulating unused results in memory.
+
+```swift
+// Preferred for side-effect-only child tasks
+await withDiscardingTaskGroup { group in
+    for connection in connections {
+        group.addTask { await connection.sendHeartbeat() }
+    }
+}
+```
+
+
+## Limiting concurrency
+
+Task groups launch all child tasks eagerly, which may be undesirable. Consider limiting concurrency manually when it is appropriate:
+
+```swift
+try await withThrowingTaskGroup { group in
+    let maxConcurrent = 4
+    var iterator = urls.makeIterator()
+
+    // Start initial batch
+    for _ in 0..<maxConcurrent {
+        guard let url = iterator.next() else { break }
+        group.addTask { try await fetch(url) }
+    }
+
+    // As each finishes, start the next
+    for try await result in group {
+        process(result)
+        if let url = iterator.next() {
+            group.addTask { try await fetch(url) }
+        }
+    }
+}
+```
+
+
+## Error handling with partial results
+
+When one child task throws, the group cancels all remaining children. If you need partial results, catch errors inside each child task:
+
+```swift
+await withTaskGroup(of: (URL, Result<Data, Error>).self) { group in
+    for url in urls {
+        group.addTask {
+            do {
+                return (url, .success(try await fetch(url)))
+            } catch {
+                return (url, .failure(error))
+            }
+        }
+    }
+
+    for await (url, result) in group {
+        switch result {
+        case .success(let data): handle(data)
+        case .failure(let error): log(error, for: url)
+        }
+    }
+}
+```
+
+
+## Inferring the type of task groups
+
+Swift is usually able to infer the type of task groups, but not always. Simple types like `String`, `URL`, `Data`, etc, usually work fine, but the example above uses `withTaskGroup(of: (URL, Result<Data, Error>).self)` and that is an example of the specific type being required – Swift would not be able to infer that.

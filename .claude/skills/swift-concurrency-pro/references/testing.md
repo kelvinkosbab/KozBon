@@ -206,7 +206,7 @@ If the code under test is a `for await` loop, you can cancel the consuming task 
 
 ## Race detection
 
-It's a good idea to enable Thread Sanitizer (TSan) in your test scheme to catch data races at runtime. TSan finds races that the compiler's static checks often miss, particularly in code using `@unchecked Sendable` or unsafe pointers.
+It’s a good idea to enable Thread Sanitizer (TSan) in your test scheme to catch data races at runtime. TSan finds races that the compiler's static checks often miss, particularly in code using `@unchecked Sendable` or unsafe pointers.
 
 In Xcode: Product → Scheme Edit Scheme → Diagnostics → Thread Sanitizer.
 

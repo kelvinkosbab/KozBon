@@ -27,7 +27,7 @@ These rules help ensure code is efficient and works well in the long term.
 ## Working with data
 
 - Prefer to make structs conform to `Identifiable` rather than using `id: \.someProperty` in SwiftUI code.
-- Never attempt to use `@AppStorage` inside an `@Observable` class, even if marked `@ObservationIgnored` – it will *not* trigger view updates when a change happens.
+- Never attempt to use `@AppStorage` inside an `@Observable` class, even if marked `@ObservationIgnored` – it will *not* trigger view updates when a change happens.
 
 
 ## SwiftData

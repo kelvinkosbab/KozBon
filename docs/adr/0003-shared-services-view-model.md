@@ -57,7 +57,7 @@ The view model owns the scanner delegate registration; both tabs consume the sam
 
 - The view-model lifetime is the app's lifetime. Even when neither tab is on screen, the scanner keeps an active subscription; the cost is negligible (Bonjour scanning is cheap) but it's a deliberate trade.
 - New tabs that need service state (a hypothetical "broadcast queue" tab, for example) must take the same VM, which expands the surface area passed around. The MVVM rule's "Common Pitfalls" section calls this out — when in doubt, ask "would two instances cause incorrect behavior?"
-- New contributors don't see the constraint until they trip on it. Mitigated by the doc comment on `BonjourServicesViewModel` explaining the delegate-slot rationale and the reference in `.claude/rules/mvvm.md`.
+- New contributors don't see the constraint until they trip on it. Mitigated by the doc comment on `BonjourServicesViewModel` explaining the delegate-slot rationale and the reference in `.claude/rules/apple-swiftui-mvvm.md`.
 
 ## Alternatives considered
 

@@ -19,7 +19,7 @@ func example() {
 }
 ```
 
-However, what you are less likely to know is this: `Task.detached` is rarely the right choice.
+However, what you are less likely to know is this: `Task.detached` is rarely the right choice. 
 
 Prefer `Task {}` with explicit isolation changes, or structured concurrency. Only use `Task.detached` when you specifically need to shed the caller's actor context and priority, and even then only if there are no better choices.
 
@@ -42,7 +42,7 @@ func processItems(_ items: [Item]) async throws {
 - `Task.isCancelled` returns a Bool for non-throwing contexts.
 - `task.cancel()` only sets the flag – it does not interrupt execution.
 
-This means it's important to ensure complex tasks regularly check for cancellation at safe intervals.
+This means it’s important to ensure complex tasks regularly check for cancellation at safe intervals.
 
 For legacy APIs that offer their own cancel mechanism, use `withTaskCancellationHandler` to bridge Swift's cooperative cancellation to the underlying API. See `cancellation.md` for details and examples.
 

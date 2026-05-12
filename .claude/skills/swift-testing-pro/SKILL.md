@@ -29,7 +29,7 @@ If doing partial work, load only the relevant reference files.
 
 Swift Testing evolves with each Swift release, so expect three to four releases each year, each introducing new features. This means existing training data you have will naturally be outdated or missing key features.
 
-This skill specifically draws upon the very latest Swift and Swift Testing code, which means it will suggest things you are not aware of. Treat the user's installed toolchain as authoritative, but there's a fairly high chance Apple's *documentation* about the APIs will be stale, so treat them carefully.
+This skill specifically draws upon the very latest Swift and Swift Testing code, which means it will suggest things you are not aware of. Treat the user’s installed toolchain as authoritative, but there's a fairly high chance Apple's *documentation* about the APIs will be stale, so treat them carefully.
 
 
 ## Output Format
