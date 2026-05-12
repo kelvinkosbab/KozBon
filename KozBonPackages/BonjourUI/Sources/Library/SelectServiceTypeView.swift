@@ -141,14 +141,10 @@ struct SelectServiceTypeView: View {
         )
         .accessibilityHint(String(localized: Strings.Accessibility.selectServiceTypeHint))
         .contextMenu {
-            #if canImport(FoundationModels)
-            if #available(iOS 26, macOS 26, visionOS 26, *) {
-                AIContextMenuItems(
-                    aiAnalysisEnabled: preferencesStore.aiAnalysisEnabled,
-                    action: { serviceTypeToExplain = serviceType }
-                )
-            }
-            #endif
+            // Backend-aware (ADR 0005) — picks Apple Intelligence
+            // items on iOS 26+ or "Explain with Claude" on the
+            // cloud path.
+            InsightsContextMenuItems(action: { serviceTypeToExplain = serviceType })
         }
     }
 }

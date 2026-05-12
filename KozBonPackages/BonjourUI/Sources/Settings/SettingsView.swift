@@ -58,7 +58,14 @@ public struct SettingsView: View {
     public var body: some View {
         NavigationStack {
             Form {
-                if AppleIntelligenceSupport.isDeviceSupported {
+                // Pre-ADR-0005 this section was gated solely on
+                // `AppleIntelligenceSupport.isDeviceSupported` —
+                // older iPhones / non-M-series Macs never saw the
+                // AI Analysis controls. Now that the cloud
+                // backend ships, the section surfaces when any
+                // viable backend exists: Apple Intelligence
+                // hardware OR a configured Anthropic key.
+                if isAIAnalysisAvailable {
                     aiAnalysisSection
                 }
 
@@ -230,8 +237,14 @@ public struct SettingsView: View {
             // hidden by `isDeviceSupported` upstream), so this notice
             // only fires for the "capable hardware, not currently
             // working" middle state.
+            //
+            // Gated to `aiBackend == .appleIntelligence` so users on
+            // the cloud path don't see Apple-Intelligence-specific
+            // warnings — their backend is fully functional regardless
+            // of the on-device model's state.
             VStack(alignment: .leading, spacing: 8) {
-                if let reason = AppleIntelligenceSupport.unavailabilityReason {
+                if preferencesStore.aiBackend == .appleIntelligence,
+                   let reason = AppleIntelligenceSupport.unavailabilityReason {
                     Text(verbatim: reason)
                         .foregroundStyle(.orange)
                         .accessibilityAddTraits(.isStaticText)
@@ -326,6 +339,22 @@ public struct SettingsView: View {
             && preferencesStore.aiResponseLength == UserPreferences.defaultAIResponseLength
             && preferencesStore.defaultSortOrder == UserPreferences.defaultSortOrder
             && !hasCustomServiceTypes
+    }
+
+    /// Whether any AI backend is currently usable on this device.
+    ///
+    /// True when either Apple Intelligence is supported hardware
+    /// (regardless of whether it's currently enabled in iOS
+    /// Settings — `isDeviceSupported` covers the device-floor
+    /// gate, the section itself surfaces the "turn on in
+    /// Settings" CTA for the disabled-mid-state) OR the user has
+    /// signed into Anthropic. ADR 0005 broadened this surface
+    /// from Apple-Intelligence-only to "any viable backend" so
+    /// users on ineligible hardware with a Claude account see
+    /// the AI Analysis controls.
+    private var isAIAnalysisAvailable: Bool {
+        AppleIntelligenceSupport.isDeviceSupported
+            || credentialsStore.hasAPIKey(for: .anthropic)
     }
 
     /// Re-queries the Core Data custom-types store and updates

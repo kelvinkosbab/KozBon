@@ -356,22 +356,18 @@ struct BroadcastBonjourServiceView: View {
     // MARK: - AI Insights Menu
 
     /// Long-press menu shown on the selected service-type row that
-    /// surfaces Apple Intelligence's "Insights" affordance — the same
-    /// component used by the Library and Discover rows. Tapping the
-    /// menu item plays a medium haptic and triggers the AI
-    /// explanation sheet via the `serviceTypeToExplain` binding.
-    /// Internally `AIContextMenuItems` checks the device's Apple
-    /// Intelligence availability and the user's preference, so this
-    /// view doesn't have to duplicate any of that gating logic.
+    /// surfaces the Insights affordance — the same component used
+    /// by the Library and Discover rows. Tapping the menu item
+    /// plays a medium haptic and triggers the AI explanation sheet
+    /// via the `serviceTypeToExplain` binding.
+    ///
+    /// `InsightsContextMenuItems` is backend-aware (ADR 0005): on
+    /// iOS 26+ devices with Apple Intelligence selected it renders
+    /// the on-device path; on devices with the Anthropic backend
+    /// selected and a key configured it renders "Explain with
+    /// Claude". This view doesn't have to duplicate the routing.
     @ViewBuilder
     private func aiInsightsContextMenu(for serviceType: BonjourServiceType) -> some View {
-        #if canImport(FoundationModels)
-        if #available(iOS 26, macOS 26, visionOS 26, *) {
-            AIContextMenuItems(
-                aiAnalysisEnabled: preferencesStore.aiAnalysisEnabled,
-                action: { serviceTypeToExplain = serviceType }
-            )
-        }
-        #endif
+        InsightsContextMenuItems(action: { serviceTypeToExplain = serviceType })
     }
 }

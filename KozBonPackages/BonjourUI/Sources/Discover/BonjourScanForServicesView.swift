@@ -262,14 +262,11 @@ public struct BonjourScanForServicesView: View {
                     }
                 }
 
-                #if canImport(FoundationModels)
-                if #available(iOS 26, macOS 26, visionOS 26, *) {
-                    AIContextMenuItems(
-                        aiAnalysisEnabled: preferencesStore.aiAnalysisEnabled,
-                        action: { serviceToExplain = service }
-                    )
-                }
-                #endif
+                // Backend-aware: picks Apple Intelligence menu items
+                // on capable iOS 26+ devices, or "Explain with
+                // Claude" when the user has the Anthropic backend
+                // selected and a key configured. ADR 0005.
+                InsightsContextMenuItems(action: { serviceToExplain = service })
             }
         }
     }

@@ -203,14 +203,14 @@ public struct SupportedServicesView: View {
             }
         }
 
-        #if canImport(FoundationModels)
-        if #available(iOS 26, macOS 26, visionOS 26, *) {
-            AIContextMenuItems(
-                aiAnalysisEnabled: preferencesStore.aiAnalysisEnabled,
-                action: { serviceTypeToExplain = serviceType }
-            )
-        }
-        #endif
+        // Backend-aware (ADR 0005) — picks Apple Intelligence
+        // items on iOS 26+ or "Explain with Claude" on the cloud
+        // path. The previous `#if canImport(FoundationModels)` +
+        // `#available(iOS 26, *)` wrap was hiding Insights from
+        // every device that couldn't import FoundationModels —
+        // which excluded users on perfectly capable iOS 18
+        // hardware with their own Claude account.
+        InsightsContextMenuItems(action: { serviceTypeToExplain = serviceType })
 
         #if os(macOS)
         Divider()
