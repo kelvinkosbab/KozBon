@@ -35,11 +35,27 @@ let sharedSwiftSettings: [SwiftSetting] = [
 /// the on-disk layout uniform. No package currently needs *test*
 /// resources; if one ever does, add a `hasTestResources: Bool` flag
 /// and a matching `Tests/Resources/` directory.
+///
+/// ## Test target dependencies
+///
+/// The test target automatically gets:
+/// 1. The source target itself (`.byName(name: name)`) so test code
+///    can `@testable import` it.
+/// 2. Every entry in the source target's `dependencies`. Tests almost
+///    always need to construct values from the same types the source
+///    uses — re-declaring those deps on the test target was pure
+///    boilerplate that drifted whenever the source list changed.
+///
+/// `additionalTestDependencies` is reserved for genuine test-only
+/// dependencies — modules used by tests but NOT by the source target
+/// (e.g., `BonjourAppIntents`'s tests need `BonjourCore` types even
+/// though the App Intents source target itself doesn't import
+/// `BonjourCore`). Don't repeat anything from `dependencies` here.
 func makeTargets(
     name: String,
     dependencies: [Target.Dependency] = [],
     hasResources: Bool = false,
-    testDependencies: [Target.Dependency] = []
+    additionalTestDependencies: [Target.Dependency] = []
 ) -> [Target] {
     [
         .target(
@@ -51,7 +67,7 @@ func makeTargets(
         ),
         .testTarget(
             name: "\(name)Tests",
-            dependencies: [.byName(name: name)] + testDependencies,
+            dependencies: [.byName(name: name)] + dependencies + additionalTestDependencies,
             path: "\(name)/Tests",
             swiftSettings: sharedSwiftSettings
         )
@@ -95,8 +111,7 @@ let package = Package(
     )
     + makeTargets(
         name: "BonjourModels",
-        dependencies: ["BonjourCore", "BonjourStorage", "BonjourLocalization"],
-        testDependencies: [.byName(name: "BonjourCore")]
+        dependencies: ["BonjourCore", "BonjourStorage", "BonjourLocalization"]
     )
     + makeTargets(
         name: "LocalNetworkMonitor"
@@ -112,10 +127,6 @@ let package = Package(
             // module that imports `BonjourScanning` automatically
             // sees the monitor types.
             "LocalNetworkMonitor"
-        ],
-        testDependencies: [
-            .byName(name: "BonjourCore"),
-            .byName(name: "BonjourModels")
         ]
     )
     + makeTargets(
@@ -134,10 +145,6 @@ let package = Package(
             "BonjourLocalization",
             "BonjourScanning",
             "BonjourStorage"
-        ],
-        testDependencies: [
-            .byName(name: "BonjourCore"),
-            .byName(name: "BonjourModels")
         ]
     )
     + makeTargets(
@@ -167,11 +174,6 @@ let package = Package(
             "BonjourAI",
             "BonjourStorage",
             .product(name: "CoreUI", package: "Core")
-        ],
-        testDependencies: [
-            .byName(name: "BonjourCore"),
-            .byName(name: "BonjourModels"),
-            .byName(name: "BonjourScanning")
         ]
     )
     + makeTargets(
@@ -187,10 +189,10 @@ let package = Package(
             "BonjourModels",
             "BonjourScanning"
         ],
-        testDependencies: [
-            .byName(name: "BonjourCore"),
-            .byName(name: "BonjourModels")
-        ]
+        // `BonjourCore` is a genuine test-only dep — used in
+        // `BonjourAppIntents`'s tests but not by the source target,
+        // which reaches its needs through `BonjourAI` / `BonjourModels`.
+        additionalTestDependencies: [.byName(name: "BonjourCore")]
     )
     + makeTargets(
         name: "AppCore",
@@ -210,11 +212,6 @@ let package = Package(
             "BonjourStorage",
             "BonjourUI",
             .product(name: "CoreUI", package: "Core")
-        ],
-        testDependencies: [
-            .byName(name: "BonjourCore"),
-            .byName(name: "BonjourLocalization"),
-            .byName(name: "BonjourUI")
         ]
     )
 )
