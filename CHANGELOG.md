@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Pluggable AI backend ([ADR 0005](docs/adr/0005-pluggable-ai-backend.md))** — Settings now offers a picker between on-device Apple Foundation Models (the default, unchanged privacy story) and Anthropic Claude (opt-in, via the user's own API key). Chat and Insights both honor the selection; the Chat tab now surfaces for any user with at least one viable backend, including users on Apple-Intelligence-ineligible hardware who bring a Claude account.
+- **Sign in to Claude** sheet in Settings — paste an Anthropic API key from `console.anthropic.com`, validated against the `sk-ant-` prefix. Keys land in the iOS Keychain (`whenUnlockedThisDeviceOnly`, never iCloud-synced); KozBon never sees the key on a server.
+- **Claude model picker** — choose between Opus (most capable), Sonnet (balanced, default), or Haiku (fastest, lowest cost). Selection applies to both the Chat tab and long-press Insights.
+- New **`BonjourAICloud`** Swift package — provider-agnostic cloud-AI scaffolding (`AICloudProvider`, `AICloudCredentialsStore`, `AICloudError`, `AIBackend`) plus the Anthropic v1 implementation: native `URLSession` + SSE streaming client (no third-party SDK dependency), `AnthropicBonjourChatSession`, `AnthropicBonjourServiceExplainer`, and `CloudAware*Factory` routers. Designed to host additional providers (OpenAI, Gemini) as additive enum cases.
+- 27 new localized strings across all 8 locales (en/es/fr/de/ja/zh-Hans/ar/he) covering the new AI Backend section, sign-in sheet, model picker, and accessibility hints.
 - Search bar on the Discover tab — case-insensitive substring filter against service name, hostname, friendly type name, and `_type._tcp` wire form. Composes with the existing sort/category filter.
 - Settings → Insights footer now surfaces a localized notice when Apple Intelligence is in an actionable unavailable state ("turned off in Settings", "model still downloading"), so users on capable hardware know what to do when AI features don't respond.
 - Insights footer copy now mentions the Chat tab as well as long-press service explanations, since the toggle gates both.
@@ -18,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- The Chat tab visibility gate broadens to "Apple Intelligence available OR Anthropic key configured" so users on ineligible hardware with a Claude account get a working Chat tab. Previously gated solely on Apple Intelligence availability per ADR 0004.
+- The on-device-only privacy claim in the README softens to "On-device by default, with optional Anthropic Claude backend." The default story is unchanged; cloud users see a clear "Your questions are sent to Anthropic" footer in Settings.
 - Reset to Defaults section in Preferences animates in/out smoothly when any preference changes, not just the AI toggle.
 - Picking the default sort option ("Host name ascending") in Preferences no longer makes the Reset to Defaults button appear — the persisted state stays canonical (`""` = default).
 - Chat assistant accessibility label keeps the localized "thinking…" text until the response stream finishes, then swaps once to the final content. Previously the label updated on every streamed token, which made VoiceOver re-announce the bubble repeatedly.

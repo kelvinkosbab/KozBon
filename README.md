@@ -1,6 +1,6 @@
 # KozBon
 
-A multi-platform Apple app for discovering, broadcasting, and understanding Bonjour (mDNS/DNS-SD) network services. Rich service inspection, filter categories, a 110+ service-type library, and optional on-device explanations — on iPhone, iPad, Mac, and Apple Vision Pro.
+A multi-platform Apple app for discovering, broadcasting, and understanding Bonjour (mDNS/DNS-SD) network services. Rich service inspection, filter categories, a 110+ service-type library, and AI-powered explanations — on-device by default, with optional Anthropic Claude integration — on iPhone, iPad, Mac, and Apple Vision Pro.
 
 📲 [Download on the App Store](https://apps.apple.com/app/kozbon/id1193790136)
 
@@ -41,14 +41,16 @@ For full build commands per platform, see [Build](#build) below. For contributio
 - **Dedicated Preferences tab** for display options, Insights configuration, and library management
 - **Reset to defaults** restores built-in settings and clears custom service types
 
-### On-device insights (Apple Intelligence)
+### AI insights (pluggable backend)
 
 - **Insights** — Long-press any service or library type to stream a Markdown-formatted explanation of what it does, why devices advertise it, and how to interact with it from *your* device
 - **Chat (or Explore on macOS/visionOS)** — Conversational assistant grounded in your live network: discovered services with their IP addresses, transport layer, and TXT records; published services; and the type library grouped by category
 - **Query-triggered descriptions** — Mention a type by name in chat and the assistant pulls in authoritative descriptions from the catalog inline
 - **Scan freshness awareness** — The assistant knows whether results are fresh, stale, or still populating and hedges answers accordingly
 - **Prompt safety** — Source-priority hierarchy (TXT > type description > model training), named uncertainty phrasing, TXT-key allowlist, client-side refusal for prompt injection and off-topic queries
-- **On-device only** — Everything runs through Apple's Foundation Models; no data leaves the device
+- **Pluggable backend** — ADR 0005 introduces a Settings picker between two paths:
+  - **Apple Intelligence (default)** — Everything runs through Apple's Foundation Models on-device; no data leaves the device. Available on Apple-Intelligence-eligible hardware with the feature turned on.
+  - **Anthropic Claude (opt-in)** — Sign in with your own Anthropic API key (stored in the iOS Keychain; KozBon never sees the key on a server). Requests are sent to Anthropic's API and billed to your Anthropic account. Choose between Opus / Sonnet (default) / Haiku. Available on any device — including older iPhones, non-M-series Macs, and devices where Apple Intelligence is disabled.
 - **Configurable** — Single Detail level setting (Basic / Technical) drives both vocabulary and response length, so the two settings can't drift out of sync
 
 ### Polish
@@ -83,10 +85,12 @@ For full build commands per platform, see [Build](#build) below. For contributio
   - **`BonjourScanning`** — Bonjour discovery and publishing (`BonjourServiceScanner`, `MyBonjourPublishManager`) with their protocol abstractions and mocks; `DependencyContainer` for environment-injected DI.
   - **`LocalNetworkMonitor`** — `NWPathMonitor`-backed primitive that tells the Discover tab whether the device is on a Wi-Fi or Ethernet path so it can surface a distinct empty state when scanning literally can't reach anything (cellular-only or offline). `@MainActor` protocol + production class + synchronous mock, driven by `AsyncStream` for structured cancellation.
   - **`BonjourAI`** — on-device AI built on FoundationModels: explainer for service-detail Insights, multi-turn chat session with tool-calling, prompt builders (`BonjourServicePromptBuilder`, `BonjourChatPromptBuilder`), input validator, and the intent broker that bridges tool calls to view-model side effects.
+  - **`BonjourAICloud`** — cloud-AI backend per [ADR 0005](docs/adr/0005-pluggable-ai-backend.md). Provider-agnostic scaffolding (`AICloudProvider`, `AICloudCredentialsStore` with Keychain + in-memory implementations, `AICloudError`, `AIBackend` + `AnthropicModel` enums) plus the Anthropic v1 implementation: native `URLSession`-based streaming client with prompt caching, `AnthropicBonjourChatSession` and `AnthropicBonjourServiceExplainer` conforming to the same protocols as the on-device side, and `CloudAware*Factory` routers that pick between on-device and cloud based on `preferencesStore.aiBackend`.
   - **`BonjourUI`** — every SwiftUI view, view model, and the design-system primitives consumed by every screen (semantic `CGFloat` tokens, the `Image.xxx` SF-Symbol façade, `glassOrMaterialBackground` / `glassOrTintedBackground` Liquid-Glass-with-fallback helpers).
   - **`BonjourAppIntents`** — App Intents (`ScanForServicesIntent`, `ListDiscoveredServicesIntent`) for Siri / Shortcuts integration, plus the `BonjourService` / `BonjourServiceType` entity projections.
 - **Dependency injection** via `DependencyContainer` + SwiftUI environment; the shared `BonjourServicesViewModel` is owned by `AppCoreViewModel` so the Discover and Chat tabs see the same scanner delegate
 - **FoundationModels** (iOS 26 / macOS 26) for on-device AI with graceful fallback on ineligible devices
+- **Pluggable cloud AI** ([ADR 0005](docs/adr/0005-pluggable-ai-backend.md)) — provider-agnostic protocol layer (`AICloudCredentialsStore`, `AIBackend`) with an Anthropic Claude v1 implementation. Native `URLSession` + SSE streaming client, no third-party SDK dependency; prompt caching for the static system block. API keys live only in the Keychain (`whenUnlockedThisDeviceOnly`, never iCloud-synced); KozBon never operates them
 - **HapticFeedback** provider injected via environment so view models can request haptics without direct UIKit dependencies
 - **Swift Testing** for unit coverage of prompt-quality invariants, view-model logic, state machines (sentence haptic tracker, broadcast publish flow), design-token value pins, haptic mocks, scanner delegate flows, and chat-session rejection paths
 - **SwiftLint** — project-wide rules plus a custom rule forbidding literal SF Symbol strings in favor of the `Image.xxx` façade
