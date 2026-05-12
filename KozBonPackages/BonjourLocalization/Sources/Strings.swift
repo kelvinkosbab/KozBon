@@ -723,6 +723,28 @@ public enum Strings {
             .init("a11y_toggle_ai_hint", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        /// VoiceOver hint for the AI backend picker. Explains the
+        /// privacy trade-off so screen-reader users get the same
+        /// context the picker's visible subtitles convey to sighted
+        /// users.
+        public static var aiBackendPickerHint: LocalizedStringResource {
+            .init("a11y_ai_backend_picker_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// VoiceOver hint for the "Sign in to Claude" button.
+        /// Clarifies that the action stores credentials locally in
+        /// the Keychain, not on Anthropic's servers (the user might
+        /// otherwise assume a server-side login).
+        public static var aiCloudSignInHint: LocalizedStringResource {
+            .init("a11y_ai_cloud_sign_in_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// VoiceOver hint for the destructive "Sign out" button on
+        /// the cloud-backend row.
+        public static var aiCloudSignOutHint: LocalizedStringResource {
+            .init("a11y_ai_cloud_sign_out_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var resetHint: LocalizedStringResource {
             .init("a11y_reset_hint", bundle: .atURL(Bundle.module.bundleURL))
         }
@@ -952,6 +974,142 @@ public enum Strings {
 
         public static var aiResponseLengthThoroughSubtitle: LocalizedStringResource {
             .init("settings_ai_response_length_thorough_subtitle", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        // MARK: - AI Backend
+        //
+        // ADR 0005 introduces a pluggable AI backend. The strings
+        // below drive the Settings → AI Backend section: a picker
+        // between on-device Apple Intelligence and a user-supplied
+        // Anthropic Claude account, plus the sign-in sheet and the
+        // Claude model picker.
+
+        /// Header for the AI Backend section.
+        public static var aiBackendSection: LocalizedStringResource {
+            .init("settings_ai_backend_section", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Row label for the backend picker.
+        public static var aiBackendPickerLabel: LocalizedStringResource {
+            .init("settings_ai_backend_picker_label", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// "Apple Intelligence" — display name for the on-device backend option.
+        public static var aiBackendApple: LocalizedStringResource {
+            .init("settings_ai_backend_apple", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// "Anthropic Claude" — display name for the cloud backend option.
+        public static var aiBackendAnthropic: LocalizedStringResource {
+            .init("settings_ai_backend_anthropic", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// One-line description shown under the Apple Intelligence option.
+        public static var aiBackendAppleSubtitle: LocalizedStringResource {
+            .init("settings_ai_backend_apple_subtitle", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// One-line description shown under the Anthropic Claude option.
+        public static var aiBackendAnthropicSubtitle: LocalizedStringResource {
+            .init("settings_ai_backend_anthropic_subtitle", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Footer shown when the Anthropic backend is selected.
+        /// Discloses that network-shape data is sent to Anthropic.
+        public static var aiCloudFooter: LocalizedStringResource {
+            .init("settings_ai_cloud_footer", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// "Sign in to Claude" — button label on the AI Backend row
+        /// when no API key is configured for Anthropic.
+        public static var aiCloudSignIn: LocalizedStringResource {
+            .init("settings_ai_cloud_sign_in", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// "Signed in" — status label on the AI Backend row when an
+        /// API key is configured for Anthropic.
+        public static var aiCloudSignedIn: LocalizedStringResource {
+            .init("settings_ai_cloud_signed_in", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// "Sign out" — destructive button that removes the stored
+        /// API key from the device Keychain.
+        public static var aiCloudSignOut: LocalizedStringResource {
+            .init("settings_ai_cloud_sign_out", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Title of the sign-in sheet.
+        public static var aiCloudSignInTitle: LocalizedStringResource {
+            .init("settings_ai_cloud_sign_in_title", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Prompt shown in the sign-in sheet above the API-key field.
+        public static var aiCloudSignInPrompt: LocalizedStringResource {
+            .init("settings_ai_cloud_sign_in_prompt", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Placeholder text in the API-key text field. Shows the
+        /// `sk-ant-…` prefix users see on Anthropic's console.
+        public static var aiCloudAPIKeyPlaceholder: LocalizedStringResource {
+            .init("settings_ai_cloud_api_key_placeholder", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Field label for the API-key text field (used as the
+        /// `LabeledContent` label and the accessibility label).
+        public static var aiCloudAPIKeyFieldLabel: LocalizedStringResource {
+            .init("settings_ai_cloud_api_key_field_label", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// "Save" — sheet's primary button when an API key is present.
+        public static var aiCloudSignInSave: LocalizedStringResource {
+            .init("settings_ai_cloud_sign_in_save", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// "Get an API key" — link below the field that opens
+        /// `console.anthropic.com/settings/keys`.
+        public static var aiCloudSignInLearnMore: LocalizedStringResource {
+            .init("settings_ai_cloud_sign_in_learn_more", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Validation error when the pasted key doesn't start with
+        /// the expected Anthropic prefix.
+        public static var aiCloudInvalidKey: LocalizedStringResource {
+            .init("settings_ai_cloud_invalid_key", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// "Claude Model" — row label for the model picker.
+        public static var aiCloudModelPickerLabel: LocalizedStringResource {
+            .init("settings_ai_cloud_model_picker_label", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Display name for Claude Opus.
+        public static var aiCloudModelOpus: LocalizedStringResource {
+            .init("settings_ai_cloud_model_opus", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Display name for Claude Sonnet.
+        public static var aiCloudModelSonnet: LocalizedStringResource {
+            .init("settings_ai_cloud_model_sonnet", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Display name for Claude Haiku.
+        public static var aiCloudModelHaiku: LocalizedStringResource {
+            .init("settings_ai_cloud_model_haiku", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// One-line description shown beneath the Opus option.
+        public static var aiCloudModelOpusSubtitle: LocalizedStringResource {
+            .init("settings_ai_cloud_model_opus_subtitle", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// One-line description shown beneath the Sonnet option.
+        public static var aiCloudModelSonnetSubtitle: LocalizedStringResource {
+            .init("settings_ai_cloud_model_sonnet_subtitle", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// One-line description shown beneath the Haiku option.
+        public static var aiCloudModelHaikuSubtitle: LocalizedStringResource {
+            .init("settings_ai_cloud_model_haiku_subtitle", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         public static var resetToDefaults: LocalizedStringResource {

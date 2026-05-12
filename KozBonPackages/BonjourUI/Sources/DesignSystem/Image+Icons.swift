@@ -174,6 +174,12 @@ public extension Image {
 
     static var adminPanels: Image { Image(systemName: Iconography.adminPanels) }
 
+    // MARK: - Accounts & Sign-In
+
+    static var signIn: Image { Image(systemName: Iconography.signIn) }
+    static var disclosure: Image { Image(systemName: Iconography.disclosure) }
+    static var signedIn: Image { Image(systemName: Iconography.signedIn) }
+
     // MARK: - Default
 
     static var wifi: Image { Image(systemName: Iconography.wifi) }

@@ -197,6 +197,16 @@ let package = Package(
             "BonjourScanning",
             "BonjourLocalization",
             "BonjourAI",
+            // Settings UI surfaces the cloud-backend picker
+            // (`AIBackend`), the sign-in sheet (which writes
+            // through `AICloudCredentialsStore`), and the Claude
+            // model picker (`AnthropicModel`). The Chat /
+            // Insights views consume the `AnthropicBonjour*`
+            // session and explainer types via the existing
+            // protocols; the factory routing that picks between
+            // Apple and cloud also lives in BonjourUI because
+            // that's where `PreferencesStore` is read.
+            "BonjourAICloud",
             "BonjourStorage",
             .product(name: "CoreUI", package: "Core")
         ]

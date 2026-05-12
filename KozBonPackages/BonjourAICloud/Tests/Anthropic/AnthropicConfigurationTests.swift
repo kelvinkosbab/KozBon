@@ -24,8 +24,8 @@ struct AnthropicConfigurationTests {
     }
 
     @Test("Overrides are honored")
-    func overridesRespected() {
-        let customURL = URL(string: "https://example.test")!
+    func overridesRespected() throws {
+        let customURL = try #require(URL(string: "https://example.test"))
         let config = AnthropicConfiguration(
             baseURL: customURL,
             apiVersion: "2099-01-01",
@@ -37,6 +37,19 @@ struct AnthropicConfigurationTests {
         #expect(config.apiVersion == "2099-01-01")
         #expect(config.model == .opus)
         #expect(config.maxResponseTokens == 4096)
+    }
+
+    @Test("`defaultBaseURL` resolves to the documented Anthropic endpoint")
+    func defaultBaseURLIsValid() {
+        // Tripwire — if the string in `defaultBaseURLString` is
+        // ever malformed (typo on a future bump), the fallback in
+        // `defaultBaseURL` would silently produce a `/dev/null`
+        // URL and live traffic would fail mysteriously. This test
+        // catches the malformation at build time instead.
+        #expect(AnthropicConfiguration.defaultBaseURL.absoluteString ==
+                AnthropicConfiguration.defaultBaseURLString)
+        #expect(AnthropicConfiguration.defaultBaseURL.scheme == "https")
+        #expect(AnthropicConfiguration.defaultBaseURL.host() == "api.anthropic.com")
     }
 
     @Test("Default API version is pinned to a stable value")

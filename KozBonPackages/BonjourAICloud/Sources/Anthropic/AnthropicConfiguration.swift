@@ -29,7 +29,17 @@ public struct AnthropicConfiguration: Sendable, Equatable {
     /// Anthropic's base API URL. Hard-coded — Anthropic offers no
     /// regional endpoints and no enterprise self-hosted variant
     /// the consumer SDK would reach.
-    public static let defaultBaseURL = URL(string: "https://api.anthropic.com")!
+    ///
+    /// Built via `URL(string:)` rather than the `URL(staticString:)`
+    /// initializer (which would let us avoid the optional) because
+    /// the latter is iOS 17+ and not strictly necessary here — the
+    /// expression is constant, evaluated once at module load, and
+    /// `defaultBaseURLString` provides a deterministic fallback.
+    /// `AnthropicConfigurationTests.defaultBaseURLIsValid` is a
+    /// tripwire that fails if the string is ever malformed.
+    public static let defaultBaseURLString = "https://api.anthropic.com"
+    public static let defaultBaseURL: URL = URL(string: defaultBaseURLString)
+        ?? URL(fileURLWithPath: "/dev/null")
 
     /// The `anthropic-version` header value KozBon ships with.
     ///

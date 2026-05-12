@@ -279,6 +279,24 @@ public enum Iconography {
     /// Admin/management panels icon.
     public static let adminPanels = "squares.leading.rectangle"
 
+    // MARK: - Accounts & Sign-In
+
+    /// "Add account" icon. Used by the Settings → AI Backend
+    /// section's "Sign in to Claude" CTA and any future
+    /// add-account affordance.
+    public static let signIn = "person.crop.circle.badge.plus"
+
+    /// Trailing disclosure chevron — used by row-style buttons
+    /// to signal "tapping here presents another surface."
+    public static let disclosure = "chevron.right"
+
+    /// Filled checkmark inside a circle. Used by the Settings
+    /// AI Backend "Signed in" status row. Distinct from
+    /// ``selected`` (same SF Symbol name) so future divergence
+    /// can be applied without disturbing every selected-state
+    /// usage in pickers.
+    public static let signedIn = "checkmark.circle.fill"
+
     // MARK: - Default
 
     /// Wi-Fi icon (default fallback for unknown service types).

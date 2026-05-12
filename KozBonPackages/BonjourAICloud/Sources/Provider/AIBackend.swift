@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import BonjourLocalization
 import BonjourStorage
 
 // MARK: - AIBackend
@@ -86,6 +87,31 @@ public enum AIBackend: String, Sendable, CaseIterable, Codable, Identifiable {
             return nil
         case .anthropic:
             return .anthropic
+        }
+    }
+
+    // MARK: - Localized Display
+
+    /// Localized user-facing name for this backend. Used by the
+    /// Settings picker.
+    public var displayName: LocalizedStringResource {
+        switch self {
+        case .appleIntelligence:
+            return Strings.Settings.aiBackendApple
+        case .anthropic:
+            return Strings.Settings.aiBackendAnthropic
+        }
+    }
+
+    /// Localized one-line description shown under the picker
+    /// option. Captures the privacy / setup posture so users can
+    /// compare options without expanding the row.
+    public var displaySubtitle: LocalizedStringResource {
+        switch self {
+        case .appleIntelligence:
+            return Strings.Settings.aiBackendAppleSubtitle
+        case .anthropic:
+            return Strings.Settings.aiBackendAnthropicSubtitle
         }
     }
 }

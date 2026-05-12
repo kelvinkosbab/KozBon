@@ -8,6 +8,7 @@
 import SwiftUI
 import CoreData
 import BonjourAI
+import BonjourAICloud
 import BonjourCore
 import BonjourLocalization
 import BonjourModels
@@ -19,9 +20,27 @@ import BonjourStorage
 /// display options, and data management.
 public struct SettingsView: View {
 
-    @Environment(\.preferencesStore) private var preferencesStore
+    // The AI Backend section's view-builders and sign-out flow
+    // live in `SettingsView+AIBackend.swift`. Per
+    // `apple-swiftui-mvvm.md`, `private` doesn't span files —
+    // these declarations stay `internal` so the companion
+    // extension can read them. They remain `@State` /
+    // `@Environment` on the View struct itself because SwiftUI
+    // ownership can't traverse a class boundary.
+    @Environment(\.preferencesStore) var preferencesStore
+    @Environment(\.aiCloudCredentialsStore) var credentialsStore
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var isResetConfirmationPresented = false
+    @State var isSignInSheetPresented = false
+    @State var isSignOutConfirmationPresented = false
+
+    /// Reflects "is there an Anthropic API key in the
+    /// Keychain right now?" Refreshed on appearance and after
+    /// the sign-in sheet dismisses or the sign-out confirmation
+    /// resolves. Pulled into `@State` so the AI Backend row
+    /// re-renders without re-querying the Keychain on every
+    /// body evaluation.
+    @State var hasAnthropicKey: Bool = false
 
     /// Cached "the user has at least one persisted custom service
     /// type" flag. Refreshed on `.onAppear` and on every Core Data
@@ -42,6 +61,8 @@ public struct SettingsView: View {
                 if AppleIntelligenceSupport.isDeviceSupported {
                     aiAnalysisSection
                 }
+
+                aiBackendSection
 
                 displaySection
 
@@ -70,10 +91,15 @@ public struct SettingsView: View {
             // AI Analysis section the same way.
             .animation(reduceMotion ? nil : .default, value: isAtDefaults)
             .animation(reduceMotion ? nil : .default, value: preferencesStore.aiAnalysisEnabled)
+            .animation(reduceMotion ? nil : .default, value: preferencesStore.aiBackend)
+            .animation(reduceMotion ? nil : .default, value: hasAnthropicKey)
             // Refresh the cached custom-types flag on first
             // appearance so the Reset to Defaults section's
             // visibility is correct the moment the form lands.
-            .onAppear { refreshCustomServiceTypesState() }
+            .onAppear {
+                refreshCustomServiceTypesState()
+                refreshAnthropicKeyState()
+            }
             // Listen for any Core Data save in the process. KozBon
             // has a single Core Data stack (the custom-service-type
             // store) so every `NSManagedObjectContextDidSave` here
@@ -108,9 +134,23 @@ public struct SettingsView: View {
                 Button(String(localized: Strings.Settings.reset), role: .destructive) {
                     preferencesStore.resetToDefaults()
                     BonjourServiceType.deleteAllPersistentCopies()
+                    refreshAnthropicKeyState()
                 }
             } message: {
                 Text(Strings.Settings.resetConfirmationMessage)
+            }
+            .alert(
+                String(localized: Strings.Settings.aiCloudSignOut),
+                isPresented: $isSignOutConfirmationPresented
+            ) {
+                Button(String(localized: Strings.Buttons.cancel), role: .cancel) {}
+                Button(String(localized: Strings.Settings.aiCloudSignOut), role: .destructive) {
+                    signOutOfClaude()
+                }
+            }
+            .sheet(isPresented: $isSignInSheetPresented) {
+                AICloudSignInSheet(credentialsStore: credentialsStore)
+                    .onDisappear { refreshAnthropicKeyState() }
             }
         }
     }
@@ -200,6 +240,15 @@ public struct SettingsView: View {
             }
         }
     }
+
+    // MARK: - AI Backend Section
+    //
+    // Implementation lives in `SettingsView+AIBackend.swift` —
+    // section view-builders, model-name localization helpers, and
+    // the sign-out flow. The state vars (`isSignInSheetPresented`,
+    // `isSignOutConfirmationPresented`, `hasAnthropicKey`) stay on
+    // `SettingsView` itself since SwiftUI's `@State` ownership
+    // can't cross the file boundary.
 
     // MARK: - Display Section
 
