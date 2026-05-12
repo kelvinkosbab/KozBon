@@ -11,7 +11,8 @@ The convention follows [`.claude/rules/project-documentation.md`](../../.claude/
 | [0001](0001-modular-spm-packages.md) | Modular SPM packages instead of a monolithic app target | Accepted |
 | [0002](0002-mvvm-with-observable.md) | SwiftUI MVVM with `@Observable` view models | Accepted |
 | [0003](0003-shared-services-view-model.md) | One shared `BonjourServicesViewModel` across Discover and Chat tabs | Accepted |
-| [0004](0004-on-device-only-ai.md) | On-device only AI via Apple Foundation Models | Accepted |
+| [0004](0004-on-device-only-ai.md) | On-device only AI via Apple Foundation Models | Superseded by [0005](0005-pluggable-ai-backend.md) |
+| [0005](0005-pluggable-ai-backend.md) | Pluggable AI backend — Apple Foundation Models or Anthropic Claude | Accepted |
 
 ## Conventions
 

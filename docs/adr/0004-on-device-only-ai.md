@@ -2,7 +2,11 @@
 
 ## Status
 
-Accepted, 2026-04-25
+Superseded by [ADR 0005](0005-pluggable-ai-backend.md), 2026-05-12.
+
+Originally accepted, 2026-04-25.
+
+> ADR 0005 introduces a pluggable AI backend: Apple Foundation Models remains the default for users with Apple Intelligence enabled, with an opt-in Anthropic Claude backend for users who want cloud-quality answers (or who don't have Apple Intelligence on their device). The "no cloud, ever" decision recorded below proved too narrow once Apple Intelligence's hardware floor turned out to leave a meaningful slice of users without any AI surface at all. See ADR 0005 for the new shape and ground rules.
 
 ## Context
 
