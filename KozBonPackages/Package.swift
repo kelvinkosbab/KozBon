@@ -91,6 +91,7 @@ let package = Package(
         .library(name: "BonjourScanning", targets: ["BonjourScanning"]),
         .library(name: "BonjourLocalization", targets: ["BonjourLocalization"]),
         .library(name: "BonjourAI", targets: ["BonjourAI"]),
+        .library(name: "BonjourAICloud", targets: ["BonjourAICloud"]),
         .library(name: "BonjourStorage", targets: ["BonjourStorage"]),
         .library(name: "BonjourUI", targets: ["BonjourUI"]),
         .library(name: "BonjourAppIntents", targets: ["BonjourAppIntents"]),
@@ -145,6 +146,30 @@ let package = Package(
             "BonjourLocalization",
             "BonjourScanning",
             "BonjourStorage"
+        ]
+    )
+    + makeTargets(
+        name: "BonjourAICloud",
+        // Provider-agnostic cloud-AI scaffolding (credentials,
+        // error surface, model selection) plus the Anthropic
+        // implementation. Stays separate from `BonjourAI` so the
+        // Apple Foundation Models path doesn't pull in Keychain
+        // / URLSession code, and so future providers (OpenAI,
+        // Gemini) can land here without restructuring `BonjourAI`.
+        //
+        // Depends on `BonjourAI` for the protocol surface
+        // (`BonjourChatSessionProtocol`,
+        // `BonjourServiceExplainerProtocol`) that the cloud
+        // implementations satisfy. The factories that pick
+        // between Apple and cloud live a layer up (in `BonjourUI`
+        // / `AppCore` where `PreferencesStore` is read).
+        dependencies: [
+            "BonjourCore",
+            "BonjourModels",
+            "BonjourLocalization",
+            "BonjourScanning",
+            "BonjourStorage",
+            "BonjourAI"
         ]
     )
     + makeTargets(
