@@ -138,6 +138,31 @@ public final class PreferencesStore {
         }
     }
 
+    /// The user's selected AI backend, as a raw string.
+    ///
+    /// ``BonjourAICloud`` exposes a typed `aiBackend: AIBackend`
+    /// extension on top of this. Code outside that module should
+    /// prefer the typed accessor.
+    public var aiBackendRawValue: String {
+        get { preferences?.aiBackendRawValue ?? UserPreferences.defaultAIBackendRawValue }
+        set {
+            preferences?.aiBackendRawValue = newValue
+            save()
+        }
+    }
+
+    /// The user's selected Claude model identifier, as a raw string.
+    ///
+    /// ``BonjourAICloud`` exposes a typed
+    /// `aiCloudModel: AnthropicModel` extension on top of this.
+    public var aiCloudModelRawValue: String {
+        get { preferences?.aiCloudModelRawValue ?? UserPreferences.defaultAICloudModelRawValue }
+        set {
+            preferences?.aiCloudModelRawValue = newValue
+            save()
+        }
+    }
+
     // MARK: - Actions
 
     /// Resets all preferences to their default values.
@@ -146,6 +171,8 @@ public final class PreferencesStore {
         preferences?.aiExpertiseLevel = UserPreferences.defaultAIExpertiseLevel
         preferences?.aiResponseLength = UserPreferences.defaultAIResponseLength
         preferences?.defaultSortOrder = UserPreferences.defaultSortOrder
+        preferences?.aiBackendRawValue = UserPreferences.defaultAIBackendRawValue
+        preferences?.aiCloudModelRawValue = UserPreferences.defaultAICloudModelRawValue
         save()
     }
 

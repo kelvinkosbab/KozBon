@@ -104,4 +104,34 @@ struct UserPreferencesTests {
         prefs.aiResponseLength = "thorough"
         #expect(prefs.aiResponseLength == "thorough")
     }
+
+    // MARK: - AI Backend
+
+    @Test("New `UserPreferences` defaults `aiBackendRawValue` to `\"apple\"`")
+    func defaultAIBackendIsApple() {
+        let prefs = UserPreferences()
+        #expect(prefs.aiBackendRawValue == "apple")
+        #expect(prefs.aiBackendRawValue == UserPreferences.defaultAIBackendRawValue)
+    }
+
+    @Test("New `UserPreferences` defaults `aiCloudModelRawValue` to `\"claude-sonnet-4-5\"`")
+    func defaultCloudModelIsSonnet() {
+        let prefs = UserPreferences()
+        #expect(prefs.aiCloudModelRawValue == "claude-sonnet-4-5")
+        #expect(prefs.aiCloudModelRawValue == UserPreferences.defaultAICloudModelRawValue)
+    }
+
+    @Test("`aiBackendRawValue` accepts a write to `\"anthropic\"` and reads it back")
+    func aiBackendCanBeSwitchedToAnthropic() {
+        let prefs = UserPreferences()
+        prefs.aiBackendRawValue = "anthropic"
+        #expect(prefs.aiBackendRawValue == "anthropic")
+    }
+
+    @Test("`aiCloudModelRawValue` accepts a write to a different model and reads it back")
+    func aiCloudModelCanBeSwitched() {
+        let prefs = UserPreferences()
+        prefs.aiCloudModelRawValue = "claude-opus-4-5"
+        #expect(prefs.aiCloudModelRawValue == "claude-opus-4-5")
+    }
 }

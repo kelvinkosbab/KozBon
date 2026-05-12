@@ -215,4 +215,51 @@ struct PreferencesStoreTests {
         #expect(store.defaultSortOrder == "hostNameDesc")
     }
 
+    // MARK: - AI Backend
+
+    @Test("Fresh store reports `aiBackendRawValue` as `\"apple\"` by default")
+    func defaultAIBackendIsApple() throws {
+        let store = try makeStore()
+        #expect(store.aiBackendRawValue == "apple")
+    }
+
+    @Test("Fresh store reports `aiCloudModelRawValue` as the Sonnet default")
+    func defaultAICloudModelIsSonnet() throws {
+        let store = try makeStore()
+        #expect(store.aiCloudModelRawValue == "claude-sonnet-4-5")
+    }
+
+    @Test("`aiBackendRawValue` survives across new store instances on the same container")
+    func aiBackendPersists() throws {
+        let container = try makeContainer()
+
+        let store1 = PreferencesStore(container: container)
+        store1.aiBackendRawValue = "anthropic"
+
+        let store2 = PreferencesStore(container: container)
+        #expect(store2.aiBackendRawValue == "anthropic")
+    }
+
+    @Test("`aiCloudModelRawValue` survives across new store instances on the same container")
+    func aiCloudModelPersists() throws {
+        let container = try makeContainer()
+
+        let store1 = PreferencesStore(container: container)
+        store1.aiCloudModelRawValue = "claude-opus-4-5"
+
+        let store2 = PreferencesStore(container: container)
+        #expect(store2.aiCloudModelRawValue == "claude-opus-4-5")
+    }
+
+    @Test("`resetToDefaults` restores both AI-backend fields")
+    func resetRestoresAIBackendFields() throws {
+        let store = try makeStore()
+        store.aiBackendRawValue = "anthropic"
+        store.aiCloudModelRawValue = "claude-opus-4-5"
+
+        store.resetToDefaults()
+
+        #expect(store.aiBackendRawValue == "apple")
+        #expect(store.aiCloudModelRawValue == "claude-sonnet-4-5")
+    }
 }

@@ -35,6 +35,20 @@ public final class UserPreferences {
     /// Default value for ``defaultSortOrder``.
     public static let defaultSortOrder = ""
 
+    /// Default value for ``aiBackendRawValue``.
+    ///
+    /// `"apple"` corresponds to `AIBackend.appleIntelligence` in
+    /// the `BonjourAICloud` typed bridge. ADR 0005 requires this
+    /// stay on-device — a fresh install never routes to cloud
+    /// without an explicit user action.
+    public static let defaultAIBackendRawValue = "apple"
+
+    /// Default value for ``aiCloudModelRawValue``.
+    ///
+    /// `"claude-sonnet-4-5"` corresponds to `AnthropicModel.sonnet`
+    /// in the `BonjourAICloud` typed bridge.
+    public static let defaultAICloudModelRawValue = "claude-sonnet-4-5"
+
     // MARK: - Properties
 
     /// Whether AI-powered service explanations are enabled.
@@ -48,6 +62,22 @@ public final class UserPreferences {
 
     /// The default sort order ID for discovered services (empty string means no preference).
     public var defaultSortOrder: String = UserPreferences.defaultSortOrder
+
+    /// The user's selected AI backend, stored as a raw string so
+    /// SwiftData doesn't need to know about the `AIBackend` enum
+    /// (which lives in `BonjourAICloud`).
+    ///
+    /// Use `PreferencesStore.aiBackend` from `BonjourAICloud` for
+    /// the typed accessor. Direct reads of this raw string belong
+    /// only inside `BonjourStorage` and migration code.
+    public var aiBackendRawValue: String = UserPreferences.defaultAIBackendRawValue
+
+    /// The user's selected Claude model identifier, stored as a
+    /// raw string for the same reason as ``aiBackendRawValue``.
+    ///
+    /// Use `PreferencesStore.aiCloudModel` from `BonjourAICloud`
+    /// for the typed accessor.
+    public var aiCloudModelRawValue: String = UserPreferences.defaultAICloudModelRawValue
 
     /// Creates a new preferences instance with default values.
     public init() {}
