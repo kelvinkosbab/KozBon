@@ -238,12 +238,18 @@ let package = Package(
         // module the scene tree touches. `CoreUI` is reached via
         // BonjourUI's transitive re-export (`.product` would be
         // explicit, but every other target consumes it the same way).
+        //
+        // `BonjourAICloud` is a direct dependency too — `AppCoreScene`
+        // wires the cloud-aware factories by default, and
+        // `TopLevelDestination` picks the chat-tab icon from
+        // `AIBackend.icon`.
         dependencies: [
             "BonjourCore",
             "BonjourModels",
             "BonjourScanning",
             "BonjourLocalization",
             "BonjourAI",
+            "BonjourAICloud",
             "BonjourStorage",
             "BonjourUI",
             .product(name: "CoreUI", package: "Core")

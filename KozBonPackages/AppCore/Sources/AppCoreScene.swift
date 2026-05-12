@@ -139,7 +139,7 @@ public struct AppCoreScene: Scene {
                             Label {
                                 Text(verbatim: TopLevelDestination.chat.titleString)
                             } icon: {
-                                TopLevelDestination.chat.icon
+                                TopLevelDestination.chat.icon(activeBackend: viewModel.preferencesStore.aiBackend)
                             }
                         }
                         #else
@@ -149,7 +149,7 @@ public struct AppCoreScene: Scene {
                             Label {
                                 Text(verbatim: TopLevelDestination.chat.titleString)
                             } icon: {
-                                TopLevelDestination.chat.icon
+                                TopLevelDestination.chat.icon(activeBackend: viewModel.preferencesStore.aiBackend)
                             }
                         }
                         #endif
@@ -161,7 +161,13 @@ public struct AppCoreScene: Scene {
                 #else
                 .tabViewStyle(.sidebarAdaptable)
                 #endif
-                .tint(.kozBonBlue)
+                // The global tint follows the user's selected AI
+                // backend so the active provider is visible at
+                // a glance on the tab bar (chat-tab icon highlight,
+                // toolbar buttons, etc.). Falls back to `kozBonBlue`
+                // for Apple Intelligence to preserve the previous
+                // look for users who don't touch the cloud path.
+                .tint(viewModel.preferencesStore.aiBackend.accentColor)
                 .environment(\.dependencies, viewModel.dependencies)
                 .environment(\.serviceExplainer, viewModel.explainer)
                 .environment(\.chatSession, viewModel.chatSession)
@@ -210,7 +216,7 @@ public struct AppCoreScene: Scene {
                                 Label {
                                     Text(verbatim: TopLevelDestination.chat.titleString)
                                 } icon: {
-                                    TopLevelDestination.chat.icon
+                                    TopLevelDestination.chat.icon(activeBackend: viewModel.preferencesStore.aiBackend)
                                 }
                             }
                     }
@@ -231,7 +237,13 @@ public struct AppCoreScene: Scene {
                 #if os(macOS)
                 .frame(minWidth: 800, minHeight: 500)
                 #endif
-                .tint(.kozBonBlue)
+                // The global tint follows the user's selected AI
+                // backend so the active provider is visible at
+                // a glance on the tab bar (chat-tab icon highlight,
+                // toolbar buttons, etc.). Falls back to `kozBonBlue`
+                // for Apple Intelligence to preserve the previous
+                // look for users who don't touch the cloud path.
+                .tint(viewModel.preferencesStore.aiBackend.accentColor)
                 .environment(\.dependencies, viewModel.dependencies)
                 .environment(\.serviceExplainer, viewModel.explainer)
                 .environment(\.chatSession, viewModel.chatSession)

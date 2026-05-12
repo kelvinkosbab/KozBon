@@ -218,7 +218,13 @@ extension BonjourChatView {
                 Text(message.content)
                     .padding(.horizontal, 14)
                     .padding(.vertical, 10)
-                    .background(Color.kozBonBlue)
+                    // User-bubble background tracks the active AI
+                    // backend — blue on the on-device path, Anthropic
+                    // Cara orange on the cloud path. The chat surface
+                    // itself doesn't otherwise telegraph which backend
+                    // is answering, so the bubble color is the
+                    // primary visual cue.
+                    .background(aiAccent)
                     .foregroundStyle(.white)
                     .cornerRadius(16)
                     .accessibilityElement(children: .combine)

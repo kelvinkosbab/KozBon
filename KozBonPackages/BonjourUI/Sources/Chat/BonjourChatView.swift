@@ -7,6 +7,7 @@
 
 import SwiftUI
 import BonjourAI
+import BonjourAICloud
 import BonjourCore
 import BonjourLocalization
 import BonjourModels
@@ -79,6 +80,20 @@ public struct BonjourChatView: View {
     /// it.
     var session: (any BonjourChatSessionProtocol)? {
         viewModel.activeSession(injected: injectedSession)
+    }
+
+    /// Accent color for the chat surface, derived from the user's
+    /// currently-selected AI backend. The send button, the user's
+    /// message bubble background, and the suggestion-chip tints
+    /// all bind to this so the active provider is visible at a
+    /// glance — blue for the on-device Apple Intelligence path,
+    /// Anthropic Cara orange for the cloud path.
+    ///
+    /// Resolved per-body so a runtime backend swap
+    /// (`refreshAIBackend` in `AppCoreViewModel`) flows through
+    /// to the chat surface without a manual refresh.
+    var aiAccent: Color {
+        preferencesStore.aiBackend.accentColor
     }
 
     public var body: some View {

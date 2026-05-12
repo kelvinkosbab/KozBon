@@ -45,6 +45,7 @@ public extension Image {
 
     static var bonjour: Image { Image(systemName: Iconography.bonjour) }
     static var appleIntelligence: Image { Image(systemName: Iconography.appleIntelligence) }
+    static var anthropicClaude: Image { Image(systemName: Iconography.anthropicClaude) }
     static var airportExtreme: Image { Image(systemName: Iconography.airportExtreme) }
 
     // MARK: - Navigation & Tabs

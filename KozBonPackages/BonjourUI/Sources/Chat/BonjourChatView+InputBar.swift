@@ -95,8 +95,13 @@ extension BonjourChatView {
             // which preserves the brand color while
             // participating in the glass layer hierarchy and
             // getting system press/hover feedback for free.
-            // Older systems fall back to a solid `.kozBonBlue`
-            // fill so the primary action still reads.
+            // Older systems fall back to a solid fill so the
+            // primary action still reads.
+            //
+            // The tint binds to `aiAccent` so the Send capsule
+            // follows the active AI backend's brand — blue for
+            // Apple Intelligence, Anthropic Cara orange for the
+            // cloud path.
             Button {
                 viewModel.submitCount &+= 1
                 isInputFocused = false
@@ -114,7 +119,7 @@ extension BonjourChatView {
                     .foregroundStyle(.white)
                     .accessibilityHidden(true)
                     .frame(width: .size44, height: .size32)
-                    .glassOrTintedBackground(tint: .kozBonBlue, in: Capsule())
+                    .glassOrTintedBackground(tint: aiAccent, in: Capsule())
                     // Make the entire 44×32 capsule tappable, not
                     // just the tiny intrinsic-size arrow glyph at
                     // its center.

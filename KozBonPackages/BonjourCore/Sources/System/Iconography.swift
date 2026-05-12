@@ -29,8 +29,22 @@ public enum Iconography {
     /// Bonjour protocol icon.
     public static let bonjour = "bonjour"
 
-    /// Apple Intelligence icon.
+    /// Apple Intelligence icon. Used as the Chat tab and Insights
+    /// glyph when the user has the on-device backend selected
+    /// (ADR 0005).
     public static let appleIntelligence = "apple.intelligence"
+
+    /// Anthropic Claude glyph. Used as the Chat tab and Insights
+    /// glyph when the user has the Anthropic backend selected so
+    /// the active provider is visible at a glance — the same
+    /// purpose `appleIntelligence` serves for the on-device path.
+    ///
+    /// `sparkle` (single-pointed star) is the closest SF Symbol
+    /// to Anthropic's published Cara/Sun brand mark without
+    /// shipping a custom asset that would carry trademark
+    /// constraints. The accent color (`Color.kozBonAnthropic`)
+    /// carries the rest of the brand cue.
+    public static let anthropicClaude = "sparkle"
 
     /// AirPort Extreme base station icon.
     public static let airportExtreme = "airport.extreme"

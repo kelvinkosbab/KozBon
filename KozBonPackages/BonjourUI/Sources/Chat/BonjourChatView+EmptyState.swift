@@ -133,7 +133,7 @@ extension BonjourChatView {
         // confirmation, which on a chat surface where the
         // streaming response takes a beat to start can read as
         // "did I tap it?". The press feedback closes that gap.
-        .buttonStyle(SuggestionCardButtonStyle(reduceMotion: reduceMotion))
+        .buttonStyle(SuggestionCardButtonStyle(reduceMotion: reduceMotion, accent: aiAccent))
         // Cap Dynamic Type on the suggestion cards. The card's HStack
         // is `Text + Spacer + chevron`, so at sizes above
         // `.accessibility2` the multi-line text wraps tall enough
@@ -183,6 +183,12 @@ private struct SuggestionCardButtonStyle: ButtonStyle {
 
     let reduceMotion: Bool
 
+    /// The chat surface's accent color. Threaded through from
+    /// `BonjourChatView.aiAccent` so suggestion-chip fills /
+    /// strokes follow the active backend's brand (blue for
+    /// Apple Intelligence, Anthropic Cara orange for cloud).
+    let accent: Color
+
     @ViewBuilder
     func makeBody(configuration: Configuration) -> some View {
         let pressed = configuration.isPressed
@@ -223,10 +229,10 @@ private struct SuggestionCardButtonStyle: ButtonStyle {
         let card = configuration.label
             .background(
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(Color.kozBonBlue.opacity(pressed ? 0.32 : 0.18))
+                    .fill(accent.opacity(pressed ? 0.32 : 0.18))
                     .overlay(
                         RoundedRectangle(cornerRadius: 12, style: .continuous)
-                            .strokeBorder(Color.kozBonBlue.opacity(0.20), lineWidth: 1)
+                            .strokeBorder(accent.opacity(0.20), lineWidth: 1)
                     )
             )
             .contentShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
