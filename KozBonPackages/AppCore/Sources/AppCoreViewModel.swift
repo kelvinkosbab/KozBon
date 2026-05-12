@@ -9,6 +9,7 @@ import SwiftUI
 import BonjourUI
 import BonjourScanning
 import BonjourAI
+import BonjourAICloud
 import BonjourStorage
 
 // MARK: - AppCoreViewModel
@@ -61,16 +62,27 @@ public final class AppCoreViewModel {
     /// AI-tab visibility check below.
     public let preferencesStore: PreferencesStore
 
-    /// On-device AI explainer that powers long-press Insights.
-    /// `nil` on devices without Apple Intelligence — views gate on
-    /// the optional and hide the affordance.
-    public let explainer: (any BonjourServiceExplainerProtocol)?
+    /// AI explainer that powers long-press Insights.
+    ///
+    /// Routed by the cloud-aware factory — points at the on-device
+    /// Apple explainer when the user has selected Apple
+    /// Intelligence (or no Anthropic key is configured), and at
+    /// the Anthropic explainer when the user is signed into
+    /// Claude and has chosen that backend. `nil` only when
+    /// neither path is viable.
+    ///
+    /// Mutable so the backend can be swapped at runtime via
+    /// ``refreshAIBackend()`` when the user flips the picker in
+    /// Settings.
+    public private(set) var explainer: (any BonjourServiceExplainerProtocol)?
 
-    /// App-wide chat session, created once at launch so the chat
-    /// tab's first activation doesn't pay the cost of constructing
-    /// the `BonjourChatSession` (and lazily, on first
-    /// ``prewarmChatSession()``, the underlying
-    /// `LanguageModelSession` with its compiled system instructions).
+    /// App-wide chat session.
+    ///
+    /// Routed by the cloud-aware factory — same routing rules as
+    /// ``explainer``. Mutable so ``refreshAIBackend()`` can swap
+    /// the live session when the user changes the backend
+    /// preference; the SwiftUI environment value picks up the
+    /// new instance and the chat surface re-renders.
     ///
     /// Owning the session at the app level — instead of letting
     /// `BonjourChatView` construct one on first render — also means
@@ -78,7 +90,7 @@ public final class AppCoreViewModel {
     /// and lets us eagerly call ``prewarmChatSession()`` in a
     /// `.task` on the root scene before the user has navigated
     /// anywhere.
-    public let chatSession: (any BonjourChatSessionProtocol)?
+    public private(set) var chatSession: (any BonjourChatSessionProtocol)?
 
     /// The single, app-wide services view model.
     ///
@@ -92,12 +104,23 @@ public final class AppCoreViewModel {
 
     // MARK: - Injected Factories
 
-    /// Factory for the on-device AI chat session. Held as a stored
-    /// property so the production default can be swapped (e.g., in
-    /// a test harness or a developer-mode build). Kept beyond
-    /// `init` because ``prewarmChatSession()`` calls back into it
-    /// at scene-task time.
+    /// Factory for the AI chat session. Held as a stored property
+    /// so the production default can be swapped (e.g., in a test
+    /// harness or a developer-mode build). Kept beyond `init`
+    /// because ``prewarmChatSession()`` and ``refreshAIBackend()``
+    /// call back into it.
     private let chatSessionFactory: any BonjourChatSessionFactoryProtocol
+
+    /// Factory for the AI service explainer. Same lifetime
+    /// reasoning as ``chatSessionFactory`` — held so
+    /// ``refreshAIBackend()`` can re-invoke when the user changes
+    /// preferences.
+    private let explainerFactory: any BonjourServiceExplainerFactoryProtocol
+
+    /// Whether the device fundamentally supports any AI path
+    /// (Apple Intelligence available OR a configured Anthropic
+    /// key — read fresh inside ``shouldShowChatTab``).
+    private let credentialsStore: (any AICloudCredentialsStore & Sendable)?
 
     // MARK: - Initialization
 
@@ -114,10 +137,13 @@ public final class AppCoreViewModel {
     public init(
         dependencies: DependencyContainer,
         explainerFactory: any BonjourServiceExplainerFactoryProtocol,
-        chatSessionFactory: any BonjourChatSessionFactoryProtocol
+        chatSessionFactory: any BonjourChatSessionFactoryProtocol,
+        credentialsStore: (any AICloudCredentialsStore & Sendable)? = nil
     ) {
         self.dependencies = dependencies
         self.chatSessionFactory = chatSessionFactory
+        self.explainerFactory = explainerFactory
+        self.credentialsStore = credentialsStore
         self.preferencesStore = PreferencesStore()
         self.servicesViewModel = BonjourServicesViewModel(dependencies: dependencies)
         self.explainer = explainerFactory.makeForCurrentEnvironment()
@@ -130,22 +156,30 @@ public final class AppCoreViewModel {
 
     /// Whether the Chat tab should render in the root tab bar.
     ///
-    /// Two gates compose:
-    /// 1. ``AppleIntelligenceSupport/isDeviceSupported`` — Apple
-    ///    Intelligence is technically available on this device.
-    ///    Hides the tab on older iPhones, non-M-series Macs, and
-    ///    any platform where Foundation Models isn't shipped.
-    /// 2. `preferencesStore.aiAnalysisEnabled` — the user has the
-    ///    AI feature turned on in Settings. Lets capable-device
-    ///    users opt out without uninstalling.
+    /// Pre-ADR-0005 the tab gated solely on Apple Intelligence
+    /// availability. Now that ADR 0005's pluggable backend ships,
+    /// the tab is visible when ANY of these paths is viable:
     ///
-    /// Both clauses are stable reads at body-evaluation time:
-    /// `isDeviceSupported` doesn't change at runtime, and
-    /// `aiAnalysisEnabled` is `@Observable`, so SwiftUI rebuilds
-    /// the tab strip when the user toggles the preference.
+    /// 1. Apple Intelligence is technically available on this
+    ///    device — covers the original on-device path.
+    /// 2. The user has signed into Anthropic and has a key in
+    ///    the Keychain — covers users on ineligible hardware who
+    ///    want a Chat tab via their own Claude account.
+    ///
+    /// Plus the user-controlled gate that lets capable users opt
+    /// out without uninstalling:
+    ///
+    /// 3. `preferencesStore.aiAnalysisEnabled` is `true`.
+    ///
+    /// All three are stable reads at body-evaluation time —
+    /// `isDeviceSupported` is a constant per device, `hasAPIKey`
+    /// touches the Keychain on every call but is cheap, and the
+    /// preference is `@Observable` so SwiftUI rebuilds the tab
+    /// strip when the user toggles it.
     public var shouldShowChatTab: Bool {
-        AppleIntelligenceSupport.isDeviceSupported
-            && preferencesStore.aiAnalysisEnabled
+        guard preferencesStore.aiAnalysisEnabled else { return false }
+        if AppleIntelligenceSupport.isDeviceSupported { return true }
+        return credentialsStore?.hasAPIKey(for: .anthropic) == true
     }
 
     // MARK: - Lifecycle
@@ -165,6 +199,32 @@ public final class AppCoreViewModel {
         await chatSessionFactory.prewarmIfEnabled(
             session: chatSession,
             aiAnalysisEnabled: preferencesStore.aiAnalysisEnabled
+        )
+    }
+
+    /// Recreates the chat session and explainer from the current
+    /// preferences.
+    ///
+    /// Called from `AppCoreScene`'s `.onChange(of: aiBackend)` /
+    /// `.onChange(of: aiCloudModel)` watchers so flipping the
+    /// backend picker in Settings — or signing into / out of
+    /// Claude — takes effect without an app restart. The new
+    /// session replaces the old `@Observable`-tracked
+    /// `chatSession` / `explainer`, which causes the SwiftUI
+    /// environment values to update and the chat / Insights
+    /// surfaces to bind to the new instance.
+    ///
+    /// Side effect: the in-flight chat conversation is dropped.
+    /// We don't try to migrate `messages` across backends because
+    /// the conversation history is meaningless across providers —
+    /// Claude has no record of the on-device session's prior
+    /// turns, and vice versa. The clearer UX is "switching
+    /// providers starts a fresh conversation" rather than a
+    /// partially-cross-pollinated state.
+    public func refreshAIBackend() {
+        explainer = explainerFactory.makeForCurrentEnvironment()
+        chatSession = chatSessionFactory.makeForCurrentEnvironment(
+            publishManager: dependencies.bonjourPublishManager
         )
     }
 }

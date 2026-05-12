@@ -11,6 +11,7 @@ import BonjourUI
 import BonjourModels
 import BonjourScanning
 import BonjourAI
+import BonjourAICloud
 import BonjourStorage
 
 // MARK: - AppCoreScene
@@ -35,21 +36,33 @@ public struct AppCoreScene: Scene {
     @State private var viewModel: AppCoreViewModel
 
     /// Production initializer — uses the default
-    /// ``DependencyContainer``, the default
-    /// ``BonjourServiceExplainerFactory``, and the default
-    /// ``BonjourChatSessionFactory``. The designated init below
-    /// accepts each as an injectable parameter; this convenience
-    /// just calls through with production defaults.
+    /// ``DependencyContainer`` and the cloud-aware factories from
+    /// `BonjourAICloud`. The cloud-aware factories internally
+    /// hold the legacy on-device factories from `BonjourAI` and
+    /// route between them based on the user's `aiBackend`
+    /// preference, so users who never touch the cloud backend
+    /// see the same behavior they did before ADR 0005.
     ///
     /// The Xcode app target's `@main` shim calls this no-arg form.
     /// Tests, previews, and developer-mode entry points construct
     /// `AppCoreScene` via the designated init below with stubbed
     /// factories.
     public init() {
+        let credentialsStore = MainActor.assumeIsolated { KeychainAICloudCredentialsStore() }
+        let preferencesStore = MainActor.assumeIsolated { PreferencesStore() }
+        let chatFactory = CloudAwareBonjourChatSessionFactory(
+            credentialsStore: credentialsStore,
+            preferencesStore: preferencesStore
+        )
+        let explainerFactory = CloudAwareBonjourServiceExplainerFactory(
+            credentialsStore: credentialsStore,
+            preferencesStore: preferencesStore
+        )
         self.init(
             dependencies: DependencyContainer(),
-            explainerFactory: BonjourServiceExplainerFactory(),
-            chatSessionFactory: BonjourChatSessionFactory()
+            explainerFactory: explainerFactory,
+            chatSessionFactory: chatFactory,
+            credentialsStore: credentialsStore
         )
     }
 
@@ -60,12 +73,14 @@ public struct AppCoreScene: Scene {
     public init(
         dependencies: DependencyContainer,
         explainerFactory: any BonjourServiceExplainerFactoryProtocol,
-        chatSessionFactory: any BonjourChatSessionFactoryProtocol
+        chatSessionFactory: any BonjourChatSessionFactoryProtocol,
+        credentialsStore: (any AICloudCredentialsStore & Sendable)? = nil
     ) {
         _viewModel = State(initialValue: AppCoreViewModel(
             dependencies: dependencies,
             explainerFactory: explainerFactory,
-            chatSessionFactory: chatSessionFactory
+            chatSessionFactory: chatSessionFactory,
+            credentialsStore: credentialsStore
         ))
     }
 
@@ -154,6 +169,21 @@ public struct AppCoreScene: Scene {
                 .task {
                     await viewModel.prewarmChatSession()
                 }
+                // ADR 0005: when the user flips the backend picker
+                // in Settings — or picks a different Claude model —
+                // recreate the chat session / explainer so the next
+                // message routes to the new backend without an app
+                // restart. The chat surface loses any in-flight
+                // conversation across the swap (see
+                // `refreshAIBackend` docs) but the alternative
+                // (silently routing some turns to the old backend
+                // after a preference change) is more surprising.
+                .onChange(of: viewModel.preferencesStore.aiBackend) {
+                    viewModel.refreshAIBackend()
+                }
+                .onChange(of: viewModel.preferencesStore.aiCloudModel) {
+                    viewModel.refreshAIBackend()
+                }
             } else {
                 TabView {
                     BonjourScanForServicesView(viewModel: viewModel.servicesViewModel)
@@ -208,6 +238,21 @@ public struct AppCoreScene: Scene {
                 .environment(\.preferencesStore, viewModel.preferencesStore)
                 .task {
                     await viewModel.prewarmChatSession()
+                }
+                // ADR 0005: when the user flips the backend picker
+                // in Settings — or picks a different Claude model —
+                // recreate the chat session / explainer so the next
+                // message routes to the new backend without an app
+                // restart. The chat surface loses any in-flight
+                // conversation across the swap (see
+                // `refreshAIBackend` docs) but the alternative
+                // (silently routing some turns to the old backend
+                // after a preference change) is more surprising.
+                .onChange(of: viewModel.preferencesStore.aiBackend) {
+                    viewModel.refreshAIBackend()
+                }
+                .onChange(of: viewModel.preferencesStore.aiCloudModel) {
+                    viewModel.refreshAIBackend()
                 }
             }
         }
