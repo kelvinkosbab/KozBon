@@ -203,6 +203,21 @@ public struct AppCoreScene: Scene {
                 .onChange(of: viewModel.preferencesStore.aiCloudModel) {
                     viewModel.refreshAIBackend()
                 }
+                // Re-run the cloud-aware factories when the user
+                // signs into / out of Claude mid-session.
+                // `AICloudCredentialsStore` implementations post
+                // this notification on every successful write —
+                // both the Settings sign-in sheet and the in-tab
+                // sign-in prompt route through the same store, so
+                // either path triggers the same backend swap
+                // without an app restart.
+                .onReceive(
+                    NotificationCenter.default.publisher(
+                        for: .aiCloudCredentialsChanged
+                    )
+                ) { _ in
+                    viewModel.refreshAIBackend()
+                }
             } else {
                 TabView {
                     BonjourScanForServicesView(viewModel: viewModel.servicesViewModel)

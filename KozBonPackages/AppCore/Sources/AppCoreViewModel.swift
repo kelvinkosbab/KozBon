@@ -192,7 +192,16 @@ public final class AppCoreViewModel {
     public var shouldShowChatTab: Bool {
         guard preferencesStore.aiAnalysisEnabled else { return false }
         if AppleIntelligenceSupport.isDeviceSupported { return true }
-        return credentialsStore?.hasAPIKey(for: .anthropic) == true
+        if credentialsStore?.hasAPIKey(for: .anthropic) == true { return true }
+        // User explicitly selected the Anthropic backend but
+        // hasn't signed in yet. Show the tab anyway so they can
+        // see the "Sign in to Claude" prompt and complete
+        // configuration without having to discover the Settings
+        // route first. Without this clause, an Apple-Intelligence-
+        // ineligible device that picked Anthropic would silently
+        // lose the chat surface and the user would have no
+        // affordance to fix it from the chat tab itself.
+        return preferencesStore.aiBackend == .anthropic
     }
 
     // MARK: - Lifecycle

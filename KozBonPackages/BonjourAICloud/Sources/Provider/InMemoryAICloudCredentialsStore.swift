@@ -40,10 +40,16 @@ public final class InMemoryAICloudCredentialsStore: AICloudCredentialsStore {
     // MARK: - AICloudCredentialsStore
 
     public func setAPIKey(_ apiKey: String, for provider: AICloudProvider) throws {
+        let changed: Bool
         if apiKey.isEmpty {
-            storage.removeValue(forKey: provider)
+            changed = storage.removeValue(forKey: provider) != nil
         } else {
+            let previous = storage[provider]
             storage[provider] = apiKey
+            changed = previous != apiKey
+        }
+        if changed {
+            NotificationCenter.default.post(name: .aiCloudCredentialsChanged, object: self)
         }
     }
 
@@ -52,7 +58,9 @@ public final class InMemoryAICloudCredentialsStore: AICloudCredentialsStore {
     }
 
     public func removeAPIKey(for provider: AICloudProvider) throws {
-        storage.removeValue(forKey: provider)
+        if storage.removeValue(forKey: provider) != nil {
+            NotificationCenter.default.post(name: .aiCloudCredentialsChanged, object: self)
+        }
     }
 
     public func hasAPIKey(for provider: AICloudProvider) -> Bool {

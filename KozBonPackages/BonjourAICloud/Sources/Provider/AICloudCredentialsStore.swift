@@ -7,6 +7,29 @@
 
 import Foundation
 
+// MARK: - Notifications
+
+public extension Notification.Name {
+
+    /// Posted after any successful write to an
+    /// ``AICloudCredentialsStore`` — key added, updated, or
+    /// removed. The notification carries no user info; observers
+    /// re-query whichever provider's state they care about
+    /// rather than relying on payload data.
+    ///
+    /// `AppCoreScene` listens for this and re-invokes the
+    /// cloud-aware factories so a sign-in (or sign-out) takes
+    /// effect mid-session without an app restart. Without this
+    /// notification, the factory's captured-at-init view of
+    /// "is the user signed in?" would stay stale until the next
+    /// `aiBackend` / `aiCloudModel` preference change happened
+    /// to fire `.onChange`, which after a fresh sign-in isn't
+    /// the next thing the user does.
+    static let aiCloudCredentialsChanged = Notification.Name(
+        "com.kozinga.KozBon.aiCloudCredentialsChanged"
+    )
+}
+
 // MARK: - AICloudCredentialsStore
 
 /// Abstraction over per-provider credential storage.

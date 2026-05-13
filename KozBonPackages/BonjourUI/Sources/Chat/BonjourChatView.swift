@@ -42,9 +42,24 @@ public struct BonjourChatView: View {
 
     @Environment(\.chatSession) var injectedSession
     @Environment(\.preferencesStore) var preferencesStore
+    @Environment(\.aiCloudCredentialsStore) var credentialsStore
     @Environment(\.accessibilityReduceMotion) var reduceMotion
 
     @FocusState var isInputFocused: Bool
+
+    /// Cached "is there an Anthropic API key in the Keychain
+    /// right now?" flag. Refreshed on appearance and after the
+    /// in-tab sign-in sheet dismisses. Same pattern Settings
+    /// uses — `KeychainAICloudCredentialsStore` isn't
+    /// `@Observable`, so we cache the answer in `@State` and
+    /// refresh on the discrete moments the value might change
+    /// rather than re-querying on every body evaluation.
+    @State var hasAnthropicKey: Bool = false
+
+    /// Presents the in-tab `AICloudSignInSheet` when the user
+    /// taps the "Sign in to Claude" prompt below the chat tab's
+    /// empty state.
+    @State var isSignInSheetPresented: Bool = false
 
     /// The chat view model — owner of every mutable piece of
     /// chat state. Initialized synchronously in `init` so the
@@ -96,6 +111,29 @@ public struct BonjourChatView: View {
         preferencesStore.aiBackend.accentColor
     }
 
+    /// Whether the chat surface should show the "Sign in to
+    /// Claude" prompt in place of the normal message list +
+    /// compose bar.
+    ///
+    /// Fires when the user has selected the Anthropic backend
+    /// but the credentials store has no key for it. The cloud-
+    /// aware factory will fall back to the Apple session in this
+    /// case (so a session object exists), but routing the user's
+    /// questions to a backend they didn't pick is surprising —
+    /// the in-tab prompt makes the configuration step explicit
+    /// before any messages go anywhere.
+    var needsClaudeSignIn: Bool {
+        preferencesStore.aiBackend == .anthropic && !hasAnthropicKey
+    }
+
+    /// Re-queries the credentials store and refreshes
+    /// ``hasAnthropicKey``. Called on first appearance and after
+    /// the in-tab sign-in sheet dismisses, mirroring the pattern
+    /// `SettingsView` uses for the same property.
+    func refreshAnthropicKeyState() {
+        hasAnthropicKey = credentialsStore.hasAPIKey(for: .anthropic)
+    }
+
     public var body: some View {
         NavigationStack {
             chatPresentations(applyingTo: chatContent)
@@ -142,7 +180,34 @@ public struct BonjourChatView: View {
                         injectedSession: injectedSession
                     )
                 }
-                .onAppear { viewModel.onAppear(injectedSession: injectedSession) }
+                .onAppear {
+                    viewModel.onAppear(injectedSession: injectedSession)
+                    refreshAnthropicKeyState()
+                }
+                // Animate the swap between the sign-in prompt
+                // and the normal chat content (message list +
+                // compose bar). Without this the swap is an
+                // instant pop the moment `hasAnthropicKey`
+                // flips after a successful sign-in; with it,
+                // the prompt fades out as the chat fades in.
+                // Honors Reduce Motion via the nil-animation
+                // shortcut, same pattern the rest of the chat
+                // surface uses.
+                .animation(
+                    reduceMotion ? nil : .default,
+                    value: needsClaudeSignIn
+                )
+                // In-tab sign-in sheet. Mounted at this level
+                // (not on `ChatSignInPromptView` itself) so the
+                // sheet survives if the prompt view ever needs
+                // to be replaced mid-flow, and so the
+                // `.onDisappear` refresh runs against the
+                // chat view's `@State` rather than the prompt
+                // view's transient one.
+                .sheet(isPresented: $isSignInSheetPresented) {
+                    AICloudSignInSheet(credentialsStore: credentialsStore)
+                        .onDisappear { refreshAnthropicKeyState() }
+                }
                 // Watch the assistant's intent broker. When a tool call
                 // publishes a drafted form, the VM hydrates it into the
                 // matching `pending*` state and consumes the broker so
@@ -168,7 +233,23 @@ public struct BonjourChatView: View {
     /// modifiers doesn't drown it visually.
     @ViewBuilder
     private var chatContent: some View {
-        if let session {
+        if needsClaudeSignIn {
+            // User picked Anthropic but hasn't configured a key.
+            // The cloud-aware factory's silent Apple-fallback
+            // would send their questions to the wrong backend;
+            // this branch surfaces the configuration step
+            // explicitly so the user knows why they aren't yet
+            // talking to Claude.
+            ChatSignInPromptView(onSignInTapped: {
+                isSignInSheetPresented = true
+            })
+            // Fade in / out rather than popping when
+            // `needsClaudeSignIn` flips. The transition pairs
+            // with the `.animation(_:value:)` below on the
+            // chatContent's container view; without both
+            // halves, SwiftUI doesn't know to animate the swap.
+            .transition(.opacity)
+        } else if let session {
             // `.safeAreaInset(edge: .bottom)` attaches the compose
             // bar to the bottom of the scroll view *without*
             // clipping the scrollable content above it. The system

@@ -75,6 +75,7 @@ public final class KeychainAICloudCredentialsStore: AICloudCredentialsStore {
 
         switch updateStatus {
         case errSecSuccess:
+            postCredentialsChanged()
             return
         case errSecItemNotFound:
             var addQuery = query
@@ -83,6 +84,7 @@ public final class KeychainAICloudCredentialsStore: AICloudCredentialsStore {
             if addStatus != errSecSuccess {
                 throw AICloudError.keychainFailure(status: addStatus)
             }
+            postCredentialsChanged()
         default:
             throw AICloudError.keychainFailure(status: updateStatus)
         }
@@ -112,7 +114,11 @@ public final class KeychainAICloudCredentialsStore: AICloudCredentialsStore {
     public func removeAPIKey(for provider: AICloudProvider) throws {
         let status = SecItemDelete(baseQuery(for: provider) as CFDictionary)
         switch status {
-        case errSecSuccess, errSecItemNotFound:
+        case errSecSuccess:
+            postCredentialsChanged()
+        case errSecItemNotFound:
+            // Nothing actually changed — skip the notification
+            // so observers don't get woken up for a no-op.
             return
         default:
             throw AICloudError.keychainFailure(status: status)
@@ -120,6 +126,14 @@ public final class KeychainAICloudCredentialsStore: AICloudCredentialsStore {
     }
 
     // MARK: - Private
+
+    /// Posts `Notification.Name.aiCloudCredentialsChanged` on
+    /// the default center. Observers (notably `AppCoreScene`)
+    /// re-run the cloud-aware factories so a mid-session
+    /// sign-in / sign-out takes effect without an app restart.
+    private func postCredentialsChanged() {
+        NotificationCenter.default.post(name: .aiCloudCredentialsChanged, object: self)
+    }
 
     /// The shared query dictionary identifying a single provider's
     /// item. Callers append `kSecReturnData`, `kSecMatchLimit`, or
