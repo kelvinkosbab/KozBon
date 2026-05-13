@@ -309,16 +309,16 @@ public struct SettingsView: View {
 
     // MARK: - Reset Section
 
-    /// The destructive "Reset to defaults" affordance only surfaces
-    /// when there's *something* to reset — at least one preference
-    /// differs from its documented default, OR at least one
-    /// user-created custom service type is persisted in Core Data.
-    /// Hiding the section in the all-defaults case keeps the form
-    /// short and prevents users from accidentally reaching for a
-    /// destructive button that would do nothing visible.
+    /// The destructive "Reset to defaults" affordance surfaces
+    /// when something can be reset (a preference differs from its
+    /// default, or a custom service type is persisted) AND
+    /// Insights is enabled. When Insights is off, the rest of the
+    /// AI surface is hidden, so a Reset button there would read
+    /// out of context — re-enable Insights to access this
+    /// section again.
     @ViewBuilder
     private var resetSection: some View {
-        if !isAtDefaults {
+        if preferencesStore.aiAnalysisEnabled, !isAtDefaults {
             Section {
                 Button(role: .destructive) {
                     isResetConfirmationPresented = true
