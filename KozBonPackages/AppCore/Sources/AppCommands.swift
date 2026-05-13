@@ -11,16 +11,10 @@ import BonjourLocalization
 
 // MARK: - AppCommands
 
-/// macOS menu-bar commands for the KozBon app: file/edit shortcuts
-/// keyed off `@FocusedBinding`/`@FocusedValue` so they enable only
-/// when the relevant scene is in focus, plus a curated Help menu
+/// macOS menu-bar commands: file/edit shortcuts keyed off
+/// `@FocusedBinding` / `@FocusedValue` so they enable only when
+/// the relevant scene is in focus, plus a curated Help menu
 /// that replaces the default "Search Help" entry.
-///
-/// Lives in its own file so `AppCore.swift` stays focused on the
-/// `@main App` skeleton — scene composition, environment plumbing,
-/// the chat session prewarm. The `force_unwrapping` SwiftLint
-/// disable scoped to the Help-menu URLs is contained to this file
-/// rather than mingling with the app entry point.
 struct AppCommands: Commands {
 
     @FocusedBinding(\.isBroadcastServicePresented) private var isBroadcastServicePresented
@@ -50,18 +44,8 @@ struct AppCommands: Commands {
             .keyboardShortcut("r", modifiers: .command)
         }
 
-        // Replace the system Help menu (which only ever offered "Search"
-        // by default) with curated links the user can reach for when
-        // KozBon shows them something they don't recognize. Items are
-        // grouped: app-level resources (source, vendor narrative, the
-        // human-readable IANA registry, Apple's port reference) above
-        // the divider; protocol specs below. The links open in the
-        // user's default browser via `Link`, which renders as a regular
-        // menu item on macOS.
-        //
-        // The URLs are hardcoded constants known to be valid — the
-        // force-unwraps can't fail at runtime, and `Link`'s API requires
-        // a non-optional `URL`. The disables are scoped to this block.
+        // URLs are hardcoded constants — `Link` requires a
+        // non-optional `URL`, and these can't fail at runtime.
         // swiftlint:disable force_unwrapping
         CommandGroup(replacing: .help) {
             Link(

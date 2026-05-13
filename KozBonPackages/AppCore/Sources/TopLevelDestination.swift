@@ -14,43 +14,26 @@ import BonjourUI
 // MARK: - TopLevelDestination
 
 /// The top-level tab destinations for the app's main TabView.
-///
-/// Each case represents a primary navigation tab with an associated
-/// title string (localized) and SF Symbol icon.
 enum TopLevelDestination: Identifiable {
 
-    /// The nearby Bonjour services scanner tab.
     case bonjour
-
-    /// The supported service type library and custom service type management tab.
     case bonjourServiceTypes
-
-    /// The AI chat assistant tab (only shown on Apple Intelligence-capable devices).
     case chat
-
-    /// The user preferences tab.
     case settings
 
-    /// A stable identifier for each destination, used by SwiftUI for tab identity.
+    /// Stable identifier used by SwiftUI for tab identity.
     var id: String {
         switch self {
-        case .bonjour:
-            "bonjour"
-
-        case .bonjourServiceTypes:
-            "bonjourServiceTypes"
-
-        case .chat:
-            "chat"
-
-        case .settings:
-            "settings"
+        case .bonjour:             "bonjour"
+        case .bonjourServiceTypes: "bonjourServiceTypes"
+        case .chat:                "chat"
+        case .settings:            "settings"
         }
     }
 
-    // MARK: - Label
-
-    /// The localized display title for this tab.
+    /// Localized display title. The chat tab reads as "Chat" on
+    /// iOS and "Explore" on macOS / visionOS where it feels more
+    /// like a discovery surface than a messaging thread.
     var titleString: String {
         switch self {
         case .bonjour:
@@ -60,8 +43,6 @@ enum TopLevelDestination: Identifiable {
             String(localized: Strings.Tabs.supportedServices)
 
         case .chat:
-            // "Chat" on iOS, "Explore" on macOS/visionOS where the tab feels
-            // more like a discovery surface than a messaging thread.
             #if os(macOS) || os(visionOS)
             String(localized: Strings.Tabs.explore)
             #else
@@ -73,39 +54,21 @@ enum TopLevelDestination: Identifiable {
         }
     }
 
-    /// The SF Symbol icon for this tab.
-    ///
-    /// The Chat tab's icon is backend-agnostic at this level — it
-    /// renders the Apple Intelligence glyph as a default. Use
-    /// ``icon(activeBackend:)`` to render the icon for the user's
-    /// currently-selected AI backend (Apple Intelligence vs.
-    /// Anthropic Claude).
+    /// Backend-agnostic icon — the chat tab defaults to the
+    /// Apple Intelligence glyph. Use ``icon(activeBackend:)`` to
+    /// surface the user's currently-selected backend's brand.
     var icon: Image {
         switch self {
-        case .bonjour:
-            Image.bonjour
-
-        case .bonjourServiceTypes:
-            Image.serviceLibrary
-
-        case .chat:
-            Image.appleIntelligence
-
-        case .settings:
-            Image.settings
+        case .bonjour:             Image.bonjour
+        case .bonjourServiceTypes: Image.serviceLibrary
+        case .chat:                Image.appleIntelligence
+        case .settings:            Image.settings
         }
     }
 
-    /// The SF Symbol icon for this tab, with the Chat tab's glyph
-    /// swapped to match the user's currently-selected AI backend.
-    ///
-    /// `activeBackend` is consulted only for the Chat tab; other
-    /// tabs return the same icon as ``icon``. Splitting the
-    /// backend-aware lookup into its own function (rather than
-    /// folding `AIBackend` into the case's associated value)
-    /// keeps `TopLevelDestination` itself backend-agnostic — only
-    /// the call site that renders the chat tab needs to know
-    /// about the active backend.
+    /// Icon variant where the chat tab's glyph swaps to match
+    /// the active AI backend. Non-chat cases ignore the param
+    /// and return the default ``icon``.
     func icon(activeBackend: AIBackend) -> Image {
         switch self {
         case .chat:
