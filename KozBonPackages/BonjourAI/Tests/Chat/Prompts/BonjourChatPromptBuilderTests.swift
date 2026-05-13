@@ -43,6 +43,35 @@ struct BonjourChatPromptBuilderTests {
         #expect(instructions.contains("Refusal template"))
     }
 
+    @Test("System instructions open with a FOCUS rule that forbids tangential padding")
+    func systemInstructionsHasFocusRule() {
+        // The on-device Foundation Model is small enough that
+        // permissive scope language ("when in doubt, answer")
+        // produces verbose, off-topic responses. The FOCUS rule
+        // explicitly tells it to answer the specific question
+        // and stop. This test pins the directive so a future
+        // revision can't silently re-introduce padding-friendly
+        // language.
+        let instructions = BonjourChatPromptBuilder.systemInstructions()
+        #expect(instructions.contains("FOCUS:"))
+        #expect(instructions.contains("Answer the specific question"))
+        #expect(instructions.contains("Do NOT introduce tangential information"))
+    }
+
+    @Test("System instructions prefer clarification over guessing on ambiguous questions")
+    func systemInstructionsPrefersClarification() {
+        // Replaces the prior "When in doubt, answer" directive
+        // which encouraged the model to attempt an answer even
+        // when the question was unclear — invitation to
+        // hallucinate on small on-device models. The current
+        // directive tells the model to ask one short clarifying
+        // question instead.
+        let instructions = BonjourChatPromptBuilder.systemInstructions()
+        #expect(instructions.contains("Stay narrowly on what was asked"))
+        #expect(instructions.contains("ask ONE short clarifying question"))
+        #expect(!instructions.contains("When in doubt, answer"))
+    }
+
     @Test("System instructions name the user's preferred language explicitly")
     func systemInstructionsIncludesLanguageDirective() {
         let instructions = BonjourChatPromptBuilder.systemInstructions()

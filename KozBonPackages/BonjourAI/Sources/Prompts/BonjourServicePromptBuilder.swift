@@ -429,8 +429,8 @@ public enum BonjourServicePromptBuilder {
                 "information (what it does and how you'd use it from your device) into " +
                 "that single paragraph."
         case .standard:
-            return "LENGTH: Keep each section to 2-3 sentences — enough to explain the topic " +
-                "clearly without being verbose."
+            return "LENGTH: Keep responses concise — at most 2-3 sentences per paragraph. " +
+                "Don't pad with background context the user didn't ask for."
         case .thorough:
             return "LENGTH: Provide comprehensive answers with 4-6 sentences per section. " +
                 "Include relevant examples, edge cases, and context where helpful."
