@@ -134,17 +134,30 @@ public final class AppCoreViewModel {
     ///   - chatSessionFactory: Factory for the on-device AI chat
     ///     session. Invoked once at init for ``chatSession``, and
     ///     again from ``prewarmChatSession()`` for the warmup hook.
+    ///   - credentialsStore: Cloud-AI credentials store. Same
+    ///     instance that backs the cloud-aware factories; held
+    ///     here so the tab-visibility gate can ask "has the user
+    ///     signed into Anthropic?" without a second lookup path.
+    ///   - preferencesStore: The user-preferences store. Must be
+    ///     the same instance the factories consult — otherwise
+    ///     Settings writes (which go through this VM's store) and
+    ///     factory routing reads (which consult the factory's
+    ///     captured store) split into two SwiftData containers
+    ///     and the runtime backend swap stops working. Optional
+    ///     for tests that want a throwaway store; production
+    ///     callers in `AppCoreScene` pass the shared instance.
     public init(
         dependencies: DependencyContainer,
         explainerFactory: any BonjourServiceExplainerFactoryProtocol,
         chatSessionFactory: any BonjourChatSessionFactoryProtocol,
-        credentialsStore: (any AICloudCredentialsStore & Sendable)? = nil
+        credentialsStore: (any AICloudCredentialsStore & Sendable)? = nil,
+        preferencesStore: PreferencesStore? = nil
     ) {
         self.dependencies = dependencies
         self.chatSessionFactory = chatSessionFactory
         self.explainerFactory = explainerFactory
         self.credentialsStore = credentialsStore
-        self.preferencesStore = PreferencesStore()
+        self.preferencesStore = preferencesStore ?? PreferencesStore()
         self.servicesViewModel = BonjourServicesViewModel(dependencies: dependencies)
         self.explainer = explainerFactory.makeForCurrentEnvironment()
         self.chatSession = chatSessionFactory.makeForCurrentEnvironment(

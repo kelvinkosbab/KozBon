@@ -49,6 +49,16 @@ public struct AppCoreScene: Scene {
     /// factories.
     public init() {
         let credentialsStore = MainActor.assumeIsolated { KeychainAICloudCredentialsStore() }
+        // ONE shared preferences store. The cloud-aware
+        // factories consult it for routing decisions on every
+        // `makeForCurrentEnvironment` call; Settings writes to
+        // it via the environment value. If we created separate
+        // instances (as a previous bug did), each
+        // `PreferencesStore()` spun up its own SwiftData
+        // container — writes from one didn't propagate to the
+        // other in-memory, so Settings would set
+        // `aiBackend = .anthropic` and the factory would still
+        // see `.appleIntelligence` and route to Apple.
         let preferencesStore = MainActor.assumeIsolated { PreferencesStore() }
         let chatFactory = CloudAwareBonjourChatSessionFactory(
             credentialsStore: credentialsStore,
@@ -62,7 +72,8 @@ public struct AppCoreScene: Scene {
             dependencies: DependencyContainer(),
             explainerFactory: explainerFactory,
             chatSessionFactory: chatFactory,
-            credentialsStore: credentialsStore
+            credentialsStore: credentialsStore,
+            preferencesStore: preferencesStore
         )
     }
 
@@ -74,13 +85,15 @@ public struct AppCoreScene: Scene {
         dependencies: DependencyContainer,
         explainerFactory: any BonjourServiceExplainerFactoryProtocol,
         chatSessionFactory: any BonjourChatSessionFactoryProtocol,
-        credentialsStore: (any AICloudCredentialsStore & Sendable)? = nil
+        credentialsStore: (any AICloudCredentialsStore & Sendable)? = nil,
+        preferencesStore: PreferencesStore? = nil
     ) {
         _viewModel = State(initialValue: AppCoreViewModel(
             dependencies: dependencies,
             explainerFactory: explainerFactory,
             chatSessionFactory: chatSessionFactory,
-            credentialsStore: credentialsStore
+            credentialsStore: credentialsStore,
+            preferencesStore: preferencesStore
         ))
     }
 

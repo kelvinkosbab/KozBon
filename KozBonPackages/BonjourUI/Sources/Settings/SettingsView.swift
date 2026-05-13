@@ -69,7 +69,19 @@ public struct SettingsView: View {
                     aiAnalysisSection
                 }
 
-                aiBackendSection
+                // The Assistant section (backend picker, sign-in
+                // row, Claude model picker) only makes sense when
+                // Insights are turned on — its only consumers are
+                // the long-press Insights surface and the Chat
+                // tab, and both of those are gated on
+                // `aiAnalysisEnabled`. Hiding the section when
+                // Insights is off keeps Settings focused and
+                // avoids the implication that configuring a
+                // provider does anything while the feature is
+                // disabled.
+                if preferencesStore.aiAnalysisEnabled {
+                    aiBackendSection
+                }
 
                 displaySection
 
