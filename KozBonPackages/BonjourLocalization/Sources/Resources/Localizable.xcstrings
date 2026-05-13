@@ -22578,6 +22578,59 @@
           }
         }
       }
+    },
+    "a11y_ai_cloud_sign_in_learn_more_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opens Anthropic's API key page in your browser."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abre la página de claves de API de Anthropic en tu navegador."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ouvre la page des clés d'API d'Anthropic dans votre navigateur."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Öffnet die API-Schlüsselseite von Anthropic in Ihrem Browser."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anthropic の API キーページをブラウザで開きます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在浏览器中打开 Anthropic 的 API 密钥页面。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يفتح صفحة مفاتيح Anthropic API في متصفّحك."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פותח את עמוד מפתחות ה‑API של Anthropic בדפדפן שלך."
+          }
+        }
+      }
     }
   },
   "version": "1.0"

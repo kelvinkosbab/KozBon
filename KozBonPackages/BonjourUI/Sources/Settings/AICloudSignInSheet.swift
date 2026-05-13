@@ -78,14 +78,24 @@ struct AICloudSignInSheet: View {
                                 openURL(url)
                             }
                         } label: {
-                            Label(
-                                Strings.Settings.aiCloudSignInLearnMore,
-                                systemImage: "arrow.up.right.square"
-                            )
+                            Label {
+                                Text(Strings.Settings.aiCloudSignInLearnMore)
+                            } icon: {
+                                Image.externalLink
+                            }
                             .font(.caption)
                         }
                         .buttonStyle(.plain)
                         .foregroundStyle(.tint)
+                        // The link doesn't visually read as a
+                        // URL (no underline / blue chrome), so a
+                        // VoiceOver user lands on it without
+                        // obvious cues that tapping leaves the
+                        // app. The hint sets the expectation
+                        // before the user commits.
+                        .accessibilityHint(
+                            String(localized: Strings.Accessibility.aiCloudSignInLearnMoreHint)
+                        )
 
                         if let keychainError = viewModel.keychainError {
                             Text(verbatim: keychainError)

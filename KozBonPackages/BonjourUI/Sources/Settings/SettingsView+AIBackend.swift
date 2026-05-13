@@ -204,6 +204,17 @@ extension SettingsView {
                             Text(localizedName(for: model))
                         }
                     }
+                    // VoiceOver reads each menu Button's label
+                    // identically across selection states (the
+                    // checkmark icon is decorative within a
+                    // `Label`), so without the `.isSelected`
+                    // trait a blind user can't tell which model
+                    // is currently active. The trait makes
+                    // VoiceOver append "selected" to the
+                    // announcement for the matching option.
+                    .accessibilityAddTraits(
+                        preferencesStore.aiCloudModel == model ? .isSelected : []
+                    )
                 }
             } label: {
                 Text(localizedName(for: preferencesStore.aiCloudModel))
@@ -217,6 +228,13 @@ extension SettingsView {
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
+            // Combine title + subtitle into one VoiceOver
+            // element so users hear "Claude Model, Balanced.
+            // 200K context window, Recommended for most
+            // questions about your network." as a single read
+            // rather than two separate elements requiring an
+            // extra swipe.
+            .accessibilityElement(children: .combine)
         }
     }
 

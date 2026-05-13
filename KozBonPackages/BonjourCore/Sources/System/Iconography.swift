@@ -304,6 +304,12 @@ public enum Iconography {
     /// to signal "tapping here presents another surface."
     public static let disclosure = "chevron.right"
 
+    /// Outward-pointing arrow in a square — signals that
+    /// tapping leaves the app and opens an external surface
+    /// (typically a web page in the user's default browser).
+    /// Used by "Get an API key" in the Claude sign-in sheet.
+    public static let externalLink = "arrow.up.right.square"
+
     /// Filled checkmark inside a circle. Used by the Settings
     /// AI Backend "Signed in" status row. Distinct from
     /// ``selected`` (same SF Symbol name) so future divergence

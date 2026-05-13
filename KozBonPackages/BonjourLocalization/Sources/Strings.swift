@@ -745,6 +745,16 @@ public enum Strings {
             .init("a11y_ai_cloud_sign_out_hint", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        /// VoiceOver hint for the "Get an API key at
+        /// console.anthropic.com" link in the Claude sign-in
+        /// sheet. Tells the user the action will open a web page
+        /// in their default browser — important because the link
+        /// isn't styled as a standard URL and a screen-reader
+        /// user might otherwise expect an in-app navigation.
+        public static var aiCloudSignInLearnMoreHint: LocalizedStringResource {
+            .init("a11y_ai_cloud_sign_in_learn_more_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var resetHint: LocalizedStringResource {
             .init("a11y_reset_hint", bundle: .atURL(Bundle.module.bundleURL))
         }
