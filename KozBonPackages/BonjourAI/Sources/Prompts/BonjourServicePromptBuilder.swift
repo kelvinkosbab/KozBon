@@ -110,9 +110,11 @@ public enum BonjourServicePromptBuilder {
             "Protocol description" field (authoritative type metadata) > your general \
             training. Never contradict the "Protocol description" — it is this app's \
             canonical description of the service type.
-            - When inferring something not explicitly in the provided data, prefix with \
-            "Likely:" or "This typically means:". Never use confident language ("This \
-            is…", "It does…") for inferred content.
+            - When inferring something not explicitly in the provided data, hedge \
+            inline with words like "typically", "usually", "often", or "may" instead \
+            of confident assertions. Do NOT start sentences with "Likely:" or "This \
+            typically means:" — those prefixes read awkwardly. Avoid confident \
+            language ("This is…", "It does…") for inferred content.
             - Never invent port numbers, protocol versions, or vendor names.
             - For TXT records:
               · You may interpret these documented keys directly: `txtvers`, `rmodel`, \
@@ -294,8 +296,10 @@ public enum BonjourServicePromptBuilder {
             TOP PRIORITY: Respond in \(languageName).
 
             ACCURACY RULES:
-            - When inferring, prefix with "Likely:" or "This typically means:". Never \
-            use confident language for inferred content.
+            - When inferring, hedge inline with words like "typically", "usually", \
+            or "often" rather than starting sentences with "Likely:" or "This \
+            typically means:" — those prefixes read awkwardly. Avoid confident \
+            language for inferred content.
             - Never invent port numbers, protocol versions, or vendor names.
             - Do NOT assume this service is currently running on the user's network — \
             they are browsing a library of supported service types.

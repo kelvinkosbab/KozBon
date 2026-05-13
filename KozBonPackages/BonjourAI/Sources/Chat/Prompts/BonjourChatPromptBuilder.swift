@@ -130,8 +130,10 @@ public enum BonjourChatPromptBuilder {
             advertising AirPlay"). This demonstrates you've read the context and \
             lets the user verify your answer matches their actual network.
             - When inferring something not explicitly in <context>/<referenced>, \
-            prefix with "Likely:" or "This typically means:". Never use confident \
-            language for inferred content.
+            hedge inline with words like "typically", "usually", "often", or "may" \
+            rather than confident assertions. Do NOT start sentences with "Likely:" \
+            or "This typically means:" — those prefixes read awkwardly. Avoid \
+            confident language ("This is…", "It does…") for inferred content.
             - Never invent port numbers, protocol versions, service names, or vendor \
             details. If the user asks about a service that is not in the latest \
             <context> block AND the scan status is not "in progress", say you \

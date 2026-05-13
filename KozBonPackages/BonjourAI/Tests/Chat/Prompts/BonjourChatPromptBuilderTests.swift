@@ -106,13 +106,20 @@ struct BonjourChatPromptBuilderTests {
         #expect(instructions.contains("quote the specific service name or hostname verbatim"))
     }
 
-    @Test("System instructions ship standardized hedge prefixes (`Likely:`, `This typically means:`)")
+    @Test("System instructions direct inline hedging vocabulary for inferred content")
     func systemInstructionsHasUncertaintyPhrasing() {
-        // Standardized hedge prefixes let the model express doubt
-        // consistently instead of confabulating with confident language.
+        // An earlier version of the prompt asked the model to
+        // prefix inferences with "Likely:" or "This typically
+        // means:" — visually distinctive but jarring. The
+        // current directive asks for inline hedging
+        // ("typically", "usually", "often", "may") and
+        // explicitly forbids the prefix form. This test pins
+        // both halves so a future revision can't silently bring
+        // back the awkward prefix.
         let instructions = BonjourChatPromptBuilder.systemInstructions()
-        #expect(instructions.contains("\"Likely:\""))
-        #expect(instructions.contains("\"This typically means:\""))
+        #expect(instructions.contains("hedge inline"))
+        #expect(instructions.contains("\"typically\""))
+        #expect(instructions.contains("Do NOT start sentences with \"Likely:\""))
     }
 
     @Test("System instructions tell the model to ask one clarifying question on ambiguous input")

@@ -298,13 +298,19 @@ struct BonjourServicePromptBuilderTests {
         #expect(instructions.contains("`_airplay._tcp`"))
     }
 
-    @Test("System instructions ship named hedge prefixes so uncertainty reads consistently")
+    @Test("System instructions direct inline hedging vocabulary for inferred content")
     func systemInstructionsUncertaintyPhrasingRule() {
-        // Named prefixes ("Likely:", "This typically means:") give the
-        // model a stable way to hedge instead of confabulating.
+        // The directive moved from prefix-style hedges ("Likely:",
+        // "This typically means:") to inline hedging vocabulary
+        // ("typically", "usually", "often", "may"). The prefix
+        // form read as jarring in user-facing copy and was a
+        // recurring complaint. The directive now also explicitly
+        // forbids the prefix form so the model can't slip back
+        // into it under instruction drift.
         let instructions = BonjourServicePromptBuilder.systemInstructions
-        #expect(instructions.contains("Likely:"))
-        #expect(instructions.contains("This typically means:"))
+        #expect(instructions.contains("hedge"))
+        #expect(instructions.contains("\"typically\""))
+        #expect(instructions.contains("Do NOT start sentences with \"Likely:\""))
     }
 
     @Test("System instructions pin a source-priority order so TXT records and detail copy never conflict silently")
