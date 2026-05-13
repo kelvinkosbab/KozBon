@@ -67,15 +67,38 @@ public enum AnthropicModel: String, Sendable, CaseIterable, Codable, Identifiabl
         return model
     }
 
+    // MARK: - Version
+
+    /// Marketing version of the model (e.g. `"4.5"`).
+    ///
+    /// Separate from ``rawValue`` (which carries the dash-cased
+    /// API identifier `claude-opus-4-5`) so the UI can surface a
+    /// human-readable version next to the model name without
+    /// parsing the API identifier — and so the source of truth
+    /// for "which Claude generation does KozBon currently
+    /// support" lives in exactly one place. When Anthropic ships
+    /// `4.6` (or whatever), bumping the version is a one-line
+    /// edit here plus the matching ``rawValue`` change.
+    public var version: String {
+        switch self {
+        case .opus, .sonnet, .haiku:
+            return "4.5"
+        }
+    }
+
     // MARK: - Display
 
-    /// English display name used in logs and tests. The UI layer
-    /// localizes via `Strings.Settings.aiCloudModelOpus` etc.
+    /// English display name used in logs and tests, including the
+    /// marketing version. The UI layer localizes via
+    /// `Strings.Settings.aiCloudModelOpus` / `…Sonnet` / `…Haiku`,
+    /// which encode the same name + version pair through the
+    /// String Catalog so translators don't have to manage version
+    /// numbers across locales.
     public var displayName: String {
         switch self {
-        case .opus:   return "Claude Opus"
-        case .sonnet: return "Claude Sonnet"
-        case .haiku:  return "Claude Haiku"
+        case .opus:   return "Claude Opus \(version)"
+        case .sonnet: return "Claude Sonnet \(version)"
+        case .haiku:  return "Claude Haiku \(version)"
         }
     }
 
