@@ -21048,49 +21048,49 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI Backend"
+            "value": "Assistant"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Modelo de IA"
+            "value": "Asistente"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Moteur d'IA"
+            "value": "Assistant"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "KI-Backend"
+            "value": "Assistent"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI バックエンド"
+            "value": "アシスタント"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI 后端"
+            "value": "助手"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "خلفية الذكاء الاصطناعي"
+            "value": "المساعد"
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "מנוע בינה מלאכותית"
+            "value": "עוזר"
           }
         }
       }
@@ -21101,49 +21101,49 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Backend"
+            "value": "Provider"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Backend"
+            "value": "Proveedor"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Moteur"
+            "value": "Fournisseur"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Backend"
+            "value": "Anbieter"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "バックエンド"
+            "value": "プロバイダー"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "后端"
+            "value": "提供方"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "الخلفية"
+            "value": "المزوّد"
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "מנוע"
+            "value": "ספק"
           }
         }
       }

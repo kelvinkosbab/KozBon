@@ -65,6 +65,22 @@ extension SettingsView {
 
     // MARK: - Backend Picker
 
+    /// Inline picker so both options surface simultaneously —
+    /// each with its provider glyph tinted in the matching brand
+    /// color (blue for Apple Intelligence, Cara orange for
+    /// Anthropic). The visible branding makes the active provider
+    /// scannable without reading the subtitle, and having both
+    /// rows present lets users compare the subtitles (which
+    /// describe the privacy posture + context-window trade-off)
+    /// side by side.
+    ///
+    /// `.labelsHidden()` suppresses the picker's own header row —
+    /// the "Assistant" section header already announces the
+    /// purpose, so the intermediate "Provider" label row would
+    /// just be visual noise. The label is preserved semantically
+    /// for VoiceOver (`accessibilityLabel` + `accessibilityHint`)
+    /// so screen-reader users still get the picker's role when
+    /// they land on the control.
     @ViewBuilder
     private var backendPicker: some View {
         Picker(
@@ -80,17 +96,44 @@ extension SettingsView {
         } label: {
             Text(Strings.Settings.aiBackendPickerLabel)
         }
+        .pickerStyle(.inline)
+        .labelsHidden()
+        .accessibilityLabel(String(localized: Strings.Settings.aiBackendPickerLabel))
         .accessibilityHint(String(localized: Strings.Accessibility.aiBackendPickerHint))
     }
 
+    /// One row of the inline backend picker.
+    ///
+    /// Leading slot is the backend's brand glyph (Apple
+    /// Intelligence sparkle for `.appleIntelligence`, the
+    /// bundled Claude vector mark for `.anthropic`), tinted with
+    /// the matching accent color (`Color.kozBonBlue` /
+    /// `Color.kozBonAnthropic`) so each row carries a coherent
+    /// visual identity. The icon sits in a fixed-width frame so
+    /// the trailing text columns align across rows regardless of
+    /// the icon's intrinsic width.
+    ///
+    /// The icon is decorative (`accessibilityHidden`) — the row's
+    /// VoiceOver label is composed from the title and subtitle so
+    /// screen-reader users get the same comparison content
+    /// sighted users get.
     @ViewBuilder
     private func backendOption(_ backend: AIBackend) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
-            Text(backend.displayName)
-            Text(backend.displaySubtitle)
-                .font(.caption)
-                .foregroundStyle(.secondary)
+        HStack(spacing: 12) {
+            backend.icon
+                .font(.title3)
+                .foregroundStyle(backend.accentColor)
+                .frame(width: 28, height: 28)
+                .accessibilityHidden(true)
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(backend.displayName)
+                Text(backend.displaySubtitle)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
         }
+        .accessibilityElement(children: .combine)
     }
 
     // MARK: - Sign-In Row
