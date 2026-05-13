@@ -209,7 +209,15 @@ let package = Package(
             "BonjourAICloud",
             "BonjourStorage",
             .product(name: "CoreUI", package: "Core")
-        ]
+        ],
+        // Ships the Claude brand mark as an asset catalog
+        // (`Media.xcassets/Claude.imageset`) so the chat tab can
+        // render the official mark when the Anthropic backend is
+        // selected. The image is template-rendered, so the tab
+        // bar's accent (Anthropic Cara orange via the global
+        // tint) colors the icon and unselected states render
+        // gray per the standard iOS tab-bar convention.
+        hasResources: true
     )
     + makeTargets(
         name: "BonjourAppIntents",

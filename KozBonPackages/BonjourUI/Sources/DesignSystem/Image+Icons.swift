@@ -45,7 +45,24 @@ public extension Image {
 
     static var bonjour: Image { Image(systemName: Iconography.bonjour) }
     static var appleIntelligence: Image { Image(systemName: Iconography.appleIntelligence) }
-    static var anthropicClaude: Image { Image(systemName: Iconography.anthropicClaude) }
+
+    /// Anthropic Claude brand mark.
+    ///
+    /// Resolved from the `Claude` imageset in
+    /// `BonjourUI/Resources/Media.xcassets`, which ships the
+    /// official Anthropic SVG mark. The asset is configured for
+    /// template rendering, so it picks up the surrounding tint
+    /// — in practice that's `Color.kozBonAnthropic` (Anthropic
+    /// Cara orange) wherever this icon appears, and the standard
+    /// iOS tab-bar gray for unselected tab states.
+    ///
+    /// `Iconography.anthropicClaude` still resolves to the
+    /// `sparkle` SF Symbol — that string-based fallback is used
+    /// by call sites that need a system-image name (e.g. `Label(_:
+    /// systemImage:)` in the Insights long-press menu, where an
+    /// asset name wouldn't resolve).
+    static var anthropicClaude: Image { Image("Claude", bundle: .module) }
+
     static var airportExtreme: Image { Image(systemName: Iconography.airportExtreme) }
 
     // MARK: - Navigation & Tabs
