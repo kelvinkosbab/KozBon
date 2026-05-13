@@ -197,6 +197,18 @@ public struct BonjourChatView: View {
                     reduceMotion ? nil : .default,
                     value: needsClaudeSignIn
                 )
+                // Animate the cross-backend swap. When the user
+                // toggles the backend in Settings and navigates
+                // back, the chat surface (active session, accent
+                // color, tab icon highlight) all change at once.
+                // Pairs with the `.id(aiBackend)` + `.transition`
+                // on `chatContent` so the swap reads as a single
+                // cohesive fade instead of a pop. Reduce Motion
+                // honored via the nil-animation shortcut.
+                .animation(
+                    reduceMotion ? nil : .default,
+                    value: preferencesStore.aiBackend
+                )
                 // In-tab sign-in sheet. Mounted at this level
                 // (not on `ChatSignInPromptView` itself) so the
                 // sheet survives if the prompt view ever needs
@@ -233,6 +245,29 @@ public struct BonjourChatView: View {
     /// modifiers doesn't drown it visually.
     @ViewBuilder
     private var chatContent: some View {
+        // `.id(preferencesStore.aiBackend)` gives the chat
+        // content a stable identity per backend so SwiftUI treats
+        // a toggle between Apple Intelligence and Anthropic as a
+        // mount/unmount rather than an in-place update. Paired
+        // with the `.transition(.opacity)` below and the
+        // `.animation(_:value: preferencesStore.aiBackend)` higher
+        // up the chain, the swap fades cleanly when the user
+        // returns to the chat tab after toggling backends in
+        // Settings — without this the new content just pops into
+        // place because the body's previous render was for a
+        // hidden tab and SwiftUI has nothing to animate from.
+        chatContentForActiveBackend
+            .id(preferencesStore.aiBackend)
+            .transition(.opacity)
+    }
+
+    /// Inner content of the chat surface — branches between the
+    /// sign-in prompt, the active session's message list, or the
+    /// fallback empty state. Split out so the outer
+    /// ``chatContent`` can apply a single `.id` + `.transition`
+    /// pair that drives the cross-backend fade animation.
+    @ViewBuilder
+    private var chatContentForActiveBackend: some View {
         if needsClaudeSignIn {
             // User picked Anthropic but hasn't configured a key.
             // The cloud-aware factory's silent Apple-fallback
