@@ -35,6 +35,21 @@ public protocol BonjourChatSessionProtocol: AnyObject, Observable {
     /// An error message if the last send failed.
     var error: String? { get set }
 
+    /// User-actionable remediation paired with ``error`` —
+    /// populated when the failure has a specific fix the user
+    /// can take outside the app (e.g., add credits to their
+    /// Anthropic account). `nil` for errors that are purely
+    /// informational. The chat surface renders this as a button
+    /// next to the error banner.
+    ///
+    /// Read-only at the protocol level. Sessions that surface
+    /// actionable errors (currently just
+    /// `AnthropicBonjourChatSession`) set it internally; Apple
+    /// Foundation Models sessions always return `nil` because
+    /// their failure modes don't translate to URL-based
+    /// remediations.
+    var errorAction: ChatErrorAction? { get }
+
     /// The desired verbosity of assistant responses.
     var responseLength: BonjourServicePromptBuilder.ResponseLength { get set }
 
@@ -92,6 +107,22 @@ public protocol BonjourChatSessionProtocol: AnyObject, Observable {
     ///     assistant's reply.
     func appendLocalRejection(userMessage: String, refusalText: String)
 
+    /// Clears the chat error banner state without touching the
+    /// conversation. Called by the view model the instant the
+    /// user commits to a follow-up send so the previous failure's
+    /// banner fades out as the new user bubble lands, rather than
+    /// lingering on screen until ``send(_:context:)`` finally
+    /// runs (which can be ~3 seconds later on live-state questions
+    /// that trigger a fresh-scan first).
+    ///
+    /// Resets both ``error`` and ``errorAction`` atomically — the
+    /// two are documented as a paired surface so they must clear
+    /// together. The default implementation clears just ``error``
+    /// (sufficient for on-device sessions, which always return
+    /// `nil` from ``errorAction``); sessions that surface
+    /// actionable errors override to clear the action too.
+    func clearError()
+
     /// Clears the conversation history and starts a new session.
     func reset()
 
@@ -122,4 +153,19 @@ public extension BonjourChatSessionProtocol {
     /// to warm, so the protocol default no-ops. The production
     /// `BonjourChatSession` overrides this with an actual prewarm.
     func prewarm() {}
+
+    /// Default implementation returns `nil` — only sessions whose
+    /// failure modes have URL-based remediations
+    /// (`AnthropicBonjourChatSession` and the credit-balance case)
+    /// override this. Apple Foundation Models, simulator, and
+    /// mock sessions inherit the nil default.
+    var errorAction: ChatErrorAction? { nil }
+
+    /// Default implementation clears just ``error`` — sufficient
+    /// for sessions whose ``errorAction`` is always `nil`.
+    /// `AnthropicBonjourChatSession` overrides to clear its own
+    /// ``errorAction`` atomically alongside.
+    func clearError() {
+        error = nil
+    }
 }

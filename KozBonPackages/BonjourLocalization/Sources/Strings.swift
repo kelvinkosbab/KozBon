@@ -824,6 +824,57 @@ public enum Strings {
         public static var chatConversation: LocalizedStringResource {
             .init("a11y_chat_conversation", bundle: .atURL(Bundle.module.bundleURL))
         }
+
+        /// VoiceOver hint paired with the "Open billing" button in
+        /// the chat error banner. The button itself reads "Open
+        /// billing"; this hint explains where the link goes so a
+        /// VoiceOver user knows the tap will leave the app for the
+        /// browser.
+        public static var chatOpenBillingHint: LocalizedStringResource {
+            .init("a11y_chat_error_open_billing_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// VoiceOver hint paired with the "Sign in again" button
+        /// in the chat error banner. Communicates that the tap
+        /// opens an in-app sheet (not the browser), so VoiceOver
+        /// users aren't surprised by a sheet presentation.
+        public static var chatSignInAgainHint: LocalizedStringResource {
+            .init("a11y_chat_error_sign_in_again_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// VoiceOver hint paired with the "Manage plan" button
+        /// in the chat error banner. Explains that the tap
+        /// leaves the app to open Anthropic's plan-management
+        /// console in the browser.
+        public static var chatOpenPlansHint: LocalizedStringResource {
+            .init("a11y_chat_error_open_plans_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// VoiceOver hint paired with the "Check status" button
+        /// in the chat error banner. Explains that the tap leaves
+        /// the app to open Anthropic's public status page.
+        public static var chatOpenStatusPageHint: LocalizedStringResource {
+            .init("a11y_chat_error_open_status_page_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// VoiceOver hint paired with the "Try again" button in
+        /// the chat error banner. In-app action — re-sends the
+        /// last user message; doesn't leave the app.
+        public static var chatTryAgainHint: LocalizedStringResource {
+            .init("a11y_chat_error_try_again_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// VoiceOver hint paired with the "Clear chat" button in
+        /// the chat error banner (mounted when the conversation
+        /// has exceeded the model's context window). Explains
+        /// that the tap discards the conversation history; the
+        /// chat tab's toolbar Clear-chat affordance gets a
+        /// distinct hint (`chatClearHistoryHint`) because the
+        /// destructive intent reads differently when it's
+        /// proactive rather than recovery-driven.
+        public static var chatErrorClearChatHint: LocalizedStringResource {
+            .init("a11y_chat_error_clear_chat_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
     }
 
     // MARK: - Guidance
@@ -1336,6 +1387,50 @@ public enum Strings {
 
         public static var errorOffTopic: LocalizedStringResource {
             .init("chat_error_off_topic", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Button label paired with the credit-balance error
+        /// banner. Tapping the button opens Anthropic's billing
+        /// console in the user's browser so they can add credits
+        /// to the account whose API key the chat surface is using.
+        ///
+        /// Only surfaces when an Anthropic chat send fails with
+        /// ``AICloudError/creditBalanceTooLow`` — the action is
+        /// the user-visible half of that typed-error case.
+        public static var openBilling: LocalizedStringResource {
+            .init("chat_error_open_billing", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Button label for the invalid-credentials error banner.
+        /// Phrased as a sign-in restart, not a fresh sign-in,
+        /// because the user previously had a key configured — it
+        /// was just rejected. Tapping opens the in-app Anthropic
+        /// sign-in sheet so the user can paste a fresh key.
+        public static var signInAgain: LocalizedStringResource {
+            .init("chat_error_sign_in_again", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Button label for the permission-denied error banner.
+        /// Tapping opens Anthropic's plans console where the
+        /// user can review which models their tier includes and
+        /// upgrade if needed.
+        public static var openPlans: LocalizedStringResource {
+            .init("chat_error_open_plans", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Button label for the service-overloaded error banner.
+        /// Tapping opens Anthropic's public status page so the
+        /// user can confirm an outage is wide rather than
+        /// something they did.
+        public static var openStatusPage: LocalizedStringResource {
+            .init("chat_error_open_status_page", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Button label for the network-unavailable error banner.
+        /// In-app action — tapping re-sends the last user
+        /// message without the user having to re-type it.
+        public static var tryAgain: LocalizedStringResource {
+            .init("chat_error_try_again", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         // MARK: - Long-Conversation Banner

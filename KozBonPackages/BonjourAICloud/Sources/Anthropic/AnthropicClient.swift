@@ -90,6 +90,22 @@ public final class AnthropicClient: AnthropicClientProtocol {
                     try await runStream(request: request, apiKey: apiKey, continuation: continuation)
                 } catch is CancellationError {
                     continuation.finish(throwing: AICloudError.cancelled)
+                } catch let urlError as URLError {
+                    // URLSession surfaces these for DNS failures,
+                    // TLS rejections, lost connectivity, and the
+                    // user being offline. Surfacing them as the
+                    // typed ``.networkUnavailable`` case lets the
+                    // chat surface attach a Retry button — the
+                    // user doesn't have to re-type their message
+                    // when their connection blips.
+                    logger.error(
+                        """
+                        Network error reaching Anthropic — \
+                        code: \(urlError.code.rawValue, privacy: .public), \
+                        description: \(urlError.localizedDescription, privacy: .public)
+                        """
+                    )
+                    continuation.finish(throwing: AICloudError.networkUnavailable)
                 } catch {
                     continuation.finish(throwing: error)
                 }
@@ -203,23 +219,63 @@ public final class AnthropicClient: AnthropicClientProtocol {
             "Anthropic API error \(statusCode): \(message ?? "<no message>", privacy: .public)"
         )
         switch statusCode {
-        case 401, 403:
+        case 401:
+            // 401 = bad key. The user needs a fresh one. Split
+            // from 403 so the user-facing remediation can differ:
+            // 401 → "re-enter your API key"; 403 → "check your
+            // plan".
             return .invalidCredentials(provider: .anthropic)
+        case 403:
+            // 403 = valid key, but the account doesn't have
+            // permission for the requested resource — typically
+            // a model the account's plan tier doesn't include.
+            return .permissionDenied(provider: .anthropic, message: message)
         case 429:
             // `Retry-After` may be seconds or an HTTP date; parse
             // numerically and fall back to nil if it's not a number.
             let retry = response.value(forHTTPHeaderField: "Retry-After")
                 .flatMap { TimeInterval($0) }
             return .rateLimited(provider: .anthropic, retryAfterSeconds: retry)
+        case 529:
+            // Anthropic-specific overloaded status. Split from
+            // generic 5xx so the chat surface can offer a
+            // status-page link — the user can confirm the
+            // outage is wide rather than something they did.
+            return .serviceOverloaded(provider: .anthropic, message: message)
         case 500...599:
             return .serverError(provider: .anthropic, message: message)
         case 400...499:
-            // 400, 404, 413, 422 — request rejected by the
-            // provider. Anthropic's error body carries a clear
-            // explanation ("model not found", "max_tokens
-            // exceeds…", etc.); surface it so users see exactly
-            // what's wrong instead of a bare status code that
-            // forces them to inspect logs.
+            // Carve out the "credit balance is too low" 400 as
+            // a separate case — the user-facing remediation is
+            // different (open Anthropic's billing console, not
+            // fix anything in the app) and the chat surface
+            // renders an actionable banner with a deep link.
+            // Anthropic's exact wording is "Your credit balance
+            // is too low to access the Anthropic API."; match
+            // case-insensitively on the distinctive phrase so
+            // minor copy changes don't break detection.
+            if let lowered = message?.lowercased() {
+                if lowered.contains("credit balance") {
+                    return .creditBalanceTooLow(provider: .anthropic, message: message)
+                }
+                // Carve out context-window-exceeded 400s. Anthropic
+                // returns messages like "prompt is too long: N
+                // tokens > max" or "input length exceeds maximum
+                // context length" depending on the failure mode.
+                // The detection phrases below cover both wordings
+                // while staying tight enough that an unrelated
+                // 400 mentioning "long" won't false-positive.
+                if lowered.contains("prompt is too long")
+                    || lowered.contains("input length")
+                    || lowered.contains("context length")
+                    || lowered.contains("context window") {
+                    return .contextWindowExceeded(provider: .anthropic, message: message)
+                }
+            }
+            // Other 4xx: model not found, max_tokens exceeds…,
+            // etc. Surface the provider's actual error string
+            // so users see what's wrong instead of a bare
+            // status code.
             return .invalidRequest(provider: .anthropic, message: message)
         default:
             return .unexpectedStatus(provider: .anthropic, statusCode: statusCode)

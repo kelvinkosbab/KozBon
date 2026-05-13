@@ -62,6 +62,7 @@ public final class AnthropicBonjourChatSession: BonjourChatSessionProtocol {
     public private(set) var messages: [BonjourChatMessage] = []
     public private(set) var isGenerating: Bool = false
     public var error: String?
+    public private(set) var errorAction: ChatErrorAction?
     public var responseLength: BonjourServicePromptBuilder.ResponseLength = .standard
     public let intentBroker: BonjourChatIntentBroker
 
@@ -193,6 +194,7 @@ public final class AnthropicBonjourChatSession: BonjourChatSessionProtocol {
         guard !trimmed.isEmpty else { return }
 
         error = nil
+        errorAction = nil
         isGenerating = true
         defer { isGenerating = false }
         // Reset tool-call counter for symmetry with the on-device
@@ -307,8 +309,88 @@ public final class AnthropicBonjourChatSession: BonjourChatSessionProtocol {
                 """
             )
             self.error = error.localizedDescription
+            self.errorAction = Self.makeErrorAction(for: error)
             rollBackTurn(assistantId: assistantId)
         }
+    }
+
+    /// Maps a stream failure to an optional user-facing remediation.
+    ///
+    /// Six cases produce an action; everything else returns `nil`
+    /// because there's no URL or in-app affordance that would help
+    /// (the banner still renders the message, just without a
+    /// button). Routing per case:
+    /// - ``AICloudError/creditBalanceTooLow`` → billing console.
+    /// - ``AICloudError/invalidCredentials`` → in-app sign-in
+    ///   sheet (which itself links to the keys console).
+    /// - ``AICloudError/permissionDenied`` → plans console.
+    /// - ``AICloudError/contextWindowExceeded`` → clear chat.
+    /// - ``AICloudError/serviceOverloaded`` → status page.
+    /// - ``AICloudError/networkUnavailable`` → in-app retry.
+    private static func makeErrorAction(for error: Error) -> ChatErrorAction? {
+        guard let aiError = error as? AICloudError else { return nil }
+        switch aiError {
+        case .creditBalanceTooLow:
+            return urlAction(
+                "https://console.anthropic.com/settings/billing",
+                label: Strings.Chat.openBilling,
+                hint: Strings.Accessibility.chatOpenBillingHint
+            )
+        case .invalidCredentials:
+            return ChatErrorAction(
+                kind: .openSignIn,
+                label: Strings.Chat.signInAgain,
+                accessibilityHint: Strings.Accessibility.chatSignInAgainHint
+            )
+        case .permissionDenied:
+            return urlAction(
+                "https://console.anthropic.com/settings/plans",
+                label: Strings.Chat.openPlans,
+                hint: Strings.Accessibility.chatOpenPlansHint
+            )
+        case .contextWindowExceeded:
+            return ChatErrorAction(
+                kind: .clearChat,
+                label: Strings.Chat.clearHistory,
+                accessibilityHint: Strings.Accessibility.chatErrorClearChatHint
+            )
+        case .serviceOverloaded:
+            return urlAction(
+                "https://status.anthropic.com",
+                label: Strings.Chat.openStatusPage,
+                hint: Strings.Accessibility.chatOpenStatusPageHint
+            )
+        case .networkUnavailable:
+            return ChatErrorAction(
+                kind: .retry,
+                label: Strings.Chat.tryAgain,
+                accessibilityHint: Strings.Accessibility.chatTryAgainHint
+            )
+        case .missingCredentials,
+                .rateLimited,
+                .serverError,
+                .invalidRequest,
+                .decodingFailure,
+                .keychainFailure,
+                .cancelled,
+                .unexpectedStatus:
+            return nil
+        }
+    }
+
+    /// Builds a ``ChatErrorAction`` from a hard-coded URL string.
+    /// The URLs in `makeErrorAction(for:)` are all known-valid
+    /// Anthropic console paths, so a missing `URL(string:)` result
+    /// would be a programming error — but we coalesce to `nil`
+    /// rather than force-unwrap so a typo in a future addition
+    /// can't crash the chat surface.
+    private static func urlAction(
+        _ urlString: String,
+        label: LocalizedStringResource,
+        hint: LocalizedStringResource
+    ) -> ChatErrorAction? {
+        guard let url = URL(string: urlString) else { return nil }
+        return ChatErrorAction(url: url, label: label, accessibilityHint: hint)
     }
 
     /// Either persists the completed assistant text into
@@ -344,6 +426,21 @@ public final class AnthropicBonjourChatSession: BonjourChatSessionProtocol {
         messages.append(BonjourChatMessage(role: .assistant, content: refusalText))
     }
 
+    // MARK: - Clear Error
+
+    /// Overrides the protocol default so the actionable
+    /// remediation (``errorAction``) clears in the same call as
+    /// ``error`` — the two are a paired surface and must
+    /// disappear together when the user commits to a follow-up
+    /// send. Without this override, the protocol's default would
+    /// clear only ``error``; the banner would briefly render
+    /// message-less-but-still-actionable, which reads as a
+    /// rendering bug.
+    public func clearError() {
+        error = nil
+        errorAction = nil
+    }
+
     // MARK: - Reset
 
     public func reset() {
@@ -354,6 +451,7 @@ public final class AnthropicBonjourChatSession: BonjourChatSessionProtocol {
         currentModel = nil
         lastContextBlock = nil
         error = nil
+        errorAction = nil
         isGenerating = false
         intentBroker.consume()
     }
@@ -373,6 +471,7 @@ public final class AnthropicBonjourChatSession: BonjourChatSessionProtocol {
         currentModel = nil
         lastContextBlock = nil
         error = nil
+        errorAction = nil
         isGenerating = false
     }
 

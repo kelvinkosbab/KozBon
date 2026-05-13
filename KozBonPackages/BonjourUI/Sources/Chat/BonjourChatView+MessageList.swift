@@ -127,6 +127,16 @@ extension BonjourChatView {
             viewModel.messageTransitionAnimation(reduceMotion: reduceMotion),
             value: viewModel.isScanningNetwork
         )
+        // Drive the error banner's mount/unmount through the same
+        // transition system. Watching `error != nil` (rather than
+        // the string itself) means a new error fades in, dismissing
+        // fades out, but a streamed error-text update on a banner
+        // already on screen doesn't re-trigger the animation —
+        // which would visually "blink" the banner mid-read.
+        .animation(
+            viewModel.messageTransitionAnimation(reduceMotion: reduceMotion),
+            value: session.error != nil
+        )
     }
 
     /// The scrollable content of the chat surface. Always contains
@@ -187,17 +197,66 @@ extension BonjourChatView {
             }
 
             if let error = session.error {
-                Text(error)
-                    .foregroundStyle(.red)
-                    .padding(.horizontal)
-                    .transition(.opacity)
-                    // Without this, VoiceOver reads the raw error
-                    // text and users relying on the red color as
-                    // the error signal are excluded.
-                    .accessibilityLabel(Strings.Accessibility.error(error))
+                ChatErrorBanner(
+                    message: error,
+                    action: session.errorAction,
+                    onInAppAction: { kind in
+                        handleErrorAction(kind, session: session)
+                    }
+                )
+                .transition(.opacity)
             }
         }
         .padding()
+    }
+
+    // MARK: - Error-Banner Action Dispatch
+
+    /// Routes the chat error banner's in-app action kinds to
+    /// their concrete view-model affordances. URL kinds bypass
+    /// this method — the banner renders them as a `Link` and
+    /// iOS handles the open.
+    ///
+    /// Defined inline rather than on the view model because each
+    /// branch reaches a different chat-view-owned piece of state
+    /// (`isSignInSheetPresented` is on the view's `@State`,
+    /// `pendingClear` is on the view model, the retry path needs
+    /// the environment-derived `preferencesStore` /
+    /// `reduceMotion`). Pulling these together at the dispatch
+    /// site keeps the view model from having to accept SwiftUI
+    /// environment values it doesn't otherwise need.
+    fileprivate func handleErrorAction(
+        _ kind: ChatErrorAction.Kind,
+        session: any BonjourChatSessionProtocol
+    ) {
+        switch kind {
+        case .openURL:
+            // URL actions render as a `Link` inside the banner;
+            // the closure never fires for them. Defensive
+            // no-op so future refactors that route URLs through
+            // the closure don't silently fall through.
+            break
+        case .openSignIn:
+            isSignInSheetPresented = true
+        case .clearChat:
+            // Setting `pendingClear` runs the animated
+            // scroll-then-reset sequence in `messageList` — same
+            // path the toolbar's Clear-chat menu item takes. The
+            // banner fades out via the
+            // `session.error != nil` animation watcher when the
+            // sequence's final `session.reset()` clears the
+            // error state.
+            isInputFocused = false
+            viewModel.pendingClear = true
+        case .retry:
+            Task {
+                await viewModel.retryLastSend(
+                    using: session,
+                    preferencesStore: preferencesStore,
+                    reduceMotion: reduceMotion
+                )
+            }
+        }
     }
 
     // MARK: - Long-Conversation Banner

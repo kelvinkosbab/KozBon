@@ -26,18 +26,38 @@ public enum AICloudError: Error, Sendable, Equatable {
     /// affordance.
     case missingCredentials(provider: AICloudProvider)
 
-    /// The provider rejected the supplied credentials. The user
-    /// should re-enter their key.
+    /// The provider rejected the supplied credentials (HTTP 401).
+    /// The key is invalid, malformed, or revoked — the user
+    /// should re-enter a fresh one. Separate from
+    /// ``permissionDenied`` because the user-facing remediation
+    /// is different: invalid keys mean "get a new key and
+    /// re-sign-in"; permission errors mean "your plan doesn't
+    /// allow this resource."
     case invalidCredentials(provider: AICloudProvider)
+
+    /// The provider accepted the key but the account doesn't
+    /// have permission for the requested resource — typically a
+    /// model the account's plan tier doesn't include (HTTP 403).
+    /// The chat surface routes this to a deep link to the
+    /// provider's plan-management console.
+    case permissionDenied(provider: AICloudProvider, message: String?)
 
     /// The provider rate-limited the request. ``retryAfterSeconds``
     /// carries the server's `Retry-After` header when present.
     case rateLimited(provider: AICloudProvider, retryAfterSeconds: TimeInterval?)
 
-    /// The provider returned a server-side error (5xx, transient
-    /// model unavailability, etc.). The opaque message comes from
-    /// the provider's response body.
+    /// The provider returned a generic server-side error (5xx
+    /// other than 529). The opaque message comes from the
+    /// provider's response body.
     case serverError(provider: AICloudProvider, message: String?)
+
+    /// The provider is currently overloaded (HTTP 529 for
+    /// Anthropic; capacity-saturation errors for other
+    /// providers). Distinct from ``serverError`` because the
+    /// user-facing remediation includes a status-page link —
+    /// the user can check whether it's a wide outage or just
+    /// their request.
+    case serviceOverloaded(provider: AICloudProvider, message: String?)
 
     /// The provider rejected the request body as invalid (4xx
     /// other than auth or rate-limit — typically 400, 404, 422).
@@ -47,6 +67,23 @@ public enum AICloudError: Error, Sendable, Equatable {
     /// rides on ``message``, so users and logs see exactly what
     /// the API complained about instead of a bare status code.
     case invalidRequest(provider: AICloudProvider, message: String?)
+
+    /// The provider's account has no credits / no payment
+    /// method, so requests are refused even with a valid API
+    /// key. A specific carve-out from ``invalidRequest`` because
+    /// the user-facing remediation is different — they need to
+    /// open the provider's billing console, not fix anything in
+    /// the app. The chat surface routes this case to an
+    /// actionable banner with a deep link to billing.
+    case creditBalanceTooLow(provider: AICloudProvider, message: String?)
+
+    /// The request's prompt + history exceeded the model's
+    /// context window (HTTP 400 with a "prompt is too long" or
+    /// similar message). Carved out from ``invalidRequest``
+    /// because the user-facing fix is in-app — clearing the
+    /// chat truncates the history that put the request over
+    /// the limit, so subsequent sends fit again.
+    case contextWindowExceeded(provider: AICloudProvider, message: String?)
 
     /// The user's device couldn't reach the provider's API at all
     /// (no network, DNS failure, TLS rejection).
@@ -93,6 +130,11 @@ extension AICloudError: LocalizedError {
             return "No API key is configured for \(provider.rawValue)."
         case .invalidCredentials(let provider):
             return "The API key for \(provider.rawValue) was rejected."
+        case .permissionDenied(let provider, let message):
+            if let message, !message.isEmpty {
+                return "\(provider.rawValue) denied access to the requested resource: \(message)"
+            }
+            return "\(provider.rawValue) denied access to the requested resource."
         case .rateLimited(let provider, let retry):
             if let retry {
                 return "\(provider.rawValue) is rate-limited. Retry after \(Int(retry))s."
@@ -103,11 +145,26 @@ extension AICloudError: LocalizedError {
                 return "\(provider.rawValue) returned a server error: \(message)"
             }
             return "\(provider.rawValue) returned a server error."
+        case .serviceOverloaded(let provider, let message):
+            if let message, !message.isEmpty {
+                return "\(provider.rawValue) is currently overloaded: \(message)"
+            }
+            return "\(provider.rawValue) is currently overloaded. Please try again shortly."
         case .invalidRequest(let provider, let message):
             if let message, !message.isEmpty {
                 return "\(provider.rawValue) rejected the request: \(message)"
             }
             return "\(provider.rawValue) rejected the request."
+        case .creditBalanceTooLow(let provider, let message):
+            if let message, !message.isEmpty {
+                return "\(provider.rawValue) credit balance too low: \(message)"
+            }
+            return "\(provider.rawValue) credit balance is too low to access the API."
+        case .contextWindowExceeded(let provider, let message):
+            if let message, !message.isEmpty {
+                return "\(provider.rawValue) context window exceeded: \(message)"
+            }
+            return "\(provider.rawValue) context window exceeded. Clear the chat to start fresh."
         case .networkUnavailable:
             return "Network unavailable."
         case .decodingFailure(let message):

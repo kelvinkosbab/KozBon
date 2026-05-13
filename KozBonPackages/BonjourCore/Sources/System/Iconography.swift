@@ -317,6 +317,15 @@ public enum Iconography {
     /// usage in pickers.
     public static let signedIn = "checkmark.circle.fill"
 
+    // MARK: - Status
+
+    /// Filled triangle with an exclamation mark — used as the
+    /// leading glyph on the chat error banner. Communicates
+    /// "something went wrong" at a glance; the colored fill (red)
+    /// is applied at the view layer so the symbol stays neutral
+    /// here.
+    public static let errorBanner = "exclamationmark.triangle.fill"
+
     // MARK: - Default
 
     /// Wi-Fi icon (default fallback for unknown service types).

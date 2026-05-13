@@ -196,6 +196,41 @@ struct AnthropicBonjourChatSessionTests {
         #expect(session.messages[0].role == .user)
     }
 
+    // MARK: - Clear Error
+
+    @Test("`clearError` resets both `error` and `errorAction` without touching the conversation")
+    func clearErrorResetsBannerStateOnly() async throws {
+        // Set up the failure-with-action state by stubbing the
+        // client to throw `.creditBalanceTooLow`. That's the one
+        // case in the mapper that populates `errorAction`, so it's
+        // the only path that exercises the override.
+        let client = MockAnthropicClient(
+            chunks: [],
+            error: AICloudError.creditBalanceTooLow(
+                provider: .anthropic,
+                message: "Your credit balance is too low"
+            )
+        )
+        let session = makeSession(client: client)
+
+        // First send fails — banner state lands populated.
+        session.appendUserMessage("hi")
+        await session.send("hi", context: makeContext())
+        #expect(session.error != nil)
+        #expect(session.errorAction != nil)
+        let messageCount = session.messages.count
+
+        // `clearError` wipes both halves of the banner state.
+        session.clearError()
+
+        #expect(session.error == nil)
+        #expect(session.errorAction == nil)
+        // The conversation is untouched — the user's bubble from
+        // the failed turn stays in `messages` so the chat history
+        // is coherent for the follow-up send.
+        #expect(session.messages.count == messageCount)
+    }
+
     // MARK: - Reset / Restore
 
     @Test("`reset` clears messages, conversation history, and error state")

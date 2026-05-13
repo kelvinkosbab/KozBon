@@ -199,6 +199,10 @@ public extension Image {
     static var signedIn: Image { Image(systemName: Iconography.signedIn) }
     static var externalLink: Image { Image(systemName: Iconography.externalLink) }
 
+    // MARK: - Status
+
+    static var errorBanner: Image { Image(systemName: Iconography.errorBanner) }
+
     // MARK: - Default
 
     static var wifi: Image { Image(systemName: Iconography.wifi) }

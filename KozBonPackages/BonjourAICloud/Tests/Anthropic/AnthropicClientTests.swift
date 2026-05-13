@@ -29,7 +29,15 @@ struct AnthropicClientTests {
 
     // MARK: - Helpers
 
-    private static func makeSession(handler: @escaping @Sendable (URLRequest) -> StubURLProtocol.Response) -> URLSession {
+    // Helpers are `internal` (no `private`) so the
+    // `AnthropicClientTests+ErrorMapping` extension in a sibling
+    // file can call them. The split keeps the type body under
+    // SwiftLint's `type_body_length` threshold while letting all
+    // tests share a single `.serialized` suite — both files'
+    // tests run sequentially against the process-global
+    // `StubURLProtocol.handler`, so they can't race on it.
+
+    static func makeSession(handler: @escaping @Sendable (URLRequest) -> StubURLProtocol.Response) -> URLSession {
         let config = URLSessionConfiguration.ephemeral
         config.protocolClasses = [StubURLProtocol.self]
         let session = URLSession(configuration: config)
@@ -37,7 +45,7 @@ struct AnthropicClientTests {
         return session
     }
 
-    private func makeRequest() -> AnthropicMessageRequest {
+    func makeRequest() -> AnthropicMessageRequest {
         AnthropicMessageRequest(
             model: "claude-sonnet-4-5",
             maxTokens: 128,
@@ -102,34 +110,28 @@ struct AnthropicClientTests {
         #expect(collected == ["ok"])
     }
 
-    // MARK: - HTTP Error Mapping
+    // MARK: - Transport Errors
+    //
+    // Per-status HTTP-error routing tests live in
+    // `AnthropicClientErrorMappingTests` so neither file exceeds
+    // SwiftLint's `type_body_length` threshold. This suite covers
+    // failure modes that occur *before* the HTTP layer parses a
+    // status code — URLSession-level errors (DNS / TLS / no
+    // connection) and the inline-SSE error case where the
+    // response is a 200 but the stream itself carries an error
+    // event.
 
-    @Test("HTTP 401 maps to `.invalidCredentials`")
-    func mapsAuthErrorTo401() async {
+    @Test("URLSession-level failures route to `.networkUnavailable` so the chat banner can offer Retry")
+    func urlSessionErrorRoutesToNetworkUnavailable() async throws {
+        // The user is offline / DNS is down / TLS rejected the
+        // connection — URLSession surfaces these as `URLError`.
+        // The client maps them to the typed
+        // ``.networkUnavailable`` so the chat banner can attach
+        // a Retry button (in-app action) instead of leaving the
+        // user with a generic localized URLError string and no
+        // recovery affordance.
         let session = Self.makeSession { _ in
-            .success(
-                statusCode: 401,
-                body: Data(#"{"type": "error", "error": {"type": "authentication_error", "message": "Invalid API key"}}"#.utf8)
-            )
-        }
-        let client = AnthropicClient(urlSession: session)
-
-        await #expect(
-            throws: AICloudError.invalidCredentials(provider: .anthropic),
-            performing: {
-                for try await _ in client.streamMessage(request: makeRequest(), apiKey: "wrong") {}
-            }
-        )
-    }
-
-    @Test("HTTP 429 maps to `.rateLimited` with parsed `Retry-After`")
-    func mapsRateLimitWithRetryAfter() async throws {
-        let session = Self.makeSession { _ in
-            .success(
-                statusCode: 429,
-                body: Data(#"{"type":"error","error":{"type":"rate_limit_error","message":"Too many requests"}}"#.utf8),
-                headers: ["Retry-After": "30"]
-            )
+            .failure(URLError(.notConnectedToInternet))
         }
         let client = AnthropicClient(urlSession: session)
 
@@ -140,78 +142,7 @@ struct AnthropicClientTests {
             caught = error
         }
 
-        let unwrapped = try #require(caught)
-        switch unwrapped {
-        case .rateLimited(let provider, let retry):
-            #expect(provider == .anthropic)
-            #expect(retry == 30)
-        default:
-            Issue.record("Expected .rateLimited, got \(unwrapped)")
-        }
-    }
-
-    @Test("HTTP 500 maps to `.serverError` carrying the API message")
-    func mapsServerError() async throws {
-        let session = Self.makeSession { _ in
-            .success(
-                statusCode: 503,
-                body: Data(#"{"error": {"message": "Service unavailable"}}"#.utf8)
-            )
-        }
-        let client = AnthropicClient(urlSession: session)
-
-        var caught: AICloudError?
-        do {
-            for try await _ in client.streamMessage(request: makeRequest(), apiKey: "k") {}
-        } catch let error as AICloudError {
-            caught = error
-        }
-
-        let unwrapped = try #require(caught)
-        switch unwrapped {
-        case .serverError(let provider, let message):
-            #expect(provider == .anthropic)
-            #expect(message == "Service unavailable")
-        default:
-            Issue.record("Expected .serverError, got \(unwrapped)")
-        }
-    }
-
-    @Test("HTTP 400 surfaces as `.invalidRequest` with the API message extracted")
-    func http400SurfacesInvalidRequestWithMessage() async throws {
-        // The user-reported regression: a 400 from Anthropic
-        // (e.g., "model not found" when a stale identifier
-        // ships) was previously collapsed into the bare
-        // `.unexpectedStatus(statusCode: 400)` case that
-        // dropped the API's explanation on the floor. The new
-        // mapping routes 4xx (other than auth / rate-limit) to
-        // `.invalidRequest` with the extracted message, so the
-        // user sees exactly what Anthropic complained about.
-        let session = Self.makeSession { _ in
-            .success(
-                statusCode: 400,
-                body: Data(#"""
-                {"type":"error","error":{"type":"invalid_request_error","message":"model: claude-opus-4-5 not found"}}
-                """#.utf8)
-            )
-        }
-        let client = AnthropicClient(urlSession: session)
-
-        var caught: AICloudError?
-        do {
-            for try await _ in client.streamMessage(request: makeRequest(), apiKey: "k") {}
-        } catch let error as AICloudError {
-            caught = error
-        }
-
-        let unwrapped = try #require(caught)
-        switch unwrapped {
-        case .invalidRequest(let provider, let message):
-            #expect(provider == .anthropic)
-            #expect(message == "model: claude-opus-4-5 not found")
-        default:
-            Issue.record("Expected .invalidRequest, got \(unwrapped)")
-        }
+        #expect(caught == .networkUnavailable)
     }
 
     // MARK: - Inline Stream Error

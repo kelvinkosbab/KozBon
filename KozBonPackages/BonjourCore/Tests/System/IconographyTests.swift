@@ -151,6 +151,8 @@ struct IconographyTests {
         Iconography.paintbrushPointed,
         // Administration
         Iconography.adminPanels,
+        // Status
+        Iconography.errorBanner,
         // Default
         Iconography.wifi
     ]

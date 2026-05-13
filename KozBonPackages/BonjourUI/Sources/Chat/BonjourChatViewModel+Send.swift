@@ -103,6 +103,18 @@ extension BonjourChatViewModel {
             return
         }
 
+        // Clear any prior error banner the instant the user
+        // commits to a fresh send. Without this, the previous
+        // failure's banner lingers on screen for ~3 seconds
+        // (the fresh-scan window inside `buildChatContext`)
+        // before `session.send` finally clears it internally —
+        // visually inconsistent with the new user bubble landing
+        // immediately below. Banner-clear fades out via the
+        // `session.error != nil` animation watcher on the
+        // ScrollView, so it animates concurrently with the new
+        // bubble's insert.
+        session.clearError()
+
         // Append the user's bubble synchronously, BEFORE any
         // awaits. The fresh-scan path inside
         // ``buildChatContext(forMessage:)`` can stall for ~3
@@ -122,6 +134,54 @@ extension BonjourChatViewModel {
         session.responseLength = detailLevel.responseLength
 
         await session.send(trimmed, context: context)
+    }
+
+    // MARK: - Retry
+
+    /// Re-sends the most recent user message after a transient
+    /// failure (network drop, etc.) so the user doesn't have to
+    /// re-type. Driven by the chat error banner's "Try again"
+    /// button on ``ChatErrorAction/Kind/retry`` actions.
+    ///
+    /// Distinct from ``sendMessage(_:using:preferencesStore:reduceMotion:)``
+    /// in two ways:
+    /// 1. The user's bubble for the failed turn is already in
+    ///    `session.messages` (the failed send appended it but
+    ///    the assistant placeholder was rolled back on error).
+    ///    Re-appending would double the bubble visually.
+    /// 2. The retry preserves any in-progress text in
+    ///    ``inputText`` — the user may have started typing a
+    ///    follow-up; we shouldn't lose it when they tap retry.
+    ///
+    /// No-ops silently when there's no last user message
+    /// (defensive — the banner only renders when a send failed,
+    /// which always leaves a user bubble in `messages`) or when
+    /// the session is mid-stream.
+    func retryLastSend(
+        using session: any BonjourChatSessionProtocol,
+        preferencesStore: PreferencesStore,
+        reduceMotion: Bool
+    ) async {
+        guard !session.isGenerating else { return }
+        guard let lastUserMessage = session.messages
+            .last(where: { $0.role == .user })?.content,
+              !lastUserMessage.isEmpty else {
+            return
+        }
+
+        // Clear the error banner so its fade-out overlaps with
+        // the assistant placeholder's fade-in — same pacing as
+        // a fresh send.
+        session.clearError()
+
+        let context = await buildChatContext(forMessage: lastUserMessage)
+
+        let detailLevel = BonjourServicePromptBuilder.ExpertiseLevel(
+            rawValue: preferencesStore.aiExpertiseLevel
+        ) ?? .basic
+        session.responseLength = detailLevel.responseLength
+
+        await session.send(lastUserMessage, context: context)
     }
 
     /// Builds the `ChatContext` the assistant sees for the
