@@ -4,6 +4,10 @@
 
 KozBon is a multi-platform Apple app for discovering and managing Bonjour (mDNS) network services. Bundle ID: `com.kozinga.KozBon`.
 
+## Working with Claude
+
+Agent execution conventions — plan multi-step edits before executing, fix course-corrections silently (no "I made a mess" / "let me clean that up" filler), prefer one atomic `Edit` over a chain of small ones — are documented in [`.claude/rules/claude-execution-discipline.md`](.claude/rules/claude-execution-discipline.md). The rule loads automatically into every Claude Code session in this repo.
+
 ## Build & Run
 
 ```bash
