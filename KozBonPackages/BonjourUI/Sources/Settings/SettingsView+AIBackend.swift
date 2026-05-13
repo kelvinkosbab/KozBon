@@ -86,7 +86,27 @@ extension SettingsView {
         Picker(
             selection: Binding(
                 get: { preferencesStore.aiBackend },
-                set: { preferencesStore.aiBackend = $0 }
+                // Wrap the mutation in a `withAnimation`
+                // transaction so the resulting color changes
+                // ripple through the view tree smoothly: the
+                // global `.tint(...)` in `AppCoreScene` reads
+                // `aiBackend.accentColor` and propagates through
+                // every tinted control (the picker's checkmark,
+                // the sign-in/sign-out buttons, the chat tab's
+                // icon highlight). Without an animation
+                // transaction the colors pop between blue and
+                // Cara orange in a single frame.
+                //
+                // The Form's existing `.animation(_:value:
+                // aiBackend)` only covers descendants of the
+                // Form — `withAnimation` covers everything that
+                // re-renders from this mutation, including the
+                // tint propagation upstream.
+                set: { newValue in
+                    withAnimation(reduceMotion ? nil : .default) {
+                        preferencesStore.aiBackend = newValue
+                    }
+                }
             )
         ) {
             backendOption(.appleIntelligence)
@@ -196,7 +216,15 @@ extension SettingsView {
             Menu {
                 ForEach(AnthropicModel.allCases) { model in
                     Button {
-                        preferencesStore.aiCloudModel = model
+                        // Same animation treatment as the
+                        // backend picker — the checkmark moves
+                        // between rows when selection changes,
+                        // and the move reads as a smooth slide
+                        // rather than a pop inside a
+                        // `withAnimation` transaction.
+                        withAnimation(reduceMotion ? nil : .default) {
+                            preferencesStore.aiCloudModel = model
+                        }
                     } label: {
                         if preferencesStore.aiCloudModel == model {
                             Label(localizedName(for: model), systemImage: Iconography.selected)
@@ -274,9 +302,16 @@ extension SettingsView {
             // separate alert would be louder than this warrants;
             // the next save attempt will overwrite cleanly.
         }
-        refreshAnthropicKeyState()
-        if AppleIntelligenceSupport.isDeviceSupported {
-            preferencesStore.aiBackend = .appleIntelligence
+        // Animate the same way the picker-driven backend swap
+        // does — sign-out reassigns `aiBackend` programmatically,
+        // and without an animation transaction the global tint
+        // would pop from Cara orange to KozBon blue between
+        // frames.
+        withAnimation(reduceMotion ? nil : .default) {
+            refreshAnthropicKeyState()
+            if AppleIntelligenceSupport.isDeviceSupported {
+                preferencesStore.aiBackend = .appleIntelligence
+            }
         }
     }
 

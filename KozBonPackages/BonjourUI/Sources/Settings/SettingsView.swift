@@ -29,7 +29,8 @@ public struct SettingsView: View {
     // ownership can't traverse a class boundary.
     @Environment(\.preferencesStore) var preferencesStore
     @Environment(\.aiCloudCredentialsStore) var credentialsStore
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    // `internal` so the `+AIBackend` companion file can read it.
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
     @State private var isResetConfirmationPresented = false
     @State var isSignInSheetPresented = false
     @State var isSignOutConfirmationPresented = false
