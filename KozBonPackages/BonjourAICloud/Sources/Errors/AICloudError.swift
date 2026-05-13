@@ -39,6 +39,15 @@ public enum AICloudError: Error, Sendable, Equatable {
     /// the provider's response body.
     case serverError(provider: AICloudProvider, message: String?)
 
+    /// The provider rejected the request body as invalid (4xx
+    /// other than auth or rate-limit — typically 400, 404, 422).
+    /// Common causes: a model identifier that doesn't exist for
+    /// this account, a malformed system block, or a required
+    /// beta header missing. The provider's actual error string
+    /// rides on ``message``, so users and logs see exactly what
+    /// the API complained about instead of a bare status code.
+    case invalidRequest(provider: AICloudProvider, message: String?)
+
     /// The user's device couldn't reach the provider's API at all
     /// (no network, DNS failure, TLS rejection).
     case networkUnavailable
@@ -94,6 +103,11 @@ extension AICloudError: LocalizedError {
                 return "\(provider.rawValue) returned a server error: \(message)"
             }
             return "\(provider.rawValue) returned a server error."
+        case .invalidRequest(let provider, let message):
+            if let message, !message.isEmpty {
+                return "\(provider.rawValue) rejected the request: \(message)"
+            }
+            return "\(provider.rawValue) rejected the request."
         case .networkUnavailable:
             return "Network unavailable."
         case .decodingFailure(let message):

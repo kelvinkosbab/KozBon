@@ -177,10 +177,23 @@ struct AnthropicClientTests {
         }
     }
 
-    @Test("HTTP 418 (unmapped) surfaces as `.unexpectedStatus`")
-    func mapsUnknownStatus() async throws {
+    @Test("HTTP 400 surfaces as `.invalidRequest` with the API message extracted")
+    func http400SurfacesInvalidRequestWithMessage() async throws {
+        // The user-reported regression: a 400 from Anthropic
+        // (e.g., "model not found" when a stale identifier
+        // ships) was previously collapsed into the bare
+        // `.unexpectedStatus(statusCode: 400)` case that
+        // dropped the API's explanation on the floor. The new
+        // mapping routes 4xx (other than auth / rate-limit) to
+        // `.invalidRequest` with the extracted message, so the
+        // user sees exactly what Anthropic complained about.
         let session = Self.makeSession { _ in
-            .success(statusCode: 418, body: Data())
+            .success(
+                statusCode: 400,
+                body: Data(#"""
+                {"type":"error","error":{"type":"invalid_request_error","message":"model: claude-opus-4-5 not found"}}
+                """#.utf8)
+            )
         }
         let client = AnthropicClient(urlSession: session)
 
@@ -193,11 +206,11 @@ struct AnthropicClientTests {
 
         let unwrapped = try #require(caught)
         switch unwrapped {
-        case .unexpectedStatus(let provider, let statusCode):
+        case .invalidRequest(let provider, let message):
             #expect(provider == .anthropic)
-            #expect(statusCode == 418)
+            #expect(message == "model: claude-opus-4-5 not found")
         default:
-            Issue.record("Expected .unexpectedStatus, got \(unwrapped)")
+            Issue.record("Expected .invalidRequest, got \(unwrapped)")
         }
     }
 

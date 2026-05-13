@@ -20,7 +20,7 @@ struct AnthropicModelTests {
 
     @Test("`resolved(rawValue:)` returns the matching case for known identifiers")
     func resolvedMatchesKnownIdentifiers() {
-        #expect(AnthropicModel.resolved(rawValue: "claude-opus-4-5") == .opus)
+        #expect(AnthropicModel.resolved(rawValue: "claude-opus-4-1") == .opus)
         #expect(AnthropicModel.resolved(rawValue: "claude-sonnet-4-5") == .sonnet)
         #expect(AnthropicModel.resolved(rawValue: "claude-haiku-4-5") == .haiku)
     }
@@ -57,8 +57,11 @@ struct AnthropicModelTests {
         // the picker — this assertion locks the format down so a
         // future "tighten the name" refactor can't silently drop
         // the version. Localized strings in the catalog should
-        // mirror this format ("Claude Opus 4.5" etc).
-        #expect(AnthropicModel.opus.displayName == "Claude Opus 4.5")
+        // mirror this format ("Claude Opus 4.1" etc). Opus
+        // intentionally lags Sonnet / Haiku by one minor revision
+        // — see the version-property comment in
+        // `AnthropicModel.swift`.
+        #expect(AnthropicModel.opus.displayName == "Claude Opus 4.1")
         #expect(AnthropicModel.sonnet.displayName == "Claude Sonnet 4.5")
         #expect(AnthropicModel.haiku.displayName == "Claude Haiku 4.5")
     }

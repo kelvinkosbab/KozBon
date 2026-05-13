@@ -195,6 +195,13 @@ public final class AnthropicClient: AnthropicClientProtocol {
         response: HTTPURLResponse
     ) -> AICloudError {
         let message = extractErrorMessage(from: body)
+        // Log the raw status + message at error level — the
+        // user-facing description above is the same content but
+        // the explicit log entry makes per-environment
+        // diagnostics easier when a status code recurs.
+        logger.error(
+            "Anthropic API error \(statusCode): \(message ?? "<no message>", privacy: .public)"
+        )
         switch statusCode {
         case 401, 403:
             return .invalidCredentials(provider: .anthropic)
@@ -206,6 +213,14 @@ public final class AnthropicClient: AnthropicClientProtocol {
             return .rateLimited(provider: .anthropic, retryAfterSeconds: retry)
         case 500...599:
             return .serverError(provider: .anthropic, message: message)
+        case 400...499:
+            // 400, 404, 413, 422 — request rejected by the
+            // provider. Anthropic's error body carries a clear
+            // explanation ("model not found", "max_tokens
+            // exceeds…", etc.); surface it so users see exactly
+            // what's wrong instead of a bare status code that
+            // forces them to inspect logs.
+            return .invalidRequest(provider: .anthropic, message: message)
         default:
             return .unexpectedStatus(provider: .anthropic, statusCode: statusCode)
         }

@@ -23,6 +23,8 @@ struct AICloudErrorTests {
             .rateLimited(provider: .anthropic, retryAfterSeconds: 30),
             .serverError(provider: .anthropic, message: nil),
             .serverError(provider: .anthropic, message: "overloaded"),
+            .invalidRequest(provider: .anthropic, message: nil),
+            .invalidRequest(provider: .anthropic, message: "model not found"),
             .networkUnavailable,
             .decodingFailure(message: "missing 'content' field"),
             .keychainFailure(status: -25_300),
@@ -52,5 +54,22 @@ struct AICloudErrorTests {
 
         #expect(withRetry.errorDescription?.contains("30") == true)
         #expect(withoutRetry.errorDescription?.contains("Retry after") == false)
+    }
+
+    @Test("`invalidRequest` surfaces the provider's API error message")
+    func invalidRequestSurfacesMessage() {
+        // The whole point of this case existing — a 400 from
+        // Anthropic carries a specific reason ("model not
+        // found", "max_tokens exceeds…") and users need to see
+        // it to act on it. The previous `.unexpectedStatus`
+        // routing logged only the status code.
+        let withMessage = AICloudError.invalidRequest(
+            provider: .anthropic,
+            message: "model: claude-opus-4-5 not found"
+        )
+        let withoutMessage = AICloudError.invalidRequest(provider: .anthropic, message: nil)
+
+        #expect(withMessage.errorDescription?.contains("model: claude-opus-4-5 not found") == true)
+        #expect(withoutMessage.errorDescription?.contains("rejected the request") == true)
     }
 }

@@ -245,17 +245,17 @@ struct PreferencesStoreTests {
         let container = try makeContainer()
 
         let store1 = PreferencesStore(container: container)
-        store1.aiCloudModelRawValue = "claude-opus-4-5"
+        store1.aiCloudModelRawValue = "claude-opus-4-1"
 
         let store2 = PreferencesStore(container: container)
-        #expect(store2.aiCloudModelRawValue == "claude-opus-4-5")
+        #expect(store2.aiCloudModelRawValue == "claude-opus-4-1")
     }
 
     @Test("`resetToDefaults` restores both AI-backend fields")
     func resetRestoresAIBackendFields() throws {
         let store = try makeStore()
         store.aiBackendRawValue = "anthropic"
-        store.aiCloudModelRawValue = "claude-opus-4-5"
+        store.aiCloudModelRawValue = "claude-opus-4-1"
 
         store.resetToDefaults()
 

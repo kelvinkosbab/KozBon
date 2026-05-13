@@ -83,11 +83,11 @@ struct AIBackendTests {
         #expect(store.aiCloudModel == .sonnet)
     }
 
-    @Test("Writing typed `aiCloudModel = .opus` persists as raw `\"claude-opus-4-5\"`")
+    @Test("Writing typed `aiCloudModel = .opus` persists as raw `\"claude-opus-4-1\"`")
     func typedCloudModelWritesRawValue() throws {
         let store = try makeStore()
         store.aiCloudModel = .opus
-        #expect(store.aiCloudModelRawValue == "claude-opus-4-5")
+        #expect(store.aiCloudModelRawValue == "claude-opus-4-1")
         #expect(store.aiCloudModel == .opus)
     }
 

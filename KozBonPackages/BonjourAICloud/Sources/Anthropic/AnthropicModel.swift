@@ -27,7 +27,14 @@ public enum AnthropicModel: String, Sendable, CaseIterable, Codable, Identifiabl
     /// The most capable Claude model. Slowest first-token latency
     /// and highest per-token cost; appropriate for users who care
     /// more about answer quality than response speed.
-    case opus = "claude-opus-4-5"
+    ///
+    /// The raw value tracks Anthropic's current top Opus alias.
+    /// Sonnet and Haiku ship with `4-5` aliases as of late 2025;
+    /// Opus's latest is `4-1` (Opus 4.1 from August 2025) — a
+    /// previous version of this enum used `claude-opus-4-5`,
+    /// which Anthropic's `/v1/messages` endpoint rejects with a
+    /// 400 because that alias was never published.
+    case opus = "claude-opus-4-1"
 
     /// The balanced default. Strong reasoning, lower cost per
     /// token than Opus, faster first-token latency. The model the
@@ -72,17 +79,22 @@ public enum AnthropicModel: String, Sendable, CaseIterable, Codable, Identifiabl
     /// Marketing version of the model (e.g. `"4.5"`).
     ///
     /// Separate from ``rawValue`` (which carries the dash-cased
-    /// API identifier `claude-opus-4-5`) so the UI can surface a
-    /// human-readable version next to the model name without
+    /// API identifier `claude-sonnet-4-5`) so the UI can surface
+    /// a human-readable version next to the model name without
     /// parsing the API identifier — and so the source of truth
     /// for "which Claude generation does KozBon currently
-    /// support" lives in exactly one place. When Anthropic ships
-    /// `4.6` (or whatever), bumping the version is a one-line
-    /// edit here plus the matching ``rawValue`` change.
+    /// support" lives in exactly one place. Bumping a version is
+    /// a one-line edit here plus the matching ``rawValue``
+    /// change.
+    ///
+    /// Opus lags Sonnet / Haiku by one minor revision because
+    /// Anthropic's release cadence ships each tier on its own
+    /// schedule — Sonnet and Haiku are at 4.5 (late 2025) while
+    /// Opus's most-recent published alias is 4.1 (August 2025).
     public var version: String {
         switch self {
-        case .opus, .sonnet, .haiku:
-            return "4.5"
+        case .opus:               return "4.1"
+        case .sonnet, .haiku:     return "4.5"
         }
     }
 

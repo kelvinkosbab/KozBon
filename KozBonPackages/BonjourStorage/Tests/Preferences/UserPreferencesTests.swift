@@ -131,7 +131,7 @@ struct UserPreferencesTests {
     @Test("`aiCloudModelRawValue` accepts a write to a different model and reads it back")
     func aiCloudModelCanBeSwitched() {
         let prefs = UserPreferences()
-        prefs.aiCloudModelRawValue = "claude-opus-4-5"
-        #expect(prefs.aiCloudModelRawValue == "claude-opus-4-5")
+        prefs.aiCloudModelRawValue = "claude-opus-4-1"
+        #expect(prefs.aiCloudModelRawValue == "claude-opus-4-1")
     }
 }
