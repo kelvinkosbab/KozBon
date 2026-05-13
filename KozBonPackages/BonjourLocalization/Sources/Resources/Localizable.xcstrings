@@ -22631,6 +22631,165 @@
           }
         }
       }
+    },
+    "chat_scanning_network": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scanning network…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buscando en la red…"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analyse du réseau…"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Netzwerk wird durchsucht…"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ネットワークをスキャン中…"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在扫描网络…"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جارٍ فحص الشبكة…"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סורק את הרשת…"
+          }
+        }
+      }
+    },
+    "chat_sign_in_to_claude_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign in to Claude"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Iniciar sesión en Claude"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se connecter à Claude"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bei Claude anmelden"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claude にサインイン"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "登录 Claude"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تسجيل الدخول إلى Claude"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "התחברות ל‑Claude"
+          }
+        }
+      }
+    },
+    "chat_sign_in_to_claude_body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You've selected Anthropic Claude as your assistant. Sign in with your Anthropic API key to start chatting."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Has seleccionado Anthropic Claude como tu asistente. Inicia sesión con tu clave de API de Anthropic para empezar a chatear."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vous avez sélectionné Anthropic Claude comme assistant. Connectez-vous avec votre clé d'API Anthropic pour commencer à discuter."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sie haben Anthropic Claude als Ihren Assistenten ausgewählt. Melden Sie sich mit Ihrem Anthropic-API-Schlüssel an, um zu chatten."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アシスタントとして Anthropic Claude を選択しています。Anthropic の API キーでサインインしてチャットを開始してください。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "您已选择 Anthropic Claude 作为助手。请使用您的 Anthropic API 密钥登录以开始聊天。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لقد اخترت Anthropic Claude مساعدًا لك. سجّل الدخول باستخدام مفتاح Anthropic API الخاص بك لبدء المحادثة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחרת ב‑Anthropic Claude כעוזר שלך. התחבר באמצעות מפתח ה‑API של Anthropic כדי להתחיל לשוחח."
+          }
+        }
+      }
     }
   },
   "version": "1.0"

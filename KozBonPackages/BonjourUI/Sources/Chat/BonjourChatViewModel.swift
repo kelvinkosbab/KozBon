@@ -75,6 +75,27 @@ final class BonjourChatViewModel {
     /// ``forwardStreamingStateToHapticTracker(injectedSession:)``.
     var sentenceHapticTracker = SentenceHapticTracker()
 
+    // MARK: - Network-Scan Indicator
+
+    /// Set during the `BonjourOneShotScanner` window that
+    /// precedes a fresh-scan-triggering question (see
+    /// `ChatScanIntentDetector`). The chat surface renders a
+    /// transient "Scanning network…" shimmer row in place of
+    /// the assistant's eventual bubble during this window so
+    /// the user has visible feedback that something is happening
+    /// — without it, the chat sits silent for the ~3 seconds
+    /// between the user's tap and the first streamed token,
+    /// which reads as a frozen UI especially on the cloud
+    /// (Anthropic) backend where there's additional network
+    /// latency on top of the scan.
+    ///
+    /// Toggled by the send pipeline in
+    /// `BonjourChatViewModel+Send.swift`: `true` immediately
+    /// before the scanner's `run()` call and `false` immediately
+    /// after, regardless of which backend will handle the
+    /// resulting message.
+    var isScanningNetwork = false
+
     // MARK: - Scroll Coordination
 
     /// Set once the user's first message in a fresh chat has

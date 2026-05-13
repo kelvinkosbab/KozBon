@@ -1272,6 +1272,36 @@ public enum Strings {
             .init("chat_clear_history", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        /// Transient row shown in the chat thread during the
+        /// fresh-scan window (see `ChatScanIntentDetector`) — the
+        /// ~3 seconds between the user's question and Claude or
+        /// Apple Intelligence's first streamed token, while the
+        /// app runs a `BonjourOneShotScanner` pass to gather live
+        /// network data for the assistant's context block.
+        ///
+        /// Renders with a leading-to-trailing glow animation so
+        /// the chat doesn't look frozen during the scan. Reads
+        /// "Scanning network…" in English; localized to match
+        /// across all 8 supported locales.
+        public static var scanningNetwork: LocalizedStringResource {
+            .init("chat_scanning_network", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Headline of the in-tab prompt shown when the user has
+        /// selected the Anthropic backend but hasn't signed in.
+        /// Mirrors the Settings sign-in sheet's title so the
+        /// language stays consistent across surfaces.
+        public static var signInToClaudeTitle: LocalizedStringResource {
+            .init("chat_sign_in_to_claude_title", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Body copy on the in-tab Claude-sign-in prompt.
+        /// Explains why the chat surface is currently unavailable
+        /// and what the user needs to do to unlock it.
+        public static var signInToClaudeBody: LocalizedStringResource {
+            .init("chat_sign_in_to_claude_body", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var suggestion1: LocalizedStringResource {
             .init("chat_suggestion_1", bundle: .atURL(Bundle.module.bundleURL))
         }

@@ -144,6 +144,17 @@ extension BonjourChatViewModel {
         let publishedServices = services.sortedPublishedServices
 
         if ChatScanIntentDetector.wantsFreshScan(message: message) {
+            // Flip the indicator state on for the scan window so
+            // the chat surface can render a "Scanning network…"
+            // row in place of the (not-yet-streaming) assistant
+            // bubble. Without this, the chat sits silent for ~3
+            // seconds while the scanner runs, which reads as a
+            // frozen UI — particularly on the cloud backend
+            // where additional network latency stacks onto the
+            // scan time.
+            isScanningNetwork = true
+            defer { isScanningNetwork = false }
+
             let runner = BonjourOneShotScanner(scanner: BonjourServiceScanner())
             let freshServices = await runner.run(
                 publishedServices: services.publishManager.publishedServices

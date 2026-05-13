@@ -114,6 +114,19 @@ extension BonjourChatView {
             viewModel.messageTransitionAnimation(reduceMotion: reduceMotion),
             value: session.messages.count
         )
+        // Drive the scan indicator's mount/unmount through the
+        // same transition system as message inserts, so the row
+        // fades in when the scan starts and out when the
+        // assistant placeholder lands. Watching the boolean
+        // separately (rather than folding it into the
+        // `messages.count` value) keeps the message-list
+        // animation tuned to insertions and prevents a flicker
+        // when both the scan finishes AND a new message arrives
+        // in the same render cycle.
+        .animation(
+            viewModel.messageTransitionAnimation(reduceMotion: reduceMotion),
+            value: viewModel.isScanningNetwork
+        )
     }
 
     /// The scrollable content of the chat surface. Always contains
@@ -155,6 +168,22 @@ extension BonjourChatView {
                     ),
                     removal: .opacity
                 ))
+            }
+
+            // Transient "Scanning network…" row rendered during
+            // the fresh-scan window — the ~3 seconds between the
+            // user tapping a live-state suggestion and the AI's
+            // first streamed token. Mounts inline as a list row
+            // so it occupies the slot the assistant's typing
+            // indicator will appear in once the session starts
+            // streaming. Fades in/out with `.opacity` so the
+            // transition into the assistant bubble reads as a
+            // single continuous motion rather than two separate
+            // pops.
+            if viewModel.isScanningNetwork {
+                ScanningNetworkIndicator()
+                    .id("scanningNetworkIndicator")
+                    .transition(.opacity)
             }
 
             if let error = session.error {
