@@ -137,6 +137,9 @@ public struct BonjourChatView: View {
     public var body: some View {
         NavigationStack {
             chatPresentations(applyingTo: chatContent)
+                // Backend-aware tint scoped to the chat surface.
+                // The TabView's global tint is always KozBon blue.
+                .tint(aiAccent)
                 // The chat surface uses the page's own intro headline
                 // ("Ask about your network") as its navigation title.
                 // Display mode is `.large` so the title renders at

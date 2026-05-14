@@ -92,14 +92,9 @@ public struct InsightsContextMenuItems: View {
                 hapticFeedback.play(.medium)
                 action()
             } label: {
-                // `Label(_:systemImage:)` only accepts SF Symbol
-                // names, so previously the long-press menu showed
-                // the `sparkle` fallback (`Iconography.anthropicClaude`)
-                // instead of Anthropic's actual brand mark. The
-                // view-builder form of `Label` accepts any Image,
-                // so we route through `Image.anthropicClaude`
-                // (resolved from the `Claude` asset, template-
-                // rendered so it picks up the menu's tint).
+                // View-builder `Label` form so the Claude asset
+                // mark renders instead of an SF Symbol. Color
+                // follows the menu's inherited tint.
                 Label {
                     Text(Strings.Insights.explainWithAI)
                 } icon: {

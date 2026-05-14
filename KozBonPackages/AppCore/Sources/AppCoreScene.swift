@@ -142,7 +142,10 @@ public struct AppCoreScene: Scene {
                 #else
                 .tabViewStyle(.sidebarAdaptable)
                 #endif
-                .tint(viewModel.preferencesStore.aiBackend.accentColor)
+                // Global tint stays KozBon blue so non-chat tabs
+                // don't inherit the backend's accent color. Chat
+                // applies the backend tint locally.
+                .tint(Color.kozBonBlue)
                 .environment(\.dependencies, viewModel.dependencies)
                 .environment(\.serviceExplainer, viewModel.explainer)
                 .environment(\.chatSession, viewModel.chatSession)
@@ -217,7 +220,10 @@ public struct AppCoreScene: Scene {
                 #if os(macOS)
                 .frame(minWidth: 800, minHeight: 500)
                 #endif
-                .tint(viewModel.preferencesStore.aiBackend.accentColor)
+                // Global tint stays KozBon blue so non-chat tabs
+                // don't inherit the backend's accent color. Chat
+                // applies the backend tint locally.
+                .tint(Color.kozBonBlue)
                 .environment(\.dependencies, viewModel.dependencies)
                 .environment(\.serviceExplainer, viewModel.explainer)
                 .environment(\.chatSession, viewModel.chatSession)
