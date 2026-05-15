@@ -28,7 +28,6 @@ import BonjourLocalization
 public struct AICloudSignInSheet: View {
 
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.openURL) private var openURL
 
     @State private var viewModel: AICloudSignInViewModel
     @FocusState private var isAPIKeyFieldFocused: Bool
@@ -54,6 +53,11 @@ public struct AICloudSignInSheet: View {
     public var body: some View {
         NavigationStack {
             Form {
+                // API key entry section — the prompt copy moves
+                // to the section's footer so VoiceOver reads it
+                // right after the field. Previously sat in a
+                // VStack with the link below it, which made the
+                // input area feel cluttered.
                 Section {
                     SecureField(
                         String(localized: apiKeyPlaceholder),
@@ -87,34 +91,43 @@ public struct AICloudSignInSheet: View {
                             .foregroundStyle(.red)
                             .accessibilityAddTraits(.isStaticText)
                     }
-                } header: {
-                    Text(signInTitle)
-                        .accessibilityAddTraits(.isHeader)
                 } footer: {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(signInPrompt)
+                    Text(signInPrompt)
+                }
 
-                        Button {
-                            if let url = URL(string: getKeyURLString) {
-                                openURL(url)
-                            }
-                        } label: {
-                            Label {
+                // "Get a key" external link as its own form row.
+                // SwiftUI `Link` integrates with `openURL` and
+                // gets the system tint automatically; the
+                // trailing external-link glyph signals the tap
+                // leaves the app — matches iOS Settings'
+                // "Privacy Policy" / "Terms of Use" affordance.
+                if let url = URL(string: getKeyURLString) {
+                    Section {
+                        Link(destination: url) {
+                            HStack {
                                 Text(getKeyLabel)
-                            } icon: {
+                                    .foregroundStyle(.primary)
+                                Spacer()
                                 Image.externalLink
+                                    .foregroundStyle(.secondary)
+                                    .imageScale(.medium)
+                                    .accessibilityHidden(true)
                             }
-                            .font(.caption)
                         }
-                        .buttonStyle(.plain)
-                        .foregroundStyle(.tint)
                         .accessibilityHint(String(localized: getKeyHint))
+                    }
+                }
 
-                        if let keychainError = viewModel.keychainError {
-                            Text(verbatim: keychainError)
-                                .foregroundStyle(.orange)
-                                .accessibilityAddTraits(.isStaticText)
-                        }
+                // Keychain save errors get their own section so
+                // they're visually distinct from the input area
+                // and can be announced via the `.onChange`
+                // observer below without competing with the
+                // section footer.
+                if let keychainError = viewModel.keychainError {
+                    Section {
+                        Text(verbatim: keychainError)
+                            .foregroundStyle(.orange)
+                            .accessibilityAddTraits(.isStaticText)
                     }
                 }
             }
@@ -122,7 +135,14 @@ public struct AICloudSignInSheet: View {
             #if os(macOS)
             .frame(width: 460, height: 360)
             #endif
-            .navigationTitle(String(localized: signInTitle))
+            // Title is the provider's display name alone
+            // ("Claude" / "GitHub") instead of "Sign in to
+            // Claude" / "Sign in to GitHub Models" — the longer
+            // form ellipsizes in inline mode on iPhone SE and
+            // compact width classes. Matches iOS Mail's
+            // Add-Account pattern, where the sheet title is the
+            // provider ("Outlook", "Google"), not the action.
+            .navigationTitle(String(localized: provider.displayName))
             #if os(iOS) || os(visionOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
@@ -169,13 +189,6 @@ public struct AICloudSignInSheet: View {
     }
 
     // MARK: - Per-Provider Copy
-
-    private var signInTitle: LocalizedStringResource {
-        switch provider {
-        case .anthropic: return Strings.Settings.aiCloudSignInTitle
-        case .github:    return Strings.Settings.aiCloudSignInTitleGitHub
-        }
-    }
 
     private var signInPrompt: LocalizedStringResource {
         switch provider {
