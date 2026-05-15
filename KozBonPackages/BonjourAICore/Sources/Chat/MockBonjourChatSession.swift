@@ -54,6 +54,12 @@ public final class MockBonjourChatSession: BonjourChatSessionProtocol {
     /// The most recent context passed to ``send(_:context:)``.
     public var lastContext: BonjourChatPromptBuilder.ChatContext?
 
+    /// The number of times ``prewarm()`` has been called. Lets
+    /// tests verify the factory's prewarm-gating logic (skip when
+    /// AI is disabled, skip when the device isn't ready) without
+    /// firing real work.
+    public var prewarmCallCount = 0
+
     public init(
         cannedReply: String = "This is a mock chat response.",
         intentBroker: BonjourChatIntentBroker = BonjourChatIntentBroker()
@@ -63,6 +69,10 @@ public final class MockBonjourChatSession: BonjourChatSessionProtocol {
     }
 
     // MARK: - BonjourChatSessionProtocol
+
+    public func prewarm() {
+        prewarmCallCount += 1
+    }
 
     public func appendUserMessage(_ text: String) {
         let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)

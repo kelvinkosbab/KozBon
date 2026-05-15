@@ -109,9 +109,6 @@ let package = Package(
     )
     + makeTargets(
         name: "BonjourAIApple",
-        // No tests yet — Apple FoundationModels paths are covered
-        // through BonjourAI's routing tests and integration tests
-        // in BonjourUI.
         dependencies: [
             "BonjourAICore",
             "BonjourCore",
@@ -119,8 +116,7 @@ let package = Package(
             "BonjourLocalization",
             "BonjourScanning",
             "BonjourStorage"
-        ],
-        hasTests: false
+        ]
     )
     + makeTargets(
         name: "BonjourAIAnthropic",
