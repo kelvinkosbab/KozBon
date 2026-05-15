@@ -65,16 +65,20 @@ public extension Image {
 
     /// GitHub Models brand glyph.
     ///
-    /// Falls back to the SF Symbol
-    /// (`chevron.left.forwardslash.chevron.right`) until a real
-    /// brand mark ships. The Octocat is trademarked and KozBon
-    /// doesn't currently bundle a permitted GitHub-Models asset,
-    /// so the developer-y "code" symbol stands in. When a brand
-    /// PDF lands at `Resources/Media.xcassets/GitHub.imageset`
-    /// this property should return
-    /// `Image("GitHub", bundle: .module)` instead — no other call
-    /// site needs to change.
-    static var github: Image { Image(systemName: Iconography.github) }
+    /// Resolved from the `GitHub` imageset in
+    /// `BonjourUI/Resources/Media.xcassets`, which ships GitHub's
+    /// official Octocat (`mark-github-24.svg` from their brand
+    /// resources). Configured for template rendering, so it
+    /// picks up the surrounding tint — in practice
+    /// `Color.kozBonGitHub` (Copilot purple) on the chat
+    /// surface and tab-bar gray when the chat tab is unselected.
+    ///
+    /// `Iconography.github` still resolves to the
+    /// `chevron.left.forwardslash.chevron.right` SF Symbol —
+    /// that string-based fallback is the path call sites take
+    /// when they need a system-image name (`Label(_:systemImage:)`),
+    /// since asset names don't resolve through that initializer.
+    static var github: Image { Image("GitHub", bundle: .module) }
 
     static var airportExtreme: Image { Image(systemName: Iconography.airportExtreme) }
 
