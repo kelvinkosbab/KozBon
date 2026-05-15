@@ -46,6 +46,17 @@ public enum Iconography {
     /// carries the rest of the brand cue.
     public static let anthropicClaude = "sparkle"
 
+    /// GitHub Models glyph. Used as the Chat tab and Insights
+    /// glyph when the user has the GitHub backend selected.
+    ///
+    /// `chevron.left.forwardslash.chevron.right` (the "code" SF
+    /// Symbol) reads as a developer-facing source — a better fit
+    /// for GitHub than shipping the Octocat (which carries
+    /// trademark constraints). When a brand-asset PDF lands the
+    /// imageset can be wired up; until then both `Image.github`
+    /// and this string resolve to the SF Symbol.
+    public static let github = "chevron.left.forwardslash.chevron.right"
+
     /// AirPort Extreme base station icon.
     public static let airportExtreme = "airport.extreme"
 

@@ -12,14 +12,19 @@ import BonjourLocalization
 
 // MARK: - AICloudSignInSheet
 
-/// Modal sheet that lets the user paste their Anthropic API key.
+/// Modal sheet that lets the user paste a cloud-provider API key.
 ///
-/// Presented from `SettingsView` when the user taps "Sign in to
-/// Claude" on the AI Backend row. The sheet's view model handles
-/// validation (`sk-ant-` prefix check) and persists via the
-/// injected credentials store. On a successful save the sheet
-/// dismisses; the parent observes the credentials store and
-/// re-renders the AI Backend row to show "Signed in".
+/// Presented from `SettingsView` (and from `BonjourChatView`'s
+/// in-tab prompt) when the user taps a sign-in row. The sheet's
+/// view model handles per-provider format validation
+/// (`sk-ant-` for Anthropic, `ghp_` / `github_pat_` / `gho_` for
+/// GitHub) and persists via the injected credentials store. On a
+/// successful save the sheet dismisses; the parent observes the
+/// credentials store and re-renders the row to show "Signed in".
+///
+/// Provider-specific copy and the external "get a key" URL come
+/// from per-provider helpers below — the view body stays
+/// provider-agnostic.
 struct AICloudSignInSheet: View {
 
     @Environment(\.dismiss) private var dismiss
@@ -28,11 +33,22 @@ struct AICloudSignInSheet: View {
     @State private var viewModel: AICloudSignInViewModel
     @FocusState private var isAPIKeyFieldFocused: Bool
 
+    /// The provider this sheet is signing in to. Captured at
+    /// init so the per-provider copy and URLs stay stable for
+    /// the lifetime of the sheet (a mid-sheet backend swap in
+    /// Settings would never happen — the user has to commit /
+    /// cancel first).
+    private let provider: AICloudProvider
+
     /// The credentials store this sheet writes to. Held by the
     /// owning view so it persists for the parent's lifetime; the
     /// sheet's view model captures it at init.
-    init(credentialsStore: any AICloudCredentialsStore) {
-        _viewModel = State(initialValue: AICloudSignInViewModel(credentialsStore: credentialsStore))
+    init(credentialsStore: any AICloudCredentialsStore, provider: AICloudProvider = .anthropic) {
+        self.provider = provider
+        _viewModel = State(initialValue: AICloudSignInViewModel(
+            credentialsStore: credentialsStore,
+            provider: provider
+        ))
     }
 
     var body: some View {
@@ -40,14 +56,13 @@ struct AICloudSignInSheet: View {
             Form {
                 Section {
                     SecureField(
-                        String(localized: Strings.Settings.aiCloudAPIKeyPlaceholder),
+                        String(localized: apiKeyPlaceholder),
                         text: Binding(
                             get: { viewModel.apiKey },
                             set: { newValue in
                                 viewModel.apiKey = newValue
                                 viewModel.validate(
-                                    localizedInvalidKeyMessage:
-                                        String(localized: Strings.Settings.aiCloudInvalidKey)
+                                    localizedInvalidKeyMessage: String(localized: invalidKeyMessage)
                                 )
                             }
                         )
@@ -58,7 +73,7 @@ struct AICloudSignInSheet: View {
                     .autocorrectionDisabled(true)
                     #endif
                     .focused($isAPIKeyFieldFocused)
-                    .accessibilityLabel(String(localized: Strings.Settings.aiCloudAPIKeyFieldLabel))
+                    .accessibilityLabel(String(localized: apiKeyFieldLabel))
 
                     if let message = viewModel.validationMessage {
                         Text(verbatim: message)
@@ -67,19 +82,19 @@ struct AICloudSignInSheet: View {
                             .accessibilityAddTraits(.isStaticText)
                     }
                 } header: {
-                    Text(Strings.Settings.aiCloudSignInTitle)
+                    Text(signInTitle)
                         .accessibilityAddTraits(.isHeader)
                 } footer: {
                     VStack(alignment: .leading, spacing: 8) {
-                        Text(Strings.Settings.aiCloudSignInPrompt)
+                        Text(signInPrompt)
 
                         Button {
-                            if let url = URL(string: "https://console.anthropic.com/settings/keys") {
+                            if let url = URL(string: getKeyURLString) {
                                 openURL(url)
                             }
                         } label: {
                             Label {
-                                Text(Strings.Settings.aiCloudSignInLearnMore)
+                                Text(getKeyLabel)
                             } icon: {
                                 Image.externalLink
                             }
@@ -87,15 +102,7 @@ struct AICloudSignInSheet: View {
                         }
                         .buttonStyle(.plain)
                         .foregroundStyle(.tint)
-                        // The link doesn't visually read as a
-                        // URL (no underline / blue chrome), so a
-                        // VoiceOver user lands on it without
-                        // obvious cues that tapping leaves the
-                        // app. The hint sets the expectation
-                        // before the user commits.
-                        .accessibilityHint(
-                            String(localized: Strings.Accessibility.aiCloudSignInLearnMoreHint)
-                        )
+                        .accessibilityHint(String(localized: getKeyHint))
 
                         if let keychainError = viewModel.keychainError {
                             Text(verbatim: keychainError)
@@ -109,7 +116,7 @@ struct AICloudSignInSheet: View {
             #if os(macOS)
             .frame(width: 460, height: 360)
             #endif
-            .navigationTitle(String(localized: Strings.Settings.aiCloudSignInTitle))
+            .navigationTitle(String(localized: signInTitle))
             #if os(iOS) || os(visionOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
@@ -142,6 +149,64 @@ struct AICloudSignInSheet: View {
                 // its insertion cursor.
                 isAPIKeyFieldFocused = true
             }
+        }
+    }
+
+    // MARK: - Per-Provider Copy
+
+    private var signInTitle: LocalizedStringResource {
+        switch provider {
+        case .anthropic: return Strings.Settings.aiCloudSignInTitle
+        case .github:    return Strings.Settings.aiCloudSignInTitleGitHub
+        }
+    }
+
+    private var signInPrompt: LocalizedStringResource {
+        switch provider {
+        case .anthropic: return Strings.Settings.aiCloudSignInPrompt
+        case .github:    return Strings.Settings.aiCloudSignInPromptGitHub
+        }
+    }
+
+    private var apiKeyPlaceholder: LocalizedStringResource {
+        switch provider {
+        case .anthropic: return Strings.Settings.aiCloudAPIKeyPlaceholder
+        case .github:    return Strings.Settings.aiCloudAPIKeyPlaceholderGitHub
+        }
+    }
+
+    private var apiKeyFieldLabel: LocalizedStringResource {
+        switch provider {
+        case .anthropic: return Strings.Settings.aiCloudAPIKeyFieldLabel
+        case .github:    return Strings.Settings.aiCloudAPIKeyFieldLabelGitHub
+        }
+    }
+
+    private var invalidKeyMessage: LocalizedStringResource {
+        switch provider {
+        case .anthropic: return Strings.Settings.aiCloudInvalidKey
+        case .github:    return Strings.Settings.aiCloudInvalidKeyGitHub
+        }
+    }
+
+    private var getKeyLabel: LocalizedStringResource {
+        switch provider {
+        case .anthropic: return Strings.Settings.aiCloudSignInLearnMore
+        case .github:    return Strings.Settings.aiCloudSignInLearnMoreGitHub
+        }
+    }
+
+    private var getKeyHint: LocalizedStringResource {
+        switch provider {
+        case .anthropic: return Strings.Accessibility.aiCloudSignInLearnMoreHint
+        case .github:    return Strings.Accessibility.chatOpenGitHubPATHint
+        }
+    }
+
+    private var getKeyURLString: String {
+        switch provider {
+        case .anthropic: return "https://console.anthropic.com/settings/keys"
+        case .github:    return "https://github.com/settings/tokens"
         }
     }
 }

@@ -34,14 +34,24 @@ struct AIBackendStyleTests {
         #expect(AIBackend.anthropic.accentColor == Color.kozBonAnthropic)
     }
 
-    @Test("The two backends have distinct accents — never accidentally swap")
+    @Test("GitHub uses `kozBonGitHub` (GitHub chrome)")
+    func githubAccentIsChrome() {
+        #expect(AIBackend.github.accentColor == Color.kozBonGitHub)
+    }
+
+    @Test("The three backends have distinct accents — never accidentally swap")
     func accentsAreDistinct() {
         // Belt-and-suspenders trip-wire: a refactor that swapped
-        // the two case branches inside `accentColor` would still
+        // two case branches inside `accentColor` would still
         // pass the per-case assertions above if the swap was
-        // symmetric. This catches the case where both ended up
+        // symmetric. This catches the case where two ended up
         // pointing at the same value.
-        #expect(AIBackend.appleIntelligence.accentColor != AIBackend.anthropic.accentColor)
+        let accents = [
+            AIBackend.appleIntelligence.accentColor,
+            AIBackend.anthropic.accentColor,
+            AIBackend.github.accentColor
+        ]
+        #expect(Set(accents.map(String.init(describing:))).count == accents.count)
     }
 
     // MARK: - Icon (Image)
@@ -67,10 +77,23 @@ struct AIBackendStyleTests {
         #expect(AIBackend.anthropic.iconSystemName == Iconography.anthropicClaude)
     }
 
-    @Test("The two backends use distinct icons")
+    @Test("`icon` resolves to the GitHub SF-Symbol fallback for GitHub")
+    func githubIconIsCodeSymbol() {
+        // No GitHub brand asset is bundled yet; the Image and
+        // its parallel `iconSystemName` both resolve to the
+        // developer-y SF Symbol stand-in. When a permitted
+        // asset ships, only `Image.github` needs to swap — the
+        // system-name fallback stays for `Label(_:systemImage:)`.
+        #expect(AIBackend.github.iconSystemName == Iconography.github)
+    }
+
+    @Test("The three backends use distinct icons")
     func iconsAreDistinct() {
-        #expect(
-            AIBackend.appleIntelligence.iconSystemName != AIBackend.anthropic.iconSystemName
-        )
+        let names = [
+            AIBackend.appleIntelligence.iconSystemName,
+            AIBackend.anthropic.iconSystemName,
+            AIBackend.github.iconSystemName
+        ]
+        #expect(Set(names).count == names.count)
     }
 }

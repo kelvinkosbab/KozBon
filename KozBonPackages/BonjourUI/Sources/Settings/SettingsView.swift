@@ -43,6 +43,10 @@ public struct SettingsView: View {
     /// body evaluation.
     @State var hasAnthropicKey: Bool = false
 
+    /// Mirror of ``hasAnthropicKey`` for the GitHub Models
+    /// backend. Same refresh contract.
+    @State var hasGitHubKey: Bool = false
+
     /// Cached "the user has at least one persisted custom service
     /// type" flag. Refreshed on `.onAppear` and on every Core Data
     /// `NSManagedObjectContextDidSave` notification, so the
@@ -95,52 +99,28 @@ public struct SettingsView: View {
             .frame(width: 400)
             #endif
             .navigationTitle(String(localized: Strings.NavigationTitles.settings))
-            // Drive the Reset to Defaults section's appear/disappear
-            // animation declaratively. `.animation(_:value:)` watches
-            // `isAtDefaults` and runs the same transition regardless
-            // of which preference flipped — the AI toggle, the
-            // expertise level menu, the sort order menu, or a
-            // custom-service-type create/delete elsewhere in the app.
-            // Without this every mutation point would have to
-            // remember to wrap in `withAnimation`, which was easy to
-            // forget when adding a new preference and produced an
-            // instant pop instead of the smooth fade users expect.
-            //
-            // The companion `value: aiAnalysisEnabled` modifier
-            // animates the conditional AI Expertise row inside the
-            // AI Analysis section the same way.
+            // Declarative section appear/disappear animations.
+            // Watches multiple values so every preference flip
+            // (and the per-backend sign-in state changes) get
+            // the same transition without each mutation site
+            // having to remember `withAnimation`.
             .animation(reduceMotion ? nil : .default, value: isAtDefaults)
             .animation(reduceMotion ? nil : .default, value: preferencesStore.aiAnalysisEnabled)
             .animation(reduceMotion ? nil : .default, value: preferencesStore.aiBackend)
             .animation(reduceMotion ? nil : .default, value: hasAnthropicKey)
+            .animation(reduceMotion ? nil : .default, value: hasGitHubKey)
             // Refresh the cached custom-types flag on first
             // appearance so the Reset to Defaults section's
             // visibility is correct the moment the form lands.
             .onAppear {
                 refreshCustomServiceTypesState()
-                refreshAnthropicKeyState()
+                refreshCloudKeyState()
             }
-            // Listen for any Core Data save in the process. KozBon
-            // has a single Core Data stack (the custom-service-type
-            // store) so every `NSManagedObjectContextDidSave` here
-            // is from that store; SwiftData (used for preferences)
-            // doesn't post these notifications. This catches:
-            //
-            //   - the Library tab's create/delete flows
-            //   - the chat assistant's `prepareCustomServiceType` /
-            //     `prepareDeleteCustomServiceType` intents
-            //   - the Reset to Defaults action itself (after which
-            //     the section needs to disappear)
-            //
-            // Especially relevant on macOS where Settings runs in
-            // its own window scene — a user can edit the Library
-            // in one window and Settings in another, and we want
-            // the section to flip visibility without a manual
-            // refresh. iOS / iPadOS / visionOS reach the same
-            // surface via tab switching, which already triggers
-            // `.onAppear`, but the listener is harmless there
-            // (notifications are debounced into a single state
-            // update per save).
+            // Refresh on any Core Data save (the custom-types
+            // store) so Library / chat-intent / Reset writes
+            // flip section visibility without a manual refresh.
+            // Especially relevant on macOS where Settings runs
+            // in its own window scene alongside Library.
             .onReceive(
                 NotificationCenter.default.publisher(for: .NSManagedObjectContextDidSave)
             ) { _ in
@@ -154,7 +134,7 @@ public struct SettingsView: View {
                 Button(String(localized: Strings.Settings.reset), role: .destructive) {
                     preferencesStore.resetToDefaults()
                     BonjourServiceType.deleteAllPersistentCopies()
-                    refreshAnthropicKeyState()
+                    refreshCloudKeyState()
                 }
             } message: {
                 Text(Strings.Settings.resetConfirmationMessage)
@@ -165,12 +145,19 @@ public struct SettingsView: View {
             ) {
                 Button(String(localized: Strings.Buttons.cancel), role: .cancel) {}
                 Button(String(localized: Strings.Settings.aiCloudSignOut), role: .destructive) {
-                    signOutOfClaude()
+                    signOutOfCurrentBackend()
                 }
             }
             .sheet(isPresented: $isSignInSheetPresented) {
-                AICloudSignInSheet(credentialsStore: credentialsStore)
-                    .onDisappear { refreshAnthropicKeyState() }
+                // Route to the currently-selected backend's
+                // provider. Anthropic fallback is defensive —
+                // the row that opens this sheet is gated to
+                // cloud backends.
+                AICloudSignInSheet(
+                    credentialsStore: credentialsStore,
+                    provider: preferencesStore.aiBackend.cloudProvider ?? .anthropic
+                )
+                    .onDisappear { refreshCloudKeyState() }
             }
         }
     }
@@ -368,6 +355,7 @@ public struct SettingsView: View {
     private var isAIAnalysisAvailable: Bool {
         AppleIntelligenceSupport.isDeviceSupported
             || credentialsStore.hasAPIKey(for: .anthropic)
+            || credentialsStore.hasAPIKey(for: .github)
     }
 
     /// Re-queries the Core Data custom-types store and updates

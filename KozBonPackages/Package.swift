@@ -67,6 +67,7 @@ let package = Package(
         .library(name: "BonjourAICore", targets: ["BonjourAICore"]),
         .library(name: "BonjourAIApple", targets: ["BonjourAIApple"]),
         .library(name: "BonjourAIAnthropic", targets: ["BonjourAIAnthropic"]),
+        .library(name: "BonjourAIGitHub", targets: ["BonjourAIGitHub"]),
         .library(name: "BonjourAI", targets: ["BonjourAI"]),
         .library(name: "BonjourStorage", targets: ["BonjourStorage"]),
         .library(name: "BonjourUI", targets: ["BonjourUI"]),
@@ -130,14 +131,26 @@ let package = Package(
         ]
     )
     + makeTargets(
+        name: "BonjourAIGitHub",
+        dependencies: [
+            "BonjourAICore",
+            "BonjourCore",
+            "BonjourModels",
+            "BonjourLocalization",
+            "BonjourScanning",
+            "BonjourStorage"
+        ]
+    )
+    + makeTargets(
         name: "BonjourAI",
         // Umbrella: re-exports `BonjourAICore` and hosts the
         // cloud-aware routing factories that sit above the
-        // Apple- and Anthropic-specific modules.
+        // Apple-, Anthropic-, and GitHub-Models-specific modules.
         dependencies: [
             "BonjourAICore",
             "BonjourAIApple",
             "BonjourAIAnthropic",
+            "BonjourAIGitHub",
             "BonjourCore",
             "BonjourModels",
             "BonjourLocalization",
@@ -165,6 +178,7 @@ let package = Package(
             "BonjourAI",
             "BonjourAIApple",
             "BonjourAIAnthropic",
+            "BonjourAIGitHub",
             "BonjourStorage",
             .product(name: "CoreUI", package: "Core")
         ],
@@ -188,6 +202,7 @@ let package = Package(
             "BonjourAI",
             "BonjourAIApple",
             "BonjourAIAnthropic",
+            "BonjourAIGitHub",
             "BonjourStorage",
             "BonjourUI",
             .product(name: "CoreUI", package: "Core")

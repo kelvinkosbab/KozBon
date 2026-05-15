@@ -68,6 +68,7 @@ Each module follows the `{name}/Sources` and `{name}/Tests` layout:
 | **BonjourAICore** | Provider-agnostic AI scaffolding — protocols, value types, prompt builders, safety, mocks, simulator stubs, UI primitives, credentials-store protocol + Keychain/InMemory impls | `BonjourChatSessionProtocol`, `BonjourServiceExplainerProtocol`, `BonjourChatPromptBuilder`, `BonjourServicePromptBuilder`, `AIBackend`, `AICloudProvider`, `AICloudCredentialsStore`, `AICloudError`, `KeychainAICloudCredentialsStore`, `InMemoryAICloudCredentialsStore`, `MockBonjourChatSession`, `MockBonjourServiceExplainer`, `ServiceExplanationSheet`, `MarkdownContentView`, `TypingIndicator` |
 | **BonjourAIApple** | Apple Foundation Models implementations of the BonjourAICore protocols | `BonjourChatSession`, `BonjourChatSessionFactory`, `BonjourServiceExplainer`, `BonjourServiceExplainerFactory`, `AppleIntelligenceSupport`, `AIContextMenuItems`, prepare-tool wrappers |
 | **BonjourAIAnthropic** | Anthropic Claude implementations of the BonjourAICore protocols + the typed `PreferencesStore.aiCloudModel` bridge | `AnthropicModel`, `AnthropicClient`, `AnthropicConfiguration`, `AnthropicBonjourChatSession`, `AnthropicBonjourServiceExplainer`, `MockAnthropicClient` |
+| **BonjourAIGitHub** | GitHub Models (OpenAI GPT-4o via `models.inference.ai.azure.com`) implementations of the BonjourAICore protocols. Hardcoded model — no picker. | `GitHubConfiguration`, `GitHubModelsClient`, `GitHubMessageRequest`, `GitHubBonjourChatSession`, `GitHubBonjourServiceExplainer`, `MockGitHubModelsClient` |
 | **BonjourAI** | Umbrella module — cloud-aware routing factories + `@_exported import BonjourAICore` so legacy `import BonjourAI` consumers stay working | `CloudAwareBonjourChatSessionFactory`, `CloudAwareBonjourServiceExplainerFactory` |
 | **BonjourUI** | SwiftUI views and view models | All views, `BonjourServicesViewModel`, UI components |
 
@@ -75,10 +76,11 @@ Each module follows the `{name}/Sources` and `{name}/Tests` layout:
 
 ```
 App → BonjourUI, BonjourScanning, BonjourModels, BonjourLocalization
-BonjourUI → BonjourModels, BonjourScanning, BonjourLocalization, BonjourAI, BonjourAIApple, BonjourAIAnthropic, BonjourStorage, CoreUI
-BonjourAI → BonjourAICore, BonjourAIApple, BonjourAIAnthropic, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
+BonjourUI → BonjourModels, BonjourScanning, BonjourLocalization, BonjourAI, BonjourAIApple, BonjourAIAnthropic, BonjourAIGitHub, BonjourStorage, CoreUI
+BonjourAI → BonjourAICore, BonjourAIApple, BonjourAIAnthropic, BonjourAIGitHub, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
 BonjourAIApple → BonjourAICore, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
 BonjourAIAnthropic → BonjourAICore, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
+BonjourAIGitHub → BonjourAICore, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
 BonjourAICore → BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
 BonjourScanning → BonjourCore, BonjourModels, LocalNetworkMonitor
 BonjourModels → BonjourCore, BonjourStorage, BonjourLocalization
@@ -90,14 +92,16 @@ BonjourCore → Core (BasicSwiftUtilities)
 ### AI Backend Routing
 
 ADR 0005 introduces a pluggable AI backend. The Settings → AI Backend section
-exposes a picker between two options:
+exposes a picker between three options:
 
 - **Apple Intelligence** (default) — on-device via `BonjourAIApple` and FoundationModels.
 - **Anthropic Claude** (opt-in) — cloud via `BonjourAIAnthropic` and the user's own API key.
+- **GitHub Models** (opt-in) — cloud via `BonjourAIGitHub` (OpenAI GPT-4o brokered through
+  GitHub's inference endpoint). Uses the user's own GitHub Personal Access Token.
 
 `CloudAwareBonjourChatSessionFactory` / `CloudAwareBonjourServiceExplainerFactory`
 live in the `BonjourAI` umbrella and sit above the per-provider factories in
-`BonjourAIApple` / `BonjourAIAnthropic`. They read `preferencesStore.aiBackend`
+`BonjourAIApple` / `BonjourAIAnthropic` / `BonjourAIGitHub`. They read `preferencesStore.aiBackend`
 on every `makeForCurrentEnvironment(...)` call and route to the right implementation.
 `AppCoreScene` watches `preferencesStore.aiBackend` and `aiCloudModel` via `.onChange`
 and calls `AppCoreViewModel.refreshAIBackend()` so flipping the picker takes effect

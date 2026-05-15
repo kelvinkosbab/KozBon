@@ -27,4 +27,11 @@ public enum AICloudProvider: String, Sendable, CaseIterable, Codable {
     /// key from `console.anthropic.com`; KozBon never operates the
     /// key.
     case anthropic
+
+    /// GitHub Models — OpenAI-compatible inference endpoint
+    /// (`models.inference.ai.azure.com`) brokered by GitHub. The
+    /// user supplies a GitHub Personal Access Token from
+    /// `github.com/settings/tokens`; KozBon never operates the
+    /// token.
+    case github
 }

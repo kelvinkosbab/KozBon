@@ -14,6 +14,7 @@ import BonjourStorage
 import BonjourAICore
 import BonjourAIApple
 import BonjourAIAnthropic
+import BonjourAIGitHub
 
 // MARK: - StubAppleChatFactory
 
@@ -99,7 +100,7 @@ struct CloudAwareBonjourChatSessionFactoryTests {
             appleFactory: appleFactory,
             credentialsStore: credentialsStore,
             preferencesStore: preferencesStore,
-            client: MockAnthropicClient()
+            anthropicClient: MockAnthropicClient()
         )
 
         let session = factory.makeForCurrentEnvironment(publishManager: MockBonjourPublishManager())
@@ -117,7 +118,7 @@ struct CloudAwareBonjourChatSessionFactoryTests {
             appleFactory: appleFactory,
             credentialsStore: credentialsStore,
             preferencesStore: preferencesStore,
-            client: MockAnthropicClient()
+            anthropicClient: MockAnthropicClient()
         )
 
         let session = factory.makeForCurrentEnvironment(publishManager: MockBonjourPublishManager())
@@ -138,7 +139,7 @@ struct CloudAwareBonjourChatSessionFactoryTests {
             appleFactory: appleFactory,
             credentialsStore: credentialsStore,
             preferencesStore: preferencesStore,
-            client: MockAnthropicClient()
+            anthropicClient: MockAnthropicClient()
         )
 
         let session = factory.makeForCurrentEnvironment(publishManager: MockBonjourPublishManager())
@@ -158,7 +159,7 @@ struct CloudAwareBonjourChatSessionFactoryTests {
             appleFactory: appleFactory,
             credentialsStore: credentialsStore,
             preferencesStore: preferencesStore,
-            client: MockAnthropicClient()
+            anthropicClient: MockAnthropicClient()
         )
 
         let session = factory.makeForCurrentEnvironment(publishManager: MockBonjourPublishManager())
@@ -176,7 +177,7 @@ struct CloudAwareBonjourChatSessionFactoryTests {
             appleFactory: appleFactory,
             credentialsStore: credentialsStore,
             preferencesStore: preferencesStore,
-            client: MockAnthropicClient()
+            anthropicClient: MockAnthropicClient()
         )
 
         let session = factory.makeForCurrentEnvironment(publishManager: MockBonjourPublishManager())
@@ -196,11 +197,77 @@ struct CloudAwareBonjourChatSessionFactoryTests {
             appleFactory: StubAppleChatFactory(),
             credentialsStore: credentialsStore,
             preferencesStore: preferencesStore,
-            client: MockAnthropicClient()
+            anthropicClient: MockAnthropicClient()
         )
 
         let session = factory.makeForCurrentEnvironment(publishManager: MockBonjourPublishManager())
         let anthropic = try #require(session as? AnthropicBonjourChatSession)
         #expect(anthropic.selectedModel == .opus)
+    }
+
+    // MARK: - GitHub-Preferred Routing
+
+    @Test("`.github` preference returns the GitHub session when a PAT is configured")
+    func githubRoutesToGitHubSession() throws {
+        let preferencesStore = try makeStore()
+        preferencesStore.aiBackend = .github
+
+        let appleSession = StubAppleChatSession()
+        let appleFactory = StubAppleChatFactory(sessionToReturn: appleSession)
+        let credentialsStore = InMemoryAICloudCredentialsStore(seed: [.github: "ghp_test"])
+        let factory = CloudAwareBonjourChatSessionFactory(
+            appleFactory: appleFactory,
+            credentialsStore: credentialsStore,
+            preferencesStore: preferencesStore,
+            anthropicClient: MockAnthropicClient(),
+            githubClient: MockGitHubModelsClient()
+        )
+
+        let session = factory.makeForCurrentEnvironment(publishManager: MockBonjourPublishManager())
+        #expect(session is GitHubBonjourChatSession)
+        #expect(!(session === appleSession))
+    }
+
+    @Test("`.github` falls back to the Apple session when no PAT is configured")
+    func githubFallsBackToAppleWhenNotSignedIn() throws {
+        let preferencesStore = try makeStore()
+        preferencesStore.aiBackend = .github
+
+        let appleSession = StubAppleChatSession()
+        let appleFactory = StubAppleChatFactory(sessionToReturn: appleSession)
+        let credentialsStore = InMemoryAICloudCredentialsStore()
+        let factory = CloudAwareBonjourChatSessionFactory(
+            appleFactory: appleFactory,
+            credentialsStore: credentialsStore,
+            preferencesStore: preferencesStore,
+            anthropicClient: MockAnthropicClient(),
+            githubClient: MockGitHubModelsClient()
+        )
+
+        let session = factory.makeForCurrentEnvironment(publishManager: MockBonjourPublishManager())
+        #expect(session === appleSession)
+    }
+
+    @Test("`.appleIntelligence` falls back to GitHub when Apple isn't available and only a GitHub PAT is configured")
+    func appleFallsBackToGitHubWhenOnlyGitHubConfigured() throws {
+        // Documents the multi-cloud fallback order: Anthropic is
+        // tried first (matching the pre-GitHub behavior), then
+        // GitHub. With only GitHub credentials, the user gets
+        // the GitHub session.
+        let preferencesStore = try makeStore()
+        preferencesStore.aiBackend = .appleIntelligence
+
+        let appleFactory = StubAppleChatFactory(sessionToReturn: nil)
+        let credentialsStore = InMemoryAICloudCredentialsStore(seed: [.github: "ghp_test"])
+        let factory = CloudAwareBonjourChatSessionFactory(
+            appleFactory: appleFactory,
+            credentialsStore: credentialsStore,
+            preferencesStore: preferencesStore,
+            anthropicClient: MockAnthropicClient(),
+            githubClient: MockGitHubModelsClient()
+        )
+
+        let session = factory.makeForCurrentEnvironment(publishManager: MockBonjourPublishManager())
+        #expect(session is GitHubBonjourChatSession)
     }
 }

@@ -850,6 +850,14 @@ public enum Strings {
             .init("a11y_chat_error_open_plans_hint", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        /// VoiceOver hint paired with the "Get a personal access
+        /// token" link in the GitHub Models sign-in sheet.
+        /// Explains that the tap leaves the app to open GitHub's
+        /// personal-access-token settings page in the browser.
+        public static var chatOpenGitHubPATHint: LocalizedStringResource {
+            .init("a11y_chat_error_open_github_pat_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         /// VoiceOver hint paired with the "Check status" button
         /// in the chat error banner. Explains that the tap leaves
         /// the app to open Anthropic's public status page.
@@ -1065,6 +1073,12 @@ public enum Strings {
             .init("settings_ai_backend_anthropic", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        /// "GitHub" — display name for the GitHub Models backend
+        /// option in the AI Backend picker.
+        public static var aiBackendGitHub: LocalizedStringResource {
+            .init("settings_ai_backend_github_title", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         /// One-line description shown under the Apple Intelligence option.
         public static var aiBackendAppleSubtitle: LocalizedStringResource {
             .init("settings_ai_backend_apple_subtitle", bundle: .atURL(Bundle.module.bundleURL))
@@ -1073,6 +1087,17 @@ public enum Strings {
         /// One-line description shown under the Anthropic Claude option.
         public static var aiBackendAnthropicSubtitle: LocalizedStringResource {
             .init("settings_ai_backend_anthropic_subtitle", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// One-line description shown under the GitHub Models option.
+        public static var aiBackendGitHubSubtitle: LocalizedStringResource {
+            .init("settings_ai_backend_github_subtitle", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Footer shown when the GitHub backend is selected.
+        /// Discloses that network-shape data is sent to GitHub's API.
+        public static var aiBackendGitHubPrivacy: LocalizedStringResource {
+            .init("settings_ai_backend_github_privacy", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         /// Footer shown when the Anthropic backend is selected.
@@ -1106,6 +1131,12 @@ public enum Strings {
             .init("settings_ai_cloud_sign_in", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        /// "Sign in to GitHub" — button label on the AI Backend
+        /// row when no PAT is configured for GitHub.
+        public static var aiCloudSignInGitHub: LocalizedStringResource {
+            .init("settings_ai_cloud_sign_in_github", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         /// "Signed in" — status label on the AI Backend row when an
         /// API key is configured for Anthropic.
         public static var aiCloudSignedIn: LocalizedStringResource {
@@ -1118,14 +1149,26 @@ public enum Strings {
             .init("settings_ai_cloud_sign_out", bundle: .atURL(Bundle.module.bundleURL))
         }
 
-        /// Title of the sign-in sheet.
+        /// Title of the sign-in sheet (Anthropic variant).
         public static var aiCloudSignInTitle: LocalizedStringResource {
             .init("settings_ai_cloud_sign_in_title", bundle: .atURL(Bundle.module.bundleURL))
         }
 
-        /// Prompt shown in the sign-in sheet above the API-key field.
+        /// Title of the sign-in sheet for the GitHub Models
+        /// backend.
+        public static var aiCloudSignInTitleGitHub: LocalizedStringResource {
+            .init("aicloud_sign_in_title_github", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Prompt shown in the sign-in sheet above the API-key field
+        /// (Anthropic variant).
         public static var aiCloudSignInPrompt: LocalizedStringResource {
             .init("settings_ai_cloud_sign_in_prompt", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Prompt body for the GitHub Models sign-in sheet.
+        public static var aiCloudSignInPromptGitHub: LocalizedStringResource {
+            .init("aicloud_sign_in_body_github", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         /// Placeholder text in the API-key text field. Shows the
@@ -1134,10 +1177,20 @@ public enum Strings {
             .init("settings_ai_cloud_api_key_placeholder", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        /// Placeholder text for the GitHub PAT field.
+        public static var aiCloudAPIKeyPlaceholderGitHub: LocalizedStringResource {
+            .init("aicloud_sign_in_field_placeholder_github", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         /// Field label for the API-key text field (used as the
         /// `LabeledContent` label and the accessibility label).
         public static var aiCloudAPIKeyFieldLabel: LocalizedStringResource {
             .init("settings_ai_cloud_api_key_field_label", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Field label for the GitHub PAT input.
+        public static var aiCloudAPIKeyFieldLabelGitHub: LocalizedStringResource {
+            .init("aicloud_sign_in_field_label_github", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         /// "Save" — sheet's primary button when an API key is present.
@@ -1151,10 +1204,22 @@ public enum Strings {
             .init("settings_ai_cloud_sign_in_learn_more", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        /// "Get a personal access token" — link below the GitHub
+        /// PAT field that opens `github.com/settings/tokens`.
+        public static var aiCloudSignInLearnMoreGitHub: LocalizedStringResource {
+            .init("aicloud_sign_in_get_key_github", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         /// Validation error when the pasted key doesn't start with
         /// the expected Anthropic prefix.
         public static var aiCloudInvalidKey: LocalizedStringResource {
             .init("settings_ai_cloud_invalid_key", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Validation hint when the pasted GitHub PAT doesn't
+        /// start with one of the expected prefixes.
+        public static var aiCloudInvalidKeyGitHub: LocalizedStringResource {
+            .init("aicloud_sign_in_validation_hint_github", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         /// "Claude Model" — row label for the model picker.
@@ -1248,6 +1313,12 @@ public enum Strings {
 
         public static var explainWithAI: LocalizedStringResource {
             .init("button_explain_with_ai", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// "Explain with GPT-4o" — Insights context-menu label
+        /// shown when the user has the GitHub backend selected.
+        public static var explainWithGitHub: LocalizedStringResource {
+            .init("insights_explain_with_github", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         public static var enableAppleIntelligence: LocalizedStringResource {
@@ -1351,6 +1422,17 @@ public enum Strings {
         /// and what the user needs to do to unlock it.
         public static var signInToClaudeBody: LocalizedStringResource {
             .init("chat_sign_in_to_claude_body", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Headline of the in-tab prompt shown when the user has
+        /// selected the GitHub backend but hasn't signed in.
+        public static var signInToGitHubTitle: LocalizedStringResource {
+            .init("chat_sign_in_to_github_title", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Body copy on the in-tab GitHub-sign-in prompt.
+        public static var signInToGitHubBody: LocalizedStringResource {
+            .init("chat_sign_in_to_github_body", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         public static var suggestion1: LocalizedStringResource {

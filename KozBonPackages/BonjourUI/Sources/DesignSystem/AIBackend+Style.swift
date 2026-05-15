@@ -32,27 +32,34 @@ public extension AIBackend {
     /// - `.anthropic` → ``Color/kozBonAnthropic`` — Anthropic's
     ///   "Cara" brand orange, lightened slightly in dark mode for
     ///   contrast.
+    /// - `.github` → ``Color/kozBonGitHub`` — GitHub's near-black
+    ///   chrome, swapped to near-white in dark mode.
     var accentColor: Color {
         switch self {
         case .appleIntelligence:
             return .kozBonBlue
         case .anthropic:
             return .kozBonAnthropic
+        case .github:
+            return .kozBonGitHub
         }
     }
 
     /// The chat-tab / Insights icon for this backend.
     ///
     /// - `.appleIntelligence` → the Apple Intelligence glyph.
-    /// - `.anthropic` → an SF Symbol stand-in (`sparkle`) chosen
-    ///   to evoke Anthropic's Cara brand mark without shipping a
-    ///   custom asset that carries trademark constraints.
+    /// - `.anthropic` → the bundled Claude vector mark.
+    /// - `.github` → the "code" SF Symbol fallback (the Octocat
+    ///   is trademarked; until a permitted asset lands, the
+    ///   developer-y glyph is the safer stand-in).
     var icon: Image {
         switch self {
         case .appleIntelligence:
             return .appleIntelligence
         case .anthropic:
             return .anthropicClaude
+        case .github:
+            return .github
         }
     }
 
@@ -65,6 +72,8 @@ public extension AIBackend {
             return Iconography.appleIntelligence
         case .anthropic:
             return Iconography.anthropicClaude
+        case .github:
+            return Iconography.github
         }
     }
 }

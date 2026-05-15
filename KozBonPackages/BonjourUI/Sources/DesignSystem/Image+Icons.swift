@@ -63,6 +63,19 @@ public extension Image {
     /// asset name wouldn't resolve).
     static var anthropicClaude: Image { Image("Claude", bundle: .module) }
 
+    /// GitHub Models brand glyph.
+    ///
+    /// Falls back to the SF Symbol
+    /// (`chevron.left.forwardslash.chevron.right`) until a real
+    /// brand mark ships. The Octocat is trademarked and KozBon
+    /// doesn't currently bundle a permitted GitHub-Models asset,
+    /// so the developer-y "code" symbol stands in. When a brand
+    /// PDF lands at `Resources/Media.xcassets/GitHub.imageset`
+    /// this property should return
+    /// `Image("GitHub", bundle: .module)` instead — no other call
+    /// site needs to change.
+    static var github: Image { Image(systemName: Iconography.github) }
+
     static var airportExtreme: Image { Image(systemName: Iconography.airportExtreme) }
 
     // MARK: - Navigation & Tabs

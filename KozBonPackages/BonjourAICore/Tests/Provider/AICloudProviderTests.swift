@@ -20,9 +20,18 @@ struct AICloudProviderTests {
         #expect(restored == provider)
     }
 
+    @Test("`github` round-trips through its raw value")
+    func githubRawValueRoundTrip() {
+        let provider = AICloudProvider.github
+        let restored = AICloudProvider(rawValue: provider.rawValue)
+        #expect(restored == provider)
+        #expect(provider.rawValue == "github")
+    }
+
     @Test("Every case is enumerated in `allCases`")
-    func allCasesContainsAnthropic() {
+    func allCasesContainsAnthropicAndGitHub() {
         #expect(AICloudProvider.allCases.contains(.anthropic))
+        #expect(AICloudProvider.allCases.contains(.github))
     }
 
     @Test("`init(rawValue:)` returns `nil` for unknown identifiers")

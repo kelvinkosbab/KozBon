@@ -31,6 +31,16 @@ public extension Color {
     /// mode so it doesn't read muddy against a dark background.
     /// Light: #CC785C, Dark: #E89B82
     static let kozBonAnthropic = Color(.kozBonAnthropic)
+
+    /// GitHub Models brand mark. Used as the accent for AI
+    /// surfaces when the user has selected the GitHub backend.
+    ///
+    /// GitHub's primary brand chrome is near-black on light
+    /// surfaces and near-white on dark. We approximate the
+    /// published `#1F2328` (light) and `#F6F8FA` (dark) so the
+    /// chat surface reads as "GitHub-y" without the full Octocat.
+    /// Light: #1F2328, Dark: #F6F8FA
+    static let kozBonGitHub = Color(.kozBonGitHub)
 }
 
 #if canImport(UIKit)
@@ -74,6 +84,25 @@ extension UIColor {
             )
         }
     }
+
+    static let kozBonGitHub = UIColor { traitCollection in
+        switch traitCollection.userInterfaceStyle {
+        case .dark:
+            return UIColor(
+                red: 0xF6 / 255.0,
+                green: 0xF8 / 255.0,
+                blue: 0xFA / 255.0,
+                alpha: 1.0
+            )
+        default:
+            return UIColor(
+                red: 0x1F / 255.0,
+                green: 0x23 / 255.0,
+                blue: 0x28 / 255.0,
+                alpha: 1.0
+            )
+        }
+    }
 }
 #elseif canImport(AppKit)
 import AppKit
@@ -110,6 +139,24 @@ extension NSColor {
                 red: 0xCC / 255.0,
                 green: 0x78 / 255.0,
                 blue: 0x5C / 255.0,
+                alpha: 1.0
+            )
+        }
+    }
+
+    static let kozBonGitHub = NSColor(name: nil) { appearance in
+        if appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua {
+            return NSColor(
+                red: 0xF6 / 255.0,
+                green: 0xF8 / 255.0,
+                blue: 0xFA / 255.0,
+                alpha: 1.0
+            )
+        } else {
+            return NSColor(
+                red: 0x1F / 255.0,
+                green: 0x23 / 255.0,
+                blue: 0x28 / 255.0,
                 alpha: 1.0
             )
         }

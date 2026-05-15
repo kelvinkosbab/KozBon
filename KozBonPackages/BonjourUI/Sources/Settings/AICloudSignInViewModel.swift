@@ -130,6 +130,17 @@ final class AICloudSignInViewModel {
         switch provider {
         case .anthropic:
             return value.hasPrefix("sk-ant-") && value.count > "sk-ant-".count
+        case .github:
+            // GitHub PATs ship in three families:
+            //   - `ghp_…` classic personal-access tokens
+            //   - `github_pat_…` fine-grained PATs
+            //   - `gho_…` OAuth tokens (also accepted by Models)
+            // All three are >prefix length so the empty-prefix
+            // case is covered by the length check.
+            let validPrefixes = ["ghp_", "github_pat_", "gho_"]
+            return validPrefixes.contains { prefix in
+                value.hasPrefix(prefix) && value.count > prefix.count
+            }
         }
     }
 }

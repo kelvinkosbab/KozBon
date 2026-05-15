@@ -55,9 +55,16 @@ public struct BonjourChatView: View {
     /// rather than re-querying on every body evaluation.
     @State var hasAnthropicKey: Bool = false
 
+    /// Mirror of ``hasAnthropicKey`` for the GitHub Models
+    /// backend. Same refresh contract; the
+    /// ``needsCloudSignIn`` computation reads whichever flag
+    /// matches the user's currently-selected backend.
+    @State var hasGitHubKey: Bool = false
+
     /// Presents the in-tab `AICloudSignInSheet` when the user
-    /// taps the "Sign in to Claude" prompt below the chat tab's
-    /// empty state.
+    /// taps the sign-in prompt below the chat tab's empty
+    /// state. The sheet routes its content to whichever cloud
+    /// backend is active.
     @State var isSignInSheetPresented: Bool = false
 
     /// The chat view model — owner of every mutable piece of
@@ -110,27 +117,31 @@ public struct BonjourChatView: View {
         preferencesStore.aiBackend.accentColor
     }
 
-    /// Whether the chat surface should show the "Sign in to
-    /// Claude" prompt in place of the normal message list +
-    /// compose bar.
+    /// Whether the chat surface should show the in-tab sign-in
+    /// prompt in place of the normal message list + compose bar.
     ///
-    /// Fires when the user has selected the Anthropic backend
-    /// but the credentials store has no key for it. The cloud-
-    /// aware factory will fall back to the Apple session in this
-    /// case (so a session object exists), but routing the user's
+    /// Fires when the user has selected a cloud backend but the
+    /// credentials store has no key for it. The cloud-aware
+    /// factory falls back to the Apple session in this case (so
+    /// a session object exists), but routing the user's
     /// questions to a backend they didn't pick is surprising —
     /// the in-tab prompt makes the configuration step explicit
     /// before any messages go anywhere.
-    var needsClaudeSignIn: Bool {
-        preferencesStore.aiBackend == .anthropic && !hasAnthropicKey
+    var needsCloudSignIn: Bool {
+        switch preferencesStore.aiBackend {
+        case .appleIntelligence: return false
+        case .anthropic:         return !hasAnthropicKey
+        case .github:            return !hasGitHubKey
+        }
     }
 
-    /// Re-queries the credentials store and refreshes
-    /// ``hasAnthropicKey``. Called on first appearance and after
-    /// the in-tab sign-in sheet dismisses, mirroring the pattern
-    /// `SettingsView` uses for the same property.
-    func refreshAnthropicKeyState() {
+    /// Re-queries the credentials store and refreshes both
+    /// per-backend key flags. Called on first appearance and
+    /// after the in-tab sign-in sheet dismisses, mirroring the
+    /// pattern `SettingsView` uses.
+    func refreshCloudKeyState() {
         hasAnthropicKey = credentialsStore.hasAPIKey(for: .anthropic)
+        hasGitHubKey = credentialsStore.hasAPIKey(for: .github)
     }
 
     public var body: some View {
@@ -184,20 +195,20 @@ public struct BonjourChatView: View {
                 }
                 .onAppear {
                     viewModel.onAppear(injectedSession: injectedSession)
-                    refreshAnthropicKeyState()
+                    refreshCloudKeyState()
                 }
                 // Animate the swap between the sign-in prompt
                 // and the normal chat content (message list +
                 // compose bar). Without this the swap is an
-                // instant pop the moment `hasAnthropicKey`
-                // flips after a successful sign-in; with it,
-                // the prompt fades out as the chat fades in.
+                // instant pop the moment the key flag flips
+                // after a successful sign-in; with it, the
+                // prompt fades out as the chat fades in.
                 // Honors Reduce Motion via the nil-animation
                 // shortcut, same pattern the rest of the chat
                 // surface uses.
                 .animation(
                     reduceMotion ? nil : .default,
-                    value: needsClaudeSignIn
+                    value: needsCloudSignIn
                 )
                 // Animate the cross-backend swap. When the user
                 // toggles the backend in Settings and navigates
@@ -219,8 +230,18 @@ public struct BonjourChatView: View {
                 // chat view's `@State` rather than the prompt
                 // view's transient one.
                 .sheet(isPresented: $isSignInSheetPresented) {
-                    AICloudSignInSheet(credentialsStore: credentialsStore)
-                        .onDisappear { refreshAnthropicKeyState() }
+                    // Route the sheet to whichever cloud
+                    // provider the user has selected so the
+                    // copy + validation hints match. Falls back
+                    // to Anthropic if the active backend is
+                    // somehow on-device (the in-tab prompt is
+                    // gated to cloud backends, so this is
+                    // defensive).
+                    AICloudSignInSheet(
+                        credentialsStore: credentialsStore,
+                        provider: preferencesStore.aiBackend.cloudProvider ?? .anthropic
+                    )
+                        .onDisappear { refreshCloudKeyState() }
                 }
                 // Watch the assistant's intent broker. When a tool call
                 // publishes a drafted form, the VM hydrates it into the
@@ -270,18 +291,19 @@ public struct BonjourChatView: View {
     /// pair that drives the cross-backend fade animation.
     @ViewBuilder
     private var chatContentForActiveBackend: some View {
-        if needsClaudeSignIn {
-            // User picked Anthropic but hasn't configured a key.
-            // The cloud-aware factory's silent Apple-fallback
-            // would send their questions to the wrong backend;
-            // this branch surfaces the configuration step
-            // explicitly so the user knows why they aren't yet
-            // talking to Claude.
-            ChatSignInPromptView(onSignInTapped: {
-                isSignInSheetPresented = true
-            })
+        if needsCloudSignIn {
+            // User picked a cloud backend but hasn't configured
+            // a key. The cloud-aware factory's silent Apple-
+            // fallback would send their questions to the wrong
+            // backend; this branch surfaces the configuration
+            // step explicitly so the user knows why they aren't
+            // yet talking to their picked provider.
+            ChatSignInPromptView(
+                backend: preferencesStore.aiBackend,
+                onSignInTapped: { isSignInSheetPresented = true }
+            )
             // Fade in / out rather than popping when
-            // `needsClaudeSignIn` flips. The transition pairs
+            // `needsCloudSignIn` flips. The transition pairs
             // with the `.animation(_:value:)` below on the
             // chatContent's container view; without both
             // halves, SwiftUI doesn't know to animate the swap.

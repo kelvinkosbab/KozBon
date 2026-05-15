@@ -10,6 +10,7 @@ import OSLog
 import BonjourAICore
 import BonjourAIApple
 import BonjourAIAnthropic
+import BonjourAIGitHub
 import BonjourStorage
 
 // MARK: - Logger
@@ -36,7 +37,8 @@ public struct CloudAwareBonjourServiceExplainerFactory: BonjourServiceExplainerF
     private let appleFactory: any BonjourServiceExplainerFactoryProtocol
     private let credentialsStore: any AICloudCredentialsStore & Sendable
     private let preferencesStore: PreferencesStore
-    private let client: any AnthropicClientProtocol
+    private let anthropicClient: any AnthropicClientProtocol
+    private let githubClient: any GitHubModelsClientProtocol
 
     // MARK: - Init
 
@@ -44,12 +46,14 @@ public struct CloudAwareBonjourServiceExplainerFactory: BonjourServiceExplainerF
         appleFactory: any BonjourServiceExplainerFactoryProtocol = BonjourServiceExplainerFactory(),
         credentialsStore: any AICloudCredentialsStore & Sendable,
         preferencesStore: PreferencesStore,
-        client: any AnthropicClientProtocol = AnthropicClient()
+        anthropicClient: any AnthropicClientProtocol = AnthropicClient(),
+        githubClient: any GitHubModelsClientProtocol = GitHubModelsClient()
     ) {
         self.appleFactory = appleFactory
         self.credentialsStore = credentialsStore
         self.preferencesStore = preferencesStore
-        self.client = client
+        self.anthropicClient = anthropicClient
+        self.githubClient = githubClient
     }
 
     // MARK: - BonjourServiceExplainerFactoryProtocol
@@ -65,9 +69,16 @@ public struct CloudAwareBonjourServiceExplainerFactory: BonjourServiceExplainerF
                 return appleExplainer
             }
             return makeAnthropicExplainerIfPossible()
+                ?? makeGitHubExplainerIfPossible()
 
         case .anthropic:
             if let cloudExplainer = makeAnthropicExplainerIfPossible() {
+                return cloudExplainer
+            }
+            return appleExplainer
+
+        case .github:
+            if let cloudExplainer = makeGitHubExplainerIfPossible() {
                 return cloudExplainer
             }
             return appleExplainer
@@ -83,10 +94,22 @@ public struct CloudAwareBonjourServiceExplainerFactory: BonjourServiceExplainerF
             return nil
         }
         let explainer = AnthropicBonjourServiceExplainer(
-            client: client,
+            client: anthropicClient,
             credentialsStore: credentialsStore
         )
         explainer.selectedModel = preferencesStore.aiCloudModel
         return explainer
+    }
+
+    @MainActor
+    private func makeGitHubExplainerIfPossible() -> GitHubBonjourServiceExplainer? {
+        guard credentialsStore.hasAPIKey(for: .github) else {
+            explainerRoutingLogger.debug("GitHub backend requested but no PAT configured.")
+            return nil
+        }
+        return GitHubBonjourServiceExplainer(
+            client: githubClient,
+            credentialsStore: credentialsStore
+        )
     }
 }

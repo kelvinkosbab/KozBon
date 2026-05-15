@@ -38,6 +38,7 @@ struct AIBackendTests {
     func resolvedMatchesKnownIdentifiers() {
         #expect(AIBackend.resolved(rawValue: "apple") == .appleIntelligence)
         #expect(AIBackend.resolved(rawValue: "anthropic") == .anthropic)
+        #expect(AIBackend.resolved(rawValue: "github") == .github)
     }
 
     @Test("`resolved(rawValue:)` falls back to default for unknown / nil values")
@@ -49,16 +50,18 @@ struct AIBackendTests {
 
     // MARK: - Classification
 
-    @Test("`isCloud` is false for Apple Intelligence and true for Anthropic")
+    @Test("`isCloud` is false for Apple Intelligence and true for every cloud backend")
     func isCloudPerCase() {
         #expect(!AIBackend.appleIntelligence.isCloud)
         #expect(AIBackend.anthropic.isCloud)
+        #expect(AIBackend.github.isCloud)
     }
 
-    @Test("`cloudProvider` is nil for Apple and `.anthropic` for the Anthropic backend")
+    @Test("`cloudProvider` is nil for Apple and matches the picker case for cloud backends")
     func cloudProviderPerCase() {
         #expect(AIBackend.appleIntelligence.cloudProvider == nil)
         #expect(AIBackend.anthropic.cloudProvider == .anthropic)
+        #expect(AIBackend.github.cloudProvider == .github)
     }
 
     // MARK: - PreferencesStore Bridge
@@ -75,6 +78,14 @@ struct AIBackendTests {
         store.aiBackend = .anthropic
         #expect(store.aiBackendRawValue == "anthropic")
         #expect(store.aiBackend == .anthropic)
+    }
+
+    @Test("Writing typed `aiBackend = .github` persists as raw `\"github\"`")
+    func typedAccessorWritesGitHubRawValue() throws {
+        let store = try makeStore()
+        store.aiBackend = .github
+        #expect(store.aiBackendRawValue == "github")
+        #expect(store.aiBackend == .github)
     }
 
     @Test("Retired backend identifiers fall back to the default")

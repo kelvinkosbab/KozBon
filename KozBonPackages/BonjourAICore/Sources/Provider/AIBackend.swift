@@ -33,6 +33,12 @@ public enum AIBackend: String, Sendable, CaseIterable, Codable, Identifiable {
     /// requires the user to paste a key from `console.anthropic.com`.
     case anthropic
 
+    /// GitHub Models (OpenAI GPT-4o via GitHub's brokered
+    /// inference endpoint) using the user's own Personal Access
+    /// Token. Opt-in; requires the user to paste a token from
+    /// `github.com/settings/tokens`.
+    case github
+
     // MARK: - Identifiable
 
     public var id: String { rawValue }
@@ -70,7 +76,7 @@ public enum AIBackend: String, Sendable, CaseIterable, Codable, Identifiable {
         switch self {
         case .appleIntelligence:
             return false
-        case .anthropic:
+        case .anthropic, .github:
             return true
         }
     }
@@ -87,6 +93,8 @@ public enum AIBackend: String, Sendable, CaseIterable, Codable, Identifiable {
             return nil
         case .anthropic:
             return .anthropic
+        case .github:
+            return .github
         }
     }
 
@@ -100,6 +108,8 @@ public enum AIBackend: String, Sendable, CaseIterable, Codable, Identifiable {
             return Strings.Settings.aiBackendApple
         case .anthropic:
             return Strings.Settings.aiBackendAnthropic
+        case .github:
+            return Strings.Settings.aiBackendGitHub
         }
     }
 
@@ -112,6 +122,8 @@ public enum AIBackend: String, Sendable, CaseIterable, Codable, Identifiable {
             return Strings.Settings.aiBackendAppleSubtitle
         case .anthropic:
             return Strings.Settings.aiBackendAnthropicSubtitle
+        case .github:
+            return Strings.Settings.aiBackendGitHubSubtitle
         }
     }
 }

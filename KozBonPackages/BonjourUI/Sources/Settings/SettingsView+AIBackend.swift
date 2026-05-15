@@ -10,6 +10,7 @@ import BonjourAI
 import BonjourAIApple
 import BonjourAICore
 import BonjourAIAnthropic
+import BonjourAIGitHub
 import BonjourCore
 import BonjourLocalization
 
@@ -32,26 +33,26 @@ extension SettingsView {
         Section {
             backendPicker
 
-            if preferencesStore.aiBackend == .anthropic {
-                signInRow
+            switch preferencesStore.aiBackend {
+            case .appleIntelligence:
+                EmptyView()
+            case .anthropic:
+                anthropicSignInRow
 
                 if hasAnthropicKey {
                     claudeModelPicker
                 }
+            case .github:
+                githubSignInRow
             }
         } header: {
             Text(Strings.Settings.aiBackendSection)
                 .accessibilityAddTraits(.isHeader)
         } footer: {
             // Two-paragraph footer: a stable description of what
-            // the AI is responsible for (applies to either
+            // the AI is responsible for (applies to every
             // backend) followed by a backend-specific privacy
-            // disclosure. The previous version surfaced the per-
-            // backend privacy line as the whole footer, which
-            // implicitly conveyed "AI is for privacy" rather
-            // than "AI explains your services and runs the Chat
-            // tab" — the purpose-first split makes both halves
-            // legible.
+            // disclosure.
             VStack(alignment: .leading, spacing: 8) {
                 Text(Strings.Settings.aiBackendSectionPurpose)
 
@@ -60,6 +61,8 @@ extension SettingsView {
                     Text(Strings.Settings.aiBackendApplePrivacy)
                 case .anthropic:
                     Text(Strings.Settings.aiCloudFooter)
+                case .github:
+                    Text(Strings.Settings.aiBackendGitHubPrivacy)
                 }
             }
         }
@@ -115,6 +118,8 @@ extension SettingsView {
                 .tag(AIBackend.appleIntelligence)
             backendOption(.anthropic)
                 .tag(AIBackend.anthropic)
+            backendOption(.github)
+                .tag(AIBackend.github)
         } label: {
             Text(Strings.Settings.aiBackendPickerLabel)
         }
@@ -158,14 +163,44 @@ extension SettingsView {
         .accessibilityElement(children: .combine)
     }
 
-    // MARK: - Sign-In Row
+    // MARK: - Sign-In Rows
 
+    /// Anthropic-specific signed-in / sign-in row. The label and
+    /// sign-out flow are Anthropic-flavored (Claude-specific
+    /// copy); the layout is shared with the GitHub variant via
+    /// ``signInRow(isConnected:signInLabel:)``.
     @ViewBuilder
-    private var signInRow: some View {
-        if hasAnthropicKey {
-            // Connected state — leading "Signed in" status, trailing
-            // destructive "Sign out" button. Keeps the row short
-            // and avoids two competing CTAs.
+    private var anthropicSignInRow: some View {
+        signInRow(
+            isConnected: hasAnthropicKey,
+            signInLabel: Strings.Settings.aiCloudSignIn
+        )
+    }
+
+    /// GitHub-specific signed-in / sign-in row. Surfaces the
+    /// GitHub-flavored copy (`Sign in to GitHub`); reuses the
+    /// shared layout helper.
+    @ViewBuilder
+    private var githubSignInRow: some View {
+        signInRow(
+            isConnected: hasGitHubKey,
+            signInLabel: Strings.Settings.aiCloudSignInGitHub
+        )
+    }
+
+    /// Shared row layout for both cloud backends. The
+    /// connected-state copy ("Signed in" / "Sign out") is
+    /// backend-agnostic; the sign-in CTA pulls a per-backend
+    /// localized label so users see the right provider name.
+    /// The sheet itself reads the active backend from
+    /// preferences when it mounts, so callers don't need to
+    /// thread the provider through.
+    @ViewBuilder
+    private func signInRow(
+        isConnected: Bool,
+        signInLabel: LocalizedStringResource
+    ) -> some View {
+        if isConnected {
             HStack {
                 Label {
                     Text(Strings.Settings.aiCloudSignedIn)
@@ -185,15 +220,12 @@ extension SettingsView {
             }
             .accessibilityElement(children: .combine)
         } else {
-            // Not connected — primary CTA to launch the sign-in
-            // sheet. Tap target spans the row so it's easy to hit
-            // with VoiceOver and on visionOS.
             Button {
                 isSignInSheetPresented = true
             } label: {
                 HStack {
                     Label {
-                        Text(Strings.Settings.aiCloudSignIn)
+                        Text(signInLabel)
                     } icon: {
                         Image.signIn
                             .accessibilityHidden(true)
@@ -288,16 +320,23 @@ extension SettingsView {
 
     // MARK: - Sign Out
 
-    /// Removes the Anthropic API key from the Keychain and falls
-    /// the user's backend back to Apple Intelligence if available.
-    /// If the device can't run Apple Intelligence we leave the
-    /// backend preference at `.anthropic` (so the user's choice
-    /// isn't second-guessed when they reach the Sign In flow
-    /// again), but they'll see the "Not signed in" state until
-    /// they enter a new key.
-    func signOutOfClaude() {
+    /// Removes the currently-selected cloud provider's credentials
+    /// from the Keychain and falls the user's backend back to
+    /// Apple Intelligence if available. If the device can't run
+    /// Apple Intelligence we leave the backend preference at the
+    /// cloud value (so the user's choice isn't second-guessed
+    /// when they reach the Sign In flow again), but they'll see
+    /// the "Not signed in" state until they enter a new key.
+    ///
+    /// Reads the active provider from the preferences store at
+    /// call time so the alert's destructive button doesn't need
+    /// to thread the provider through. A user on `.appleIntelligence`
+    /// shouldn't see the sign-out alert — this method is a no-op
+    /// for that case.
+    func signOutOfCurrentBackend() {
+        guard let provider = preferencesStore.aiBackend.cloudProvider else { return }
         do {
-            try credentialsStore.removeAPIKey(for: .anthropic)
+            try credentialsStore.removeAPIKey(for: provider)
         } catch {
             // Worst case: the key remains in the Keychain but the
             // user expects it gone. Surfacing the failure as a
@@ -307,20 +346,21 @@ extension SettingsView {
         // Animate the same way the picker-driven backend swap
         // does — sign-out reassigns `aiBackend` programmatically,
         // and without an animation transaction the global tint
-        // would pop from Cara orange to KozBon blue between
-        // frames.
+        // would pop between brand colors in a single frame.
         withAnimation(reduceMotion ? nil : .default) {
-            refreshAnthropicKeyState()
+            refreshCloudKeyState()
             if AppleIntelligenceSupport.isDeviceSupported {
                 preferencesStore.aiBackend = .appleIntelligence
             }
         }
     }
 
-    /// Re-queries the credentials store and refreshes
-    /// ``hasAnthropicKey``. Called on appearance and after every
-    /// sign-in / sign-out flow resolves.
-    func refreshAnthropicKeyState() {
+    /// Re-queries the credentials store and refreshes both
+    /// ``hasAnthropicKey`` and ``hasGitHubKey``. Called on
+    /// appearance and after every sign-in / sign-out flow
+    /// resolves.
+    func refreshCloudKeyState() {
         hasAnthropicKey = credentialsStore.hasAPIKey(for: .anthropic)
+        hasGitHubKey = credentialsStore.hasAPIKey(for: .github)
     }
 }

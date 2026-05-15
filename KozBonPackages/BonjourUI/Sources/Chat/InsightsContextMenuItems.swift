@@ -64,6 +64,9 @@ public struct InsightsContextMenuItems: View {
 
             case .anthropic:
                 anthropicMenu
+
+            case .github:
+                githubMenu
             }
         }
     }
@@ -99,6 +102,29 @@ public struct InsightsContextMenuItems: View {
                     Text(Strings.Insights.explainWithAI)
                 } icon: {
                     Image.anthropicClaude
+                }
+            }
+        }
+    }
+
+    // MARK: - GitHub Models
+
+    @ViewBuilder
+    private var githubMenu: some View {
+        if credentialsStore.hasAPIKey(for: .github) {
+            Divider()
+            Button {
+                hapticFeedback.play(.medium)
+                action()
+            } label: {
+                // Per-backend glyph + label so the menu makes
+                // the active provider scannable. Reads "Explain
+                // with GPT-4o" to mirror the surface name users
+                // selected in Settings.
+                Label {
+                    Text(Strings.Insights.explainWithGitHub)
+                } icon: {
+                    Image.github
                 }
             }
         }
