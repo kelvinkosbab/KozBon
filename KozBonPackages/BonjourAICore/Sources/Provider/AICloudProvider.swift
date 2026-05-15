@@ -22,7 +22,12 @@ import BonjourLocalization
 /// ADR 0005 documents why this layer exists — KozBon's default is
 /// still on-device Apple Foundation Models, and the cloud surface
 /// is strictly opt-in.
-public enum AICloudProvider: String, Sendable, CaseIterable, Codable {
+public enum AICloudProvider: String, Sendable, CaseIterable, Codable, Identifiable {
+
+    /// Stable identity for SwiftUI's `.sheet(item:)` and friends.
+    /// The raw value doubles as the identifier since each case
+    /// is unique and stable across launches.
+    public var id: String { rawValue }
 
     /// Anthropic's Claude family. The user supplies their own API
     /// key from `console.anthropic.com`; KozBon never operates the

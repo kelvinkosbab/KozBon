@@ -25,7 +25,7 @@ import BonjourLocalization
 /// Provider-specific copy and the external "get a key" URL come
 /// from per-provider helpers below — the view body stays
 /// provider-agnostic.
-struct AICloudSignInSheet: View {
+public struct AICloudSignInSheet: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
@@ -43,7 +43,7 @@ struct AICloudSignInSheet: View {
     /// The credentials store this sheet writes to. Held by the
     /// owning view so it persists for the parent's lifetime; the
     /// sheet's view model captures it at init.
-    init(credentialsStore: any AICloudCredentialsStore, provider: AICloudProvider = .anthropic) {
+    public init(credentialsStore: any AICloudCredentialsStore, provider: AICloudProvider = .anthropic) {
         self.provider = provider
         _viewModel = State(initialValue: AICloudSignInViewModel(
             credentialsStore: credentialsStore,
@@ -51,7 +51,7 @@ struct AICloudSignInSheet: View {
         ))
     }
 
-    var body: some View {
+    public var body: some View {
         NavigationStack {
             Form {
                 Section {

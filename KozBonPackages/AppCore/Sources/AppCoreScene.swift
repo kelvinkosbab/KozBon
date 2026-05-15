@@ -25,6 +25,18 @@ public struct AppCoreScene: Scene {
     @State private var viewModel: AppCoreViewModel
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
+    /// Cloud provider the scene-level sign-in sheet should mount
+    /// for. Driven by the
+    /// ``Notification.Name/aiCloudSignInRequested`` notification —
+    /// the Insights long-press menu posts when the user picks
+    /// the "Sign in to Claude" / "Sign in to GitHub" CTA on a
+    /// cloud-backend row that lacks credentials. Hosting the
+    /// sheet here (rather than inside each long-press call site)
+    /// keeps the sign-in surface reachable from Discover,
+    /// Library, the chat tab, and any future Insights surface
+    /// without each of them having to plumb its own sheet state.
+    @State private var pendingCloudSignInProvider: AICloudProvider?
+
     /// Production initializer — wires the default
     /// ``DependencyContainer`` and the cloud-aware factories.
     public init() {
@@ -177,6 +189,10 @@ public struct AppCoreScene: Scene {
                 ) { _ in
                     viewModel.refreshAIBackend()
                 }
+                .modifier(CloudSignInSheetPresentation(
+                    pendingProvider: $pendingCloudSignInProvider,
+                    credentialsStore: viewModel.credentialsStore
+                ))
             } else {
                 TabView {
                     BonjourScanForServicesView(viewModel: viewModel.servicesViewModel)
@@ -243,6 +259,10 @@ public struct AppCoreScene: Scene {
                 .onChange(of: viewModel.preferencesStore.aiCloudModel) {
                     viewModel.refreshAIBackend()
                 }
+                .modifier(CloudSignInSheetPresentation(
+                    pendingProvider: $pendingCloudSignInProvider,
+                    credentialsStore: viewModel.credentialsStore
+                ))
             }
         }
         #if os(macOS)
@@ -269,5 +289,42 @@ public struct AppCoreScene: Scene {
         }
         #endif
 
+    }
+}
+
+// MARK: - CloudSignInSheetPresentation
+
+/// Hosts the scene-level `AICloudSignInSheet` and the
+/// notification bridge that drives it. Mounted on both the
+/// modern (`TabView { Tab { ... } }`) and legacy
+/// (`TabView { ... .tabItem }`) branches of `AppCoreScene.body`
+/// so the Insights long-press menu's
+/// ``Notification.Name/aiCloudSignInRequested`` reaches a sheet
+/// presenter regardless of which OS branch is in play.
+///
+/// `credentialsStore == nil` is the test path (the in-memory
+/// stub init); the sheet still wires up but writes are no-ops.
+private struct CloudSignInSheetPresentation: ViewModifier {
+
+    @Binding var pendingProvider: AICloudProvider?
+    let credentialsStore: (any AICloudCredentialsStore & Sendable)?
+
+    func body(content: Content) -> some View {
+        content
+            .onReceive(
+                NotificationCenter.default.publisher(for: .aiCloudSignInRequested)
+            ) { note in
+                guard let raw = note.userInfo?[aiCloudSignInRequestedProviderKey] as? String,
+                      let provider = AICloudProvider(rawValue: raw) else { return }
+                pendingProvider = provider
+            }
+            .sheet(item: $pendingProvider) { provider in
+                if let credentialsStore {
+                    AICloudSignInSheet(
+                        credentialsStore: credentialsStore,
+                        provider: provider
+                    )
+                }
+            }
     }
 }

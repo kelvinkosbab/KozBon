@@ -48,7 +48,10 @@ public final class AppCoreViewModel {
 
     private let chatSessionFactory: any BonjourChatSessionFactoryProtocol
     private let explainerFactory: any BonjourServiceExplainerFactoryProtocol
-    private let credentialsStore: (any AICloudCredentialsStore & Sendable)?
+    /// Exposed (internal) so `AppCoreScene` can pass it to the
+    /// scene-level `AICloudSignInSheet` when the Insights
+    /// long-press menu requests a sign-in flow.
+    let credentialsStore: (any AICloudCredentialsStore & Sendable)?
 
     // MARK: - Initialization
 

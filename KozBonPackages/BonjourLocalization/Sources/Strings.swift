@@ -1337,6 +1337,23 @@ public enum Strings {
             .init("insights_explain_with_github", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        /// "Sign in to Claude" — Insights context-menu CTA when
+        /// the Anthropic backend is selected but no API key is
+        /// configured. Mirrors the "Enable Apple Intelligence"
+        /// affordance for the Apple-Intelligence-disabled state
+        /// so the long-press menu always surfaces a useful next
+        /// step for the user's chosen backend.
+        public static var signInToClaude: LocalizedStringResource {
+            .init("insights_sign_in_to_claude", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// "Sign in to GitHub" — Insights context-menu CTA when
+        /// the GitHub backend is selected but no PAT is
+        /// configured.
+        public static var signInToGitHub: LocalizedStringResource {
+            .init("insights_sign_in_to_github", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var enableAppleIntelligence: LocalizedStringResource {
             .init("button_enable_apple_intelligence", bundle: .atURL(Bundle.module.bundleURL))
         }

@@ -28,7 +28,24 @@ public extension Notification.Name {
     static let aiCloudCredentialsChanged = Notification.Name(
         "com.kozinga.KozBon.aiCloudCredentialsChanged"
     )
+
+    /// Posted when a surface elsewhere in the app (the Insights
+    /// long-press menu when no cloud key is configured) wants
+    /// the scene-level sign-in sheet to mount. `userInfo`
+    /// carries the provider under
+    /// ``aiCloudSignInRequestedProviderKey`` as the raw value
+    /// string so observers don't need to import the cloud
+    /// modules. ``AppCoreScene`` listens and presents the
+    /// matching `AICloudSignInSheet`.
+    static let aiCloudSignInRequested = Notification.Name(
+        "com.kozinga.KozBon.aiCloudSignInRequested"
+    )
 }
+
+/// Key into `Notification.userInfo` for the
+/// ``Notification.Name/aiCloudSignInRequested`` payload — the
+/// provider's `rawValue` (`"anthropic"` or `"github"`).
+public let aiCloudSignInRequestedProviderKey = "provider"
 
 // MARK: - AICloudCredentialsStore
 

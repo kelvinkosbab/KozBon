@@ -8,6 +8,7 @@
 import SwiftUI
 import BonjourAI
 import BonjourAIApple
+import BonjourAICore
 import BonjourCore
 import BonjourLocalization
 import BonjourStorage
@@ -96,14 +97,19 @@ public struct InsightsContextMenuItems: View {
                 action()
             } label: {
                 // View-builder `Label` form so the Claude asset
-                // mark renders instead of an SF Symbol. Color
-                // follows the menu's inherited tint.
+                // mark renders instead of an SF Symbol.
                 Label {
                     Text(Strings.Insights.explainWithAI)
                 } icon: {
                     Image.anthropicClaude
                 }
             }
+        } else {
+            cloudSignInItem(
+                provider: .anthropic,
+                label: Strings.Insights.signInToClaude,
+                icon: Image.anthropicClaude
+            )
         }
     }
 
@@ -117,15 +123,50 @@ public struct InsightsContextMenuItems: View {
                 hapticFeedback.play(.medium)
                 action()
             } label: {
-                // Per-backend glyph + label so the menu makes
-                // the active provider scannable. Reads "Explain
-                // with GPT-4o" to mirror the surface name users
-                // selected in Settings.
                 Label {
                     Text(Strings.Insights.explainWithGitHub)
                 } icon: {
                     Image.github
                 }
+            }
+        } else {
+            cloudSignInItem(
+                provider: .github,
+                label: Strings.Insights.signInToGitHub,
+                icon: Image.github
+            )
+        }
+    }
+
+    // MARK: - Cloud Sign-In CTA
+
+    /// Sign-in CTA surfaced in the cloud branches when the
+    /// selected backend doesn't have credentials yet. Posts
+    /// ``Notification.Name/aiCloudSignInRequested`` with the
+    /// provider; ``AppCoreScene`` observes it at the scene root
+    /// and mounts the matching `AICloudSignInSheet`. Mirrors the
+    /// Apple-Intelligence path's "Enable Apple Intelligence"
+    /// affordance so the long-press menu always surfaces a
+    /// useful next step for the selected backend.
+    @ViewBuilder
+    private func cloudSignInItem(
+        provider: AICloudProvider,
+        label: LocalizedStringResource,
+        icon: Image
+    ) -> some View {
+        Divider()
+        Button {
+            hapticFeedback.play(.light)
+            NotificationCenter.default.post(
+                name: .aiCloudSignInRequested,
+                object: nil,
+                userInfo: [aiCloudSignInRequestedProviderKey: provider.rawValue]
+            )
+        } label: {
+            Label {
+                Text(label)
+            } icon: {
+                icon
             }
         }
     }
