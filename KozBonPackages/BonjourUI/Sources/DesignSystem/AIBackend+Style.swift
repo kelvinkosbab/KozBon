@@ -79,3 +79,28 @@ public extension AIBackend {
         }
     }
 }
+
+// MARK: - AICloudProvider + Style
+
+/// Cloud-provider styling mirroring ``AIBackend``'s. The two
+/// types overlap for the cloud cases — `AIBackend.cloudProvider`
+/// is exactly this enum — but `AICloudProvider` is what the
+/// sign-in sheet, credentials store, and routing-factory code
+/// hold directly, so it gets its own accent accessor rather
+/// than forcing every call site to round-trip through
+/// `AIBackend`.
+public extension AICloudProvider {
+
+    /// The brand-color tint surfaces (sign-in sheet, error
+    /// banners that mention a specific provider) use when
+    /// rendering provider-scoped UI. Resolves to the same colors
+    /// as ``AIBackend/accentColor`` for the matching cases.
+    var accentColor: Color {
+        switch self {
+        case .anthropic:
+            return .kozBonAnthropic
+        case .github:
+            return .kozBonGitHub
+        }
+    }
+}

@@ -146,6 +146,13 @@ public struct AICloudSignInSheet: View {
             #if os(iOS) || os(visionOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
+            // Tint the whole sheet in the provider's brand
+            // color — Cancel / Save toolbar buttons, the
+            // "Get a key" Link row, and any inherited-tint
+            // controls pick it up. Matches iOS's branded
+            // Add-Account sheets (Apple Music = red, Mail
+            // providers carry their own chrome).
+            .tint(provider.accentColor)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(String(localized: Strings.Buttons.cancel)) {
