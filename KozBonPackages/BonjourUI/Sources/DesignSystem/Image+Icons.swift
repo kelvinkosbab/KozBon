@@ -7,6 +7,8 @@
 
 import SwiftUI
 import BonjourCore
+import BonjourAIAnthropic
+import BonjourAIGitHub
 
 // MARK: - Image + App Iconography
 //
@@ -48,37 +50,42 @@ public extension Image {
 
     /// Anthropic Claude brand mark.
     ///
-    /// Resolved from the `Claude` imageset in
-    /// `BonjourUI/Resources/Media.xcassets`, which ships the
-    /// official Anthropic SVG mark. The asset is configured for
-    /// template rendering, so it picks up the surrounding tint
-    /// — in practice that's `Color.kozBonAnthropic` (Anthropic
-    /// Cara orange) wherever this icon appears, and the standard
-    /// iOS tab-bar gray for unselected tab states.
+    /// Resolved from the `Claude` imageset shipped by
+    /// `BonjourAIAnthropic` (the module hosting the rest of the
+    /// Anthropic-specific code), reached via
+    /// ``AnthropicResources/bundle``. Configured for template
+    /// rendering so it picks up the surrounding tint — in
+    /// practice `Color.kozBonAnthropic` wherever this icon
+    /// appears.
     ///
     /// `Iconography.anthropicClaude` still resolves to the
-    /// `sparkle` SF Symbol — that string-based fallback is used
-    /// by call sites that need a system-image name (e.g. `Label(_:
-    /// systemImage:)` in the Insights long-press menu, where an
-    /// asset name wouldn't resolve).
-    static var anthropicClaude: Image { Image("Claude", bundle: .module) }
+    /// `sparkle` SF Symbol — that string-based fallback covers
+    /// call sites that need a system-image name (e.g. `Label(_:
+    /// systemImage:)`), where an asset name wouldn't resolve.
+    static var anthropicClaude: Image {
+        Image("Claude", bundle: AnthropicResources.bundle)
+    }
 
     /// GitHub Models brand glyph.
     ///
-    /// Resolved from the `GitHub` imageset in
-    /// `BonjourUI/Resources/Media.xcassets`, which ships GitHub's
+    /// Resolved from the `GitHub` imageset shipped by
+    /// `BonjourAIGitHub` (the module hosting the rest of the
+    /// GitHub-specific code), reached via
+    /// ``GitHubResources/bundle``. The asset is GitHub's
     /// official Octocat (`mark-github-24.svg` from their brand
-    /// resources). Configured for template rendering, so it
-    /// picks up the surrounding tint — in practice
-    /// `Color.kozBonGitHub` (Copilot purple) on the chat
-    /// surface and tab-bar gray when the chat tab is unselected.
+    /// resources), template-rendered so it picks up the
+    /// surrounding tint — `Color.kozBonGitHub` (Copilot
+    /// purple) on the chat surface and tab-bar gray when the
+    /// chat tab is unselected.
     ///
     /// `Iconography.github` still resolves to the
     /// `chevron.left.forwardslash.chevron.right` SF Symbol —
     /// that string-based fallback is the path call sites take
     /// when they need a system-image name (`Label(_:systemImage:)`),
     /// since asset names don't resolve through that initializer.
-    static var github: Image { Image("GitHub", bundle: .module) }
+    static var github: Image {
+        Image("GitHub", bundle: GitHubResources.bundle)
+    }
 
     static var airportExtreme: Image { Image(systemName: Iconography.airportExtreme) }
 

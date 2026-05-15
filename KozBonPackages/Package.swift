@@ -128,7 +128,13 @@ let package = Package(
             "BonjourLocalization",
             "BonjourScanning",
             "BonjourStorage"
-        ]
+        ],
+        // Ships the official Anthropic brand mark in
+        // `Media.xcassets/Claude.imageset/`. Co-locating the
+        // asset with the Anthropic code keeps everything
+        // provider-scoped in one place; BonjourUI reaches it
+        // via `AnthropicResources.bundle`.
+        hasResources: true
     )
     + makeTargets(
         name: "BonjourAIGitHub",
@@ -139,7 +145,11 @@ let package = Package(
             "BonjourLocalization",
             "BonjourScanning",
             "BonjourStorage"
-        ]
+        ],
+        // Ships GitHub's Octocat
+        // (`Media.xcassets/GitHub.imageset/`). BonjourUI
+        // resolves via `GitHubResources.bundle`.
+        hasResources: true
     )
     + makeTargets(
         name: "BonjourAI",
@@ -181,9 +191,11 @@ let package = Package(
             "BonjourAIGitHub",
             "BonjourStorage",
             .product(name: "CoreUI", package: "Core")
-        ],
-        // Ships the Claude brand mark in `Media.xcassets`.
-        hasResources: true
+        ]
+        // Brand marks moved to the per-provider modules
+        // (`BonjourAIAnthropic` ships Claude;
+        // `BonjourAIGitHub` ships the Octocat). BonjourUI no
+        // longer ships any resources of its own.
     )
     + makeTargets(
         name: "BonjourAppIntents",
