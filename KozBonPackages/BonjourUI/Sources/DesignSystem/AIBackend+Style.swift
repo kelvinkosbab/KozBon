@@ -33,8 +33,9 @@ public extension AIBackend {
     ///   "Cara" brand orange, lightened slightly in dark mode for
     ///   contrast.
     /// - `.github` → ``Color/kozBonGitHub`` — Microsoft's
-    ///   "Copilot purple" (#8534F3), lifted toward higher
-    ///   lightness in dark mode (#A872FF) for AA contrast.
+    ///   "Copilot purple" (#8534F3), with a modest dark-mode
+    ///   lift (#9444FF) tuned so white-on-purple stays AA
+    ///   Normal in both modes.
     var accentColor: Color {
         switch self {
         case .appleIntelligence:

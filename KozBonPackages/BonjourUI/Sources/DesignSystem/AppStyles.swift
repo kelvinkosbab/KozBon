@@ -35,12 +35,13 @@ public extension Color {
     /// GitHub Models brand mark. Used as the accent for AI
     /// surfaces when the user has selected the GitHub backend.
     ///
-    /// Microsoft's published "Copilot purple" (#8534F3) — same
-    /// hue used across Copilot product surfaces. Lifted toward
-    /// higher lightness in dark mode (#A872FF) so contrast
-    /// against a dark background stays comfortably AA, since
-    /// the base value sits right at the threshold.
-    /// Light: #8534F3, Dark: #A872FF
+    /// Microsoft's published "Copilot purple" (#8534F3). Lifted
+    /// modestly in dark mode (#9444FF) — enough to keep purple
+    /// icons legible on dark backgrounds (≥AA Large at 3.64:1)
+    /// while keeping white-text-on-purple comfortably AA Normal
+    /// at 4.65:1 for the chat send button and user message
+    /// bubble (which are the dominant uses of the accent).
+    /// Light: #8534F3, Dark: #9444FF
     static let kozBonGitHub = Color(.kozBonGitHub)
 }
 
@@ -90,8 +91,8 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .dark:
             return UIColor(
-                red: 0xA8 / 255.0,
-                green: 0x72 / 255.0,
+                red: 0x94 / 255.0,
+                green: 0x44 / 255.0,
                 blue: 0xFF / 255.0,
                 alpha: 1.0
             )
@@ -148,8 +149,8 @@ extension NSColor {
     static let kozBonGitHub = NSColor(name: nil) { appearance in
         if appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua {
             return NSColor(
-                red: 0xA8 / 255.0,
-                green: 0x72 / 255.0,
+                red: 0x94 / 255.0,
+                green: 0x44 / 255.0,
                 blue: 0xFF / 255.0,
                 alpha: 1.0
             )
