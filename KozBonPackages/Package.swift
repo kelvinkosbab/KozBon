@@ -130,10 +130,11 @@ let package = Package(
             "BonjourStorage"
         ],
         // Ships the official Anthropic brand mark in
-        // `Media.xcassets/Claude.imageset/`. Co-locating the
-        // asset with the Anthropic code keeps everything
-        // provider-scoped in one place; BonjourUI reaches it
-        // via `AnthropicResources.bundle`.
+        // `Media.xcassets/Claude.imageset/` plus the
+        // `Image.anthropicClaude` accessor that wraps it —
+        // colocated so the SwiftPM-generated `Bundle.module`
+        // resolves correctly without exposing a separate
+        // public bundle handle.
         hasResources: true
     )
     + makeTargets(
@@ -147,8 +148,9 @@ let package = Package(
             "BonjourStorage"
         ],
         // Ships GitHub's Octocat
-        // (`Media.xcassets/GitHub.imageset/`). BonjourUI
-        // resolves via `GitHubResources.bundle`.
+        // (`Media.xcassets/GitHub.imageset/`) plus the
+        // `Image.github` accessor — same colocation pattern as
+        // BonjourAIAnthropic.
         hasResources: true
     )
     + makeTargets(

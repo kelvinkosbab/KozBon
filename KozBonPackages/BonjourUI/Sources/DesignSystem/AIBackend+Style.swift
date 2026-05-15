@@ -7,6 +7,8 @@
 
 import SwiftUI
 import BonjourAICore
+import BonjourAIAnthropic
+import BonjourAIGitHub
 import BonjourCore
 
 // MARK: - AIBackend + Style

@@ -7,8 +7,6 @@
 
 import SwiftUI
 import BonjourCore
-import BonjourAIAnthropic
-import BonjourAIGitHub
 
 // MARK: - Image + App Iconography
 //
@@ -48,44 +46,13 @@ public extension Image {
     static var bonjour: Image { Image(systemName: Iconography.bonjour) }
     static var appleIntelligence: Image { Image(systemName: Iconography.appleIntelligence) }
 
-    /// Anthropic Claude brand mark.
-    ///
-    /// Resolved from the `Claude` imageset shipped by
-    /// `BonjourAIAnthropic` (the module hosting the rest of the
-    /// Anthropic-specific code), reached via
-    /// ``AnthropicResources/bundle``. Configured for template
-    /// rendering so it picks up the surrounding tint — in
-    /// practice `Color.kozBonAnthropic` wherever this icon
-    /// appears.
-    ///
-    /// `Iconography.anthropicClaude` still resolves to the
-    /// `sparkle` SF Symbol — that string-based fallback covers
-    /// call sites that need a system-image name (e.g. `Label(_:
-    /// systemImage:)`), where an asset name wouldn't resolve.
-    static var anthropicClaude: Image {
-        Image("Claude", bundle: AnthropicResources.bundle)
-    }
-
-    /// GitHub Models brand glyph.
-    ///
-    /// Resolved from the `GitHub` imageset shipped by
-    /// `BonjourAIGitHub` (the module hosting the rest of the
-    /// GitHub-specific code), reached via
-    /// ``GitHubResources/bundle``. The asset is GitHub's
-    /// official Octocat (`mark-github-24.svg` from their brand
-    /// resources), template-rendered so it picks up the
-    /// surrounding tint — `Color.kozBonGitHub` (Copilot
-    /// purple) on the chat surface and tab-bar gray when the
-    /// chat tab is unselected.
-    ///
-    /// `Iconography.github` still resolves to the
-    /// `chevron.left.forwardslash.chevron.right` SF Symbol —
-    /// that string-based fallback is the path call sites take
-    /// when they need a system-image name (`Label(_:systemImage:)`),
-    /// since asset names don't resolve through that initializer.
-    static var github: Image {
-        Image("GitHub", bundle: GitHubResources.bundle)
-    }
+    // `Image.anthropicClaude` and `Image.github` are defined
+    // in `BonjourAIAnthropic/Image+AnthropicBrand.swift` and
+    // `BonjourAIGitHub/Image+GitHubBrand.swift` respectively —
+    // co-located with the SVG assets they wrap so each
+    // provider module's `Bundle.module` resolves correctly.
+    // Importing the provider module brings the extension into
+    // scope automatically.
 
     static var airportExtreme: Image { Image(systemName: Iconography.airportExtreme) }
 
