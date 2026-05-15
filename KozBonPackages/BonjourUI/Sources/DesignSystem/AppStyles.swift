@@ -35,11 +35,12 @@ public extension Color {
     /// GitHub Models brand mark. Used as the accent for AI
     /// surfaces when the user has selected the GitHub backend.
     ///
-    /// GitHub's primary brand chrome is near-black on light
-    /// surfaces and near-white on dark. We approximate the
-    /// published `#1F2328` (light) and `#F6F8FA` (dark) so the
-    /// chat surface reads as "GitHub-y" without the full Octocat.
-    /// Light: #1F2328, Dark: #F6F8FA
+    /// Microsoft's published "Copilot purple" (#8534F3) — same
+    /// hue used across Copilot product surfaces. Lifted toward
+    /// higher lightness in dark mode (#A872FF) so contrast
+    /// against a dark background stays comfortably AA, since
+    /// the base value sits right at the threshold.
+    /// Light: #8534F3, Dark: #A872FF
     static let kozBonGitHub = Color(.kozBonGitHub)
 }
 
@@ -89,16 +90,16 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .dark:
             return UIColor(
-                red: 0xF6 / 255.0,
-                green: 0xF8 / 255.0,
-                blue: 0xFA / 255.0,
+                red: 0xA8 / 255.0,
+                green: 0x72 / 255.0,
+                blue: 0xFF / 255.0,
                 alpha: 1.0
             )
         default:
             return UIColor(
-                red: 0x1F / 255.0,
-                green: 0x23 / 255.0,
-                blue: 0x28 / 255.0,
+                red: 0x85 / 255.0,
+                green: 0x34 / 255.0,
+                blue: 0xF3 / 255.0,
                 alpha: 1.0
             )
         }
@@ -147,16 +148,16 @@ extension NSColor {
     static let kozBonGitHub = NSColor(name: nil) { appearance in
         if appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua {
             return NSColor(
-                red: 0xF6 / 255.0,
-                green: 0xF8 / 255.0,
-                blue: 0xFA / 255.0,
+                red: 0xA8 / 255.0,
+                green: 0x72 / 255.0,
+                blue: 0xFF / 255.0,
                 alpha: 1.0
             )
         } else {
             return NSColor(
-                red: 0x1F / 255.0,
-                green: 0x23 / 255.0,
-                blue: 0x28 / 255.0,
+                red: 0x85 / 255.0,
+                green: 0x34 / 255.0,
+                blue: 0xF3 / 255.0,
                 alpha: 1.0
             )
         }

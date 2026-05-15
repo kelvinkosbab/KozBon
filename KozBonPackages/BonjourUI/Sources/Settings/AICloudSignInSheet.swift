@@ -74,6 +74,12 @@ struct AICloudSignInSheet: View {
                     #endif
                     .focused($isAPIKeyFieldFocused)
                     .accessibilityLabel(String(localized: apiKeyFieldLabel))
+                    // Thread the validation message into the
+                    // field's accessibility hint so VoiceOver
+                    // users hear the format error as part of
+                    // the field rather than having to swipe
+                    // away to find the orange-text sibling.
+                    .accessibilityHint(viewModel.validationMessage ?? "")
 
                     if let message = viewModel.validationMessage {
                         Text(verbatim: message)
@@ -148,6 +154,16 @@ struct AICloudSignInSheet: View {
                 // immediately; on macOS the field already shows
                 // its insertion cursor.
                 isAPIKeyFieldFocused = true
+            }
+            // Actively announce Keychain save failures. The
+            // orange-text row below the form sits under the
+            // fold; without an announcement a VoiceOver user
+            // has to swipe to discover the save didn't go
+            // through.
+            .onChange(of: viewModel.keychainError) { _, newValue in
+                if let message = newValue {
+                    AccessibilityNotification.Announcement(message).post()
+                }
             }
         }
     }

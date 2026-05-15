@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import BonjourLocalization
 
 // MARK: - AICloudProvider
 
@@ -34,4 +35,17 @@ public enum AICloudProvider: String, Sendable, CaseIterable, Codable {
     /// `github.com/settings/tokens`; KozBon never operates the
     /// token.
     case github
+
+    /// Localized user-facing name for this provider, suitable for
+    /// confirmation dialogs and error messages that reference a
+    /// specific cloud backend. Mirrors ``AIBackend/displayName``
+    /// for the cloud cases.
+    public var displayName: LocalizedStringResource {
+        switch self {
+        case .anthropic:
+            return Strings.Settings.aiBackendAnthropic
+        case .github:
+            return Strings.Settings.aiBackendGitHub
+        }
+    }
 }

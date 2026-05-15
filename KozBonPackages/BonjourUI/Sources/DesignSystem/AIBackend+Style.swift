@@ -32,8 +32,9 @@ public extension AIBackend {
     /// - `.anthropic` → ``Color/kozBonAnthropic`` — Anthropic's
     ///   "Cara" brand orange, lightened slightly in dark mode for
     ///   contrast.
-    /// - `.github` → ``Color/kozBonGitHub`` — GitHub's near-black
-    ///   chrome, swapped to near-white in dark mode.
+    /// - `.github` → ``Color/kozBonGitHub`` — Microsoft's
+    ///   "Copilot purple" (#8534F3), lifted toward higher
+    ///   lightness in dark mode (#A872FF) for AA contrast.
     var accentColor: Color {
         switch self {
         case .appleIntelligence:

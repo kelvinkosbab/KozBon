@@ -33,7 +33,15 @@ public struct SettingsView: View {
     @Environment(\.accessibilityReduceMotion) var reduceMotion
     @State private var isResetConfirmationPresented = false
     @State var isSignInSheetPresented = false
-    @State var isSignOutConfirmationPresented = false
+
+    /// Provider whose sign-out is being confirmed. Drives the
+    /// alert's title + destructive target so taps on the
+    /// non-active row don't remove the active provider's key.
+    @State var providerPendingSignOut: AICloudProvider?
+
+    /// Provider whose sign-in sheet is about to mount. Captured
+    /// from the tapped row so per-provider copy matches.
+    @State var providerPendingSignIn: AICloudProvider?
 
     /// Reflects "is there an Anthropic API key in the
     /// Keychain right now?" Refreshed on appearance and after
@@ -140,24 +148,47 @@ public struct SettingsView: View {
                 Text(Strings.Settings.resetConfirmationMessage)
             }
             .alert(
-                String(localized: Strings.Settings.aiCloudSignOut),
-                isPresented: $isSignOutConfirmationPresented
+                // Title interpolates the specific provider name
+                // (e.g. "Sign out of Claude?" / "Sign out of
+                // GitHub?") so the user can't accidentally
+                // remove the wrong key when both clouds are
+                // signed in.
+                providerPendingSignOut.map { provider in
+                    Strings.Settings.aiCloudSignOutConfirmationTitle(
+                        String(localized: provider.displayName)
+                    )
+                } ?? String(localized: Strings.Settings.aiCloudSignOut),
+                isPresented: Binding(
+                    get: { providerPendingSignOut != nil },
+                    set: { presented in
+                        if !presented { providerPendingSignOut = nil }
+                    }
+                )
             ) {
-                Button(String(localized: Strings.Buttons.cancel), role: .cancel) {}
+                Button(String(localized: Strings.Buttons.cancel), role: .cancel) {
+                    providerPendingSignOut = nil
+                }
                 Button(String(localized: Strings.Settings.aiCloudSignOut), role: .destructive) {
-                    signOutOfCurrentBackend()
+                    if let provider = providerPendingSignOut {
+                        signOut(from: provider)
+                    }
+                    providerPendingSignOut = nil
                 }
             }
             .sheet(isPresented: $isSignInSheetPresented) {
-                // Route to the currently-selected backend's
-                // provider. Anthropic fallback is defensive —
-                // the row that opens this sheet is gated to
-                // cloud backends.
+                // Route to the provider whose row was tapped.
+                // Anthropic fallback is defensive — the sheet
+                // shouldn't open without `providerPendingSignIn`
+                // being set, but if the rare race happens we
+                // land on the historical default.
                 AICloudSignInSheet(
                     credentialsStore: credentialsStore,
-                    provider: preferencesStore.aiBackend.cloudProvider ?? .anthropic
+                    provider: providerPendingSignIn ?? .anthropic
                 )
-                    .onDisappear { refreshCloudKeyState() }
+                    .onDisappear {
+                        refreshCloudKeyState()
+                        providerPendingSignIn = nil
+                    }
             }
         }
     }
@@ -319,20 +350,11 @@ public struct SettingsView: View {
         }
     }
 
-    /// Whether every preference tracked by the reset action is at
-    /// its documented default value AND no custom service types
-    /// are persisted. The four preference comparisons read from
-    /// the `@Observable` `preferencesStore`, which triggers a
-    /// re-render when any preference changes; the custom-types
-    /// half reads the cached ``hasCustomServiceTypes`` flag,
-    /// which is refreshed on `.onAppear` and on every
-    /// `NSManagedObjectContextDidSave` notification. Net result:
-    /// the Reset to Defaults section reacts to changes from any
-    /// surface — the Library tab, the chat assistant's intent
-    /// flow, the reset action itself — within a single render
-    /// cycle of the underlying mutation, on every platform
-    /// including macOS multi-window setups where Settings can be
-    /// open in parallel with Library.
+    /// Whether every reset-tracked preference is at its default
+    /// AND no custom service types are persisted. The preference
+    /// reads come through `@Observable` `preferencesStore`; the
+    /// custom-types half reads the cached flag refreshed on
+    /// `.onAppear` and `NSManagedObjectContextDidSave`.
     private var isAtDefaults: Bool {
         preferencesStore.aiAnalysisEnabled == UserPreferences.defaultAIAnalysisEnabled
             && preferencesStore.aiExpertiseLevel == UserPreferences.defaultAIExpertiseLevel
@@ -341,17 +363,11 @@ public struct SettingsView: View {
             && !hasCustomServiceTypes
     }
 
-    /// Whether any AI backend is currently usable on this device.
-    ///
-    /// True when either Apple Intelligence is supported hardware
-    /// (regardless of whether it's currently enabled in iOS
-    /// Settings — `isDeviceSupported` covers the device-floor
-    /// gate, the section itself surfaces the "turn on in
-    /// Settings" CTA for the disabled-mid-state) OR the user has
-    /// signed into Anthropic. ADR 0005 broadened this surface
-    /// from Apple-Intelligence-only to "any viable backend" so
-    /// users on ineligible hardware with a Claude account see
-    /// the AI Analysis controls.
+    /// Whether any AI backend is currently usable — Apple
+    /// Intelligence hardware-supported, OR a cloud key configured.
+    /// ADR 0005 broadened this from on-device-only so users on
+    /// ineligible hardware with a cloud account still see the AI
+    /// Analysis controls.
     private var isAIAnalysisAvailable: Bool {
         AppleIntelligenceSupport.isDeviceSupported
             || credentialsStore.hasAPIKey(for: .anthropic)
@@ -370,16 +386,9 @@ public struct SettingsView: View {
 
     // MARK: - About Section
 
-    /// Read-only metadata about the running build — marketing version
-    /// (`CFBundleShortVersionString`) and build number
-    /// (`CFBundleVersion`). Surfaced as separate ``LabeledContent``
-    /// rows so each piece carries its own VoiceOver label and
-    /// monospaced-digit value column. The combined "4.2 (114)" form
-    /// available as ``AppVersion/formatted`` is intentionally not
-    /// used here — splitting into rows lets users scan, copy via
-    /// long-press selection, and identify whichever piece a bug
-    /// report or TestFlight crash dump is asking for, without
-    /// having to mentally parse a parenthetical.
+    /// Build metadata — marketing version + build number as
+    /// separate `LabeledContent` rows so each piece is its own
+    /// VoiceOver element and copy target.
     @ViewBuilder
     private var aboutSection: some View {
         Section {

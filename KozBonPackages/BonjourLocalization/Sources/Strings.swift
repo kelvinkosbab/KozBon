@@ -1149,6 +1149,22 @@ public enum Strings {
             .init("settings_ai_cloud_sign_out", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        /// Title for the sign-out confirmation alert, with the
+        /// specific provider's display name interpolated (e.g.
+        /// "Sign out of Claude?" / "Sign out of GitHub?"). Lets
+        /// users distinguish which backend they're confirming
+        /// the removal of when both cloud backends are signed in.
+        public static func aiCloudSignOutConfirmationTitle(_ providerName: String) -> String {
+            String(
+                format: NSLocalizedString(
+                    "settings_ai_cloud_sign_out_confirmation_format",
+                    bundle: Bundle.module,
+                    comment: ""
+                ),
+                providerName
+            )
+        }
+
         /// Title of the sign-in sheet (Anthropic variant).
         public static var aiCloudSignInTitle: LocalizedStringResource {
             .init("settings_ai_cloud_sign_in_title", bundle: .atURL(Bundle.module.bundleURL))

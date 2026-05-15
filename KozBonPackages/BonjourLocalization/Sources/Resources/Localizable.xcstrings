@@ -22155,6 +22155,59 @@
         }
       }
     },
+    "settings_ai_cloud_sign_out_confirmation_format": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign out of %@?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Cerrar sesión en %@?"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se déconnecter de %@ ?"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bei %@ abmelden?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@からサインアウトしますか？"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "退出 %@?"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تسجيل الخروج من %@؟"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "להתנתק מ-%@?"
+          }
+        }
+      }
+    },
     "settings_ai_cloud_sign_in_title": {
       "extractionState": "manual",
       "localizations": {

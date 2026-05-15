@@ -165,38 +165,36 @@ extension SettingsView {
 
     // MARK: - Sign-In Rows
 
-    /// Anthropic-specific signed-in / sign-in row. The label and
-    /// sign-out flow are Anthropic-flavored (Claude-specific
-    /// copy); the layout is shared with the GitHub variant via
-    /// ``signInRow(isConnected:signInLabel:)``.
+    /// Anthropic-specific signed-in / sign-in row.
     @ViewBuilder
     private var anthropicSignInRow: some View {
         signInRow(
+            provider: .anthropic,
             isConnected: hasAnthropicKey,
             signInLabel: Strings.Settings.aiCloudSignIn
         )
     }
 
-    /// GitHub-specific signed-in / sign-in row. Surfaces the
-    /// GitHub-flavored copy (`Sign in to GitHub`); reuses the
-    /// shared layout helper.
+    /// GitHub-specific signed-in / sign-in row.
     @ViewBuilder
     private var githubSignInRow: some View {
         signInRow(
+            provider: .github,
             isConnected: hasGitHubKey,
             signInLabel: Strings.Settings.aiCloudSignInGitHub
         )
     }
 
-    /// Shared row layout for both cloud backends. The
-    /// connected-state copy ("Signed in" / "Sign out") is
-    /// backend-agnostic; the sign-in CTA pulls a per-backend
-    /// localized label so users see the right provider name.
-    /// The sheet itself reads the active backend from
-    /// preferences when it mounts, so callers don't need to
-    /// thread the provider through.
+    /// Shared row layout for both cloud backends. The destructive
+    /// sign-out button captures `provider` into
+    /// ``providerPendingSignOut`` so the confirmation alert
+    /// targets the row's provider rather than the currently-
+    /// selected backend — important when both cloud providers
+    /// are signed in and the active one is GitHub but the user
+    /// taps Sign Out on the Anthropic row.
     @ViewBuilder
     private func signInRow(
+        provider: AICloudProvider,
         isConnected: Bool,
         signInLabel: LocalizedStringResource
     ) -> some View {
@@ -211,16 +209,17 @@ extension SettingsView {
                 }
                 Spacer()
                 Button(role: .destructive) {
-                    isSignOutConfirmationPresented = true
+                    providerPendingSignOut = provider
                 } label: {
                     Text(Strings.Settings.aiCloudSignOut)
                 }
                 .accessibilityHint(String(localized: Strings.Accessibility.aiCloudSignOutHint))
-                .accessibilityIdentifier("aiCloud.signOut")
+                .accessibilityIdentifier("aiCloud.signOut.\(provider.rawValue)")
             }
             .accessibilityElement(children: .combine)
         } else {
             Button {
+                providerPendingSignIn = provider
                 isSignInSheetPresented = true
             } label: {
                 HStack {
@@ -238,7 +237,7 @@ extension SettingsView {
                 }
             }
             .accessibilityHint(String(localized: Strings.Accessibility.aiCloudSignInHint))
-            .accessibilityIdentifier("aiCloud.signIn")
+            .accessibilityIdentifier("aiCloud.signIn.\(provider.rawValue)")
         }
     }
 
@@ -322,19 +321,19 @@ extension SettingsView {
 
     /// Removes the currently-selected cloud provider's credentials
     /// from the Keychain and falls the user's backend back to
-    /// Apple Intelligence if available. If the device can't run
-    /// Apple Intelligence we leave the backend preference at the
-    /// cloud value (so the user's choice isn't second-guessed
-    /// when they reach the Sign In flow again), but they'll see
-    /// the "Not signed in" state until they enter a new key.
+    /// Removes the stored API key for `provider` and, if that
+    /// provider was the user's currently-selected backend, falls
+    /// the active backend back to Apple Intelligence (when the
+    /// device supports it). Signing out from a non-active
+    /// provider just clears its key — the user stays on whichever
+    /// backend they had selected.
     ///
-    /// Reads the active provider from the preferences store at
-    /// call time so the alert's destructive button doesn't need
-    /// to thread the provider through. A user on `.appleIntelligence`
-    /// shouldn't see the sign-out alert — this method is a no-op
-    /// for that case.
-    func signOutOfCurrentBackend() {
-        guard let provider = preferencesStore.aiBackend.cloudProvider else { return }
+    /// The previous `signOutOfCurrentBackend()` always read from
+    /// `preferencesStore.aiBackend`, which removed the wrong key
+    /// when both cloud providers were configured but the user
+    /// tapped Sign Out on the non-active row. Threading the
+    /// provider through fixes that.
+    func signOut(from provider: AICloudProvider) {
         do {
             try credentialsStore.removeAPIKey(for: provider)
         } catch {
@@ -343,13 +342,15 @@ extension SettingsView {
             // separate alert would be louder than this warrants;
             // the next save attempt will overwrite cleanly.
         }
-        // Animate the same way the picker-driven backend swap
-        // does — sign-out reassigns `aiBackend` programmatically,
-        // and without an animation transaction the global tint
-        // would pop between brand colors in a single frame.
         withAnimation(reduceMotion ? nil : .default) {
             refreshCloudKeyState()
-            if AppleIntelligenceSupport.isDeviceSupported {
+            // Only switch backend if we just signed out from the
+            // active one. Keys-on-disk and active-backend are
+            // independent — signing out from Anthropic while
+            // using GitHub doesn't change which backend is
+            // running.
+            if preferencesStore.aiBackend.cloudProvider == provider,
+               AppleIntelligenceSupport.isDeviceSupported {
                 preferencesStore.aiBackend = .appleIntelligence
             }
         }
