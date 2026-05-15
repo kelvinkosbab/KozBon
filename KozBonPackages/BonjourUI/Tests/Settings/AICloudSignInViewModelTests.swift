@@ -7,7 +7,7 @@
 
 import Foundation
 import Testing
-import BonjourAICloud
+import BonjourAICore
 @testable import BonjourUI
 
 // MARK: - AICloudSignInViewModelTests

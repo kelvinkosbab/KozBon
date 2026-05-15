@@ -140,7 +140,7 @@ public final class PreferencesStore {
 
     /// The user's selected AI backend, as a raw string.
     ///
-    /// ``BonjourAICloud`` exposes a typed `aiBackend: AIBackend`
+    /// ``BonjourAI`` exposes a typed `aiBackend: AIBackend`
     /// extension on top of this. Code outside that module should
     /// prefer the typed accessor.
     public var aiBackendRawValue: String {
@@ -153,7 +153,7 @@ public final class PreferencesStore {
 
     /// The user's selected Claude model identifier, as a raw string.
     ///
-    /// ``BonjourAICloud`` exposes a typed
+    /// ``BonjourAI`` exposes a typed
     /// `aiCloudModel: AnthropicModel` extension on top of this.
     public var aiCloudModelRawValue: String {
         get { preferences?.aiCloudModelRawValue ?? UserPreferences.defaultAICloudModelRawValue }

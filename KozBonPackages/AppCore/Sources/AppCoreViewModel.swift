@@ -9,7 +9,8 @@ import SwiftUI
 import BonjourUI
 import BonjourScanning
 import BonjourAI
-import BonjourAICloud
+import BonjourAIApple
+import BonjourAICore
 import BonjourStorage
 
 // MARK: - AppCoreViewModel

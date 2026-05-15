@@ -1,0 +1,131 @@
+//
+//  BonjourServiceExplainer.swift
+//  BonjourAIApple
+//
+//  Copyright © 2016-present Kozinga. All rights reserved.
+//
+
+import Foundation
+import BonjourCore
+import BonjourModels
+import BonjourAICore
+
+#if canImport(FoundationModels)
+import FoundationModels
+
+// MARK: - BonjourServiceExplainer
+
+/// Uses Apple's on-device FoundationModels to explain Bonjour services to users.
+///
+/// Provides context-aware explanations by analyzing the service's hostname,
+/// IP addresses, transport layer, TXT records, and protocol description.
+@available(iOS 26, macOS 26, visionOS 26, *)
+@MainActor
+@Observable
+public final class BonjourServiceExplainer: BonjourServiceExplainerProtocol {
+
+    // MARK: - Properties
+
+    /// The streamed explanation text, updated as tokens arrive.
+    public var explanation: String = ""
+
+    /// Whether the model is currently generating a response.
+    public var isGenerating: Bool = false
+
+    /// An error message if generation fails.
+    public var error: String?
+
+    /// Whether the on-device language model is available.
+    public var isAvailable: Bool {
+        SystemLanguageModel.default.isAvailable
+    }
+
+    /// The desired level of technical detail in the explanation.
+    public var expertiseLevel: BonjourServicePromptBuilder.ExpertiseLevel = .basic
+
+    /// The desired verbosity of the explanation.
+    public var responseLength: BonjourServicePromptBuilder.ResponseLength = .standard
+
+    private var session: LanguageModelSession?
+
+    // MARK: - Init
+
+    public init() {}
+
+    // MARK: - Explain
+
+    /// Generates a streaming explanation of the given Bonjour service.
+    ///
+    /// - Parameter service: The discovered Bonjour service to explain.
+    public func explain(service: BonjourService, isPublished: Bool = false) async {
+        explanation = ""
+        error = nil
+        isGenerating = true
+
+        let prompt = BonjourServicePromptBuilder.buildPrompt(
+            service: service,
+            isPublished: isPublished,
+            expertiseLevel: expertiseLevel,
+            responseLength: responseLength
+        )
+
+        do {
+            let session = LanguageModelSession(
+                instructions: BonjourServicePromptBuilder.systemInstructions
+            )
+            self.session = session
+
+            let stream = session.streamResponse(to: prompt)
+            for try await partial in stream {
+                // Cooperative cancellation — see the matching note
+                // in `BonjourChatSession.send`. Dismissing the
+                // Insights sheet mid-stream cancels the surrounding
+                // Task; without this check the model keeps
+                // generating into a no-longer-visible explanation
+                // and ties up the session for the next long-press.
+                if Task.isCancelled { break }
+                explanation = partial.content
+            }
+        } catch {
+            self.error = error.localizedDescription
+        }
+
+        isGenerating = false
+    }
+
+    /// Generates a streaming explanation of the given Bonjour service type.
+    ///
+    /// - Parameter serviceType: The service type to explain.
+    public func explain(serviceType: BonjourServiceType) async {
+        explanation = ""
+        error = nil
+        isGenerating = true
+
+        let prompt = BonjourServicePromptBuilder.buildPrompt(
+            serviceType: serviceType,
+            expertiseLevel: expertiseLevel,
+            responseLength: responseLength
+        )
+
+        do {
+            let session = LanguageModelSession(
+                instructions: BonjourServicePromptBuilder.serviceTypeSystemInstructions
+            )
+            self.session = session
+
+            let stream = session.streamResponse(to: prompt)
+            for try await partial in stream {
+                // See note above — same cancellation discipline for
+                // the service-type explainer path.
+                if Task.isCancelled { break }
+                explanation = partial.content
+            }
+        } catch {
+            self.error = error.localizedDescription
+        }
+
+        isGenerating = false
+    }
+}
+
+#endif

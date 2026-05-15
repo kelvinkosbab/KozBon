@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import BonjourAICloud
+import BonjourAICore
 import BonjourCore
 
 // MARK: - AIBackend + Style
@@ -16,7 +16,7 @@ import BonjourCore
 /// backend the user has selected — telegraphing the active provider
 /// at a glance before they read a response.
 ///
-/// Lives in `BonjourUI` (not `BonjourAICloud`) because the styling
+/// Lives in `BonjourUI` (not `BonjourAICore`) because the styling
 /// belongs to the design system, not the AI module. The AI module
 /// shouldn't have to know about `Color` or `Image` types; the UI
 /// module is the natural home for "what does this backend look

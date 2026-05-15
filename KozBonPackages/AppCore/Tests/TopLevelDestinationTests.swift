@@ -6,7 +6,7 @@
 //
 
 import Testing
-import BonjourAICloud
+import BonjourAICore
 @testable import AppCore
 
 // MARK: - TopLevelDestinationTests

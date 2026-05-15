@@ -7,7 +7,9 @@
 
 import SwiftUI
 import BonjourAI
-import BonjourAICloud
+import BonjourAIApple
+import BonjourAICore
+import BonjourAIAnthropic
 import BonjourCore
 import BonjourLocalization
 

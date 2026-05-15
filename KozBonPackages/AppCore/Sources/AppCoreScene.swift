@@ -11,7 +11,9 @@ import BonjourUI
 import BonjourModels
 import BonjourScanning
 import BonjourAI
-import BonjourAICloud
+import BonjourAIApple
+import BonjourAICore
+import BonjourAIAnthropic
 import BonjourStorage
 
 // MARK: - AppCoreScene

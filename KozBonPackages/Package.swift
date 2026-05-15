@@ -12,31 +12,40 @@ let sharedSwiftSettings: [SwiftSetting] = [
 
 /// Creates a paired source + test target for a module at
 /// `{name}/Sources` and `{name}/Tests`. Set `hasResources: true`
-/// to ship `Sources/Resources/` via `.process`. The test target
-/// auto-inherits every entry in `dependencies`;
-/// `additionalTestDependencies` is for modules tests need but
-/// the source target doesn't.
+/// to ship `Sources/Resources/` via `.process`. Set
+/// `hasTests: false` to skip emitting a test target — for
+/// modules that have no tests yet (provider-specific shims that
+/// are exercised entirely through their parent's integration
+/// tests). The test target auto-inherits every entry in
+/// `dependencies`; `additionalTestDependencies` is for modules
+/// tests need but the source target doesn't.
 func makeTargets(
     name: String,
     dependencies: [Target.Dependency] = [],
     hasResources: Bool = false,
+    hasTests: Bool = true,
     additionalTestDependencies: [Target.Dependency] = []
 ) -> [Target] {
-    [
+    var targets: [Target] = [
         .target(
             name: name,
             dependencies: dependencies,
             path: "\(name)/Sources",
             resources: hasResources ? [.process("Resources")] : nil,
             swiftSettings: sharedSwiftSettings
-        ),
-        .testTarget(
-            name: "\(name)Tests",
-            dependencies: [.byName(name: name)] + dependencies + additionalTestDependencies,
-            path: "\(name)/Tests",
-            swiftSettings: sharedSwiftSettings
         )
     ]
+    if hasTests {
+        targets.append(
+            .testTarget(
+                name: "\(name)Tests",
+                dependencies: [.byName(name: name)] + dependencies + additionalTestDependencies,
+                path: "\(name)/Tests",
+                swiftSettings: sharedSwiftSettings
+            )
+        )
+    }
+    return targets
 }
 
 // MARK: - Package
@@ -55,8 +64,10 @@ let package = Package(
         .library(name: "BonjourModels", targets: ["BonjourModels"]),
         .library(name: "BonjourScanning", targets: ["BonjourScanning"]),
         .library(name: "BonjourLocalization", targets: ["BonjourLocalization"]),
+        .library(name: "BonjourAICore", targets: ["BonjourAICore"]),
+        .library(name: "BonjourAIApple", targets: ["BonjourAIApple"]),
+        .library(name: "BonjourAIAnthropic", targets: ["BonjourAIAnthropic"]),
         .library(name: "BonjourAI", targets: ["BonjourAI"]),
-        .library(name: "BonjourAICloud", targets: ["BonjourAICloud"]),
         .library(name: "BonjourStorage", targets: ["BonjourStorage"]),
         .library(name: "BonjourUI", targets: ["BonjourUI"]),
         .library(name: "BonjourAppIntents", targets: ["BonjourAppIntents"]),
@@ -87,7 +98,7 @@ let package = Package(
         dependencies: ["BonjourCore", "BonjourModels", "LocalNetworkMonitor"]
     )
     + makeTargets(
-        name: "BonjourAI",
+        name: "BonjourAICore",
         dependencies: [
             "BonjourCore",
             "BonjourModels",
@@ -97,16 +108,45 @@ let package = Package(
         ]
     )
     + makeTargets(
-        name: "BonjourAICloud",
-        // Depends on `BonjourAI` for the protocol surface the
-        // cloud implementations satisfy.
+        name: "BonjourAIApple",
+        // No tests yet — Apple FoundationModels paths are covered
+        // through BonjourAI's routing tests and integration tests
+        // in BonjourUI.
         dependencies: [
+            "BonjourAICore",
             "BonjourCore",
             "BonjourModels",
             "BonjourLocalization",
             "BonjourScanning",
-            "BonjourStorage",
-            "BonjourAI"
+            "BonjourStorage"
+        ],
+        hasTests: false
+    )
+    + makeTargets(
+        name: "BonjourAIAnthropic",
+        dependencies: [
+            "BonjourAICore",
+            "BonjourCore",
+            "BonjourModels",
+            "BonjourLocalization",
+            "BonjourScanning",
+            "BonjourStorage"
+        ]
+    )
+    + makeTargets(
+        name: "BonjourAI",
+        // Umbrella: re-exports `BonjourAICore` and hosts the
+        // cloud-aware routing factories that sit above the
+        // Apple- and Anthropic-specific modules.
+        dependencies: [
+            "BonjourAICore",
+            "BonjourAIApple",
+            "BonjourAIAnthropic",
+            "BonjourCore",
+            "BonjourModels",
+            "BonjourLocalization",
+            "BonjourScanning",
+            "BonjourStorage"
         ]
     )
     + makeTargets(
@@ -127,7 +167,8 @@ let package = Package(
             "BonjourScanning",
             "BonjourLocalization",
             "BonjourAI",
-            "BonjourAICloud",
+            "BonjourAIApple",
+            "BonjourAIAnthropic",
             "BonjourStorage",
             .product(name: "CoreUI", package: "Core")
         ],
@@ -149,7 +190,8 @@ let package = Package(
             "BonjourScanning",
             "BonjourLocalization",
             "BonjourAI",
-            "BonjourAICloud",
+            "BonjourAIApple",
+            "BonjourAIAnthropic",
             "BonjourStorage",
             "BonjourUI",
             .product(name: "CoreUI", package: "Core")

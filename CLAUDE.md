@@ -44,7 +44,7 @@ swift test --package-path KozBonPackages
 
 `KozBon.xcworkspace` contains:
 - `KozBon.xcodeproj` — the app target (5 Swift files)
-- `KozBonPackages/` — local SPM package with 6 modules
+- `KozBonPackages/` — local SPM package (11 modules)
 
 ### App Target (KozBon/)
 
@@ -65,17 +65,21 @@ Each module follows the `{name}/Sources` and `{name}/Tests` layout:
 | **BonjourLocalization** | Localized strings (8 languages, including RTL: ar, he) | `Strings` enum, `Localizable.xcstrings` |
 | **BonjourModels** | Domain models and service library | `BonjourServiceType`, `BonjourService`, `BonjourServiceSortType` |
 | **BonjourScanning** | Network discovery and publishing | `BonjourServiceScanner`, `MyBonjourPublishManager`, `DependencyContainer`, mocks |
-| **BonjourAI** | On-device AI explainer + chat (FoundationModels) | `BonjourServicePromptBuilder`, `BonjourChatPromptBuilder`, `BonjourServiceExplainer`, `BonjourChatSession` |
-| **BonjourAICloud** | Cloud AI backend per ADR 0005 — provider-agnostic scaffolding + Anthropic Claude v1 | `AICloudProvider`, `AICloudCredentialsStore`, `AIBackend`, `AnthropicModel`, `AnthropicClient`, `AnthropicBonjourChatSession`, `AnthropicBonjourServiceExplainer`, `CloudAwareBonjourChatSessionFactory`, `CloudAwareBonjourServiceExplainerFactory` |
+| **BonjourAICore** | Provider-agnostic AI scaffolding — protocols, value types, prompt builders, safety, mocks, simulator stubs, UI primitives, credentials-store protocol + Keychain/InMemory impls | `BonjourChatSessionProtocol`, `BonjourServiceExplainerProtocol`, `BonjourChatPromptBuilder`, `BonjourServicePromptBuilder`, `AIBackend`, `AICloudProvider`, `AICloudCredentialsStore`, `AICloudError`, `KeychainAICloudCredentialsStore`, `InMemoryAICloudCredentialsStore`, `MockBonjourChatSession`, `MockBonjourServiceExplainer`, `ServiceExplanationSheet`, `MarkdownContentView`, `TypingIndicator` |
+| **BonjourAIApple** | Apple Foundation Models implementations of the BonjourAICore protocols | `BonjourChatSession`, `BonjourChatSessionFactory`, `BonjourServiceExplainer`, `BonjourServiceExplainerFactory`, `AppleIntelligenceSupport`, `AIContextMenuItems`, prepare-tool wrappers |
+| **BonjourAIAnthropic** | Anthropic Claude implementations of the BonjourAICore protocols + the typed `PreferencesStore.aiCloudModel` bridge | `AnthropicModel`, `AnthropicClient`, `AnthropicConfiguration`, `AnthropicBonjourChatSession`, `AnthropicBonjourServiceExplainer`, `MockAnthropicClient` |
+| **BonjourAI** | Umbrella module — cloud-aware routing factories + `@_exported import BonjourAICore` so legacy `import BonjourAI` consumers stay working | `CloudAwareBonjourChatSessionFactory`, `CloudAwareBonjourServiceExplainerFactory` |
 | **BonjourUI** | SwiftUI views and view models | All views, `BonjourServicesViewModel`, UI components |
 
 ### Dependency Graph
 
 ```
 App → BonjourUI, BonjourScanning, BonjourModels, BonjourLocalization
-BonjourUI → BonjourModels, BonjourScanning, BonjourLocalization, BonjourAI, BonjourAICloud, BonjourStorage, CoreUI
-BonjourAICloud → BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage, BonjourAI
-BonjourAI → BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
+BonjourUI → BonjourModels, BonjourScanning, BonjourLocalization, BonjourAI, BonjourAIApple, BonjourAIAnthropic, BonjourStorage, CoreUI
+BonjourAI → BonjourAICore, BonjourAIApple, BonjourAIAnthropic, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
+BonjourAIApple → BonjourAICore, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
+BonjourAIAnthropic → BonjourAICore, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
+BonjourAICore → BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
 BonjourScanning → BonjourCore, BonjourModels, LocalNetworkMonitor
 BonjourModels → BonjourCore, BonjourStorage, BonjourLocalization
 BonjourStorage → BonjourCore
@@ -88,11 +92,12 @@ BonjourCore → Core (BasicSwiftUtilities)
 ADR 0005 introduces a pluggable AI backend. The Settings → AI Backend section
 exposes a picker between two options:
 
-- **Apple Intelligence** (default) — on-device via `BonjourAI` and FoundationModels.
-- **Anthropic Claude** (opt-in) — cloud via `BonjourAICloud` and the user's own API key.
+- **Apple Intelligence** (default) — on-device via `BonjourAIApple` and FoundationModels.
+- **Anthropic Claude** (opt-in) — cloud via `BonjourAIAnthropic` and the user's own API key.
 
 `CloudAwareBonjourChatSessionFactory` / `CloudAwareBonjourServiceExplainerFactory`
-sit above the on-device factories in `BonjourAI`. They read `preferencesStore.aiBackend`
+live in the `BonjourAI` umbrella and sit above the per-provider factories in
+`BonjourAIApple` / `BonjourAIAnthropic`. They read `preferencesStore.aiBackend`
 on every `makeForCurrentEnvironment(...)` call and route to the right implementation.
 `AppCoreScene` watches `preferencesStore.aiBackend` and `aiCloudModel` via `.onChange`
 and calls `AppCoreViewModel.refreshAIBackend()` so flipping the picker takes effect
@@ -172,7 +177,7 @@ never iCloud-synced) via `KeychainAICloudCredentialsStore`. Tests substitute
 ## Testing
 
 - **Framework**: Swift Testing (`@Test`, `@Suite`, `#expect`)
-- **Package tests** (`swift test`): 952+ tests across 72 suites in `KozBonPackages/` — BonjourCore, BonjourModels, BonjourScanning, BonjourUI, BonjourAICloud, etc.
+- **Package tests** (`swift test`): 992+ tests across 76 suites in `KozBonPackages/` — BonjourCore, BonjourModels, BonjourScanning, BonjourUI, BonjourAICore, BonjourAIAnthropic, etc.
 - **App tests** (`xcodebuild test`): 8 tests in `KozBonTests/` — TopLevelDestination
 - **Naming**: `<TypeName>Tests.swift` (e.g., `TransportLayerTests.swift`)
 - **`@MainActor` tests**: Use `@MainActor` on the suite when testing `@MainActor`-isolated types

@@ -7,7 +7,7 @@
 
 import SwiftUI
 import Testing
-import BonjourAICloud
+import BonjourAICore
 import BonjourCore
 @testable import BonjourUI
 
