@@ -13,13 +13,6 @@ import BonjourAIGitHub
 import BonjourCore
 import BonjourStorage
 
-// MARK: - Logger
-
-private let explainerRoutingLogger = Logger(
-    subsystem: "com.kozinga.KozBon",
-    category: "CloudAwareBonjourServiceExplainerFactory"
-)
-
 // MARK: - CloudAwareBonjourServiceExplainerFactory
 
 /// Cloud-aware ``BonjourServiceExplainerFactoryProtocol`` that
@@ -39,6 +32,13 @@ public struct CloudAwareBonjourServiceExplainerFactory: BonjourServiceExplainerF
     private let preferencesStore: PreferencesStore
     private let anthropicClient: any AnthropicClientProtocol
     private let githubClient: any GitHubModelsClientProtocol
+
+    /// Subsystem-scoped logger. Console.app filters by category
+    /// `CloudAwareBonjourServiceExplainerFactory`.
+    private let explainerRoutingLogger = Logger(
+        subsystem: "com.kozinga.KozBon",
+        category: "CloudAwareBonjourServiceExplainerFactory"
+    )
 
     // MARK: - Init
 

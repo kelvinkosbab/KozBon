@@ -10,13 +10,6 @@ import BonjourAICore
 import BonjourCore
 import BonjourModels
 
-// MARK: - Logger
-
-private let logger = Logger(
-    subsystem: "com.kozinga.KozBon",
-    category: "GitHubBonjourServiceExplainer"
-)
-
 // MARK: - GitHubBonjourServiceExplainer
 
 /// GitHub-Models-backed implementation of
@@ -48,6 +41,16 @@ public final class GitHubBonjourServiceExplainer: BonjourServiceExplainerProtoco
     public var explanation: String = ""
     public private(set) var isGenerating: Bool = false
     public var error: String?
+
+    // MARK: - Diagnostics
+
+    /// Subsystem-scoped logger for explainer stream / auth
+    /// failures. The user-facing error lives on ``error``;
+    /// this is for log triage only.
+    private let logger = Logger(
+        subsystem: "com.kozinga.KozBon",
+        category: "GitHubBonjourServiceExplainer"
+    )
 
     /// Whether the explainer can currently issue a request.
     ///

@@ -10,17 +10,6 @@ import BonjourAICore
 import BonjourCore
 import BonjourLocalization
 
-// MARK: - Logger
-
-/// Subsystem-scoped logger. Errors from the streaming client
-/// surface in Console.app under `com.kozinga.KozBon` with category
-/// `GitHubBonjourChatSession`. Used purely for diagnostics — users
-/// see the localized error text in the chat surface.
-private let logger = Logger(
-    subsystem: "com.kozinga.KozBon",
-    category: "GitHubBonjourChatSession"
-)
-
 // MARK: - GitHubBonjourChatSession
 
 /// GitHub-Models-backed implementation of
@@ -59,6 +48,18 @@ public final class GitHubBonjourChatSession: BonjourChatSessionProtocol {
     public private(set) var errorAction: ChatErrorAction?
     public var responseLength: BonjourServicePromptBuilder.ResponseLength = .standard
     public let intentBroker: BonjourChatIntentBroker
+
+    // MARK: - Diagnostics
+
+    /// Subsystem-scoped logger. Errors from the streaming
+    /// client surface in Console.app under `com.kozinga.KozBon`
+    /// with category `GitHubBonjourChatSession`. Users see the
+    /// localized error text in the chat surface; this is for
+    /// log triage only.
+    private let logger = Logger(
+        subsystem: "com.kozinga.KozBon",
+        category: "GitHubBonjourChatSession"
+    )
 
     // MARK: - GitHub-Specific State
 

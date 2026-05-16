@@ -11,16 +11,6 @@ import BonjourCore
 import BonjourModels
 import BonjourScanning
 
-/// Subsystem-scoped logger. Errors thrown by the on-device model
-/// surface in Console.app under the `com.kozinga.KozBon` subsystem
-/// with category `BonjourChatSession`. Used purely for diagnostics —
-/// users see the localized error text in the chat surface, not the
-/// raw error description.
-private let chatSessionLogger = Logger(
-    subsystem: "com.kozinga.KozBon",
-    category: "BonjourChatSession"
-)
-
 #if canImport(FoundationModels)
 import FoundationModels
 
@@ -58,6 +48,18 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
     /// isn't dropped when, for example, the response-length
     /// preference flips mid-conversation.
     public let intentBroker: BonjourChatIntentBroker
+
+    // MARK: - Diagnostics
+
+    /// Subsystem-scoped logger. Errors thrown by the on-device
+    /// model surface in Console.app under
+    /// `com.kozinga.KozBon` with category `BonjourChatSession`.
+    /// Users see the localized error text in the chat surface;
+    /// this is for log triage only.
+    private let chatSessionLogger = Logger(
+        subsystem: "com.kozinga.KozBon",
+        category: "BonjourChatSession"
+    )
 
     /// The current session. Created lazily on first send and kept alive across turns
     /// so conversation history is preserved.

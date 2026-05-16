@@ -14,13 +14,6 @@ import BonjourCore
 import BonjourScanning
 import BonjourStorage
 
-// MARK: - Logger
-
-private let routingLogger = Logger(
-    subsystem: "com.kozinga.KozBon",
-    category: "CloudAwareBonjourChatSessionFactory"
-)
-
 // MARK: - CloudAwareBonjourChatSessionFactory
 
 /// Cloud-aware ``BonjourChatSessionFactoryProtocol`` that picks
@@ -64,6 +57,14 @@ public struct CloudAwareBonjourChatSessionFactory: BonjourChatSessionFactoryProt
     private let preferencesStore: PreferencesStore
     private let anthropicClient: any AnthropicClientProtocol
     private let githubClient: any GitHubModelsClientProtocol
+
+    /// Subsystem-scoped logger for cloud-fallback diagnostics.
+    /// Console.app filters by category
+    /// `CloudAwareBonjourChatSessionFactory`.
+    private let routingLogger = Logger(
+        subsystem: "com.kozinga.KozBon",
+        category: "CloudAwareBonjourChatSessionFactory"
+    )
 
     // MARK: - Init
 
