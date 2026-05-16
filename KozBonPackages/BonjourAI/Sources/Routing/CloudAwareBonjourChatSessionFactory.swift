@@ -6,17 +6,17 @@
 //
 
 import Foundation
-import OSLog
 import BonjourAICore
 import BonjourAIApple
 import BonjourAIAnthropic
 import BonjourAIGitHub
+import BonjourCore
 import BonjourScanning
 import BonjourStorage
 
 // MARK: - Logger
 
-private let routingLogger = os.Logger(
+private let routingLogger = Logger(
     subsystem: "com.kozinga.KozBon",
     category: "CloudAwareBonjourChatSessionFactory"
 )

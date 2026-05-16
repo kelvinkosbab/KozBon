@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import OSLog
 import BonjourAICore
+import BonjourCore
 
 // MARK: - AICloudSignInViewModel
 

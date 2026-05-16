@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import OSLog
 import BonjourAICore
+import BonjourCore
 import BonjourLocalization
 
 // MARK: - Logger
@@ -304,8 +304,8 @@ public final class AnthropicBonjourChatSession: BonjourChatSessionProtocol {
             logger.error(
                 """
                 Anthropic stream failed — \
-                kind: \(String(describing: error), privacy: .public), \
-                description: \(error.localizedDescription, privacy: .public)
+                kind: \(String(describing: error)), \
+                description: \(error.localizedDescription)
                 """
             )
             self.error = error.localizedDescription

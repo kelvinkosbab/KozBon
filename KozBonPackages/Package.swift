@@ -92,7 +92,13 @@ let package = Package(
         dependencies: ["BonjourCore", "BonjourStorage", "BonjourLocalization"]
     )
     + makeTargets(
-        name: "LocalNetworkMonitor"
+        name: "LocalNetworkMonitor",
+        // Pulls in BasicSwiftUtilities directly (not through
+        // BonjourCore — LocalNetworkMonitor is a low-level
+        // module and shouldn't take a transitive dep on Bonjour
+        // domain code) so it can use the `Logger` wrapper
+        // shipped by Core.
+        dependencies: [.product(name: "Core", package: "Core")]
     )
     + makeTargets(
         name: "BonjourScanning",

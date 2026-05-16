@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import OSLog
 import BonjourAICore
+import BonjourCore
 
 // MARK: - GitHubModelsClientProtocol
 
@@ -100,8 +100,8 @@ public final class GitHubModelsClient: GitHubModelsClientProtocol {
                     logger.error(
                         """
                         Network error reaching GitHub Models — \
-                        code: \(urlError.code.rawValue, privacy: .public), \
-                        description: \(urlError.localizedDescription, privacy: .public)
+                        code: \(urlError.code.rawValue), \
+                        description: \(urlError.localizedDescription)
                         """
                     )
                     continuation.finish(throwing: AICloudError.networkUnavailable)
@@ -206,7 +206,7 @@ public final class GitHubModelsClient: GitHubModelsClientProtocol {
     ) -> AICloudError {
         let message = extractErrorMessage(from: body)
         logger.error(
-            "GitHub Models API error \(statusCode): \(message ?? "<no message>", privacy: .public)"
+            "GitHub Models API error \(statusCode): \(message ?? "<no message>")"
         )
         switch statusCode {
         case 401:

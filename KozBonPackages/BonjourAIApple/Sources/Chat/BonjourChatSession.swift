@@ -6,10 +6,10 @@
 //
 
 import Foundation
-import OSLog
+import BonjourAICore
+import BonjourCore
 import BonjourModels
 import BonjourScanning
-import BonjourAICore
 
 /// Subsystem-scoped logger. Errors thrown by the on-device model
 /// surface in Console.app under the `com.kozinga.KozBon` subsystem
@@ -305,8 +305,8 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
             chatSessionLogger.error(
                 """
                 streamResponse failed — \
-                kind: \(String(describing: error), privacy: .public), \
-                description: \(error.localizedDescription, privacy: .public)
+                kind: \(String(describing: error)), \
+                description: \(error.localizedDescription)
                 """
             )
             self.error = error.localizedDescription

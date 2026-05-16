@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import OSLog
 import BonjourAICore
+import BonjourCore
 
 // MARK: - AnthropicClientProtocol
 
@@ -102,8 +102,8 @@ public final class AnthropicClient: AnthropicClientProtocol {
                     logger.error(
                         """
                         Network error reaching Anthropic — \
-                        code: \(urlError.code.rawValue, privacy: .public), \
-                        description: \(urlError.localizedDescription, privacy: .public)
+                        code: \(urlError.code.rawValue), \
+                        description: \(urlError.localizedDescription)
                         """
                     )
                     continuation.finish(throwing: AICloudError.networkUnavailable)
@@ -217,7 +217,7 @@ public final class AnthropicClient: AnthropicClientProtocol {
         // the explicit log entry makes per-environment
         // diagnostics easier when a status code recurs.
         logger.error(
-            "Anthropic API error \(statusCode): \(message ?? "<no message>", privacy: .public)"
+            "Anthropic API error \(statusCode): \(message ?? "<no message>")"
         )
         switch statusCode {
         case 401:

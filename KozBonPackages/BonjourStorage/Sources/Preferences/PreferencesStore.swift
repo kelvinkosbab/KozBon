@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import OSLog
+import BonjourCore
 import SwiftData
 
 // MARK: - PreferencesStore

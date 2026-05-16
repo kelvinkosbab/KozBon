@@ -115,7 +115,7 @@ public enum AICloudError: Error, Sendable, Equatable {
 extension AICloudError: LocalizedError {
 
     /// Returns a generic, English-only description for use in
-    /// `os.Logger` calls and crash reports. The localized,
+    /// `Logger` calls and crash reports. The localized,
     /// user-facing string lives in the call site (the Settings
     /// view, the chat error banner) and is built from
     /// `BonjourLocalization.Strings`.

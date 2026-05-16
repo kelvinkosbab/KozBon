@@ -6,16 +6,16 @@
 //
 
 import Foundation
-import OSLog
 import BonjourAICore
 import BonjourAIApple
 import BonjourAIAnthropic
 import BonjourAIGitHub
+import BonjourCore
 import BonjourStorage
 
 // MARK: - Logger
 
-private let explainerRoutingLogger = os.Logger(
+private let explainerRoutingLogger = Logger(
     subsystem: "com.kozinga.KozBon",
     category: "CloudAwareBonjourServiceExplainerFactory"
 )

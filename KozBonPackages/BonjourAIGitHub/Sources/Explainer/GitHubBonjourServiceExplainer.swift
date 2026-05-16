@@ -6,17 +6,13 @@
 //
 
 import Foundation
-import OSLog
 import BonjourAICore
 import BonjourCore
 import BonjourModels
 
 // MARK: - Logger
 
-// `BonjourCore`'s `Exports.swift` re-exports the `Core` package
-// which ships its own `Logger` type. Spell the OSLog one fully so
-// the imports don't fight over the unqualified name.
-private let logger = os.Logger(
+private let logger = Logger(
     subsystem: "com.kozinga.KozBon",
     category: "GitHubBonjourServiceExplainer"
 )
@@ -153,7 +149,7 @@ public final class GitHubBonjourServiceExplainer: BonjourServiceExplainerProtoco
             // decide whether to keep or discard.
         } catch {
             let description = error.localizedDescription
-            logger.error("GitHub Models explainer stream failed: \(description, privacy: .public)")
+            logger.error("GitHub Models explainer stream failed: \(description)")
             self.error = description
         }
     }

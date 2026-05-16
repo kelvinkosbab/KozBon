@@ -7,7 +7,7 @@
 
 import Foundation
 import Network
-import os
+import Core
 
 // MARK: - LocalNetworkMonitor
 
@@ -166,7 +166,7 @@ public final class LocalNetworkMonitor: LocalNetworkMonitorProtocol {
     private func handlePathUpdate(isOnLocalNetwork newValue: Bool) {
         guard newValue != self.isOnLocalNetwork else { return }
         self.isOnLocalNetwork = newValue
-        logger.info("Connectivity changed: isOnLocalNetwork=\(newValue, privacy: .public)")
+        logger.info("Connectivity changed: isOnLocalNetwork=\(newValue)")
         delegate?.localNetworkMonitor(didChangeIsOnLocalNetwork: newValue)
     }
 }
