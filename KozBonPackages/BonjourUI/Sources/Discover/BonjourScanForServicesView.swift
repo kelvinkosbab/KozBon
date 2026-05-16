@@ -60,7 +60,11 @@ public struct BonjourScanForServicesView: View {
             }
             .contentMarginsBasedOnSizeClass()
             #if os(macOS)
-            .navigationSplitViewColumnWidth(min: 280, ideal: 320)
+            // Wider sidebar so hostnames + device-type subtitles
+            // fit on one line; min stays comfortably above the
+            // detail column's minimum even on the smallest
+            // supported window width.
+            .navigationSplitViewColumnWidth(min: 320, ideal: 400)
             #endif
             .overlay {
                 // The custom overlays only fire when there's no

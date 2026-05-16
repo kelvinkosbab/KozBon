@@ -57,7 +57,10 @@ public struct SupportedServicesView: View {
             }
             .contentMarginsBasedOnSizeClass()
             #if os(macOS)
-            .navigationSplitViewColumnWidth(min: 280, ideal: 320)
+            // Match the Discover sidebar — longer service-type
+            // names ("_homekit._tcp", etc.) fit cleanly without
+            // truncation.
+            .navigationSplitViewColumnWidth(min: 320, ideal: 400)
             #endif
             .navigationTitle(String(localized: Strings.NavigationTitles.supportedServices))
             .searchable(text: $viewModel.searchText, prompt: String(localized: Strings.Placeholders.search))
