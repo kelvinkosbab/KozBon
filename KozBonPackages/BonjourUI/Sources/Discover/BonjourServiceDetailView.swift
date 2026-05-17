@@ -168,7 +168,15 @@ public struct BonjourServiceDetailView: View {
             txtRecordsSection()
         }
         .accessibilityIdentifier("service_detail_list")
-        .contentMarginsBasedOnSizeClass()
+        // Cap the list at a readable form-content width and
+        // center it in the detail column. Without this the
+        // List anchors to the leading edge on macOS / iPadOS
+        // regular / visionOS — the previous
+        // `.contentMarginsBasedOnSizeClass()` set scroll-content
+        // margins that AppKit's bordered List style mostly
+        // ignored, so the layout drifted asymmetric.
+        .frame(maxWidth: 720)
+        .frame(maxWidth: .infinity, alignment: .center)
         #if !os(macOS)
         .navigationBarTitleDisplayMode(.inline)
         #endif

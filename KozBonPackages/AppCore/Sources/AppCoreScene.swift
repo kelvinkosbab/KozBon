@@ -131,21 +131,13 @@ public struct AppCoreScene: Scene {
                         Tab {
                             BonjourChatView(viewModel: viewModel.servicesViewModel)
                         } label: {
-                            Label {
-                                Text(verbatim: TopLevelDestination.chat.titleString)
-                            } icon: {
-                                TopLevelDestination.chat.icon(activeBackend: viewModel.preferencesStore.aiBackend)
-                            }
+                            ChatTabLabel(backend: viewModel.preferencesStore.aiBackend)
                         }
                         #else
                         Tab(role: .search) {
                             BonjourChatView(viewModel: viewModel.servicesViewModel)
                         } label: {
-                            Label {
-                                Text(verbatim: TopLevelDestination.chat.titleString)
-                            } icon: {
-                                TopLevelDestination.chat.icon(activeBackend: viewModel.preferencesStore.aiBackend)
-                            }
+                            ChatTabLabel(backend: viewModel.preferencesStore.aiBackend)
                         }
                         #endif
                     }
@@ -154,7 +146,15 @@ public struct AppCoreScene: Scene {
                 .tabViewStyle(.automatic)
                 .frame(minWidth: 800, minHeight: 500)
                 #else
-                .tabViewStyle(.sidebarAdaptable)
+                // `.automatic` (not `.sidebarAdaptable`) on
+                // iPad gives the floating top capsule without
+                // the user-toggleable left sidebar — the
+                // sidebar mode was confusing in regular size
+                // class and we'd rather ship the cleaner top-
+                // tab UX. iPhone keeps its bottom tabs (the
+                // automatic style for compact size class) and
+                // visionOS keeps its ornament tabs.
+                .tabViewStyle(.automatic)
                 #endif
                 // Global tint stays KozBon blue so non-chat tabs
                 // don't inherit the backend's accent color. Chat
@@ -216,11 +216,7 @@ public struct AppCoreScene: Scene {
                     if viewModel.shouldShowChatTab {
                         BonjourChatView(viewModel: viewModel.servicesViewModel)
                             .tabItem {
-                                Label {
-                                    Text(verbatim: TopLevelDestination.chat.titleString)
-                                } icon: {
-                                    TopLevelDestination.chat.icon(activeBackend: viewModel.preferencesStore.aiBackend)
-                                }
+                                ChatTabLabel(backend: viewModel.preferencesStore.aiBackend)
                             }
                     }
 
@@ -289,6 +285,43 @@ public struct AppCoreScene: Scene {
         }
         #endif
 
+    }
+}
+
+// MARK: - ChatTabLabel
+
+/// Label for the AI chat tab. In a regular horizontal size
+/// class (macOS, iPad full screen, visionOS) the title swaps to
+/// the active backend's brand name — "Apple Intelligence",
+/// "Claude", "GitHub" — so the wide top tab capsule isn't a
+/// lone glyph the user has to decode. Compact size class
+/// (iPhone, iPad Slide Over) keeps the generic "Chat" / "Explore"
+/// title since the icon+text pair already reads cleanly in the
+/// bottom tab bar.
+private struct ChatTabLabel: View {
+
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    let backend: AIBackend
+
+    var body: some View {
+        Label {
+            Text(titleText)
+        } icon: {
+            TopLevelDestination.chat.icon(activeBackend: backend)
+        }
+    }
+
+    private var titleText: String {
+        #if os(macOS) || os(visionOS)
+        // macOS / visionOS have no horizontal size class and the
+        // window is always "wide" by definition.
+        return String(localized: backend.displayName)
+        #else
+        if horizontalSizeClass == .regular {
+            return String(localized: backend.displayName)
+        }
+        return TopLevelDestination.chat.titleString
+        #endif
     }
 }
 

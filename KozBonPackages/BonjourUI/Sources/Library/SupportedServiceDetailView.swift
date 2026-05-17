@@ -191,7 +191,11 @@ public struct SupportedServiceDetailView: View {
                 }
             }
         }
-        .contentMarginsBasedOnSizeClass()
+        // Match the Discover detail's framing — cap the list
+        // at a readable form-content width and center it in
+        // the detail column.
+        .frame(maxWidth: 720)
+        .frame(maxWidth: .infinity, alignment: .center)
         #if !os(macOS)
         .navigationBarTitleDisplayMode(.inline)
         #endif
