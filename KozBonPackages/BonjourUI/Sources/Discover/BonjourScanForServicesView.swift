@@ -61,12 +61,16 @@ public struct BonjourScanForServicesView: View {
             .contentMarginsBasedOnSizeClass()
             #if os(macOS)
             // Wider sidebar so hostnames + device-type subtitles
-            // fit on one line. The min is also high enough to
-            // override any sidebar width persisted by an earlier
-            // build — `NSSplitView` remembers the last-dragged
-            // divider position across launches and would
-            // otherwise keep the old narrower value.
-            .navigationSplitViewColumnWidth(min: 380, ideal: 520)
+            // fit on one line and the TabView's sidebar header
+            // (which shares the column) doesn't collapse its tab
+            // labels into a ">>" overflow. The min is also high
+            // enough to override any sidebar width persisted by an
+            // earlier build — `NSSplitView` remembers the last-
+            // dragged divider position across launches and would
+            // otherwise keep the old narrower value. The explicit
+            // `max` keeps the user from dragging the sidebar wide
+            // enough to crowd the detail column.
+            .navigationSplitViewColumnWidth(min: 460, ideal: 640, max: 800)
             #endif
             .overlay {
                 // The custom overlays only fire when there's no

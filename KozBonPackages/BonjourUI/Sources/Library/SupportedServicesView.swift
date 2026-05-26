@@ -58,10 +58,14 @@ public struct SupportedServicesView: View {
             .contentMarginsBasedOnSizeClass()
             #if os(macOS)
             // Match the Discover sidebar — longer service-type
-            // names ("_homekit._tcp", etc.) fit cleanly. The
-            // bumped min also overrides any persisted divider
-            // width from earlier builds.
-            .navigationSplitViewColumnWidth(min: 380, ideal: 520)
+            // names ("_homekit._tcp", etc.) fit cleanly and the
+            // TabView's sidebar header (which shares the column)
+            // has room for its tab labels without collapsing into
+            // a ">>" overflow. The bumped min also overrides any
+            // persisted divider width from earlier builds; the
+            // explicit `max` keeps the column from crowding the
+            // detail view if dragged.
+            .navigationSplitViewColumnWidth(min: 460, ideal: 640, max: 800)
             #endif
             .navigationTitle(String(localized: Strings.NavigationTitles.supportedServices))
             .searchable(text: $viewModel.searchText, prompt: String(localized: Strings.Placeholders.search))
