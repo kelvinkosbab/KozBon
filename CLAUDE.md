@@ -20,12 +20,11 @@ xcodebuild -workspace KozBon.xcworkspace -scheme KozBon -destination 'platform=m
 # Build for visionOS Simulator
 xcodebuild -workspace KozBon.xcworkspace -scheme KozBon -destination 'platform=visionOS Simulator,name=Apple Vision Pro' build
 
-# Run app unit tests (via Xcode)
-xcodebuild test -workspace KozBon.xcworkspace -scheme KozBon -destination 'platform=iOS Simulator,name=iPhone 17 Pro,OS=26.2'
-
-# Run SPM package tests (faster, no simulator needed)
+# Run tests — all tests live in the SPM package
 swift test --package-path KozBonPackages
 ```
+
+The `KozBon` scheme has no test action configured; all tests run through SPM.
 
 ## Architecture
 
@@ -181,23 +180,22 @@ never iCloud-synced) via `KeychainAICloudCredentialsStore`. Tests substitute
 ## Testing
 
 - **Framework**: Swift Testing (`@Test`, `@Suite`, `#expect`)
-- **Package tests** (`swift test`): 992+ tests across 76 suites in `KozBonPackages/` — BonjourCore, BonjourModels, BonjourScanning, BonjourUI, BonjourAICore, BonjourAIAnthropic, etc.
-- **App tests** (`xcodebuild test`): 8 tests in `KozBonTests/` — TopLevelDestination
+- **Runner**: `swift test --package-path KozBonPackages` is the only test runner. All tests live in `KozBonPackages/` — 1,079 tests across 87 suites covering BonjourCore, BonjourModels, BonjourScanning, BonjourUI, BonjourAICore, BonjourAIAnthropic, AppCore (including the former app-level `TopLevelDestinationTests`), etc.
 - **Naming**: `<TypeName>Tests.swift` (e.g., `TransportLayerTests.swift`)
 - **`@MainActor` tests**: Use `@MainActor` on the suite when testing `@MainActor`-isolated types
 - **Cross-module testing**: Use `@testable import <Module>` to access internal types, `import <Module>` for public API tests
-- **`CustomServiceTypeTests` in BonjourStorage**: Require Xcode to compile `.xcdatamodeld` — excluded from the SPM test target (`Package.swift` `testExcludes`) and run via `xcodebuild test` only. The other BonjourStorage tests (SwiftData-backed `PreferencesStore` / `UserPreferences`) run fine under `swift test`
+- **`CustomServiceTypeTests` in BonjourStorage**: Require Xcode to compile `.xcdatamodeld` — excluded from the SPM test target (`Package.swift` `testExcludes`). The other BonjourStorage tests (SwiftData-backed `PreferencesStore` / `UserPreferences`) run fine under `swift test`
 
 ## CI / GitHub Actions
 
 | Workflow | Trigger | What it does |
 |----------|---------|-------------|
-| **iOS CI** (`ios.yml`) | Push + PR to main | Build + test iOS on iPhone 17 Pro simulator |
+| **Native CI** (`ios.yml`) | Push + PR to main | Build-only on iOS Simulator (iPhone 17 Pro) and macOS — no `xcodebuild test`; tests run under `spm-tests.yml` |
 | **SPM Package Tests** (`spm-tests.yml`) | Push + PR when `KozBonPackages/` changes | `swift build` + `swift test` |
 | **SwiftLint** (`swiftlint.yml`) | PR when `.swift` files change | Lint with inline PR annotations |
 | **Multi-platform Build** (`multiplatform-build.yml`) | Push + PR to main | macOS + visionOS builds in parallel |
 
-All workflows use `macos-16` runner with concurrency groups and SPM caching.
+All workflows use `macos-26` runner with concurrency groups and SPM caching.
 
 ## Important Gotchas
 
