@@ -192,6 +192,8 @@ extension CreateFooViewModel {
 }
 ```
 
+This pattern also lets the View's three corresponding inits collapse into thin wrappers that just pick the right factory — keeping init signatures focused on what the *caller* provides rather than how the VM should be configured.
+
 ## Common Pitfalls
 
 - **Don't put `@Environment` reads on the view model.** They only work in views.
@@ -199,6 +201,7 @@ extension CreateFooViewModel {
 - **Don't put validation logic in the view body.** If the view has a `private func validateForm()`, that's a view model waiting to be extracted.
 - **Don't capture `@Environment` values in view-model closures via `self.environmentValue`.** Pass them in.
 - **Don't make the view model hold a reference back to the view.** The view re-renders; the view model persists. The relationship is one-way.
+- **Don't hold long-lived `Task` references in the view model without a cancellation strategy.** Either use structured concurrency tied to a method's lifetime, or hold the `Task` and cancel it explicitly in a `deinit`-equivalent path.
 
 ## Patterns to Follow
 

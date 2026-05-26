@@ -2,6 +2,7 @@
   "permissions": {
     "allow": [
       "Bash(xcodebuild:*)",
+      "Bash(swift:*)",
       "Bash(swiftlint:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
@@ -16,7 +17,8 @@
       "Bash(mkdir:*)",
       "Bash(xcode-select:*)",
       "WebFetch(domain:github.com)",
-      "WebFetch(domain:raw.githubusercontent.com)"
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:developer.apple.com)"
     ]
   }
 }
