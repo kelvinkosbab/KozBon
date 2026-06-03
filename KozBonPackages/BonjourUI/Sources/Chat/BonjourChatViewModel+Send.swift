@@ -219,8 +219,24 @@ extension BonjourChatViewModel {
             let freshServices = await runner.run(
                 publishedServices: services.publishManager.publishedServices
             )
+            // The 3-second one-shot window sweeps 114+ service
+            // types; on a typical home network many devices
+            // don't respond inside that budget, so the raw
+            // `freshServices` list reads as "only a couple of
+            // services" even when the network is busy. The
+            // Discover tab's continuous scanner has been running
+            // since launch, so its `flatActiveServices` snapshot
+            // typically holds far more. Merge the two: cached
+            // snapshot for breadth, fresh entries override on
+            // overlap so the model sees the most up-to-date
+            // hostname / addresses / TXT records for anything
+            // that just changed.
+            let mergedDiscovered = Self.mergeDiscoveredServices(
+                cached: services.flatActiveServices,
+                fresh: freshServices
+            )
             return BonjourChatPromptBuilder.ChatContext(
-                discoveredServices: freshServices,
+                discoveredServices: mergedDiscovered,
                 publishedServices: publishedServices,
                 serviceTypeLibrary: library,
                 // The just-completed scan is by definition the
@@ -255,5 +271,46 @@ extension BonjourChatViewModel {
         case .offTopic:
             return String(localized: Strings.Chat.errorOffTopic)
         }
+    }
+
+    /// Combines the Discover tab's running snapshot with the
+    /// chat's fresh one-shot scan results.
+    ///
+    /// Cached order wins (the prompt builder enumerates these as
+    /// `1.`, `2.`, …, and stable ordering across turns helps the
+    /// model's enumeration discipline), but each cached entry is
+    /// replaced with its fresh-state version where the same id
+    /// appears in both lists — so the model sees the most up-to-
+    /// date hostname, addresses, and TXT records for anything
+    /// that updated during the scan window. Fresh-only services
+    /// (newly appeared on the network) are appended at the end.
+    ///
+    /// `internal` rather than `private` so the symmetrical unit
+    /// test in `BonjourChatViewModelMergeTests` can verify the
+    /// id-preserving / order-preserving contract without going
+    /// through a real `BonjourServiceScanner`.
+    static func mergeDiscoveredServices(
+        cached: [BonjourService],
+        fresh: [BonjourService]
+    ) -> [BonjourService] {
+        var freshByID: [BonjourService.ID: BonjourService] = [:]
+        for service in fresh {
+            freshByID[service.id] = service
+        }
+
+        var seen: Set<BonjourService.ID> = []
+        var merged: [BonjourService] = []
+        merged.reserveCapacity(cached.count + fresh.count)
+
+        for service in cached where seen.insert(service.id).inserted {
+            // Prefer the fresh-state copy when the same service
+            // also appeared in the one-shot scan.
+            merged.append(freshByID[service.id] ?? service)
+        }
+        for service in fresh where seen.insert(service.id).inserted {
+            merged.append(service)
+        }
+
+        return merged
     }
 }
