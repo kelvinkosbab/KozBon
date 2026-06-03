@@ -94,6 +94,61 @@ public final class AppCoreViewModel {
         return preferencesStore.aiBackend == .anthropic
     }
 
+    // MARK: - Tab Selection
+
+    /// Currently-selected top-level tab. Bound to SwiftUI's
+    /// `TabView(selection:)` in ``AppCoreScene`` so the scene can
+    /// observe navigation to the chat tab and clear the unread
+    /// badge the moment the user opens it. Module-internal because
+    /// `TopLevelDestination` itself is internal — the binding only
+    /// ever crosses between this view model and the scene, both of
+    /// which live in `AppCore`.
+    var selectedTab: TopLevelDestination = .bonjour
+
+    // MARK: - Chat Badge
+
+    /// `id` of the assistant message the user most recently saw —
+    /// either because the chat tab was visible when the message
+    /// streamed in, or because the user just opened the chat tab.
+    /// `nil` when no assistant message has ever been seen (fresh
+    /// session, or after `refreshAIBackend()` wipes the
+    /// conversation across a backend swap).
+    private var lastSeenAssistantMessageID: UUID?
+
+    /// True when the chat session has an assistant message the
+    /// user hasn't scrolled to the bottom of. Drives the chat
+    /// tab's red-dot badge.
+    ///
+    /// "Seen" means the user physically reached the bottom edge
+    /// of the message list — the chat surface's
+    /// `.onScrollGeometryChange` observer fires the
+    /// ``ChatMessagesSeenAction`` env callback whenever it
+    /// detects the scroll view is at the bottom, which updates
+    /// ``lastSeenAssistantMessageID``. Tab visibility and
+    /// streaming state intentionally don't enter the
+    /// computation — under the scroll-driven model the badge
+    /// can legitimately appear while chat is on screen (user
+    /// scrolled up, message arrived below the viewport) and
+    /// while a turn is still streaming (the message exists but
+    /// the user hasn't physically scrolled to its tail yet).
+    var hasUnreadAssistantChatMessage: Bool {
+        guard let latestAssistantID = chatSession?.messages
+            .last(where: { $0.role == .assistant })?.id
+        else {
+            return false
+        }
+        return latestAssistantID != lastSeenAssistantMessageID
+    }
+
+    /// Records the user as having seen the most recent assistant
+    /// message. Called by the scene when the chat tab becomes
+    /// selected and whenever a new message lands while it's
+    /// already visible.
+    func markChatMessagesSeen() {
+        lastSeenAssistantMessageID = chatSession?.messages
+            .last(where: { $0.role == .assistant })?.id
+    }
+
     // MARK: - Lifecycle
 
     /// Eagerly prewarm the chat session at app launch so the

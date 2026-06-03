@@ -109,6 +109,37 @@ extension BonjourChatView {
                     anchorID: Self.emptyStateAnchorID
                 )
             }
+            // Drives the chat-tab unread badge. Tracks whether
+            // the scroll view is currently at (or within a small
+            // threshold of) the bottom edge. Transitioning to
+            // `true` is the signal that the user has visibly
+            // caught up — fire the seen-action so the badge
+            // clears. The 32pt threshold tolerates the small
+            // rubber-banding overshoot the auto-scroll animation
+            // leaves at the bottom on streaming turns.
+            .onScrollGeometryChange(for: Bool.self) { geometry in
+                let threshold: CGFloat = 32
+                return geometry.contentOffset.y + geometry.containerSize.height
+                    >= geometry.contentSize.height - threshold
+            } action: { _, atBottom in
+                isAtChatBottom = atBottom
+                if atBottom {
+                    chatMessagesSeenAction()
+                }
+            }
+            // The Bool above only transitions on the *edge* —
+            // a new assistant message that lands while the user
+            // is already at the bottom (auto-scroll keeps them
+            // pinned) wouldn't re-fire the geometry handler with
+            // a *changed* value. Mirror the mark-seen on
+            // message-id changes too so badge state stays clean
+            // through a streaming turn the user is actively
+            // watching.
+            .onChange(of: session.messages.last?.id) { _, _ in
+                if isAtChatBottom {
+                    chatMessagesSeenAction()
+                }
+            }
         }
         .animation(
             viewModel.messageTransitionAnimation(reduceMotion: reduceMotion),

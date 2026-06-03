@@ -83,9 +83,17 @@ public struct AppCoreScene: Scene {
 
     public var body: some Scene {
         WindowGroup {
+            // `@Bindable` lets us hand a binding into
+            // `TabView(selection:)` without making
+            // `selectedTab` itself a `@State` here — keeping
+            // the source-of-truth on the view model means
+            // tests and previews can drive the selection
+            // without going through SwiftUI.
+            @Bindable var bindable = viewModel
+
             if #available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *) {
-                TabView {
-                    Tab {
+                TabView(selection: $bindable.selectedTab) {
+                    Tab(value: TopLevelDestination.bonjour) {
                         BonjourScanForServicesView(viewModel: viewModel.servicesViewModel)
                     } label: {
                         Label {
@@ -95,7 +103,7 @@ public struct AppCoreScene: Scene {
                         }
                     }
 
-                    Tab {
+                    Tab(value: TopLevelDestination.bonjourServiceTypes) {
                         SupportedServicesView()
                     } label: {
                         Label {
@@ -109,7 +117,7 @@ public struct AppCoreScene: Scene {
                     // Settings window (⌘,) the `Settings { }`
                     // scene below provides.
                     #if !os(macOS)
-                    Tab {
+                    Tab(value: TopLevelDestination.settings) {
                         SettingsView()
                     } label: {
                         Label {
@@ -128,16 +136,22 @@ public struct AppCoreScene: Scene {
                         // use a regular Tab there to preserve our
                         // backend-specific glyph.
                         #if os(macOS)
-                        Tab {
+                        Tab(value: TopLevelDestination.chat) {
                             BonjourChatView(viewModel: viewModel.servicesViewModel)
                         } label: {
-                            ChatTabLabel(backend: viewModel.preferencesStore.aiBackend)
+                            ChatTabLabel(
+                                backend: viewModel.preferencesStore.aiBackend,
+                                hasUnread: viewModel.hasUnreadAssistantChatMessage
+                            )
                         }
                         #else
-                        Tab(role: .search) {
+                        Tab(value: TopLevelDestination.chat, role: .search) {
                             BonjourChatView(viewModel: viewModel.servicesViewModel)
                         } label: {
-                            ChatTabLabel(backend: viewModel.preferencesStore.aiBackend)
+                            ChatTabLabel(
+                                backend: viewModel.preferencesStore.aiBackend,
+                                hasUnread: viewModel.hasUnreadAssistantChatMessage
+                            )
                         }
                         #endif
                     }
@@ -164,6 +178,15 @@ public struct AppCoreScene: Scene {
                 .environment(\.serviceExplainer, viewModel.explainer)
                 .environment(\.chatSession, viewModel.chatSession)
                 .environment(\.preferencesStore, viewModel.preferencesStore)
+                // Hands the chat surface a closure that records
+                // the user as having seen the latest assistant
+                // message. The scroll view fires this when the
+                // user reaches the bottom edge — that's the only
+                // event that should clear the tab-bar badge.
+                .environment(
+                    \.chatMessagesSeenAction,
+                    ChatMessagesSeenAction { viewModel.markChatMessagesSeen() }
+                )
                 // Animate the tab-bar tint + chat-tab icon swap
                 // when the backend changes mid-session.
                 .animation(
@@ -194,7 +217,7 @@ public struct AppCoreScene: Scene {
                     credentialsStore: viewModel.credentialsStore
                 ))
             } else {
-                TabView {
+                TabView(selection: $bindable.selectedTab) {
                     BonjourScanForServicesView(viewModel: viewModel.servicesViewModel)
                         .tabItem {
                             Label {
@@ -203,6 +226,7 @@ public struct AppCoreScene: Scene {
                                 TopLevelDestination.bonjour.icon
                             }
                         }
+                        .tag(TopLevelDestination.bonjour)
 
                     SupportedServicesView()
                         .tabItem {
@@ -212,12 +236,17 @@ public struct AppCoreScene: Scene {
                                 TopLevelDestination.bonjourServiceTypes.icon
                             }
                         }
+                        .tag(TopLevelDestination.bonjourServiceTypes)
 
                     if viewModel.shouldShowChatTab {
                         BonjourChatView(viewModel: viewModel.servicesViewModel)
                             .tabItem {
-                                ChatTabLabel(backend: viewModel.preferencesStore.aiBackend)
+                                ChatTabLabel(
+                                    backend: viewModel.preferencesStore.aiBackend,
+                                    hasUnread: viewModel.hasUnreadAssistantChatMessage
+                                )
                             }
+                            .tag(TopLevelDestination.chat)
                     }
 
                     #if !os(macOS)
@@ -229,6 +258,7 @@ public struct AppCoreScene: Scene {
                                 TopLevelDestination.settings.icon
                             }
                         }
+                        .tag(TopLevelDestination.settings)
                     #endif
                 }
                 #if os(macOS)
@@ -242,6 +272,10 @@ public struct AppCoreScene: Scene {
                 .environment(\.serviceExplainer, viewModel.explainer)
                 .environment(\.chatSession, viewModel.chatSession)
                 .environment(\.preferencesStore, viewModel.preferencesStore)
+                .environment(
+                    \.chatMessagesSeenAction,
+                    ChatMessagesSeenAction { viewModel.markChatMessagesSeen() }
+                )
                 .animation(
                     reduceMotion ? nil : .default,
                     value: viewModel.preferencesStore.aiBackend
@@ -298,16 +332,47 @@ public struct AppCoreScene: Scene {
 /// (iPhone, iPad Slide Over) keeps the generic "Chat" / "Explore"
 /// title since the icon+text pair already reads cleanly in the
 /// bottom tab bar.
+///
+/// When `hasUnread` is true, a small red dot is painted in the
+/// top-trailing corner of the brand icon. The dot is rendered
+/// in-app via a `Circle` overlay rather than SwiftUI's `.badge()`
+/// modifier because the iOS 18+ Liquid Glass tab bar applies its
+/// own system-controlled (and noticeably larger) badge styling to
+/// the trailing `role: .search` tab — going through `.badge()`
+/// there gave us no size control. The overlay is identical
+/// across iPhone, iPad, and macOS.
 private struct ChatTabLabel: View {
 
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     let backend: AIBackend
+    let hasUnread: Bool
 
     var body: some View {
         Label {
             Text(titleText)
         } icon: {
             TopLevelDestination.chat.icon(activeBackend: backend)
+                .overlay(alignment: .topTrailing) {
+                    if hasUnread {
+                        Circle()
+                            .fill(.red)
+                            // Halo against the tab background so
+                            // the dot stays visible against both
+                            // light and dark tab chrome (and against
+                            // a tinted brand icon underneath).
+                            .overlay {
+                                Circle()
+                                    .stroke(.background, lineWidth: 1)
+                            }
+                            .frame(width: 7, height: 7)
+                            // Nudge the dot slightly outside the
+                            // icon's intrinsic bounds — the tab
+                            // slot is wider than the icon, so the
+                            // offset doesn't get clipped.
+                            .offset(x: 4, y: -2)
+                            .accessibilityHidden(true)
+                    }
+                }
         }
     }
 

@@ -44,7 +44,26 @@ public struct BonjourChatView: View {
     @Environment(\.aiCloudCredentialsStore) var credentialsStore
     @Environment(\.accessibilityReduceMotion) var reduceMotion
 
+    /// Action injected by `AppCoreScene` that records the user
+    /// as having seen the latest assistant message. Called by
+    /// ``messageList(session:)`` the moment the scroll view's
+    /// geometry observer reports the user has reached the
+    /// bottom of the conversation. Defaults to a no-op so
+    /// previews / standalone tests render without any extra
+    /// plumbing.
+    @Environment(\.chatMessagesSeenAction) var chatMessagesSeenAction
+
     @FocusState var isInputFocused: Bool
+
+    /// Whether the message-list ScrollView is currently scrolled
+    /// to (or near) the bottom edge. Watched so message-id
+    /// changes that arrive while the user is at the bottom can
+    /// fire the seen-action without waiting for the auto-scroll
+    /// animation to redrive `.onScrollGeometryChange`. Initialised
+    /// `true` because an empty chat or a chat with the latest
+    /// message visible should not flash a stale badge on first
+    /// render.
+    @State var isAtChatBottom: Bool = true
 
     /// Cached "is there an Anthropic API key in the Keychain
     /// right now?" flag. Refreshed on appearance and after the
@@ -73,6 +92,11 @@ public struct BonjourChatView: View {
     /// session and there's no empty-state flash on tab
     /// activation.
     @State var viewModel: BonjourChatViewModel
+
+    /// Diagnostic logger for chat-tab activation latency. Stays
+    /// on while we're hunting the "5s lag on first chat tab tap"
+    /// regression. Remove once the bottleneck is found and fixed.
+    private let logger: Loggable = Logger(category: "BonjourChatView")
 
     /// Creates the Chat view bound to the shared services view model.
     ///
@@ -140,8 +164,10 @@ public struct BonjourChatView: View {
     /// after the in-tab sign-in sheet dismisses, mirroring the
     /// pattern `SettingsView` uses.
     func refreshCloudKeyState() {
+        let start = Date()
         hasAnthropicKey = credentialsStore.hasAPIKey(for: .anthropic)
         hasGitHubKey = credentialsStore.hasAPIKey(for: .github)
+        logger.debug("[lag] refreshCloudKeyState took \(Int(Date().timeIntervalSince(start) * 1000))ms")
     }
 
     public var body: some View {
@@ -194,8 +220,11 @@ public struct BonjourChatView: View {
                     )
                 }
                 .onAppear {
+                    let start = Date()
+                    logger.debug("[lag] BonjourChatView.onAppear ENTER")
                     viewModel.onAppear(injectedSession: injectedSession)
                     refreshCloudKeyState()
+                    logger.debug("[lag] BonjourChatView.onAppear EXIT total=\(Int(Date().timeIntervalSince(start) * 1000))ms")
                 }
                 // Animate the swap between the sign-in prompt
                 // and the normal chat content (message list +
