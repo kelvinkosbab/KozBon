@@ -386,9 +386,10 @@ public struct SettingsView: View {
 
     // MARK: - About Section
 
-    /// Build metadata — marketing version + build number as
-    /// separate `LabeledContent` rows so each piece is its own
-    /// VoiceOver element and copy target.
+    /// Build metadata — just the marketing version. The build
+    /// number used to be a separate row but was redundant noise
+    /// for users (the marketing version already pins the
+    /// release), so it was removed.
     @ViewBuilder
     private var aboutSection: some View {
         Section {
@@ -396,18 +397,8 @@ public struct SettingsView: View {
                 String(localized: Strings.Settings.version),
                 value: AppVersion.marketing
             )
-            // `monospacedDigit()` keeps the value column aligned across
-            // both rows even when the marketing and build strings have
-            // different proportional widths — without it, "4.2" and
-            // "114" land at slightly different x positions on the
-            // grouped-form's trailing edge.
-            .monospacedDigit()
-            .accessibilityElement(children: .combine)
-
-            LabeledContent(
-                String(localized: Strings.Settings.buildNumber),
-                value: AppVersion.build
-            )
+            // `monospacedDigit()` keeps the value column aligned
+            // against any neighbouring rows we add later.
             .monospacedDigit()
             .accessibilityElement(children: .combine)
         } header: {
