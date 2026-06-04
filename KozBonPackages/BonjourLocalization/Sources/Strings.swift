@@ -679,6 +679,29 @@ public enum Strings {
             String(format: NSLocalizedString("a11y_error_format", bundle: Bundle.module, comment: ""), message)
         }
 
+        /// VoiceOver hint on the "What's New" navigation row in
+        /// the About section — clarifies the destination so
+        /// screen-reader users know what tapping the row opens.
+        public static var whatsNewHint: LocalizedStringResource {
+            .init("a11y_whats_new_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// VoiceOver label for a "What's New" section header.
+        /// Visually each header renders as just the bare version
+        /// number ("4.4") since the page title gives it context;
+        /// VoiceOver users navigating by heading get the explicit
+        /// "Version 4.4" phrasing instead.
+        public static func whatsNewVersionHeader(_ version: String) -> String {
+            String(
+                format: NSLocalizedString(
+                    "a11y_whats_new_version_header_format",
+                    bundle: Bundle.module,
+                    comment: ""
+                ),
+                version
+            )
+        }
+
         public static func remove(_ name: String) -> String {
             String(format: NSLocalizedString("a11y_remove_format", bundle: Bundle.module, comment: ""), name)
         }
@@ -1313,6 +1336,12 @@ public enum Strings {
         /// row with its own descriptive label.
         public static var buildNumber: LocalizedStringResource {
             .init("settings_build_number", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Row label + navigation title for the "What's New"
+        /// release-notes page reached from the About section.
+        public static var whatsNew: LocalizedStringResource {
+            .init("settings_whats_new", bundle: .atURL(Bundle.module.bundleURL))
         }
     }
 

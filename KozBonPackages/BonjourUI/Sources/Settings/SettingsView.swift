@@ -386,10 +386,8 @@ public struct SettingsView: View {
 
     // MARK: - About Section
 
-    /// Build metadata — just the marketing version. The build
-    /// number used to be a separate row but was redundant noise
-    /// for users (the marketing version already pins the
-    /// release), so it was removed.
+    /// Build metadata — marketing version row plus a navigation
+    /// row that pushes the "What's New" release-notes page.
     @ViewBuilder
     private var aboutSection: some View {
         Section {
@@ -401,6 +399,14 @@ public struct SettingsView: View {
             // against any neighbouring rows we add later.
             .monospacedDigit()
             .accessibilityElement(children: .combine)
+
+            NavigationLink {
+                WhatsNewView()
+            } label: {
+                Text(Strings.Settings.whatsNew)
+            }
+            .accessibilityHint(Strings.Accessibility.whatsNewHint)
+            .accessibilityIdentifier("whats_new_link")
         } header: {
             Text(Strings.Settings.about)
                 .accessibilityAddTraits(.isHeader)
