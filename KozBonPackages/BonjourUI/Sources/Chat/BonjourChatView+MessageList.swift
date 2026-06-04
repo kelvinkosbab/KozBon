@@ -117,26 +117,45 @@ extension BonjourChatView {
             // clears. The 32pt threshold tolerates the small
             // rubber-banding overshoot the auto-scroll animation
             // leaves at the bottom on streaming turns.
+            //
+            // Mark-seen is gated on `!session.isGenerating` so
+            // the assistant placeholder appended at the start of
+            // a turn doesn't get snapshotted as "seen" while
+            // it's still empty — if the user then scrolls up
+            // mid-stream, the post-stream reconciliation in the
+            // `onChange(of: isGenerating)` handler below leaves
+            // the seen-id stale and the badge appears.
             .onScrollGeometryChange(for: Bool.self) { geometry in
                 let threshold: CGFloat = 32
                 return geometry.contentOffset.y + geometry.containerSize.height
                     >= geometry.contentSize.height - threshold
             } action: { _, atBottom in
                 isAtChatBottom = atBottom
-                if atBottom {
+                if atBottom, !session.isGenerating {
                     chatMessagesSeenAction()
                 }
             }
             // The Bool above only transitions on the *edge* —
-            // a new assistant message that lands while the user
+            // a new completed message that lands while the user
             // is already at the bottom (auto-scroll keeps them
             // pinned) wouldn't re-fire the geometry handler with
             // a *changed* value. Mirror the mark-seen on
-            // message-id changes too so badge state stays clean
-            // through a streaming turn the user is actively
-            // watching.
+            // message-id changes too. Still gated on
+            // `!isGenerating` — placeholder appends don't count.
             .onChange(of: session.messages.last?.id) { _, _ in
-                if isAtChatBottom {
+                if isAtChatBottom, !session.isGenerating {
+                    chatMessagesSeenAction()
+                }
+            }
+            // The reconciliation moment. When a streaming turn
+            // finishes (`true → false`), check whether the user
+            // is still at the bottom. If yes, they watched the
+            // message land — mark seen so no badge appears. If
+            // no, they navigated away mid-stream — leave the
+            // seen-id at its previous value so the newly-
+            // completed message id surfaces as unread.
+            .onChange(of: session.isGenerating) { _, isGenerating in
+                if !isGenerating, isAtChatBottom {
                     chatMessagesSeenAction()
                 }
             }

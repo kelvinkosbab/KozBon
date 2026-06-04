@@ -115,24 +115,34 @@ public final class AppCoreViewModel {
     /// conversation across a backend swap).
     private var lastSeenAssistantMessageID: UUID?
 
-    /// True when the chat session has an assistant message the
-    /// user hasn't scrolled to the bottom of. Drives the chat
-    /// tab's red-dot badge.
+    /// True when the chat session has a completed assistant
+    /// message the user hasn't scrolled to the bottom of.
+    /// Drives the chat tab's red-dot badge.
     ///
     /// "Seen" means the user physically reached the bottom edge
     /// of the message list — the chat surface's
     /// `.onScrollGeometryChange` observer fires the
-    /// ``ChatMessagesSeenAction`` env callback whenever it
-    /// detects the scroll view is at the bottom, which updates
-    /// ``lastSeenAssistantMessageID``. Tab visibility and
-    /// streaming state intentionally don't enter the
-    /// computation — under the scroll-driven model the badge
-    /// can legitimately appear while chat is on screen (user
-    /// scrolled up, message arrived below the viewport) and
-    /// while a turn is still streaming (the message exists but
-    /// the user hasn't physically scrolled to its tail yet).
+    /// ``ChatMessagesSeenAction`` env callback (gated on
+    /// `!isGenerating`) which updates
+    /// ``lastSeenAssistantMessageID``.
+    ///
+    /// Suppressed while the session is mid-stream
+    /// (`isGenerating == true`) so the badge never flashes for
+    /// the empty assistant placeholder that gets appended at
+    /// the start of a turn — the placeholder's id is unequal
+    /// to whatever id was seen on the previous turn, but the
+    /// user obviously can't have "missed" content that hasn't
+    /// streamed in yet. The post-stream
+    /// `onChange(of: isGenerating)` handler in the chat surface
+    /// is the moment we reconcile: if the user is still at the
+    /// bottom when the turn finishes, the seen-id snaps to the
+    /// just-completed message; if not, the placeholder id
+    /// becomes the unread target and the badge lights up.
     var hasUnreadAssistantChatMessage: Bool {
-        guard let latestAssistantID = chatSession?.messages
+        guard let chatSession, !chatSession.isGenerating else {
+            return false
+        }
+        guard let latestAssistantID = chatSession.messages
             .last(where: { $0.role == .assistant })?.id
         else {
             return false
