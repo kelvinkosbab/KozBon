@@ -362,7 +362,22 @@ private struct ChatTabLabel: View {
         } icon: {
             ChatTabIcon(
                 backend: backend,
-                showsDot: hasUnread,
+                // Gate the dot on container width, not device.
+                // `horizontalSizeClass` reflects the *layout*
+                // SwiftUI is rendering into — iPhone portrait,
+                // iPad Slide Over, a deliberately-narrow macOS
+                // window all read as `.compact` and get the
+                // badge; iPad full screen, iPhone Plus/Max in
+                // landscape, a wide macOS window, and visionOS
+                // all read as `.regular` and skip it. The
+                // assumption: when the user has room for a
+                // multi-pane / multi-window layout, the chat
+                // surface is already a single glance away and
+                // a passive tab indicator is more clutter than
+                // signal. When the window is condensed, the
+                // user is one-screen-at-a-time and the indicator
+                // earns its keep.
+                showsDot: hasUnread && horizontalSizeClass == .compact,
                 isSelected: isSelected
             )
         }
