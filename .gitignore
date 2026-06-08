@@ -26,3 +26,22 @@ DerivedData/
 # Editor temp files
 *.swp
 *~
+
+# --- AppBootstrapAI (apple) ---
+# Apple / Xcode / SPM
+*.DS_Store
+*xcuserdata*
+DerivedData/
+build/
+*.ipa
+*.dSYM.zip
+.build/
+.swiftpm/
+Package.resolved
+Carthage/Build/
+fastlane/report.xml
+fastlane/test_output
+# Claude Code local settings
+.claude/settings.local.json
+.claude/plans/
+# --- end AppBootstrapAI ---

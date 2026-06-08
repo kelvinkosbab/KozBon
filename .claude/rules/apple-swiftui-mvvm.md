@@ -1,11 +1,11 @@
 ---
-description: MVVM ownership and view-model conventions for SwiftUI views in BonjourUI
-globs: "**/BonjourUI/**/*.swift"
+description: MVVM ownership and view-model conventions for SwiftUI views
+globs: "**/*.swift"
 ---
 
-# MVVM Conventions
+# SwiftUI MVVM Conventions
 
-KozBon uses a SwiftUI-flavored MVVM pattern. The conventions below pin which views need view models, how view models are owned, and where state belongs. They're enforced by review, not by the compiler — a view that violates them still builds but fails the audits.
+A SwiftUI-flavored MVVM pattern. The conventions below pin which views need view models, how view models are owned, and where state belongs. They're enforced by review, not by the compiler — a view that violates them still builds but fails the audits.
 
 ## When a view needs a view model
 
@@ -20,7 +20,7 @@ A SwiftUI `View` should be a thin presenter. Extract a view model when ANY of th
 A view does NOT need a view model when:
 
 - It only owns **UI presentation flags** (`showSheet: Bool`, `showConfirmation: Bool`, `isExpanded: Bool`).
-- It's a **thin wrapper around an environment store** (e.g., `SettingsView` reading from `PreferencesStore`).
+- It's a **thin wrapper around an environment store** (e.g., a settings view reading from a shared preferences object).
 - It's a **pure layout / styling component** (badges, list rows, decorative views).
 
 ## View Model Anatomy
@@ -38,18 +38,18 @@ final class FeatureViewModel {
 
     // MARK: - Long-Lived Dependencies (captured at init)
 
-    let services: BonjourServicesViewModel
+    let service: SomeService
 
     // MARK: - Init
 
-    init(services: BonjourServicesViewModel) {
-        self.services = services
+    init(service: SomeService) {
+        self.service = service
     }
 
     // MARK: - Methods (orchestration; take short-lived deps as parameters)
 
     func submit(
-        preferencesStore: PreferencesStore,
+        preferences: AppPreferences,
         reduceMotion: Bool
     ) async throws {
         // ...
@@ -80,24 +80,22 @@ struct DetailView: View {
 }
 ```
 
-Examples in this codebase:
-- `BonjourChatView` owns `BonjourChatViewModel`
-- `BonjourServiceDetailView` owns `BonjourServiceDetailViewModel`
-- `SelectServiceTypeView` owns `SelectServiceTypeViewModel`
-- `SupportedServicesView` owns `SupportedServicesViewModel`
+Most form sheets, detail screens, and per-item editors fit this pattern.
 
 ### `@Bindable` injected (shared across siblings)
 
 Use when multiple views need the same instance — typically because the underlying resource has external constraints (delegate slots, persistent connections, single source of truth):
 
 ```swift
-struct DiscoverView: View {
-    @Bindable var viewModel: BonjourServicesViewModel
+struct ListView: View {
+    @Bindable var viewModel: SharedListViewModel
 }
 ```
 
-Examples in this codebase:
-- `BonjourServicesViewModel` is shared between Discover and Chat tabs because `BonjourServiceScanner` exposes only one `weak var delegate` — two view models would race for the slot.
+Common reasons to share a single instance:
+- The underlying service exposes only one `weak var delegate` slot — two view models would race for it.
+- A long-running network or scan operation must not be started twice.
+- Multiple tabs need to read/mutate the same in-memory collection.
 
 If you find yourself reaching for an injected view model, ask: "would two instances cause incorrect behavior?" If yes, share. If no, prefer per-view ownership.
 
@@ -109,16 +107,16 @@ View models capture **long-lived dependencies** at init time. They take **short-
 @MainActor @Observable final class FeatureViewModel {
 
     // Long-lived: captured at init, used by every method.
-    let services: BonjourServicesViewModel
+    let service: SomeService
 
-    init(services: BonjourServicesViewModel) {
-        self.services = services
+    init(service: SomeService) {
+        self.service = service
     }
 
     // Short-lived: passed by the View at the call site.
     func submit(
-        preferencesStore: PreferencesStore,  // @Environment value
-        reduceMotion: Bool                    // @Environment value
+        preferences: AppPreferences,    // @Environment value
+        reduceMotion: Bool              // @Environment value
     ) async {
         // ...
     }
@@ -153,8 +151,6 @@ FeatureViewModel+Intents.swift  // intent dispatch
 ```
 
 Methods in the extension files default to `internal` access (which works for cross-file calls within the module). `private` only works within a single file — use `private` for helpers that genuinely don't escape the file.
-
-`BonjourChatViewModel` is the canonical example of this split.
 
 ## Forms
 
@@ -209,13 +205,13 @@ This pattern also lets the View's three corresponding inits collapse into thin w
 // View
 struct FeatureView: View {
 
-    @Environment(\.preferencesStore) private var preferencesStore
+    @Environment(\.appPreferences) private var preferences
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @FocusState private var isInputFocused: Bool
     @State private var viewModel: FeatureViewModel
 
-    init(services: BonjourServicesViewModel) {
-        self._viewModel = State(initialValue: FeatureViewModel(services: services))
+    init(service: SomeService) {
+        self._viewModel = State(initialValue: FeatureViewModel(service: service))
     }
 
     var body: some View {
@@ -227,7 +223,7 @@ struct FeatureView: View {
             Button("Submit") {
                 Task {
                     await viewModel.submit(
-                        preferencesStore: preferencesStore,
+                        preferences: preferences,
                         reduceMotion: reduceMotion
                     )
                 }
