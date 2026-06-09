@@ -91,212 +91,141 @@ public struct AppCoreScene: Scene {
             // without going through SwiftUI.
             @Bindable var bindable = viewModel
 
-            if #available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *) {
-                TabView(selection: $bindable.selectedTab) {
-                    Tab(value: TopLevelDestination.bonjour) {
-                        BonjourScanForServicesView(viewModel: viewModel.servicesViewModel)
-                    } label: {
-                        Label {
-                            Text(verbatim: TopLevelDestination.bonjour.titleString)
-                        } icon: {
-                            TopLevelDestination.bonjour.icon
-                        }
-                    }
-
-                    Tab(value: TopLevelDestination.bonjourServiceTypes) {
-                        SupportedServicesView()
-                    } label: {
-                        Label {
-                            Text(verbatim: TopLevelDestination.bonjourServiceTypes.titleString)
-                        } icon: {
-                            TopLevelDestination.bonjourServiceTypes.icon
-                        }
-                    }
-
-                    // macOS Preferences belong in the standard
-                    // Settings window (⌘,) the `Settings { }`
-                    // scene below provides.
-                    #if !os(macOS)
-                    Tab(value: TopLevelDestination.settings) {
-                        SettingsView()
-                    } label: {
-                        Label {
-                            Text(verbatim: TopLevelDestination.settings.titleString)
-                        } icon: {
-                            TopLevelDestination.settings.icon
-                        }
-                    }
-                    #endif
-
-                    if viewModel.shouldShowChatTab {
-                        // `role: .search` on iOS/visionOS places this
-                        // tab at the trailing edge with Liquid Glass
-                        // separation. macOS overrides any search-role
-                        // tab's icon with a magnifying glass, so we
-                        // use a regular Tab there to preserve our
-                        // backend-specific glyph.
-                        #if os(macOS)
-                        Tab(value: TopLevelDestination.chat) {
-                            BonjourChatView(viewModel: viewModel.servicesViewModel)
-                        } label: {
-                            ChatTabLabel(
-                                backend: viewModel.preferencesStore.aiBackend,
-                                hasUnread: viewModel.hasUnreadAssistantChatMessage,
-                                isSelected: viewModel.selectedTab == .chat
-                            )
-                        }
-                        #else
-                        Tab(value: TopLevelDestination.chat, role: .search) {
-                            BonjourChatView(viewModel: viewModel.servicesViewModel)
-                        } label: {
-                            ChatTabLabel(
-                                backend: viewModel.preferencesStore.aiBackend,
-                                hasUnread: viewModel.hasUnreadAssistantChatMessage,
-                                isSelected: viewModel.selectedTab == .chat
-                            )
-                        }
-                        #endif
-                    }
-                }
-                #if os(macOS)
-                .tabViewStyle(.automatic)
-                .frame(minWidth: 800, minHeight: 500)
-                #else
-                // `.automatic` (not `.sidebarAdaptable`) on
-                // iPad gives the floating top capsule without
-                // the user-toggleable left sidebar — the
-                // sidebar mode was confusing in regular size
-                // class and we'd rather ship the cleaner top-
-                // tab UX. iPhone keeps its bottom tabs (the
-                // automatic style for compact size class) and
-                // visionOS keeps its ornament tabs.
-                .tabViewStyle(.automatic)
-                #endif
-                // Global tint stays KozBon blue so non-chat tabs
-                // don't inherit the backend's accent color. Chat
-                // applies the backend tint locally.
-                .tint(Color.kozBonBlue)
-                .environment(\.dependencies, viewModel.dependencies)
-                .environment(\.serviceExplainer, viewModel.explainer)
-                .environment(\.chatSession, viewModel.chatSession)
-                .environment(\.preferencesStore, viewModel.preferencesStore)
-                // Hands the chat surface a closure that records
-                // the user as having seen the latest assistant
-                // message. The scroll view fires this when the
-                // user reaches the bottom edge — that's the only
-                // event that should clear the tab-bar badge.
-                .environment(
-                    \.chatMessagesSeenAction,
-                    ChatMessagesSeenAction { viewModel.markChatMessagesSeen() }
-                )
-                // Animate the tab-bar tint + chat-tab icon swap
-                // when the backend changes mid-session.
-                .animation(
-                    reduceMotion ? nil : .default,
-                    value: viewModel.preferencesStore.aiBackend
-                )
-                .task {
-                    await viewModel.prewarmChatSession()
-                }
-                .onChange(of: viewModel.preferencesStore.aiBackend) {
-                    viewModel.refreshAIBackend()
-                }
-                .onChange(of: viewModel.preferencesStore.aiCloudModel) {
-                    viewModel.refreshAIBackend()
-                }
-                // Sign-in / sign-out to Claude posts this
-                // notification; re-run the factories so the
-                // active session reflects the new credentials.
-                .onReceive(
-                    NotificationCenter.default.publisher(
-                        for: .aiCloudCredentialsChanged
-                    )
-                ) { _ in
-                    viewModel.refreshAIBackend()
-                }
-                .modifier(CloudSignInSheetPresentation(
-                    pendingProvider: $pendingCloudSignInProvider,
-                    credentialsStore: viewModel.credentialsStore
-                ))
-            } else {
-                TabView(selection: $bindable.selectedTab) {
+            // Deployment targets (iOS 18.6 / macOS 15.6 / visionOS 26.0)
+            // are all already past the iOS 18 / macOS 15 / visionOS 2
+            // thresholds the new TabView API needs, so no `#available`
+            // gate is required. Xcode 27's SwiftUI tightened the
+            // `TupleContent<repeat each Content>` conformance to require
+            // iOS 26 specifically — and an `if/else` here was producing
+            // exactly that tuple shape, breaking the build under the
+            // iOS 26 SDK even though both branches type-checked under
+            // older Xcode toolchains.
+            TabView(selection: $bindable.selectedTab) {
+                Tab(value: TopLevelDestination.bonjour) {
                     BonjourScanForServicesView(viewModel: viewModel.servicesViewModel)
-                        .tabItem {
-                            Label {
-                                Text(verbatim: TopLevelDestination.bonjour.titleString)
-                            } icon: {
-                                TopLevelDestination.bonjour.icon
-                            }
-                        }
-                        .tag(TopLevelDestination.bonjour)
-
-                    SupportedServicesView()
-                        .tabItem {
-                            Label {
-                                Text(verbatim: TopLevelDestination.bonjourServiceTypes.titleString)
-                            } icon: {
-                                TopLevelDestination.bonjourServiceTypes.icon
-                            }
-                        }
-                        .tag(TopLevelDestination.bonjourServiceTypes)
-
-                    if viewModel.shouldShowChatTab {
-                        BonjourChatView(viewModel: viewModel.servicesViewModel)
-                            .tabItem {
-                                ChatTabLabel(
-                                    backend: viewModel.preferencesStore.aiBackend,
-                                    hasUnread: viewModel.hasUnreadAssistantChatMessage,
-                                    isSelected: viewModel.selectedTab == .chat
-                                )
-                            }
-                            .tag(TopLevelDestination.chat)
+                } label: {
+                    Label {
+                        Text(verbatim: TopLevelDestination.bonjour.titleString)
+                    } icon: {
+                        TopLevelDestination.bonjour.icon
                     }
+                }
 
-                    #if !os(macOS)
+                Tab(value: TopLevelDestination.bonjourServiceTypes) {
+                    SupportedServicesView()
+                } label: {
+                    Label {
+                        Text(verbatim: TopLevelDestination.bonjourServiceTypes.titleString)
+                    } icon: {
+                        TopLevelDestination.bonjourServiceTypes.icon
+                    }
+                }
+
+                // macOS Preferences belong in the standard
+                // Settings window (⌘,) the `Settings { }`
+                // scene below provides.
+                #if !os(macOS)
+                Tab(value: TopLevelDestination.settings) {
                     SettingsView()
-                        .tabItem {
-                            Label {
-                                Text(verbatim: TopLevelDestination.settings.titleString)
-                            } icon: {
-                                TopLevelDestination.settings.icon
-                            }
-                        }
-                        .tag(TopLevelDestination.settings)
+                } label: {
+                    Label {
+                        Text(verbatim: TopLevelDestination.settings.titleString)
+                    } icon: {
+                        TopLevelDestination.settings.icon
+                    }
+                }
+                #endif
+
+                if viewModel.shouldShowChatTab {
+                    // `role: .search` on iOS/visionOS places this
+                    // tab at the trailing edge with Liquid Glass
+                    // separation. macOS overrides any search-role
+                    // tab's icon with a magnifying glass, so we
+                    // use a regular Tab there to preserve our
+                    // backend-specific glyph.
+                    #if os(macOS)
+                    Tab(value: TopLevelDestination.chat) {
+                        BonjourChatView(viewModel: viewModel.servicesViewModel)
+                    } label: {
+                        ChatTabLabel(
+                            backend: viewModel.preferencesStore.aiBackend,
+                            hasUnread: viewModel.hasUnreadAssistantChatMessage,
+                            isSelected: viewModel.selectedTab == .chat
+                        )
+                    }
+                    #else
+                    Tab(value: TopLevelDestination.chat, role: .search) {
+                        BonjourChatView(viewModel: viewModel.servicesViewModel)
+                    } label: {
+                        ChatTabLabel(
+                            backend: viewModel.preferencesStore.aiBackend,
+                            hasUnread: viewModel.hasUnreadAssistantChatMessage,
+                            isSelected: viewModel.selectedTab == .chat
+                        )
+                    }
                     #endif
                 }
-                #if os(macOS)
-                .frame(minWidth: 800, minHeight: 500)
-                #endif
-                // Global tint stays KozBon blue so non-chat tabs
-                // don't inherit the backend's accent color. Chat
-                // applies the backend tint locally.
-                .tint(Color.kozBonBlue)
-                .environment(\.dependencies, viewModel.dependencies)
-                .environment(\.serviceExplainer, viewModel.explainer)
-                .environment(\.chatSession, viewModel.chatSession)
-                .environment(\.preferencesStore, viewModel.preferencesStore)
-                .environment(
-                    \.chatMessagesSeenAction,
-                    ChatMessagesSeenAction { viewModel.markChatMessagesSeen() }
-                )
-                .animation(
-                    reduceMotion ? nil : .default,
-                    value: viewModel.preferencesStore.aiBackend
-                )
-                .task {
-                    await viewModel.prewarmChatSession()
-                }
-                .onChange(of: viewModel.preferencesStore.aiBackend) {
-                    viewModel.refreshAIBackend()
-                }
-                .onChange(of: viewModel.preferencesStore.aiCloudModel) {
-                    viewModel.refreshAIBackend()
-                }
-                .modifier(CloudSignInSheetPresentation(
-                    pendingProvider: $pendingCloudSignInProvider,
-                    credentialsStore: viewModel.credentialsStore
-                ))
             }
+            #if os(macOS)
+            .tabViewStyle(.automatic)
+            .frame(minWidth: 800, minHeight: 500)
+            #else
+            // `.automatic` (not `.sidebarAdaptable`) on
+            // iPad gives the floating top capsule without
+            // the user-toggleable left sidebar — the
+            // sidebar mode was confusing in regular size
+            // class and we'd rather ship the cleaner top-
+            // tab UX. iPhone keeps its bottom tabs (the
+            // automatic style for compact size class) and
+            // visionOS keeps its ornament tabs.
+            .tabViewStyle(.automatic)
+            #endif
+            // Global tint stays KozBon blue so non-chat tabs
+            // don't inherit the backend's accent color. Chat
+            // applies the backend tint locally.
+            .tint(Color.kozBonBlue)
+            .environment(\.dependencies, viewModel.dependencies)
+            .environment(\.serviceExplainer, viewModel.explainer)
+            .environment(\.chatSession, viewModel.chatSession)
+            .environment(\.preferencesStore, viewModel.preferencesStore)
+            // Hands the chat surface a closure that records
+            // the user as having seen the latest assistant
+            // message. The scroll view fires this when the
+            // user reaches the bottom edge — that's the only
+            // event that should clear the tab-bar badge.
+            .environment(
+                \.chatMessagesSeenAction,
+                ChatMessagesSeenAction { viewModel.markChatMessagesSeen() }
+            )
+            // Animate the tab-bar tint + chat-tab icon swap
+            // when the backend changes mid-session.
+            .animation(
+                reduceMotion ? nil : .default,
+                value: viewModel.preferencesStore.aiBackend
+            )
+            .task {
+                await viewModel.prewarmChatSession()
+            }
+            .onChange(of: viewModel.preferencesStore.aiBackend) {
+                viewModel.refreshAIBackend()
+            }
+            .onChange(of: viewModel.preferencesStore.aiCloudModel) {
+                viewModel.refreshAIBackend()
+            }
+            // Sign-in / sign-out to Claude posts this
+            // notification; re-run the factories so the
+            // active session reflects the new credentials.
+            .onReceive(
+                NotificationCenter.default.publisher(
+                    for: .aiCloudCredentialsChanged
+                )
+            ) { _ in
+                viewModel.refreshAIBackend()
+            }
+            .modifier(CloudSignInSheetPresentation(
+                pendingProvider: $pendingCloudSignInProvider,
+                credentialsStore: viewModel.credentialsStore
+            ))
         }
         #if os(macOS)
         .defaultSize(width: 1100, height: 700)
