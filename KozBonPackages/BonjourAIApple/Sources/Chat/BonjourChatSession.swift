@@ -148,25 +148,14 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
     /// stall main for a noticeable beat on the first call after a
     /// cold launch.
     public func prewarm() {
-        let start = Date()
-        guard session == nil || sessionResponseLengthSnapshot != responseLength else {
-            chatSessionLogger.debug("[lag] BonjourChatSession.prewarm SKIP (session already warm)")
-            return
-        }
-        let instructionsStart = Date()
+        guard session == nil || sessionResponseLengthSnapshot != responseLength else { return }
         let instructions = BonjourChatPromptBuilder.systemInstructions(
             responseLength: responseLength
         )
-        chatSessionLogger.debug("[lag] BonjourChatSession.prewarm systemInstructions took \(Int(Date().timeIntervalSince(instructionsStart) * 1000))ms")
-        let fetchStart = Date()
         librarySnapshot = BonjourServiceType.fetchAll()
-        chatSessionLogger.debug("[lag] BonjourChatSession.prewarm fetchAll took \(Int(Date().timeIntervalSince(fetchStart) * 1000))ms")
-        let modelStart = Date()
         session = LanguageModelSession(instructions: instructions)
-        chatSessionLogger.debug("[lag] BonjourChatSession.prewarm LanguageModelSession.init took \(Int(Date().timeIntervalSince(modelStart) * 1000))ms")
         sessionResponseLengthSnapshot = responseLength
         lastContextBlock = nil
-        chatSessionLogger.debug("[lag] BonjourChatSession.prewarm TOTAL=\(Int(Date().timeIntervalSince(start) * 1000))ms")
     }
 
     // MARK: - Append User Message

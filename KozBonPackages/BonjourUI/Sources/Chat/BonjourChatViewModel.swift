@@ -169,11 +169,6 @@ final class BonjourChatViewModel {
     /// instance always wins via ``activeSession(injected:)``.
     var localSession: (any BonjourChatSessionProtocol)?
 
-    /// Diagnostic logger for chat-tab activation latency. Stays
-    /// on while we're hunting the "5s lag on first chat tab tap"
-    /// regression. Remove once the bottleneck is found and fixed.
-    private let logger: Loggable = Logger(category: "BonjourChatViewModel")
-
     // MARK: - Long-Lived Dependencies
 
     /// Services view model shared with the Discover tab. The
@@ -242,18 +237,10 @@ final class BonjourChatViewModel {
     /// compilation.
     func onAppear(injectedSession: (any BonjourChatSessionProtocol)?) {
         Task { @MainActor in
-            let taskStart = Date()
-            logger.debug("[lag] VM.onAppear TASK ENTER")
             await Task.yield()
-            logger.debug("[lag] VM.onAppear after first yield t=\(Int(Date().timeIntervalSince(taskStart) * 1000))ms")
-            let loadStart = Date()
             services.load()
-            logger.debug("[lag] VM.onAppear services.load() took \(Int(Date().timeIntervalSince(loadStart) * 1000))ms")
             await Task.yield()
-            logger.debug("[lag] VM.onAppear after second yield t=\(Int(Date().timeIntervalSince(taskStart) * 1000))ms")
-            let prewarmStart = Date()
             activeSession(injected: injectedSession)?.prewarm()
-            logger.debug("[lag] VM.onAppear prewarm() took \(Int(Date().timeIntervalSince(prewarmStart) * 1000))ms TASK EXIT total=\(Int(Date().timeIntervalSince(taskStart) * 1000))ms")
         }
     }
 

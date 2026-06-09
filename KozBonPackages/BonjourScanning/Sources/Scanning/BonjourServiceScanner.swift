@@ -99,24 +99,19 @@ public final class BonjourServiceScanner: BonjourServiceScannerDelegate {
     /// - Parameter publishedServices: Services published by the user, used to ensure their
     ///   types are also scanned even if not in the built-in library.
     public func startScan(publishedServices: Set<BonjourService> = []) {
-        let start = Date()
-        self.logger.debug("[lag] Starting scan")
+        self.logger.debug("Starting scan")
 
         // First reset all the scanners
         self.reset()
 
         // Populate service browsers with existing service types
-        let fetchStart = Date()
         let allServiceTypes = BonjourServiceType.fetchAll()
-        self.logger.debug("[lag] startScan fetchAll took \(Int(Date().timeIntervalSince(fetchStart) * 1000))ms (\(allServiceTypes.count) types)")
-        let initStart = Date()
         for serviceType in allServiceTypes {
 
             let serviceBrowser = BonjourServiceTypeScanner(serviceType: serviceType, domain: "")
             serviceBrowser.delegate = self
             self.typeScanners.append(serviceBrowser)
         }
-        self.logger.debug("[lag] startScan typeScanner inits took \(Int(Date().timeIntervalSince(initStart) * 1000))ms")
 
         // Populate service browsers with user-published service types
         for publishedService in publishedServices where
@@ -131,12 +126,9 @@ public final class BonjourServiceScanner: BonjourServiceScannerDelegate {
 
         self.logger.debug("Starting scan with \(self.typeScanners.count) type scanners")
 
-        let browseStart = Date()
         for scanner in self.typeScanners {
             scanner.startScan()
         }
-        self.logger.debug("[lag] startScan per-scanner startScan() loop took \(Int(Date().timeIntervalSince(browseStart) * 1000))ms")
-        self.logger.debug("[lag] startScan TOTAL=\(Int(Date().timeIntervalSince(start) * 1000))ms")
     }
 
     /// Stops all active type scanners.

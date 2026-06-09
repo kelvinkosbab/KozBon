@@ -93,11 +93,6 @@ public struct BonjourChatView: View {
     /// activation.
     @State var viewModel: BonjourChatViewModel
 
-    /// Diagnostic logger for chat-tab activation latency. Stays
-    /// on while we're hunting the "5s lag on first chat tab tap"
-    /// regression. Remove once the bottleneck is found and fixed.
-    private let logger: Loggable = Logger(category: "BonjourChatView")
-
     /// Creates the Chat view bound to the shared services view model.
     ///
     /// The services view model is owned by the app root so that
@@ -164,10 +159,8 @@ public struct BonjourChatView: View {
     /// after the in-tab sign-in sheet dismisses, mirroring the
     /// pattern `SettingsView` uses.
     func refreshCloudKeyState() {
-        let start = Date()
         hasAnthropicKey = credentialsStore.hasAPIKey(for: .anthropic)
         hasGitHubKey = credentialsStore.hasAPIKey(for: .github)
-        logger.debug("[lag] refreshCloudKeyState took \(Int(Date().timeIntervalSince(start) * 1000))ms")
     }
 
     public var body: some View {
@@ -220,11 +213,8 @@ public struct BonjourChatView: View {
                     )
                 }
                 .onAppear {
-                    let start = Date()
-                    logger.debug("[lag] BonjourChatView.onAppear ENTER")
                     viewModel.onAppear(injectedSession: injectedSession)
                     refreshCloudKeyState()
-                    logger.debug("[lag] BonjourChatView.onAppear EXIT total=\(Int(Date().timeIntervalSince(start) * 1000))ms")
                 }
                 // Animate the swap between the sign-in prompt
                 // and the normal chat content (message list +

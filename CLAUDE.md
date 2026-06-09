@@ -185,6 +185,8 @@ never iCloud-synced) via `KeychainAICloudCredentialsStore`. Tests substitute
 - **`@MainActor` tests**: Use `@MainActor` on the suite when testing `@MainActor`-isolated types
 - **Cross-module testing**: Use `@testable import <Module>` to access internal types, `import <Module>` for public API tests
 - **`CustomServiceTypeTests` in BonjourStorage**: Require Xcode to compile `.xcdatamodeld` — excluded from the SPM test target (`Package.swift` `testExcludes`). The other BonjourStorage tests (SwiftData-backed `PreferencesStore` / `UserPreferences`) run fine under `swift test`
+- **Flaky-test detection (Xcode 27+)**: Re-run the suite under stress with `swift test --package-path KozBonPackages --maximum-repetitions 5 --repeat-until fail` to surface any test that passes on the first run but fails intermittently. Pairs well with `--filter` to scope to a suspect suite. Available with the Xcode 27 toolchain or `xcrun --toolchain Xcode27 swift test …`.
+- **Test failure summary (Xcode 27+)**: The Xcode 27 `swift test` runner prints a consolidated failure summary at the end of the run when one or more test targets fail — no scrolling required to find what broke.
 
 ## CI / GitHub Actions
 

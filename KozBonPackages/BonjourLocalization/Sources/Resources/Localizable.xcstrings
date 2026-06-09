@@ -21782,7 +21782,8 @@
             "value": "Apple Intelligence"
           }
         }
-      }
+      },
+      "comment": "do not translate"
     },
     "settings_ai_backend_anthropic": {
       "extractionState": "manual",
@@ -21835,7 +21836,8 @@
             "value": "Anthropic Claude"
           }
         }
-      }
+      },
+      "comment": "do not translate"
     },
     "settings_ai_backend_apple_subtitle": {
       "extractionState": "manual",
@@ -23478,7 +23480,8 @@
             "value": "GitHub"
           }
         }
-      }
+      },
+      "comment": "do not translate"
     },
     "settings_ai_backend_github_subtitle": {
       "extractionState": "manual",
