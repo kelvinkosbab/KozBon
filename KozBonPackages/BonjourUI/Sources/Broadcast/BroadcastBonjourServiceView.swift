@@ -295,7 +295,15 @@ struct BroadcastBonjourServiceView: View {
                         }
                         if let indexToRemove {
                             withAnimation(reduceMotion ? nil : .default) {
-                                viewModel.dataRecords.remove(at: indexToRemove)
+                                // `Array.remove(at:)` returns the removed
+                                // element; Xcode 27's `#NoUsage` diagnostic
+                                // flags discarded results from
+                                // `withAnimation` when the closure is a
+                                // single expression that implicitly
+                                // returns. Discard explicitly to silence
+                                // the warning — we don't need the removed
+                                // record for the swipe-delete affordance.
+                                _ = viewModel.dataRecords.remove(at: indexToRemove)
                             }
                         }
                     } label: {
