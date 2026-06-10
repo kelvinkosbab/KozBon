@@ -43,7 +43,7 @@ struct BonjourServiceListSortMenu: View {
                 sortButton(for: option)
             }
         } label: {
-            Label(String(localized: Strings.Buttons.sort), systemImage: Iconography.sort)
+            Label(Strings.Buttons.sort, systemImage: Iconography.sort)
                 .tint(.primary)
         }
     }

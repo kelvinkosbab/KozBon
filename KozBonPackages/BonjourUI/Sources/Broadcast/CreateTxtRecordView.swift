@@ -55,8 +55,8 @@ struct CreateTxtRecordView: View {
                         String(localized: Strings.Placeholders.txtRecordKey),
                         text: $bindable.key
                     )
-                    .accessibilityLabel(String(localized: Strings.Accessibility.txtRecordKey))
-                    .accessibilityHint(String(localized: Strings.Accessibility.txtRecordKeyHint))
+                    .accessibilityLabel(Strings.Accessibility.txtRecordKey)
+                    .accessibilityHint(Strings.Accessibility.txtRecordKeyHint)
                     .onSubmit {
                         commit()
                     }
@@ -77,8 +77,8 @@ struct CreateTxtRecordView: View {
                         String(localized: Strings.Placeholders.txtRecordValue),
                         text: $bindable.value
                     )
-                    .accessibilityLabel(String(localized: Strings.Accessibility.txtRecordValue))
-                    .accessibilityHint(String(localized: Strings.Accessibility.txtRecordValueHint))
+                    .accessibilityLabel(Strings.Accessibility.txtRecordValue)
+                    .accessibilityHint(Strings.Accessibility.txtRecordValueHint)
                     .onSubmit {
                         commit()
                     }
@@ -113,7 +113,7 @@ struct CreateTxtRecordView: View {
                     Button(role: .cancel) {
                         isPresented = false
                     } label: {
-                        Label(String(localized: Strings.Buttons.cancel), systemImage: Iconography.cancel)
+                        Label(Strings.Buttons.cancel, systemImage: Iconography.cancel)
                     }
                     .keyboardShortcut(.cancelAction)
                 }
@@ -121,7 +121,7 @@ struct CreateTxtRecordView: View {
                     Button {
                         commit()
                     } label: {
-                        Label(String(localized: Strings.Buttons.done), systemImage: Iconography.confirm)
+                        Label(Strings.Buttons.done, systemImage: Iconography.confirm)
                     }
                     .keyboardShortcut(.defaultAction)
                 }

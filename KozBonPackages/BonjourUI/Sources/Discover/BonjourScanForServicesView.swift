@@ -124,10 +124,10 @@ public struct BonjourScanForServicesView: View {
                     Button {
                         viewModel.isBroadcastBonjourServicePresented = true
                     } label: {
-                        Label(String(localized: Strings.Buttons.broadcast), systemImage: Iconography.antenna)
+                        Label(Strings.Buttons.broadcast, systemImage: Iconography.antenna)
                     }
-                    .accessibilityLabel(String(localized: Strings.Accessibility.create))
-                    .accessibilityHint(String(localized: Strings.Accessibility.createHint))
+                    .accessibilityLabel(Strings.Accessibility.create)
+                    .accessibilityHint(Strings.Accessibility.createHint)
                 }
             }
             .navigationTitle(String(localized: Strings.NavigationTitles.nearbyServices))
@@ -196,7 +196,7 @@ public struct BonjourScanForServicesView: View {
                 set: { if !$0 { viewModel.scanError = nil } }
             )
         ) {
-            Button(String(localized: Strings.Buttons.ok)) { viewModel.scanError = nil }
+            Button(Strings.Buttons.ok) { viewModel.scanError = nil }
         } message: {
             Text(viewModel.scanError ?? "")
         }
@@ -245,19 +245,19 @@ public struct BonjourScanForServicesView: View {
                 Button {
                     Clipboard.copy(service.hostName)
                 } label: {
-                    Label(String(localized: Strings.Actions.copyHostname), systemImage: Iconography.copy)
+                    Label(Strings.Actions.copyHostname, systemImage: Iconography.copy)
                 }
 
                 Button {
                     Clipboard.copy(service.serviceType.name)
                 } label: {
-                    Label(String(localized: Strings.Actions.copyName), systemImage: Iconography.copy)
+                    Label(Strings.Actions.copyName, systemImage: Iconography.copy)
                 }
 
                 Button {
                     Clipboard.copy(service.serviceType.fullType)
                 } label: {
-                    Label(String(localized: Strings.Actions.copyServiceType), systemImage: Iconography.copyAlternate)
+                    Label(Strings.Actions.copyServiceType, systemImage: Iconography.copyAlternate)
                 }
 
                 if !service.addresses.isEmpty {

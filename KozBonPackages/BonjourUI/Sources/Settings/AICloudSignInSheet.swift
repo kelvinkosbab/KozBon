@@ -77,7 +77,7 @@ public struct AICloudSignInSheet: View {
                     .autocorrectionDisabled(true)
                     #endif
                     .focused($isAPIKeyFieldFocused)
-                    .accessibilityLabel(String(localized: apiKeyFieldLabel))
+                    .accessibilityLabel(apiKeyFieldLabel)
                     // Thread the validation message into the
                     // field's accessibility hint so VoiceOver
                     // users hear the format error as part of
@@ -114,7 +114,7 @@ public struct AICloudSignInSheet: View {
                                     .accessibilityHidden(true)
                             }
                         }
-                        .accessibilityHint(String(localized: getKeyHint))
+                        .accessibilityHint(getKeyHint)
                     }
                 }
 
@@ -155,13 +155,13 @@ public struct AICloudSignInSheet: View {
             .tint(provider.accentColor)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button(String(localized: Strings.Buttons.cancel)) {
+                    Button(Strings.Buttons.cancel) {
                         dismiss()
                     }
                     .accessibilityIdentifier("aiCloudSignIn.cancel")
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button(String(localized: Strings.Settings.aiCloudSignInSave)) {
+                    Button(Strings.Settings.aiCloudSignInSave) {
                         if viewModel.save() {
                             dismiss()
                         }

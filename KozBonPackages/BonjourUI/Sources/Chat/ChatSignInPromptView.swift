@@ -90,7 +90,7 @@ struct ChatSignInPromptView: View {
             }
             .buttonStyle(.borderedProminent)
             .tint(backend.accentColor)
-            .accessibilityHint(String(localized: Strings.Accessibility.aiCloudSignInHint))
+            .accessibilityHint(Strings.Accessibility.aiCloudSignInHint)
             .accessibilityIdentifier("chat_sign_in_prompt_button")
         }
         .padding(40)

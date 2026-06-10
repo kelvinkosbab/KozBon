@@ -125,8 +125,8 @@ extension SettingsView {
         }
         .pickerStyle(.inline)
         .labelsHidden()
-        .accessibilityLabel(String(localized: Strings.Settings.aiBackendPickerLabel))
-        .accessibilityHint(String(localized: Strings.Accessibility.aiBackendPickerHint))
+        .accessibilityLabel(Strings.Settings.aiBackendPickerLabel)
+        .accessibilityHint(Strings.Accessibility.aiBackendPickerHint)
     }
 
     /// One row of the inline backend picker.
@@ -213,7 +213,7 @@ extension SettingsView {
                 } label: {
                     Text(Strings.Settings.aiCloudSignOut)
                 }
-                .accessibilityHint(String(localized: Strings.Accessibility.aiCloudSignOutHint))
+                .accessibilityHint(Strings.Accessibility.aiCloudSignOutHint)
                 .accessibilityIdentifier("aiCloud.signOut.\(provider.rawValue)")
             }
             .accessibilityElement(children: .combine)
@@ -236,7 +236,7 @@ extension SettingsView {
                         .accessibilityHidden(true)
                 }
             }
-            .accessibilityHint(String(localized: Strings.Accessibility.aiCloudSignInHint))
+            .accessibilityHint(Strings.Accessibility.aiCloudSignInHint)
             .accessibilityIdentifier("aiCloud.signIn.\(provider.rawValue)")
         }
     }
@@ -281,7 +281,7 @@ extension SettingsView {
                 Text(localizedName(for: preferencesStore.aiCloudModel))
                     .font(.subheadline)
             }
-            .accessibilityLabel(String(localized: Strings.Settings.aiCloudModelPickerLabel))
+            .accessibilityLabel(Strings.Settings.aiCloudModelPickerLabel)
         } label: {
             VStack(alignment: .leading, spacing: 2) {
                 Text(Strings.Settings.aiCloudModelPickerLabel)

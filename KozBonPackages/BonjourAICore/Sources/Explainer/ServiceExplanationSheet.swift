@@ -117,7 +117,7 @@ public struct ServiceExplanationSheet: View {
                     } else if explainer.explanation.isEmpty && explainer.isGenerating {
                         HStack(spacing: 8) {
                             TypingIndicator()
-                                .accessibilityLabel(String(localized: Strings.Insights.generating))
+                                .accessibilityLabel(Strings.Insights.generating)
                             Text(Strings.Insights.generating)
                                 .foregroundStyle(.secondary)
                         }
@@ -135,7 +135,7 @@ public struct ServiceExplanationSheet: View {
                         // flow.
                         TypingIndicator()
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .accessibilityLabel(String(localized: Strings.Insights.generating))
+                            .accessibilityLabel(Strings.Insights.generating)
                     }
                 }
                 .padding()
@@ -164,7 +164,7 @@ public struct ServiceExplanationSheet: View {
                     Button {
                         dismiss()
                     } label: {
-                        Label(String(localized: Strings.Buttons.done), systemImage: Iconography.confirm)
+                        Label(Strings.Buttons.done, systemImage: Iconography.confirm)
                     }
                 }
 

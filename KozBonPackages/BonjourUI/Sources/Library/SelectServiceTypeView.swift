@@ -139,7 +139,7 @@ struct SelectServiceTypeView: View {
                 ? String(localized: Strings.Accessibility.selected)
                 : String(localized: Strings.Accessibility.notSelected)
         )
-        .accessibilityHint(String(localized: Strings.Accessibility.selectServiceTypeHint))
+        .accessibilityHint(Strings.Accessibility.selectServiceTypeHint)
         .contextMenu {
             // Backend-aware (ADR 0005) — picks Apple Intelligence
             // items on iOS 26+ or "Explain with Claude" on the

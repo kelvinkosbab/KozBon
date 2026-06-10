@@ -138,8 +138,8 @@ public struct SettingsView: View {
                 String(localized: Strings.Settings.resetToDefaults),
                 isPresented: $isResetConfirmationPresented
             ) {
-                Button(String(localized: Strings.Buttons.cancel), role: .cancel) {}
-                Button(String(localized: Strings.Settings.reset), role: .destructive) {
+                Button(Strings.Buttons.cancel, role: .cancel) {}
+                Button(Strings.Settings.reset, role: .destructive) {
                     preferencesStore.resetToDefaults()
                     BonjourServiceType.deleteAllPersistentCopies()
                     refreshCloudKeyState()
@@ -165,10 +165,10 @@ public struct SettingsView: View {
                     }
                 )
             ) {
-                Button(String(localized: Strings.Buttons.cancel), role: .cancel) {
+                Button(Strings.Buttons.cancel, role: .cancel) {
                     providerPendingSignOut = nil
                 }
-                Button(String(localized: Strings.Settings.aiCloudSignOut), role: .destructive) {
+                Button(Strings.Settings.aiCloudSignOut, role: .destructive) {
                     if let provider = providerPendingSignOut {
                         signOut(from: provider)
                     }
@@ -205,7 +205,7 @@ public struct SettingsView: View {
                     set: { preferencesStore.aiAnalysisEnabled = $0 }
                 )
             )
-            .accessibilityHint(String(localized: Strings.Accessibility.toggleAIHint))
+            .accessibilityHint(Strings.Accessibility.toggleAIHint)
 
             if preferencesStore.aiAnalysisEnabled {
                 LabeledContent {
@@ -214,7 +214,7 @@ public struct SettingsView: View {
                             preferencesStore.aiExpertiseLevel = "basic"
                         } label: {
                             if preferencesStore.aiExpertiseLevel == "basic" {
-                                Label(String(localized: Strings.Insights.basic), systemImage: Iconography.selected)
+                                Label(Strings.Insights.basic, systemImage: Iconography.selected)
                             } else {
                                 Text(Strings.Insights.basic)
                             }
@@ -224,7 +224,7 @@ public struct SettingsView: View {
                             preferencesStore.aiExpertiseLevel = "technical"
                         } label: {
                             if preferencesStore.aiExpertiseLevel == "technical" {
-                                Label(String(localized: Strings.Insights.technical), systemImage: Iconography.selected)
+                                Label(Strings.Insights.technical, systemImage: Iconography.selected)
                             } else {
                                 Text(Strings.Insights.technical)
                             }
@@ -235,7 +235,7 @@ public struct SettingsView: View {
                              : Strings.Insights.basic)
                             .font(.subheadline)
                     }
-                    .accessibilityLabel(String(localized: Strings.Settings.aiExpertiseLevel))
+                    .accessibilityLabel(Strings.Settings.aiExpertiseLevel)
                 } label: {
                     VStack(alignment: .leading, spacing: 2) {
                         Text(Strings.Settings.aiExpertiseLevel)
@@ -313,7 +313,7 @@ public struct SettingsView: View {
                     Text(currentSortTitle)
                         .font(.subheadline)
                 }
-                .accessibilityLabel(String(localized: Strings.Settings.defaultSortOrder))
+                .accessibilityLabel(Strings.Settings.defaultSortOrder)
             } label: {
                 Text(Strings.Settings.defaultSortOrder)
             }
@@ -343,7 +343,7 @@ public struct SettingsView: View {
                 } label: {
                     Text(Strings.Settings.resetToDefaults)
                 }
-                .accessibilityHint(String(localized: Strings.Accessibility.resetHint))
+                .accessibilityHint(Strings.Accessibility.resetHint)
             } footer: {
                 Text(Strings.Settings.resetFooter)
             }

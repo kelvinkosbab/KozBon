@@ -70,7 +70,7 @@ public struct BonjourServiceDetailView: View {
                     Button {
                         Clipboard.copy(viewModel.serviceType.name)
                     } label: {
-                        Label(String(localized: Strings.Actions.copyName), systemImage: Iconography.copy)
+                        Label(Strings.Actions.copyName, systemImage: Iconography.copy)
                     }
                 }
                 .accessibilityActions {
@@ -89,7 +89,7 @@ public struct BonjourServiceDetailView: View {
                     Button {
                         Clipboard.copy(viewModel.serviceType.fullType)
                     } label: {
-                        Label(String(localized: Strings.Actions.copyFullType), systemImage: Iconography.copy)
+                        Label(Strings.Actions.copyFullType, systemImage: Iconography.copy)
                     }
                 }
                 .accessibilityActions {
@@ -106,7 +106,7 @@ public struct BonjourServiceDetailView: View {
                     Button {
                         Clipboard.copy(viewModel.serviceType.type)
                     } label: {
-                        Label(String(localized: Strings.Actions.copyServiceType), systemImage: Iconography.copy)
+                        Label(Strings.Actions.copyServiceType, systemImage: Iconography.copy)
                     }
                 }
                 .accessibilityActions {
@@ -148,16 +148,16 @@ public struct BonjourServiceDetailView: View {
                         )
                         .draggable(address.ipPortString)
                         .accessibilityLabel("\(address.ipPortString), \(address.protocol.stringRepresentation)")
-                        .accessibilityHint(String(localized: Strings.Accessibility.longPressCopyAddress))
+                        .accessibilityHint(Strings.Accessibility.longPressCopyAddress)
                         .contextMenu {
                             Button {
                                 Clipboard.copy(address.ipPortString)
                             } label: {
-                                Label(String(localized: Strings.Actions.copyAddress), systemImage: Iconography.copy)
+                                Label(Strings.Actions.copyAddress, systemImage: Iconography.copy)
                             }
                         }
                         .accessibilityActions {
-                            Button(String(localized: Strings.Actions.copyAddress)) {
+                            Button(Strings.Actions.copyAddress) {
                                 Clipboard.copy(address.ipPortString)
                             }
                         }
@@ -235,9 +235,9 @@ public struct BonjourServiceDetailView: View {
                 viewModel.txtRecordToEdit = nil
                 viewModel.isCreateTxtRecordPresented = true
             } label: {
-                Label(String(localized: Strings.Buttons.addTxtRecord), systemImage: Iconography.add)
+                Label(Strings.Buttons.addTxtRecord, systemImage: Iconography.add)
             }
-            .accessibilityHint(String(localized: Strings.Accessibility.addTxtRecordHint))
+            .accessibilityHint(Strings.Accessibility.addTxtRecordHint)
             .accessibilityIdentifier("txt_record_add_button")
         }
     }
@@ -252,19 +252,19 @@ public struct BonjourServiceDetailView: View {
         }
         .draggable("\(dataRecord.key)=\(dataRecord.value)")
         .accessibilityLabel("\(dataRecord.key): \(dataRecord.value)")
-        .accessibilityHint(String(localized: Strings.Accessibility.editRecordHint))
+        .accessibilityHint(Strings.Accessibility.editRecordHint)
         .accessibilityActions {
-            Button(String(localized: Strings.Accessibility.copyRecord)) {
+            Button(Strings.Accessibility.copyRecord) {
                 Clipboard.copy("\(dataRecord.key)=\(dataRecord.value)")
             }
-            Button(String(localized: Strings.Accessibility.copyValueOnly)) {
+            Button(Strings.Accessibility.copyValueOnly) {
                 Clipboard.copy(dataRecord.value)
             }
-            Button(String(localized: Strings.Accessibility.editRecord)) {
+            Button(Strings.Accessibility.editRecord) {
                 viewModel.txtRecordToEdit = dataRecord
                 viewModel.isCreateTxtRecordPresented = true
             }
-            Button(String(localized: Strings.Accessibility.deleteRecord), role: .destructive) {
+            Button(Strings.Accessibility.deleteRecord, role: .destructive) {
                 viewModel.deleteTxtRecord(dataRecord)
             }
         }
@@ -273,10 +273,10 @@ public struct BonjourServiceDetailView: View {
             Button(role: .destructive) {
                 viewModel.deleteTxtRecord(dataRecord)
             } label: {
-                Label(String(localized: Strings.Buttons.remove), systemImage: Iconography.remove)
+                Label(Strings.Buttons.remove, systemImage: Iconography.remove)
             }
             .accessibilityLabel(Strings.Accessibility.remove(dataRecord.key))
-            .accessibilityHint(String(localized: Strings.Accessibility.deleteTxtRecordHint))
+            .accessibilityHint(Strings.Accessibility.deleteTxtRecordHint)
             .tint(.red)
         }
     }
@@ -288,12 +288,12 @@ public struct BonjourServiceDetailView: View {
                 TitleDetailStackView(title: dataRecord.key, detail: dataRecord.value)
                     .draggable("\(dataRecord.key)=\(dataRecord.value)")
                     .accessibilityLabel("\(dataRecord.key): \(dataRecord.value)")
-                    .accessibilityHint(String(localized: Strings.Accessibility.longPressCopyRecord))
+                    .accessibilityHint(Strings.Accessibility.longPressCopyRecord)
                     .accessibilityActions {
-                        Button(String(localized: Strings.Accessibility.copyRecord)) {
+                        Button(Strings.Accessibility.copyRecord) {
                             Clipboard.copy("\(dataRecord.key)=\(dataRecord.value)")
                         }
-                        Button(String(localized: Strings.Accessibility.copyValueOnly)) {
+                        Button(Strings.Accessibility.copyValueOnly) {
                             Clipboard.copy(dataRecord.value)
                         }
                     }
@@ -310,13 +310,13 @@ public struct BonjourServiceDetailView: View {
         Button {
             Clipboard.copy("\(dataRecord.key)=\(dataRecord.value)")
         } label: {
-            Label(String(localized: Strings.Actions.copyRecord), systemImage: Iconography.copy)
+            Label(Strings.Actions.copyRecord, systemImage: Iconography.copy)
         }
 
         Button {
             Clipboard.copy(dataRecord.value)
         } label: {
-            Label(String(localized: Strings.Actions.copyValue), systemImage: Iconography.copyAlternate)
+            Label(Strings.Actions.copyValue, systemImage: Iconography.copyAlternate)
         }
     }
 }
@@ -351,7 +351,7 @@ private extension BonjourServiceDetailView {
             Button {
                 Clipboard.copy(viewModel.service.service.name)
             } label: {
-                Label(String(localized: Strings.Actions.copyName), systemImage: Iconography.copy)
+                Label(Strings.Actions.copyName, systemImage: Iconography.copy)
             }
         }
         .accessibilityActions {
@@ -377,7 +377,7 @@ private extension BonjourServiceDetailView {
                 Button {
                     Clipboard.copy(identification.friendlyName)
                 } label: {
-                    Label(String(localized: Strings.Actions.copyName), systemImage: Iconography.copy)
+                    Label(Strings.Actions.copyName, systemImage: Iconography.copy)
                 }
             }
             .accessibilityActions {
@@ -400,7 +400,7 @@ private extension BonjourServiceDetailView {
             Button {
                 Clipboard.copy(viewModel.service.hostName)
             } label: {
-                Label(String(localized: Strings.Actions.copyHostname), systemImage: Iconography.copy)
+                Label(Strings.Actions.copyHostname, systemImage: Iconography.copy)
             }
         }
         .accessibilityActions {

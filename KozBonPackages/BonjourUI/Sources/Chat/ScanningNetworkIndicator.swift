@@ -45,7 +45,7 @@ struct ScanningNetworkIndicator: View {
         // for VoiceOver; treating the row as one static-text
         // element keeps the announcement tight.
         .accessibilityElement(children: .combine)
-        .accessibilityLabel(String(localized: Strings.Chat.scanningNetwork))
+        .accessibilityLabel(Strings.Chat.scanningNetwork)
         .accessibilityAddTraits(.isStaticText)
         // Actively announce the scan status when the indicator
         // mounts. Without this, VoiceOver users get visual

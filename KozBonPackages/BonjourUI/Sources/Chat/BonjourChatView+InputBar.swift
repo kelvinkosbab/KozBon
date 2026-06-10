@@ -56,7 +56,7 @@ extension BonjourChatView {
             // shown to sighted users, but its trailing ellipsis
             // reads awkwardly when announced aloud — `.accessibilityLabel`
             // overrides the placeholder fallback for VoiceOver.
-            .accessibilityLabel(String(localized: Strings.Accessibility.chatInputLabel))
+            .accessibilityLabel(Strings.Accessibility.chatInputLabel)
             // Hint flips to the busy variant while the assistant
             // is streaming a response. The Send button below uses
             // the same flag so both controls read consistently.
@@ -132,7 +132,7 @@ extension BonjourChatView {
             }
             .buttonStyle(.plain)
             .disabled(viewModel.sendDisabled(session: session))
-            .accessibilityLabel(String(localized: Strings.Chat.send))
+            .accessibilityLabel(Strings.Chat.send)
             // Three-way hint so VoiceOver can explain *why* the
             // button is in its current state: busy / empty input
             // / enabled.

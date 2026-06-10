@@ -58,8 +58,7 @@ public struct AIContextMenuItems: View {
             Button {
                 onInsightsTapped()
             } label: {
-                Label(
-                    String(localized: Strings.Insights.explainWithAI),
+                Label(Strings.Insights.explainWithAI,
                     systemImage: Iconography.appleIntelligence
                 )
             }
@@ -70,8 +69,7 @@ public struct AIContextMenuItems: View {
                 Button {
                     onInsightsTapped()
                 } label: {
-                    Label(
-                        String(localized: Strings.Insights.explainWithAI),
+                    Label(Strings.Insights.explainWithAI,
                         systemImage: Iconography.appleIntelligence
                     )
                 }
@@ -89,8 +87,7 @@ public struct AIContextMenuItems: View {
                         hapticFeedback.play(.light)
                         openAppleIntelligenceSettings()
                     } label: {
-                        Label(
-                            String(localized: Strings.Insights.enableAppleIntelligence),
+                        Label(Strings.Insights.enableAppleIntelligence,
                             systemImage: Iconography.appleIntelligence
                         )
                     }

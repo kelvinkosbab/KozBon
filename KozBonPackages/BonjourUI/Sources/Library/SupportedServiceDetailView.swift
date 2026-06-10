@@ -83,8 +83,7 @@ public struct SupportedServiceDetailView: View {
                     Button {
                         Clipboard.copy(serviceType.fullType)
                     } label: {
-                        Label(
-                            String(localized: Strings.Actions.copyFullType),
+                        Label(Strings.Actions.copyFullType,
                             systemImage: Iconography.copy
                         )
                     }
@@ -112,8 +111,7 @@ public struct SupportedServiceDetailView: View {
                         Button {
                             Clipboard.copy(detail)
                         } label: {
-                            Label(
-                                String(localized: Strings.Actions.copyDetails),
+                            Label(Strings.Actions.copyDetails,
                                 systemImage: Iconography.copy
                             )
                         }
@@ -143,7 +141,7 @@ public struct SupportedServiceDetailView: View {
                         }
                     }
                     .accessibilityLabel(Strings.Accessibility.edit(serviceType.name))
-                    .accessibilityHint(String(localized: Strings.Accessibility.editHint))
+                    .accessibilityHint(Strings.Accessibility.editHint)
                     .foregroundStyle(.yellow)
                     .sheet(isPresented: $showEditConfirmation) {
                         CreateOrUpdateBonjourServiceTypeView(
@@ -170,7 +168,7 @@ public struct SupportedServiceDetailView: View {
                         }
                     }
                     .accessibilityLabel(Strings.Accessibility.delete(serviceType.name))
-                    .accessibilityHint(String(localized: Strings.Accessibility.deleteHint))
+                    .accessibilityHint(Strings.Accessibility.deleteHint)
                     .confirmationDialog(
                         String(localized: Strings.Alerts.deleteServiceType),
                         isPresented: $showDeleteConfirmation,
@@ -180,7 +178,7 @@ public struct SupportedServiceDetailView: View {
                             serviceType.deletePersistentCopy()
                             dismiss()
                         } label: {
-                            Label(String(localized: Strings.Buttons.delete), systemImage: Iconography.remove)
+                            Label(Strings.Buttons.delete, systemImage: Iconography.remove)
                         }
                         .foregroundStyle(.red)
                     }

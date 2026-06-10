@@ -23,13 +23,13 @@ struct AppCommands: Commands {
 
     var body: some Commands {
         CommandGroup(after: .newItem) {
-            Button(String(localized: Strings.Buttons.broadcastService)) {
+            Button(Strings.Buttons.broadcastService) {
                 isBroadcastServicePresented = true
             }
             .disabled(isBroadcastServicePresented == nil)
             .keyboardShortcut("n", modifiers: [.command, .shift])
 
-            Button(String(localized: Strings.Buttons.createCustomServiceType)) {
+            Button(Strings.Buttons.createCustomServiceType) {
                 isCreateServiceTypePresented = true
             }
             .disabled(isCreateServiceTypePresented == nil)
@@ -37,7 +37,7 @@ struct AppCommands: Commands {
 
             Divider()
 
-            Button(String(localized: Strings.Buttons.refresh)) {
+            Button(Strings.Buttons.refresh) {
                 refreshScan?()
             }
             .disabled(refreshScan == nil)

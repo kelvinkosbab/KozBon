@@ -383,14 +383,12 @@ public struct BonjourChatView: View {
                         isInputFocused = false
                         viewModel.pendingClear = true
                     } label: {
-                        Label(
-                            String(localized: Strings.Chat.clearHistory),
+                        Label(Strings.Chat.clearHistory,
                             systemImage: Iconography.clearChat
                         )
                     }
                 } label: {
-                    Label(
-                        String(localized: Strings.Chat.clearHistory),
+                    Label(Strings.Chat.clearHistory,
                         systemImage: Iconography.clearChat
                     )
                 }
@@ -400,7 +398,7 @@ public struct BonjourChatView: View {
                 // destructive intent reads at a glance, before
                 // the menu is even opened.
                 .tint(.red)
-                .accessibilityHint(String(localized: Strings.Accessibility.chatClearHistoryHint))
+                .accessibilityHint(Strings.Accessibility.chatClearHistoryHint)
                 .accessibilityIdentifier("chat_clear_button")
             }
         }

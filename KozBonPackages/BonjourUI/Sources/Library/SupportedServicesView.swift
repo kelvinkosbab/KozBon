@@ -194,20 +194,20 @@ public struct SupportedServicesView: View {
         Button {
             Clipboard.copy(serviceType.fullType)
         } label: {
-            Label(String(localized: Strings.Actions.copyFullType), systemImage: Iconography.copy)
+            Label(Strings.Actions.copyFullType, systemImage: Iconography.copy)
         }
 
         Button {
             Clipboard.copy(serviceType.name)
         } label: {
-            Label(String(localized: Strings.Actions.copyName), systemImage: Iconography.copyAlternate)
+            Label(Strings.Actions.copyName, systemImage: Iconography.copyAlternate)
         }
 
         if let detail = serviceType.localizedDetail {
             Button {
                 Clipboard.copy(detail)
             } label: {
-                Label(String(localized: Strings.Actions.copyDetails), systemImage: Iconography.info)
+                Label(Strings.Actions.copyDetails, systemImage: Iconography.info)
             }
         }
 
@@ -226,7 +226,7 @@ public struct SupportedServicesView: View {
         Button {
             openWindow(value: serviceType)
         } label: {
-            Label(String(localized: Strings.Actions.openNewWindow), systemImage: Iconography.openInNewWindow)
+            Label(Strings.Actions.openNewWindow, systemImage: Iconography.openInNewWindow)
         }
         #endif
     }
@@ -236,14 +236,14 @@ public struct SupportedServicesView: View {
             Button {
                 viewModel.isCreateCustomServiceTypePresented = true
             } label: {
-                Label(String(localized: Strings.Buttons.createCustomServiceType), systemImage: Iconography.createServiceType)
+                Label(Strings.Buttons.createCustomServiceType, systemImage: Iconography.createServiceType)
             }
         } label: {
-            Label(String(localized: Strings.Buttons.create), systemImage: Iconography.add)
+            Label(Strings.Buttons.create, systemImage: Iconography.add)
                 .tint(.primary)
         }
-        .accessibilityLabel(String(localized: Strings.Accessibility.create))
-        .accessibilityHint(String(localized: Strings.Accessibility.createServiceTypeHint))
+        .accessibilityLabel(Strings.Accessibility.create)
+        .accessibilityHint(Strings.Accessibility.createServiceTypeHint)
         .accessibilityIdentifier("create_service_type_menu")
     }
 
@@ -258,7 +258,7 @@ public struct SupportedServicesView: View {
                 setFilter(nil)
             } label: {
                 if viewModel.filterCategory == nil {
-                    Label(String(localized: Strings.Filters.allCategories), systemImage: Iconography.selected)
+                    Label(Strings.Filters.allCategories, systemImage: Iconography.selected)
                 } else {
                     Text(Strings.Filters.allCategories)
                 }
@@ -285,10 +285,10 @@ public struct SupportedServicesView: View {
             // matched so the filter affordance is recognizable from
             // either side. The label text differentiates ("Filter by
             // category" here vs the implicit Sort label there).
-            Label(String(localized: Strings.Filters.filterByCategory), systemImage: Iconography.sort)
+            Label(Strings.Filters.filterByCategory, systemImage: Iconography.sort)
                 .tint(.primary)
         }
-        .accessibilityLabel(String(localized: Strings.Filters.filterByCategory))
+        .accessibilityLabel(Strings.Filters.filterByCategory)
         .accessibilityIdentifier("filter_category_menu")
     }
 

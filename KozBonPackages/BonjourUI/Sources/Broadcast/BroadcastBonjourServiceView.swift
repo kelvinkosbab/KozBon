@@ -111,7 +111,7 @@ struct BroadcastBonjourServiceView: View {
                     Button(role: .cancel) {
                         isPresented = false
                     } label: {
-                        Label(String(localized: Strings.Buttons.cancel), systemImage: Iconography.cancel)
+                        Label(Strings.Buttons.cancel, systemImage: Iconography.cancel)
                     }
                     .keyboardShortcut(.cancelAction)
                     .accessibilityIdentifier("broadcast_cancel_button")
@@ -121,7 +121,7 @@ struct BroadcastBonjourServiceView: View {
                     Button {
                         commit()
                     } label: {
-                        Label(String(localized: Strings.Buttons.done), systemImage: Iconography.confirm)
+                        Label(Strings.Buttons.done, systemImage: Iconography.confirm)
                     }
                     .disabled(!viewModel.isFormValid)
                     .keyboardShortcut(.defaultAction)
@@ -223,7 +223,7 @@ struct BroadcastBonjourServiceView: View {
             .onSubmit {
                 commit()
             }
-            .accessibilityLabel(String(localized: Strings.Accessibility.portNumber))
+            .accessibilityLabel(Strings.Accessibility.portNumber)
             .accessibilityHint(Strings.Accessibility.portHint(min: Constants.Network.minimumPort, max: Constants.Network.maximumPort))
             .accessibilityValue(viewModel.port.map { "\($0)" } ?? "")
 
@@ -252,8 +252,8 @@ struct BroadcastBonjourServiceView: View {
         @Bindable var bindable = viewModel
         Section {
             TextField(String(localized: Strings.Placeholders.serviceDomain), text: $bindable.domain)
-                .accessibilityLabel(String(localized: Strings.Accessibility.serviceDomain))
-                .accessibilityHint(String(localized: Strings.Accessibility.serviceDomainHint))
+                .accessibilityLabel(Strings.Accessibility.serviceDomain)
+                .accessibilityHint(Strings.Accessibility.serviceDomainHint)
                 // macOS hover tooltip; other platforms ignore `.help`.
                 .help(Text(Strings.Guidance.serviceDomainHint))
                 .onSubmit {
@@ -307,10 +307,10 @@ struct BroadcastBonjourServiceView: View {
                             }
                         }
                     } label: {
-                        Label(String(localized: Strings.Buttons.remove), systemImage: Iconography.remove)
+                        Label(Strings.Buttons.remove, systemImage: Iconography.remove)
                     }
                     .accessibilityLabel(Strings.Accessibility.remove(dataRecord.key))
-                    .accessibilityHint(String(localized: Strings.Accessibility.deleteTxtRecordHint))
+                    .accessibilityHint(Strings.Accessibility.deleteTxtRecordHint)
                     .tint(.red)
                 }
             }
@@ -318,9 +318,9 @@ struct BroadcastBonjourServiceView: View {
             Button {
                 isCreateTxtRecordViewPresented = true
             } label: {
-                Label(String(localized: Strings.Buttons.addTxtRecord), systemImage: Iconography.add)
+                Label(Strings.Buttons.addTxtRecord, systemImage: Iconography.add)
             }
-            .accessibilityHint(String(localized: Strings.Accessibility.addTxtRecordHint))
+            .accessibilityHint(Strings.Accessibility.addTxtRecordHint)
         } header: {
             Text(Strings.Sections.txtRecords)
                 .accessibilityAddTraits(.isHeader)

@@ -54,7 +54,7 @@ extension BonjourChatView {
             // "Conversation" so they know what they're entering
             // when they swipe into it. Also gives UI tests a
             // stable handle on the messages collection.
-            .accessibilityLabel(String(localized: Strings.Accessibility.chatConversation))
+            .accessibilityLabel(Strings.Accessibility.chatConversation)
             .accessibilityIdentifier("chat_message_list")
             // `scrollDismissesKeyboard` is unavailable on visionOS
             // — the Vision Pro uses a floating virtual keyboard
@@ -380,7 +380,7 @@ extension BonjourChatView {
                     // visible indicator the chat looks frozen.
                     if isStreaming {
                         TypingIndicator()
-                            .accessibilityLabel(String(localized: Strings.Accessibility.chatAssistantThinking))
+                            .accessibilityLabel(Strings.Accessibility.chatAssistantThinking)
                             .transition(.opacity)
                     }
                 }

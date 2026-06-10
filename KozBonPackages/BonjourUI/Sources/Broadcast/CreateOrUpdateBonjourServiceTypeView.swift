@@ -83,8 +83,8 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
             List {
                 Section {
                     TextField(String(localized: Strings.Placeholders.serviceName), text: $bindable.name)
-                        .accessibilityLabel(String(localized: Strings.Accessibility.serviceName))
-                        .accessibilityHint(String(localized: Strings.Accessibility.serviceNameHint))
+                        .accessibilityLabel(Strings.Accessibility.serviceName)
+                        .accessibilityHint(Strings.Accessibility.serviceNameHint)
                 } header: {
                     Text(Strings.Sections.serviceName)
                         .accessibilityAddTraits(.isHeader)
@@ -106,8 +106,8 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
 
                 Section {
                     TextField(String(localized: Strings.Placeholders.typeDefinition), text: $bindable.type)
-                        .accessibilityLabel(String(localized: Strings.Accessibility.bonjourType))
-                        .accessibilityHint(String(localized: Strings.Accessibility.bonjourTypeHint))
+                        .accessibilityLabel(Strings.Accessibility.bonjourType)
+                        .accessibilityHint(Strings.Accessibility.bonjourTypeHint)
                         .disabled(!viewModel.isCreatingBonjourService)
                         .disableAutocorrection(true)
                         #if !os(macOS)
@@ -158,8 +158,8 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                         axis: .vertical
                     )
                     .lineLimit(3...8)
-                    .accessibilityLabel(String(localized: Strings.Accessibility.additionalDetails))
-                    .accessibilityHint(String(localized: Strings.Accessibility.additionalDetailsHint))
+                    .accessibilityLabel(Strings.Accessibility.additionalDetails)
+                    .accessibilityHint(Strings.Accessibility.additionalDetailsHint)
                     .onSubmit {
                         commit()
                     }
@@ -204,7 +204,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                     Button(role: .cancel) {
                         isPresented = false
                     } label: {
-                        Label(String(localized: Strings.Buttons.cancel), systemImage: Iconography.cancel)
+                        Label(Strings.Buttons.cancel, systemImage: Iconography.cancel)
                     }
                     .keyboardShortcut(.cancelAction)
                 }
@@ -213,7 +213,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                     Button {
                         commit()
                     } label: {
-                        Label(String(localized: Strings.Buttons.done), systemImage: Iconography.confirm)
+                        Label(Strings.Buttons.done, systemImage: Iconography.confirm)
                     }
                     .disabled(!viewModel.isFormValid)
                     .accessibilityHint(

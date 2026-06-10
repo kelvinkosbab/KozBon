@@ -145,7 +145,7 @@ extension BonjourChatView {
         // (subtitle, bubbles, input) keeps full Dynamic Type.
         .dynamicTypeSize(...DynamicTypeSize.accessibility2)
         .accessibilityLabel(text)
-        .accessibilityHint(String(localized: Strings.Accessibility.chatSuggestionHint))
+        .accessibilityHint(Strings.Accessibility.chatSuggestionHint)
         .accessibilityIdentifier(identifier)
     }
 }
