@@ -101,6 +101,11 @@ struct WhatsNewView: View {
     /// Update by prepending a new entry on each release. Older
     /// entries are immutable historical record.
     static let releases: [WhatsNewRelease] = [
+        WhatsNewRelease(version: "4.6", highlights: [
+            "Internal polish and Xcode 27 / iOS 26 compatibility — the assistant tab badge and brand icons render correctly on the new SDK.",
+            "Reliability improvements across the chat surface, including a swipe-delete animation fix in the broadcast TXT-record list.",
+            "Brand names (Apple Intelligence, Claude, GitHub) now reliably stay in English across every locale."
+        ]),
         WhatsNewRelease(version: "4.5", highlights: [
             "Chat tab now shows a red badge in compact / portrait windows when an assistant reply lands while you're scrolled away from the bottom. The badge clears the moment you scroll back to the latest message.",
             "Wider Discover and Library sidebars on macOS so hostnames and service-type identifiers fit on one line.",
