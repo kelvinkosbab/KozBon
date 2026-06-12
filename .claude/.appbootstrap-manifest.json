@@ -1,90 +1,604 @@
 {
   "schema_version": 2,
-  "installed_at": "2026-06-08T00:03:22Z",
-  "bundle_commit": "10d869a6fb723ed246a6aa8127bbbcfaef472947",
+  "installed_at": "2026-06-12T03:02:30Z",
+  "bundle_commit": "b64ec75fa58d21f5c27bebb448a67654c97e57eb",
   "selection": {
     "platform": "apple",
     "apple_language": "swift",
+    "apple_platforms_input": "",
+    "apple_platforms_resolved": [],
+    "android_platforms_input": "",
+    "android_platforms_resolved": [],
     "features_input": "recommended,ai,persistence",
-    "features_resolved": ["core", "concurrency", "ui", "testing", "docs", "error-handling", "packaging", "logging", "localization", "linting", "ai", "persistence"],
+    "features_resolved": [
+      "core",
+      "concurrency",
+      "ui",
+      "testing",
+      "docs",
+      "error-handling",
+      "packaging",
+      "logging",
+      "localization",
+      "linting",
+      "ai",
+      "persistence"
+    ],
     "agents_input": "claude",
-    "agents_resolved": ["claude"]
+    "agents_resolved": [
+      "claude"
+    ]
   },
   "files": [
-    {"path": ".claude/skills/coredata-swift6-pro/references/spm-limitations.md", "type": "skill-file", "category": "persistence", "sha256": "b1af92dc33462ac71f40b1786cedc548e1afbf0b74370e9747a1d8ec041f8c3f", "skill": "coredata-swift6-pro"},
-    {"path": ".claude/skills/coredata-swift6-pro/references/modern-patterns.md", "type": "skill-file", "category": "persistence", "sha256": "7694d38294d9d4f23d59bd8c937f4aed5739e21d9d45c0455ad106c5487f219f", "skill": "coredata-swift6-pro"},
-    {"path": ".claude/skills/coredata-swift6-pro/references/main-actor.md", "type": "skill-file", "category": "persistence", "sha256": "83fb36c1e295f2f22024bad7db305c450c1077ef5f2156d1f5ff516bd910babd", "skill": "coredata-swift6-pro"},
-    {"path": ".claude/skills/coredata-swift6-pro/references/background-contexts.md", "type": "skill-file", "category": "persistence", "sha256": "92afa49f2dfe3b5c289c41728d80d75f1b3ae40aba0da653c91f66c3ae9f133d", "skill": "coredata-swift6-pro"},
-    {"path": ".claude/skills/coredata-swift6-pro/SKILL.md", "type": "skill-file", "category": "persistence", "sha256": "ab0426c900e8115eb363a30aa56431d82372fe4d586f6c5fd7a045b946cc24d5", "skill": "coredata-swift6-pro"},
-    {"path": ".claude/skills/swift-concurrency-pro/references/structured.md", "type": "skill-file", "category": "concurrency", "sha256": "1655b610fd1dafb7cf42b61457ff8229117c06879d0e9cc40460f437ba97895b", "skill": "swift-concurrency-pro"},
-    {"path": ".claude/skills/swift-concurrency-pro/references/hotspots.md", "type": "skill-file", "category": "concurrency", "sha256": "199a9fa4beea4a550b3f63e07cddd441d72fd41d1e17e6f3255071a661ce1e6d", "skill": "swift-concurrency-pro"},
-    {"path": ".claude/skills/swift-concurrency-pro/references/interop.md", "type": "skill-file", "category": "concurrency", "sha256": "b86cd716bd22b38d718e86b37b3d7dd1225b5ce93a53f88842ff6993e93ca566", "skill": "swift-concurrency-pro"},
-    {"path": ".claude/skills/swift-concurrency-pro/references/async-streams.md", "type": "skill-file", "category": "concurrency", "sha256": "589ba0dad544b28b158702e239fe6a4077b6d1484c83b8fd51290192bf1ffc9a", "skill": "swift-concurrency-pro"},
-    {"path": ".claude/skills/swift-concurrency-pro/references/testing.md", "type": "skill-file", "category": "concurrency", "sha256": "4a1fc1aefb572bbdbd75a502a74df795af7e2212eec6836a4f353f9b725abffc", "skill": "swift-concurrency-pro"},
-    {"path": ".claude/skills/swift-concurrency-pro/references/actors.md", "type": "skill-file", "category": "concurrency", "sha256": "7a77a0f06d0040a6813ec02cd4b1360df4bcfa501f93710bfb4296de9911d64f", "skill": "swift-concurrency-pro"},
-    {"path": ".claude/skills/swift-concurrency-pro/references/new-features.md", "type": "skill-file", "category": "concurrency", "sha256": "c721a187b57e9d94112972c9685c57f7129187df2d36add4df1a9c9e9aa9e541", "skill": "swift-concurrency-pro"},
-    {"path": ".claude/skills/swift-concurrency-pro/references/bridging.md", "type": "skill-file", "category": "concurrency", "sha256": "c8eb60dcdd90f67cb3b8b1213fc55a56dd5c4a04f465d7aff7fdbd5c451e0498", "skill": "swift-concurrency-pro"},
-    {"path": ".claude/skills/swift-concurrency-pro/references/bug-patterns.md", "type": "skill-file", "category": "concurrency", "sha256": "2233f58e784a9b6cf13620133485fcf7e3150192a40e713369ebbddc820dec85", "skill": "swift-concurrency-pro"},
-    {"path": ".claude/skills/swift-concurrency-pro/references/cancellation.md", "type": "skill-file", "category": "concurrency", "sha256": "c83b4134b44ea5a0ee06e785bd0cb85616234469833f9677297b6fcddea1e1fa", "skill": "swift-concurrency-pro"},
-    {"path": ".claude/skills/swift-concurrency-pro/references/diagnostics.md", "type": "skill-file", "category": "concurrency", "sha256": "cc2debc6f430ed13fc3be3a7ce942e55bb1cf02a9804ebfb272f295b502c9569", "skill": "swift-concurrency-pro"},
-    {"path": ".claude/skills/swift-concurrency-pro/references/unstructured.md", "type": "skill-file", "category": "concurrency", "sha256": "d8063edf18bbe5abc9c628548b0100c4dd8defe3340c017d6fa4936eca17c456", "skill": "swift-concurrency-pro"},
-    {"path": ".claude/skills/swift-concurrency-pro/agents/openai.yaml", "type": "skill-file", "category": "concurrency", "sha256": "c9aeb1a570575ef05eecfabf4657236591081f7c13cb832d6029981f7d72e0dc", "skill": "swift-concurrency-pro"},
-    {"path": ".claude/skills/swift-concurrency-pro/SKILL.md", "type": "skill-file", "category": "concurrency", "sha256": "95d3098b038a38f163259cb7404070f786fed846a5e8b864e6b34fa7600247f9", "skill": "swift-concurrency-pro"},
-    {"path": ".claude/skills/swift-concurrency-pro/assets/swift-concurrency-pro-icon.png", "type": "skill-file", "category": "concurrency", "sha256": "f1552e2844ae6382bd2575f40c48e0f199db2b42574aa1bdcb87ec92ddc901a1", "skill": "swift-concurrency-pro"},
-    {"path": ".claude/skills/swift-concurrency-pro/assets/swift-concurrency-pro-icon.svg", "type": "skill-file", "category": "concurrency", "sha256": "da92910ec6329966729d6e9bcd27bb2be8c079d95b779c1081641dd9b64a344a", "skill": "swift-concurrency-pro"},
-    {"path": ".claude/skills/swift-docc-pro/references/code-examples.md", "type": "skill-file", "category": "docs", "sha256": "ed478fe0ccc397a357eedc334b30f66f150dde64d2529ec889a918068c99c8f4", "skill": "swift-docc-pro"},
-    {"path": ".claude/skills/swift-docc-pro/references/comment-syntax.md", "type": "skill-file", "category": "docs", "sha256": "5b87b80ee4fd7953cccead7beac90f564958549626c63803b72b0fadcd9c039b", "skill": "swift-docc-pro"},
-    {"path": ".claude/skills/swift-docc-pro/references/topics.md", "type": "skill-file", "category": "docs", "sha256": "5976ab94114372852d69f97c78d3112ff944c63f242e387a1252da9497b78ef8", "skill": "swift-docc-pro"},
-    {"path": ".claude/skills/swift-docc-pro/references/symbol-linking.md", "type": "skill-file", "category": "docs", "sha256": "9cd2c2d7204098599da52ed936619e18bae758f51ca89496a8601ee9289cc652", "skill": "swift-docc-pro"},
-    {"path": ".claude/skills/swift-docc-pro/SKILL.md", "type": "skill-file", "category": "docs", "sha256": "eb46661dbdd2a1d58a9104c587ebba03ad488b735065e4cc40374952a8c53ff1", "skill": "swift-docc-pro"},
-    {"path": ".claude/skills/swift-error-handling-pro/references/result-vs-throws.md", "type": "skill-file", "category": "error-handling", "sha256": "3631772bbb6a7d2a2fdda520fc8098ad9e2b7fcd9dc6113d46d42b72cbb1bca3", "skill": "swift-error-handling-pro"},
-    {"path": ".claude/skills/swift-error-handling-pro/references/typed-throws.md", "type": "skill-file", "category": "error-handling", "sha256": "35d07f803e4610b96c89439db67ee72d024317edb18348034b75d127fcaa7467", "skill": "swift-error-handling-pro"},
-    {"path": ".claude/skills/swift-error-handling-pro/references/async-errors.md", "type": "skill-file", "category": "error-handling", "sha256": "88b6f1c5f1cf53baabbea48d9fbae9475f9e59b05f45c92d046599a8a5b59547", "skill": "swift-error-handling-pro"},
-    {"path": ".claude/skills/swift-error-handling-pro/references/error-types.md", "type": "skill-file", "category": "error-handling", "sha256": "ec9d71dbad1f13c7ad0c48a2d798e85be19b4a2f28688fee57a40e78b7c79339", "skill": "swift-error-handling-pro"},
-    {"path": ".claude/skills/swift-error-handling-pro/SKILL.md", "type": "skill-file", "category": "error-handling", "sha256": "3bef2111db816340fbd61235775362d387312036994b57e3f9978f2685944acb", "skill": "swift-error-handling-pro"},
-    {"path": ".claude/skills/swift-logging-pro/references/os-logger.md", "type": "skill-file", "category": "logging", "sha256": "0b54f7da3ea44298517cf29520631ac7e3ac59c73fb830de611a6c4cef9decf1", "skill": "swift-logging-pro"},
-    {"path": ".claude/skills/swift-logging-pro/references/log-levels.md", "type": "skill-file", "category": "logging", "sha256": "05f00db647fa9adf1861206ce48a29484224413369f63c54ac0568647d3c56b5", "skill": "swift-logging-pro"},
-    {"path": ".claude/skills/swift-logging-pro/references/privacy.md", "type": "skill-file", "category": "logging", "sha256": "7e92aaabd3fbac40721de1a08a7cbc03e150ebc30aa4c86d5de251432d8bb690", "skill": "swift-logging-pro"},
-    {"path": ".claude/skills/swift-logging-pro/SKILL.md", "type": "skill-file", "category": "logging", "sha256": "efa946c38d1fd8acbfb259078b0737404566796af53a7783a9e002fc8513a04f", "skill": "swift-logging-pro"},
-    {"path": ".claude/skills/swift-package-pro/references/public-api.md", "type": "skill-file", "category": "packaging", "sha256": "784f9a73ae9030900c0407bd729984d44f51a0120bf32ee1c9ab832025b12972", "skill": "swift-package-pro"},
-    {"path": ".claude/skills/swift-package-pro/references/versioning.md", "type": "skill-file", "category": "packaging", "sha256": "51fc363f28fcfba42ae00176c0896dbe583979a78048b7c1f14ac1e848d43668", "skill": "swift-package-pro"},
-    {"path": ".claude/skills/swift-package-pro/references/resources.md", "type": "skill-file", "category": "packaging", "sha256": "2db8c98e3264e1954b1b6736d1f07a3f268fc03e338e03c9b1d6d0857f4677a0", "skill": "swift-package-pro"},
-    {"path": ".claude/skills/swift-package-pro/references/module-organization.md", "type": "skill-file", "category": "packaging", "sha256": "b08cec56d8bd5e95bd96f62584a5c97f9f6d2b450571677805062384caa6e096", "skill": "swift-package-pro"},
-    {"path": ".claude/skills/swift-package-pro/SKILL.md", "type": "skill-file", "category": "packaging", "sha256": "b5311ea0a42ea10e324b684ff88d5ac446c590f95a9941baf6f01d789c778f89", "skill": "swift-package-pro"},
-    {"path": ".claude/skills/swift-testing-pro/references/async-tests.md", "type": "skill-file", "category": "testing", "sha256": "52892a8f7014c11c132013f87f271c1becd76776fffc087e8086b8cb2d888201", "skill": "swift-testing-pro"},
-    {"path": ".claude/skills/swift-testing-pro/references/new-features.md", "type": "skill-file", "category": "testing", "sha256": "988df5cb556893c789f9aecdc4c8773fdbbda787ab1dad766bf1182a7b9a4819", "skill": "swift-testing-pro"},
-    {"path": ".claude/skills/swift-testing-pro/references/migrating-from-xctest.md", "type": "skill-file", "category": "testing", "sha256": "35b64812402ad1d15b496993e1721daaf4e80672bf9cce47078f772fd271f93f", "skill": "swift-testing-pro"},
-    {"path": ".claude/skills/swift-testing-pro/references/writing-better-tests.md", "type": "skill-file", "category": "testing", "sha256": "25da3455f6cec4f10d3dff0bf3e8e1372568c75691916541b4d517f451cb8bf1", "skill": "swift-testing-pro"},
-    {"path": ".claude/skills/swift-testing-pro/references/core-rules.md", "type": "skill-file", "category": "testing", "sha256": "2271efdca6c2b7b3365501172147884b6e786bcee7bef680fb4f4718929d6180", "skill": "swift-testing-pro"},
-    {"path": ".claude/skills/swift-testing-pro/agents/openai.yaml", "type": "skill-file", "category": "testing", "sha256": "f7a35b0befd4eb136cf87047543379a63efebb4f0f7eb4490489325d09383c4f", "skill": "swift-testing-pro"},
-    {"path": ".claude/skills/swift-testing-pro/SKILL.md", "type": "skill-file", "category": "testing", "sha256": "ad4f1bff44b5b7fce20b282481e651876efce024d13b16cb969bc433036ac059", "skill": "swift-testing-pro"},
-    {"path": ".claude/skills/swift-testing-pro/assets/swift-testing-pro-icon.png", "type": "skill-file", "category": "testing", "sha256": "13cbe2849191cc3fda400fc065d5fe6afa5b78f09e347d783bfa2b6d852a2b66", "skill": "swift-testing-pro"},
-    {"path": ".claude/skills/swift-testing-pro/assets/swift-testing-pro-icon.svg", "type": "skill-file", "category": "testing", "sha256": "92d3d0b2855da2404beaacd3ea574b79a26535c9d99a0739edfd5e35d764a9e0", "skill": "swift-testing-pro"},
-    {"path": ".claude/skills/swiftui-pro/references/swift.md", "type": "skill-file", "category": "ui", "sha256": "8c31c5f5f99b3fa9586f0260cd1a4b1688dc7bda5e8de2891eb3f9d6a791125a", "skill": "swiftui-pro"},
-    {"path": ".claude/skills/swiftui-pro/references/hygiene.md", "type": "skill-file", "category": "ui", "sha256": "91d96f45f3ffa02f5553c288415f3c3d5f317cab7d8d9c6c60240ea6c44a2b01", "skill": "swiftui-pro"},
-    {"path": ".claude/skills/swiftui-pro/references/api.md", "type": "skill-file", "category": "ui", "sha256": "12fa73d65a19c9d08224f925801db8eec914b1cedf5b2f86a38cdda04a66377a", "skill": "swiftui-pro"},
-    {"path": ".claude/skills/swiftui-pro/references/views.md", "type": "skill-file", "category": "ui", "sha256": "87cdd3d96e8e562aefe35070a59664e3536cfcc014bd8437cff603477f7e5a1d", "skill": "swiftui-pro"},
-    {"path": ".claude/skills/swiftui-pro/references/data.md", "type": "skill-file", "category": "ui", "sha256": "5cc50484c525f748839e12174c065f7ea5fdd4380ce04b6885a906ecd6e6a318", "skill": "swiftui-pro"},
-    {"path": ".claude/skills/swiftui-pro/references/accessibility.md", "type": "skill-file", "category": "ui", "sha256": "0752544f0b6042ab87321e774203bb3bfb8c1eb3da0207c46ce4a9162d4456c0", "skill": "swiftui-pro"},
-    {"path": ".claude/skills/swiftui-pro/references/navigation.md", "type": "skill-file", "category": "ui", "sha256": "a3adb302455993aff85bbb6b5845ed2fcffa137c8b2ded99c937f3e4b7fcd77b", "skill": "swiftui-pro"},
-    {"path": ".claude/skills/swiftui-pro/references/performance.md", "type": "skill-file", "category": "ui", "sha256": "1b503e3807e216d6b34b45f18bfba89214cea2fa1b88dd7ae8f482ebf0f03616", "skill": "swiftui-pro"},
-    {"path": ".claude/skills/swiftui-pro/references/design.md", "type": "skill-file", "category": "ui", "sha256": "a730e05be38f166f38784cfbceed8b6c28adf174181d8fdd02980f7d8c621391", "skill": "swiftui-pro"},
-    {"path": ".claude/skills/swiftui-pro/agents/openai.yaml", "type": "skill-file", "category": "ui", "sha256": "429c39b71692d4dc86e2b616f28b7e7f56207361c5b5a0b06df4746af96d5fa3", "skill": "swiftui-pro"},
-    {"path": ".claude/skills/swiftui-pro/SKILL.md", "type": "skill-file", "category": "ui", "sha256": "016a4fb9cad11596fa2038dd3eb4c8ff10b1a054025fe8fea104ad3cc5d9ff89", "skill": "swiftui-pro"},
-    {"path": ".claude/skills/swiftui-pro/assets/swiftui-pro-icon.svg", "type": "skill-file", "category": "ui", "sha256": "a15c0a3030f08ffcc442aed9b7f2f19840877e43f980ad4dfdef515e9aeb44b3", "skill": "swiftui-pro"},
-    {"path": ".claude/skills/swiftui-pro/assets/swiftui-pro-icon.png", "type": "skill-file", "category": "ui", "sha256": "51a28a5834e6d251def3c562712db1e2124e6d67b62be89fe4c1ca628e37a70a", "skill": "swiftui-pro"},
-    {"path": ".claude/rules/apple-accessibility-best-practices.md", "type": "rule", "category": "ui", "sha256": "60a54c413a7fc3a2c9e99f63ffef7fd3570ce3e6f35cfa846dabb22db917f3d1"},
-    {"path": ".claude/rules/apple-documentation-strategy.md", "type": "rule", "category": "docs", "sha256": "9cb5038b2cd8d17588675efae38037096fc51f1a4ef5d94891e38f369a73fb83"},
-    {"path": ".claude/rules/apple-foundation-models.md", "type": "rule", "category": "ai", "sha256": "da448d47f32210c79d825b9cf25c8cabe6efe085b576e34d69663e8458112a75"},
-    {"path": ".claude/rules/apple-linting-strategy.md", "type": "rule", "category": "linting", "sha256": "fb5742772017675d802aefd1b730652559114515e995002d4c5476a59e5e5a63"},
-    {"path": ".claude/rules/apple-localization-best-practices.md", "type": "rule", "category": "localization", "sha256": "9068545762e81d859fb5a38bb5bef2f4021c24216b71a9098eecde9dbeffd3a0"},
-    {"path": ".claude/rules/apple-logging-strategy.md", "type": "rule", "category": "logging", "sha256": "129a267303c147f60937a797fc226c064d42176a555a75398cd21efc22d87d96"},
-    {"path": ".claude/rules/apple-spm-package-conventions.md", "type": "rule", "category": "packaging", "sha256": "c1ab45e31e622b669b01a4b645fe7471bd039d55670c019c150ee98d924a5390"},
-    {"path": ".claude/rules/apple-swift6-strict-concurrency.md", "type": "rule", "category": "concurrency", "sha256": "87554c94e65763927755c6914ceab64ae382b0a3a4e738a749bc2079b6cb765a"},
-    {"path": ".claude/rules/apple-swiftui-mvvm.md", "type": "rule", "category": "ui", "sha256": "fe8d9c244f7a3fe7a8634b97a81d11df48b90e0d24cbd19ac8c2dc1747b3c41c"},
-    {"path": ".claude/rules/apple-testing-strategy.md", "type": "rule", "category": "testing", "sha256": "eb4c49c9f6e07c4f76439b189314e7bbd5dff07e659995ea0676a23c39273ab5"},
-    {"path": ".claude/rules/project-documentation.md", "type": "rule", "category": "core", "sha256": "39112d980ac910ef15d721d69555af0e2c1f176579a5b8b9bb6127b487f70394"},
-    {"path": ".gitignore", "type": "gitignore-block", "category": "-", "sha256": null}
+    {
+      "path": ".claude/skills/coredata-swift6-pro/references/spm-limitations.md",
+      "type": "skill-file",
+      "category": "persistence",
+      "sha256": "b1af92dc33462ac71f40b1786cedc548e1afbf0b74370e9747a1d8ec041f8c3f",
+      "skill": "coredata-swift6-pro"
+    },
+    {
+      "path": ".claude/skills/coredata-swift6-pro/references/modern-patterns.md",
+      "type": "skill-file",
+      "category": "persistence",
+      "sha256": "7694d38294d9d4f23d59bd8c937f4aed5739e21d9d45c0455ad106c5487f219f",
+      "skill": "coredata-swift6-pro"
+    },
+    {
+      "path": ".claude/skills/coredata-swift6-pro/references/main-actor.md",
+      "type": "skill-file",
+      "category": "persistence",
+      "sha256": "83fb36c1e295f2f22024bad7db305c450c1077ef5f2156d1f5ff516bd910babd",
+      "skill": "coredata-swift6-pro"
+    },
+    {
+      "path": ".claude/skills/coredata-swift6-pro/references/background-contexts.md",
+      "type": "skill-file",
+      "category": "persistence",
+      "sha256": "92afa49f2dfe3b5c289c41728d80d75f1b3ae40aba0da653c91f66c3ae9f133d",
+      "skill": "coredata-swift6-pro"
+    },
+    {
+      "path": ".claude/skills/coredata-swift6-pro/SKILL.md",
+      "type": "skill-file",
+      "category": "persistence",
+      "sha256": "ab0426c900e8115eb363a30aa56431d82372fe4d586f6c5fd7a045b946cc24d5",
+      "skill": "coredata-swift6-pro"
+    },
+    {
+      "path": ".claude/skills/swift-concurrency-pro/references/structured.md",
+      "type": "skill-file",
+      "category": "concurrency",
+      "sha256": "1655b610fd1dafb7cf42b61457ff8229117c06879d0e9cc40460f437ba97895b",
+      "skill": "swift-concurrency-pro"
+    },
+    {
+      "path": ".claude/skills/swift-concurrency-pro/references/hotspots.md",
+      "type": "skill-file",
+      "category": "concurrency",
+      "sha256": "199a9fa4beea4a550b3f63e07cddd441d72fd41d1e17e6f3255071a661ce1e6d",
+      "skill": "swift-concurrency-pro"
+    },
+    {
+      "path": ".claude/skills/swift-concurrency-pro/references/interop.md",
+      "type": "skill-file",
+      "category": "concurrency",
+      "sha256": "b86cd716bd22b38d718e86b37b3d7dd1225b5ce93a53f88842ff6993e93ca566",
+      "skill": "swift-concurrency-pro"
+    },
+    {
+      "path": ".claude/skills/swift-concurrency-pro/references/async-streams.md",
+      "type": "skill-file",
+      "category": "concurrency",
+      "sha256": "589ba0dad544b28b158702e239fe6a4077b6d1484c83b8fd51290192bf1ffc9a",
+      "skill": "swift-concurrency-pro"
+    },
+    {
+      "path": ".claude/skills/swift-concurrency-pro/references/testing.md",
+      "type": "skill-file",
+      "category": "concurrency",
+      "sha256": "4a1fc1aefb572bbdbd75a502a74df795af7e2212eec6836a4f353f9b725abffc",
+      "skill": "swift-concurrency-pro"
+    },
+    {
+      "path": ".claude/skills/swift-concurrency-pro/references/actors.md",
+      "type": "skill-file",
+      "category": "concurrency",
+      "sha256": "7a77a0f06d0040a6813ec02cd4b1360df4bcfa501f93710bfb4296de9911d64f",
+      "skill": "swift-concurrency-pro"
+    },
+    {
+      "path": ".claude/skills/swift-concurrency-pro/references/new-features.md",
+      "type": "skill-file",
+      "category": "concurrency",
+      "sha256": "c721a187b57e9d94112972c9685c57f7129187df2d36add4df1a9c9e9aa9e541",
+      "skill": "swift-concurrency-pro"
+    },
+    {
+      "path": ".claude/skills/swift-concurrency-pro/references/bridging.md",
+      "type": "skill-file",
+      "category": "concurrency",
+      "sha256": "c8eb60dcdd90f67cb3b8b1213fc55a56dd5c4a04f465d7aff7fdbd5c451e0498",
+      "skill": "swift-concurrency-pro"
+    },
+    {
+      "path": ".claude/skills/swift-concurrency-pro/references/bug-patterns.md",
+      "type": "skill-file",
+      "category": "concurrency",
+      "sha256": "2233f58e784a9b6cf13620133485fcf7e3150192a40e713369ebbddc820dec85",
+      "skill": "swift-concurrency-pro"
+    },
+    {
+      "path": ".claude/skills/swift-concurrency-pro/references/cancellation.md",
+      "type": "skill-file",
+      "category": "concurrency",
+      "sha256": "c83b4134b44ea5a0ee06e785bd0cb85616234469833f9677297b6fcddea1e1fa",
+      "skill": "swift-concurrency-pro"
+    },
+    {
+      "path": ".claude/skills/swift-concurrency-pro/references/diagnostics.md",
+      "type": "skill-file",
+      "category": "concurrency",
+      "sha256": "cc2debc6f430ed13fc3be3a7ce942e55bb1cf02a9804ebfb272f295b502c9569",
+      "skill": "swift-concurrency-pro"
+    },
+    {
+      "path": ".claude/skills/swift-concurrency-pro/references/unstructured.md",
+      "type": "skill-file",
+      "category": "concurrency",
+      "sha256": "d8063edf18bbe5abc9c628548b0100c4dd8defe3340c017d6fa4936eca17c456",
+      "skill": "swift-concurrency-pro"
+    },
+    {
+      "path": ".claude/skills/swift-concurrency-pro/agents/openai.yaml",
+      "type": "skill-file",
+      "category": "concurrency",
+      "sha256": "c9aeb1a570575ef05eecfabf4657236591081f7c13cb832d6029981f7d72e0dc",
+      "skill": "swift-concurrency-pro"
+    },
+    {
+      "path": ".claude/skills/swift-concurrency-pro/SKILL.md",
+      "type": "skill-file",
+      "category": "concurrency",
+      "sha256": "95d3098b038a38f163259cb7404070f786fed846a5e8b864e6b34fa7600247f9",
+      "skill": "swift-concurrency-pro"
+    },
+    {
+      "path": ".claude/skills/swift-concurrency-pro/assets/swift-concurrency-pro-icon.png",
+      "type": "skill-file",
+      "category": "concurrency",
+      "sha256": "f1552e2844ae6382bd2575f40c48e0f199db2b42574aa1bdcb87ec92ddc901a1",
+      "skill": "swift-concurrency-pro"
+    },
+    {
+      "path": ".claude/skills/swift-concurrency-pro/assets/swift-concurrency-pro-icon.svg",
+      "type": "skill-file",
+      "category": "concurrency",
+      "sha256": "da92910ec6329966729d6e9bcd27bb2be8c079d95b779c1081641dd9b64a344a",
+      "skill": "swift-concurrency-pro"
+    },
+    {
+      "path": ".claude/skills/swift-docc-pro/references/code-examples.md",
+      "type": "skill-file",
+      "category": "docs",
+      "sha256": "ed478fe0ccc397a357eedc334b30f66f150dde64d2529ec889a918068c99c8f4",
+      "skill": "swift-docc-pro"
+    },
+    {
+      "path": ".claude/skills/swift-docc-pro/references/comment-syntax.md",
+      "type": "skill-file",
+      "category": "docs",
+      "sha256": "5b87b80ee4fd7953cccead7beac90f564958549626c63803b72b0fadcd9c039b",
+      "skill": "swift-docc-pro"
+    },
+    {
+      "path": ".claude/skills/swift-docc-pro/references/topics.md",
+      "type": "skill-file",
+      "category": "docs",
+      "sha256": "5976ab94114372852d69f97c78d3112ff944c63f242e387a1252da9497b78ef8",
+      "skill": "swift-docc-pro"
+    },
+    {
+      "path": ".claude/skills/swift-docc-pro/references/symbol-linking.md",
+      "type": "skill-file",
+      "category": "docs",
+      "sha256": "9cd2c2d7204098599da52ed936619e18bae758f51ca89496a8601ee9289cc652",
+      "skill": "swift-docc-pro"
+    },
+    {
+      "path": ".claude/skills/swift-docc-pro/SKILL.md",
+      "type": "skill-file",
+      "category": "docs",
+      "sha256": "eb46661dbdd2a1d58a9104c587ebba03ad488b735065e4cc40374952a8c53ff1",
+      "skill": "swift-docc-pro"
+    },
+    {
+      "path": ".claude/skills/swift-error-handling-pro/references/result-vs-throws.md",
+      "type": "skill-file",
+      "category": "error-handling",
+      "sha256": "3631772bbb6a7d2a2fdda520fc8098ad9e2b7fcd9dc6113d46d42b72cbb1bca3",
+      "skill": "swift-error-handling-pro"
+    },
+    {
+      "path": ".claude/skills/swift-error-handling-pro/references/typed-throws.md",
+      "type": "skill-file",
+      "category": "error-handling",
+      "sha256": "35d07f803e4610b96c89439db67ee72d024317edb18348034b75d127fcaa7467",
+      "skill": "swift-error-handling-pro"
+    },
+    {
+      "path": ".claude/skills/swift-error-handling-pro/references/async-errors.md",
+      "type": "skill-file",
+      "category": "error-handling",
+      "sha256": "88b6f1c5f1cf53baabbea48d9fbae9475f9e59b05f45c92d046599a8a5b59547",
+      "skill": "swift-error-handling-pro"
+    },
+    {
+      "path": ".claude/skills/swift-error-handling-pro/references/error-types.md",
+      "type": "skill-file",
+      "category": "error-handling",
+      "sha256": "ec9d71dbad1f13c7ad0c48a2d798e85be19b4a2f28688fee57a40e78b7c79339",
+      "skill": "swift-error-handling-pro"
+    },
+    {
+      "path": ".claude/skills/swift-error-handling-pro/SKILL.md",
+      "type": "skill-file",
+      "category": "error-handling",
+      "sha256": "3bef2111db816340fbd61235775362d387312036994b57e3f9978f2685944acb",
+      "skill": "swift-error-handling-pro"
+    },
+    {
+      "path": ".claude/skills/swift-logging-pro/references/os-logger.md",
+      "type": "skill-file",
+      "category": "logging",
+      "sha256": "0b54f7da3ea44298517cf29520631ac7e3ac59c73fb830de611a6c4cef9decf1",
+      "skill": "swift-logging-pro"
+    },
+    {
+      "path": ".claude/skills/swift-logging-pro/references/log-levels.md",
+      "type": "skill-file",
+      "category": "logging",
+      "sha256": "05f00db647fa9adf1861206ce48a29484224413369f63c54ac0568647d3c56b5",
+      "skill": "swift-logging-pro"
+    },
+    {
+      "path": ".claude/skills/swift-logging-pro/references/privacy.md",
+      "type": "skill-file",
+      "category": "logging",
+      "sha256": "7e92aaabd3fbac40721de1a08a7cbc03e150ebc30aa4c86d5de251432d8bb690",
+      "skill": "swift-logging-pro"
+    },
+    {
+      "path": ".claude/skills/swift-logging-pro/SKILL.md",
+      "type": "skill-file",
+      "category": "logging",
+      "sha256": "efa946c38d1fd8acbfb259078b0737404566796af53a7783a9e002fc8513a04f",
+      "skill": "swift-logging-pro"
+    },
+    {
+      "path": ".claude/skills/swift-package-pro/references/public-api.md",
+      "type": "skill-file",
+      "category": "packaging",
+      "sha256": "784f9a73ae9030900c0407bd729984d44f51a0120bf32ee1c9ab832025b12972",
+      "skill": "swift-package-pro"
+    },
+    {
+      "path": ".claude/skills/swift-package-pro/references/versioning.md",
+      "type": "skill-file",
+      "category": "packaging",
+      "sha256": "51fc363f28fcfba42ae00176c0896dbe583979a78048b7c1f14ac1e848d43668",
+      "skill": "swift-package-pro"
+    },
+    {
+      "path": ".claude/skills/swift-package-pro/references/resources.md",
+      "type": "skill-file",
+      "category": "packaging",
+      "sha256": "2db8c98e3264e1954b1b6736d1f07a3f268fc03e338e03c9b1d6d0857f4677a0",
+      "skill": "swift-package-pro"
+    },
+    {
+      "path": ".claude/skills/swift-package-pro/references/module-organization.md",
+      "type": "skill-file",
+      "category": "packaging",
+      "sha256": "b08cec56d8bd5e95bd96f62584a5c97f9f6d2b450571677805062384caa6e096",
+      "skill": "swift-package-pro"
+    },
+    {
+      "path": ".claude/skills/swift-package-pro/SKILL.md",
+      "type": "skill-file",
+      "category": "packaging",
+      "sha256": "b5311ea0a42ea10e324b684ff88d5ac446c590f95a9941baf6f01d789c778f89",
+      "skill": "swift-package-pro"
+    },
+    {
+      "path": ".claude/skills/swift-testing-pro/references/async-tests.md",
+      "type": "skill-file",
+      "category": "testing",
+      "sha256": "52892a8f7014c11c132013f87f271c1becd76776fffc087e8086b8cb2d888201",
+      "skill": "swift-testing-pro"
+    },
+    {
+      "path": ".claude/skills/swift-testing-pro/references/new-features.md",
+      "type": "skill-file",
+      "category": "testing",
+      "sha256": "988df5cb556893c789f9aecdc4c8773fdbbda787ab1dad766bf1182a7b9a4819",
+      "skill": "swift-testing-pro"
+    },
+    {
+      "path": ".claude/skills/swift-testing-pro/references/migrating-from-xctest.md",
+      "type": "skill-file",
+      "category": "testing",
+      "sha256": "35b64812402ad1d15b496993e1721daaf4e80672bf9cce47078f772fd271f93f",
+      "skill": "swift-testing-pro"
+    },
+    {
+      "path": ".claude/skills/swift-testing-pro/references/writing-better-tests.md",
+      "type": "skill-file",
+      "category": "testing",
+      "sha256": "25da3455f6cec4f10d3dff0bf3e8e1372568c75691916541b4d517f451cb8bf1",
+      "skill": "swift-testing-pro"
+    },
+    {
+      "path": ".claude/skills/swift-testing-pro/references/core-rules.md",
+      "type": "skill-file",
+      "category": "testing",
+      "sha256": "2271efdca6c2b7b3365501172147884b6e786bcee7bef680fb4f4718929d6180",
+      "skill": "swift-testing-pro"
+    },
+    {
+      "path": ".claude/skills/swift-testing-pro/agents/openai.yaml",
+      "type": "skill-file",
+      "category": "testing",
+      "sha256": "f7a35b0befd4eb136cf87047543379a63efebb4f0f7eb4490489325d09383c4f",
+      "skill": "swift-testing-pro"
+    },
+    {
+      "path": ".claude/skills/swift-testing-pro/SKILL.md",
+      "type": "skill-file",
+      "category": "testing",
+      "sha256": "ad4f1bff44b5b7fce20b282481e651876efce024d13b16cb969bc433036ac059",
+      "skill": "swift-testing-pro"
+    },
+    {
+      "path": ".claude/skills/swift-testing-pro/assets/swift-testing-pro-icon.png",
+      "type": "skill-file",
+      "category": "testing",
+      "sha256": "13cbe2849191cc3fda400fc065d5fe6afa5b78f09e347d783bfa2b6d852a2b66",
+      "skill": "swift-testing-pro"
+    },
+    {
+      "path": ".claude/skills/swift-testing-pro/assets/swift-testing-pro-icon.svg",
+      "type": "skill-file",
+      "category": "testing",
+      "sha256": "92d3d0b2855da2404beaacd3ea574b79a26535c9d99a0739edfd5e35d764a9e0",
+      "skill": "swift-testing-pro"
+    },
+    {
+      "path": ".claude/skills/swiftui-pro/references/swift.md",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "8c31c5f5f99b3fa9586f0260cd1a4b1688dc7bda5e8de2891eb3f9d6a791125a",
+      "skill": "swiftui-pro"
+    },
+    {
+      "path": ".claude/skills/swiftui-pro/references/hygiene.md",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "91d96f45f3ffa02f5553c288415f3c3d5f317cab7d8d9c6c60240ea6c44a2b01",
+      "skill": "swiftui-pro"
+    },
+    {
+      "path": ".claude/skills/swiftui-pro/references/api.md",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "12fa73d65a19c9d08224f925801db8eec914b1cedf5b2f86a38cdda04a66377a",
+      "skill": "swiftui-pro"
+    },
+    {
+      "path": ".claude/skills/swiftui-pro/references/views.md",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "87cdd3d96e8e562aefe35070a59664e3536cfcc014bd8437cff603477f7e5a1d",
+      "skill": "swiftui-pro"
+    },
+    {
+      "path": ".claude/skills/swiftui-pro/references/data.md",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "5cc50484c525f748839e12174c065f7ea5fdd4380ce04b6885a906ecd6e6a318",
+      "skill": "swiftui-pro"
+    },
+    {
+      "path": ".claude/skills/swiftui-pro/references/accessibility.md",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "0752544f0b6042ab87321e774203bb3bfb8c1eb3da0207c46ce4a9162d4456c0",
+      "skill": "swiftui-pro"
+    },
+    {
+      "path": ".claude/skills/swiftui-pro/references/navigation.md",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "a3adb302455993aff85bbb6b5845ed2fcffa137c8b2ded99c937f3e4b7fcd77b",
+      "skill": "swiftui-pro"
+    },
+    {
+      "path": ".claude/skills/swiftui-pro/references/performance.md",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "1b503e3807e216d6b34b45f18bfba89214cea2fa1b88dd7ae8f482ebf0f03616",
+      "skill": "swiftui-pro"
+    },
+    {
+      "path": ".claude/skills/swiftui-pro/references/design.md",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "a730e05be38f166f38784cfbceed8b6c28adf174181d8fdd02980f7d8c621391",
+      "skill": "swiftui-pro"
+    },
+    {
+      "path": ".claude/skills/swiftui-pro/agents/openai.yaml",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "429c39b71692d4dc86e2b616f28b7e7f56207361c5b5a0b06df4746af96d5fa3",
+      "skill": "swiftui-pro"
+    },
+    {
+      "path": ".claude/skills/swiftui-pro/SKILL.md",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "016a4fb9cad11596fa2038dd3eb4c8ff10b1a054025fe8fea104ad3cc5d9ff89",
+      "skill": "swiftui-pro"
+    },
+    {
+      "path": ".claude/skills/swiftui-pro/assets/swiftui-pro-icon.svg",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "a15c0a3030f08ffcc442aed9b7f2f19840877e43f980ad4dfdef515e9aeb44b3",
+      "skill": "swiftui-pro"
+    },
+    {
+      "path": ".claude/skills/swiftui-pro/assets/swiftui-pro-icon.png",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "51a28a5834e6d251def3c562712db1e2124e6d67b62be89fe4c1ca628e37a70a",
+      "skill": "swiftui-pro"
+    },
+    {
+      "path": ".claude/rules/apple-accessibility-best-practices.md",
+      "type": "rule",
+      "category": "ui",
+      "sha256": "60a54c413a7fc3a2c9e99f63ffef7fd3570ce3e6f35cfa846dabb22db917f3d1"
+    },
+    {
+      "path": ".claude/rules/apple-documentation-strategy.md",
+      "type": "rule",
+      "category": "docs",
+      "sha256": "9cb5038b2cd8d17588675efae38037096fc51f1a4ef5d94891e38f369a73fb83"
+    },
+    {
+      "path": ".claude/rules/apple-foundation-models.md",
+      "type": "rule",
+      "category": "ai",
+      "sha256": "f6a82699a0e830775e5f83a9959aa6fa2d58fe6bf8040136871753a0956fd3d9"
+    },
+    {
+      "path": ".claude/rules/apple-linting-strategy.md",
+      "type": "rule",
+      "category": "linting",
+      "sha256": "fb5742772017675d802aefd1b730652559114515e995002d4c5476a59e5e5a63"
+    },
+    {
+      "path": ".claude/rules/apple-localization-best-practices.md",
+      "type": "rule",
+      "category": "localization",
+      "sha256": "cbbf745b1fdc95a15c9a000e29777d2edc92809fba2784108884670bc51f404d"
+    },
+    {
+      "path": ".claude/rules/apple-logging-strategy.md",
+      "type": "rule",
+      "category": "logging",
+      "sha256": "129a267303c147f60937a797fc226c064d42176a555a75398cd21efc22d87d96"
+    },
+    {
+      "path": ".claude/rules/apple-spm-package-conventions.md",
+      "type": "rule",
+      "category": "packaging",
+      "sha256": "a6a9fb4dd2a9d191ff659222f50f5d3ac75ae8c79c487c12f19aadb4c9b82de8"
+    },
+    {
+      "path": ".claude/rules/apple-swift6-strict-concurrency.md",
+      "type": "rule",
+      "category": "concurrency",
+      "sha256": "7c3245104e063c818c230b40de74696d91790b9ca07411bf1419aa011f27dc63"
+    },
+    {
+      "path": ".claude/rules/apple-swiftui-mvvm.md",
+      "type": "rule",
+      "category": "ui",
+      "sha256": "fe8d9c244f7a3fe7a8634b97a81d11df48b90e0d24cbd19ac8c2dc1747b3c41c"
+    },
+    {
+      "path": ".claude/rules/apple-testing-strategy.md",
+      "type": "rule",
+      "category": "testing",
+      "sha256": "310c418c774d7f3a4b050b67861f24c5282419c29e2857d944f28b4fe8c97aa8"
+    },
+    {
+      "path": ".claude/rules/project-documentation.md",
+      "type": "rule",
+      "category": "core",
+      "sha256": "39112d980ac910ef15d721d69555af0e2c1f176579a5b8b9bb6127b487f70394"
+    },
+    {
+      "path": ".gitignore",
+      "type": "gitignore-block",
+      "category": "-",
+      "sha256": null
+    },
+    {
+      "path": ".claude/skills/swiftdata-pro/SKILL.md",
+      "type": "skill-file",
+      "category": "persistence",
+      "sha256": "79164f3bc4942b8ca384057cbe951ca7715aecee4970bea38781d91ddb1c442e",
+      "skill": "swiftdata-pro"
+    },
+    {
+      "path": ".claude/skills/swiftdata-pro/agents/openai.yaml",
+      "type": "skill-file",
+      "category": "persistence",
+      "sha256": "4293560a9ce8fe893a81c8d64b2b472b47b4c679023ade972f4129636dd406d5",
+      "skill": "swiftdata-pro"
+    },
+    {
+      "path": ".claude/skills/swiftdata-pro/assets/swiftdata-pro-icon.png",
+      "type": "skill-file",
+      "category": "persistence",
+      "sha256": "6be448484728cd09655bd877e7b450fff8b12839e7fd281f1edc406748ebc51d",
+      "skill": "swiftdata-pro"
+    },
+    {
+      "path": ".claude/skills/swiftdata-pro/assets/swiftdata-pro-icon.svg",
+      "type": "skill-file",
+      "category": "persistence",
+      "sha256": "876f9b502c4565f51a9ef1e57c15fb0821e3272d28da32d2d42e13ecd9992425",
+      "skill": "swiftdata-pro"
+    },
+    {
+      "path": ".claude/skills/swiftdata-pro/references/class-inheritance.md",
+      "type": "skill-file",
+      "category": "persistence",
+      "sha256": "05b22c87e9864a47517ba095c9a870dc320f0e6f4cd85ff9f0b54c5ca356a41d",
+      "skill": "swiftdata-pro"
+    },
+    {
+      "path": ".claude/skills/swiftdata-pro/references/cloudkit.md",
+      "type": "skill-file",
+      "category": "persistence",
+      "sha256": "52a549b1713d55be183b79af595d37729426af0abea36ed05f932b718d8ee11f",
+      "skill": "swiftdata-pro"
+    },
+    {
+      "path": ".claude/skills/swiftdata-pro/references/core-rules.md",
+      "type": "skill-file",
+      "category": "persistence",
+      "sha256": "8bf45a2af28bfb0648303bb520d3d317d2794b56fcfabe599c4785ccdf02f80a",
+      "skill": "swiftdata-pro"
+    },
+    {
+      "path": ".claude/skills/swiftdata-pro/references/indexing.md",
+      "type": "skill-file",
+      "category": "persistence",
+      "sha256": "909167e538461bf517f8fc6b00bfe70d1c8ea19b12a4749088823c275de52a82",
+      "skill": "swiftdata-pro"
+    },
+    {
+      "path": ".claude/skills/swiftdata-pro/references/predicates.md",
+      "type": "skill-file",
+      "category": "persistence",
+      "sha256": "623c3195fccdec0ec95c0291223ced7491025b04e59c0b4f4fe5ffd23eb1019b",
+      "skill": "swiftdata-pro"
+    }
   ],
   "mcps_installed": []
 }
