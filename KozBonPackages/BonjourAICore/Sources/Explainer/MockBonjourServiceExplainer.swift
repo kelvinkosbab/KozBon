@@ -66,4 +66,13 @@ public final class MockBonjourServiceExplainer: BonjourServiceExplainerProtocol 
         explanation = cannedExplanation
         isGenerating = false
     }
+
+    public func explain(releaseHighlight: String, version: String) async {
+        explainCallCount += 1
+        explanation = ""
+        error = nil
+        isGenerating = true
+        explanation = cannedExplanation
+        isGenerating = false
+    }
 }

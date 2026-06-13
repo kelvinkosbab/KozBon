@@ -126,6 +126,41 @@ public final class BonjourServiceExplainer: BonjourServiceExplainerProtocol {
 
         isGenerating = false
     }
+
+    /// Generates a streaming explanation of what a "What's New"
+    /// release highlight means for the user.
+    public func explain(releaseHighlight: String, version: String) async {
+        explanation = ""
+        error = nil
+        isGenerating = true
+
+        let prompt = BonjourServicePromptBuilder.buildPrompt(
+            releaseHighlight: releaseHighlight,
+            version: version,
+            expertiseLevel: expertiseLevel,
+            responseLength: responseLength
+        )
+
+        do {
+            let session = LanguageModelSession(
+                instructions: BonjourServicePromptBuilder.releaseHighlightSystemInstructions
+            )
+            self.session = session
+
+            let stream = session.streamResponse(to: prompt)
+            for try await partial in stream {
+                // Same cancellation discipline as the other explain
+                // paths — dismissing the sheet mid-stream cancels
+                // the Task and we stop feeding a hidden view.
+                if Task.isCancelled { break }
+                explanation = partial.content
+            }
+        } catch {
+            self.error = error.localizedDescription
+        }
+
+        isGenerating = false
+    }
 }
 
 #endif

@@ -41,6 +41,10 @@ public final class SimulatorBonjourServiceExplainer: BonjourServiceExplainerProt
         await streamRandomResponse()
     }
 
+    public func explain(releaseHighlight: String, version: String) async {
+        await streamRandomResponse()
+    }
+
     // MARK: - Streaming
 
     private func streamRandomResponse() async {

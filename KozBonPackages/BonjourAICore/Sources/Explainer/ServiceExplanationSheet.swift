@@ -23,27 +23,53 @@ import BonjourStorage
 @available(iOS 26, macOS 26, visionOS 26, *)
 public struct ServiceExplanationSheet: View {
 
-    /// The subject to explain — either a discovered service or a service type from the library.
+    /// The subject to explain — a discovered service, a service
+    /// type from the library, or a "What's New" release highlight.
     @MainActor
     enum Subject {
         case service(BonjourService, isPublished: Bool)
         case serviceType(BonjourServiceType)
+        case releaseHighlight(version: String, text: String)
 
+        /// SF Symbol shown in the sheet header. Service subjects
+        /// reuse their type's glyph; a release highlight gets a
+        /// neutral "sparkles" announcement icon.
+        var iconSystemName: String {
+            switch self {
+            case .service(let service, _):
+                service.serviceType.imageSystemName
+            case .serviceType(let serviceType):
+                serviceType.imageSystemName
+            case .releaseHighlight:
+                "sparkles"
+            }
+        }
+
+        /// Header title — the service / type name, or the localized
+        /// "What's New" label for a release highlight.
         var displayName: String {
             switch self {
             case .service(let service, _):
                 service.service.name
             case .serviceType(let serviceType):
                 serviceType.name
+            case .releaseHighlight:
+                String(localized: Strings.Settings.whatsNew)
             }
         }
 
-        var serviceType: BonjourServiceType {
+        /// Header subtitle — the full DNS-SD type for services, or
+        /// the verbatim highlight bullet for a release. `nil` is
+        /// never returned today but keeps the header rendering
+        /// defensive.
+        var subtitle: String? {
             switch self {
             case .service(let service, _):
-                service.serviceType
+                service.serviceType.fullType
             case .serviceType(let serviceType):
-                serviceType
+                serviceType.fullType
+            case .releaseHighlight(_, let text):
+                text
             }
         }
     }
@@ -78,21 +104,40 @@ public struct ServiceExplanationSheet: View {
         self.subject = .serviceType(serviceType)
     }
 
+    /// Explains what a single "What's New" release highlight means
+    /// for the user.
+    ///
+    /// - Parameters:
+    ///   - releaseHighlight: The verbatim highlight bullet.
+    ///   - version: The marketing version it belongs to (e.g. "4.6").
+    public init(releaseHighlight: String, version: String) {
+        self.subject = .releaseHighlight(version: version, text: releaseHighlight)
+    }
+
     public var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
-                    // Service header
+                    // Subject header — service / type glyph + name,
+                    // or the sparkles icon + "What's New" + the
+                    // highlight text for a release insight.
                     HStack(spacing: 10) {
-                        Image(systemName: subject.serviceType.imageSystemName)
+                        Image(systemName: subject.iconSystemName)
                             .font(.title2)
                             .foregroundStyle(.secondary)
                         VStack(alignment: .leading) {
                             Text(verbatim: subject.displayName)
                                 .font(.headline)
-                            Text(verbatim: subject.serviceType.fullType)
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
+                            if let subtitle = subject.subtitle {
+                                Text(verbatim: subtitle)
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                                    // A release highlight subtitle is
+                                    // a full sentence; cap it so a long
+                                    // bullet doesn't crowd out the
+                                    // streamed explanation below.
+                                    .lineLimit(3)
+                            }
                         }
                     }
                     .padding(.bottom, 8)
@@ -194,6 +239,8 @@ public struct ServiceExplanationSheet: View {
             await explainer.explain(service: service, isPublished: isPublished)
         case .serviceType(let serviceType):
             await explainer.explain(serviceType: serviceType)
+        case .releaseHighlight(let version, let text):
+            await explainer.explain(releaseHighlight: text, version: version)
         }
     }
 

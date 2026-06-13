@@ -60,6 +60,7 @@ final class StubAppleExplainer: BonjourServiceExplainerProtocol {
     var responseLength: BonjourServicePromptBuilder.ResponseLength = .standard
     func explain(service: BonjourService, isPublished: Bool) async {}
     func explain(serviceType: BonjourServiceType) async {}
+    func explain(releaseHighlight: String, version: String) async {}
 }
 
 // MARK: - CloudAwareBonjourServiceExplainerFactoryTests

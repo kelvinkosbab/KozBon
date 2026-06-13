@@ -115,6 +115,19 @@ public final class GitHubBonjourServiceExplainer: BonjourServiceExplainerProtoco
         await stream(prompt: prompt, systemText: systemText)
     }
 
+    // MARK: - Explain (Release Highlight)
+
+    public func explain(releaseHighlight: String, version: String) async {
+        let prompt = BonjourServicePromptBuilder.buildPrompt(
+            releaseHighlight: releaseHighlight,
+            version: version,
+            expertiseLevel: expertiseLevel,
+            responseLength: responseLength
+        )
+        let systemText = BonjourServicePromptBuilder.releaseHighlightSystemInstructions
+        await stream(prompt: prompt, systemText: systemText)
+    }
+
     // MARK: - Private
 
     /// Streams the response into ``explanation``.

@@ -134,7 +134,7 @@ struct MockBonjourServiceExplainerTests {
         #expect(mock.explainCallCount == 2)
     }
 
-    @Test("Both `explain` overloads share `explainCallCount` — total reflects either entry point")
+    @Test("All `explain` overloads share `explainCallCount` — total reflects every entry point")
     func mixedExplainCallsShareCallCount() async {
         let mock = MockBonjourServiceExplainer()
         let service = makeService()
@@ -143,7 +143,22 @@ struct MockBonjourServiceExplainerTests {
         )
         await mock.explain(service: service)
         await mock.explain(serviceType: serviceType)
-        #expect(mock.explainCallCount == 2)
+        await mock.explain(releaseHighlight: "New badge", version: "4.6")
+        #expect(mock.explainCallCount == 3)
+    }
+
+    // MARK: - Explain Release Highlight
+
+    @Test("`explain(releaseHighlight:version:)` writes the canned explanation and bumps the counter")
+    func explainReleaseHighlightSetsExplanation() async {
+        let mock = MockBonjourServiceExplainer(cannedExplanation: "Highlight explanation")
+        await mock.explain(
+            releaseHighlight: "Chat tab shows an unread badge.",
+            version: "4.6"
+        )
+        #expect(mock.explanation == "Highlight explanation")
+        #expect(mock.explainCallCount == 1)
+        #expect(!mock.isGenerating)
     }
 
     // MARK: - isPublished Parameter

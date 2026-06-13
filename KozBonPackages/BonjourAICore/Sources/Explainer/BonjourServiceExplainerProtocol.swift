@@ -46,4 +46,18 @@ public protocol BonjourServiceExplainerProtocol: AnyObject, Observable {
     ///
     /// - Parameter serviceType: The service type to explain (without a specific discovered instance).
     func explain(serviceType: BonjourServiceType) async
+
+    /// Generates a streaming explanation of what a single "What's
+    /// New" release highlight means for the user.
+    ///
+    /// Streams into the same ``explanation`` / ``isGenerating`` /
+    /// ``error`` surface as the service explainers, so the Insights
+    /// sheet renders it identically.
+    ///
+    /// - Parameters:
+    ///   - releaseHighlight: The verbatim highlight bullet the user
+    ///     long-pressed on the What's New page.
+    ///   - version: The marketing version the highlight belongs to
+    ///     (e.g. "4.6"), to ground the model's answer.
+    func explain(releaseHighlight: String, version: String) async
 }
