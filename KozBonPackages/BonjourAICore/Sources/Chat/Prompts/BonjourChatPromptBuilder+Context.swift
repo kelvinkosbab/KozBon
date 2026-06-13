@@ -114,6 +114,46 @@ extension BonjourChatPromptBuilder {
         return parts.joined(separator: "\n")
     }
 
+    /// Number of recent releases rendered into the `whatsNewBlock`.
+    /// The full ``ReleaseNotes/all`` table reaches back to 3.0
+    /// (~16 entries, ~2400 tokens) — too much for the on-device
+    /// model's ~4K window alongside the system prompt and live
+    /// network context. Six entries (~900 tokens) covers the
+    /// "latest versions" the user actually asks about while
+    /// staying within budget. Users wanting the complete history
+    /// have the Preferences → About → What's New page.
+    fileprivate static let recentReleaseCap = 6
+
+    /// Query-triggered block that lists KozBon's recent release
+    /// notes when the user's message asks about what's new /
+    /// changelog / recent updates. Returns an empty string
+    /// otherwise so the block adds zero token cost to the common
+    /// case (questions about the user's network). Called from
+    /// ``userTurn`` on every user message and NOT tracked by
+    /// `lastContextBlock`, so its per-turn presence doesn't force
+    /// re-injection of the stable context.
+    ///
+    /// Reads the static ``ReleaseNotes/all`` table directly rather
+    /// than threading it through ``ChatContext`` — release notes
+    /// are compile-time constant, unlike the per-session network
+    /// state the context carries.
+    public static func whatsNewBlock(query: String) -> String {
+        guard ChatWhatsNewIntentDetector.wantsWhatsNew(message: query) else {
+            return ""
+        }
+        var parts: [String] = [
+            "RECENT KOZBON RELEASES (newest first — answer \"what's new\" " +
+            "questions ONLY from this list; never invent versions or changes):"
+        ]
+        for release in ReleaseNotes.all.prefix(recentReleaseCap) {
+            parts.append("Version \(release.version):")
+            for highlight in release.highlights {
+                parts.append("- \(highlight)")
+            }
+        }
+        return parts.joined(separator: "\n")
+    }
+
     // MARK: - Context Section Builders
 
     /// Renders a single-line scan-freshness summary so the model can

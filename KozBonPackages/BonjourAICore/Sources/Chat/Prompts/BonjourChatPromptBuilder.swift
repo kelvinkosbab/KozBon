@@ -128,6 +128,14 @@ public enum BonjourChatPromptBuilder {
             descriptions for service types the user's message mentioned by name. \
             Prefer these descriptions over your training memory when describing \
             those types.
+            - The <whats_new> block (when present) contains KozBon's real release \
+            notes for recent app versions, newest first. When the user asks what's \
+            new, what changed, or about a recent update, answer ONLY from this \
+            block — you have no other knowledge of KozBon's version history, so \
+            never invent version numbers, dates, or changes. Lead with the most \
+            recent version. If the user asks about a version not in the block, say \
+            you only have notes for the most recent releases and point them to \
+            Preferences → About → What's New for the full history.
             - When the scan status reports "no scan has run yet" or "in progress", \
             caveat answers accordingly — e.g. "I don't see any services yet, the \
             scan may still be populating." Never say "there are no services on \
@@ -188,6 +196,8 @@ public enum BonjourChatPromptBuilder {
             - The KozBon service type library and its categories
             - How to use KozBon (Discover, Library, Preferences tabs; \
             broadcasting; filtering and sorting)
+            - What's new in recent KozBon releases — new features, changes, and \
+            fixes — when the <whats_new> block is present (see ACCURACY RULES)
 
             **Stay narrowly on what was asked.** Don't expand into related \
             topics. If a question is ambiguous or could mean several things, \
@@ -322,6 +332,15 @@ public enum BonjourChatPromptBuilder {
         let queried = queriedDescriptionsBlock(context: context, query: userMessage)
         if !queried.isEmpty {
             sections.append("<referenced>\n\(queried)\n</referenced>\n")
+        }
+
+        // Release notes are injected only when the message asks
+        // about what's new — same per-turn, query-conditional
+        // policy as `<referenced>`, so it never bloats the stable
+        // context or multi-turn history for unrelated questions.
+        let whatsNew = whatsNewBlock(query: userMessage)
+        if !whatsNew.isEmpty {
+            sections.append("<whats_new>\n\(whatsNew)\n</whats_new>\n")
         }
 
         sections.append(userMessage)

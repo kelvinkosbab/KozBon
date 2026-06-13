@@ -187,4 +187,74 @@ struct BonjourChatPromptBuilderUserTurnTests {
         )
         #expect(!turn.contains("<referenced>"))
     }
+
+    // MARK: - User Turn: What's New Integration
+
+    @Test("User turn embeds a `<whats_new>` block when the query asks what's new")
+    func userTurnIncludesWhatsNewBlockForWhatsNewQuery() {
+        let context = BonjourChatPromptBuilder.ChatContext()
+        let turn = BonjourChatPromptBuilder.userTurn(
+            message: "What's new in this version?",
+            context: context,
+            isFirstTurn: true,
+            contextChanged: false
+        )
+        #expect(turn.contains("<whats_new>"))
+        #expect(turn.contains("RECENT KOZBON RELEASES"))
+        // The real most-recent version must appear so the model
+        // answers from data, not memory.
+        if let latest = ReleaseNotes.all.first {
+            #expect(turn.contains("Version \(latest.version):"))
+        }
+    }
+
+    @Test("User turn omits the `<whats_new>` block for network / concept questions")
+    func userTurnOmitsWhatsNewBlockForUnrelatedQuery() {
+        let context = BonjourChatPromptBuilder.ChatContext()
+        // A network-state question routes to the scan path, never
+        // the release-notes path.
+        let networkTurn = BonjourChatPromptBuilder.userTurn(
+            message: "What's on my network?",
+            context: context,
+            isFirstTurn: true,
+            contextChanged: false
+        )
+        #expect(!networkTurn.contains("<whats_new>"))
+
+        // A concept question is also unrelated.
+        let conceptTurn = BonjourChatPromptBuilder.userTurn(
+            message: "What is Matter?",
+            context: context,
+            isFirstTurn: true,
+            contextChanged: false
+        )
+        #expect(!conceptTurn.contains("<whats_new>"))
+    }
+
+    @Test("What's-new and referenced blocks coexist when the query triggers both")
+    func userTurnIncludesBothWhatsNewAndReferenced() {
+        // "What's new with AirPlay?" matches the what's-new intent
+        // ("what's new") AND mentions a library type by name
+        // (AirPlay) — both blocks should attach.
+        let serviceType = BonjourServiceType(
+            name: "AirPlay",
+            type: "airplay",
+            transportLayer: .tcp,
+            detail: "Apple's wireless streaming protocol."
+        )
+        let context = BonjourChatPromptBuilder.ChatContext(serviceTypeLibrary: [serviceType])
+        let turn = BonjourChatPromptBuilder.userTurn(
+            message: "What's new with AirPlay?",
+            context: context,
+            isFirstTurn: true,
+            contextChanged: false
+        )
+        #expect(turn.contains("<whats_new>"))
+        #expect(turn.contains("<referenced>"))
+        // The user message comes last, after both injected blocks.
+        if let messageIndex = turn.range(of: "What's new with AirPlay?")?.lowerBound,
+           let whatsNewIndex = turn.range(of: "<whats_new>")?.lowerBound {
+            #expect(whatsNewIndex < messageIndex)
+        }
+    }
 }

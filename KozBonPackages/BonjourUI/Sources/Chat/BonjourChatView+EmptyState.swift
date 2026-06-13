@@ -72,6 +72,16 @@ extension BonjourChatView {
                     identifier: "chat_suggestion_6",
                     session: session
                 )
+                // "What's new in this version?" — each localized
+                // value contains a phrase
+                // `ChatWhatsNewIntentDetector` matches, so tapping
+                // it injects KozBon's real release notes into the
+                // assistant's context.
+                suggestionButton(
+                    text: String(localized: Strings.Chat.suggestion7),
+                    identifier: "chat_suggestion_7",
+                    session: session
+                )
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
