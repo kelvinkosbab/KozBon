@@ -10,6 +10,7 @@
 		B6CE1D321E1208C1003D4FFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6CE1D311E1208C1003D4FFA /* Assets.xcassets */; };
 		B6CE1D4A1E120AF8003D4FFA /* service-names-port-numbers.csv in Resources */ = {isa = PBXBuildFile; fileRef = B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */; };
 		F6INFO0BF0001 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = F6INFO0FR0001 /* InfoPlist.xcstrings */; };
+		F6PRIV0BF0001 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = F6PRIV0FR0001 /* PrivacyInfo.xcprivacy */; };
 		F6240E692A92CF0600951875 /* KozBonApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E682A92CF0600951875 /* KozBonApp.swift */; };
 		F690B5FB2561E9B600902DAB /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F690B5FA2561E9B600902DAB /* NetworkExtension.framework */; };
 		F6C472F52C1A1EAB00BBB0F9 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = F6C472F42C1A1EAB00BBB0F9 /* Core */; };
@@ -29,6 +30,7 @@
 		B6CE1D311E1208C1003D4FFA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B6CE1D361E1208C1003D4FFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F6INFO0FR0001 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		F6PRIV0FR0001 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "service-names-port-numbers.csv"; sourceTree = "<group>"; };
 		F6240E682A92CF0600951875 /* KozBonApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KozBonApp.swift; sourceTree = "<group>"; };
 		F62EDC5E255B9D25003E5178 /* KozBon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KozBon.entitlements; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 				B6CE1D311E1208C1003D4FFA /* Assets.xcassets */,
 				B6CE1D361E1208C1003D4FFA /* Info.plist */,
 				F6INFO0FR0001 /* InfoPlist.xcstrings */,
+				F6PRIV0FR0001 /* PrivacyInfo.xcprivacy */,
 			);
 			path = KozBon;
 			sourceTree = "<group>";
@@ -182,6 +185,7 @@
 				B6CE1D4A1E120AF8003D4FFA /* service-names-port-numbers.csv in Resources */,
 				B6CE1D321E1208C1003D4FFA /* Assets.xcassets in Resources */,
 				F6INFO0BF0001 /* InfoPlist.xcstrings in Resources */,
+				F6PRIV0BF0001 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
