@@ -157,6 +157,17 @@ find build/MyApp.xcarchive -name "*.dSYM" -print | while read -r dsym; do
 done
 ```
 
+## Privacy Manifests (`PrivacyInfo.xcprivacy`) — a Hard Upload Gate
+
+Since spring 2024, App Store uploads are validated against privacy manifests. This is the gate **AI-generated code trips most often**: an agent casually adds `UserDefaults`, a file-timestamp check, or `Date` boot-time math, and the next upload bounces with an `ITMS-91053` email because the API was never declared.
+
+- **`NSPrivacyAccessedAPITypes` — declare every "required reason" API you use**, with an allowed reason code. The five categories: `UserDefaults` (`NSPrivacyAccessedAPICategoryUserDefaults` — reason `CA92.1` for app-own data), file timestamps, system boot time, disk space, and active keyboards. `grep` for the APIs before release; don't wait for Apple's email.
+- **`NSPrivacyCollectedDataTypes`** — what data the app collects, whether it's linked to identity, and whether it's used for tracking. Must agree with your App Store privacy "nutrition label" answers.
+- **`NSPrivacyTracking` + `NSPrivacyTrackingDomains`** — if you track, say so and list the domains; iOS blocks those domains until ATT consent.
+- **Third-party SDKs on Apple's "commonly used SDKs" list must ship their *own* privacy manifest and signature.** An outdated Firebase/Facebook/analytics pod without a manifest fails *your* upload (`ITMS-91061`). Keeping deps current is part of release hygiene.
+- **Audit with Xcode's privacy report** — archive → Generate Privacy Report — which aggregates your manifest + every SDK's. Review it on each release branch, and re-check whenever a new dependency (especially an analytics or AI SDK) lands.
+- **Cloud AI calls are data collection.** Sending user content to a model API typically counts as collected data — update the manifest and the privacy label when you adopt one (see `apple-foundation-models.md`).
+
 ## Build Reproducibility
 
 For TestFlight builds you'll have to debug later, make the build reproducible:
@@ -165,6 +176,14 @@ For TestFlight builds you'll have to debug later, make the build reproducible:
 - **Pin the Xcode version in CI.** GitHub Actions: `xcode-version: 15.4` or use the `actions/setup-xcode` action. Don't rely on "the latest Xcode" — Apple ships breaking changes between minors.
 - **Pin Ruby / Bundler / fastlane.** A `Gemfile.lock` + `Bundler` in CI keeps fastlane stable across runs.
 - **Stamp the commit SHA into the build.** Easy: a `Bundle short version` or `Info.plist` custom key set from `${GITHUB_SHA}`. Lets you correlate TestFlight builds to source.
+
+### Xcode 27 toolchain notes (Apple silicon, Intel sunset, linker)
+
+Xcode 27 (Swift 6.4) changes the CI baseline — plan for these when you bump the pinned Xcode:
+
+- **Xcode 27 is Apple-silicon-only** and requires **macOS Tahoe 26.4+**. CI runners must be Apple silicon (e.g. GitHub's `macos-15`/`macos-26` ARM images) — an Intel runner can't install it. Pin the runner image, not just the Xcode version.
+- **Universal builds drop `x86_64` by default at deployment target ≥ 27.** `ARCHS_STANDARD` no longer includes `x86_64` when `MACOSX_DEPLOYMENT_TARGET` (or `DRIVERKIT_DEPLOYMENT_TARGET`) is `27.0`+. Apple-silicon-only apps get a smaller binary for free; if you still ship Intel, add `x86_64` to `ARCHS` explicitly.
+- **`ld64` (the classic linker) is removed; `-ld_classic` is no longer accepted.** Strip any `-ld_classic` from `OTHER_LDFLAGS` / SPM `unsafeFlags` before moving to Xcode 27 — a leftover flag fails the link. The modern linker is the only option.
 
 ## CI Patterns — Tool-Agnostic
 
