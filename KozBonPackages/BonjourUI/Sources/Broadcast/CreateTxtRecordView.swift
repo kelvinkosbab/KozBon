@@ -27,6 +27,16 @@ struct CreateTxtRecordView: View {
     @Binding private var txtDataRecords: [BonjourService.TxtDataRecord]
     @State private var viewModel: CreateTxtRecordViewModel
 
+    /// The form's error footers, for VoiceOver focus routing.
+    private enum ValidationErrorField: Hashable {
+        case key, value
+    }
+
+    /// Moves VoiceOver focus onto the first error footer after a
+    /// failed submit — otherwise the red footers are only found by
+    /// manually navigating away from the Done button.
+    @AccessibilityFocusState private var focusedError: ValidationErrorField?
+
     init(
         isPresented: Binding<Bool>,
         txtDataRecords: Binding<[BonjourService.TxtDataRecord]>
@@ -69,6 +79,7 @@ struct CreateTxtRecordView: View {
                         Text(verbatim: keyError)
                             .foregroundStyle(.red)
                             .accessibilityLabel(Strings.Accessibility.error(keyError))
+                            .accessibilityFocused($focusedError, equals: .key)
                     }
                 }
 
@@ -98,6 +109,7 @@ struct CreateTxtRecordView: View {
                             Text(verbatim: valueError)
                                 .foregroundStyle(.red)
                                 .accessibilityLabel(Strings.Accessibility.error(valueError))
+                                .accessibilityFocused($focusedError, equals: .value)
                         }
                         Text(Strings.Guidance.txtRecord)
                     }
@@ -148,11 +160,28 @@ struct CreateTxtRecordView: View {
             currentRecords: txtDataRecords,
             reduceMotion: reduceMotion
         ) else {
+            moveAccessibilityFocusToFirstError()
             return
         }
         withAnimation(reduceMotion ? nil : .default) {
             txtDataRecords = updated
             isPresented = false
+        }
+    }
+
+    // MARK: - Error Focus
+
+    /// Routes VoiceOver focus to the first error footer, in form
+    /// order. Deferred one runloop tick so the footer views exist
+    /// before focus is assigned.
+    private func moveAccessibilityFocusToFirstError() {
+        Task { @MainActor in
+            await Task.yield()
+            if viewModel.keyError != nil {
+                focusedError = .key
+            } else if viewModel.valueError != nil {
+                focusedError = .value
+            }
         }
     }
 }

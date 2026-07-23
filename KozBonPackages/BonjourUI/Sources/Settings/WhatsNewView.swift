@@ -122,9 +122,9 @@ struct WhatsNewView: View {
                 // Context menus aren't reachable via VoiceOver's
                 // rotor, so mirror the Insights action explicitly.
                 .accessibilityActions {
-                    Button(String(localized: Strings.Insights.explainWithAI)) {
+                    InsightsAccessibilityAction(action: {
                         insightTarget = HighlightInsight(version: version, text: highlight)
-                    }
+                    })
                 }
         } else {
             row

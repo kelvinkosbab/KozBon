@@ -43,6 +43,18 @@ struct BroadcastBonjourServiceView: View {
     /// about it.
     @State private var serviceTypeToExplain: BonjourServiceType?
 
+    /// The form's error footers, for VoiceOver focus routing.
+    private enum ValidationErrorField: Hashable {
+        case serviceType, port, domain
+    }
+
+    /// Moves VoiceOver focus onto the first error footer after a
+    /// failed submit. Without it, a VoiceOver user who taps Done
+    /// stays focused on the button and is never told the submit
+    /// failed — the red footers are only discovered by manually
+    /// navigating.
+    @AccessibilityFocusState private var focusedError: ValidationErrorField?
+
     init(
         isPresented: Binding<Bool>,
         customPublishedServices: Binding<[BonjourService]>,
@@ -162,6 +174,11 @@ struct BroadcastBonjourServiceView: View {
                     detail: serviceType.fullType
                 )
                 .contextMenu { aiInsightsContextMenu(for: serviceType) }
+                // VoiceOver / Switch Control mirror — context menus
+                // aren't reachable from the rotor.
+                .accessibilityActions {
+                    InsightsAccessibilityAction(action: { serviceTypeToExplain = serviceType })
+                }
             } else {
                 NavigationLink {
                     SelectServiceTypeView(selectedServiceType: $bindable.serviceType)
@@ -188,6 +205,14 @@ struct BroadcastBonjourServiceView: View {
                         aiInsightsContextMenu(for: serviceType)
                     }
                 }
+                // VoiceOver / Switch Control mirror — context menus
+                // aren't reachable from the rotor. Same pre-selection
+                // gate as the menu above.
+                .accessibilityActions {
+                    if let serviceType = viewModel.serviceType {
+                        InsightsAccessibilityAction(action: { serviceTypeToExplain = serviceType })
+                    }
+                }
             }
         } header: {
             Text(Strings.Sections.serviceType)
@@ -197,6 +222,7 @@ struct BroadcastBonjourServiceView: View {
                 Text(verbatim: serviceTypeError)
                     .foregroundStyle(.red)
                     .accessibilityLabel(Strings.Accessibility.error(serviceTypeError))
+                    .accessibilityFocused($focusedError, equals: .serviceType)
             }
         }
         .onChange(of: [viewModel.serviceType]) {
@@ -236,6 +262,7 @@ struct BroadcastBonjourServiceView: View {
                 Text(verbatim: portError)
                     .foregroundStyle(.red)
                     .accessibilityLabel(Strings.Accessibility.error(portError))
+                    .accessibilityFocused($focusedError, equals: .port)
             } else {
                 Text(Strings.Guidance.servicePortHint)
             }
@@ -269,6 +296,7 @@ struct BroadcastBonjourServiceView: View {
                 Text(verbatim: domainError)
                     .foregroundStyle(.red)
                     .accessibilityLabel(Strings.Accessibility.error(domainError))
+                    .accessibilityFocused($focusedError, equals: .domain)
             } else {
                 Text(Strings.Guidance.serviceDomainHint)
             }
@@ -290,28 +318,20 @@ struct BroadcastBonjourServiceView: View {
                 )
                 .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                     Button(role: .destructive) {
-                        let indexToRemove = viewModel.dataRecords.firstIndex { record in
-                            record.key == dataRecord.key
-                        }
-                        if let indexToRemove {
-                            withAnimation(reduceMotion ? nil : .default) {
-                                // `Array.remove(at:)` returns the removed
-                                // element; Xcode 27's `#NoUsage` diagnostic
-                                // flags discarded results from
-                                // `withAnimation` when the closure is a
-                                // single expression that implicitly
-                                // returns. Discard explicitly to silence
-                                // the warning — we don't need the removed
-                                // record for the swipe-delete affordance.
-                                _ = viewModel.dataRecords.remove(at: indexToRemove)
-                            }
-                        }
+                        removeDataRecord(dataRecord)
                     } label: {
                         Label(Strings.Buttons.remove, systemImage: Iconography.remove)
                     }
                     .accessibilityLabel(Strings.Accessibility.remove(dataRecord.key))
                     .accessibilityHint(Strings.Accessibility.deleteTxtRecordHint)
                     .tint(.red)
+                }
+                // Swipe actions are gesture-only — mirror delete so
+                // VoiceOver / Switch Control users can remove records.
+                .accessibilityActions {
+                    Button(Strings.Accessibility.remove(dataRecord.key)) {
+                        removeDataRecord(dataRecord)
+                    }
                 }
             }
 
@@ -335,6 +355,43 @@ struct BroadcastBonjourServiceView: View {
         }
     }
 
+    // MARK: - Error Focus
+
+    /// Routes VoiceOver focus to the first error footer, in form
+    /// order. Deferred one runloop tick so the footer views exist
+    /// before focus is assigned — assigning accessibility focus to
+    /// a not-yet-rendered element is silently dropped.
+    private func moveAccessibilityFocusToFirstError() {
+        Task { @MainActor in
+            await Task.yield()
+            if viewModel.serviceTypeError != nil {
+                focusedError = .serviceType
+            } else if viewModel.portError != nil {
+                focusedError = .port
+            } else if viewModel.domainError != nil {
+                focusedError = .domain
+            }
+        }
+    }
+
+    // MARK: - TXT Record Removal
+
+    /// Removes the given TXT record with the standard animation.
+    /// Shared by the swipe-delete button and its VoiceOver
+    /// accessibility-action mirror so the two paths can't drift.
+    private func removeDataRecord(_ dataRecord: BonjourService.TxtDataRecord) {
+        guard let indexToRemove = viewModel.dataRecords.firstIndex(where: { record in
+            record.key == dataRecord.key
+        }) else { return }
+        withAnimation(reduceMotion ? nil : .default) {
+            // `Array.remove(at:)` returns the removed element;
+            // Xcode 27's `#NoUsage` diagnostic flags discarded
+            // results from `withAnimation` single-expression
+            // closures. Discard explicitly.
+            _ = viewModel.dataRecords.remove(at: indexToRemove)
+        }
+    }
+
     // MARK: - Done Action
 
     /// Validates via the VM, awaits the publish call, applies
@@ -346,7 +403,10 @@ struct BroadcastBonjourServiceView: View {
     private func commit() {
         Task {
             viewModel.clearAllErrors(reduceMotion: reduceMotion)
-            guard let inputs = viewModel.validate(reduceMotion: reduceMotion) else { return }
+            guard let inputs = viewModel.validate(reduceMotion: reduceMotion) else {
+                moveAccessibilityFocusToFirstError()
+                return
+            }
             guard let published = await viewModel.publish(
                 inputs: inputs,
                 reduceMotion: reduceMotion

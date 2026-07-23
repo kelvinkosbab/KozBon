@@ -31,6 +31,16 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
     @Binding private var serviceTypeToUpdate: BonjourServiceType
     @State private var viewModel: CreateOrUpdateBonjourServiceTypeViewModel
 
+    /// The form's error footers, for VoiceOver focus routing.
+    private enum ValidationErrorField: Hashable {
+        case name, type, details
+    }
+
+    /// Moves VoiceOver focus onto the first error footer after a
+    /// failed submit — otherwise the red footers are only found by
+    /// manually navigating away from the Done button.
+    @AccessibilityFocusState private var focusedError: ValidationErrorField?
+
     init(isPresented: Binding<Bool>) {
         self._isPresented = isPresented
         self._serviceTypeToUpdate = .constant(BonjourServiceType(
@@ -99,6 +109,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                             Text(verbatim: nameError)
                                 .foregroundStyle(.red)
                                 .accessibilityLabel(Strings.Accessibility.error(nameError))
+                                .accessibilityFocused($focusedError, equals: .name)
                         }
                         Text(Strings.Guidance.serviceNameHint)
                     }
@@ -133,11 +144,13 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                             Text(verbatim: typeError)
                                 .foregroundStyle(.red)
                                 .accessibilityLabel(Strings.Accessibility.error(typeError))
+                                .accessibilityFocused($focusedError, equals: .type)
 
                         } else if let typeError = viewModel.typeError, !viewModel.type.isEmpty {
                             Text(verbatim: "\(viewModel.fullType) · \(typeError)")
                                 .foregroundStyle(.red)
                                 .accessibilityLabel(Strings.Accessibility.error("\(typeError) for \(viewModel.fullType)"))
+                                .accessibilityFocused($focusedError, equals: .type)
 
                         } else if !viewModel.type.isEmpty {
                             Text(verbatim: viewModel.fullType)
@@ -182,6 +195,7 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
                             Text(verbatim: detailsError)
                                 .foregroundStyle(.red)
                                 .accessibilityLabel(Strings.Accessibility.error(detailsError))
+                                .accessibilityFocused($focusedError, equals: .details)
                         }
                         if preferencesStore.aiAnalysisEnabled {
                             Text(Strings.Sections.aiContextFooter)
@@ -246,11 +260,30 @@ struct CreateOrUpdateBonjourServiceTypeView: View {
     /// no-ops, matching the original code's behavior.
     private func commit() {
         guard let inputs = viewModel.validate(reduceMotion: reduceMotion) else {
+            moveAccessibilityFocusToFirstError()
             return
         }
         serviceTypeToUpdate.deletePersistentCopy()
         inputs.serviceType.savePersistentCopy()
         serviceTypeToUpdate = inputs.serviceType
         isPresented = false
+    }
+
+    // MARK: - Error Focus
+
+    /// Routes VoiceOver focus to the first error footer, in form
+    /// order. Deferred one runloop tick so the footer views exist
+    /// before focus is assigned.
+    private func moveAccessibilityFocusToFirstError() {
+        Task { @MainActor in
+            await Task.yield()
+            if viewModel.nameError != nil {
+                focusedError = .name
+            } else if viewModel.typeError != nil {
+                focusedError = .type
+            } else if viewModel.detailsError != nil {
+                focusedError = .details
+            }
+        }
     }
 }

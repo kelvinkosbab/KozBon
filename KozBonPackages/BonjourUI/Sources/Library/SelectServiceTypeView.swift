@@ -146,6 +146,11 @@ struct SelectServiceTypeView: View {
             // cloud path.
             InsightsContextMenuItems(action: { serviceTypeToExplain = serviceType })
         }
+        // VoiceOver / Switch Control mirror — context menus aren't
+        // reachable from the rotor.
+        .accessibilityActions {
+            InsightsAccessibilityAction(action: { serviceTypeToExplain = serviceType })
+        }
     }
 }
 

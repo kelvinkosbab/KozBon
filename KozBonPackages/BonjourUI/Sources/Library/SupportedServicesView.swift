@@ -178,10 +178,22 @@ public struct SupportedServicesView: View {
             .draggable(serviceType.fullType)
             .accessibilityLabel("\(serviceType.name), \(serviceType.fullType)")
             .accessibilityHint(Strings.Accessibility.viewDetails(serviceType.name))
+            // Mirrors `serviceTypeContextMenu` — context menus
+            // aren't reachable from the VoiceOver rotor or Switch
+            // Control scanning.
             .accessibilityActions {
-                Button(Strings.Accessibility.copyField(serviceType.name)) {
+                Button(Strings.Accessibility.copyField(serviceType.fullType)) {
                     Clipboard.copy(serviceType.fullType)
                 }
+                Button(Strings.Accessibility.copyField(serviceType.name)) {
+                    Clipboard.copy(serviceType.name)
+                }
+                if let detail = serviceType.localizedDetail {
+                    Button(String(localized: Strings.Actions.copyDetails)) {
+                        Clipboard.copy(detail)
+                    }
+                }
+                InsightsAccessibilityAction(action: { serviceTypeToExplain = serviceType })
             }
             .contextMenu {
                 serviceTypeContextMenu(serviceType: serviceType)

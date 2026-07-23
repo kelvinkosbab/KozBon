@@ -236,10 +236,25 @@ public struct BonjourScanForServicesView: View {
             }
             .draggable(service.hostName)
             .accessibilityHint(Strings.Accessibility.viewDetails(service.service.name))
+            // Mirrors the full context menu below — context menus
+            // aren't reachable from the VoiceOver rotor or Switch
+            // Control scanning.
             .accessibilityActions {
                 Button(Strings.Accessibility.copyField(service.hostName)) {
                     Clipboard.copy(service.hostName)
                 }
+                Button(Strings.Accessibility.copyField(service.serviceType.name)) {
+                    Clipboard.copy(service.serviceType.name)
+                }
+                Button(Strings.Accessibility.copyField(service.serviceType.fullType)) {
+                    Clipboard.copy(service.serviceType.fullType)
+                }
+                ForEach(service.addresses, id: \.ipPortString) { address in
+                    Button(Strings.Accessibility.copyField(address.ipPortString)) {
+                        Clipboard.copy(address.ipPortString)
+                    }
+                }
+                InsightsAccessibilityAction(action: { serviceToExplain = service })
             }
             .contextMenu {
                 Button {

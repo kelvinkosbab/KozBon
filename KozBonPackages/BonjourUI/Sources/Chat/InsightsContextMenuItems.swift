@@ -173,3 +173,37 @@ public struct InsightsContextMenuItems: View {
         }
     }
 }
+
+// MARK: - InsightsAccessibilityAction
+
+/// VoiceOver / Switch Control mirror for ``InsightsContextMenuItems``.
+///
+/// Context menus aren't reachable from the VoiceOver rotor or
+/// Switch Control scanning, so every row that offers Insights via
+/// long-press must also expose it as an accessibility action.
+/// Drop this inside the row's `.accessibilityActions { }` block:
+///
+/// ```swift
+/// .accessibilityActions {
+///     InsightsAccessibilityAction(action: { serviceToExplain = service })
+/// }
+/// ```
+///
+/// Gated on `aiAnalysisEnabled` to match the context-menu items —
+/// when AI is off, no phantom action appears in the rotor.
+public struct InsightsAccessibilityAction: View {
+
+    @Environment(\.preferencesStore) private var preferencesStore
+
+    private let action: () -> Void
+
+    public init(action: @escaping () -> Void) {
+        self.action = action
+    }
+
+    public var body: some View {
+        if preferencesStore.aiAnalysisEnabled {
+            Button(String(localized: Strings.Insights.explainWithAI), action: action)
+        }
+    }
+}

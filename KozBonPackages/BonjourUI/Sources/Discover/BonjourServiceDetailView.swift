@@ -135,6 +135,13 @@ public struct BonjourServiceDetailView: View {
                             action: { viewModel.isAIExplanationPresented = true }
                         )
                     }
+                    // VoiceOver / Switch Control mirror — context
+                    // menus aren't reachable from the rotor.
+                    .accessibilityActions {
+                        InsightsAccessibilityAction(
+                            action: { viewModel.isAIExplanationPresented = true }
+                        )
+                    }
                     .accessibilityHint(Strings.Accessibility.longPressToCopy(String(localized: Strings.DetailRows.protocolInformation)))
                 }
             }

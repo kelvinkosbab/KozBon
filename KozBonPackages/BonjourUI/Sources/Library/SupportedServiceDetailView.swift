@@ -97,6 +97,7 @@ public struct SupportedServiceDetailView: View {
                     Button(Strings.Accessibility.copyField(String(localized: Strings.DetailRows.fullType).lowercased())) {
                         Clipboard.copy(serviceType.fullType)
                     }
+                    InsightsAccessibilityAction(action: { isAIExplanationPresented = true })
                 }
                 if let detail = serviceType.localizedDetail, !detail.isEmpty {
                     TitleDetailStackView(
@@ -123,6 +124,7 @@ public struct SupportedServiceDetailView: View {
                         Button(Strings.Accessibility.copyField(String(localized: Strings.DetailRows.details).lowercased())) {
                             Clipboard.copy(detail)
                         }
+                        InsightsAccessibilityAction(action: { isAIExplanationPresented = true })
                     }
                 }
             }
