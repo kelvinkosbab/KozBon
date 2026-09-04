@@ -14,7 +14,6 @@ import BonjourStorage
 import BonjourAICore
 import BonjourAIApple
 import BonjourAIAnthropic
-import BonjourAIGitHub
 
 // MARK: - StubAppleChatFactory
 
@@ -205,69 +204,37 @@ struct CloudAwareBonjourChatSessionFactoryTests {
         #expect(anthropic.selectedModel == .opus)
     }
 
-    // MARK: - GitHub-Preferred Routing
+    // MARK: - Retired GitHub Backend
 
-    @Test("`.github` preference returns the GitHub session when a PAT is configured")
-    func githubRoutesToGitHubSession() throws {
+    @Test("A stored `\"github\"` preference migrates to the on-device default")
+    func retiredGitHubRawValueResolvesToDefault() throws {
+        // GitHub Models was retired 2026-07-30 and `AIBackend.github`
+        // was removed. Anyone whose stored preference still reads
+        // "github" must resolve to the default rather than dangling.
         let preferencesStore = try makeStore()
-        preferencesStore.aiBackend = .github
+        preferencesStore.aiBackendRawValue = "github"
 
-        let appleSession = StubAppleChatSession()
-        let appleFactory = StubAppleChatFactory(sessionToReturn: appleSession)
-        let credentialsStore = InMemoryAICloudCredentialsStore(seed: [.github: "ghp_test"])
-        let factory = CloudAwareBonjourChatSessionFactory(
-            appleFactory: appleFactory,
-            credentialsStore: credentialsStore,
-            preferencesStore: preferencesStore,
-            anthropicClient: MockAnthropicClient(),
-            githubClient: MockGitHubModelsClient()
-        )
-
-        let session = factory.makeForCurrentEnvironment(publishManager: MockBonjourPublishManager())
-        #expect(session is GitHubBonjourChatSession)
-        #expect(!(session === appleSession))
+        #expect(preferencesStore.aiBackend == .appleIntelligence)
     }
 
-    @Test("`.github` falls back to the Apple session when no PAT is configured")
-    func githubFallsBackToAppleWhenNotSignedIn() throws {
+    @Test("A stored `\"github\"` preference routes to the Apple session, not a dead cloud session")
+    func retiredGitHubRawValueRoutesToApple() throws {
         let preferencesStore = try makeStore()
-        preferencesStore.aiBackend = .github
+        preferencesStore.aiBackendRawValue = "github"
 
         let appleSession = StubAppleChatSession()
         let appleFactory = StubAppleChatFactory(sessionToReturn: appleSession)
-        let credentialsStore = InMemoryAICloudCredentialsStore()
+        // A stale PAT left in the Keychain must NOT resurrect any
+        // GitHub routing — the backend no longer exists.
+        let credentialsStore = InMemoryAICloudCredentialsStore(seed: [.github: "ghp_stale"])
         let factory = CloudAwareBonjourChatSessionFactory(
             appleFactory: appleFactory,
             credentialsStore: credentialsStore,
             preferencesStore: preferencesStore,
-            anthropicClient: MockAnthropicClient(),
-            githubClient: MockGitHubModelsClient()
+            anthropicClient: MockAnthropicClient()
         )
 
         let session = factory.makeForCurrentEnvironment(publishManager: MockBonjourPublishManager())
         #expect(session === appleSession)
-    }
-
-    @Test("`.appleIntelligence` falls back to GitHub when Apple isn't available and only a GitHub PAT is configured")
-    func appleFallsBackToGitHubWhenOnlyGitHubConfigured() throws {
-        // Documents the multi-cloud fallback order: Anthropic is
-        // tried first (matching the pre-GitHub behavior), then
-        // GitHub. With only GitHub credentials, the user gets
-        // the GitHub session.
-        let preferencesStore = try makeStore()
-        preferencesStore.aiBackend = .appleIntelligence
-
-        let appleFactory = StubAppleChatFactory(sessionToReturn: nil)
-        let credentialsStore = InMemoryAICloudCredentialsStore(seed: [.github: "ghp_test"])
-        let factory = CloudAwareBonjourChatSessionFactory(
-            appleFactory: appleFactory,
-            credentialsStore: credentialsStore,
-            preferencesStore: preferencesStore,
-            anthropicClient: MockAnthropicClient(),
-            githubClient: MockGitHubModelsClient()
-        )
-
-        let session = factory.makeForCurrentEnvironment(publishManager: MockBonjourPublishManager())
-        #expect(session is GitHubBonjourChatSession)
     }
 }

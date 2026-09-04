@@ -8,7 +8,6 @@
 import SwiftUI
 import BonjourAICore
 import BonjourAIAnthropic
-import BonjourAIGitHub
 import BonjourCore
 
 // MARK: - AIBackend + Style
@@ -44,8 +43,6 @@ public extension AIBackend {
             return .kozBonBlue
         case .anthropic:
             return .kozBonAnthropic
-        case .github:
-            return .kozBonGitHub
         }
     }
 
@@ -62,8 +59,6 @@ public extension AIBackend {
             return .appleIntelligence
         case .anthropic:
             return .anthropicClaude
-        case .github:
-            return .github
         }
     }
 
@@ -76,8 +71,6 @@ public extension AIBackend {
             return Iconography.appleIntelligence
         case .anthropic:
             return Iconography.anthropicClaude
-        case .github:
-            return Iconography.github
         }
     }
 }

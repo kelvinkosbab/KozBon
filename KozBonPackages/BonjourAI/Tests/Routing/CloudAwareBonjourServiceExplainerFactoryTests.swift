@@ -14,7 +14,6 @@ import BonjourStorage
 import BonjourAICore
 import BonjourAIApple
 import BonjourAIAnthropic
-import BonjourAIGitHub
 
 // MARK: - StubAppleExplainerFactory
 
@@ -208,65 +207,25 @@ struct CloudAwareExplainerFactoryTests {
         #expect(anthropic.selectedModel == .haiku)
     }
 
-    // MARK: - GitHub-Preferred Routing
+    // MARK: - Retired GitHub Backend
 
-    @Test("`.github` preference returns the GitHub explainer when a PAT is configured")
-    func githubRoutesToGitHubExplainer() throws {
+    @Test("A stored `\"github\"` preference falls back to the Apple explainer")
+    func retiredGitHubRawValueUsesAppleExplainer() throws {
+        // The GitHub explainer path was removed with the backend;
+        // a stale PAT must not route anywhere.
         let preferencesStore = try makeStore()
-        preferencesStore.aiBackend = .github
+        preferencesStore.aiBackendRawValue = "github"
 
         let appleExplainer = StubAppleExplainer()
         let appleFactory = StubAppleExplainerFactory(explainerToReturn: appleExplainer)
-        let credentialsStore = InMemoryAICloudCredentialsStore(seed: [.github: "ghp_test"])
+        let credentialsStore = InMemoryAICloudCredentialsStore(seed: [.github: "ghp_stale"])
         let factory = CloudAwareBonjourServiceExplainerFactory(
             appleFactory: appleFactory,
             credentialsStore: credentialsStore,
             preferencesStore: preferencesStore,
-            anthropicClient: MockAnthropicClient(),
-            githubClient: MockGitHubModelsClient()
+            anthropicClient: MockAnthropicClient()
         )
 
-        let explainer = factory.makeForCurrentEnvironment()
-        #expect(explainer is GitHubBonjourServiceExplainer)
-        #expect(!(explainer === appleExplainer))
-    }
-
-    @Test("`.github` falls back to the Apple explainer when no PAT is configured")
-    func githubFallsBackToAppleWhenNotSignedIn() throws {
-        let preferencesStore = try makeStore()
-        preferencesStore.aiBackend = .github
-
-        let appleExplainer = StubAppleExplainer()
-        let appleFactory = StubAppleExplainerFactory(explainerToReturn: appleExplainer)
-        let credentialsStore = InMemoryAICloudCredentialsStore()
-        let factory = CloudAwareBonjourServiceExplainerFactory(
-            appleFactory: appleFactory,
-            credentialsStore: credentialsStore,
-            preferencesStore: preferencesStore,
-            anthropicClient: MockAnthropicClient(),
-            githubClient: MockGitHubModelsClient()
-        )
-
-        let explainer = factory.makeForCurrentEnvironment()
-        #expect(explainer === appleExplainer)
-    }
-
-    @Test("`.appleIntelligence` falls back to GitHub when Apple isn't available and only a GitHub PAT is configured")
-    func appleFallsBackToGitHubWhenOnlyGitHubConfigured() throws {
-        let preferencesStore = try makeStore()
-        preferencesStore.aiBackend = .appleIntelligence
-
-        let appleFactory = StubAppleExplainerFactory(explainerToReturn: nil)
-        let credentialsStore = InMemoryAICloudCredentialsStore(seed: [.github: "ghp_test"])
-        let factory = CloudAwareBonjourServiceExplainerFactory(
-            appleFactory: appleFactory,
-            credentialsStore: credentialsStore,
-            preferencesStore: preferencesStore,
-            anthropicClient: MockAnthropicClient(),
-            githubClient: MockGitHubModelsClient()
-        )
-
-        let explainer = factory.makeForCurrentEnvironment()
-        #expect(explainer is GitHubBonjourServiceExplainer)
+        #expect(factory.makeForCurrentEnvironment() === appleExplainer)
     }
 }

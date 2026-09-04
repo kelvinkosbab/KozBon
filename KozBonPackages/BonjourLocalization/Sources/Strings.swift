@@ -1117,6 +1117,18 @@ public enum Strings {
             .init("settings_ai_backend_github_subtitle", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        public static var aiBackendGitHubRetiredTitle: LocalizedStringResource {
+            .init("settings_ai_backend_github_retired_title", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var aiBackendGitHubRetiredBody: LocalizedStringResource {
+            .init("settings_ai_backend_github_retired_body", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var aiBackendGitHubRetiredRemoveToken: LocalizedStringResource {
+            .init("settings_ai_backend_github_retired_remove_token", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         /// Footer shown when the GitHub backend is selected.
         /// Discloses that network-shape data is sent to GitHub's API.
         public static var aiBackendGitHubPrivacy: LocalizedStringResource {

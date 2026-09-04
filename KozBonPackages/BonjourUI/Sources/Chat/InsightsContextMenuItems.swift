@@ -10,7 +10,6 @@ import BonjourAI
 import BonjourAIAnthropic
 import BonjourAIApple
 import BonjourAICore
-import BonjourAIGitHub
 import BonjourCore
 import BonjourLocalization
 import BonjourStorage
@@ -67,9 +66,6 @@ public struct InsightsContextMenuItems: View {
 
             case .anthropic:
                 anthropicMenu
-
-            case .github:
-                githubMenu
             }
         }
     }
@@ -115,30 +111,6 @@ public struct InsightsContextMenuItems: View {
         }
     }
 
-    // MARK: - GitHub Models
-
-    @ViewBuilder
-    private var githubMenu: some View {
-        if credentialsStore.hasAPIKey(for: .github) {
-            Divider()
-            Button {
-                hapticFeedback.play(.medium)
-                action()
-            } label: {
-                Label {
-                    Text(Strings.Insights.explainWithGitHub)
-                } icon: {
-                    Image.github
-                }
-            }
-        } else {
-            cloudSignInItem(
-                provider: .github,
-                label: Strings.Insights.signInToGitHub,
-                icon: Image.github
-            )
-        }
-    }
 
     // MARK: - Cloud Sign-In CTA
 

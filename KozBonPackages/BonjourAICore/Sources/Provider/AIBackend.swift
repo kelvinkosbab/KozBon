@@ -33,11 +33,23 @@ public enum AIBackend: String, Sendable, CaseIterable, Codable, Identifiable {
     /// requires the user to paste a key from `console.anthropic.com`.
     case anthropic
 
-    /// GitHub Models (OpenAI GPT-4o via GitHub's brokered
-    /// inference endpoint) using the user's own Personal Access
-    /// Token. Opt-in; requires the user to paste a token from
-    /// `github.com/settings/tokens`.
-    case github
+    // NOTE: `case github` was removed when GitHub retired GitHub
+    // Models on 2026-07-30 — the playground, model catalog,
+    // inference API, and BYOK all went away, and the endpoint
+    // this app called (`models.inference.ai.azure.com`) no longer
+    // resolves in DNS. Every request from a GitHub-backed session
+    // failed outright, so leaving the option selectable only
+    // produced network errors.
+    //
+    // Removing the case (rather than keeping a disabled one) is
+    // deliberate: ``resolved(rawValue:)`` already maps
+    // unrecognized stored values to ``default``, so anyone whose
+    // preference still reads `"github"` is migrated to on-device
+    // Apple Intelligence automatically on next read — the exact
+    // "retired provider" path that method was written for.
+    // `AICloudProvider.github` intentionally survives so Settings
+    // can still surface, and delete, the now-useless Personal
+    // Access Token left in the Keychain.
 
     // MARK: - Identifiable
 
@@ -76,7 +88,7 @@ public enum AIBackend: String, Sendable, CaseIterable, Codable, Identifiable {
         switch self {
         case .appleIntelligence:
             return false
-        case .anthropic, .github:
+        case .anthropic:
             return true
         }
     }
@@ -93,8 +105,6 @@ public enum AIBackend: String, Sendable, CaseIterable, Codable, Identifiable {
             return nil
         case .anthropic:
             return .anthropic
-        case .github:
-            return .github
         }
     }
 
@@ -108,8 +118,6 @@ public enum AIBackend: String, Sendable, CaseIterable, Codable, Identifiable {
             return Strings.Settings.aiBackendApple
         case .anthropic:
             return Strings.Settings.aiBackendAnthropic
-        case .github:
-            return Strings.Settings.aiBackendGitHub
         }
     }
 
@@ -122,8 +130,6 @@ public enum AIBackend: String, Sendable, CaseIterable, Codable, Identifiable {
             return Strings.Settings.aiBackendAppleSubtitle
         case .anthropic:
             return Strings.Settings.aiBackendAnthropicSubtitle
-        case .github:
-            return Strings.Settings.aiBackendGitHubSubtitle
         }
     }
 }

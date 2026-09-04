@@ -24489,6 +24489,165 @@
           }
         }
       }
+    },
+    "settings_ai_backend_github_retired_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub Models Was Retired"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub Models se ha retirado"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub Models a été retiré"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub Models wurde eingestellt"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub Models は提供終了しました"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub Models 已停止服务"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تم إيقاف GitHub Models"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub Models הופסק"
+          }
+        }
+      }
+    },
+    "settings_ai_backend_github_retired_body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub shut down GitHub Models on July 30, 2026, so it is no longer available as an assistant. KozBon switched you to Apple Intelligence. Your saved access token no longer works and can be removed."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub cerró GitHub Models el 30 de julio de 2026, por lo que ya no está disponible como asistente. KozBon te cambió a Apple Intelligence. Tu token guardado ya no funciona y puede eliminarse."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub a fermé GitHub Models le 30 juillet 2026 ; il n'est donc plus disponible comme assistant. KozBon vous a basculé sur Apple Intelligence. Votre jeton enregistré ne fonctionne plus et peut être supprimé."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub hat GitHub Models am 30. Juli 2026 eingestellt, daher ist es nicht mehr als Assistent verfügbar. KozBon hat auf Apple Intelligence umgestellt. Ihr gespeichertes Token funktioniert nicht mehr und kann entfernt werden."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub は 2026年7月30日 に GitHub Models を終了したため、アシスタントとして利用できなくなりました。KozBon は Apple Intelligence に切り替えました。保存されたトークンは無効なため削除できます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub 已于 2026 年 7 月 30 日关闭 GitHub Models，因此它不再可用作助理。KozBon 已为你切换到 Apple Intelligence。你保存的访问令牌已失效，可以移除。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أوقفت GitHub خدمة GitHub Models في 30 يوليو 2026، لذا لم تعد متاحة كمساعد. حوّلك KozBon إلى Apple Intelligence. لم يعد رمز الوصول المحفوظ يعمل ويمكن إزالته."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub סגרה את GitHub Models ב‑30 ביולי 2026, ולכן היא אינה זמינה עוד כעוזר. KozBon העביר אותך ל‑Apple Intelligence. אסימון הגישה השמור אינו פעיל עוד וניתן להסירו."
+          }
+        }
+      }
+    },
+    "settings_ai_backend_github_retired_remove_token": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove Saved Token"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eliminar el token guardado"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Supprimer le jeton enregistré"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gespeichertes Token entfernen"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存されたトークンを削除"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "移除已保存的令牌"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إزالة الرمز المحفوظ"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הסרת האסימון השמור"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

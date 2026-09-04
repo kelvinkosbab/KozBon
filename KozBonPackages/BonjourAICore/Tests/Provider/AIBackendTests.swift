@@ -38,12 +38,14 @@ struct AIBackendTests {
     func resolvedMatchesKnownIdentifiers() {
         #expect(AIBackend.resolved(rawValue: "apple") == .appleIntelligence)
         #expect(AIBackend.resolved(rawValue: "anthropic") == .anthropic)
-        #expect(AIBackend.resolved(rawValue: "github") == .github)
     }
 
     @Test("`resolved(rawValue:)` falls back to default for unknown / nil values")
     func resolvedFallsBackForUnknown() {
         #expect(AIBackend.resolved(rawValue: "openai") == .default)
+        // GitHub Models was retired 2026-07-30 and the case removed —
+        // stored preferences must migrate to the default, not dangle.
+        #expect(AIBackend.resolved(rawValue: "github") == .default)
         #expect(AIBackend.resolved(rawValue: nil) == .default)
         #expect(AIBackend.resolved(rawValue: "") == .default)
     }
@@ -54,14 +56,12 @@ struct AIBackendTests {
     func isCloudPerCase() {
         #expect(!AIBackend.appleIntelligence.isCloud)
         #expect(AIBackend.anthropic.isCloud)
-        #expect(AIBackend.github.isCloud)
     }
 
     @Test("`cloudProvider` is nil for Apple and matches the picker case for cloud backends")
     func cloudProviderPerCase() {
         #expect(AIBackend.appleIntelligence.cloudProvider == nil)
         #expect(AIBackend.anthropic.cloudProvider == .anthropic)
-        #expect(AIBackend.github.cloudProvider == .github)
     }
 
     // MARK: - PreferencesStore Bridge
@@ -80,12 +80,14 @@ struct AIBackendTests {
         #expect(store.aiBackend == .anthropic)
     }
 
-    @Test("Writing typed `aiBackend = .github` persists as raw `\"github\"`")
-    func typedAccessorWritesGitHubRawValue() throws {
+    @Test("A persisted `\"github\"` raw value reads back as the default after retirement")
+    func retiredGitHubRawValueReadsBackAsDefault() throws {
         let store = try makeStore()
-        store.aiBackend = .github
-        #expect(store.aiBackendRawValue == "github")
-        #expect(store.aiBackend == .github)
+        // Simulates a user who selected GitHub Models before it was
+        // retired: the raw value survives in SwiftData, but the typed
+        // accessor must hand back a working backend.
+        store.aiBackendRawValue = "github"
+        #expect(store.aiBackend == .appleIntelligence)
     }
 
     @Test("Retired backend identifiers fall back to the default")

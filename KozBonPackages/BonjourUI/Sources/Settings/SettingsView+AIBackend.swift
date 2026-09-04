@@ -10,7 +10,6 @@ import BonjourAI
 import BonjourAIApple
 import BonjourAICore
 import BonjourAIAnthropic
-import BonjourAIGitHub
 import BonjourCore
 import BonjourLocalization
 
@@ -31,6 +30,12 @@ extension SettingsView {
     @ViewBuilder
     var aiBackendSection: some View {
         Section {
+            // Shown only while a now-useless GitHub PAT is still
+            // in the Keychain — see `gitHubRetirementNotice`.
+            if hasGitHubKey {
+                gitHubRetirementNotice
+            }
+
             backendPicker
 
             switch preferencesStore.aiBackend {
@@ -42,8 +47,6 @@ extension SettingsView {
                 if hasAnthropicKey {
                     claudeModelPicker
                 }
-            case .github:
-                githubSignInRow
             }
         } header: {
             Text(Strings.Settings.aiBackendSection)
@@ -61,8 +64,6 @@ extension SettingsView {
                     Text(Strings.Settings.aiBackendApplePrivacy)
                 case .anthropic:
                     Text(Strings.Settings.aiCloudFooter)
-                case .github:
-                    Text(Strings.Settings.aiBackendGitHubPrivacy)
                 }
             }
         }
@@ -118,8 +119,6 @@ extension SettingsView {
                 .tag(AIBackend.appleIntelligence)
             backendOption(.anthropic)
                 .tag(AIBackend.anthropic)
-            backendOption(.github)
-                .tag(AIBackend.github)
         } label: {
             Text(Strings.Settings.aiBackendPickerLabel)
         }
@@ -175,14 +174,49 @@ extension SettingsView {
         )
     }
 
-    /// GitHub-specific signed-in / sign-in row.
+    // MARK: - GitHub Retirement Notice
+
+    /// Explains why the GitHub Models option disappeared, and
+    /// offers to delete the Personal Access Token it left behind.
+    ///
+    /// GitHub retired GitHub Models on 2026-07-30 (playground,
+    /// catalog, inference API, and BYOK all withdrawn), and the
+    /// endpoint KozBon called no longer resolves in DNS — so
+    /// `AIBackend.github` was removed and anyone who had it
+    /// selected is silently migrated to Apple Intelligence by
+    /// `AIBackend.resolved(rawValue:)`. A silent switch would be
+    /// baffling on its own, hence this row.
+    ///
+    /// Presence of the orphaned key IS the "should I show this?"
+    /// state — no extra persisted flag, and the notice disappears
+    /// for good once the token is removed. Reuses the standard
+    /// sign-out confirmation flow via ``providerPendingSignOut``.
     @ViewBuilder
-    private var githubSignInRow: some View {
-        signInRow(
-            provider: .github,
-            isConnected: hasGitHubKey,
-            signInLabel: Strings.Settings.aiCloudSignInGitHub
-        )
+    private var gitHubRetirementNotice: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Label {
+                Text(Strings.Settings.aiBackendGitHubRetiredTitle)
+                    .font(.headline)
+            } icon: {
+                Image.errorBanner
+                    .foregroundStyle(.orange)
+                    .accessibilityHidden(true)
+            }
+
+            Text(Strings.Settings.aiBackendGitHubRetiredBody)
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+
+            Button(role: .destructive) {
+                providerPendingSignOut = .github
+            } label: {
+                Text(Strings.Settings.aiBackendGitHubRetiredRemoveToken)
+            }
+            .accessibilityIdentifier("aiCloud.removeRetiredToken.github")
+        }
+        .padding(.vertical, 4)
+        .accessibilityElement(children: .contain)
     }
 
     /// Shared row layout for both cloud backends. The destructive

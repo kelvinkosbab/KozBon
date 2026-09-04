@@ -121,8 +121,6 @@ struct ChatSignInPromptView: View {
             // on-device-unavailable banner) should still get
             // sensible copy. Falls back to the Claude string.
             return Strings.Chat.signInToClaudeTitle
-        case .github:
-            return Strings.Chat.signInToGitHubTitle
         }
     }
 
@@ -130,8 +128,6 @@ struct ChatSignInPromptView: View {
         switch backend {
         case .anthropic, .appleIntelligence:
             return Strings.Chat.signInToClaudeBody
-        case .github:
-            return Strings.Chat.signInToGitHubBody
         }
     }
 
@@ -139,8 +135,6 @@ struct ChatSignInPromptView: View {
         switch backend {
         case .anthropic, .appleIntelligence:
             return Strings.Settings.aiCloudSignIn
-        case .github:
-            return Strings.Settings.aiCloudSignInGitHub
         }
     }
 }

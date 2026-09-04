@@ -9,7 +9,6 @@ import Foundation
 import BonjourAICore
 import BonjourAIApple
 import BonjourAIAnthropic
-import BonjourAIGitHub
 import BonjourCore
 import BonjourScanning
 import BonjourStorage
@@ -56,7 +55,6 @@ public struct CloudAwareBonjourChatSessionFactory: BonjourChatSessionFactoryProt
     private let credentialsStore: any AICloudCredentialsStore & Sendable
     private let preferencesStore: PreferencesStore
     private let anthropicClient: any AnthropicClientProtocol
-    private let githubClient: any GitHubModelsClientProtocol
 
     /// Subsystem-scoped logger for cloud-fallback diagnostics.
     /// Console.app filters by category
@@ -83,22 +81,16 @@ public struct CloudAwareBonjourChatSessionFactory: BonjourChatSessionFactoryProt
     ///   - anthropicClient: The Anthropic API client used when
     ///     routing hits the Anthropic path. Defaults to a real
     ///     ``AnthropicClient`` against `api.anthropic.com`.
-    ///   - githubClient: The GitHub Models API client used when
-    ///     routing hits the GitHub path. Defaults to a real
-    ///     ``GitHubModelsClient`` against
-    ///     `models.inference.ai.azure.com`.
     public init(
         appleFactory: any BonjourChatSessionFactoryProtocol = BonjourChatSessionFactory(),
         credentialsStore: any AICloudCredentialsStore & Sendable,
         preferencesStore: PreferencesStore,
         anthropicClient: any AnthropicClientProtocol = AnthropicClient(),
-        githubClient: any GitHubModelsClientProtocol = GitHubModelsClient()
     ) {
         self.appleFactory = appleFactory
         self.credentialsStore = credentialsStore
         self.preferencesStore = preferencesStore
         self.anthropicClient = anthropicClient
-        self.githubClient = githubClient
     }
 
     // MARK: - BonjourChatSessionFactoryProtocol
@@ -120,21 +112,12 @@ public struct CloudAwareBonjourChatSessionFactory: BonjourChatSessionFactoryProt
                 return appleSession
             }
             return makeAnthropicSessionIfPossible()
-                ?? makeGitHubSessionIfPossible()
 
         case .anthropic:
             // User picked Anthropic. Use it when possible; fall
             // back to the Apple session if no credentials so the
             // tab still surfaces.
             if let cloudSession = makeAnthropicSessionIfPossible() {
-                return cloudSession
-            }
-            return appleSession
-
-        case .github:
-            // User picked GitHub. Use it when possible; same
-            // Apple fall-back semantics as the Anthropic branch.
-            if let cloudSession = makeGitHubSessionIfPossible() {
                 return cloudSession
             }
             return appleSession
@@ -152,8 +135,7 @@ public struct CloudAwareBonjourChatSessionFactory: BonjourChatSessionFactoryProt
         // Intelligence availability — for the cloud path that
         // check would unhelpfully skip the warmup. Pick the
         // right strategy based on what we actually got back.
-        if session is AnthropicBonjourChatSession
-            || session is GitHubBonjourChatSession {
+        if session is AnthropicBonjourChatSession {
             await Task.yield()
             session.prewarm()
         } else {
@@ -183,18 +165,4 @@ public struct CloudAwareBonjourChatSessionFactory: BonjourChatSessionFactoryProt
         return session
     }
 
-    /// Builds a ``GitHubBonjourChatSession`` when the credentials
-    /// store has a GitHub PAT. Returns `nil` otherwise. No model
-    /// selection: the GitHub backend hardcodes `gpt-4o`.
-    @MainActor
-    private func makeGitHubSessionIfPossible() -> GitHubBonjourChatSession? {
-        guard credentialsStore.hasAPIKey(for: .github) else {
-            routingLogger.debug("GitHub backend requested but no PAT configured.")
-            return nil
-        }
-        return GitHubBonjourChatSession(
-            client: githubClient,
-            credentialsStore: credentialsStore
-        )
-    }
 }

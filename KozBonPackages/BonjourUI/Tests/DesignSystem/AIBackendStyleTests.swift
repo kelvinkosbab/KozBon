@@ -34,12 +34,8 @@ struct AIBackendStyleTests {
         #expect(AIBackend.anthropic.accentColor == Color.kozBonAnthropic)
     }
 
-    @Test("GitHub uses `kozBonGitHub` (GitHub chrome)")
-    func githubAccentIsChrome() {
-        #expect(AIBackend.github.accentColor == Color.kozBonGitHub)
-    }
 
-    @Test("The three backends have distinct accents — never accidentally swap")
+    @Test("The backends have distinct accents — never accidentally swap")
     func accentsAreDistinct() {
         // Belt-and-suspenders trip-wire: a refactor that swapped
         // two case branches inside `accentColor` would still
@@ -48,8 +44,7 @@ struct AIBackendStyleTests {
         // pointing at the same value.
         let accents = [
             AIBackend.appleIntelligence.accentColor,
-            AIBackend.anthropic.accentColor,
-            AIBackend.github.accentColor
+            AIBackend.anthropic.accentColor
         ]
         #expect(Set(accents.map(String.init(describing:))).count == accents.count)
     }
@@ -77,22 +72,12 @@ struct AIBackendStyleTests {
         #expect(AIBackend.anthropic.iconSystemName == Iconography.anthropicClaude)
     }
 
-    @Test("`icon` resolves to the GitHub SF-Symbol fallback for GitHub")
-    func githubIconIsCodeSymbol() {
-        // No GitHub brand asset is bundled yet; the Image and
-        // its parallel `iconSystemName` both resolve to the
-        // developer-y SF Symbol stand-in. When a permitted
-        // asset ships, only `Image.github` needs to swap — the
-        // system-name fallback stays for `Label(_:systemImage:)`.
-        #expect(AIBackend.github.iconSystemName == Iconography.github)
-    }
 
-    @Test("The three backends use distinct icons")
+    @Test("The backends use distinct icons")
     func iconsAreDistinct() {
         let names = [
             AIBackend.appleIntelligence.iconSystemName,
-            AIBackend.anthropic.iconSystemName,
-            AIBackend.github.iconSystemName
+            AIBackend.anthropic.iconSystemName
         ]
         #expect(Set(names).count == names.count)
     }

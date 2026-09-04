@@ -150,7 +150,6 @@ public struct BonjourChatView: View {
         switch preferencesStore.aiBackend {
         case .appleIntelligence: return false
         case .anthropic:         return !hasAnthropicKey
-        case .github:            return !hasGitHubKey
         }
     }
 
