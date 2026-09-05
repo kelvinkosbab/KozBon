@@ -277,51 +277,29 @@ extension SettingsView {
 
     // MARK: - Claude Model Picker
 
+    /// Model picker driven by ``AnthropicModelCatalog`` rather
+    /// than the hardcoded ``AnthropicModel`` enum.
+    ///
+    /// Anthropic ships new models between KozBon releases, so a
+    /// compiled-in list goes stale the moment it ships. The
+    /// catalog fetches what the user's own key can actually call;
+    /// the enum survives only as the offline fallback.
     @ViewBuilder
     private var claudeModelPicker: some View {
         LabeledContent {
             Menu {
-                ForEach(AnthropicModel.allCases) { model in
-                    Button {
-                        // Same animation treatment as the
-                        // backend picker — the checkmark moves
-                        // between rows when selection changes,
-                        // and the move reads as a smooth slide
-                        // rather than a pop inside a
-                        // `withAnimation` transaction.
-                        withAnimation(reduceMotion ? nil : .default) {
-                            preferencesStore.aiCloudModel = model
-                        }
-                    } label: {
-                        if preferencesStore.aiCloudModel == model {
-                            Label(localizedName(for: model), systemImage: Iconography.selected)
-                        } else {
-                            Text(localizedName(for: model))
-                        }
-                    }
-                    // VoiceOver reads each menu Button's label
-                    // identically across selection states (the
-                    // checkmark icon is decorative within a
-                    // `Label`), so without the `.isSelected`
-                    // trait a blind user can't tell which model
-                    // is currently active. The trait makes
-                    // VoiceOver append "selected" to the
-                    // announcement for the matching option.
-                    .accessibilityAddTraits(
-                        preferencesStore.aiCloudModel == model ? .isSelected : []
-                    )
+                ForEach(anthropicModelCatalog.options) { option in
+                    modelMenuButton(for: option)
                 }
             } label: {
-                Text(localizedName(for: preferencesStore.aiCloudModel))
+                Text(verbatim: modelDisplayName(for: selectedModelIdentifier))
                     .font(.subheadline)
             }
             .accessibilityLabel(Strings.Settings.aiCloudModelPickerLabel)
         } label: {
             VStack(alignment: .leading, spacing: 2) {
                 Text(Strings.Settings.aiCloudModelPickerLabel)
-                Text(localizedSubtitle(for: preferencesStore.aiCloudModel))
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                modelSubtitleView
             }
             // Combine title + subtitle into one VoiceOver
             // element so users hear "Claude Model, Balanced.
@@ -331,6 +309,81 @@ extension SettingsView {
             // extra swipe.
             .accessibilityElement(children: .combine)
         }
+    }
+
+    /// One row of the model menu. Extracted so the picker body
+    /// stays small enough for the type-checker.
+    @ViewBuilder
+    private func modelMenuButton(for option: AnthropicModelOption) -> some View {
+        let isSelected = option.id == selectedModelIdentifier
+        Button {
+            // Same animation treatment as the backend picker —
+            // the checkmark moves between rows when selection
+            // changes, and the move reads as a smooth slide
+            // rather than a pop inside a `withAnimation`
+            // transaction.
+            withAnimation(reduceMotion ? nil : .default) {
+                preferencesStore.aiCloudModelIdentifier = option.id
+            }
+        } label: {
+            if isSelected {
+                Label(modelDisplayName(for: option.id), systemImage: Iconography.selected)
+            } else {
+                Text(verbatim: modelDisplayName(for: option.id))
+            }
+        }
+        // VoiceOver reads each menu Button's label identically
+        // across selection states (the checkmark icon is
+        // decorative within a `Label`), so without the
+        // `.isSelected` trait a blind user can't tell which model
+        // is currently active.
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
+    }
+
+    /// Subtitle under the picker label. The curated, localized
+    /// blurbs only exist for the three built-in tiers; a model
+    /// that came from the live catalog shows its identifier
+    /// instead, which is more useful than nothing and needs no
+    /// translation.
+    @ViewBuilder
+    private var modelSubtitleView: some View {
+        if let builtIn = AnthropicModel(rawValue: selectedModelIdentifier) {
+            Text(localizedSubtitle(for: builtIn))
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        } else {
+            Text(verbatim: selectedModelIdentifier)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    // MARK: - Model Selection Helpers
+
+    /// The currently-selected model identifier, reconciled against
+    /// the catalog.
+    ///
+    /// ``AnthropicModelCatalog/resolvedSelection(for:)`` only
+    /// overrides the stored value when it has a *live* list
+    /// proving the model is gone — so a newer model this binary
+    /// has never heard of is preserved rather than discarded.
+    var selectedModelIdentifier: String {
+        anthropicModelCatalog.resolvedSelection(
+            for: preferencesStore.aiCloudModelIdentifier
+        )
+    }
+
+    /// Display name for a model identifier.
+    ///
+    /// Built-in tiers keep their translated names from the String
+    /// Catalog; catalog-sourced models use Anthropic's own
+    /// `display_name`, which is English — consistent with how the
+    /// project already treats provider and model branding.
+    func modelDisplayName(for identifier: String) -> String {
+        if let builtIn = AnthropicModel(rawValue: identifier) {
+            return String(localized: localizedName(for: builtIn))
+        }
+        return anthropicModelCatalog.displayName(for: identifier)
     }
 
     // MARK: - Localized Model Copy

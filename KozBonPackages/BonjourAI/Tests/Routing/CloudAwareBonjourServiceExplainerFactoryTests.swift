@@ -192,7 +192,7 @@ struct CloudAwareExplainerFactoryTests {
     func selectedModelFromPreferencesReachesExplainer() throws {
         let preferencesStore = try makeStore()
         preferencesStore.aiBackend = .anthropic
-        preferencesStore.aiCloudModel = .haiku
+        preferencesStore.aiCloudModelIdentifier = AnthropicModel.haiku.rawValue
 
         let credentialsStore = InMemoryAICloudCredentialsStore(seed: [.anthropic: "sk-ant-test"])
         let factory = CloudAwareBonjourServiceExplainerFactory(
@@ -204,7 +204,7 @@ struct CloudAwareExplainerFactoryTests {
 
         let explainer = factory.makeForCurrentEnvironment()
         let anthropic = try #require(explainer as? AnthropicBonjourServiceExplainer)
-        #expect(anthropic.selectedModel == .haiku)
+        #expect(anthropic.selectedModel == AnthropicModel.haiku.rawValue)
     }
 
     // MARK: - Retired GitHub Backend

@@ -66,7 +66,7 @@ Each module follows the `{name}/Sources` and `{name}/Tests` layout:
 | **BonjourScanning** | Network discovery and publishing | `BonjourServiceScanner`, `MyBonjourPublishManager`, `DependencyContainer`, mocks |
 | **BonjourAICore** | Provider-agnostic AI scaffolding — protocols, value types, prompt builders, safety, mocks, simulator stubs, UI primitives, credentials-store protocol + Keychain/InMemory impls | `BonjourChatSessionProtocol`, `BonjourServiceExplainerProtocol`, `BonjourChatPromptBuilder`, `BonjourServicePromptBuilder`, `AIBackend`, `AICloudProvider`, `AICloudCredentialsStore`, `AICloudError`, `KeychainAICloudCredentialsStore`, `InMemoryAICloudCredentialsStore`, `MockBonjourChatSession`, `MockBonjourServiceExplainer`, `ServiceExplanationSheet`, `MarkdownContentView`, `TypingIndicator` |
 | **BonjourAIApple** | Apple Foundation Models implementations of the BonjourAICore protocols | `BonjourChatSession`, `BonjourChatSessionFactory`, `BonjourServiceExplainer`, `BonjourServiceExplainerFactory`, `AppleIntelligenceSupport`, `AIContextMenuItems`, prepare-tool wrappers |
-| **BonjourAIAnthropic** | Anthropic Claude implementations of the BonjourAICore protocols + the typed `PreferencesStore.aiCloudModel` bridge | `AnthropicModel`, `AnthropicClient`, `AnthropicConfiguration`, `AnthropicBonjourChatSession`, `AnthropicBonjourServiceExplainer`, `MockAnthropicClient` |
+| **BonjourAIAnthropic** | Anthropic Claude implementations of the BonjourAICore protocols + the runtime model catalog and the `PreferencesStore.aiCloudModelIdentifier` bridge | `AnthropicModel` (offline fallback only), `AnthropicModelOption`, `AnthropicModelCatalog`, `AnthropicModelCatalogClient`, `AnthropicClient`, `AnthropicConfiguration`, `AnthropicBonjourChatSession`, `AnthropicBonjourServiceExplainer`, `MockAnthropicClient` |
 | **BonjourAIGitHub** | ⚠️ **Orphaned — pending deletion.** GitHub retired GitHub Models on 2026-07-30; its endpoint no longer resolves in DNS. `AIBackend.github` was removed, so no source file imports this module any more. Kept only to keep the removal diff separate. | `GitHubConfiguration`, `GitHubModelsClient`, `GitHubBonjourChatSession`, `GitHubBonjourServiceExplainer` (all unreachable) |
 | **BonjourAI** | Umbrella module — cloud-aware routing factories + `@_exported import BonjourAICore` so legacy `import BonjourAI` consumers stay working | `CloudAwareBonjourChatSessionFactory`, `CloudAwareBonjourServiceExplainerFactory` |
 | **BonjourUI** | SwiftUI views and view models | All views, `BonjourServicesViewModel`, UI components |
@@ -105,13 +105,22 @@ presence of that Keychain entry is the notice's only state).
 live in the `BonjourAI` umbrella and sit above the per-provider factories in
 `BonjourAIApple` / `BonjourAIAnthropic`. They read `preferencesStore.aiBackend`
 on every `makeForCurrentEnvironment(...)` call and route to the right implementation.
-`AppCoreScene` watches `preferencesStore.aiBackend` and `aiCloudModel` via `.onChange`
+`AppCoreScene` watches `preferencesStore.aiBackend` and `aiCloudModelIdentifier` via `.onChange`
 and calls `AppCoreViewModel.refreshAIBackend()` so flipping the picker takes effect
 without an app restart (the in-flight conversation is dropped across the swap).
 
 The Anthropic API key lives in the iOS Keychain (`whenUnlockedThisDeviceOnly`,
 never iCloud-synced) via `KeychainAICloudCredentialsStore`. Tests substitute
 `InMemoryAICloudCredentialsStore`.
+
+The Claude model picker is populated at runtime by `AnthropicModelCatalog`
+(`GET /v1/models` with the user's own key), not by the `AnthropicModel` enum —
+that enum is now only the offline fallback. Resolution is three-tiered: live
+fetch → this session's cached fetch (1h TTL, in-memory) → the compiled-in list.
+The selected model persists as a raw `String` (`aiCloudModelIdentifier`), and an
+identifier the binary doesn't recognize is **only** discarded when a live list
+proves it retired — otherwise a model newer than the build would be silently
+replaced by the default.
 
 ## Code Conventions
 

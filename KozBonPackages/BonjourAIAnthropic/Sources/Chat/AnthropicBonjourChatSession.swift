@@ -84,7 +84,7 @@ public final class AnthropicBonjourChatSession: BonjourChatSessionProtocol {
     /// Snapshot of the Claude model selected when the current
     /// system block was built. If the user flips this preference
     /// mid-conversation we recreate the cached prefix.
-    private var currentModel: AnthropicModel?
+    private var currentModel: String?
 
     /// Snapshot of the response-length preference baked into the
     /// current system instructions. Same recreation policy as
@@ -213,7 +213,7 @@ public final class AnthropicBonjourChatSession: BonjourChatSessionProtocol {
         messages.append(BonjourChatMessage(id: assistantId, role: .assistant, content: ""))
 
         let request = AnthropicMessageRequest(
-            model: selectedModel.rawValue,
+            model: selectedModel,
             maxTokens: Self.maximumResponseTokensPerTurn,
             stream: true,
             system: [systemBlock],
@@ -487,5 +487,9 @@ public final class AnthropicBonjourChatSession: BonjourChatSessionProtocol {
     /// preferences-store-agnostic; the consumer
     /// (`BonjourChatSessionFactory` or its cloud-aware future
     /// sibling) decides when to inject which model.
-    public var selectedModel: AnthropicModel = .default
+    /// API identifier of the model to send (e.g.
+    /// `claude-opus-5`). A raw `String` rather than
+    /// ``AnthropicModel`` because the catalog is fetched at
+    /// runtime — see `PreferencesStore.aiCloudModelIdentifier`.
+    public var selectedModel: String = AnthropicModel.default.rawValue
 }

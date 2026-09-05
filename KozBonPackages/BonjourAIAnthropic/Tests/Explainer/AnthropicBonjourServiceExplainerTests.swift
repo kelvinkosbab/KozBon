@@ -116,7 +116,7 @@ struct AnthropicBonjourServiceExplainerTests {
     func sendsSelectedModel() async throws {
         let client = MockAnthropicClient(chunks: ["ok"])
         let explainer = makeExplainer(client: client)
-        explainer.selectedModel = .haiku
+        explainer.selectedModel = AnthropicModel.haiku.rawValue
 
         await explainer.explain(serviceType: makeServiceType())
 

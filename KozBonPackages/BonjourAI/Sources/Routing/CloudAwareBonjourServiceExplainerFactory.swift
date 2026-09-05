@@ -87,7 +87,7 @@ public struct CloudAwareBonjourServiceExplainerFactory: BonjourServiceExplainerF
             client: anthropicClient,
             credentialsStore: credentialsStore
         )
-        explainer.selectedModel = preferencesStore.aiCloudModel
+        explainer.selectedModel = preferencesStore.aiCloudModelIdentifier
         return explainer
     }
 

@@ -161,7 +161,7 @@ public struct CloudAwareBonjourChatSessionFactory: BonjourChatSessionFactoryProt
             client: anthropicClient,
             credentialsStore: credentialsStore
         )
-        session.selectedModel = preferencesStore.aiCloudModel
+        session.selectedModel = preferencesStore.aiCloudModelIdentifier
         return session
     }
 

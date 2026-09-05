@@ -8,6 +8,7 @@
 import SwiftUI
 import CoreData
 import BonjourAI
+import BonjourAIAnthropic
 import BonjourAIApple
 import BonjourCore
 import BonjourLocalization
@@ -51,9 +52,20 @@ public struct SettingsView: View {
     /// body evaluation.
     @State var hasAnthropicKey: Bool = false
 
-    /// Mirror of ``hasAnthropicKey`` for the GitHub Models
-    /// backend. Same refresh contract.
+    /// Mirror of ``hasAnthropicKey`` for the retired GitHub
+    /// backend. Retained solely to drive the retirement notice —
+    /// its `true` state means an orphaned Personal Access Token is
+    /// still sitting in the Keychain and can be cleaned up.
     @State var hasGitHubKey: Bool = false
+
+    /// Live list of Claude models the user's key can call.
+    ///
+    /// Owned by the view (rather than injected) because the
+    /// picker is its only consumer, and `@State` keeps the fetched
+    /// list alive for the Settings tab's lifetime so reopening
+    /// Settings doesn't re-hit the network. Falls back to the
+    /// compiled-in list until a refresh succeeds.
+    @State var anthropicModelCatalog = AnthropicModelCatalog()
 
     /// Cached "the user has at least one persisted custom service
     /// type" flag. Refreshed on `.onAppear` and on every Core Data
@@ -123,6 +135,16 @@ public struct SettingsView: View {
             .onAppear {
                 refreshCustomServiceTypesState()
                 refreshCloudKeyState()
+            }
+            // Refresh the Claude model list so the picker reflects
+            // Anthropic's current lineup rather than whatever
+            // shipped in this binary. No-ops when the cached list
+            // is still fresh or no key is configured, so reopening
+            // Settings costs nothing.
+            .task {
+                await anthropicModelCatalog.refreshIfNeeded(
+                    apiKey: try? credentialsStore.apiKey(for: .anthropic)
+                )
             }
             // Refresh on any Core Data save (the custom-types
             // store) so Library / chat-intent / Reset writes

@@ -209,7 +209,7 @@ public struct AppCoreScene: Scene {
             .onChange(of: viewModel.preferencesStore.aiBackend) {
                 viewModel.refreshAIBackend()
             }
-            .onChange(of: viewModel.preferencesStore.aiCloudModel) {
+            .onChange(of: viewModel.preferencesStore.aiCloudModelIdentifier) {
                 viewModel.refreshAIBackend()
             }
             // Sign-in / sign-out to Claude posts this

@@ -189,7 +189,7 @@ struct CloudAwareBonjourChatSessionFactoryTests {
     func selectedModelFromPreferencesReachesSession() throws {
         let preferencesStore = try makeStore()
         preferencesStore.aiBackend = .anthropic
-        preferencesStore.aiCloudModel = .opus
+        preferencesStore.aiCloudModelIdentifier = AnthropicModel.opus.rawValue
 
         let credentialsStore = InMemoryAICloudCredentialsStore(seed: [.anthropic: "sk-ant-test"])
         let factory = CloudAwareBonjourChatSessionFactory(
@@ -201,7 +201,7 @@ struct CloudAwareBonjourChatSessionFactoryTests {
 
         let session = factory.makeForCurrentEnvironment(publishManager: MockBonjourPublishManager())
         let anthropic = try #require(session as? AnthropicBonjourChatSession)
-        #expect(anthropic.selectedModel == .opus)
+        #expect(anthropic.selectedModel == AnthropicModel.opus.rawValue)
     }
 
     // MARK: - Retired GitHub Backend

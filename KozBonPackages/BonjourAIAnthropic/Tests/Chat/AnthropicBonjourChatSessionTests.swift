@@ -138,7 +138,7 @@ struct AnthropicBonjourChatSessionTests {
     func sendsSelectedModel() async throws {
         let client = MockAnthropicClient(chunks: ["ok"])
         let session = makeSession(client: client)
-        session.selectedModel = .opus
+        session.selectedModel = AnthropicModel.opus.rawValue
 
         session.appendUserMessage("hello")
         await session.send("hello", context: makeContext())

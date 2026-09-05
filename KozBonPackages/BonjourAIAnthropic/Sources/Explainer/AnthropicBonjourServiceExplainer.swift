@@ -77,7 +77,9 @@ public final class AnthropicBonjourServiceExplainer: BonjourServiceExplainerProt
     /// factory based on the user's preference; defaults to
     /// ``AnthropicModel/default`` so previews and tests don't
     /// need to wire it explicitly.
-    public var selectedModel: AnthropicModel = .default
+    /// API identifier of the model to send. See
+    /// ``AnthropicBonjourChatSession/selectedModel``.
+    public var selectedModel: String = AnthropicModel.default.rawValue
 
     // MARK: - Init
 
@@ -156,7 +158,7 @@ public final class AnthropicBonjourServiceExplainer: BonjourServiceExplainerProt
             cacheControl: .ephemeral
         )
         let request = AnthropicMessageRequest(
-            model: selectedModel.rawValue,
+            model: selectedModel,
             maxTokens: Self.maximumResponseTokensPerExplanation,
             stream: true,
             system: [systemBlock],
