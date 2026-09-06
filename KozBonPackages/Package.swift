@@ -4,9 +4,7 @@ import PackageDescription
 
 // MARK: - Shared Settings
 
-let sharedSwiftSettings: [SwiftSetting] = [
-    .swiftLanguageMode(.v6)
-]
+let sharedSwiftSettings: [SwiftSetting] = [ .swiftLanguageMode(.v6) ]
 
 // MARK: - Target Helpers
 
