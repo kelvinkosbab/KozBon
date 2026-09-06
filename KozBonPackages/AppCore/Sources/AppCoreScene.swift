@@ -137,14 +137,7 @@ public struct AppCoreScene: Scene {
                 #endif
 
                 if viewModel.shouldShowChatTab {
-                    // `role: .search` on iOS/visionOS places this
-                    // tab at the trailing edge with Liquid Glass
-                    // separation. macOS overrides any search-role
-                    // tab's icon with a magnifying glass, so we
-                    // use a regular Tab there to preserve our
-                    // backend-specific glyph.
-                    #if os(macOS)
-                    Tab(value: TopLevelDestination.chat) {
+                    Tab(value: TopLevelDestination.chat, role: chatTabRole) {
                         BonjourChatView(viewModel: viewModel.servicesViewModel)
                     } label: {
                         ChatTabLabel(
@@ -153,17 +146,6 @@ public struct AppCoreScene: Scene {
                             isSelected: viewModel.selectedTab == .chat
                         )
                     }
-                    #else
-                    Tab(value: TopLevelDestination.chat, role: .search) {
-                        BonjourChatView(viewModel: viewModel.servicesViewModel)
-                    } label: {
-                        ChatTabLabel(
-                            backend: viewModel.preferencesStore.aiBackend,
-                            hasUnread: viewModel.hasUnreadAssistantChatMessage,
-                            isSelected: viewModel.selectedTab == .chat
-                        )
-                    }
-                    #endif
                 }
             }
             #if os(macOS)
@@ -251,6 +233,52 @@ public struct AppCoreScene: Scene {
         }
         #endif
 
+    }
+
+    // MARK: - Chat Tab Role
+
+    /// Role that gives the chat tab its separated, trailing
+    /// position in the tab bar.
+    ///
+    /// iOS 26 granted that Liquid Glass treatment to `.search`
+    /// tabs, so the chat tab claimed the role for the *look* even
+    /// though it hosts a conversation, not a search field. iOS 27
+    /// split the two concerns: `.prominent` now owns the visual
+    /// treatment, and a `.search` tab only "may receive the
+    /// prominent visual treatment by default" — which it stops
+    /// doing for a tab that never implements search. That's why
+    /// the chat tab quietly rejoined the row on iOS 27.
+    ///
+    /// Two gates, and both are load-bearing:
+    ///
+    /// - `#if compiler(>=6.4)` — `.prominent` exists only in the
+    ///   iOS 27 SDK. App Store archives are still cut with Xcode
+    ///   26.5 (Swift 6.3.2), where merely *naming* the symbol
+    ///   fails to compile; Xcode 27 is Swift 6.4.
+    /// - `if #available` — the deployment target is iOS 18.6, so
+    ///   even an Xcode-27 build has to fall back at runtime.
+    ///
+    /// macOS deliberately takes no role: it renders a search-role
+    /// tab as a search field and swaps the label's icon for a
+    /// magnifying glass, which would throw away the backend
+    /// glyph. Whether `.prominent` sidesteps that on macOS 27 is
+    /// untested, so this leaves a working surface alone.
+    ///
+    /// Computed here rather than inline in the `TabView` builder
+    /// because an `if #available` *inside* that builder is what
+    /// produced the `TupleContent<repeat each Content>`
+    /// variadic-generics build failure under the iOS 26 SDK.
+    private var chatTabRole: TabRole? {
+        #if os(macOS)
+        return nil
+        #else
+        #if compiler(>=6.4)
+        if #available(iOS 27, visionOS 27, *) {
+            return .prominent
+        }
+        #endif
+        return .search
+        #endif
     }
 }
 
