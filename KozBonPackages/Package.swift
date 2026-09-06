@@ -65,6 +65,7 @@ let package = Package(
         .library(name: "BonjourAICore", targets: ["BonjourAICore"]),
         .library(name: "BonjourAIApple", targets: ["BonjourAIApple"]),
         .library(name: "BonjourAIAnthropic", targets: ["BonjourAIAnthropic"]),
+        .library(name: "BonjourAIGemini", targets: ["BonjourAIGemini"]),
         .library(name: "BonjourAIGitHub", targets: ["BonjourAIGitHub"]),
         .library(name: "BonjourAI", targets: ["BonjourAI"]),
         .library(name: "BonjourStorage", targets: ["BonjourStorage"]),
@@ -142,6 +143,17 @@ let package = Package(
         hasResources: true
     )
     + makeTargets(
+        name: "BonjourAIGemini",
+        dependencies: [
+            "BonjourAICore",
+            "BonjourCore",
+            "BonjourModels",
+            "BonjourLocalization",
+            "BonjourScanning",
+            "BonjourStorage"
+        ]
+    )
+    + makeTargets(
         name: "BonjourAIGitHub",
         dependencies: [
             "BonjourAICore",
@@ -161,11 +173,12 @@ let package = Package(
         name: "BonjourAI",
         // Umbrella: re-exports `BonjourAICore` and hosts the
         // cloud-aware routing factories that sit above the
-        // Apple-, Anthropic-, and GitHub-Models-specific modules.
+        // Apple-, Anthropic-, Gemini-, and GitHub-specific modules.
         dependencies: [
             "BonjourAICore",
             "BonjourAIApple",
             "BonjourAIAnthropic",
+            "BonjourAIGemini",
             "BonjourAIGitHub",
             "BonjourCore",
             "BonjourModels",
@@ -194,6 +207,7 @@ let package = Package(
             "BonjourAI",
             "BonjourAIApple",
             "BonjourAIAnthropic",
+            "BonjourAIGemini",
             "BonjourAIGitHub",
             "BonjourStorage",
             .product(name: "CoreUI", package: "Core")
@@ -220,6 +234,7 @@ let package = Package(
             "BonjourAI",
             "BonjourAIApple",
             "BonjourAIAnthropic",
+            "BonjourAIGemini",
             "BonjourAIGitHub",
             "BonjourStorage",
             "BonjourUI",

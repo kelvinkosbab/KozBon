@@ -33,6 +33,10 @@ public enum AIBackend: String, Sendable, CaseIterable, Codable, Identifiable {
     /// requires the user to paste a key from `console.anthropic.com`.
     case anthropic
 
+    /// Google Gemini via the user's own API key. Opt-in; requires
+    /// the user to paste a key from Google AI Studio.
+    case gemini
+
     // NOTE: `case github` was removed when GitHub retired GitHub
     // Models on 2026-07-30 — the playground, model catalog,
     // inference API, and BYOK all went away, and the endpoint
@@ -88,7 +92,7 @@ public enum AIBackend: String, Sendable, CaseIterable, Codable, Identifiable {
         switch self {
         case .appleIntelligence:
             return false
-        case .anthropic:
+        case .anthropic, .gemini:
             return true
         }
     }
@@ -105,6 +109,8 @@ public enum AIBackend: String, Sendable, CaseIterable, Codable, Identifiable {
             return nil
         case .anthropic:
             return .anthropic
+        case .gemini:
+            return .gemini
         }
     }
 
@@ -118,6 +124,8 @@ public enum AIBackend: String, Sendable, CaseIterable, Codable, Identifiable {
             return Strings.Settings.aiBackendApple
         case .anthropic:
             return Strings.Settings.aiBackendAnthropic
+        case .gemini:
+            return Strings.Settings.aiBackendGemini
         }
     }
 
@@ -130,6 +138,8 @@ public enum AIBackend: String, Sendable, CaseIterable, Codable, Identifiable {
             return Strings.Settings.aiBackendAppleSubtitle
         case .anthropic:
             return Strings.Settings.aiBackendAnthropicSubtitle
+        case .gemini:
+            return Strings.Settings.aiBackendGeminiSubtitle
         }
     }
 }

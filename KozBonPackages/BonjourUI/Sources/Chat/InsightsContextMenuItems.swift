@@ -8,6 +8,7 @@
 import SwiftUI
 import BonjourAI
 import BonjourAIAnthropic
+import BonjourAIGemini
 import BonjourAIApple
 import BonjourAICore
 import BonjourCore
@@ -66,6 +67,9 @@ public struct InsightsContextMenuItems: View {
 
             case .anthropic:
                 anthropicMenu
+
+            case .gemini:
+                geminiMenu
             }
         }
     }
@@ -82,6 +86,27 @@ public struct InsightsContextMenuItems: View {
             )
         }
         #endif
+    }
+
+    // MARK: - Google Gemini
+
+    @ViewBuilder
+    private var geminiMenu: some View {
+        if credentialsStore.hasAPIKey(for: .gemini) {
+            Divider()
+            Button {
+                hapticFeedback.play(.medium)
+                action()
+            } label: {
+                Label(Strings.Insights.explainWithAI, systemImage: Iconography.googleGemini)
+            }
+        } else {
+            cloudSignInItem(
+                provider: .gemini,
+                label: Strings.Insights.signInToGemini,
+                icon: Image(systemName: Iconography.googleGemini)
+            )
+        }
     }
 
     // MARK: - Anthropic Claude

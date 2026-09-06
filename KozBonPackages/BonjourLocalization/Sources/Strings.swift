@@ -778,6 +778,12 @@ public enum Strings {
             .init("a11y_ai_cloud_sign_in_learn_more_hint", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        /// Hint for the "Get an API key at aistudio.google.com"
+        /// link in the Gemini sign-in sheet.
+        public static var aiCloudSignInLearnMoreHintGemini: LocalizedStringResource {
+            .init("accessibility_ai_cloud_sign_in_learn_more_hint_gemini", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var resetHint: LocalizedStringResource {
             .init("a11y_reset_hint", bundle: .atURL(Bundle.module.bundleURL))
         }
@@ -1112,6 +1118,77 @@ public enum Strings {
             .init("settings_ai_backend_anthropic_subtitle", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        /// "Gemini Model" — label for the Gemini model picker.
+        public static var aiCloudModelPickerLabelGemini: LocalizedStringResource {
+            .init("settings_ai_cloud_model_picker_label_gemini", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Subtitle for the Gemini Pro tier.
+        public static var aiCloudModelGeminiProSubtitle: LocalizedStringResource {
+            .init("settings_ai_cloud_model_gemini_pro_subtitle", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Subtitle for the Gemini Flash tier.
+        public static var aiCloudModelGeminiFlashSubtitle: LocalizedStringResource {
+            .init("settings_ai_cloud_model_gemini_flash_subtitle", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Subtitle for the Gemini Flash-Lite tier.
+        public static var aiCloudModelGeminiFlashLiteSubtitle: LocalizedStringResource {
+            .init("settings_ai_cloud_model_gemini_flash_lite_subtitle", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// "Google Gemini" — display name for the Gemini cloud
+        /// backend option.
+        public static var aiBackendGemini: LocalizedStringResource {
+            .init("settings_ai_backend_gemini", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// One-line description shown under the Google Gemini option.
+        public static var aiBackendGeminiSubtitle: LocalizedStringResource {
+            .init("settings_ai_backend_gemini_subtitle", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Privacy note shown when Gemini is the selected backend.
+        public static var aiBackendGeminiPrivacy: LocalizedStringResource {
+            .init("settings_ai_backend_gemini_privacy", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Sign-in button title for Gemini.
+        public static var aiCloudSignInGemini: LocalizedStringResource {
+            .init("settings_ai_cloud_sign_in_gemini", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Sign-in sheet title for Gemini.
+        public static var aiCloudSignInTitleGemini: LocalizedStringResource {
+            .init("settings_ai_cloud_sign_in_title_gemini", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Explanatory body in the Gemini sign-in sheet.
+        public static var aiCloudSignInPromptGemini: LocalizedStringResource {
+            .init("settings_ai_cloud_sign_in_prompt_gemini", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Placeholder for the Gemini API-key field.
+        public static var aiCloudAPIKeyPlaceholderGemini: LocalizedStringResource {
+            .init("settings_ai_cloud_api_key_placeholder_gemini", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Field label for the Gemini API key.
+        public static var aiCloudAPIKeyFieldLabelGemini: LocalizedStringResource {
+            .init("settings_ai_cloud_api_key_field_label_gemini", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Validation message for a key that isn't a Google one.
+        public static var aiCloudInvalidKeyGemini: LocalizedStringResource {
+            .init("settings_ai_cloud_invalid_key_gemini", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// "Get an API key at aistudio.google.com" link text.
+        public static var aiCloudSignInLearnMoreGemini: LocalizedStringResource {
+            .init("settings_ai_cloud_sign_in_learn_more_gemini", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         /// One-line description shown under the GitHub Models option.
         public static var aiBackendGitHubSubtitle: LocalizedStringResource {
             .init("settings_ai_backend_github_subtitle", bundle: .atURL(Bundle.module.bundleURL))
@@ -1384,6 +1461,12 @@ public enum Strings {
         /// affordance for the Apple-Intelligence-disabled state
         /// so the long-press menu always surfaces a useful next
         /// step for the user's chosen backend.
+        /// "Sign in to Gemini" — Insights menu row when Gemini is
+        /// selected but no key is stored.
+        public static var signInToGemini: LocalizedStringResource {
+            .init("insights_sign_in_to_gemini", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var signInToClaude: LocalizedStringResource {
             .init("insights_sign_in_to_claude", bundle: .atURL(Bundle.module.bundleURL))
         }
@@ -1487,6 +1570,17 @@ public enum Strings {
         /// selected the Anthropic backend but hasn't signed in.
         /// Mirrors the Settings sign-in sheet's title so the
         /// language stays consistent across surfaces.
+        /// Title of the in-tab sign-in prompt when Gemini is the
+        /// selected backend.
+        public static var signInToGeminiTitle: LocalizedStringResource {
+            .init("chat_sign_in_to_gemini_title", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Body of the in-tab sign-in prompt for Gemini.
+        public static var signInToGeminiBody: LocalizedStringResource {
+            .init("chat_sign_in_to_gemini_body", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var signInToClaudeTitle: LocalizedStringResource {
             .init("chat_sign_in_to_claude_title", bundle: .atURL(Bundle.module.bundleURL))
         }

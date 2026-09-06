@@ -10,6 +10,7 @@ import BonjourAI
 import BonjourAIApple
 import BonjourAICore
 import BonjourAIAnthropic
+import BonjourAIGemini
 import BonjourCore
 import BonjourLocalization
 
@@ -47,6 +48,12 @@ extension SettingsView {
                 if hasAnthropicKey {
                     claudeModelPicker
                 }
+            case .gemini:
+                geminiSignInRow
+
+                if hasGeminiKey {
+                    geminiModelPicker
+                }
             }
         } header: {
             Text(Strings.Settings.aiBackendSection)
@@ -64,6 +71,8 @@ extension SettingsView {
                     Text(Strings.Settings.aiBackendApplePrivacy)
                 case .anthropic:
                     Text(Strings.Settings.aiCloudFooter)
+                case .gemini:
+                    Text(Strings.Settings.aiBackendGeminiPrivacy)
                 }
             }
         }
@@ -71,14 +80,14 @@ extension SettingsView {
 
     // MARK: - Backend Picker
 
-    /// Inline picker so both options surface simultaneously —
+    /// Inline picker so every option surfaces simultaneously —
     /// each with its provider glyph tinted in the matching brand
     /// color (blue for Apple Intelligence, Cara orange for
-    /// Anthropic). The visible branding makes the active provider
-    /// scannable without reading the subtitle, and having both
-    /// rows present lets users compare the subtitles (which
-    /// describe the privacy posture + context-window trade-off)
-    /// side by side.
+    /// Anthropic, Google blue for Gemini). The visible branding
+    /// makes the active provider scannable without reading the
+    /// subtitle, and having every row present lets users compare
+    /// the subtitles (which describe the privacy posture and cost
+    /// trade-off) side by side.
     ///
     /// `.labelsHidden()` suppresses the picker's own header row —
     /// the "Assistant" section header already announces the
@@ -115,10 +124,14 @@ extension SettingsView {
                 }
             )
         ) {
-            backendOption(.appleIntelligence)
-                .tag(AIBackend.appleIntelligence)
-            backendOption(.anthropic)
-                .tag(AIBackend.anthropic)
+            // Enumerated rather than listed row by row: a
+            // hardcoded list silently omitted Gemini when it was
+            // added, and no switch meant no compiler error. Adding
+            // a case to `AIBackend` now surfaces it here for free.
+            ForEach(AIBackend.allCases) { backend in
+                backendOption(backend)
+                    .tag(backend)
+            }
         } label: {
             Text(Strings.Settings.aiBackendPickerLabel)
         }
@@ -171,6 +184,16 @@ extension SettingsView {
             provider: .anthropic,
             isConnected: hasAnthropicKey,
             signInLabel: Strings.Settings.aiCloudSignIn
+        )
+    }
+
+    /// Gemini-specific signed-in / sign-in row.
+    @ViewBuilder
+    private var geminiSignInRow: some View {
+        signInRow(
+            provider: .gemini,
+            isConnected: hasGeminiKey,
+            signInLabel: Strings.Settings.aiCloudSignInGemini
         )
     }
 
@@ -358,6 +381,99 @@ extension SettingsView {
         }
     }
 
+    // MARK: - Gemini Model Picker
+
+    /// The Gemini counterpart to ``claudeModelPicker``, driven by
+    /// ``GeminiModelCatalog`` for the same reason: Google ships new
+    /// models between KozBon releases, so a compiled-in list is
+    /// stale on arrival.
+    ///
+    /// Deliberately a sibling rather than a generalization of the
+    /// Claude picker. The two differ in more than their data
+    /// source — separate localized labels, separate built-in tiers
+    /// with their own curated subtitles — and this file is already
+    /// organized per provider.
+    @ViewBuilder
+    private var geminiModelPicker: some View {
+        LabeledContent {
+            Menu {
+                ForEach(geminiModelCatalog.options) { option in
+                    geminiModelMenuButton(for: option)
+                }
+            } label: {
+                Text(verbatim: geminiModelDisplayName(for: selectedGeminiModelIdentifier))
+                    .font(.subheadline)
+            }
+            .accessibilityLabel(Strings.Settings.aiCloudModelPickerLabelGemini)
+        } label: {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(Strings.Settings.aiCloudModelPickerLabelGemini)
+                geminiModelSubtitleView
+            }
+            .accessibilityElement(children: .combine)
+        }
+    }
+
+    @ViewBuilder
+    private func geminiModelMenuButton(for option: GeminiModelOption) -> some View {
+        let isSelected = option.id == selectedGeminiModelIdentifier
+        Button {
+            withAnimation(reduceMotion ? nil : .default) {
+                preferencesStore.setAICloudModelIdentifier(option.id, for: .gemini)
+            }
+        } label: {
+            if isSelected {
+                Label(geminiModelDisplayName(for: option.id), systemImage: Iconography.selected)
+            } else {
+                Text(verbatim: geminiModelDisplayName(for: option.id))
+            }
+        }
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
+    }
+
+    /// Curated blurbs exist only for the compiled-in tiers; a
+    /// catalog-sourced model shows its identifier, which beats
+    /// showing nothing and needs no translation.
+    @ViewBuilder
+    private var geminiModelSubtitleView: some View {
+        if let builtIn = GeminiModel(rawValue: selectedGeminiModelIdentifier) {
+            Text(localizedSubtitle(for: builtIn))
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        } else {
+            Text(verbatim: selectedGeminiModelIdentifier)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    /// Reconciled against the catalog — an identifier this binary
+    /// has never heard of survives unless a live list proves it
+    /// retired.
+    var selectedGeminiModelIdentifier: String {
+        geminiModelCatalog.resolvedSelection(
+            for: preferencesStore.aiCloudModelIdentifier(for: .gemini)
+        )
+    }
+
+    func geminiModelDisplayName(for identifier: String) -> String {
+        // Model names are brand identifiers, so unlike the
+        // subtitles they aren't translated — the catalog's own
+        // `displayName` and the built-in list agree on that.
+        if let builtIn = GeminiModel(rawValue: identifier) {
+            return builtIn.displayName
+        }
+        return geminiModelCatalog.displayName(for: identifier)
+    }
+
+    private func localizedSubtitle(for model: GeminiModel) -> LocalizedStringResource {
+        switch model {
+        case .pro:       return Strings.Settings.aiCloudModelGeminiProSubtitle
+        case .flash:     return Strings.Settings.aiCloudModelGeminiFlashSubtitle
+        case .flashLite: return Strings.Settings.aiCloudModelGeminiFlashLiteSubtitle
+        }
+    }
+
     // MARK: - Model Selection Helpers
 
     /// The currently-selected model identifier, reconciled against
@@ -449,6 +565,7 @@ extension SettingsView {
     /// resolves.
     func refreshCloudKeyState() {
         hasAnthropicKey = credentialsStore.hasAPIKey(for: .anthropic)
+        hasGeminiKey = credentialsStore.hasAPIKey(for: .gemini)
         hasGitHubKey = credentialsStore.hasAPIKey(for: .github)
     }
 }

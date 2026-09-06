@@ -8,6 +8,7 @@
 import SwiftUI
 import BonjourAICore
 import BonjourAIAnthropic
+import BonjourAIGemini
 import BonjourCore
 
 // MARK: - AIBackend + Style
@@ -33,6 +34,8 @@ public extension AIBackend {
     /// - `.anthropic` → ``Color/kozBonAnthropic`` — Anthropic's
     ///   "Cara" brand orange, lightened slightly in dark mode for
     ///   contrast.
+    /// - `.gemini` → ``Color/kozBonGemini`` — Google's published
+    ///   blues (#1A73E8 / #8AB4F8).
     /// - `.github` → ``Color/kozBonGitHub`` — Microsoft's
     ///   "Copilot purple" (#8534F3), with a modest dark-mode
     ///   lift (#9444FF) tuned so white-on-purple stays AA
@@ -43,6 +46,8 @@ public extension AIBackend {
             return .kozBonBlue
         case .anthropic:
             return .kozBonAnthropic
+        case .gemini:
+            return .kozBonGemini
         }
     }
 
@@ -50,6 +55,9 @@ public extension AIBackend {
     ///
     /// - `.appleIntelligence` → the Apple Intelligence glyph.
     /// - `.anthropic` → the bundled Claude vector mark.
+    /// - `.gemini` → the `asterisk` SF Symbol; no brand asset
+    ///   ships for Gemini (trademark), so the symbol is the icon
+    ///   rather than a fallback.
     /// - `.github` → the "code" SF Symbol fallback (the Octocat
     ///   is trademarked; until a permitted asset lands, the
     ///   developer-y glyph is the safer stand-in).
@@ -59,6 +67,8 @@ public extension AIBackend {
             return .appleIntelligence
         case .anthropic:
             return .anthropicClaude
+        case .gemini:
+            return Image(systemName: Iconography.googleGemini)
         }
     }
 
@@ -71,6 +81,8 @@ public extension AIBackend {
             return Iconography.appleIntelligence
         case .anthropic:
             return Iconography.anthropicClaude
+        case .gemini:
+            return Iconography.googleGemini
         }
     }
 }
@@ -94,6 +106,8 @@ public extension AICloudProvider {
         switch self {
         case .anthropic:
             return .kozBonAnthropic
+        case .gemini:
+            return .kozBonGemini
         case .github:
             return .kozBonGitHub
         }

@@ -163,6 +163,17 @@ public final class PreferencesStore {
         }
     }
 
+    /// The user's selected Gemini model identifier, as a raw
+    /// string — the per-provider counterpart to
+    /// ``aiCloudModelRawValue``.
+    public var aiGeminiModelRawValue: String {
+        get { preferences?.aiGeminiModelRawValue ?? UserPreferences.defaultAIGeminiModelRawValue }
+        set {
+            preferences?.aiGeminiModelRawValue = newValue
+            save()
+        }
+    }
+
     // MARK: - Actions
 
     /// Resets all preferences to their default values.
@@ -173,6 +184,7 @@ public final class PreferencesStore {
         preferences?.defaultSortOrder = UserPreferences.defaultSortOrder
         preferences?.aiBackendRawValue = UserPreferences.defaultAIBackendRawValue
         preferences?.aiCloudModelRawValue = UserPreferences.defaultAICloudModelRawValue
+        preferences?.aiGeminiModelRawValue = UserPreferences.defaultAIGeminiModelRawValue
         save()
     }
 

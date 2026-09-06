@@ -49,6 +49,12 @@ public final class UserPreferences {
     /// in the `BonjourAI` typed bridge.
     public static let defaultAICloudModelRawValue = "claude-sonnet-4-5"
 
+    /// Default value for ``aiGeminiModelRawValue``.
+    ///
+    /// `"gemini-2.5-flash"` corresponds to `GeminiModel.flash` in
+    /// the `BonjourAIGemini` typed bridge.
+    public static let defaultAIGeminiModelRawValue = "gemini-2.5-flash"
+
     // MARK: - Properties
 
     /// Whether AI-powered service explanations are enabled.
@@ -72,12 +78,27 @@ public final class UserPreferences {
     /// only inside `BonjourStorage` and migration code.
     public var aiBackendRawValue: String = UserPreferences.defaultAIBackendRawValue
 
-    /// The user's selected Claude model identifier, stored as a
+    /// The user's selected **Claude** model identifier, stored as a
     /// raw string for the same reason as ``aiBackendRawValue``.
     ///
-    /// Use `PreferencesStore.aiCloudModel` from `BonjourAI`
-    /// for the typed accessor.
+    /// Each cloud provider gets its own slot so switching between
+    /// them and back preserves both choices — one shared field
+    /// would hand Gemini a `claude-` identifier it can't use. The
+    /// generic-sounding name predates the second provider; it is
+    /// kept as-is because renaming a `@Model` property is a
+    /// schema migration for no user-visible gain.
+    ///
+    /// Read it through
+    /// `PreferencesStore.aiCloudModelIdentifier(for:)` in
+    /// `BonjourAICore` rather than directly.
     public var aiCloudModelRawValue: String = UserPreferences.defaultAICloudModelRawValue
+
+    /// The user's selected **Gemini** model identifier — the
+    /// per-provider counterpart to ``aiCloudModelRawValue``.
+    ///
+    /// Additive, so existing rows decode with the default and no
+    /// migration plan is required.
+    public var aiGeminiModelRawValue: String = UserPreferences.defaultAIGeminiModelRawValue
 
     /// Creates a new preferences instance with default values.
     public init() {}

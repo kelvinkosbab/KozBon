@@ -46,6 +46,20 @@ public enum Iconography {
     /// carries the rest of the brand cue.
     public static let anthropicClaude = "sparkle"
 
+    /// Google Gemini glyph.
+    ///
+    /// Unlike Anthropic and GitHub, no bundled brand asset ships
+    /// for Gemini — Google's mark carries trademark constraints —
+    /// so this symbol is the icon rather than a fallback for
+    /// `systemImage:` call sites.
+    ///
+    /// `asterisk` is the closest SF Symbol to Gemini's
+    /// four-pointed spark without shipping a custom asset, and is
+    /// deliberately not `sparkle` (Anthropic's) or `sparkles`
+    /// (which reads as generic "AI" rather than a specific
+    /// provider). The accent color carries the rest of the cue.
+    public static let googleGemini = "asterisk"
+
     /// GitHub Models SF Symbol fallback. `Image.github` now
     /// resolves to the bundled Octocat asset
     /// (`Media.xcassets/GitHub.imageset`); this constant exists

@@ -130,6 +130,11 @@ final class AICloudSignInViewModel {
         switch provider {
         case .anthropic:
             return value.hasPrefix("sk-ant-") && value.count > "sk-ant-".count
+        case .gemini:
+            // Google AI Studio keys are `AIza` + 35 chars. Only
+            // the prefix is checked — length has changed before,
+            // and the real validation is the first API call.
+            return value.hasPrefix("AIza") && value.count > "AIza".count
         case .github:
             // GitHub PATs ship in three families:
             //   - `ghp_…` classic personal-access tokens

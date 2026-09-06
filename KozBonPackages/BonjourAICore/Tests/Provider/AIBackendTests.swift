@@ -98,3 +98,51 @@ struct AIBackendTests {
         #expect(store.aiBackend == .default)
     }
 }
+
+// MARK: - AIBackendTests · Completeness
+
+/// Guards against a half-added provider.
+///
+/// Most `AIBackend` call sites are switches, so the compiler
+/// enumerates them — but not all. The Settings picker listed its
+/// rows by hand and silently omitted Gemini when it was added,
+/// which no switch and no test caught; only a screenshot did. The
+/// picker now iterates `allCases`, and these pin the per-case data
+/// that iteration depends on.
+extension AIBackendTests {
+
+    @Test("Every backend has a distinct display name and subtitle")
+    func everyBackendHasDistinctCopy() {
+        let names = Set(AIBackend.allCases.map { String(localized: $0.displayName) })
+        let subtitles = Set(AIBackend.allCases.map { String(localized: $0.displaySubtitle) })
+
+        #expect(names.count == AIBackend.allCases.count)
+        #expect(subtitles.count == AIBackend.allCases.count)
+    }
+
+    @Test("Exactly the cloud backends map to a provider, and each maps to a distinct one")
+    func cloudBackendsMapToDistinctProviders() {
+        let cloud = AIBackend.allCases.filter(\.isCloud)
+        let providers = cloud.compactMap(\.cloudProvider)
+
+        // `isCloud` and `cloudProvider` are separate switches; a
+        // new case that updates one and not the other routes to
+        // the wrong backend rather than failing to compile.
+        #expect(providers.count == cloud.count)
+        #expect(Set(providers).count == providers.count)
+
+        let onDevice = AIBackend.allCases.filter { !$0.isCloud }
+        #expect(onDevice.allSatisfy { $0.cloudProvider == nil })
+    }
+
+    @Test("Every cloud provider names a non-empty default model, except retired GitHub")
+    func cloudProvidersDeclareDefaultModels() {
+        for backend in AIBackend.allCases {
+            guard let provider = backend.cloudProvider else { continue }
+            #expect(
+                !provider.defaultModelIdentifier.isEmpty,
+                "\(provider) needs a default model for the preferences fallback"
+            )
+        }
+    }
+}

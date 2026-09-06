@@ -9,6 +9,7 @@ import SwiftUI
 import CoreData
 import BonjourAI
 import BonjourAIAnthropic
+import BonjourAIGemini
 import BonjourAIApple
 import BonjourCore
 import BonjourLocalization
@@ -58,6 +59,9 @@ public struct SettingsView: View {
     /// still sitting in the Keychain and can be cleaned up.
     @State var hasGitHubKey: Bool = false
 
+    /// Mirror of ``hasAnthropicKey`` for the Gemini backend.
+    @State var hasGeminiKey: Bool = false
+
     /// Live list of Claude models the user's key can call.
     ///
     /// Owned by the view (rather than injected) because the
@@ -66,6 +70,12 @@ public struct SettingsView: View {
     /// Settings doesn't re-hit the network. Falls back to the
     /// compiled-in list until a refresh succeeds.
     @State var anthropicModelCatalog = AnthropicModelCatalog()
+
+    /// Gemini counterpart to ``anthropicModelCatalog``. Held
+    /// alongside rather than swapped on backend change so the
+    /// picker doesn't refetch every time the user toggles between
+    /// providers to compare them.
+    @State var geminiModelCatalog = GeminiModelCatalog()
 
     /// Cached "the user has at least one persisted custom service
     /// type" flag. Refreshed on `.onAppear` and on every Core Data
@@ -129,6 +139,7 @@ public struct SettingsView: View {
             .animation(reduceMotion ? nil : .default, value: preferencesStore.aiBackend)
             .animation(reduceMotion ? nil : .default, value: hasAnthropicKey)
             .animation(reduceMotion ? nil : .default, value: hasGitHubKey)
+            .animation(reduceMotion ? nil : .default, value: hasGeminiKey)
             // Refresh the cached custom-types flag on first
             // appearance so the Reset to Defaults section's
             // visibility is correct the moment the form lands.
@@ -136,14 +147,17 @@ public struct SettingsView: View {
                 refreshCustomServiceTypesState()
                 refreshCloudKeyState()
             }
-            // Refresh the Claude model list so the picker reflects
-            // Anthropic's current lineup rather than whatever
+            // Refresh each provider's model list so the pickers
+            // reflect the current lineups rather than whatever
             // shipped in this binary. No-ops when the cached list
             // is still fresh or no key is configured, so reopening
             // Settings costs nothing.
             .task {
                 await anthropicModelCatalog.refreshIfNeeded(
                     apiKey: try? credentialsStore.apiKey(for: .anthropic)
+                )
+                await geminiModelCatalog.refreshIfNeeded(
+                    apiKey: try? credentialsStore.apiKey(for: .gemini)
                 )
             }
             // Refresh on any Core Data save (the custom-types

@@ -9,6 +9,7 @@ import Foundation
 import BonjourAICore
 import BonjourAIApple
 import BonjourAIAnthropic
+import BonjourAIGemini
 import BonjourCore
 import BonjourStorage
 
@@ -30,6 +31,7 @@ public struct CloudAwareBonjourServiceExplainerFactory: BonjourServiceExplainerF
     private let credentialsStore: any AICloudCredentialsStore & Sendable
     private let preferencesStore: PreferencesStore
     private let anthropicClient: any AnthropicClientProtocol
+    private let geminiClient: any GeminiClientProtocol
 
     /// Subsystem-scoped logger. Console.app filters by category
     /// `CloudAwareBonjourServiceExplainerFactory`.
@@ -45,11 +47,13 @@ public struct CloudAwareBonjourServiceExplainerFactory: BonjourServiceExplainerF
         credentialsStore: any AICloudCredentialsStore & Sendable,
         preferencesStore: PreferencesStore,
         anthropicClient: any AnthropicClientProtocol = AnthropicClient(),
+        geminiClient: any GeminiClientProtocol = GeminiClient(),
     ) {
         self.appleFactory = appleFactory
         self.credentialsStore = credentialsStore
         self.preferencesStore = preferencesStore
         self.anthropicClient = anthropicClient
+        self.geminiClient = geminiClient
     }
 
     // MARK: - BonjourServiceExplainerFactoryProtocol
@@ -64,11 +68,12 @@ public struct CloudAwareBonjourServiceExplainerFactory: BonjourServiceExplainerF
             if appleExplainer != nil {
                 return appleExplainer
             }
-            return makeAnthropicExplainerIfPossible()
+            return makeCloudExplainerIfPossible(for: .anthropic)
+                ?? makeCloudExplainerIfPossible(for: .gemini)
 
-
-        case .anthropic:
-            if let cloudExplainer = makeAnthropicExplainerIfPossible() {
+        case .anthropic, .gemini:
+            if let provider = backend.cloudProvider,
+               let cloudExplainer = makeCloudExplainerIfPossible(for: provider) {
                 return cloudExplainer
             }
             return appleExplainer
@@ -77,18 +82,40 @@ public struct CloudAwareBonjourServiceExplainerFactory: BonjourServiceExplainerF
 
     // MARK: - Private
 
+    /// Builds the explainer for `provider` when a key is stored
+    /// for it, reading the model from that provider's own
+    /// preference slot.
     @MainActor
-    private func makeAnthropicExplainerIfPossible() -> AnthropicBonjourServiceExplainer? {
-        guard credentialsStore.hasAPIKey(for: .anthropic) else {
-            explainerRoutingLogger.debug("Anthropic backend requested but no API key configured.")
+    private func makeCloudExplainerIfPossible(
+        for provider: AICloudProvider
+    ) -> (any BonjourServiceExplainerProtocol)? {
+        guard credentialsStore.hasAPIKey(for: provider) else {
+            explainerRoutingLogger.debug("Cloud backend requested but no API key configured.")
             return nil
         }
-        let explainer = AnthropicBonjourServiceExplainer(
-            client: anthropicClient,
-            credentialsStore: credentialsStore
-        )
-        explainer.selectedModel = preferencesStore.aiCloudModelIdentifier
-        return explainer
+
+        // `selectedModel` is concrete on each explainer rather than
+        // a protocol requirement, so assign before erasing.
+        let model = preferencesStore.aiCloudModelIdentifier(for: provider)
+        switch provider {
+        case .anthropic:
+            let explainer = AnthropicBonjourServiceExplainer(
+                client: anthropicClient,
+                credentialsStore: credentialsStore
+            )
+            explainer.selectedModel = model
+            return explainer
+        case .gemini:
+            let explainer = GeminiBonjourServiceExplainer(
+                client: geminiClient,
+                credentialsStore: credentialsStore
+            )
+            explainer.selectedModel = model
+            return explainer
+        case .github:
+            // Retired 2026-07-30; unreachable from any backend.
+            return nil
+        }
     }
 
 }

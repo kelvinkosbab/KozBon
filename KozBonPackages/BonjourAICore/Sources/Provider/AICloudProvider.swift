@@ -34,6 +34,16 @@ public enum AICloudProvider: String, Sendable, CaseIterable, Codable, Identifiab
     /// key.
     case anthropic
 
+    /// Google's Gemini family, via the Gemini Developer API
+    /// (`generativelanguage.googleapis.com`). The user supplies
+    /// their own API key from Google AI Studio; KozBon never
+    /// operates the key.
+    ///
+    /// Deliberately the Developer API rather than Vertex AI —
+    /// Vertex authenticates with service-account OAuth, which the
+    /// paste-an-API-key flow in Settings can't express.
+    case gemini
+
     /// GitHub Models — OpenAI-compatible inference endpoint
     /// (`models.inference.ai.azure.com`) brokered by GitHub. The
     /// user supplies a GitHub Personal Access Token from
@@ -49,8 +59,31 @@ public enum AICloudProvider: String, Sendable, CaseIterable, Codable, Identifiab
         switch self {
         case .anthropic:
             return Strings.Settings.aiBackendAnthropic
+        case .gemini:
+            return Strings.Settings.aiBackendGemini
         case .github:
             return Strings.Settings.aiBackendGitHub
+        }
+    }
+
+    /// The model identifier to fall back on when nothing usable is
+    /// stored for this provider.
+    ///
+    /// Lives here rather than on each provider's model enum so the
+    /// provider-agnostic preferences bridge can resolve a default
+    /// without importing every provider module. Each provider's
+    /// own `Model.default` must agree with this — enforced by a
+    /// test in that provider's module.
+    public var defaultModelIdentifier: String {
+        switch self {
+        case .anthropic:
+            return "claude-sonnet-4-5"
+        case .gemini:
+            return "gemini-2.5-flash"
+        case .github:
+            // Retired 2026-07-30; the case survives only so
+            // Settings can delete the stranded token.
+            return ""
         }
     }
 }

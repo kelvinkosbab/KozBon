@@ -9,6 +9,7 @@ import Foundation
 import BonjourAICore
 import BonjourAIApple
 import BonjourAIAnthropic
+import BonjourAIGemini
 import BonjourCore
 import BonjourScanning
 import BonjourStorage
@@ -55,6 +56,7 @@ public struct CloudAwareBonjourChatSessionFactory: BonjourChatSessionFactoryProt
     private let credentialsStore: any AICloudCredentialsStore & Sendable
     private let preferencesStore: PreferencesStore
     private let anthropicClient: any AnthropicClientProtocol
+    private let geminiClient: any GeminiClientProtocol
 
     /// Subsystem-scoped logger for cloud-fallback diagnostics.
     /// Console.app filters by category
@@ -81,16 +83,22 @@ public struct CloudAwareBonjourChatSessionFactory: BonjourChatSessionFactoryProt
     ///   - anthropicClient: The Anthropic API client used when
     ///     routing hits the Anthropic path. Defaults to a real
     ///     ``AnthropicClient`` against `api.anthropic.com`.
+    ///   - geminiClient: The Gemini API client used when routing
+    ///     hits the Gemini path. Defaults to a real
+    ///     ``GeminiClient`` against
+    ///     `generativelanguage.googleapis.com`.
     public init(
         appleFactory: any BonjourChatSessionFactoryProtocol = BonjourChatSessionFactory(),
         credentialsStore: any AICloudCredentialsStore & Sendable,
         preferencesStore: PreferencesStore,
         anthropicClient: any AnthropicClientProtocol = AnthropicClient(),
+        geminiClient: any GeminiClientProtocol = GeminiClient(),
     ) {
         self.appleFactory = appleFactory
         self.credentialsStore = credentialsStore
         self.preferencesStore = preferencesStore
         self.anthropicClient = anthropicClient
+        self.geminiClient = geminiClient
     }
 
     // MARK: - BonjourChatSessionFactoryProtocol
@@ -111,13 +119,15 @@ public struct CloudAwareBonjourChatSessionFactory: BonjourChatSessionFactoryProt
             if appleSession != nil {
                 return appleSession
             }
-            return makeAnthropicSessionIfPossible()
+            return makeCloudSessionIfPossible(for: .anthropic)
+                ?? makeCloudSessionIfPossible(for: .gemini)
 
-        case .anthropic:
-            // User picked Anthropic. Use it when possible; fall
-            // back to the Apple session if no credentials so the
-            // tab still surfaces.
-            if let cloudSession = makeAnthropicSessionIfPossible() {
+        case .anthropic, .gemini:
+            // User picked a cloud provider. Use it when possible;
+            // fall back to the Apple session if no credentials so
+            // the tab still surfaces.
+            if let provider = backend.cloudProvider,
+               let cloudSession = makeCloudSessionIfPossible(for: provider) {
                 return cloudSession
             }
             return appleSession
@@ -135,7 +145,7 @@ public struct CloudAwareBonjourChatSessionFactory: BonjourChatSessionFactoryProt
         // Intelligence availability — for the cloud path that
         // check would unhelpfully skip the warmup. Pick the
         // right strategy based on what we actually got back.
-        if session is AnthropicBonjourChatSession {
+        if session is AnthropicBonjourChatSession || session is GeminiBonjourChatSession {
             await Task.yield()
             session.prewarm()
         } else {
@@ -148,21 +158,44 @@ public struct CloudAwareBonjourChatSessionFactory: BonjourChatSessionFactoryProt
 
     // MARK: - Private
 
-    /// Builds an ``AnthropicBonjourChatSession`` when the
-    /// credentials store has an Anthropic key. Returns `nil`
-    /// otherwise so callers can fall back to other paths.
+    /// Builds the session for `provider` when the credentials
+    /// store holds a key for it. Returns `nil` otherwise so callers
+    /// can fall back to another path.
+    ///
+    /// The model comes from that provider's own preference slot, so
+    /// switching backends can't hand Gemini a `claude-` identifier.
     @MainActor
-    private func makeAnthropicSessionIfPossible() -> AnthropicBonjourChatSession? {
-        guard credentialsStore.hasAPIKey(for: .anthropic) else {
-            routingLogger.debug("Anthropic backend requested but no API key configured.")
+    private func makeCloudSessionIfPossible(
+        for provider: AICloudProvider
+    ) -> (any BonjourChatSessionProtocol)? {
+        guard credentialsStore.hasAPIKey(for: provider) else {
+            routingLogger.debug("Cloud backend requested but no API key configured.")
             return nil
         }
-        let session = AnthropicBonjourChatSession(
-            client: anthropicClient,
-            credentialsStore: credentialsStore
-        )
-        session.selectedModel = preferencesStore.aiCloudModelIdentifier
-        return session
+
+        // `selectedModel` is a concrete property on each session
+        // type rather than a protocol requirement, so it has to be
+        // assigned before the value is erased to the protocol.
+        let model = preferencesStore.aiCloudModelIdentifier(for: provider)
+        switch provider {
+        case .anthropic:
+            let session = AnthropicBonjourChatSession(
+                client: anthropicClient,
+                credentialsStore: credentialsStore
+            )
+            session.selectedModel = model
+            return session
+        case .gemini:
+            let session = GeminiBonjourChatSession(
+                client: geminiClient,
+                credentialsStore: credentialsStore
+            )
+            session.selectedModel = model
+            return session
+        case .github:
+            // Retired 2026-07-30; unreachable from any backend.
+            return nil
+        }
     }
 
 }

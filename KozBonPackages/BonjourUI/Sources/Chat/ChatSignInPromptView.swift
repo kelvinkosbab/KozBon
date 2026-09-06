@@ -114,6 +114,8 @@ struct ChatSignInPromptView: View {
 
     private var promptTitle: LocalizedStringResource {
         switch backend {
+        case .gemini:
+            return Strings.Chat.signInToGeminiTitle
         case .anthropic, .appleIntelligence:
             // The Apple branch is defensive — the chat view
             // gates this prompt to cloud backends only, but a
@@ -126,6 +128,8 @@ struct ChatSignInPromptView: View {
 
     private var promptBody: LocalizedStringResource {
         switch backend {
+        case .gemini:
+            return Strings.Chat.signInToGeminiBody
         case .anthropic, .appleIntelligence:
             return Strings.Chat.signInToClaudeBody
         }
@@ -133,6 +137,8 @@ struct ChatSignInPromptView: View {
 
     private var signInLabel: LocalizedStringResource {
         switch backend {
+        case .gemini:
+            return Strings.Settings.aiCloudSignInGemini
         case .anthropic, .appleIntelligence:
             return Strings.Settings.aiCloudSignIn
         }
