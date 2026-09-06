@@ -19,18 +19,23 @@ public struct TitleDetailStackView<Trailing>: View where Trailing: View {
     @ScaledMetric private var verticalSpacing: CGFloat = 4
 
     let title: String
-    let detail: String
+
+    /// Secondary line. `nil` (or empty) renders a single-line row —
+    /// used where an enclosing section header already states what
+    /// the detail would say, so repeating it per row is noise.
+    let detail: String?
     let trailing: (() -> Trailing)?
 
     /// Creates a title-detail row with a trailing view.
     ///
     /// - Parameters:
     ///   - title: The primary text displayed in body font.
-    ///   - detail: The secondary text displayed in caption font.
+    ///   - detail: The secondary text displayed in caption font. Pass
+    ///     `nil` to render a single-line row.
     ///   - trailing: A view builder for content displayed on the trailing edge.
     public init(
         title: String,
-        detail: String,
+        detail: String?,
         trailing: @escaping () -> Trailing
     ) {
         self.title = title
@@ -47,9 +52,11 @@ public struct TitleDetailStackView<Trailing>: View where Trailing: View {
                 Text(self.title)
                     .font(.body)
                     .foregroundColor(.primary)
-                Text(self.detail)
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
+                if let detail, !detail.isEmpty {
+                    Text(detail)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
             }
 
             Spacer()
@@ -57,7 +64,7 @@ public struct TitleDetailStackView<Trailing>: View where Trailing: View {
             trailing?()
         }
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(title), \(detail)")
+        .accessibilityLabel(accessibilityLabelText)
         .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
         // `.hoverEffect` is unavailable on macOS — the framework marks
         // it `@available(macOS, unavailable)` because AppKit list cells
@@ -68,12 +75,19 @@ public struct TitleDetailStackView<Trailing>: View where Trailing: View {
         .hoverEffect(.highlight)
         #endif
     }
+
+    /// Collapses to the title alone when there's no detail, so a
+    /// single-line row doesn't announce a dangling comma.
+    private var accessibilityLabelText: String {
+        guard let detail, !detail.isEmpty else { return title }
+        return "\(title), \(detail)"
+    }
 }
 
 public extension TitleDetailStackView where Trailing == EmptyView {
     init(
         title: String,
-        detail: String
+        detail: String?
     ) {
         self.title = title
         self.detail = detail

@@ -177,6 +177,82 @@ public final class BonjourServicesViewModel: BonjourServiceScannerDelegate, Loca
         }
     }
 
+    // MARK: - Service Type Grouping
+
+    /// Whether the Nearby list should break discovered services
+    /// into one section per service type.
+    ///
+    /// True in exactly two states:
+    ///
+    /// - **Nothing applied** — the default. Sections give the raw
+    ///   list structure without the user having asked for an order.
+    /// - **A service-type sort** — sections are simply the visual
+    ///   form of that ordering.
+    ///
+    /// Host-name sorts stay flat on purpose: sectioning by type
+    /// would fight the continuous A→Z hostname run the user asked
+    /// for. Category filters stay flat too — the list is already
+    /// scoped to a single bucket, so a second level of grouping
+    /// adds chrome without adding information.
+    var isGroupedByServiceType: Bool {
+        switch sortType {
+        case nil, .serviceNameAsc, .serviceNameDesc:
+            return true
+        case .hostNameAsc, .hostNameDesc,
+             .smartHome, .appleDevices, .mediaAndStreaming,
+             .printersAndScanners, .remoteAccess:
+            return false
+        }
+    }
+
+    /// ``flatActiveServices`` bucketed into one group per service
+    /// type, ordered alphabetically by type name — reversed when
+    /// the user picked the descending service-type sort.
+    ///
+    /// Within a group the order is whatever `flatActiveServices`
+    /// already produced, so the active sort keeps deciding how rows
+    /// read inside a section.
+    ///
+    /// Returns empty when ``isGroupedByServiceType`` is `false`, so
+    /// the view renders one branch or the other and never pays for
+    /// building both.
+    var groupedActiveServices: [BonjourServiceGroup] {
+        guard isGroupedByServiceType else { return [] }
+
+        var typesByKey: [String: BonjourServiceType] = [:]
+        var membersByKey: [String: [BonjourService]] = [:]
+        for service in flatActiveServices {
+            let key = service.serviceType.fullType
+            typesByKey[key] = service.serviceType
+            membersByKey[key, default: []].append(service)
+        }
+
+        let groups = typesByKey.map { key, serviceType in
+            BonjourServiceGroup(
+                serviceType: serviceType,
+                services: membersByKey[key] ?? []
+            )
+        }
+
+        // `fullType` breaks ties so two transports sharing a display
+        // name ("Foo" over tcp and udp) keep a stable, repeatable
+        // order instead of flipping between renders.
+        var isDescending = false
+        if case .serviceNameDesc = sortType {
+            isDescending = true
+        }
+        if isDescending {
+            return groups.sorted {
+                ($1.serviceType.name, $1.serviceType.fullType)
+                    < ($0.serviceType.name, $0.serviceType.fullType)
+            }
+        }
+        return groups.sorted {
+            ($0.serviceType.name, $0.serviceType.fullType)
+                < ($1.serviceType.name, $1.serviceType.fullType)
+        }
+    }
+
     /// Filters a service list down to those whose user-facing name,
     /// resolved hostname, friendly service-type name, or wire
     /// `_type._transport` form contains ``searchText`` (case-

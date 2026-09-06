@@ -14,7 +14,7 @@ import BonjourLocalization
 /// A sort or filter option describing how nearby services should be ordered or filtered in lists.
 ///
 /// Sort options reorder all services. Filter options show only matching services.
-public enum BonjourServiceSortType: Identifiable, CaseIterable {
+public enum BonjourServiceSortType: Identifiable, CaseIterable, Sendable {
 
     // MARK: - Sort Options
 

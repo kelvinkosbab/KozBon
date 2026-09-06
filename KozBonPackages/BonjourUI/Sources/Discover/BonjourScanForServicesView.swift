@@ -52,7 +52,34 @@ public struct BonjourScanForServicesView: View {
                     }
                 }
 
-                if !viewModel.flatActiveServices.isEmpty {
+                // One section per service type when the user hasn't
+                // asked for a competing order (see
+                // `isGroupedByServiceType`); otherwise the original
+                // single unsectioned run.
+                if viewModel.isGroupedByServiceType {
+                    ForEach(viewModel.groupedActiveServices) { group in
+                        Section {
+                            forEach(
+                                services: group.services,
+                                showsServiceTypeSubtitle: false
+                            )
+                        } header: {
+                            Text(verbatim: group.serviceType.name)
+                                .font(.caption)
+                                .accessibilityAddTraits(.isHeader)
+                        } footer: {
+                            // Library blurbs run from one clause to a
+                            // paragraph with URLs, so cap the footer
+                            // and let the detail screen carry the
+                            // rest. VoiceOver still reads it whole.
+                            if let detail = group.footerDetail {
+                                Text(verbatim: detail)
+                                    .font(.caption)
+                                    .lineLimit(2)
+                            }
+                        }
+                    }
+                } else if !viewModel.flatActiveServices.isEmpty {
                     Section {
                         forEach(services: viewModel.flatActiveServices)
                     }
@@ -216,8 +243,16 @@ public struct BonjourScanForServicesView: View {
         #endif
     }
 
+    /// - Parameter showsServiceTypeSubtitle: Pass `false` inside a
+    ///   per-type section — the header already names the type, so the
+    ///   subtitle would repeat it on every row. VoiceOver still hears
+    ///   the type via the explicit row label below, since a section
+    ///   header is only reachable through the rotor.
     @ViewBuilder
-    private func forEach(services: [BonjourService]) -> some View {
+    private func forEach(
+        services: [BonjourService],
+        showsServiceTypeSubtitle: Bool = true
+    ) -> some View {
         ForEach(services) { service in
             // `NavigationLink(value:)` (instead of plain `.tag`) is what
             // renders the disclosure chevron and the system "tappable
@@ -229,12 +264,15 @@ public struct BonjourScanForServicesView: View {
             NavigationLink(value: service) {
                 TitleDetailStackView(
                     title: displayTitle(for: service),
-                    detail: service.serviceType.name
+                    detail: showsServiceTypeSubtitle ? service.serviceType.name : nil
                 ) {
                     ServiceTypeBadge(serviceType: service.serviceType, style: .iconOnly)
                 }
             }
             .draggable(service.hostName)
+            // Stated explicitly so a row reads the same whether or not
+            // the subtitle is drawn.
+            .accessibilityLabel("\(displayTitle(for: service)), \(service.serviceType.name)")
             .accessibilityHint(Strings.Accessibility.viewDetails(service.service.name))
             // Mirrors the full context menu below — context menus
             // aren't reachable from the VoiceOver rotor or Switch
