@@ -33,7 +33,8 @@ public protocol BonjourServiceScannerDelegate: AnyObject, Sendable {
 /// and forwards discovery events through its ``delegate``. Use the ``shared`` singleton
 /// for production scanning.
 @MainActor
-public final class BonjourServiceScanner: BonjourServiceScannerDelegate {
+public final class BonjourServiceScanner: BonjourServiceScannerDelegate,
+                                          BonjourHostResolutionDelegate {
 
     public init() {}
 
@@ -142,6 +143,30 @@ public final class BonjourServiceScanner: BonjourServiceScannerDelegate {
 
     public func didAdd(service: BonjourService) {
         self.services.update(with: service)
+
+        // Browsing yields the DNS-SD instance name; `hostName` stays
+        // empty until the service resolves. Consumers group and title
+        // rows by host, and instance names differ per service type on
+        // one device (`_raop` prefixes the MAC), so without this a
+        // single device reads as several. Resolving here rather than
+        // in a view model keeps it on the live scanner — the mocks
+        // stay offline, and the detail screen keeps sole ownership of
+        // each service's `MyNetServiceDelegate` slot.
+        service.hostResolutionDelegate = self
+        service.resolveHostIfNeeded()
+
+        self.delegate?.didAdd(service: service)
+    }
+
+    // MARK: - BonjourHostResolutionDelegate
+
+    /// Re-announces a service once its host is known.
+    ///
+    /// `NetService` fills `hostName` in outside Swift's observation,
+    /// so re-firing `didAdd` is what lets a list pick the new value
+    /// up — the same path a rediscovery already takes.
+    public func serviceDidResolveHost(_ service: BonjourService) {
+        guard self.services.contains(service) else { return }
         self.delegate?.didAdd(service: service)
     }
 

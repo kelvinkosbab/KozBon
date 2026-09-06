@@ -13,13 +13,13 @@ import BonjourScanning
 
 // MARK: - BonjourServicesViewModelGroupingTests
 
-/// Pins when the Nearby list breaks into per-service-type sections
-/// and how those sections are ordered.
+/// Pins how the Nearby list breaks into sections and how those
+/// sections are ordered.
 ///
-/// The rule under test: group when the user hasn't asked for a
-/// competing order — i.e. nothing applied, or an explicit
-/// service-type sort. Host-name sorts and category filters stay
-/// flat.
+/// The rule under test: section along whatever axis the user's sort
+/// already clusters — per service type for the service-type sorts
+/// (and the default), per host for the host-name sorts. Category
+/// filters stay flat, the list already being scoped to one bucket.
 @Suite("BonjourServicesViewModel · Grouping")
 @MainActor
 struct BonjourServicesViewModelGroupingTests {
@@ -76,25 +76,25 @@ struct BonjourServicesViewModelGroupingTests {
     func groupsWhenNothingApplied() {
         let viewModel = makeViewModel()
         #expect(viewModel.sortType == nil)
-        #expect(viewModel.isGroupedByServiceType)
+        #expect(viewModel.serviceGrouping == .serviceType)
     }
 
     @Test("Grouping is on for both service-type sorts")
     func groupsForServiceTypeSorts() {
         let viewModel = makeViewModel()
         viewModel.sort(sortType: .serviceNameAsc)
-        #expect(viewModel.isGroupedByServiceType)
+        #expect(viewModel.serviceGrouping == .serviceType)
         viewModel.sort(sortType: .serviceNameDesc)
-        #expect(viewModel.isGroupedByServiceType)
+        #expect(viewModel.serviceGrouping == .serviceType)
     }
 
-    @Test("Grouping is off for host-name sorts — sections would fight an A→Z hostname run")
-    func staysFlatForHostNameSorts() {
+    @Test("Host-name sorts group by host, the axis they already cluster on")
+    func groupsByHostForHostNameSorts() {
         let viewModel = makeViewModel()
         viewModel.sort(sortType: .hostNameAsc)
-        #expect(!viewModel.isGroupedByServiceType)
+        #expect(viewModel.serviceGrouping == .hostName)
         viewModel.sort(sortType: .hostNameDesc)
-        #expect(!viewModel.isGroupedByServiceType)
+        #expect(viewModel.serviceGrouping == .hostName)
     }
 
     @Test("Grouping is off for every category filter — the list is already scoped", arguments: [
@@ -107,15 +107,15 @@ struct BonjourServicesViewModelGroupingTests {
     func staysFlatForCategoryFilters(_ filter: BonjourServiceSortType) {
         let viewModel = makeViewModel()
         viewModel.sort(sortType: filter)
-        #expect(!viewModel.isGroupedByServiceType)
+        #expect(viewModel.serviceGrouping == .flat)
     }
 
-    @Test("A non-grouping state yields no groups at all, so the view never builds both branches")
-    func nonGroupingStateReturnsNoGroups() {
+    @Test("A flat state yields no groups at all, so the view never builds both branches")
+    func flatStateReturnsNoGroups() {
         let viewModel = makePopulatedViewModel()
-        viewModel.sort(sortType: .hostNameAsc)
+        viewModel.sort(sortType: .mediaAndStreaming)
+        #expect(viewModel.serviceGrouping == .flat)
         #expect(viewModel.groupedActiveServices.isEmpty)
-        #expect(!viewModel.flatActiveServices.isEmpty)
     }
 
     // MARK: - Bucketing
@@ -126,7 +126,7 @@ struct BonjourServicesViewModelGroupingTests {
         let groups = viewModel.groupedActiveServices
 
         #expect(groups.count == 2)
-        #expect(groups.map(\.serviceType.name) == ["AirPlay", "Printer"])
+        #expect(groups.map(\.title) == ["AirPlay", "Printer"])
         #expect(groups.first?.services.count == 2)
         #expect(groups.last?.services.count == 1)
     }
@@ -155,14 +155,14 @@ struct BonjourServicesViewModelGroupingTests {
     @Test("Groups are alphabetical by type name with nothing applied")
     func groupsAlphabeticalByDefault() {
         let viewModel = makePopulatedViewModel()
-        #expect(viewModel.groupedActiveServices.map(\.serviceType.name) == ["AirPlay", "Printer"])
+        #expect(viewModel.groupedActiveServices.map(\.title) == ["AirPlay", "Printer"])
     }
 
     @Test("The descending service-type sort reverses the group order")
     func descendingSortReversesGroups() {
         let viewModel = makePopulatedViewModel()
         viewModel.sort(sortType: .serviceNameDesc)
-        #expect(viewModel.groupedActiveServices.map(\.serviceType.name) == ["Printer", "AirPlay"])
+        #expect(viewModel.groupedActiveServices.map(\.title) == ["Printer", "AirPlay"])
     }
 
     @Test("Within a group, rows keep the order the active sort produced")
@@ -170,7 +170,7 @@ struct BonjourServicesViewModelGroupingTests {
         let viewModel = makePopulatedViewModel()
         // Default sorts by instance name, so the AirPlay bucket
         // reads Attic before Bedroom.
-        let airPlay = viewModel.groupedActiveServices.first { $0.serviceType.name == "AirPlay" }
+        let airPlay = viewModel.groupedActiveServices.first { $0.title == "AirPlay" }
         #expect(airPlay?.services.map(\.service.name) == ["Attic", "Bedroom"])
     }
 
@@ -210,6 +210,83 @@ struct BonjourServicesViewModelGroupingTests {
         #expect(group.footerDetail == nil)
     }
 
+    // MARK: - Host Grouping
+
+    @Test("Services bucket into one group per host")
+    func bucketsByHost() {
+        let viewModel = makePopulatedViewModel()
+        viewModel.sort(sortType: .hostNameAsc)
+        let groups = viewModel.groupedActiveServices
+
+        // Attic and Bedroom each advertise AirPlay; Office is the
+        // printer. Unresolved hosts fall back to the instance name.
+        #expect(groups.count == 3)
+        #expect(groups.map(\.title) == ["Attic", "Bedroom", "Office"])
+        #expect(groups.allSatisfy { $0.services.count == 1 })
+    }
+
+    @Test("Host groups are keyed as host groups, so rows know which half to drop")
+    func hostGroupsCarryTheHostKey() {
+        let viewModel = makePopulatedViewModel()
+        viewModel.sort(sortType: .hostNameAsc)
+        #expect(viewModel.groupedActiveServices.allSatisfy { $0.key == .hostName })
+    }
+
+    @Test("Several services on one host collapse into a single section")
+    func oneSectionPerHostNotPerService() throws {
+        let viewModel = makeViewModel()
+        viewModel.didAdd(service: makeService(named: "Studio", typeName: "AirPlay", type: "airplay"))
+        viewModel.didAdd(service: makeService(named: "Studio", typeName: "Printer", type: "ipp"))
+        viewModel.sort(sortType: .hostNameAsc)
+
+        let groups = viewModel.groupedActiveServices
+        #expect(groups.count == 1)
+        let studio = try #require(groups.first)
+        #expect(studio.title == "Studio")
+        #expect(studio.services.count == 2)
+        // Within a host, the sort's tie-break orders by type name.
+        #expect(studio.services.map(\.serviceType.name) == ["AirPlay", "Printer"])
+    }
+
+    @Test("The descending host sort reverses the section order")
+    func descendingHostSortReversesSections() {
+        let viewModel = makePopulatedViewModel()
+        viewModel.sort(sortType: .hostNameDesc)
+        #expect(viewModel.groupedActiveServices.map(\.title) == ["Office", "Bedroom", "Attic"])
+    }
+
+    @Test("Host sections carry no footer — a host spans several types")
+    func hostGroupsHaveNoFooter() {
+        let viewModel = makeViewModel()
+        viewModel.didAdd(
+            service: makeService(
+                named: "Studio",
+                typeName: "AirPlay",
+                type: "airplay",
+                detail: "Protocol for streaming audio / video content"
+            )
+        )
+        viewModel.sort(sortType: .hostNameAsc)
+
+        #expect(viewModel.groupedActiveServices.allSatisfy { $0.footerDetail == nil })
+    }
+
+    @Test("Every discovered service lands in exactly one host group")
+    func hostGroupingLosesNothing() {
+        let viewModel = makePopulatedViewModel()
+        viewModel.sort(sortType: .hostNameAsc)
+        let grouped = viewModel.groupedActiveServices.flatMap(\.services)
+        #expect(Set(grouped.map(\.id)) == Set(viewModel.flatActiveServices.map(\.id)))
+    }
+
+    @Test("Host group ids are unique, so no section silently drops")
+    func hostGroupIdsAreUnique() {
+        let viewModel = makePopulatedViewModel()
+        viewModel.sort(sortType: .hostNameAsc)
+        let ids = viewModel.groupedActiveServices.map(\.id)
+        #expect(Set(ids).count == ids.count)
+    }
+
     // MARK: - Search Composition
 
     @Test("Search narrows within groups and drops groups that empty out")
@@ -219,7 +296,7 @@ struct BonjourServicesViewModelGroupingTests {
 
         let groups = viewModel.groupedActiveServices
         #expect(groups.count == 1)
-        #expect(groups.first?.serviceType.name == "AirPlay")
+        #expect(groups.first?.title == "AirPlay")
         #expect(groups.first?.services.map(\.service.name) == ["Attic"])
     }
 
@@ -228,7 +305,7 @@ struct BonjourServicesViewModelGroupingTests {
     @Test("No discovered services means no groups")
     func emptyProducesNoGroups() {
         let viewModel = makeViewModel()
-        #expect(viewModel.isGroupedByServiceType)
+        #expect(viewModel.serviceGrouping == .serviceType)
         #expect(viewModel.groupedActiveServices.isEmpty)
     }
 }

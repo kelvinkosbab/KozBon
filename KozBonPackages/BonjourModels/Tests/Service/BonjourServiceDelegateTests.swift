@@ -20,6 +20,16 @@ private final class TestNetServiceDelegate: MyNetServiceDelegate {
     }
 }
 
+// MARK: - TestHostResolutionDelegate
+
+@MainActor
+private final class TestHostResolutionDelegate: BonjourHostResolutionDelegate {
+    var resolvedServices: [BonjourService] = []
+    func serviceDidResolveHost(_ service: BonjourService) {
+        resolvedServices.append(service)
+    }
+}
+
 // MARK: - BonjourServiceDelegateTests
 
 @Suite("BonjourService Delegate & State Machine")
@@ -67,6 +77,65 @@ struct BonjourServiceDelegateTests {
         // Simulate NetService calling back
         service.netServiceDidStop(service.service)
         #expect(callbackCalled == true)
+    }
+
+    @Test("`resolveHostIfNeeded()` starts a resolve on a service that has no host yet")
+    func resolveHostIfNeededStartsResolving() {
+        let service = makeService()
+        service.resolveHostIfNeeded()
+        #expect(service.isResolving == true)
+    }
+
+    @Test("`resolveHostIfNeeded()` leaves an in-flight resolve alone")
+    func resolveHostIfNeededDoesNotRestartAnInFlightResolve() {
+        let service = makeService()
+        service.resolve()
+
+        // Repeated discovery callbacks for the same service must not
+        // stack resolves on top of one another.
+        service.resolveHostIfNeeded()
+
+        #expect(service.isResolving == true)
+    }
+
+    // MARK: - Host Resolution Delegate
+
+    @Test("Resolution notifies the host delegate")
+    func resolutionNotifiesHostDelegate() {
+        let service = makeService()
+        let hostDelegate = TestHostResolutionDelegate()
+        service.hostResolutionDelegate = hostDelegate
+
+        service.netServiceDidResolveAddress(service.service)
+
+        #expect(hostDelegate.resolvedServices.count == 1)
+    }
+
+    @Test("A failed resolution notifies the host delegate too, so a browser stops waiting")
+    func failedResolutionNotifiesHostDelegate() {
+        let service = makeService()
+        let hostDelegate = TestHostResolutionDelegate()
+        service.hostResolutionDelegate = hostDelegate
+
+        service.netService(service.service, didNotResolve: [:])
+
+        #expect(hostDelegate.resolvedServices.count == 1)
+    }
+
+    @Test("The two delegate slots are independent — a browser and the detail screen both get told")
+    func bothDelegateSlotsFireIndependently() {
+        let service = makeService()
+        let addressDelegate = TestNetServiceDelegate()
+        let hostDelegate = TestHostResolutionDelegate()
+        service.delegate = addressDelegate
+        service.hostResolutionDelegate = hostDelegate
+
+        service.netServiceDidResolveAddress(service.service)
+
+        // Sharing one slot would have whichever attached last cut the
+        // other off — the whole reason the second slot exists.
+        #expect(addressDelegate.resolvedServices.count == 1)
+        #expect(hostDelegate.resolvedServices.count == 1)
     }
 
     // MARK: - Resolve Delegate Callbacks

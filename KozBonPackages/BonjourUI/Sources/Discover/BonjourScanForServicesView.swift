@@ -52,19 +52,15 @@ public struct BonjourScanForServicesView: View {
                     }
                 }
 
-                // One section per service type when the user hasn't
-                // asked for a competing order (see
-                // `isGroupedByServiceType`); otherwise the original
-                // single unsectioned run.
-                if viewModel.isGroupedByServiceType {
+                // Sections per service type or per host, depending on
+                // what the user asked for (see `serviceGrouping`);
+                // otherwise the original single unsectioned run.
+                if viewModel.serviceGrouping != .flat {
                     ForEach(viewModel.groupedActiveServices) { group in
                         Section {
-                            forEach(
-                                services: group.services,
-                                showsServiceTypeSubtitle: false
-                            )
+                            forEach(services: group.services, style: .init(group.key))
                         } header: {
-                            Text(verbatim: group.serviceType.name)
+                            Text(verbatim: group.title)
                                 .font(.caption)
                                 .accessibilityAddTraits(.isHeader)
                         } footer: {
@@ -246,15 +242,15 @@ public struct BonjourScanForServicesView: View {
         #endif
     }
 
-    /// - Parameter showsServiceTypeSubtitle: Pass `false` inside a
-    ///   per-type section — the header already names the type, so the
-    ///   subtitle would repeat it on every row. VoiceOver still hears
-    ///   the type via the explicit row label below, since a section
-    ///   header is only reachable through the rotor.
+    /// - Parameter style: How much of the row's identity the
+    ///   enclosing section header already carries. VoiceOver hears
+    ///   the whole thing regardless, via the explicit row label
+    ///   below — a section header is only reachable through the
+    ///   rotor.
     @ViewBuilder
     private func forEach(
         services: [BonjourService],
-        showsServiceTypeSubtitle: Bool = true
+        style: ServiceRowStyle = .standalone
     ) -> some View {
         ForEach(services) { service in
             // `NavigationLink(value:)` (instead of plain `.tag`) is what
@@ -266,15 +262,15 @@ public struct BonjourScanForServicesView: View {
             // no `.navigationDestination(for:)` is needed.
             NavigationLink(value: service) {
                 TitleDetailStackView(
-                    title: displayTitle(for: service),
-                    detail: showsServiceTypeSubtitle ? service.serviceType.name : nil
+                    title: rowTitle(for: service, style: style),
+                    detail: rowDetail(for: service, style: style)
                 ) {
                     ServiceTypeBadge(serviceType: service.serviceType, style: .iconOnly)
                 }
             }
             .draggable(service.hostName)
-            // Stated explicitly so a row reads the same whether or not
-            // the subtitle is drawn.
+            // Stated explicitly so a row reads the same in every
+            // style, whichever half the header took over.
             .accessibilityLabel("\(displayTitle(for: service)), \(service.serviceType.name)")
             .accessibilityHint(Strings.Accessibility.viewDetails(service.service.name))
             // Mirrors the full context menu below — context menus
@@ -363,16 +359,73 @@ public struct BonjourScanForServicesView: View {
     ///   Name if hostname is missing/`"NA"`).
     /// - Hostname missing/`"NA"` → use Service Name in its slot.
     private func displayTitle(for service: BonjourService) -> String {
-        let rawHostname = service.hostName
-        let isHostnameAvailable = !rawHostname.isEmpty && rawHostname != "NA"
-        let primaryIdentifier = isHostnameAvailable
-            ? rawHostname
-            : service.service.name
+        let primaryIdentifier = service.hostIdentifier
 
         if let identification = BonjourDeviceIdentifier.identify(service: service) {
             return "\(primaryIdentifier) - \(identification.friendlyName)"
         }
         return primaryIdentifier
+    }
+
+    /// The row's primary line: whichever half the section header
+    /// didn't already spend.
+    private func rowTitle(
+        for service: BonjourService,
+        style: ServiceRowStyle
+    ) -> String {
+        switch style {
+        case .standalone, .inServiceTypeSection:
+            return displayTitle(for: service)
+        case .inHostSection:
+            return service.serviceType.name
+        }
+    }
+
+    /// The row's secondary line, or `nil` for a single-line row.
+    private func rowDetail(
+        for service: BonjourService,
+        style: ServiceRowStyle
+    ) -> String? {
+        switch style {
+        case .standalone:
+            return service.serviceType.name
+        case .inServiceTypeSection:
+            // The header names the type; nothing left worth a second
+            // line, since the title already carries host and device.
+            return nil
+        case .inHostSection:
+            // The header names the host, so the DNS-SD type earns the
+            // second line: it's the one field that separates two
+            // same-named types across transports.
+            return service.serviceType.fullType
+        }
+    }
+}
+
+// MARK: - ServiceRowStyle
+
+/// How much of a discovered-service row's identity its enclosing
+/// section header already states.
+///
+/// A header repeated on every row beneath it is noise, so each style
+/// moves the repeated field out of the row and promotes what's left.
+private enum ServiceRowStyle {
+
+    /// No section header, or one that says nothing about the row —
+    /// the full host title plus service-type subtitle.
+    case standalone
+
+    /// Inside a per-service-type section.
+    case inServiceTypeSection
+
+    /// Inside a per-host section.
+    case inHostSection
+
+    init(_ key: BonjourServiceGroup.Key) {
+        switch key {
+        case .serviceType: self = .inServiceTypeSection
+        case .hostName: self = .inHostSection
+        }
     }
 }
 

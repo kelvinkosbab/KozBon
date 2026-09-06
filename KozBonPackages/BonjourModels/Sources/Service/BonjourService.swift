@@ -17,6 +17,22 @@ public protocol MyNetServiceDelegate: AnyObject, Sendable {
     func serviceDidResolveAddress(_ service: BonjourService)
 }
 
+// MARK: - BonjourHostResolutionDelegate
+
+/// Delegate protocol for observing when a service learns its host.
+///
+/// Deliberately a second slot rather than a second conformer of
+/// ``MyNetServiceDelegate``: a browsing scanner resolves every
+/// service it finds, while the detail screen owns
+/// ``BonjourService/delegate`` for the one service it's showing.
+/// Sharing one slot would have whichever attached last silently cut
+/// the other off.
+@MainActor
+public protocol BonjourHostResolutionDelegate: AnyObject, Sendable {
+    /// Called when a service finishes resolving, successfully or not.
+    func serviceDidResolveHost(_ service: BonjourService)
+}
+
 // MARK: - BonjourService
 
 /// Wraps a `NetService` with additional state tracking for address resolution,
@@ -63,6 +79,11 @@ public final class BonjourService: NSObject, @preconcurrency NetServiceDelegate 
 
     /// Delegate notified when address resolution completes.
     public weak var delegate: MyNetServiceDelegate?
+
+    /// Delegate notified when the service learns its host — see
+    /// ``BonjourHostResolutionDelegate`` for why this is separate
+    /// from ``delegate``.
+    public weak var hostResolutionDelegate: BonjourHostResolutionDelegate?
 
     private let logger: Loggable = Logger(category: "BonjourService")
 
@@ -174,6 +195,24 @@ public final class BonjourService: NSObject, @preconcurrency NetServiceDelegate 
         self.startMonitoring()
     }
 
+    /// Starts resolving just enough to populate ``hostName``, and
+    /// does nothing if that's already underway or done.
+    ///
+    /// Separate from ``resolve()`` because a browsing list wants the
+    /// host, not the TXT records: this deliberately skips
+    /// ``startMonitoring()``, so discovering N services doesn't leave
+    /// N record monitors running. Fire-and-forget — completion
+    /// arrives through ``MyNetServiceDelegate/serviceDidResolveAddress(_:)``.
+    ///
+    /// Guarded on `isResolving` so repeated discovery callbacks for
+    /// the same service don't stack resolves, and on the underlying
+    /// `hostName` so an already-resolved service is left alone.
+    public func resolveHostIfNeeded() {
+        guard !self.isResolving, self.service.hostName == nil else { return }
+        self.isResolving = true
+        self.service.resolve(withTimeout: Constants.Network.resolveTimeout)
+    }
+
     /// Resolves the service's addresses asynchronously. Suspends until resolution completes or fails.
     public func resolveAddresses() async {
         await withCheckedContinuation { continuation in
@@ -190,6 +229,7 @@ public final class BonjourService: NSObject, @preconcurrency NetServiceDelegate 
         logger.debug("Service did resolve address", censored: "\(sender) with hostname \(self.hostName)")
         self.addresses = sender.parseInternetAddresses()
         delegate?.serviceDidResolveAddress(self)
+        hostResolutionDelegate?.serviceDidResolveHost(self)
         isResolving = false
         resolveAddressContinuation?.resume()
         resolveAddressContinuation = nil
@@ -198,6 +238,7 @@ public final class BonjourService: NSObject, @preconcurrency NetServiceDelegate 
     public func netService(_ sender: NetService, didNotResolve errorDict: [String: NSNumber]) {
         logger.debug("Service did not resolve address", censored: "\(sender) with errorDict \(errorDict)")
         self.delegate?.serviceDidResolveAddress(self)
+        self.hostResolutionDelegate?.serviceDidResolveHost(self)
         self.isResolving = false
         self.resolveAddressContinuation?.resume()
         self.resolveAddressContinuation = nil
