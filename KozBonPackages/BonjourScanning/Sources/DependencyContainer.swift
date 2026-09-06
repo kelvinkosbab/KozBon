@@ -113,19 +113,34 @@ extension DependencyContainer {
     }
 }
 
+// MARK: - Default Container
+
+extension DependencyContainer {
+
+    /// Backs `EnvironmentValues.dependencies` when nothing has been
+    /// injected.
+    ///
+    /// Allocated once here instead of inline at the `@Entry`
+    /// declaration: that default-value site is re-evaluated on every
+    /// read, so building a container there would stand up a fresh
+    /// scanner and publish manager each time and invalidate every
+    /// view reading the environment.
+    ///
+    /// `nonisolated` so the generated default-value site — which the
+    /// macro emits in a nonisolated context — can reference it
+    /// directly. The `assumeIsolated` hop covers the main-actor-
+    /// isolated `init()`; SwiftUI always resolves environment
+    /// defaults on the main actor, so the runtime check never trips.
+    nonisolated static let environmentDefault = MainActor.assumeIsolated {
+        DependencyContainer()
+    }
+}
+
 // MARK: - Environment Values
 
 public extension EnvironmentValues {
     /// The application's dependency container, accessible via `@Environment(\.dependencies)`.
-    ///
-    /// The default uses `MainActor.assumeIsolated` because the
-    /// production `DependencyContainer.init()` is main-actor-isolated
-    /// (it constructs the live `BonjourServiceScanner` and
-    /// `BonjourPublishManager`) and `@Entry`'s macro generates the
-    /// default-value site in a nonisolated context. SwiftUI always
-    /// evaluates environment values on the main actor in practice,
-    /// so the runtime check never trips.
-    @Entry var dependencies: DependencyContainer = MainActor.assumeIsolated { DependencyContainer() }
+    @Entry var dependencies: DependencyContainer = .environmentDefault
 }
 
 // MARK: - View Extension

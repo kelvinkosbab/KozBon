@@ -101,3 +101,12 @@ public final class BonjourPublishManager {
         publishedServices.removeAll()
     }
 }
+
+// MARK: - BonjourPublishManagerProtocol
+
+// Stated here rather than beside the protocol: it inherits
+// `Sendable`, and a `Sendable` conformance has to live in the
+// conforming class's own file — splitting them is a warning today
+// and an error in a future language mode. `BonjourServiceScanner`
+// satisfies the same rule by conforming at its declaration.
+extension BonjourPublishManager: BonjourPublishManagerProtocol {}

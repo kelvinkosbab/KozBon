@@ -237,7 +237,10 @@ public struct BonjourScanForServicesView: View {
             }
         }
         .focusedSceneValue(\.isBroadcastServicePresented, $viewModel.isBroadcastBonjourServicePresented)
-        .focusedSceneValue(\.refreshScan, { [viewModel] in viewModel.load() })
+        .focusedSceneValue(
+            \.refreshScan,
+            RefreshScanAction(owner: viewModel) { [viewModel] in viewModel.load() }
+        )
         #if canImport(FoundationModels)
         .modifier(AIServiceExplanationSheetModifier(serviceToExplain: $serviceToExplain))
         #endif

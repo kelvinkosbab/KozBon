@@ -8,6 +8,8 @@
 #if os(macOS)
 import SwiftUI
 import BonjourLocalization
+// For `RefreshScanAction`, the type behind `\.refreshScan`.
+import BonjourUI
 
 // MARK: - AppCommands
 

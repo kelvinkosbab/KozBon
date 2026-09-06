@@ -40,7 +40,3 @@ public protocol BonjourPublishManagerProtocol: AnyObject, Sendable {
     /// Stops publishing all currently active services.
     func unPublishAllServices() async
 }
-
-// MARK: - BonjourPublishManager + Protocol Conformance
-
-extension BonjourPublishManager: BonjourPublishManagerProtocol {}
