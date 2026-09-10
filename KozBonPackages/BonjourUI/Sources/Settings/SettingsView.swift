@@ -33,6 +33,7 @@ public struct SettingsView: View {
     @Environment(\.aiCloudCredentialsStore) var credentialsStore
     // `internal` so the `+AIBackend` companion file can read it.
     @Environment(\.accessibilityReduceMotion) var reduceMotion
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @State private var isResetConfirmationPresented = false
     @State var isSignInSheetPresented = false
 
@@ -127,6 +128,27 @@ public struct SettingsView: View {
             .formStyle(.grouped)
             #if os(macOS)
             .frame(width: 400)
+            #else
+            // Inset the rows in regular width. Uncapped, a
+            // regular-width canvas stretches every row edge to
+            // edge and leaves ~800pt of dead space between a label
+            // and its control — reachable on iPad, on iPhone in
+            // landscape, and on the iPhone Duo inner display.
+            //
+            // Scroll-content margins rather than a `maxWidth`
+            // frame: the large navigation title is part of the
+            // scroll content, so it insets with the rows instead of
+            // being left stranded at the leading edge.
+            .contentMarginsBasedOnSizeClass()
+            // A large title anchors to the leading edge of the
+            // *window*, not to the inset rows, so in regular width
+            // it strands itself ~180pt away from the content it
+            // labels. Inline centers it over the form instead.
+            // Compact width keeps the large title — the rows run
+            // edge to edge there, so it already lines up.
+            .navigationBarTitleDisplayMode(
+                horizontalSizeClass == .regular ? .inline : .large
+            )
             #endif
             .navigationTitle(String(localized: Strings.NavigationTitles.settings))
             // Declarative section appear/disappear animations.

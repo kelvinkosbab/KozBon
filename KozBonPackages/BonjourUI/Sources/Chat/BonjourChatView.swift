@@ -43,6 +43,7 @@ public struct BonjourChatView: View {
     @Environment(\.preferencesStore) var preferencesStore
     @Environment(\.aiCloudCredentialsStore) var credentialsStore
     @Environment(\.accessibilityReduceMotion) var reduceMotion
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
     /// Action injected by `AppCoreScene` that records the user
     /// as having seen the latest assistant message. Called by
@@ -182,7 +183,14 @@ public struct BonjourChatView: View {
                 // scroll up — same behavior as Mail / Messages.
                 .navigationTitle(String(localized: Strings.Chat.emptyTitle))
                 #if !os(macOS)
-                .navigationBarTitleDisplayMode(.large)
+                // Regular width caps the transcript at 720pt, and a
+                // large title anchors to the window's leading edge
+                // rather than the capped content — leaving it
+                // stranded well clear of the messages it labels.
+                // Inline centers it over the transcript instead.
+                .navigationBarTitleDisplayMode(
+                    horizontalSizeClass == .regular ? .inline : .large
+                )
                 #endif
                 .toolbar { clearChatToolbarItem }
                 // Tactile confirmation that a message was dispatched, plus
@@ -348,6 +356,14 @@ public struct BonjourChatView: View {
                 .safeAreaInset(edge: .bottom, spacing: 0) {
                     inputBar(session: session)
                 }
+                // Cap the transcript and the compose bar together
+                // so they stay aligned, then center the pair. On a
+                // regular-width canvas (iPad, iPhone landscape, the
+                // iPhone Duo inner display) an uncapped chat renders
+                // 800pt-wide suggestion cards and a 726pt text
+                // field, both of which read as broken.
+                .frame(maxWidth: 720)
+                .frame(maxWidth: .infinity, alignment: .center)
         } else {
             ContentUnavailableView(
                 String(localized: Strings.Chat.emptyTitle),
