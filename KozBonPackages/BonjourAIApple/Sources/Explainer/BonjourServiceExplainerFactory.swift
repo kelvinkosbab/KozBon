@@ -56,10 +56,7 @@ public struct BonjourServiceExplainerFactory: BonjourServiceExplainerFactoryProt
         #if targetEnvironment(simulator)
         return SimulatorBonjourServiceExplainer()
         #elseif canImport(FoundationModels)
-        if #available(iOS 26, macOS 26, visionOS 26, *) {
-            return BonjourServiceExplainer()
-        }
-        return nil
+        return BonjourServiceExplainer()
         #else
         return nil
         #endif

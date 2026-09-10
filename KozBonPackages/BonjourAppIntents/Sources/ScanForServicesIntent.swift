@@ -26,7 +26,6 @@ import BonjourScanning
 /// keeps the contract simple (no IPC, no stale-snapshot logic)
 /// at the cost of running a separate ~3-second scan per
 /// invocation — well within Siri's intent budget.
-@available(iOS 18.0, macOS 15.0, visionOS 2.0, *)
 public struct ScanForServicesIntent: AppIntent {
 
     public static let title: LocalizedStringResource = .init("intent_scan_title")

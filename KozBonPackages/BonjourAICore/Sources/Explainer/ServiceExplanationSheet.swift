@@ -20,7 +20,6 @@ import BonjourStorage
 /// (on-device Apple FoundationModels via ``BonjourAIApple`` or
 /// Anthropic Claude via ``BonjourAIAnthropic``), falling back to
 /// a local explainer if none is injected.
-@available(iOS 26, macOS 26, visionOS 26, *)
 public struct ServiceExplanationSheet: View {
 
     /// The subject to explain — a discovered service, a service

@@ -79,12 +79,10 @@ public struct InsightsContextMenuItems: View {
     @ViewBuilder
     private var appleIntelligenceMenu: some View {
         #if canImport(FoundationModels)
-        if #available(iOS 26, macOS 26, visionOS 26, *) {
-            AIContextMenuItems(
-                aiAnalysisEnabled: preferencesStore.aiAnalysisEnabled,
-                action: action
-            )
-        }
+        AIContextMenuItems(
+            aiAnalysisEnabled: preferencesStore.aiAnalysisEnabled,
+            action: action
+        )
         #endif
     }
 

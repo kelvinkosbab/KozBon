@@ -72,23 +72,20 @@ public enum AppleIntelligenceSupport {
         #if targetEnvironment(simulator)
         return .available
         #elseif canImport(FoundationModels)
-        if #available(iOS 26, macOS 26, visionOS 26, *) {
-            switch SystemLanguageModel.default.availability {
-            case .available:
-                return .available
-            case .unavailable(.deviceNotEligible):
-                return .deviceNotEligible
-            case .unavailable(.appleIntelligenceNotEnabled):
-                return .appleIntelligenceDisabled
-            case .unavailable(.modelNotReady):
-                return .modelNotReady
-            case .unavailable:
-                return .otherUnavailable
-            @unknown default:
-                return .otherUnavailable
-            }
+        switch SystemLanguageModel.default.availability {
+        case .available:
+            return .available
+        case .unavailable(.deviceNotEligible):
+            return .deviceNotEligible
+        case .unavailable(.appleIntelligenceNotEnabled):
+            return .appleIntelligenceDisabled
+        case .unavailable(.modelNotReady):
+            return .modelNotReady
+        case .unavailable:
+            return .otherUnavailable
+        @unknown default:
+            return .otherUnavailable
         }
-        return .deviceNotEligible
         #else
         return .deviceNotEligible
         #endif

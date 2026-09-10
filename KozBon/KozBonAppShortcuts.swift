@@ -45,7 +45,6 @@ import Foundation
 /// Siri experience feel less polished than the in-app chat. Users
 /// who want chat should open the Chat tab; Siri is reserved for
 /// concrete actions (scan, list).
-@available(iOS 18.0, macOS 15.0, visionOS 2.0, *)
 public struct KozBonAppShortcuts: AppShortcutsProvider {
 
     /// Tint applied to the Shortcut's icon in the Shortcuts app.

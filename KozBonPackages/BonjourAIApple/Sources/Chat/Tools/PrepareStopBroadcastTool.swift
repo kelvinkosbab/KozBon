@@ -27,7 +27,6 @@ import FoundationModels
 /// As with the other destructive tool, this only opens a
 /// confirmation; the actual `unPublish(service:)` call runs from
 /// the dialog's destructive button.
-@available(iOS 26, macOS 26, visionOS 26, *)
 public struct PrepareStopBroadcastTool: Tool {
 
     public let name = "prepareStopBroadcast"

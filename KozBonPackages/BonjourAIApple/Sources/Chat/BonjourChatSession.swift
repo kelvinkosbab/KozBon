@@ -28,7 +28,6 @@ import FoundationModels
 /// `<context>` preamble when it has materially changed, so follow-up questions
 /// always have an up-to-date view of the network without losing conversation
 /// history.
-@available(iOS 26, macOS 26, visionOS 26, *)
 @MainActor
 @Observable
 public final class BonjourChatSession: BonjourChatSessionProtocol {

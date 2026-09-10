@@ -27,7 +27,6 @@ import FoundationModels
 ///
 /// Like the other prepare-* tools, this does NOT save anything —
 /// the user reviews and confirms via the form's Done button.
-@available(iOS 26, macOS 26, visionOS 26, *)
 public struct PrepareEditCustomServiceTypeTool: Tool {
 
     public let name = "prepareEditCustomServiceType"

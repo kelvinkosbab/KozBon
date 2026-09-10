@@ -38,12 +38,8 @@ struct BonjourServiceExplainerFactoryTests {
         // Simulator branch → SimulatorBonjourServiceExplainer.
         #expect(explainer != nil)
         #elseif canImport(FoundationModels)
-        if #available(iOS 26, macOS 26, visionOS 26, *) {
-            // Real BonjourServiceExplainer.
-            #expect(explainer != nil)
-        } else {
-            #expect(explainer == nil)
-        }
+        // Real BonjourServiceExplainer.
+        #expect(explainer != nil)
         #else
         // Older SDKs without FoundationModels → nil; the Insights
         // menu item drops the action silently.

@@ -247,8 +247,7 @@ public struct SupportedServiceDetailView: View {
 
 #if canImport(FoundationModels)
 
-@available(iOS 26, macOS 26, visionOS 26, *)
-private struct AIServiceTypeSheetAvailable: ViewModifier {
+struct AIServiceTypeSheetModifier: ViewModifier {
     let serviceType: BonjourServiceType
     @Binding var isPresented: Bool
 
@@ -257,22 +256,6 @@ private struct AIServiceTypeSheetAvailable: ViewModifier {
             .sheet(isPresented: $isPresented) {
                 ServiceExplanationSheet(serviceType: serviceType)
             }
-    }
-}
-
-struct AIServiceTypeSheetModifier: ViewModifier {
-    let serviceType: BonjourServiceType
-    @Binding var isPresented: Bool
-
-    func body(content: Content) -> some View {
-        if #available(iOS 26, macOS 26, visionOS 26, *) {
-            content.modifier(AIServiceTypeSheetAvailable(
-                serviceType: serviceType,
-                isPresented: $isPresented
-            ))
-        } else {
-            content
-        }
     }
 }
 

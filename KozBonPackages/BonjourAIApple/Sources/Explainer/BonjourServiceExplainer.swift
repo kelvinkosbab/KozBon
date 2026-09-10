@@ -19,7 +19,6 @@ import FoundationModels
 ///
 /// Provides context-aware explanations by analyzing the service's hostname,
 /// IP addresses, transport layer, TXT records, and protocol description.
-@available(iOS 26, macOS 26, visionOS 26, *)
 @MainActor
 @Observable
 public final class BonjourServiceExplainer: BonjourServiceExplainerProtocol {

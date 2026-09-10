@@ -433,8 +433,7 @@ private enum ServiceRowStyle {
 
 #if canImport(FoundationModels)
 
-@available(iOS 26, macOS 26, visionOS 26, *)
-private struct AIServiceExplanationSheetAvailable: ViewModifier {
+struct AIServiceExplanationSheetModifier: ViewModifier {
     @Binding var serviceToExplain: BonjourService?
 
     func body(content: Content) -> some View {
@@ -442,19 +441,6 @@ private struct AIServiceExplanationSheetAvailable: ViewModifier {
             .sheet(item: $serviceToExplain) { service in
                 ServiceExplanationSheet(service: service)
             }
-    }
-}
-
-struct AIServiceExplanationSheetModifier: ViewModifier {
-    @Binding var serviceToExplain: BonjourService?
-
-    func body(content: Content) -> some View {
-        if #available(iOS 26, macOS 26, visionOS 26, *) {
-            content
-                .modifier(AIServiceExplanationSheetAvailable(serviceToExplain: $serviceToExplain))
-        } else {
-            content
-        }
     }
 }
 #endif

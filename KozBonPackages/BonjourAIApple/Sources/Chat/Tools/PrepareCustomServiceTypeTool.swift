@@ -30,7 +30,6 @@ import FoundationModels
 /// fill in by hand. `transport` is supplied as the wire string
 /// ("tcp" or "udp") so the model doesn't need to reason about the
 /// `TransportLayer` enum.
-@available(iOS 26, macOS 26, visionOS 26, *)
 public struct PrepareCustomServiceTypeTool: Tool {
 
     public let name = "prepareCustomServiceType"

@@ -15,7 +15,7 @@ private struct ContentMarginsBasedOnSizeClass: ViewModifier {
 
     func body(content: Content) -> some View {
         GeometryReader { geometry in
-            if #available(iOS 17.0, *), horizontalSizeClass == .regular {
+            if horizontalSizeClass == .regular {
                 content
                     .contentMargins(
                         .horizontal,

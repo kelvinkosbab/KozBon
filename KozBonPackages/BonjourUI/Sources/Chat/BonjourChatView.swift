@@ -340,17 +340,13 @@ public struct BonjourChatView: View {
             // view, so messages flow behind the input bar as the
             // user scrolls.
             //
-            // On iOS 26+ the text field and send button apply
-            // their own Liquid Glass backgrounds, so the outer
-            // bar must stay transparent — otherwise an extra
-            // `.bar` material layer sits behind the inner glass
-            // and the effect reads as frosted material instead
-            // of clear glass. `.composeBarBackgroundForLegacySystems()`
-            // keeps `.bar` on older iOS/macOS and on visionOS.
+            // The text field and send button apply their own Liquid
+            // Glass backgrounds, so the outer bar stays transparent —
+            // an extra material layer behind the inner glass reads as
+            // frosted material instead of clear glass.
             messageList(session: session)
                 .safeAreaInset(edge: .bottom, spacing: 0) {
                     inputBar(session: session)
-                        .composeBarBackgroundForLegacySystems()
                 }
         } else {
             ContentUnavailableView(

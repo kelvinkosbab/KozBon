@@ -255,7 +255,7 @@ public struct AppCoreScene: Scene {
     ///   iOS 27 SDK. App Store archives are still cut with Xcode
     ///   26.5 (Swift 6.3.2), where merely *naming* the symbol
     ///   fails to compile; Xcode 27 is Swift 6.4.
-    /// - `if #available` — the deployment target is iOS 18.6, so
+    /// - `if #available` — the deployment target is iOS 26, so
     ///   even an Xcode-27 build has to fall back at runtime.
     ///
     /// macOS deliberately takes no role: it renders a search-role

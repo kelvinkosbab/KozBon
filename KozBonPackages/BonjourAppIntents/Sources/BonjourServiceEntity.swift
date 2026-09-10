@@ -26,7 +26,6 @@ import BonjourModels
 /// likely to consume — **name**, **service type**, **hostname**,
 /// **port** — projected to plain `String`/`Int` so the values
 /// travel through Shortcuts cleanly.
-@available(iOS 18.0, macOS 15.0, visionOS 2.0, *)
 public struct BonjourServiceEntity: AppEntity, Sendable, Hashable {
 
     // MARK: - Identity
@@ -163,7 +162,6 @@ public struct BonjourServiceEntity: AppEntity, Sendable, Hashable {
 /// can be filled in to drive a fresh scan and match by id —
 /// but for Phase 2 the empty default is honest about the
 /// transient nature of Bonjour state.
-@available(iOS 18.0, macOS 15.0, visionOS 2.0, *)
 public struct BonjourServiceEntityQuery: EntityQuery {
 
     public init() {}

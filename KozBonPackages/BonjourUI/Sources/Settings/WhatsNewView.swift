@@ -136,24 +136,9 @@ struct WhatsNewView: View {
 
 #if canImport(FoundationModels)
 
-/// Availability shim mirroring `AIServiceTypeSheetModifier`:
-/// presents the 26-only ``ServiceExplanationSheet`` for the
-/// long-pressed release highlight, and is a no-op on older OSes.
+/// Presents ``ServiceExplanationSheet`` for the long-pressed
+/// release highlight.
 private struct WhatsNewInsightSheetModifier: ViewModifier {
-
-    @Binding var target: HighlightInsight?
-
-    func body(content: Content) -> some View {
-        if #available(iOS 26, macOS 26, visionOS 26, *) {
-            content.modifier(WhatsNewInsightSheetAvailable(target: $target))
-        } else {
-            content
-        }
-    }
-}
-
-@available(iOS 26, macOS 26, visionOS 26, *)
-private struct WhatsNewInsightSheetAvailable: ViewModifier {
 
     @Binding var target: HighlightInsight?
 

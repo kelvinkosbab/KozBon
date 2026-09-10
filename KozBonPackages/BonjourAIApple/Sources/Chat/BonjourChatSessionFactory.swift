@@ -77,10 +77,7 @@ public struct BonjourChatSessionFactory: BonjourChatSessionFactoryProtocol {
         #if targetEnvironment(simulator)
         return SimulatorBonjourChatSession()
         #elseif canImport(FoundationModels)
-        if #available(iOS 26, macOS 26, visionOS 26, *) {
-            return BonjourChatSession(publishManager: publishManager)
-        }
-        return nil
+        return BonjourChatSession(publishManager: publishManager)
         #else
         return nil
         #endif

@@ -29,7 +29,6 @@ import AppKit
 /// - **Available**: Shows "Explain with AI" button that triggers the provided action.
 /// - **Not enabled / model not ready**: Shows "Enable Apple Intelligence" that opens Settings.
 /// - **Device not eligible**: Shows nothing.
-@available(iOS 26, macOS 26, visionOS 26, *)
 public struct AIContextMenuItems: View {
 
     @Environment(\.hapticFeedback) private var hapticFeedback

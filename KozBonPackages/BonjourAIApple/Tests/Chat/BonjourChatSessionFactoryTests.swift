@@ -91,13 +91,8 @@ struct BonjourChatSessionFactoryTests {
         // Simulator branch → SimulatorBonjourChatSession.
         #expect(session != nil)
         #elseif canImport(FoundationModels)
-        if #available(iOS 26, macOS 26, visionOS 26, *) {
-            // Real BonjourChatSession.
-            #expect(session != nil)
-        } else {
-            // Hosts on canImport-true but pre-26 OS report nil.
-            #expect(session == nil)
-        }
+        // Real BonjourChatSession.
+        #expect(session != nil)
         #else
         // Hosts that can't import FoundationModels (older SDKs)
         // get nil so the chat tab silently omits itself.

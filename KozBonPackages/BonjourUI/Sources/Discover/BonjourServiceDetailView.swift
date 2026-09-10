@@ -422,8 +422,7 @@ private extension BonjourServiceDetailView {
 
 #if canImport(FoundationModels)
 
-@available(iOS 26, macOS 26, visionOS 26, *)
-private struct AIExplanationSheetAvailable: ViewModifier {
+struct AIExplanationSheetModifier: ViewModifier {
     @Bindable var viewModel: BonjourServiceDetailViewModel
 
     func body(content: Content) -> some View {
@@ -431,19 +430,6 @@ private struct AIExplanationSheetAvailable: ViewModifier {
             .sheet(isPresented: $viewModel.isAIExplanationPresented) {
                 ServiceExplanationSheet(service: viewModel.service, isPublished: viewModel.isPublished)
             }
-    }
-}
-
-struct AIExplanationSheetModifier: ViewModifier {
-    let viewModel: BonjourServiceDetailViewModel
-
-    func body(content: Content) -> some View {
-        if #available(iOS 26, macOS 26, visionOS 26, *) {
-            content
-                .modifier(AIExplanationSheetAvailable(viewModel: viewModel))
-        } else {
-            content
-        }
     }
 }
 #endif

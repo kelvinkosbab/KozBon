@@ -28,7 +28,6 @@ import BonjourScanning
 /// `ScanForServicesIntent` is voice-only ("how many?"),
 /// `ListDiscoveredServicesIntent` is data-first ("give me the
 /// list").
-@available(iOS 18.0, macOS 15.0, visionOS 2.0, *)
 public struct ListDiscoveredServicesIntent: AppIntent {
 
     public static let title: LocalizedStringResource = .init("intent_list_title")

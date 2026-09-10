@@ -32,7 +32,6 @@ import FoundationModels
 /// type that isn't in the user's library yet, the tool returns a
 /// hint suggesting the assistant should first call
 /// ``PrepareCustomServiceTypeTool`` to create one.
-@available(iOS 26, macOS 26, visionOS 26, *)
 public struct PrepareBroadcastTool: Tool {
 
     public let name = "prepareBroadcast"

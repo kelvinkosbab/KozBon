@@ -91,7 +91,7 @@ extension BonjourChatView {
             // rather than an undifferentiated icon.
             //
             // On iOS 26+ the background is a *tinted* Liquid
-            // Glass capsule (via `.glassOrTintedBackground`),
+            // Glass capsule (via `.platformGlassBackground`),
             // which preserves the brand color while
             // participating in the glass layer hierarchy and
             // getting system press/hover feedback for free.
@@ -119,7 +119,7 @@ extension BonjourChatView {
                     .foregroundStyle(.white)
                     .accessibilityHidden(true)
                     .frame(width: .size44, height: .size32)
-                    .glassOrTintedBackground(tint: aiAccent, in: Capsule())
+                    .platformGlassBackground(tint: aiAccent, in: Capsule())
                     // Make the entire 44×32 capsule tappable, not
                     // just the tiny intrinsic-size arrow glyph at
                     // its center.
@@ -162,7 +162,7 @@ extension BonjourChatView {
         .padding(.leading, .space14)
         .padding(.trailing, .space8)
         .padding(.vertical, .space6)
-        .glassOrMaterialBackground(
+        .platformGlassBackground(
             in: RoundedRectangle(cornerRadius: .radius20, style: .continuous)
         )
         // Outer page-level padding stays symmetric so the rounded

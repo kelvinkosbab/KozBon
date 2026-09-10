@@ -29,7 +29,6 @@ import FoundationModels
 /// Built-in (non-custom) types can't be deleted; the tool returns
 /// a hint to the model so it can explain that to the user rather
 /// than the user seeing a no-op dialog.
-@available(iOS 26, macOS 26, visionOS 26, *)
 public struct PrepareDeleteCustomServiceTypeTool: Tool {
 
     public let name = "prepareDeleteCustomServiceType"

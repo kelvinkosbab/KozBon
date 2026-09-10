@@ -158,8 +158,7 @@ struct SelectServiceTypeView: View {
 
 #if canImport(FoundationModels)
 
-@available(iOS 26, macOS 26, visionOS 26, *)
-private struct SelectServiceTypeAISheetAvailable: ViewModifier {
+struct SelectServiceTypeAISheetModifier: ViewModifier {
     @Binding var serviceTypeToExplain: BonjourServiceType?
 
     func body(content: Content) -> some View {
@@ -167,20 +166,6 @@ private struct SelectServiceTypeAISheetAvailable: ViewModifier {
             .sheet(item: $serviceTypeToExplain) { serviceType in
                 ServiceExplanationSheet(serviceType: serviceType)
             }
-    }
-}
-
-struct SelectServiceTypeAISheetModifier: ViewModifier {
-    @Binding var serviceTypeToExplain: BonjourServiceType?
-
-    func body(content: Content) -> some View {
-        if #available(iOS 26, macOS 26, visionOS 26, *) {
-            content.modifier(SelectServiceTypeAISheetAvailable(
-                serviceTypeToExplain: $serviceTypeToExplain
-            ))
-        } else {
-            content
-        }
     }
 }
 
