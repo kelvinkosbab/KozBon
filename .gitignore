@@ -22,6 +22,9 @@ DerivedData/
 .claude/settings.local.json
 .claude/plans/
 .claude/scheduled_tasks.lock
+# Agent worktrees are nested inside the repo, so without this their
+# working trees show up as untracked files in the parent's status.
+.claude/worktrees/
 
 # Editor temp files
 *.swp
