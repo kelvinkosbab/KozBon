@@ -12,7 +12,7 @@ Agent execution conventions — plan multi-step edits before executing, fix cour
 
 ```bash
 # Build for iOS Simulator
-xcodebuild -workspace KozBon.xcworkspace -scheme KozBon -destination 'platform=iOS Simulator,name=iPhone 17 Pro,OS=26.2' build
+xcodebuild -workspace KozBon.xcworkspace -scheme KozBon -destination 'platform=iOS Simulator,name=iPhone 17 Pro,OS=27.0' build
 
 # Build for macOS
 xcodebuild -workspace KozBon.xcworkspace -scheme KozBon -destination 'platform=macOS' build
@@ -29,7 +29,7 @@ The `KozBon` scheme has no test action configured; all tests run through SPM.
 ## Architecture
 
 - **Swift 6.2** with strict concurrency checking (`SWIFT_STRICT_CONCURRENCY = complete`)
-- **SwiftUI** with MVVM pattern, targeting iOS 18.6+, macOS 15.6+, tvOS 18.0+, watchOS 11.0+, visionOS 2.0+
+- **SwiftUI** with MVVM pattern, targeting **26 on every platform** (iOS, macOS, tvOS, watchOS, visionOS). The minimums were raised together so that no `#available` gating is needed for 26-era APIs — Liquid Glass, Foundation Models, and the Apple Intelligence surfaces are all unconditional. Only two availability annotations remain in the codebase: an `iOS 27 / visionOS 27` check for `TabRole.prominent` in `AppCoreScene.swift`, and one `@available(macOS, unavailable)`, which is a platform exclusion rather than a version gate. Adding a new `#available(… 26 …)` is a sign something is out of date.
   - View-model conventions are documented in [`.claude/rules/apple-swiftui-mvvm.md`](.claude/rules/apple-swiftui-mvvm.md) — when to use a VM, `@State` vs `@Bindable` ownership, dependency-plumbing rules, splitting large VMs across companion files
 - **Modular SPM packages** via `KozBonPackages/` local package in the Xcode workspace
 - **Dependency Injection** via `DependencyContainer` (in `BonjourScanning` module) using SwiftUI environment (`@Environment(\.dependencies)`)
@@ -47,11 +47,13 @@ The `KozBon` scheme has no test action configured; all tests run through SPM.
 
 ### App Target (KozBon/)
 
-Only the app entry point and wiring:
-- `AppCore.swift` — @main entry point, tab configuration, macOS commands
-- `TopLevelDestination.swift` — tab definitions
-- `BonjourNearbyServices/PreviewDependencies.swift` — preview helpers
-- `BonjourNearbyServices/DependencyInjectionExamples.swift` — DI documentation and examples
+Deliberately thin — the entry point, the one type the App Intents extractor requires here, and the resources that must live in the main bundle:
+- `KozBonApp.swift` — @main entry point; pulls the root scene from `AppCore`
+- `KozBonAppShortcuts.swift` — `AppShortcutsProvider`. Cannot move into a package; see "App Intents & Siri Strings"
+- `Localizable.xcstrings` — App Intents strings (main-bundle-only)
+- `AppShortcuts.xcstrings` — spoken Siri phrases
+- `InfoPlist.xcstrings` — permission usage descriptions
+- `Info.plist`, `PrivacyInfo.xcprivacy`, `Assets.xcassets`, `service-names-port-numbers.csv`
 
 ### SPM Modules (KozBonPackages/)
 
@@ -70,12 +72,14 @@ Each module follows the `{name}/Sources` and `{name}/Tests` layout:
 | **BonjourAIGemini** | Google Gemini implementations of the BonjourAICore protocols + the runtime model catalog. Uses the Gemini Developer API (`generativelanguage.googleapis.com`), not Vertex AI — Vertex needs service-account OAuth the paste-an-API-key sheet can't express. | `GeminiModel` (offline fallback only), `GeminiModelOption`, `GeminiModelCatalog`, `GeminiModelCatalogClient`, `GeminiClient`, `GeminiConfiguration`, `GeminiGenerateRequest`, `GeminiStreamEvent`, `GeminiBonjourChatSession`, `GeminiBonjourServiceExplainer`, `MockGeminiClient` |
 | **BonjourAIGitHub** | ⚠️ **Orphaned — pending deletion.** GitHub retired GitHub Models on 2026-07-30; its endpoint no longer resolves in DNS. `AIBackend.github` was removed, so no source file imports this module any more. Kept only to keep the removal diff separate. | `GitHubConfiguration`, `GitHubModelsClient`, `GitHubBonjourChatSession`, `GitHubBonjourServiceExplainer` (all unreachable) |
 | **BonjourAI** | Umbrella module — cloud-aware routing factories + `@_exported import BonjourAICore` so legacy `import BonjourAI` consumers stay working | `CloudAwareBonjourChatSessionFactory`, `CloudAwareBonjourServiceExplainerFactory` |
+| **BonjourAppIntents** | The Siri / Shortcuts / Spotlight actions. Holds the intents and entity; the `AppShortcutsProvider` itself lives in the app target because Xcode won't extract or localize one declared in a package | `ScanForServicesIntent`, `ListDiscoveredServicesIntent`, `BonjourServiceEntity`, `BonjourServiceEntityQuery` |
 | **BonjourUI** | SwiftUI views and view models | All views, `BonjourServicesViewModel`, UI components |
 
 ### Dependency Graph
 
 ```
-App → BonjourUI, BonjourScanning, BonjourModels, BonjourLocalization
+App → AppCore, BonjourUI, BonjourAppIntents, BonjourScanning, BonjourModels, BonjourStorage, BonjourCore
+BonjourAppIntents → BonjourAI, BonjourModels, BonjourScanning
 BonjourUI → BonjourModels, BonjourScanning, BonjourLocalization, BonjourAI, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourAIGitHub, BonjourStorage, CoreUI
 BonjourAI → BonjourAICore, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourAIGitHub, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
 BonjourAIApple → BonjourAICore, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
@@ -148,7 +152,7 @@ build would be silently replaced by the default.
 - Use `[weak self]` in `Task` closures that capture `self` with a delay (e.g., `Task.sleep`), to avoid retaining objects past their lifetime
 - Respect `@Environment(\.accessibilityReduceMotion)` — use `withAnimation(reduceMotion ? nil : .default)` instead of bare `withAnimation`
 - Use semantic fonts (`.font(.headline)`) not `.font(.system(.headline))` for Dynamic Type support
-- All user-facing strings must use `BonjourLocalization.Strings.*` — never hardcode English strings in views
+- All user-facing strings must use `BonjourLocalization.Strings.*` — never hardcode English strings in views. **Two compiler-enforced exceptions**, both in the app target (see "App Intents & Siri Strings" below): App Intents metadata and App Shortcut phrases cannot resolve against a package bundle.
 - Service type definitions go in `MyServiceType+Library.swift` — each new type needs a `static private let` definition AND an entry in `tcpServiceTypes` or `udpServiceTypes` array AND a corresponding `NSBonjourServices` entry in `Info.plist`
 
 ## Swift 6.2 Strict Concurrency
@@ -195,6 +199,26 @@ build would be silently replaced by the default.
 - **Service descriptions**: Use `serviceType.localizedDetail` (not `.detail`) — looks up translations from the String Catalog
 - **Adding new strings**: Add the key to `Strings.swift`, add the entry with all 8 translations (including `ar` and `he`) to `Localizable.xcstrings`, validate JSON. `scripts/validate-localizations.py` enforces locale completeness in CI.
 - **Never use `NSLocalizedString`** — all strings go through the `Strings` enum for type safety
+
+## App Intents & Siri Strings
+
+App Intents strings are the one place the `BonjourLocalization.Strings.*` rule does **not** apply. The compiler enforces this — the constraints below are build errors, not style preferences.
+
+**They must resolve against the main bundle.** Routing an intent's `title` through `Strings` fails with *"AppIntents requires `LocalizedStringResource` to use the main bundle"*, because `Strings` accessors carry `bundle: .atURL(Bundle.module.bundleURL)`. So these strings live in the app target's own catalogs, not in `BonjourLocalization`:
+
+| Catalog | Holds | Referenced from |
+|---------|-------|-----------------|
+| `KozBon/Localizable.xcstrings` | intent titles, descriptions, Spotlight keywords, entity type name, shortcut tile `shortTitle`s | `.init("intent_…")` in `BonjourAppIntents` |
+| `KozBon/AppShortcuts.xcstrings` | the 10 spoken Siri phrases **only** | extracted from `KozBonAppShortcuts.swift` |
+| `KozBon/InfoPlist.xcstrings` | permission usage descriptions | read by iOS directly |
+
+**`KozBonAppShortcuts` must stay in the app target.** Xcode passes `--no-app-shortcuts-localization` to the App Intents extractor for every SPM target and omits it only for the app target. Declared in a package, the phrases can't be localized *and* never reach `Metadata.appintents` at all — `autoShortcuts` comes out empty and Siri offers nothing.
+
+**Some parameters accept only a literal.** `title` takes `.init("key")`, but `TypeDisplayRepresentation(numericFormat:)` and `AppShortcut(shortTitle:)` reject it — *"must be initialized directly with a String literal."* Those keep the literal in Swift, and the catalog entry is keyed on the literal's own text (e.g. `"%lld Bonjour services"`, `"Scan for Services"`).
+
+**Don't put `shortTitle` in `AppShortcuts.xcstrings`.** That catalog accepts spoken phrases only; anything else draws *"This phrase is not used in any App Shortcut"* once per locale.
+
+Verify a change by building and inspecting `Metadata.appintents/extract.actionsdata` in the built app — `autoShortcuts` should list both shortcuts with their `phraseTemplates`.
 
 ## SwiftLint
 
