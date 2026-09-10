@@ -50,6 +50,7 @@ func makeTargets(
 
 let package = Package(
     name: "KozBonPackages",
+    defaultLocalization: "en",
     platforms: [
         .iOS(.v18),
         .macOS(.v15),

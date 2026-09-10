@@ -31,20 +31,20 @@ import BonjourScanning
 @available(iOS 18.0, macOS 15.0, visionOS 2.0, *)
 public struct ListDiscoveredServicesIntent: AppIntent {
 
-    public static let title: LocalizedStringResource = "List Discovered Services"
+    public static let title: LocalizedStringResource = .init("intent_list_title")
 
     public static let description = IntentDescription(
-        "Lists Bonjour services discovered on your local network. Use this in Shortcuts to feed the list of services into the next step.",
+        .init("intent_list_description"),
         searchKeywords: Self.spotlightSearchKeywords
     )
 
     private static let spotlightSearchKeywords: [LocalizedStringResource] = [
-        "list",
-        "services",
-        "bonjour",
-        "discover",
-        "network",
-        "kozbon"
+        .init("intent_keyword_list"),
+        .init("intent_keyword_services"),
+        .init("intent_keyword_bonjour"),
+        .init("intent_keyword_discover"),
+        .init("intent_keyword_network"),
+        .init("intent_keyword_kozbon")
     ]
 
     public static let openAppWhenRun: Bool = false

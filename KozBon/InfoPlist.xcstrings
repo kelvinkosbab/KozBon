@@ -2,7 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "CFBundleDisplayName" : {
-      "comment" : "Bundle display name",
+      "comment" : "Bundle display name. Product brand name, do not translate.",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
@@ -14,7 +14,7 @@
       }
     },
     "CFBundleName" : {
-      "comment" : "Bundle name",
+      "comment" : "Bundle name. Product brand name, do not translate.",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
@@ -28,6 +28,12 @@
     "NSLocalNetworkUsageDescription" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "يحتاج KozBon إلى إذن للبحث عن خدمات Bonjour القريبة."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -52,6 +58,12 @@
             "value" : "KozBon a besoin d'accéder au réseau local pour rechercher les services Bonjour à proximité."
           }
         },
+        "he" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "נדרשת הרשאה כדי ש-KozBon יוכל לסרוק שירותי Bonjour בקרבת מקום."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -69,6 +81,12 @@
     "NSSiriUsageDescription" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "يستخدم KozBon تقنية Siri، بحيث يمكنك السؤال عن خدمات Bonjour وكيفية استخدام التطبيق من أي مكان. ويقرأ Siri الإجابة بصوت عالٍ دون الحاجة إلى فتح KozBon."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -93,6 +111,12 @@
             "value" : "KozBon utilise Siri pour que vous puissiez poser des questions sur les services Bonjour et l'utilisation de l'app depuis n'importe où — Siri lit la réponse à voix haute sans que vous ayez à ouvrir KozBon."
           }
         },
+        "he" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "אפליקציית KozBon משתמשת ב-Siri כדי שניתן יהיה לשאול על שירותי Bonjour ועל אופן השימוש בה מכל מקום. Siri מקריא את התשובה בקול, ללא צורך לפתוח את KozBon."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -108,5 +132,5 @@
       }
     }
   },
-  "version" : "1.0"
+  "version" : "1.3"
 }

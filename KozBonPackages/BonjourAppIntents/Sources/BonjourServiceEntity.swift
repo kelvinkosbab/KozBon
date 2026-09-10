@@ -93,7 +93,7 @@ public struct BonjourServiceEntity: AppEntity, Sendable, Hashable {
     // MARK: - AppEntity
 
     public static let typeDisplayRepresentation = TypeDisplayRepresentation(
-        name: "Bonjour Service",
+        name: .init("intent_entity_type_name"),
         numericFormat: "\(placeholder: .int) Bonjour services"
     )
 

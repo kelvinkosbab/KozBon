@@ -29,19 +29,19 @@ import BonjourScanning
 @available(iOS 18.0, macOS 15.0, visionOS 2.0, *)
 public struct ScanForServicesIntent: AppIntent {
 
-    public static let title: LocalizedStringResource = "Scan for Bonjour Services"
+    public static let title: LocalizedStringResource = .init("intent_scan_title")
 
     public static let description = IntentDescription(
-        "Scans for Bonjour services on your local network for a few seconds and tells you how many were found.",
+        .init("intent_scan_description"),
         searchKeywords: Self.spotlightSearchKeywords
     )
 
     private static let spotlightSearchKeywords: [LocalizedStringResource] = [
-        "scan",
-        "bonjour",
-        "discover",
-        "network",
-        "kozbon"
+        .init("intent_keyword_scan"),
+        .init("intent_keyword_bonjour"),
+        .init("intent_keyword_discover"),
+        .init("intent_keyword_network"),
+        .init("intent_keyword_kozbon")
     ]
 
     /// Voice-first by design — opening the app would interrupt the

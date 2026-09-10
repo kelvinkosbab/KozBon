@@ -6,6 +6,7 @@
 //
 
 import AppIntents
+import BonjourAppIntents
 import Foundation
 
 // MARK: - KozBonAppShortcuts
@@ -13,6 +14,13 @@ import Foundation
 /// Registers the suggested phrases for KozBon's App Intents so
 /// users can invoke them via Siri without first creating a
 /// Shortcut by hand.
+///
+/// Lives in the **app target**, not `BonjourAppIntents`, because
+/// Xcode runs the App Intents extractor with
+/// `--no-app-shortcuts-localization` for every SPM target and
+/// without it only for the app target. Declared in the package,
+/// these phrases cannot be localized at all — and did not reach
+/// the shipped `Metadata.appintents` (`autoShortcuts` was empty).
 ///
 /// The phrases are surfaced in:
 ///
@@ -22,9 +30,13 @@ import Foundation
 /// - **Action Button** (iPhone 15 Pro+) — assignable target
 /// - **Apple Intelligence** (iOS 26+) — natural-language match
 ///
-/// The `\(.applicationName)` token expands to the localized app
-/// display name at runtime, so Spanish users hear "Buscar
-/// servicios Bonjour con KozBon" rather than the English form.
+/// The `\(.applicationName)` token expands to the app's display
+/// name — which is "KozBon" in every locale. It does not localize
+/// the phrase: the surrounding text below is an untranslated
+/// literal, so a Spanish user still has to say "Scan my network
+/// with KozBon". Localizing these (and `shortTitle`) requires an
+/// `AppShortcuts.xcstrings` catalog in this module; none exists
+/// yet, so the whole Siri surface ships English-only.
 ///
 /// The conversational `AskKozBonIntent` (and its supporting
 /// `BonjourSiriPromptBuilder` / `SiriResponsePostProcessor`) was

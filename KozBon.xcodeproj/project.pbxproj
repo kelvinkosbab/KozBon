@@ -9,33 +9,39 @@
 /* Begin PBXBuildFile section */
 		B6CE1D321E1208C1003D4FFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6CE1D311E1208C1003D4FFA /* Assets.xcassets */; };
 		B6CE1D4A1E120AF8003D4FFA /* service-names-port-numbers.csv in Resources */ = {isa = PBXBuildFile; fileRef = B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */; };
-		F6INFO0BF0001 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = F6INFO0FR0001 /* InfoPlist.xcstrings */; };
-		F6PRIV0BF0001 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = F6PRIV0FR0001 /* PrivacyInfo.xcprivacy */; };
 		F6240E692A92CF0600951875 /* KozBonApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E682A92CF0600951875 /* KozBonApp.swift */; };
+		F6SHCT0BF0001 /* KozBonAppShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6SHCT0FR0001 /* KozBonAppShortcuts.swift */; };
 		F690B5FB2561E9B600902DAB /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F690B5FA2561E9B600902DAB /* NetworkExtension.framework */; };
 		F6C472F52C1A1EAB00BBB0F9 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = F6C472F42C1A1EAB00BBB0F9 /* Core */; };
 		F6C472F72C1A1EAB00BBB0F9 /* CoreStorage in Frameworks */ = {isa = PBXBuildFile; productRef = F6C472F62C1A1EAB00BBB0F9 /* CoreStorage */; };
 		F6C472F92C1A1EAB00BBB0F9 /* CoreUI in Frameworks */ = {isa = PBXBuildFile; productRef = F6C472F82C1A1EAB00BBB0F9 /* CoreUI */; };
-		F6KOZPKG0BF0007 /* AppCore in Frameworks */ = {isa = PBXBuildFile; productRef = F6KOZPKG0PD0007 /* AppCore */; };
-		F6KOZPKG0BF0006 /* BonjourAppIntents in Frameworks */ = {isa = PBXBuildFile; productRef = F6KOZPKG0PD0006 /* BonjourAppIntents */; };
+		F6INFO0BF0001 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = F6INFO0FR0001 /* InfoPlist.xcstrings */; };
+		F6SHRT0BF0001 /* AppShortcuts.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = F6SHRT0FR0001 /* AppShortcuts.xcstrings */; };
+		F6LOCL0BF0001 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = F6LOCL0FR0001 /* Localizable.xcstrings */; };
 		F6KOZPKG0BF0001 /* BonjourCore in Frameworks */ = {isa = PBXBuildFile; productRef = F6KOZPKG0PD0001 /* BonjourCore */; };
 		F6KOZPKG0BF0002 /* BonjourStorage in Frameworks */ = {isa = PBXBuildFile; productRef = F6KOZPKG0PD0002 /* BonjourStorage */; };
 		F6KOZPKG0BF0003 /* BonjourModels in Frameworks */ = {isa = PBXBuildFile; productRef = F6KOZPKG0PD0003 /* BonjourModels */; };
 		F6KOZPKG0BF0004 /* BonjourScanning in Frameworks */ = {isa = PBXBuildFile; productRef = F6KOZPKG0PD0004 /* BonjourScanning */; };
 		F6KOZPKG0BF0005 /* BonjourUI in Frameworks */ = {isa = PBXBuildFile; productRef = F6KOZPKG0PD0005 /* BonjourUI */; };
+		F6KOZPKG0BF0006 /* BonjourAppIntents in Frameworks */ = {isa = PBXBuildFile; productRef = F6KOZPKG0PD0006 /* BonjourAppIntents */; };
+		F6KOZPKG0BF0007 /* AppCore in Frameworks */ = {isa = PBXBuildFile; productRef = F6KOZPKG0PD0007 /* AppCore */; };
+		F6PRIV0BF0001 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = F6PRIV0FR0001 /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B6CE1D241E1208C1003D4FFA /* KozBon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KozBon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6CE1D311E1208C1003D4FFA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B6CE1D361E1208C1003D4FFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F6INFO0FR0001 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
-		F6PRIV0FR0001 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "service-names-port-numbers.csv"; sourceTree = "<group>"; };
 		F6240E682A92CF0600951875 /* KozBonApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KozBonApp.swift; sourceTree = "<group>"; };
+		F6SHCT0FR0001 /* KozBonAppShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KozBonAppShortcuts.swift; sourceTree = "<group>"; };
 		F62EDC5E255B9D25003E5178 /* KozBon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KozBon.entitlements; sourceTree = "<group>"; };
 		F6781EF72694C5F6009B79F7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F690B5FA2561E9B600902DAB /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
+		F6INFO0FR0001 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		F6SHRT0FR0001 /* AppShortcuts.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = AppShortcuts.xcstrings; sourceTree = "<group>"; };
+		F6LOCL0FR0001 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		F6PRIV0FR0001 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,10 +89,13 @@
 			isa = PBXGroup;
 			children = (
 				F6240E682A92CF0600951875 /* KozBonApp.swift */,
+				F6SHCT0FR0001 /* KozBonAppShortcuts.swift */,
 				B6CE1D491E120AF8003D4FFA /* service-names-port-numbers.csv */,
 				B6CE1D311E1208C1003D4FFA /* Assets.xcassets */,
 				B6CE1D361E1208C1003D4FFA /* Info.plist */,
 				F6INFO0FR0001 /* InfoPlist.xcstrings */,
+				F6SHRT0FR0001 /* AppShortcuts.xcstrings */,
+				F6LOCL0FR0001 /* Localizable.xcstrings */,
 				F6PRIV0FR0001 /* PrivacyInfo.xcprivacy */,
 			);
 			path = KozBon;
@@ -163,6 +172,8 @@
 				ja,
 				"zh-Hans",
 				Base,
+				ar,
+				he,
 			);
 			mainGroup = B6CE1D1B1E1208C1003D4FFA;
 			packageReferences = (
@@ -185,6 +196,8 @@
 				B6CE1D4A1E120AF8003D4FFA /* service-names-port-numbers.csv in Resources */,
 				B6CE1D321E1208C1003D4FFA /* Assets.xcassets in Resources */,
 				F6INFO0BF0001 /* InfoPlist.xcstrings in Resources */,
+				F6SHRT0BF0001 /* AppShortcuts.xcstrings in Resources */,
+				F6LOCL0BF0001 /* Localizable.xcstrings in Resources */,
 				F6PRIV0BF0001 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -197,6 +210,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F6240E692A92CF0600951875 /* KozBonApp.swift in Sources */,
+				F6SHCT0BF0001 /* KozBonAppShortcuts.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
