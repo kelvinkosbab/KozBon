@@ -1,10 +1,10 @@
 name: Localizations
 
-# Validate the String Catalog stays in sync with the Swift code that
-# consumes it. The script enforces four hard rules:
+# Validate the String Catalogs stay in sync with the Swift code that
+# consumes them. The script enforces five hard rules:
 #
 #   - `Localizable.xcstrings` is valid JSON.
-#   - Every catalog entry has a translation in all 6 expected locales.
+#   - Every catalog entry has a translation in all 8 expected locales.
 #   - Every key referenced by `Strings.swift` exists in the catalog,
 #     and no catalog entry is unreferenced. `Strings.swift` drift would
 #     return the literal key as the user-visible string at runtime —
@@ -13,10 +13,19 @@ name: Localizations
 #   - Every `detail: "..."` literal in the service-type library exists
 #     as a catalog key. Drift here downgrades non-English users to
 #     English for that one service.
+#   - `InfoPlist.xcstrings` is valid JSON and locale-complete, so iOS
+#     never shows an English permission prompt inside an otherwise
+#     localized alert. Brand-name entries marked "do not translate"
+#     are exempt.
+#   - The app target's `Localizable.xcstrings` and
+#     `AppShortcuts.xcstrings` are locale-complete, and every Siri
+#     phrase keeps its `${applicationName}` token. These back the
+#     App Intents surface and must live in the app target, because
+#     Xcode disables App Shortcut localization for SPM targets.
 #
 # Triggers on PRs that touch any input the validator reads — the
-# catalog itself, `Strings.swift`, the service-type library — plus
-# pushes to main as a backstop.
+# catalogs themselves, `Strings.swift`, the service-type library —
+# plus pushes to main as a backstop.
 
 on:
   push:
@@ -24,6 +33,9 @@ on:
     paths:
       - 'KozBonPackages/BonjourLocalization/**'
       - 'KozBonPackages/BonjourModels/Sources/ServiceType/MyServiceType+Library.swift'
+      - 'KozBon/InfoPlist.xcstrings'
+      - 'KozBon/Localizable.xcstrings'
+      - 'KozBon/AppShortcuts.xcstrings'
       - 'scripts/validate-localizations.py'
       - '.github/workflows/localizations.yml'
   pull_request:
@@ -31,6 +43,9 @@ on:
     paths:
       - 'KozBonPackages/BonjourLocalization/**'
       - 'KozBonPackages/BonjourModels/Sources/ServiceType/MyServiceType+Library.swift'
+      - 'KozBon/InfoPlist.xcstrings'
+      - 'KozBon/Localizable.xcstrings'
+      - 'KozBon/AppShortcuts.xcstrings'
       - 'scripts/validate-localizations.py'
       - '.github/workflows/localizations.yml'
 
@@ -40,7 +55,7 @@ concurrency:
 
 jobs:
   validate:
-    name: Validate Localizable.xcstrings
+    name: Validate String Catalogs
     runs-on: ubuntu-latest
 
     steps:
