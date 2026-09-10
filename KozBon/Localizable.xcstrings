@@ -175,6 +175,114 @@
         }
       }
     },
+    "List Discovered Services": {
+      "comment": "Short title on the shortcut tile in the Shortcuts app. Key is the literal from AppShortcut(shortTitle:). Lives here, not in AppShortcuts.xcstrings — that catalog accepts spoken phrases only.",
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "سرد الخدمات المكتشفة"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gefundene Dienste auflisten"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "List Discovered Services"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enumerar servicios descubiertos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lister les services découverts"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "רשימת השירותים שהתגלו"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "検出されたサービスを一覧表示"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "列出已发现的服务"
+          }
+        }
+      }
+    },
+    "Scan for Services": {
+      "comment": "Short title on the shortcut tile in the Shortcuts app. Key is the literal from AppShortcut(shortTitle:). Lives here, not in AppShortcuts.xcstrings — that catalog accepts spoken phrases only.",
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "البحث عن الخدمات"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nach Diensten suchen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scan for Services"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buscar servicios"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rechercher des services"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סריקת שירותים"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "サービスをスキャン"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "扫描服务"
+          }
+        }
+      }
+    },
     "intent_entity_type_name": {
       "comment": "Singular name of the Bonjour service entity type, shown in the Shortcuts action editor.",
       "extractionState": "manual",
