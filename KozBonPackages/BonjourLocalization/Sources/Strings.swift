@@ -243,14 +243,6 @@ public enum Strings {
             .init("button_ok", bundle: .atURL(Bundle.module.bundleURL))
         }
 
-        public static var update: LocalizedStringResource {
-            .init("button_update", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
-        public static var broadcastBonjourService: LocalizedStringResource {
-            .init("button_broadcast_bonjour_service", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
         public static var startScanning: LocalizedStringResource {
             .init("button_start_scanning", bundle: .atURL(Bundle.module.bundleURL))
         }
@@ -265,10 +257,6 @@ public enum Strings {
 
         public static var broadcast: LocalizedStringResource {
             .init("button_broadcast", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
-        public static var createServiceType: LocalizedStringResource {
-            .init("button_create_service_type", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         public static var createCustomServiceType: LocalizedStringResource {
@@ -288,20 +276,12 @@ public enum Strings {
             .init("action_copy_hostname", bundle: .atURL(Bundle.module.bundleURL))
         }
 
-        public static var copyIpAddress: LocalizedStringResource {
-            .init("action_copy_ip_address", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
         public static var copyServiceType: LocalizedStringResource {
             .init("action_copy_service_type", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         public static var copyAddress: LocalizedStringResource {
             .init("action_copy_address", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
-        public static var copyIpOnly: LocalizedStringResource {
-            .init("action_copy_ip_only", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         public static var copyRecord: LocalizedStringResource {
@@ -978,48 +958,12 @@ public enum Strings {
 
     public enum Settings {
 
-        public static var scanning: LocalizedStringResource {
-            .init("settings_scanning", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
-        public static var scanOnLaunch: LocalizedStringResource {
-            .init("settings_scan_on_launch", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
         public static var display: LocalizedStringResource {
             .init("settings_display", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         public static var defaultSortOrder: LocalizedStringResource {
             .init("settings_default_sort_order", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
-        public static var sortNone: LocalizedStringResource {
-            .init("settings_sort_none", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
-        public static var sortDefault: LocalizedStringResource {
-            .init("settings_sort_default", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
-        public static var sortHostnameAsc: LocalizedStringResource {
-            .init("settings_sort_hostname_asc", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
-        public static var sortHostnameDesc: LocalizedStringResource {
-            .init("settings_sort_hostname_desc", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
-        public static var sortServiceNameAsc: LocalizedStringResource {
-            .init("settings_sort_service_name_asc", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
-        public static var sortServiceNameDesc: LocalizedStringResource {
-            .init("settings_sort_service_name_desc", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
-        public static var clearCustomServiceTypes: LocalizedStringResource {
-            .init("settings_clear_custom_service_types", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         public static var aiAnalysis: LocalizedStringResource {
@@ -1160,10 +1104,6 @@ public enum Strings {
         }
 
         /// Sign-in sheet title for Gemini.
-        public static var aiCloudSignInTitleGemini: LocalizedStringResource {
-            .init("settings_ai_cloud_sign_in_title_gemini", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
         /// Explanatory body in the Gemini sign-in sheet.
         public static var aiCloudSignInPromptGemini: LocalizedStringResource {
             .init("settings_ai_cloud_sign_in_prompt_gemini", bundle: .atURL(Bundle.module.bundleURL))
@@ -1190,10 +1130,6 @@ public enum Strings {
         }
 
         /// One-line description shown under the GitHub Models option.
-        public static var aiBackendGitHubSubtitle: LocalizedStringResource {
-            .init("settings_ai_backend_github_subtitle", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
         public static var aiBackendGitHubRetiredTitle: LocalizedStringResource {
             .init("settings_ai_backend_github_retired_title", bundle: .atURL(Bundle.module.bundleURL))
         }
@@ -1208,10 +1144,6 @@ public enum Strings {
 
         /// Footer shown when the GitHub backend is selected.
         /// Discloses that network-shape data is sent to GitHub's API.
-        public static var aiBackendGitHubPrivacy: LocalizedStringResource {
-            .init("settings_ai_backend_github_privacy", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
         /// Footer shown when the Anthropic backend is selected.
         /// Discloses that network-shape data is sent to Anthropic.
         public static var aiCloudFooter: LocalizedStringResource {
@@ -1245,10 +1177,6 @@ public enum Strings {
 
         /// "Sign in to GitHub" — button label on the AI Backend
         /// row when no PAT is configured for GitHub.
-        public static var aiCloudSignInGitHub: LocalizedStringResource {
-            .init("settings_ai_cloud_sign_in_github", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
         /// "Signed in" — status label on the AI Backend row when an
         /// API key is configured for Anthropic.
         public static var aiCloudSignedIn: LocalizedStringResource {
@@ -1278,16 +1206,8 @@ public enum Strings {
         }
 
         /// Title of the sign-in sheet (Anthropic variant).
-        public static var aiCloudSignInTitle: LocalizedStringResource {
-            .init("settings_ai_cloud_sign_in_title", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
         /// Title of the sign-in sheet for the GitHub Models
         /// backend.
-        public static var aiCloudSignInTitleGitHub: LocalizedStringResource {
-            .init("aicloud_sign_in_title_github", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
         /// Prompt shown in the sign-in sheet above the API-key field
         /// (Anthropic variant).
         public static var aiCloudSignInPrompt: LocalizedStringResource {
@@ -1423,10 +1343,6 @@ public enum Strings {
         /// e.g. "114"). Distinct from ``version`` so users can copy
         /// either piece independently and so VoiceOver reads each
         /// row with its own descriptive label.
-        public static var buildNumber: LocalizedStringResource {
-            .init("settings_build_number", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
         /// Row label + navigation title for the "What's New"
         /// release-notes page reached from the About section.
         public static var whatsNew: LocalizedStringResource {
@@ -1451,10 +1367,6 @@ public enum Strings {
 
         /// "Explain with GPT-4o" — Insights context-menu label
         /// shown when the user has the GitHub backend selected.
-        public static var explainWithGitHub: LocalizedStringResource {
-            .init("insights_explain_with_github", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
         /// "Sign in to Claude" — Insights context-menu CTA when
         /// the Anthropic backend is selected but no API key is
         /// configured. Mirrors the "Enable Apple Intelligence"
@@ -1474,10 +1386,6 @@ public enum Strings {
         /// "Sign in to GitHub" — Insights context-menu CTA when
         /// the GitHub backend is selected but no PAT is
         /// configured.
-        public static var signInToGitHub: LocalizedStringResource {
-            .init("insights_sign_in_to_github", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
         public static var enableAppleIntelligence: LocalizedStringResource {
             .init("button_enable_apple_intelligence", bundle: .atURL(Bundle.module.bundleURL))
         }
@@ -1490,24 +1398,12 @@ public enum Strings {
             .init("ai_generating", bundle: .atURL(Bundle.module.bundleURL))
         }
 
-        public static var explainHint: LocalizedStringResource {
-            .init("a11y_explain_with_ai_hint", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
         public static var basic: LocalizedStringResource {
             .init("ai_expertise_basic", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         public static var technical: LocalizedStringResource {
             .init("ai_expertise_technical", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
-        public static var moreDetail: LocalizedStringResource {
-            .init("ai_more_detail", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
-        public static var lessDetail: LocalizedStringResource {
-            .init("ai_less_detail", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         public static var responseLengthBrief: LocalizedStringResource {
@@ -1526,10 +1422,6 @@ public enum Strings {
     // MARK: - Chat
 
     public enum Chat {
-
-        public static var title: LocalizedStringResource {
-            .init("chat_title", bundle: .atURL(Bundle.module.bundleURL))
-        }
 
         public static var inputPlaceholder: LocalizedStringResource {
             .init("chat_input_placeholder", bundle: .atURL(Bundle.module.bundleURL))
@@ -1594,15 +1486,7 @@ public enum Strings {
 
         /// Headline of the in-tab prompt shown when the user has
         /// selected the GitHub backend but hasn't signed in.
-        public static var signInToGitHubTitle: LocalizedStringResource {
-            .init("chat_sign_in_to_github_title", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
         /// Body copy on the in-tab GitHub-sign-in prompt.
-        public static var signInToGitHubBody: LocalizedStringResource {
-            .init("chat_sign_in_to_github_body", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
         public static var suggestion1: LocalizedStringResource {
             .init("chat_suggestion_1", bundle: .atURL(Bundle.module.bundleURL))
         }
@@ -1741,19 +1625,6 @@ public enum Strings {
                 ),
                 name
             )
-        }
-    }
-
-    // MARK: - Nearby Section Header
-
-    public enum NearbySection {
-
-        public static func title(_ sortTitle: String) -> String {
-            String(format: NSLocalizedString("nearby_format", bundle: Bundle.module, comment: ""), sortTitle)
-        }
-
-        public static var services: LocalizedStringResource {
-            .init("nearby_services", bundle: .atURL(Bundle.module.bundleURL))
         }
     }
 

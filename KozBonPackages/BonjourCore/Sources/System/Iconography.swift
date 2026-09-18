@@ -46,28 +46,19 @@ public enum Iconography {
     /// carries the rest of the brand cue.
     public static let anthropicClaude = "sparkle"
 
-    /// Google Gemini glyph.
-    ///
-    /// Unlike Anthropic and GitHub, no bundled brand asset ships
-    /// for Gemini — Google's mark carries trademark constraints —
-    /// so this symbol is the icon rather than a fallback for
-    /// `systemImage:` call sites.
+    /// Google Gemini SF Symbol fallback. `Image.googleGemini` now
+    /// resolves to the bundled Gemini spark
+    /// (`Media.xcassets/Gemini.imageset`); this constant exists
+    /// only for call sites that need a `systemImage:`-compatible
+    /// name — e.g., `Label(_:systemImage:)`, which doesn't accept
+    /// asset-catalog names.
     ///
     /// `asterisk` is the closest SF Symbol to Gemini's
-    /// four-pointed spark without shipping a custom asset, and is
-    /// deliberately not `sparkle` (Anthropic's) or `sparkles`
-    /// (which reads as generic "AI" rather than a specific
-    /// provider). The accent color carries the rest of the cue.
+    /// four-pointed spark, and is deliberately not `sparkle`
+    /// (Anthropic's) or `sparkles` (which reads as generic "AI"
+    /// rather than a specific provider). The accent color carries
+    /// the rest of the cue.
     public static let googleGemini = "asterisk"
-
-    /// GitHub Models SF Symbol fallback. `Image.github` now
-    /// resolves to the bundled Octocat asset
-    /// (`Media.xcassets/GitHub.imageset`); this constant exists
-    /// only for call sites that need a `systemImage:`-compatible
-    /// name — e.g., `Label(_:systemImage:)`, which doesn't
-    /// accept asset-catalog names. The "code" symbol is the
-    /// closest semantic stand-in when an asset isn't reachable.
-    public static let github = "chevron.left.forwardslash.chevron.right"
 
     /// AirPort Extreme base station icon.
     public static let airportExtreme = "airport.extreme"

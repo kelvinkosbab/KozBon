@@ -67,7 +67,6 @@ let package = Package(
         .library(name: "BonjourAIApple", targets: ["BonjourAIApple"]),
         .library(name: "BonjourAIAnthropic", targets: ["BonjourAIAnthropic"]),
         .library(name: "BonjourAIGemini", targets: ["BonjourAIGemini"]),
-        .library(name: "BonjourAIGitHub", targets: ["BonjourAIGitHub"]),
         .library(name: "BonjourAI", targets: ["BonjourAI"]),
         .library(name: "BonjourStorage", targets: ["BonjourStorage"]),
         .library(name: "BonjourUI", targets: ["BonjourUI"]),
@@ -152,35 +151,23 @@ let package = Package(
             "BonjourLocalization",
             "BonjourScanning",
             "BonjourStorage"
-        ]
-    )
-    + makeTargets(
-        name: "BonjourAIGitHub",
-        dependencies: [
-            "BonjourAICore",
-            "BonjourCore",
-            "BonjourModels",
-            "BonjourLocalization",
-            "BonjourScanning",
-            "BonjourStorage"
         ],
-        // Ships GitHub's Octocat
-        // (`Media.xcassets/GitHub.imageset/`) plus the
-        // `Image.github` accessor — same colocation pattern as
-        // BonjourAIAnthropic.
+        // Ships Google's Gemini spark
+        // (`Media.xcassets/Gemini.imageset/`) plus the
+        // `Image.googleGemini` accessor — same colocation pattern
+        // as BonjourAIAnthropic.
         hasResources: true
     )
     + makeTargets(
         name: "BonjourAI",
         // Umbrella: re-exports `BonjourAICore` and hosts the
         // cloud-aware routing factories that sit above the
-        // Apple-, Anthropic-, Gemini-, and GitHub-specific modules.
+        // Apple-, Anthropic-, and Gemini-specific modules.
         dependencies: [
             "BonjourAICore",
             "BonjourAIApple",
             "BonjourAIAnthropic",
             "BonjourAIGemini",
-            "BonjourAIGitHub",
             "BonjourCore",
             "BonjourModels",
             "BonjourLocalization",
@@ -209,14 +196,13 @@ let package = Package(
             "BonjourAIApple",
             "BonjourAIAnthropic",
             "BonjourAIGemini",
-            "BonjourAIGitHub",
             "BonjourStorage",
             .product(name: "CoreUI", package: "Core")
         ]
         // Brand marks moved to the per-provider modules
-        // (`BonjourAIAnthropic` ships Claude;
-        // `BonjourAIGitHub` ships the Octocat). BonjourUI no
-        // longer ships any resources of its own.
+        // (`BonjourAIAnthropic` ships Claude; `BonjourAIGemini`
+        // ships the Gemini spark). BonjourUI no longer ships any
+        // resources of its own.
     )
     + makeTargets(
         name: "BonjourAppIntents",
@@ -236,7 +222,6 @@ let package = Package(
             "BonjourAIApple",
             "BonjourAIAnthropic",
             "BonjourAIGemini",
-            "BonjourAIGitHub",
             "BonjourStorage",
             "BonjourUI",
             .product(name: "CoreUI", package: "Core")

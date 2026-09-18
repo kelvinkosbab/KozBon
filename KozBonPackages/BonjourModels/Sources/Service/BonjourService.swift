@@ -71,7 +71,7 @@ public final class BonjourService: NSObject, @preconcurrency NetServiceDelegate 
     /// `NetService` delegate state.
     public nonisolated let logicalIdentity: String
 
-    /// Resolved IP addresses for this service. Empty until `resolve()` or `resolveAddresses()` completes.
+    /// Resolved IP addresses for this service. Empty until `resolve()` completes.
     public private(set) var addresses: [InternetAddress] = []
 
     /// TXT record key-value pairs published by this service.
@@ -168,7 +168,6 @@ public final class BonjourService: NSObject, @preconcurrency NetServiceDelegate 
         self.isResolving = false
         self.isPublishing = false
         self.didStop = didStop
-        self.resolveAddressContinuation = nil
         self.publishContinuation = nil
         self.service.stop()
     }
@@ -186,7 +185,6 @@ public final class BonjourService: NSObject, @preconcurrency NetServiceDelegate 
 
     /// Whether a resolve operation is currently in progress.
     public private(set) var isResolving: Bool = false
-    private var resolveAddressContinuation: CheckedContinuation<Void, Never>?
 
     /// Begins resolving addresses and starts TXT record monitoring. Returns immediately (fire-and-forget).
     public func resolve() {
@@ -213,16 +211,6 @@ public final class BonjourService: NSObject, @preconcurrency NetServiceDelegate 
         self.service.resolve(withTimeout: Constants.Network.resolveTimeout)
     }
 
-    /// Resolves the service's addresses asynchronously. Suspends until resolution completes or fails.
-    public func resolveAddresses() async {
-        await withCheckedContinuation { continuation in
-            self.resolveAddressContinuation = continuation
-            self.isResolving = true
-            self.service.resolve(withTimeout: Constants.Network.resolveTimeout)
-            self.startMonitoring()
-        }
-    }
-
     // MARK: - NetServiceDelegate - Resolving Address
 
     public func netServiceDidResolveAddress(_ sender: NetService) {
@@ -231,8 +219,6 @@ public final class BonjourService: NSObject, @preconcurrency NetServiceDelegate 
         delegate?.serviceDidResolveAddress(self)
         hostResolutionDelegate?.serviceDidResolveHost(self)
         isResolving = false
-        resolveAddressContinuation?.resume()
-        resolveAddressContinuation = nil
     }
 
     public func netService(_ sender: NetService, didNotResolve errorDict: [String: NSNumber]) {
@@ -240,8 +226,6 @@ public final class BonjourService: NSObject, @preconcurrency NetServiceDelegate 
         self.delegate?.serviceDidResolveAddress(self)
         self.hostResolutionDelegate?.serviceDidResolveHost(self)
         self.isResolving = false
-        self.resolveAddressContinuation?.resume()
-        self.resolveAddressContinuation = nil
     }
 
     // MARK: - Publishing Service

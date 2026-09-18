@@ -7,6 +7,7 @@
 
 import Foundation
 import Testing
+import SwiftData
 import BonjourAI
 import BonjourCore
 import BonjourLocalization
@@ -88,10 +89,25 @@ struct BonjourChatViewModelIntegrationTests {
         return mock
     }
 
+    /// Fresh ``PreferencesStore`` on its own in-memory container,
+    /// with the expertise level the VM should read.
+    ///
+    /// The container is in-memory *explicitly*. The zero-argument
+    /// `PreferencesStore()` init resolves an **on-disk** container
+    /// — `~/Library/Application Support/default.store` under the
+    /// unsandboxed `swift test` runner — which every test target
+    /// in the package shares and which survives between runs.
+    /// Writing the expertise level through that init leaked into
+    /// `PreferencesStoreTests.defaultInitCreatesWorkingStore`,
+    /// making it pass or fail on target interleaving.
     private func makePreferencesStore(
         expertiseLevel: String = UserPreferences.defaultAIExpertiseLevel
-    ) -> PreferencesStore {
-        let store = PreferencesStore()
+    ) throws -> PreferencesStore {
+        let container = try ModelContainer(
+            for: UserPreferences.self,
+            configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+        )
+        let store = PreferencesStore(container: container)
         store.aiExpertiseLevel = expertiseLevel
         return store
     }
@@ -99,22 +115,22 @@ struct BonjourChatViewModelIntegrationTests {
     // MARK: - Send Pipeline (Goes Through `buildChatContext` → `fetchAll`)
 
     @Test("`sendMessage` clears `inputText` immediately, before any awaits")
-    func sendMessageClearsInputText() async {
+    func sendMessageClearsInputText() async throws {
         if skipIfCoreDataUnavailable() { return }
         let (vm, _) = makeViewModel()
         let mock = attachMockSession(to: vm)
-        let store = makePreferencesStore()
+        let store = try makePreferencesStore()
         vm.inputText = "Hello"
         await vm.sendMessage("Hello", using: mock, preferencesStore: store, reduceMotion: true)
         #expect(vm.inputText.isEmpty)
     }
 
     @Test("`sendMessage` appends the user bubble before kicking off `send` on the session")
-    func sendMessageAppendsUserBeforeSend() async {
+    func sendMessageAppendsUserBeforeSend() async throws {
         if skipIfCoreDataUnavailable() { return }
         let (vm, _) = makeViewModel()
         let mock = attachMockSession(to: vm)
-        let store = makePreferencesStore()
+        let store = try makePreferencesStore()
         await vm.sendMessage("Hello", using: mock, preferencesStore: store, reduceMotion: true)
         // Append fired exactly once via the synchronous protocol
         // call, before `send` started its await chain. The mock's
@@ -128,11 +144,11 @@ struct BonjourChatViewModelIntegrationTests {
     }
 
     @Test("`sendMessage` propagates the user's expertise level into the session's response length")
-    func sendMessageSetsResponseLengthFromExpertise() async {
+    func sendMessageSetsResponseLengthFromExpertise() async throws {
         if skipIfCoreDataUnavailable() { return }
         let (vm, _) = makeViewModel()
         let mock = attachMockSession(to: vm)
-        let store = makePreferencesStore(expertiseLevel: "technical")
+        let store = try makePreferencesStore(expertiseLevel: "technical")
         await vm.sendMessage("Hello", using: mock, preferencesStore: store, reduceMotion: true)
         // Technical → thorough; Basic → standard. The contract is
         // pinned in `BonjourServicePromptBuilder.ExpertiseLevel.responseLength`.
@@ -140,20 +156,20 @@ struct BonjourChatViewModelIntegrationTests {
     }
 
     @Test("`sendMessage` defaults to basic-level response length when expertise pref is unset / unknown")
-    func sendMessageDefaultsToBasicWhenExpertiseUnknown() async {
+    func sendMessageDefaultsToBasicWhenExpertiseUnknown() async throws {
         if skipIfCoreDataUnavailable() { return }
         let (vm, _) = makeViewModel()
         let mock = attachMockSession(to: vm)
         // Storing an unknown raw value forces the
         // `BonjourServicePromptBuilder.ExpertiseLevel(rawValue:)`
         // init to fail and the VM to fall through to `.basic`.
-        let store = makePreferencesStore(expertiseLevel: "wat")
+        let store = try makePreferencesStore(expertiseLevel: "wat")
         await vm.sendMessage("Hello", using: mock, preferencesStore: store, reduceMotion: true)
         #expect(mock.responseLength == .standard)
     }
 
     @Test("`sendMessage` runs the full pipeline twice without leaking state across calls")
-    func sendMessageRunsTwiceCleanly() async {
+    func sendMessageRunsTwiceCleanly() async throws {
         if skipIfCoreDataUnavailable() { return }
         // The VM's no-op-when-already-generating guard runs on the
         // synchronous frame BEFORE any await — so two awaited
@@ -166,7 +182,7 @@ struct BonjourChatViewModelIntegrationTests {
         // window.
         let (vm, _) = makeViewModel()
         let mock = attachMockSession(to: vm)
-        let store = makePreferencesStore()
+        let store = try makePreferencesStore()
         await vm.sendMessage("First", using: mock, preferencesStore: store, reduceMotion: true)
         #expect(mock.sendCallCount == 1)
         await vm.sendMessage("Second", using: mock, preferencesStore: store, reduceMotion: true)

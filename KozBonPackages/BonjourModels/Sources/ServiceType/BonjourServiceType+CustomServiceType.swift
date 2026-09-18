@@ -32,14 +32,6 @@ extension BonjourServiceType {
     // MARK: - Saving / Deleting Persistent Copies
 
     @MainActor
-    public var hasPersistentCopy: Bool {
-        return CustomServiceType.fetch(
-            serviceType: self.type,
-            transportLayerValue: Int16(self.transportLayer.rawValue)
-        ) != nil
-    }
-
-    @MainActor
     public func savePersistentCopy() {
         _ = CustomServiceType.createOrUpdate(
             name: self.name,
@@ -60,17 +52,6 @@ extension BonjourServiceType {
     }
 
     // MARK: - Static Helpers
-
-    @MainActor
-    public static func fetchPersistentCopy(type: String, transportLayer: TransportLayer) -> BonjourServiceType? {
-        if let persistentCopy = CustomServiceType.fetch(
-            serviceType: type,
-            transportLayerValue: Int16(transportLayer.rawValue)
-        ) {
-            return persistentCopy.bonjourServiceType
-        }
-        return nil
-    }
 
     @MainActor
     public static func fetchAllPersistentCopies() -> [BonjourServiceType] {

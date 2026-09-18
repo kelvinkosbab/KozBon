@@ -2,6 +2,18 @@
 
 excluded:
   - KozBon/Legacy
+  # Build output and generated sources. Linting these produces violations
+  # nobody can act on — SwiftPM's generated test `runner.swift` alone trips
+  # file_length, line_length (at error severity), force_unwrapping, and more.
+  # CI never saw them (fresh checkout has no build dir), so a local
+  # `swiftlint lint` was far noisier than the gate it's meant to mirror.
+  #
+  # `**/.build` rather than `.build`: the SwiftPM build directory lives at
+  # `KozBonPackages/.build`, not the repo root. The bare entry is kept for a
+  # root-level build dir.
+  - .build
+  - "**/.build"
+  - "**/*.derived"
 
 disabled_rules:
   - todo

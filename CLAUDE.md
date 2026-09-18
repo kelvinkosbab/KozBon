@@ -70,7 +70,6 @@ Each module follows the `{name}/Sources` and `{name}/Tests` layout:
 | **BonjourAIApple** | Apple Foundation Models implementations of the BonjourAICore protocols | `BonjourChatSession`, `BonjourChatSessionFactory`, `BonjourServiceExplainer`, `BonjourServiceExplainerFactory`, `AppleIntelligenceSupport`, `AIContextMenuItems`, prepare-tool wrappers |
 | **BonjourAIAnthropic** | Anthropic Claude implementations of the BonjourAICore protocols + the runtime model catalog and the `PreferencesStore.aiCloudModelIdentifier` bridge | `AnthropicModel` (offline fallback only), `AnthropicModelOption`, `AnthropicModelCatalog`, `AnthropicModelCatalogClient`, `AnthropicClient`, `AnthropicConfiguration`, `AnthropicBonjourChatSession`, `AnthropicBonjourServiceExplainer`, `MockAnthropicClient` |
 | **BonjourAIGemini** | Google Gemini implementations of the BonjourAICore protocols + the runtime model catalog. Uses the Gemini Developer API (`generativelanguage.googleapis.com`), not Vertex AI — Vertex needs service-account OAuth the paste-an-API-key sheet can't express. | `GeminiModel` (offline fallback only), `GeminiModelOption`, `GeminiModelCatalog`, `GeminiModelCatalogClient`, `GeminiClient`, `GeminiConfiguration`, `GeminiGenerateRequest`, `GeminiStreamEvent`, `GeminiBonjourChatSession`, `GeminiBonjourServiceExplainer`, `MockGeminiClient` |
-| **BonjourAIGitHub** | ⚠️ **Orphaned — pending deletion.** GitHub retired GitHub Models on 2026-07-30; its endpoint no longer resolves in DNS. `AIBackend.github` was removed, so no source file imports this module any more. Kept only to keep the removal diff separate. | `GitHubConfiguration`, `GitHubModelsClient`, `GitHubBonjourChatSession`, `GitHubBonjourServiceExplainer` (all unreachable) |
 | **BonjourAI** | Umbrella module — cloud-aware routing factories + `@_exported import BonjourAICore` so legacy `import BonjourAI` consumers stay working | `CloudAwareBonjourChatSessionFactory`, `CloudAwareBonjourServiceExplainerFactory` |
 | **BonjourAppIntents** | The Siri / Shortcuts / Spotlight actions. Holds the intents and entity; the `AppShortcutsProvider` itself lives in the app target because Xcode won't extract or localize one declared in a package | `ScanForServicesIntent`, `ListDiscoveredServicesIntent`, `BonjourServiceEntity`, `BonjourServiceEntityQuery` |
 | **BonjourUI** | SwiftUI views and view models | All views, `BonjourServicesViewModel`, UI components |
@@ -80,12 +79,11 @@ Each module follows the `{name}/Sources` and `{name}/Tests` layout:
 ```
 App → AppCore, BonjourUI, BonjourAppIntents, BonjourScanning, BonjourModels, BonjourStorage, BonjourCore
 BonjourAppIntents → BonjourAI, BonjourModels, BonjourScanning
-BonjourUI → BonjourModels, BonjourScanning, BonjourLocalization, BonjourAI, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourAIGitHub, BonjourStorage, CoreUI
-BonjourAI → BonjourAICore, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourAIGitHub, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
+BonjourUI → BonjourModels, BonjourScanning, BonjourLocalization, BonjourAI, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourStorage, CoreUI
+BonjourAI → BonjourAICore, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
 BonjourAIApple → BonjourAICore, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
 BonjourAIAnthropic → BonjourAICore, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
 BonjourAIGemini → BonjourAICore, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
-BonjourAIGitHub → BonjourAICore, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
 BonjourAICore → BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
 BonjourScanning → BonjourCore, BonjourModels, LocalNetworkMonitor
 BonjourModels → BonjourCore, BonjourStorage, BonjourLocalization
@@ -103,10 +101,13 @@ exposes a picker between three options:
 - **Anthropic Claude** (opt-in) — cloud via `BonjourAIAnthropic` and the user's own API key.
 - **Google Gemini** (opt-in) — cloud via `BonjourAIGemini` and the user's own Google AI Studio key.
 GitHub Models was a third option until GitHub retired the service on 2026-07-30.
-`AIBackend.github` has been removed; a stored `"github"` preference migrates to
-Apple Intelligence via `AIBackend.resolved(rawValue:)`, and Settings shows a
-one-time notice offering to delete the orphaned Personal Access Token (the
-presence of that Keychain entry is the notice's only state).
+`AIBackend.github` and the whole `BonjourAIGitHub` module are gone; a stored
+`"github"` preference migrates to Apple Intelligence via
+`AIBackend.resolved(rawValue:)`, and Settings shows a one-time notice offering
+to delete the orphaned Personal Access Token (the presence of that Keychain
+entry is the notice's only state). `AICloudProvider.github` and
+`Color.kozBonGitHub` deliberately survive — they are what that cleanup row is
+built from — so don't "finish the job" by deleting them.
 
 `CloudAwareBonjourChatSessionFactory` / `CloudAwareBonjourServiceExplainerFactory`
 live in the `BonjourAI` umbrella and sit above the per-provider factories in
@@ -233,7 +234,7 @@ Verify a change by building and inspecting `Metadata.appintents/extract.actionsd
 ## Testing
 
 - **Framework**: Swift Testing (`@Test`, `@Suite`, `#expect`)
-- **Runner**: `swift test --package-path KozBonPackages` is the only test runner. All tests live in `KozBonPackages/` — 1,079 tests across 87 suites covering BonjourCore, BonjourModels, BonjourScanning, BonjourUI, BonjourAICore, BonjourAIAnthropic, AppCore (including the former app-level `TopLevelDestinationTests`), etc.
+- **Runner**: `swift test --package-path KozBonPackages` is the only test runner. All tests live in `KozBonPackages/` — 1,165 tests across 96 suites covering BonjourCore, BonjourModels, BonjourScanning, BonjourUI, BonjourAICore, BonjourAIAnthropic, AppCore (including the former app-level `TopLevelDestinationTests`), etc.
 - **Naming**: `<TypeName>Tests.swift` (e.g., `TransportLayerTests.swift`)
 - **`@MainActor` tests**: Use `@MainActor` on the suite when testing `@MainActor`-isolated types
 - **Cross-module testing**: Use `@testable import <Module>` to access internal types, `import <Module>` for public API tests

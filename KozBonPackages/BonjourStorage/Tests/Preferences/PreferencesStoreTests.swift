@@ -136,13 +136,31 @@ struct PreferencesStoreTests {
 
     // MARK: - Default Init
 
-    @Test("Zero-argument `PreferencesStore()` produces a usable store with default values")
+    @Test("Zero-argument `PreferencesStore()` resolves a container whose accessors round-trip")
     func defaultInitCreatesWorkingStore() {
+        // Deliberately does NOT assert the documented defaults.
+        // The zero-argument init resolves the *real on-disk*
+        // container — `~/Library/Application Support/default.store`
+        // under the unsandboxed `swift test` runner — which is
+        // shared by every test target and survives between runs.
+        // Asserting `"basic"` here made this test pass or fail on
+        // whichever target happened to write last.
+        //
+        // The defaults are already covered against fresh
+        // in-memory containers (`defaultAiExpertiseLevel` and
+        // friends above). What's unique to *this* path is that
+        // `init()` resolves a container at all and that
+        // `fetchOrCreate` + `save` round-trip through it — so
+        // that's all this asserts, restoring the prior value so
+        // the shared store is left as we found it.
         let store = PreferencesStore()
-        #expect(store.aiAnalysisEnabled)
+        let original = store.aiExpertiseLevel
+        defer { store.aiExpertiseLevel = original }
+
+        store.aiExpertiseLevel = "technical"
+        #expect(store.aiExpertiseLevel == "technical")
+        store.aiExpertiseLevel = "basic"
         #expect(store.aiExpertiseLevel == "basic")
-        #expect(store.aiResponseLength == "standard")
-        #expect(store.defaultSortOrder == "")
     }
 
     // MARK: - Response Length

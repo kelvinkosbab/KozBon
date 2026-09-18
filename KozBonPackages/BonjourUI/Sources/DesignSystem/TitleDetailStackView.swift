@@ -94,16 +94,3 @@ public extension TitleDetailStackView where Trailing == EmptyView {
         self.trailing = nil
     }
 }
-
-// MARK: - Preview
-
-struct BonjourServiceCardView_Previews: PreviewProvider {
-    static var previews: some View {
-        List {
-            TitleDetailStackView(
-                title: "title",
-                detail: "detail"
-            )
-        }
-    }
-}

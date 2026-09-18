@@ -64,21 +64,3 @@ public struct EmptyStateOverlayView: View {
         .padding()
     }
 }
-
-// MARK: - Preview
-
-struct EmptyStateOverlayView_Previews: PreviewProvider {
-    static var previews: some View {
-        EmptyStateOverlayView(
-            image: nil,
-            title: "Some title saying something"
-        )
-
-        EmptyStateOverlayView(
-            image: Image.antenna,
-            title: "Some title saying something",
-            actionTitle: "Start Scanning",
-            action: {}
-        )
-    }
-}

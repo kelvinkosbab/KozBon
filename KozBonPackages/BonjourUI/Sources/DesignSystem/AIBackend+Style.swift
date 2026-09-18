@@ -36,10 +36,6 @@ public extension AIBackend {
     ///   contrast.
     /// - `.gemini` → ``Color/kozBonGemini`` — Google's published
     ///   blues (#1A73E8 / #8AB4F8).
-    /// - `.github` → ``Color/kozBonGitHub`` — Microsoft's
-    ///   "Copilot purple" (#8534F3), with a modest dark-mode
-    ///   lift (#9444FF) tuned so white-on-purple stays AA
-    ///   Normal in both modes.
     var accentColor: Color {
         switch self {
         case .appleIntelligence:
@@ -55,12 +51,7 @@ public extension AIBackend {
     ///
     /// - `.appleIntelligence` → the Apple Intelligence glyph.
     /// - `.anthropic` → the bundled Claude vector mark.
-    /// - `.gemini` → the `asterisk` SF Symbol; no brand asset
-    ///   ships for Gemini (trademark), so the symbol is the icon
-    ///   rather than a fallback.
-    /// - `.github` → the "code" SF Symbol fallback (the Octocat
-    ///   is trademarked; until a permitted asset lands, the
-    ///   developer-y glyph is the safer stand-in).
+    /// - `.gemini` → the bundled Gemini spark vector mark.
     var icon: Image {
         switch self {
         case .appleIntelligence:
@@ -68,7 +59,7 @@ public extension AIBackend {
         case .anthropic:
             return .anthropicClaude
         case .gemini:
-            return Image(systemName: Iconography.googleGemini)
+            return .googleGemini
         }
     }
 
@@ -102,6 +93,12 @@ public extension AICloudProvider {
     /// banners that mention a specific provider) use when
     /// rendering provider-scoped UI. Resolves to the same colors
     /// as ``AIBackend/accentColor`` for the matching cases.
+    ///
+    /// `.github` has no ``AIBackend`` counterpart — the case
+    /// survives only so Settings can offer to delete the
+    /// Keychain token GitHub Models left behind — and keeps
+    /// ``Color/kozBonGitHub``, Microsoft's "Copilot purple"
+    /// (#8534F3 / #9444FF in dark mode).
     var accentColor: Color {
         switch self {
         case .anthropic:

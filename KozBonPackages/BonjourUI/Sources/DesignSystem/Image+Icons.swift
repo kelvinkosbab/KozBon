@@ -46,10 +46,10 @@ public extension Image {
     static var bonjour: Image { Image(systemName: Iconography.bonjour) }
     static var appleIntelligence: Image { Image(systemName: Iconography.appleIntelligence) }
 
-    // `Image.anthropicClaude` and `Image.github` are defined
-    // in `BonjourAIAnthropic/Image+AnthropicBrand.swift` and
-    // `BonjourAIGitHub/Image+GitHubBrand.swift` respectively —
-    // co-located with the SVG assets they wrap so each
+    // `Image.anthropicClaude` and `Image.googleGemini` are
+    // defined in `BonjourAIAnthropic/Image+AnthropicBrand.swift`
+    // and `BonjourAIGemini/Image+GeminiBrand.swift` respectively
+    // — co-located with the SVG assets they wrap so each
     // provider module's `Bundle.module` resolves correctly.
     // Importing the provider module brings the extension into
     // scope automatically.

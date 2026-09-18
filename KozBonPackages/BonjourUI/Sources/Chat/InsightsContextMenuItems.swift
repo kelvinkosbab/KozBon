@@ -96,13 +96,19 @@ public struct InsightsContextMenuItems: View {
                 hapticFeedback.play(.medium)
                 action()
             } label: {
-                Label(Strings.Insights.explainWithAI, systemImage: Iconography.googleGemini)
+                // View-builder `Label` form so the Gemini asset
+                // mark renders instead of an SF Symbol.
+                Label {
+                    Text(Strings.Insights.explainWithAI)
+                } icon: {
+                    Image.googleGemini
+                }
             }
         } else {
             cloudSignInItem(
                 provider: .gemini,
                 label: Strings.Insights.signInToGemini,
-                icon: Image(systemName: Iconography.googleGemini)
+                icon: Image.googleGemini
             )
         }
     }
@@ -133,7 +139,6 @@ public struct InsightsContextMenuItems: View {
             )
         }
     }
-
 
     // MARK: - Cloud Sign-In CTA
 

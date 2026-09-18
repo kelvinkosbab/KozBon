@@ -18,8 +18,8 @@ import BonjourStorage
 
 /// Cloud-aware ``BonjourChatSessionFactoryProtocol`` that picks
 /// between the on-device Apple Foundation Models session, the
-/// Anthropic Claude session, and the GitHub Models (GPT-4o)
-/// session based on the user's current preferences.
+/// Anthropic Claude session, and the Google Gemini session based
+/// on the user's current preferences.
 ///
 /// Sits on top of the existing ``BonjourChatSessionFactory``
 /// (which knows how to build the Apple-side session) rather than
@@ -34,15 +34,16 @@ import BonjourStorage
 ///   factory. Returns `nil` on hardware that can't run
 ///   FoundationModels; falls through to a cloud path when any
 ///   cloud credentials are configured (so users on ineligible
-///   hardware can still get a Chat tab via Claude or GitHub).
+///   hardware can still get a Chat tab via Claude or Gemini).
 /// - **`.anthropic`** — read the Anthropic key from the
 ///   credentials store; if present, return an
 ///   ``AnthropicBonjourChatSession``. If no key, fall back to the
 ///   Apple session (so the tab doesn't disappear when the user
 ///   selects cloud but hasn't signed in yet).
-/// - **`.github`** — read the GitHub PAT from the credentials
-///   store; if present, return a ``GitHubBonjourChatSession``.
-///   Same fall-back-to-Apple semantics as the Anthropic branch.
+/// - **`.gemini`** — read the Google AI Studio key from the
+///   credentials store; if present, return a
+///   ``GeminiBonjourChatSession``. Same fall-back-to-Apple
+///   semantics as the Anthropic branch.
 /// - **Neither available** — return `nil`, matching the legacy
 ///   contract that hides the Chat tab.
 ///

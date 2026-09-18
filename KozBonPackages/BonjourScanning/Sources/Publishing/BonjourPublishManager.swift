@@ -9,15 +9,6 @@ import Foundation
 import BonjourCore
 import BonjourModels
 
-/// Delegate protocol for receiving updates when the set of published Bonjour services changes.
-@MainActor
-public protocol BonjourPublishManagerDelegate: AnyObject, Sendable {
-    /// Called when the list of published services has been updated.
-    ///
-    /// - Parameter publishedServices: The current array of published services.
-    func publishedServicesUpdated(_ publishedServices: [BonjourService])
-}
-
 /// Manages publishing (broadcasting) Bonjour services on the local network.
 ///
 /// Use the ``shared`` singleton to publish and unpublish services. Published services
