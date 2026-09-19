@@ -177,6 +177,12 @@ public struct BonjourScanForServicesView: View {
                 )
             }
         }
+        #if !os(macOS)
+        // `.automatic` collapses the sidebar on the Duo's 669pt
+        // inner display, opening the app on an empty detail pane.
+        // macOS excluded — it has bespoke column-width tuning above.
+        .navigationSplitViewStyle(.balanced)
+        #endif
         .task {
             if viewModel.isInitialLoad {
                 // Apply persisted sort order on first load — but never apply filters

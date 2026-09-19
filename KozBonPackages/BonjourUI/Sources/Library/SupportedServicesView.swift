@@ -109,6 +109,11 @@ public struct SupportedServicesView: View {
                 )
             }
         }
+        #if !os(macOS)
+        // `.automatic` collapses the sidebar on the Duo's 669pt
+        // inner display, opening the app on an empty detail pane.
+        .navigationSplitViewStyle(.balanced)
+        #endif
         .task {
             viewModel.load()
         }
