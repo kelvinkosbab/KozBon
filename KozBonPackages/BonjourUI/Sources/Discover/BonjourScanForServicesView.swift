@@ -46,8 +46,12 @@ public struct BonjourScanForServicesView: View {
                     Section {
                         forEach(services: viewModel.sortedPublishedServices)
                     } header: {
+                        // `List` forces its own secondary colour on
+                        // header content, so size and weight are the
+                        // only levers for separating a header from a
+                        // footer.
                         Text(Strings.Sections.published)
-                            .font(.caption)
+                            .font(.headline)
                             .accessibilityAddTraits(.isHeader)
                     }
                 }
@@ -61,7 +65,7 @@ public struct BonjourScanForServicesView: View {
                             forEach(services: group.services, style: .init(group.key))
                         } header: {
                             Text(verbatim: group.title)
-                                .font(.caption)
+                                .font(.headline)
                                 .accessibilityAddTraits(.isHeader)
                         } footer: {
                             // Library blurbs run from one clause to a
