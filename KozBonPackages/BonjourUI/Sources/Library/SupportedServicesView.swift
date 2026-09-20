@@ -26,6 +26,10 @@ public struct SupportedServicesView: View {
     @State private var viewModel = SupportedServicesViewModel()
     @State private var serviceTypeToExplain: BonjourServiceType?
 
+    /// See the note in `BonjourScanForServicesView` — `.automatic`
+    /// collapses the sidebar on the Duo's 669pt inner display.
+    @State private var columnVisibility: NavigationSplitViewVisibility = .all
+
     #if os(macOS)
     @Environment(\.openWindow) private var openWindow
     #endif
@@ -33,7 +37,7 @@ public struct SupportedServicesView: View {
     public init() {}
 
     public var body: some View {
-        NavigationSplitView {
+        NavigationSplitView(columnVisibility: $columnVisibility) {
             List(selection: $viewModel.selectedServiceType) {
                 // User-created types appear ABOVE the built-in catalog so
                 // the user's own content is the first thing they see.

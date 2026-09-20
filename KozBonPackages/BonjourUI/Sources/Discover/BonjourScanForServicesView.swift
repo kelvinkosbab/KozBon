@@ -29,6 +29,12 @@ public struct BonjourScanForServicesView: View {
     @Bindable var viewModel: BonjourServicesViewModel
     @State private var serviceToExplain: BonjourService?
 
+    /// Seeded to `.all` because `.automatic` collapses the sidebar
+    /// on the Duo's 669pt inner display, opening the app on an empty
+    /// detail pane. SwiftUI still overrides this down to a single
+    /// column at genuinely compact widths, which is what we want.
+    @State private var columnVisibility: NavigationSplitViewVisibility = .all
+
     /// Creates the Discover view bound to the shared services view model.
     ///
     /// The view model is owned by the app root so that both the Discover tab and
@@ -40,7 +46,7 @@ public struct BonjourScanForServicesView: View {
     }
 
     public var body: some View {
-        NavigationSplitView {
+        NavigationSplitView(columnVisibility: $columnVisibility) {
             List(selection: $viewModel.selectedService) {
                 if !viewModel.sortedPublishedServices.isEmpty {
                     Section {
