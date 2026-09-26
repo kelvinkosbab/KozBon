@@ -64,19 +64,33 @@ public struct ReleaseNote: Identifiable, Hashable, Sendable {
 ///
 /// Update by prepending a new entry on each release. Older entries
 /// are immutable historical record. Consumed by ``WhatsNewView``
-/// (the Preferences → About page) and by the chat assistant's
+/// (the Settings → About page) and by the chat assistant's
 /// prompt builder (so "what's new?" questions answer from real
 /// data instead of hallucinated version history).
 public enum ReleaseNotes {
 
     /// Newest-first releases since 3.0.
     public static let all: [ReleaseNote] = [
+        ReleaseNote(version: "4.7", highlights: [
+            // swiftlint:disable:next line_length
+            "Every tab now sits on an ambient background — a slow colour wash that drifts like water, tinted differently per tab, and carried through to the detail pages you open from each one.",
+            // swiftlint:disable:next line_length
+            "New Ambient Background switch in Settings → Display turns the wash off and restores the plain system styling. It also steps aside automatically for Increase Contrast, Reduce Transparency, and Smart Invert, and holds still under Reduce Motion or Low Power Mode.",
+            // swiftlint:disable:next line_length
+            "Chat suggestions are now iMessage-style blue capsules with a send arrow, so they read as prompts you can send rather than links.",
+            "The Preferences tab is now called Settings."
+        ]),
         ReleaseNote(version: "4.6", highlights: [
+            // Release-note prose is data, not code — breaking a
+            // sentence across a `+` to satisfy the column limit
+            // hurts the thing being read here.
+            // swiftlint:disable:next line_length
             "Internal polish and Xcode 27 / iOS 26 compatibility — the assistant tab badge and brand icons render correctly on the new SDK.",
             "Reliability improvements across the chat surface, including a swipe-delete animation fix in the broadcast TXT-record list.",
             "Brand names (Apple Intelligence, Claude, GitHub) now reliably stay in English across every locale."
         ]),
         ReleaseNote(version: "4.5", highlights: [
+            // swiftlint:disable:next line_length
             "Chat tab now shows a red badge in compact / portrait windows when an assistant reply lands while you're scrolled away from the bottom. The badge clears the moment you scroll back to the latest message.",
             "Wider Discover and Library sidebars on macOS so hostnames and service-type identifiers fit on one line.",
             "Tighter wide-window tab bar and detail layouts on iPad and macOS.",

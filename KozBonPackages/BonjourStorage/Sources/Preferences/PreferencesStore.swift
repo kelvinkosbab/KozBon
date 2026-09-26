@@ -174,6 +174,22 @@ public final class PreferencesStore {
         }
     }
 
+    /// Whether the animated ambient mesh background is drawn behind
+    /// each tab's content.
+    ///
+    /// Off falls the whole app back to the platform's default list
+    /// and form styling. The accessibility settings that conflict
+    /// with the wash suppress it regardless of this value, so a
+    /// `true` here means "draw it where it's appropriate", not
+    /// "always draw it".
+    public var ambientBackgroundEnabled: Bool {
+        get { preferences?.ambientBackgroundEnabled ?? UserPreferences.defaultAmbientBackgroundEnabled }
+        set {
+            preferences?.ambientBackgroundEnabled = newValue
+            save()
+        }
+    }
+
     // MARK: - Actions
 
     /// Resets all preferences to their default values.
@@ -185,6 +201,7 @@ public final class PreferencesStore {
         preferences?.aiBackendRawValue = UserPreferences.defaultAIBackendRawValue
         preferences?.aiCloudModelRawValue = UserPreferences.defaultAICloudModelRawValue
         preferences?.aiGeminiModelRawValue = UserPreferences.defaultAIGeminiModelRawValue
+        preferences?.ambientBackgroundEnabled = UserPreferences.defaultAmbientBackgroundEnabled
         save()
     }
 

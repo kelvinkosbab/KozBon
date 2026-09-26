@@ -58,6 +58,12 @@ struct PreferencesStoreTests {
         #expect(store.defaultSortOrder == "")
     }
 
+    @Test("Fresh store reports `ambientBackgroundEnabled` as true by default")
+    func defaultAmbientBackgroundEnabled() throws {
+        let store = try makeStore()
+        #expect(store.ambientBackgroundEnabled)
+    }
+
     // MARK: - Persistence
 
     @Test("`aiAnalysisEnabled` survives across new store instances on the same container")
@@ -93,6 +99,17 @@ struct PreferencesStoreTests {
         #expect(store2.defaultSortOrder == "hostNameAsc")
     }
 
+    @Test("`ambientBackgroundEnabled` survives across new store instances on the same container")
+    func ambientBackgroundEnabledPersists() throws {
+        let container = try makeContainer()
+
+        let store1 = PreferencesStore(container: container)
+        store1.ambientBackgroundEnabled = false
+
+        let store2 = PreferencesStore(container: container)
+        #expect(!store2.ambientBackgroundEnabled)
+    }
+
     // MARK: - Reset
 
     @Test("`resetToDefaults` restores every preference to its documented default value")
@@ -101,12 +118,14 @@ struct PreferencesStoreTests {
         store.aiAnalysisEnabled = false
         store.aiExpertiseLevel = "technical"
         store.defaultSortOrder = "serviceNameDesc"
+        store.ambientBackgroundEnabled = false
 
         store.resetToDefaults()
 
         #expect(store.aiAnalysisEnabled)
         #expect(store.aiExpertiseLevel == "basic")
         #expect(store.defaultSortOrder == "")
+        #expect(store.ambientBackgroundEnabled)
     }
 
     // MARK: - Single Row

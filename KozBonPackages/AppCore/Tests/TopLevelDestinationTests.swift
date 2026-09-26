@@ -45,7 +45,7 @@ struct TopLevelDestinationTests {
     // MARK: - titleString
     //
     // The previous tests pinned exact English values (`"Discover"`,
-    // `"Library"`, `"Chat"` / `"Explore"`, `"Preferences"`). They
+    // `"Library"`, `"Chat"` / `"Explore"`, `"Settings"`). They
     // worked under `xcodebuild test` (where the iOS runtime resolves
     // `.xcstrings` against `Bundle.module`) but break under the SPM
     // CLI (`swift test`), where the same `LocalizedStringResource`
@@ -67,7 +67,7 @@ struct TopLevelDestinationTests {
 
     @Test func allTitlesResolveToSomethingMeaningful() {
         // Under a runtime that resolves the catalog, the titles are
-        // localized English text ("Discover", "Library", "Preferences",
+        // localized English text ("Discover", "Library", "Settings",
         // "Chat" / "Explore"). Under the SPM CLI fallback path, they're
         // the raw key strings ("tab_bonjour", "tab_supported_services",
         // …) — also non-empty, also unique, and the runtime that

@@ -60,6 +60,10 @@ public struct SupportedServicesView: View {
                 )
             }
             .contentMarginsBasedOnSizeClass()
+            // Teal-leaning sibling of the Discover wash, so the
+            // reference catalog reads as a different surface from
+            // the live scan without changing the app's palette.
+            .ambientMeshBackground()
             #if os(macOS)
             // Match the Discover sidebar — longer service-type
             // names ("_homekit._tcp", etc.) fit cleanly and the
@@ -111,6 +115,9 @@ public struct SupportedServicesView: View {
                     systemImage: Iconography.list,
                     description: Text(Strings.EmptyStates.selectServiceTypeDescription)
                 )
+                // Lighter than the sidebar's wash — see the Discover
+                // placeholder for the reasoning.
+                .ambientMeshBackground(intensity: .subdued)
             }
         }
         #if !os(macOS)
@@ -118,6 +125,10 @@ public struct SupportedServicesView: View {
         // inner display, opening the app on an empty detail pane.
         .navigationSplitViewStyle(.balanced)
         #endif
+        // Declared on the split view so the detail column's
+        // `SupportedServiceDetailView` inherits it — a service type
+        // pushed from Library keeps the Library wash.
+        .ambientMeshPalette(.library)
         .task {
             viewModel.load()
         }

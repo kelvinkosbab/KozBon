@@ -121,36 +121,35 @@ extension BonjourChatView {
                 Text(text)
                     .multilineTextAlignment(.leading)
                 Spacer()
-                Image.arrowUpRight
-                    // Diagonal trailing affordance — must mirror under
-                    // right-to-left locales (Arabic, Hebrew) so it
-                    // continues to point AWAY from the text and toward
-                    // the leading edge in the user's reading direction.
-                    // Without this, the arrow points back into the
-                    // text in RTL, reading as a "go back" hint instead
-                    // of "send forward".
-                    .flipsForRightToLeftLayoutDirection(true)
-                    .foregroundStyle(.secondary)
+                // Same `arrow.up` the compose bar's send button
+                // uses, so a suggestion reads as "send this" rather
+                // than "open this". Straight up is direction-neutral,
+                // so unlike the previous diagonal glyph it needs no
+                // RTL mirroring.
+                Image.arrowUp
+                    .font(.footnote.weight(.bold))
+                    .foregroundStyle(.white)
                     .accessibilityHidden(true)
             }
-            .padding()
+            // Pill padding: roomier horizontally than vertically so
+            // the capsule's rounded caps don't crowd the text.
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
         }
-        // Custom ButtonStyle (instead of `.plain`) so the card gets
-        // a tactile press animation: subtle scale-down + dimmed tint
-        // + slightly darker background while the finger is down,
-        // snapping back on release. Without this, taps on the
-        // recommended-prompt cards land instantly with no visual
-        // confirmation, which on a chat surface where the
-        // streaming response takes a beat to start can read as
-        // "did I tap it?". The press feedback closes that gap.
-        .buttonStyle(SuggestionCardButtonStyle(reduceMotion: reduceMotion, accent: aiAccent))
-        // Cap Dynamic Type on the suggestion cards. The card's HStack
-        // is `Text + Spacer + chevron`, so at sizes above
+        // Custom ButtonStyle (instead of `.plain`) so the chip gets
+        // a tactile press animation: scale-down + deeper fill +
+        // dimmed label while the finger is down, snapping back on
+        // release. Without this, taps land with no visual
+        // confirmation, which on a chat surface where the streaming
+        // response takes a beat to start reads as "did I tap it?".
+        .buttonStyle(SuggestionCardButtonStyle(reduceMotion: reduceMotion))
+        // Cap Dynamic Type on the suggestion chips. The chip's
+        // HStack is `Text + Spacer + arrow`, so at sizes above
         // `.accessibility2` the multi-line text wraps tall enough
-        // that the trailing chevron either truncates or pushes
+        // that the trailing arrow either truncates or pushes
         // off-screen on compact iPhones. Capping at `.accessibility2`
         // keeps both readable; users at the very largest text sizes
-        // still see scaled-up text and a visible chevron, just not
+        // still see scaled-up text and a visible arrow, just not
         // the full system-max scaling. The rest of the chat surface
         // (subtitle, bubbles, input) keeps full Dynamic Type.
         .dynamicTypeSize(...DynamicTypeSize.accessibility2)
@@ -162,13 +161,13 @@ extension BonjourChatView {
 
 // MARK: - SuggestionCardButtonStyle
 
-/// Press feedback for the recommended-prompt cards on the chat empty
-/// state. The card scales down to ~97%, the background tint deepens,
-/// and the whole label dims slightly while the finger is down — all
-/// snapping back on release. Tuned to feel like a single press of a
-/// physical key: enough visual difference to confirm the tap, brief
-/// enough not to delay the user's perception of the response
-/// starting to stream.
+/// Press feedback for the recommended-prompt chips on the chat empty
+/// state. The chip scales down to ~94%, its fill deepens, and the
+/// whole label dims slightly while the finger is down — all snapping
+/// back on release. Tuned to feel like a single press of a physical
+/// key: enough visual difference to confirm the tap, brief enough
+/// not to delay the user's perception of the response starting to
+/// stream.
 ///
 /// The `reduceMotion` flag swaps the spring scale for an opacity-only
 /// flicker so users with the system Reduce Motion preference still
@@ -183,69 +182,41 @@ extension BonjourChatView {
 /// underlying `Button` provides its own focus ring and a hand
 /// cursor by default.
 ///
-/// `.contentShape(...)` on the inner background pins the hit area to
-/// the visible pill rather than the label's intrinsic bounds, so
-/// taps near the multi-line text's empty trailing region still
-/// register on the card. The previous `.plain` button style passed
-/// through the label's bounds, which on wrapped suggestions
-/// silently missed tall empty regions.
+/// `.contentShape(.capsule)` pins the hit area to the visible pill
+/// rather than the label's intrinsic bounds, so taps near a
+/// multi-line suggestion's empty trailing region still register.
 private struct SuggestionCardButtonStyle: ButtonStyle {
 
     let reduceMotion: Bool
 
-    /// The chat surface's accent color. Threaded through from
-    /// `BonjourChatView.aiAccent` so suggestion-chip fills /
-    /// strokes follow the active backend's brand (blue for
-    /// Apple Intelligence, Anthropic Cara orange for cloud).
-    let accent: Color
+    /// Resting fill opacity.
+    ///
+    /// Well short of an iMessage bubble's solid fill: these chips
+    /// are suggestions behind the ambient mesh wash, not sent
+    /// messages, so the fill has to stay translucent enough that
+    /// the wash reads through it and light enough that `.primary`
+    /// label text keeps its contrast in both appearances.
+    private static let restingFill: Double = 0.55
+
+    /// Pressed fill opacity. The +0.20 delta is what makes a quick
+    /// (~80 ms) tap visibly register.
+    private static let pressedFill: Double = 0.75
 
     @ViewBuilder
     func makeBody(configuration: Configuration) -> some View {
         let pressed = configuration.isPressed
-        // Press feedback values tuned together so a quick tap
-        // (~80 ms — most taps don't hold long enough to see a
-        // full settle animation) still produces a visible squish:
-        //
-        //   - scale 0.94 (was 0.97) — 6% reduction is large enough
-        //     to register at a glance even when the surrounding
-        //     ScrollView is scrolling messages into place.
-        //   - opacity 0.70 (was 0.85) — pairs the scale with a
-        //     dimming pulse, so the press reads as a deliberate
-        //     "depress" rather than a subtle hover state.
-        //   - background tint resting 0.18 / pressed 0.32 (was
-        //     0.10 / 0.25). The previous 0.10 resting tint was
-        //     barely visible against the chat surface, so the six
-        //     suggestion cards ran together as one tinted blob.
-        //     Bumping the resting state to 0.18 gives each card a
-        //     defined boundary without making the tint loud; the
-        //     pressed state moves to 0.32 to preserve the +0.14
-        //     visible delta on tap so the press still reads as a
-        //     deliberate "depress."
-        //   - subtle stroke at resting 0.20 — sharpens the card
-        //     boundary further on light backgrounds (where the
-        //     blue fill on white reads as the lightest of grays
-        //     without an edge). The stroke uses the same brand
-        //     tint as the fill so it composites cleanly in both
-        //     light and dark modes.
-        //   - spring response 0.18 (was 0.25) — faster
-        //     attack/release so the visual change starts right
-        //     when the finger lands and unwinds promptly on
-        //     release. Damping stays low enough to look elastic
-        //     without feeling jittery.
-        //
-        // Reduce Motion swaps the spring scale for an opacity-
-        // only flicker; the new values still apply (so reduce-
-        // motion users get the dimming and tint shift).
-        let card = configuration.label
+        // System blue rather than the chat surface's backend accent:
+        // these read as iMessage-style send affordances, and the
+        // iMessage association only holds in blue. The compose
+        // bar's send button and the user's own message bubbles
+        // still follow `aiAccent`, so the active backend is still
+        // visible on the surface.
+        let chip = configuration.label
             .background(
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(accent.opacity(pressed ? 0.32 : 0.18))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12, style: .continuous)
-                            .strokeBorder(accent.opacity(0.20), lineWidth: 1)
-                    )
+                Capsule(style: .continuous)
+                    .fill(Color.blue.opacity(pressed ? Self.pressedFill : Self.restingFill))
             )
-            .contentShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+            .contentShape(.capsule)
             .scaleEffect(reduceMotion ? 1.0 : (pressed ? 0.94 : 1.0))
             .opacity(pressed ? 0.70 : 1.0)
             .animation(
@@ -256,9 +227,9 @@ private struct SuggestionCardButtonStyle: ButtonStyle {
             )
 
         #if !os(macOS)
-        card.hoverEffect(.highlight)
+        chip.hoverEffect(.highlight)
         #else
-        card
+        chip
         #endif
     }
 }

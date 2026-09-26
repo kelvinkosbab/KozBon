@@ -59,8 +59,8 @@ public enum Strings {
             .init("tab_supported_services", bundle: .atURL(Bundle.module.bundleURL))
         }
 
-        public static var preferences: LocalizedStringResource {
-            .init("tab_preferences", bundle: .atURL(Bundle.module.bundleURL))
+        public static var settings: LocalizedStringResource {
+            .init("tab_settings", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         public static var chat: LocalizedStringResource {
@@ -768,6 +768,10 @@ public enum Strings {
             .init("a11y_reset_hint", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        public static var ambientBackgroundHint: LocalizedStringResource {
+            .init("a11y_ambient_background_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var formIncompleteHint: LocalizedStringResource {
             .init("a11y_form_incomplete_hint", bundle: .atURL(Bundle.module.bundleURL))
         }
@@ -1319,6 +1323,14 @@ public enum Strings {
 
         public static var displayFooter: LocalizedStringResource {
             .init("settings_display_footer", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var ambientBackground: LocalizedStringResource {
+            .init("settings_ambient_background", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var ambientBackgroundFooter: LocalizedStringResource {
+            .init("settings_ambient_background_footer", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         public static var resetFooter: LocalizedStringResource {

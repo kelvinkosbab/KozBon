@@ -172,6 +172,11 @@ public struct BonjourChatView: View {
     public var body: some View {
         NavigationStack {
             chatPresentations(applyingTo: chatContent)
+                // The transcript is a plain ScrollView with no
+                // background of its own, so the wash shows through
+                // the full surface here rather than only in the
+                // gutters. Message bubbles carry their own fills.
+                .ambientMeshBackground()
                 // Backend-aware tint scoped to the chat surface.
                 // The TabView's global tint is always KozBon blue.
                 .tint(aiAccent)
@@ -292,6 +297,9 @@ public struct BonjourChatView: View {
                 // Chat tab without needing to know its current nav title.
                 .accessibilityIdentifier("chat_page")
         }
+        // Declared on the `NavigationStack` so anything the
+        // chat surface pushes inherits the Chat wash.
+        .ambientMeshPalette(.chat)
     }
 
     /// Inner content of the chat surface — message list + compose

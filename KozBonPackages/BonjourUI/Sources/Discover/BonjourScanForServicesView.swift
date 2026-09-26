@@ -96,10 +96,7 @@ public struct BonjourScanForServicesView: View {
             // gutters take the wash and text contrast is unaffected.
             // Must mount inside the column — a `.background` on the
             // enclosing split view is hidden behind the column's own.
-            .scrollContentBackground(.hidden)
-            .background {
-                AmbientMeshBackground()
-            }
+            .ambientMeshBackground()
             #if os(macOS)
             // Wider sidebar so hostnames + device-type subtitles
             // fit on one line and the TabView's sidebar header
@@ -193,8 +190,16 @@ public struct BonjourScanForServicesView: View {
                     systemImage: Iconography.antenna,
                     description: Text(Strings.EmptyStates.selectServiceDescription)
                 )
+                // Lighter than the sidebar's wash. On a wide layout
+                // both columns are on screen at once, and two washes
+                // at equal strength read as two unrelated screens.
+                .ambientMeshBackground(intensity: .subdued)
             }
         }
+        // Declared on the split view so the detail column's
+        // `BonjourServiceDetailView` inherits it — a service pushed
+        // from Discover keeps the Discover wash.
+        .ambientMeshPalette(.discover)
         #if !os(macOS)
         // `.automatic` collapses the sidebar on the Duo's 669pt
         // inner display, opening the app on an empty detail pane.
@@ -425,49 +430,6 @@ public struct BonjourScanForServicesView: View {
         }
     }
 }
-
-// MARK: - ServiceRowStyle
-
-/// How much of a discovered-service row's identity its enclosing
-/// section header already states.
-///
-/// A header repeated on every row beneath it is noise, so each style
-/// moves the repeated field out of the row and promotes what's left.
-private enum ServiceRowStyle {
-
-    /// No section header, or one that says nothing about the row —
-    /// the full host title plus service-type subtitle.
-    case standalone
-
-    /// Inside a per-service-type section.
-    case inServiceTypeSection
-
-    /// Inside a per-host section.
-    case inHostSection
-
-    init(_ key: BonjourServiceGroup.Key) {
-        switch key {
-        case .serviceType: self = .inServiceTypeSection
-        case .hostName: self = .inHostSection
-        }
-    }
-}
-
-// MARK: - AI Service Explanation Sheet Modifier
-
-#if canImport(FoundationModels)
-
-struct AIServiceExplanationSheetModifier: ViewModifier {
-    @Binding var serviceToExplain: BonjourService?
-
-    func body(content: Content) -> some View {
-        content
-            .sheet(item: $serviceToExplain) { service in
-                ServiceExplanationSheet(service: service)
-            }
-    }
-}
-#endif
 
 // MARK: - Previews
 

@@ -81,6 +81,9 @@ struct SelectServiceTypeView: View {
             }
         }
         .contentMarginsBasedOnSizeClass()
+        // Presented from the Library tab's broadcast flow, so it
+        // inherits that palette.
+        .ambientMeshBackground()
         .navigationTitle(String(localized: Strings.NavigationTitles.supportedServices))
         #if !os(macOS)
         // Inline title is required for the `.principal` toolbar slot

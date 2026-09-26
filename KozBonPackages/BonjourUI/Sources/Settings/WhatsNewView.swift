@@ -68,6 +68,9 @@ struct WhatsNewView: View {
                 }
             }
         }
+        // Inherits the Preferences palette from the pushing
+        // `NavigationStack`.
+        .ambientMeshBackground()
         .navigationTitle(String(localized: Strings.Settings.whatsNew))
         #if !os(macOS)
         .navigationBarTitleDisplayMode(.inline)

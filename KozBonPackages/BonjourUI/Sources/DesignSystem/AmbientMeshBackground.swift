@@ -9,26 +9,29 @@ import SwiftUI
 
 // MARK: - AmbientMeshBackground
 
-/// A slow, low-frequency colour wash painted behind a screen's
-/// content.
+/// A slowly rolling colour wash painted behind a screen's content.
 ///
-/// The mesh control points drift on independent sine waves with
-/// periods of roughly 50–80 seconds, so the motion reads as
-/// atmosphere rather than animation — there is no loop a user can
-/// perceive and nothing that competes with the list in front of it.
+/// ``AmbientMeshWave`` supplies the geometry and alpha; this view
+/// binds them to a palette and a clock. Rendering is a pure function
+/// of elapsed time rather than `withAnimation` state, which is what
+/// lets the whole thing freeze to a fixed frame instead of blanking
+/// when motion is suppressed.
 ///
-/// Rendering is a pure function of elapsed time rather than
-/// `withAnimation` state, which is what lets the whole thing freeze
-/// to a fixed frame instead of blanking when motion is suppressed.
-///
-/// Suppressed entirely under Increase Contrast, and frozen (not
-/// hidden) under Reduce Motion, Low Power Mode, or when the scene
-/// is not active.
+/// Frozen (not hidden) under Reduce Motion, Low Power Mode, or a
+/// backgrounded scene. Whether the wash is drawn *at all* is
+/// ``AmbientMeshBackgroundModifier``'s decision — it owns the user
+/// preference and the accessibility settings that conflict outright.
 struct AmbientMeshBackground: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.colorSchemeContrast) private var colorSchemeContrast
     @Environment(\.scenePhase) private var scenePhase
+
+    /// Per-tab hues and wave phase.
+    let palette: AmbientMeshPalette
+
+    /// How strongly the wash reads. Defaults to
+    /// ``AmbientMeshIntensity/standard``.
+    var intensity: AmbientMeshIntensity = .standard
 
     /// Mirrors `ProcessInfo.isLowPowerModeEnabled`, refreshed from
     /// the power-state notification. Seeded at init so the first
@@ -38,47 +41,34 @@ struct AmbientMeshBackground: View {
 
     // MARK: - Tuning
 
-    /// Deliberately ~20fps, not the display's native rate. The wash
-    /// is low-frequency enough that nobody can tell, and the frames
-    /// we skip are the entire point on a screen that also runs a
-    /// continuous Bonjour scan.
-    private static let frameInterval: TimeInterval = 1.0 / 20.0
+    /// 30fps, not the display's native rate. The wave periods are
+    /// long enough (4–7s) that the dropped frames don't show as
+    /// stepping, and they're the entire point on a screen that also
+    /// runs a continuous Bonjour scan.
+    private static let frameInterval: TimeInterval = 1.0 / 30.0
 
-    /// Overall strength of the wash. Low by design — the list is the
-    /// content and this must never compete with row text for
-    /// attention or contrast.
-    private static let washOpacity: Double = 0.30
-
-    /// How far an interior control point may drift from its resting
-    /// position, in unit-square coordinates. Corners never move, so
-    /// the mesh always covers the full frame.
-    private static let driftAmplitude: Float = 0.09
+    /// Overall strength of the wash at
+    /// ``AmbientMeshIntensity/standard``. The list itself is still
+    /// the content, so this stays short of anything that would read
+    /// as a coloured background — but well above a scrim.
+    private static let washOpacity: Double = 0.55
 
     // MARK: - Body
 
     var body: some View {
-        if colorSchemeContrast == .increased {
-            // Increase Contrast is a legibility request. Any tint
-            // behind the content works against it, so there's no
-            // "reduced" version worth keeping here.
-            Color.clear
-        } else {
-            wash
-        }
-    }
-
-    private var wash: some View {
         TimelineView(.animation(minimumInterval: Self.frameInterval, paused: isPaused)) { context in
+            let time = isPaused ? 0 : context.date.timeIntervalSinceReferenceDate
+
             MeshGradient(
-                width: 3,
-                height: 3,
-                points: Self.points(at: isPaused ? 0 : context.date.timeIntervalSinceReferenceDate),
-                colors: Self.colors,
+                width: AmbientMeshWave.resolution,
+                height: AmbientMeshWave.resolution,
+                points: AmbientMeshWave.points(at: time, phase: palette.phaseOffset),
+                colors: colors(at: time),
                 background: .clear,
                 smoothsColors: true
             )
         }
-        .opacity(Self.washOpacity)
+        .opacity(Self.washOpacity * intensity.opacityScale)
         .ignoresSafeArea()
         .allowsHitTesting(false)
         .accessibilityHidden(true)
@@ -92,53 +82,69 @@ struct AmbientMeshBackground: View {
     /// Frozen rather than hidden: a still mesh is a pleasant
     /// gradient, so suppressing motion costs the user nothing
     /// visually.
+    ///
+    /// Pauses on `.background` only, not on `.inactive`. An
+    /// unfocused window, a Stage Manager side panel, and a
+    /// simulator the developer isn't clicking on are all
+    /// `.inactive` while fully on screen — freezing there just
+    /// looks broken. A backgrounded scene isn't rendering anyway.
     private var isPaused: Bool {
-        reduceMotion || isLowPowerMode || scenePhase != .active
+        reduceMotion || isLowPowerMode || scenePhase == .background
     }
 
-    // MARK: - Geometry
+    // MARK: - Colour
 
-    /// The nine control points of the 3×3 mesh at a given time.
-    ///
-    /// Pure and deterministic so it can be unit-tested without a
-    /// rendering pass, and so `paused` can freeze the wash by simply
-    /// pinning `time` to zero.
-    ///
-    /// The four corners are pinned. If they drifted, the mesh would
-    /// pull away from the frame edges and expose the background
-    /// through the gap.
-    ///
-    /// - Parameter time: Elapsed time in seconds. Any stable
-    ///   reference epoch works; only differences matter.
-    static func points(at time: TimeInterval) -> [SIMD2<Float>] {
-        func drift(phase: Double, speed: Double) -> Float {
-            0.5 + Self.driftAmplitude * Float(sin(time * speed + phase))
+    /// The palette's sixteen hues carrying the travelling alpha at a
+    /// given time.
+    private func colors(at time: TimeInterval) -> [Color] {
+        let alphas = AmbientMeshWave.alphas(at: time, phase: palette.phaseOffset)
+        return zip(palette.hues, alphas).map { $0.opacity($1) }
+    }
+}
+
+// MARK: - Previews
+
+// These previews mount the view directly, bypassing
+// `AmbientMeshBackgroundModifier` — so the preference and the
+// accessibility suppression aren't in play here. The frozen state
+// isn't previewable either: Reduce Motion is a read-only environment
+// value with no canvas variant, so it needs the Settings toggle on a
+// device or simulator.
+
+#Preview("Ambient Mesh - Discover") {
+    AmbientMeshBackground(palette: .discover)
+}
+
+#Preview("Ambient Mesh - All Palettes") {
+    // Side by side, to check the four tabs read as variations on one
+    // palette rather than as four different apps.
+    VStack(spacing: 0) {
+        AmbientMeshBackground(palette: .discover)
+        AmbientMeshBackground(palette: .library)
+        AmbientMeshBackground(palette: .preferences)
+        AmbientMeshBackground(palette: .chat)
+    }
+}
+
+#Preview("Ambient Mesh - Dark") {
+    AmbientMeshBackground(palette: .discover)
+        .preferredColorScheme(.dark)
+}
+
+#Preview("Ambient Mesh - Behind Content") {
+    // Mirrors the production mount. Worth checking row text stays
+    // legible against the brightest part of the gradient.
+    NavigationStack {
+        List {
+            ForEach(0..<12, id: \.self) { index in
+                TitleDetailStackView(
+                    title: "Sample Service \(index)",
+                    detail: "_sample._tcp · 192.168.1.\(index)"
+                )
+            }
         }
-
-        // Mutually prime-ish speeds keep the points from returning to
-        // a shared configuration, so the wash never visibly repeats.
-        return [
-            SIMD2(0, 0),
-            SIMD2(drift(phase: 0.0, speed: 0.121), 0),
-            SIMD2(1, 0),
-
-            SIMD2(0, drift(phase: 1.3, speed: 0.097)),
-            SIMD2(drift(phase: 2.1, speed: 0.083), drift(phase: 3.4, speed: 0.109)),
-            SIMD2(1, drift(phase: 4.2, speed: 0.113)),
-
-            SIMD2(0, 1),
-            SIMD2(drift(phase: 5.0, speed: 0.131), 1),
-            SIMD2(1, 1)
-        ]
+        .ambientMeshPalette(.discover)
+        .ambientMeshBackground()
+        .navigationTitle(Text(verbatim: "Discover"))
     }
-
-    /// Brand blue carries the wash; the cyan and indigo corners add
-    /// just enough hue travel to keep it from reading as a flat
-    /// scrim. Per-colour alpha does the shaping — `washOpacity` then
-    /// scales the whole thing.
-    private static let colors: [Color] = [
-        Color.kozBonBlue.opacity(0.45), Color.cyan.opacity(0.20), Color.kozBonBlue.opacity(0.50),
-        Color.indigo.opacity(0.28), Color.kozBonBlue.opacity(0.60), Color.cyan.opacity(0.22),
-        Color.kozBonBlue.opacity(0.55), Color.indigo.opacity(0.30), Color.kozBonBlue.opacity(0.40)
-    ]
 }

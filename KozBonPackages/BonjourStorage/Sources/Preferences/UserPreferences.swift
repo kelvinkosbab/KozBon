@@ -55,6 +55,13 @@ public final class UserPreferences {
     /// the `BonjourAIGemini` typed bridge.
     public static let defaultAIGeminiModelRawValue = "gemini-2.5-flash"
 
+    /// Default value for ``ambientBackgroundEnabled``.
+    ///
+    /// On by default — the wash is part of the app's look, and the
+    /// accessibility settings that conflict with it already suppress
+    /// it without the user having to find this toggle.
+    public static let defaultAmbientBackgroundEnabled = true
+
     // MARK: - Properties
 
     /// Whether AI-powered service explanations are enabled.
@@ -99,6 +106,13 @@ public final class UserPreferences {
     /// Additive, so existing rows decode with the default and no
     /// migration plan is required.
     public var aiGeminiModelRawValue: String = UserPreferences.defaultAIGeminiModelRawValue
+
+    /// Whether the animated ambient mesh background is drawn behind
+    /// each tab's content. When off, every tab falls back to the
+    /// platform's default list and form styling.
+    ///
+    /// Additive, so existing rows decode with the default.
+    public var ambientBackgroundEnabled: Bool = UserPreferences.defaultAmbientBackgroundEnabled
 
     /// Creates a new preferences instance with default values.
     public init() {}

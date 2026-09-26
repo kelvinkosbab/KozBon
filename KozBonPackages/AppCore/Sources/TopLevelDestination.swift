@@ -50,7 +50,7 @@ enum TopLevelDestination: Identifiable {
             #endif
 
         case .settings:
-            String(localized: Strings.Tabs.preferences)
+            String(localized: Strings.Tabs.settings)
         }
     }
 

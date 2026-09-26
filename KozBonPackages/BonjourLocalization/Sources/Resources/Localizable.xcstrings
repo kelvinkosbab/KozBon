@@ -8375,6 +8375,59 @@
         }
       }
     },
+    "a11y_ambient_background_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turns the animated colour gradient behind every tab on or off."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activa o desactiva el degradado de color animado que aparece detrás de cada pestaña."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Active ou désactive le dégradé de couleur animé affiché derrière chaque onglet."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schaltet den animierten Farbverlauf hinter jedem Tab ein oder aus."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "各タブの背後にあるアニメーションのカラーグラデーションをオンまたはオフにします。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "开启或关闭每个标签页背后的动态颜色渐变。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يشغّل أو يوقف تدرج الألوان المتحرك خلف كل علامة تبويب."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מפעיל או מכבה את מפל הצבע המונפש שמאחורי כל כרטיסייה."
+          }
+        }
+      }
+    },
     "a11y_bonjour_type": {
       "extractionState": "manual",
       "localizations": {
@@ -18345,49 +18398,49 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Your preferences"
+            "value": "Settings"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tus preferencias"
+            "value": "Ajustes"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vos préférences"
+            "value": "Réglages"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ihre Einstellungen"
+            "value": "Einstellungen"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "あなたの設定"
+            "value": "設定"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "您的偏好设置"
+            "value": "设置"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "تفضيلاتك"
+            "value": "الإعدادات"
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "ההעדפות שלך"
+            "value": "הגדרות"
           }
         }
       }
@@ -22741,6 +22794,112 @@
         }
       }
     },
+    "settings_ambient_background": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ambient Background"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fondo ambiental"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrière-plan d’ambiance"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Umgebungshintergrund"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アンビエント背景"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "氛围背景"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الخلفية المحيطة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "רקע אווירה"
+          }
+        }
+      }
+    },
+    "settings_ambient_background_footer": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Washes each tab with a slowly drifting colour gradient. Turns off automatically when Increase Contrast, Reduce Transparency, or Smart Invert is on, and holds still under Reduce Motion or Low Power Mode."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aplica a cada pestaña un degradado de color que se desplaza lentamente. Se desactiva automáticamente si Aumentar contraste, Reducir transparencia o Invertir inteligente están activados, y se queda inmóvil con Reducir movimiento o el modo de bajo consumo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nappe chaque onglet d’un dégradé de couleur qui dérive lentement. Se désactive automatiquement si Augmenter le contraste, Réduire la transparence ou Inversion intelligente est activé, et s’immobilise avec Réduire les animations ou le mode économie d’énergie."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Überzieht jeden Tab mit einem langsam wandernden Farbverlauf. Wird automatisch deaktiviert, wenn Kontrast erhöhen, Transparenz reduzieren oder Intelligentes Invertieren aktiv ist, und steht still bei Bewegung reduzieren oder im Energiesparmodus."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "各タブをゆっくりと流れるカラーグラデーションで覆います。「コントラストを上げる」「透明度を下げる」「スマート反転」がオンのときは自動的にオフになり、「視差効果を減らす」または低電力モードでは静止します。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "为每个标签页覆盖一层缓慢流动的颜色渐变。当“增强对比度”“降低透明度”或“智能反转”开启时会自动关闭，在“减弱动态效果”或低电量模式下则保持静止。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يغطي كل علامة تبويب بتدرج لوني يتحرك ببطء. يتوقف تلقائيًا عند تشغيل زيادة التباين أو تقليل الشفافية أو العكس الذكي، ويبقى ثابتًا مع تقليل الحركة أو نمط الطاقة المنخفضة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מציף כל כרטיסייה במפל צבע שנע באיטיות. נכבה אוטומטית כאשר הגברת ניגודיות, הפחתת שקיפות או היפוך חכם פעילים, ונשאר קבוע במצב הפחתת תנועה או מצב חיסכון בסוללה."
+          }
+        }
+      }
+    },
     "settings_default_sort_order": {
       "extractionState": "manual",
       "localizations": {
@@ -23854,25 +24013,25 @@
         }
       }
     },
-    "tab_preferences": {
+    "tab_settings": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Preferences"
+            "value": "Settings"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Preferencias"
+            "value": "Ajustes"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Préférences"
+            "value": "Réglages"
           }
         },
         "de": {
@@ -23884,25 +24043,25 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "環境設定"
+            "value": "設定"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "偏好设置"
+            "value": "设置"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "التفضيلات"
+            "value": "الإعدادات"
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "העדפות"
+            "value": "הגדרות"
           }
         }
       }
