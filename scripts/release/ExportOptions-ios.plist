@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Xcode 15+ spelling. Plain "app-store" silently produces an
+         ad-hoc-signed export that uploads but never appears in
+         TestFlight. -->
+    <key>method</key>
+    <string>app-store-connect</string>
+    <key>teamID</key>
+    <string>6SS93B87P2</string>
+    <!-- Bitcode has been gone since Xcode 14. -->
+    <key>uploadBitcode</key>
+    <false/>
+    <!-- dSYMs travel with the upload, so App Store Connect crash
+         reports arrive symbolicated. -->
+    <key>uploadSymbols</key>
+    <true/>
+    <!-- "automatic" needs a logged-in Xcode and cannot run
+         unattended; switch to manual + provisioningProfiles once
+         the App Store profiles exist. -->
+    <key>signingStyle</key>
+    <string>automatic</string>
+</dict>
+</plist>
