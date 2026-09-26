@@ -92,6 +92,14 @@ public struct BonjourScanForServicesView: View {
                 }
             }
             .contentMarginsBasedOnSizeClass()
+            // Rows keep their own card background, so only the
+            // gutters take the wash and text contrast is unaffected.
+            // Must mount inside the column — a `.background` on the
+            // enclosing split view is hidden behind the column's own.
+            .scrollContentBackground(.hidden)
+            .background {
+                AmbientMeshBackground()
+            }
             #if os(macOS)
             // Wider sidebar so hostnames + device-type subtitles
             // fit on one line and the TabView's sidebar header
