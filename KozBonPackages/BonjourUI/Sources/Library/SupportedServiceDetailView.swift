@@ -194,11 +194,12 @@ public struct SupportedServiceDetailView: View {
         // Match the Discover detail's framing — cap the list
         // at a readable form-content width and center it in
         // the detail column.
+        .frame(maxWidth: 720)
+        .frame(maxWidth: .infinity, alignment: .center)
+        // After the width cap so the wash spans the full column.
         // Inherits the Library palette declared on that tab's
         // split view, so the detail column matches its sidebar.
         .ambientMeshBackground()
-        .frame(maxWidth: 720)
-        .frame(maxWidth: .infinity, alignment: .center)
         #if !os(macOS)
         .navigationBarTitleDisplayMode(.inline)
         #endif

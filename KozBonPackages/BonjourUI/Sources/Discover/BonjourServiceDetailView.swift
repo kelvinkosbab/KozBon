@@ -175,9 +175,6 @@ public struct BonjourServiceDetailView: View {
             txtRecordsSection()
         }
         .accessibilityIdentifier("service_detail_list")
-        // Inherits whichever palette the pushing tab declared, so
-        // a service opened from Discover carries the Discover wash.
-        .ambientMeshBackground()
         // Cap the list at a readable form-content width and
         // center it in the detail column. Without this the
         // List anchors to the leading edge on macOS / iPadOS
@@ -187,6 +184,11 @@ public struct BonjourServiceDetailView: View {
         // ignored, so the layout drifted asymmetric.
         .frame(maxWidth: 720)
         .frame(maxWidth: .infinity, alignment: .center)
+        // After the width cap, not before — mounted inside it the
+        // wash stops at 720pt and leaves bare gutters either side.
+        // Inherits whichever palette the pushing tab declared, so
+        // a service opened from Discover carries the Discover wash.
+        .ambientMeshBackground()
         #if !os(macOS)
         .navigationBarTitleDisplayMode(.inline)
         #endif
