@@ -149,7 +149,18 @@ public enum Strings {
         /// separator for one their locale uses.
         public static func serviceTypeAndHost(_ serviceType: String, _ host: String) -> String {
             String(
-                format: NSLocalizedString("detail_service_type_and_host", bundle: Bundle.module, comment: ""),
+                format: NSLocalizedString(
+                    "detail_service_type_and_host",
+                    bundle: Bundle.module,
+                    // Without a `value:`, a lookup miss returns the
+                    // key — which carries no `%@`, so `String(format:)`
+                    // silently drops both halves and the UI shows
+                    // "detail_service_type_and_host". A miss is real:
+                    // SwiftPM only compiles the catalog from Swift 6.4
+                    // on, so every older toolchain takes this path.
+                    value: "%1$@ – %2$@",
+                    comment: ""
+                ),
                 serviceType,
                 host
             )
@@ -788,7 +799,14 @@ public enum Strings {
         /// would render as literal noise.
         public static func serviceTypeAndHost(_ serviceType: String, _ host: String) -> String {
             String(
-                format: NSLocalizedString("a11y_service_type_and_host_format", bundle: Bundle.module, comment: ""),
+                format: NSLocalizedString(
+                    "a11y_service_type_and_host_format",
+                    bundle: Bundle.module,
+                    // See the visible counterpart for why the
+                    // fallback has to carry the format itself.
+                    value: "%1$@, %2$@",
+                    comment: ""
+                ),
                 serviceType,
                 host
             )
