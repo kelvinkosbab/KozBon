@@ -84,4 +84,15 @@ struct BonjourLocalizationTests {
         let b = Strings.Buttons.cancel
         #expect(a.key != b.key)
     }
+
+    // MARK: - Release Highlights
+
+    @Test("`releaseHighlight` falls back to the English text for a bullet with no catalog entry")
+    func releaseHighlightFallsBackToEnglish() {
+        // A reworded bullet is exactly this case until it's
+        // re-keyed — the page must show the new English, not the
+        // raw key or an empty row.
+        let english = "A highlight that was never added to the catalog."
+        #expect(Strings.Settings.releaseHighlight(english) == english)
+    }
 }

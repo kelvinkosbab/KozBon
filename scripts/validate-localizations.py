@@ -14,7 +14,9 @@ consumes them. Seven hard checks, each reported on stderr:
 4. Every `detail: "..."` literal in the service-type library exists as
    a catalog key (the string itself is the key, via
    `BonjourServiceType.localizedDetail`). Drift here downgrades
-   non-English users to English for that one service.
+   non-English users to English for that one service. The same holds
+   for every highlight in `ReleaseNotes.all` — each English bullet is
+   its own catalog key, resolved by `Strings.Settings.releaseHighlight`.
 5. `InfoPlist.xcstrings` is valid JSON and locale-complete. These are
    the system-presented permission prompts (`NSLocalNetworkUsage-
    Description`, `NSSiriUsageDescription`); a missing locale means iOS
@@ -83,6 +85,12 @@ APP_NAME_TOKEN = "${applicationName}"
 LIBRARY_PATH = (
     REPO_ROOT
     / "KozBonPackages/BonjourModels/Sources/ServiceType/MyServiceType+Library.swift"
+)
+# Release-note highlights are keyed the same way: each English bullet in
+# `ReleaseNotes.all` is its own catalog key, resolved at runtime by
+# `Strings.Settings.releaseHighlight(_:)`.
+RELEASE_NOTES_PATH = (
+    REPO_ROOT / "KozBonPackages/BonjourCore/Sources/System/ReleaseNote.swift"
 )
 
 # The languages KozBon ships in. Adding a new language means adding
@@ -225,6 +233,23 @@ def extract_library_detail_keys() -> set[str]:
     return {_unescape_swift_string(match) for match in _DETAIL_PATTERN.findall(text)}
 
 
+# A highlight is a string literal alone on its line inside `ReleaseNotes.all`.
+_HIGHLIGHT_PATTERN = re.compile(r'^\s*"((?:[^"\\]|\\.)*)",?\s*$', re.MULTILINE)
+
+
+def extract_release_note_keys() -> set[str]:
+    """Parse `ReleaseNotes.all` and return every highlight literal.
+
+    Only the text after the `all` declaration is scanned, so string literals
+    in the type's own code can't be mistaken for highlights."""
+    text = RELEASE_NOTES_PATH.read_text()
+    marker = "public static let all"
+    if marker not in text:
+        raise SystemExit(f"ERROR: `{marker}` not found in {RELEASE_NOTES_PATH.name}")
+    body = text[text.index(marker):]
+    return {_unescape_swift_string(match) for match in _HIGHLIGHT_PATTERN.findall(body)}
+
+
 def main() -> int:
     catalog = load_catalog()
     if catalog is None:
@@ -245,9 +270,11 @@ def main() -> int:
     catalog_keys = frozenset(catalog.get("strings", {}).keys())
     swift_keys = extract_swift_keys()
     library_keys = extract_library_detail_keys()
-    referenced_keys = swift_keys | library_keys
+    release_note_keys = extract_release_note_keys()
+    referenced_keys = swift_keys | library_keys | release_note_keys
     dangling_swift = sorted(swift_keys - catalog_keys)
     dangling_library = sorted(library_keys - catalog_keys)
+    dangling_release_notes = sorted(release_note_keys - catalog_keys)
     orphaned = sorted(catalog_keys - referenced_keys)
 
     if dangling_swift:
@@ -264,10 +291,18 @@ def main() -> int:
         for key in dangling_library:
             failures.append(f"  {key}")
 
+    if dangling_release_notes:
+        failures.append(
+            "Release-note highlights missing from the catalog (the What's New "
+            "page shows English for these):"
+        )
+        for key in dangling_release_notes:
+            failures.append(f"  {key}")
+
     if orphaned:
         failures.append(
-            "Catalog entries not referenced by Strings.swift or the service-type "
-            "library (dead):"
+            "Catalog entries not referenced by Strings.swift, the service-type "
+            "library, or the release notes (dead):"
         )
         for key in orphaned:
             failures.append(f"  {key}")
@@ -335,7 +370,8 @@ def main() -> int:
         f"OK: {len(catalog_keys)} keys validated across "
         f"{len(EXPECTED_LOCALES)} locales; "
         f"{len(swift_keys)} Swift references and "
-        f"{len(library_keys)} service-type details resolved; "
+        f"{len(library_keys)} service-type details and "
+        f"{len(release_note_keys)} release-note highlights resolved; "
         f"{info_plist_translatable} InfoPlist keys and "
         f"{len(app_target_catalog.get('strings', {}))} app-target keys and "
         f"{len(app_shortcuts_catalog.get('strings', {}))} Siri phrases validated."

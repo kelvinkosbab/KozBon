@@ -198,6 +198,7 @@ build would be silently replaced by the default.
 - **Access pattern**: `Text(Strings.NavigationTitles.nearbyServices)` or `String(localized: Strings.Errors.portMin)`
 - **Format strings**: Use methods like `Strings.Errors.portMin(value)` for runtime interpolation
 - **Service descriptions**: Use `serviceType.localizedDetail` (not `.detail`) — looks up translations from the String Catalog
+- **Release notes**: each English bullet in `ReleaseNotes.all` is its own catalog key, displayed via `Strings.Settings.releaseHighlight(_:)`. A new or reworded bullet needs a catalog entry in all 8 locales — the validator fails otherwise. The AI surfaces read the English directly.
 - **Adding new strings**: Add the key to `Strings.swift`, add the entry with all 8 translations (including `ar` and `he`) to `Localizable.xcstrings`, validate JSON. `scripts/validate-localizations.py` enforces locale completeness in CI.
 - **Never use `NSLocalizedString`** — all strings go through the `Strings` enum for type safety
 

@@ -17,17 +17,16 @@ import Foundation
 /// `Identifiable` id is the release identity itself — no separate
 /// uuid plumbing needed.
 ///
-/// `highlights` are intentionally **dev-curated English** rather
-/// than going through `BonjourLocalization`. Release notes are
-/// developer-authored content that changes per release; routing
-/// every bullet through the 8-language string catalog would mean
-/// committing translation churn on every version bump and would
-/// leave non-English locales blank between releases anyway. The
-/// `WhatsNewView` surface labels ("What's New" title, version-
-/// header accessibility) DO go through the catalog — only the
-/// bullets stay raw. The AI chat assistant reads these English
-/// bullets and translates the gist into the user's language at
-/// response time (it's already locale-pinned by the system prompt).
+/// `highlights` are the authored **English** source. Each bullet is
+/// also its own key in the `BonjourLocalization` catalog, and
+/// `WhatsNewView` displays it through
+/// `Strings.Settings.releaseHighlight(_:)`, falling back to the
+/// English when a translation is missing. The AI surfaces (chat
+/// assistant, long-press Insights) read the English directly and
+/// answer in the user's language themselves.
+///
+/// `BonjourCore` can't see the catalog, which is why the lookup
+/// happens in the view rather than here.
 ///
 /// Lives in `BonjourCore` — the base module — so both the
 /// `WhatsNewView` (in `BonjourUI`) and the chat prompt builder
@@ -40,8 +39,8 @@ public struct ReleaseNote: Identifiable, Hashable, Sendable {
     /// "4.6"). Matches `CFBundleShortVersionString` at release.
     public let version: String
 
-    /// User-facing highlight bullets, newest-first within the
-    /// release. Dev-curated English (see type doc).
+    /// User-facing highlight bullets, most notable first within the
+    /// release. English source text and catalog keys (see type doc).
     public let highlights: [String]
 
     public var id: String { version }
@@ -62,8 +61,11 @@ public struct ReleaseNote: Identifiable, Hashable, Sendable {
 /// changes (new tabs, new features, fixes the user would notice)
 /// and skip refactors / tooling / CI.
 ///
-/// Update by prepending a new entry on each release. Older entries
-/// are immutable historical record. Consumed by ``WhatsNewView``
+/// Update by prepending a new entry on each release, and add each
+/// new bullet to `Localizable.xcstrings` in all eight locales —
+/// `scripts/validate-localizations.py` fails CI on any bullet
+/// missing from the catalog. Older entries are immutable historical
+/// record; rewording one means re-keying its translations too. Consumed by ``WhatsNewView``
 /// (the Settings → About page) and by the chat assistant's
 /// prompt builder (so "what's new?" questions answer from real
 /// data instead of hallucinated version history).
@@ -73,7 +75,7 @@ public enum ReleaseNotes {
     public static let all: [ReleaseNote] = [
         ReleaseNote(version: "4.7", highlights: [
             // swiftlint:disable:next line_length
-            "Google Gemini joins Apple Intelligence and Anthropic Claude as an AI backend — add your own Google AI Studio key in Settings → AI Backend. Each cloud provider remembers its own model choice, so switching back and forth keeps both.",
+            "Google Gemini joins Apple Intelligence and Anthropic Claude as an AI backend — add your own Google AI Studio key in Settings → Assistant. Each cloud provider remembers its own model choice, so switching back and forth keeps both.",
             // swiftlint:disable:next line_length
             "The Claude and Gemini model pickers now load each provider's current model list with your key, so new models show up without an app update. Offline, they fall back to a built-in list.",
             // swiftlint:disable:next line_length

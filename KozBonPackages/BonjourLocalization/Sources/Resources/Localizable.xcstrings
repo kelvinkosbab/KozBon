@@ -107,6 +107,114 @@
         }
       }
     },
+    "About section trimmed to just the marketing version — the redundant build-number row is gone.": {
+      "comment": "What's New release-note highlight for KozBon 4.5. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "About section trimmed to just the marketing version — the redundant build-number row is gone."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La sección Acerca de se limita ahora a la versión comercial: se ha eliminado la fila redundante del número de compilación."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Section À propos réduite à la seule version commerciale — la ligne redondante du numéro de build a disparu."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Bereich „Info“ zeigt jetzt nur noch die Versionsnummer — die überflüssige Zeile mit der Build-Nummer entfällt."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「情報」セクションをマーケティングバージョンのみの表示にし、重複していたビルド番号の行を削除しました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“关于”部分精简为仅显示营销版本号——多余的构建版本号行已移除。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اقتصر قسم «حول التطبيق» على رقم الإصدار التسويقي فقط، وأُزيل صف رقم البنية المكرّر."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "המקטע \"אודות\" צומצם למספר הגרסה השיווקי בלבד — שורת מספר הבנייה המיותרת הוסרה."
+          }
+        }
+      }
+    },
+    "Accessibility updates across the app — VoiceOver labels, hints, and traits tightened on every screen.": {
+      "comment": "What's New release-note highlight for KozBon 3.9. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accessibility updates across the app — VoiceOver labels, hints, and traits tightened on every screen."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mejoras de accesibilidad en toda la app: etiquetas, indicaciones y rasgos de VoiceOver más precisos en todas las pantallas."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Améliorations de l’accessibilité dans toute l’app — libellés, indications et traits VoiceOver affinés sur chaque écran."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verbesserungen der Bedienungshilfen in der gesamten App — VoiceOver-Beschriftungen, -Hinweise und -Merkmale auf jedem Bildschirm überarbeitet."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App全体でアクセシビリティを改善し、すべての画面でVoiceOverのラベル、ヒント、特性を見直しました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "全 App 辅助功能更新——每个界面的 VoiceOver 标签、提示和特征都更加精确。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تحديثات لإمكانية الوصول في أنحاء التطبيق — تحسين تسميات VoiceOver وتلميحاته وسماته في كل شاشة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "עדכוני נגישות בכל האפליקציה — תוויות, רמזים ותכונות VoiceOver שופרו בכל מסך."
+          }
+        }
+      }
+    },
     "Adobe Photoshop remote navigation service for controlling Photoshop from a tablet or mobile device.": {
       "extractionState": "manual",
       "localizations": {
@@ -1697,6 +1805,60 @@
         }
       }
     },
+    "Background continuous scan with live service refresh.": {
+      "comment": "What's New release-note highlight for KozBon 3.0. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Background continuous scan with live service refresh."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escaneo continuo en segundo plano con actualización de servicios en tiempo real."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analyse continue en arrière-plan avec actualisation des services en direct."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kontinuierlicher Scan im Hintergrund mit Live-Aktualisierung der Dienste."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "バックグラウンドで継続的にスキャンし、サービスをリアルタイムで更新します。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "后台持续扫描，服务实时刷新。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "فحص متواصل في الخلفية مع تحديث مباشر للخدمات."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סריקה רציפה ברקע עם רענון שירותים בזמן אמת."
+          }
+        }
+      }
+    },
     "Beats Transfer Protocol for discovering and configuring Beats audio products including headphones, earbuds, and speakers.": {
       "extractionState": "manual",
       "localizations": {
@@ -1746,6 +1908,330 @@
           "stringUnit": {
             "state": "translated",
             "value": "Beats Transfer Protocol לגילוי ולהגדרה של מוצרי האודיו של Beats כולל אוזניות, אוזניות-תוך-אוזן ורמקולים."
+          }
+        }
+      }
+    },
+    "Bonjour service discovery across iPhone, iPad, macOS, and visionOS.": {
+      "comment": "What's New release-note highlight for KozBon 3.0. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bonjour service discovery across iPhone, iPad, macOS, and visionOS."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Descubrimiento de servicios Bonjour en iPhone, iPad, macOS y visionOS."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Découverte des services Bonjour sur iPhone, iPad, macOS et visionOS."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erkennung von Bonjour-Diensten auf iPhone, iPad, macOS und visionOS."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iPhone、iPad、macOS、visionOSでBonjourサービスを検出できます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在 iPhone、iPad、macOS 和 visionOS 上发现 Bonjour 服务。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اكتشاف خدمات Bonjour على iPhone وiPad وmacOS وvisionOS."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "גילוי שירותי Bonjour ב-iPhone, ב-iPad, ב-macOS וב-visionOS."
+          }
+        }
+      }
+    },
+    "BonjourChatView split into focused files for faster compile and easier review.": {
+      "comment": "What's New release-note highlight for KozBon 4.1. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BonjourChatView split into focused files for faster compile and easier review."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BonjourChatView dividido en archivos específicos para compilar más rápido y facilitar la revisión."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BonjourChatView scindé en fichiers ciblés pour une compilation plus rapide et une revue plus simple."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BonjourChatView in fokussierte Dateien aufgeteilt, für schnelleres Kompilieren und einfachere Reviews."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BonjourChatViewを役割ごとのファイルに分割し、コンパイルの高速化とレビューのしやすさを向上しました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BonjourChatView 拆分为多个专注的文件，编译更快，审查更轻松。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تقسيم BonjourChatView إلى ملفات مركّزة لتسريع الترجمة البرمجية وتسهيل المراجعة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BonjourChatView פוצל לקבצים ממוקדים להידור מהיר יותר ולסקירה קלה יותר."
+          }
+        }
+      }
+    },
+    "Brand names (Apple Intelligence, Claude, GitHub) now reliably stay in English across every locale.": {
+      "comment": "What's New release-note highlight for KozBon 4.6. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brand names (Apple Intelligence, Claude, GitHub) now reliably stay in English across every locale."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Los nombres de marca (Apple Intelligence, Claude, GitHub) ahora se mantienen siempre en inglés en todos los idiomas."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les noms de marque (Apple Intelligence, Claude, GitHub) restent désormais toujours en anglais, quelle que soit la langue."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Markennamen (Apple Intelligence, Claude, GitHub) bleiben jetzt in allen Sprachen zuverlässig auf Englisch."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ブランド名（Apple Intelligence、Claude、GitHub）が、どの言語でも確実に英語のまま表示されるようになりました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "品牌名称（Apple Intelligence、Claude、GitHub）现在在所有语言中都会可靠地保持英文。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أصبحت أسماء العلامات التجارية (Apple Intelligence وClaude وGitHub) تبقى بالإنجليزية دائمًا في جميع اللغات."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שמות מותגים (Apple Intelligence, Claude, GitHub) נשארים כעת באנגלית באופן אמין בכל השפות."
+          }
+        }
+      }
+    },
+    "Brand-new AI Chat tab — ask the on-device Apple Intelligence assistant about Bonjour services and the app.": {
+      "comment": "What's New release-note highlight for KozBon 4.0. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brand-new AI Chat tab — ask the on-device Apple Intelligence assistant about Bonjour services and the app."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nueva pestaña de chat con IA: pregunta al asistente de Apple Intelligence en el dispositivo sobre servicios Bonjour y sobre la app."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tout nouvel onglet Chat IA — interrogez l’assistant Apple Intelligence intégré à l’appareil sur les services Bonjour et sur l’app."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brandneuer KI-Chat-Tab — frag den Apple Intelligence-Assistenten auf dem Gerät nach Bonjour-Diensten und der App."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "まったく新しい「AIチャット」タブを追加しました。デバイス上のApple IntelligenceアシスタントにBonjourサービスやこのAppについて質問できます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "全新 AI“聊天”标签页——向设备端 Apple Intelligence 助手询问 Bonjour 服务和本 App 的相关问题。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "علامة تبويب جديدة كليًا للمحادثة بالذكاء الاصطناعي — اسأل مساعد Apple Intelligence على الجهاز عن خدمات Bonjour وعن التطبيق."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "כרטיסיית צ'אט AI חדשה לגמרי — אפשר לשאול את עוזר Apple Intelligence שבמכשיר על שירותי Bonjour ועל האפליקציה."
+          }
+        }
+      }
+    },
+    "Brand-new Preferences tab pulling display, AI, and reset options into one place.": {
+      "comment": "What's New release-note highlight for KozBon 3.7. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brand-new Preferences tab pulling display, AI, and reset options into one place."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nueva pestaña Preferencias que reúne en un solo lugar las opciones de pantalla, IA y restablecimiento."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tout nouvel onglet Préférences qui réunit en un seul endroit les options d’affichage, d’IA et de réinitialisation."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brandneuer Tab „Präferenzen“, der Anzeige-, KI- und Zurücksetzen-Optionen an einem Ort bündelt."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "まったく新しい「環境設定」タブを追加し、表示、AI、リセットのオプションを1か所にまとめました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "全新“偏好设置”标签页，将显示、AI 和重置选项集中到一处。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "علامة تبويب «التفضيلات» جديدة كليًا تجمع خيارات العرض والذكاء الاصطناعي وإعادة التعيين في مكان واحد."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "כרטיסיית \"העדפות\" חדשה לגמרי שמרכזת את אפשרויות התצוגה, ה-AI והאיפוס במקום אחד."
+          }
+        }
+      }
+    },
+    "Brand-tinted in-app sign-in pages for each cloud provider with native link rows to your API key console.": {
+      "comment": "What's New release-note highlight for KozBon 4.3. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brand-tinted in-app sign-in pages for each cloud provider with native link rows to your API key console."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Páginas de inicio de sesión en la app con los colores de cada proveedor en la nube y filas de enlace nativas a tu consola de claves de API."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pages de connexion intégrées aux couleurs de chaque fournisseur cloud, avec des liens natifs vers votre console de clés API."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In der Markenfarbe gestaltete Anmeldeseiten in der App für jeden Cloud-Anbieter, mit nativen Links zu deiner API-Schlüssel-Konsole."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "クラウドプロバイダごとに、ブランドカラーのApp内サインインページを用意しました。APIキーのコンソールへのネイティブなリンク行も表示されます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "为每个云端提供方新增带品牌色调的 App 内登录页面，并提供可直达 API 密钥控制台的原生链接行。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "صفحات تسجيل دخول داخل التطبيق بألوان العلامة التجارية لكل مزوّد سحابي، مع صفوف روابط أصلية تنقلك إلى لوحة مفاتيح API الخاصة بك."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "דפי התחברות בתוך האפליקציה בצבעי המותג של כל ספק ענן, עם שורות קישור מובנות למסוף מפתחות ה-API שלך."
           }
         }
       }
@@ -1962,6 +2448,384 @@
         }
       }
     },
+    "Centralized iconography across the app using SF Symbols.": {
+      "comment": "What's New release-note highlight for KozBon 3.3. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Centralized iconography across the app using SF Symbols."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Iconografía unificada en toda la app con SF Symbols."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Iconographie centralisée dans toute l’app grâce aux SF Symbols."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Einheitliche Symbolsprache in der gesamten App mit SF Symbols."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App全体のアイコンをSF Symbolsで統一しました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "全 App 统一使用 SF Symbols 图标。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "توحيد الأيقونات في أنحاء التطبيق باستخدام SF Symbols."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ריכוז הסמלים בכל האפליקציה באמצעות SF Symbols."
+          }
+        }
+      }
+    },
+    "Chat automatically runs a fresh Bonjour scan when you ask about live network state.": {
+      "comment": "What's New release-note highlight for KozBon 4.1. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chat automatically runs a fresh Bonjour scan when you ask about live network state."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El chat realiza automáticamente un nuevo escaneo de Bonjour cuando preguntas por el estado actual de la red."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le chat lance automatiquement une nouvelle analyse Bonjour lorsque vous l’interrogez sur l’état du réseau en temps réel."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Chat führt automatisch einen neuen Bonjour-Scan durch, wenn du nach dem aktuellen Netzwerkstatus fragst."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ネットワークの現在の状態について質問すると、チャットが自動で新たにBonjourスキャンを実行するようになりました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "当你询问实时网络状态时，聊天会自动运行一次新的 Bonjour 扫描。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تُجري المحادثة تلقائيًا فحصًا جديدًا لخدمات Bonjour عندما تسأل عن حالة الشبكة الحالية."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הצ'אט מריץ אוטומטית סריקת Bonjour חדשה כששואלים על מצב הרשת הנוכחי."
+          }
+        }
+      }
+    },
+    "Chat remembers the conversation while the app is running.": {
+      "comment": "What's New release-note highlight for KozBon 4.0. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chat remembers the conversation while the app is running."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El chat recuerda la conversación mientras la app está abierta."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le chat garde la conversation en mémoire tant que l’app est ouverte."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Chat merkt sich die Unterhaltung, solange die App läuft."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appの起動中は、チャットが会話の内容を記憶します。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App 运行期间，聊天会记住对话内容。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تتذكّر المحادثة سياقها ما دام التطبيق قيد التشغيل."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הצ'אט זוכר את השיחה כל עוד האפליקציה פועלת."
+          }
+        }
+      }
+    },
+    "Chat session pre-warmed at launch so the first prompt streams without a cold-start lag.": {
+      "comment": "What's New release-note highlight for KozBon 4.1. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chat session pre-warmed at launch so the first prompt streams without a cold-start lag."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La sesión de chat se prepara al abrir la app para que la primera respuesta llegue sin demora de arranque."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Session de chat préparée dès le lancement, pour que la première requête s’affiche sans délai de démarrage."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Chat-Sitzung wird beim Start vorgewärmt, sodass die erste Antwort ohne Verzögerung beim Kaltstart gestreamt wird."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "起動時にチャットセッションを事前に準備するため、最初のプロンプトからすぐに応答がストリーミングされます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "聊天会话在启动时预热，首个提示即可流畅输出，不再有冷启动延迟。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تُهيَّأ جلسة المحادثة مسبقًا عند التشغيل، فيبدأ بثّ الرد على أول طلب دون تأخير البدء البارد."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סשן הצ'אט מוכן מראש בעת ההפעלה, כך שהתשובה להנחיה הראשונה מוזרמת ללא עיכוב של הפעלה קרה."
+          }
+        }
+      }
+    },
+    "Chat suggestions are now iMessage-style blue capsules with a send arrow, so they read as prompts you can send rather than links. On iOS 27 the Chat tab keeps its own spot at the end of the tab bar.": {
+      "comment": "What's New release-note highlight for KozBon 4.7. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chat suggestions are now iMessage-style blue capsules with a send arrow, so they read as prompts you can send rather than links. On iOS 27 the Chat tab keeps its own spot at the end of the tab bar."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Las sugerencias del chat son ahora cápsulas azules al estilo de iMessage con una flecha de envío, para que se lean como mensajes que puedes enviar y no como enlaces. En iOS 27, la pestaña Chat mantiene su propio lugar al final de la barra de pestañas."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les suggestions du chat prennent désormais la forme de pastilles bleues façon iMessage avec une flèche d’envoi : elles se lisent comme des messages à envoyer plutôt que comme des liens. Sous iOS 27, l’onglet Chat garde sa propre place à la fin de la barre d’onglets."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chat-Vorschläge sind jetzt blaue Kapseln im iMessage-Stil mit Sendepfeil, damit sie als Nachrichten erkennbar sind, die du senden kannst, und nicht als Links. Unter iOS 27 behält der Chat-Tab seinen eigenen Platz am Ende der Tableiste."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "チャットの候補がiMessage風の青いカプセルと送信矢印で表示されるようになり、リンクではなく送信できるプロンプトであることがわかりやすくなりました。iOS 27では、「チャット」タブがタブバーの末尾に独立して配置されます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "聊天建议现在是 iMessage 风格的蓝色胶囊，并带有发送箭头，看起来更像可以直接发送的提示而非链接。在 iOS 27 上，“聊天”标签页会固定在标签栏末尾。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أصبحت اقتراحات المحادثة كبسولات زرقاء على طريقة iMessage مع سهم إرسال، لتبدو كعبارات يمكنك إرسالها لا كروابط. وفي iOS 27، تحتفظ علامة التبويب «محادثة» بمكانها الخاص في نهاية شريط علامات التبويب."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הצעות הצ'אט מוצגות כעת כקפסולות כחולות בסגנון iMessage עם חץ שליחה, כך שהן נראות כהנחיות שאפשר לשלוח ולא כקישורים. ב-iOS 27 הכרטיסייה \"צ'אט\" שומרת על מקום משלה בקצה סרגל הכרטיסיות."
+          }
+        }
+      }
+    },
+    "Chat tab now shows a red badge in compact / portrait windows when an assistant reply lands while you're scrolled away from the bottom. The badge clears the moment you scroll back to the latest message.": {
+      "comment": "What's New release-note highlight for KozBon 4.5. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chat tab now shows a red badge in compact / portrait windows when an assistant reply lands while you're scrolled away from the bottom. The badge clears the moment you scroll back to the latest message."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La pestaña Chat ahora muestra una insignia roja en ventanas compactas o en vertical cuando llega una respuesta del asistente mientras no estás al final de la conversación. La insignia desaparece en cuanto vuelves al último mensaje."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L’onglet Chat affiche désormais une pastille rouge dans les fenêtres compactes ou en portrait lorsqu’une réponse de l’assistant arrive alors que vous n’êtes pas en bas de la conversation. La pastille disparaît dès que vous revenez au dernier message."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Chat-Tab zeigt in kompakten Fenstern bzw. im Hochformat jetzt ein rotes Badge, wenn eine Antwort des Assistenten eintrifft, während du nicht ganz unten bist. Das Badge verschwindet, sobald du zurück zur neuesten Nachricht scrollst."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "コンパクトまたは縦向きのウインドウで、下までスクロールしていないときにアシスタントの返信が届くと、「チャット」タブに赤いバッジが表示されるようになりました。最新のメッセージまでスクロールするとすぐに消えます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在紧凑或竖屏窗口中，如果你滚动离开底部时收到助手回复，“聊天”标签页现在会显示红色标记。滚动回最新消息后，标记会立即清除。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعرض علامة التبويب «محادثة» الآن شارة حمراء في النوافذ المضغوطة أو العمودية عند وصول رد من المساعد بينما تكون قد مرّرت بعيدًا عن الأسفل. وتختفي الشارة فور التمرير عائدًا إلى أحدث رسالة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הכרטיסייה \"צ'אט\" מציגה כעת תג אדום בחלונות צרים או לאורך כשמגיעה תשובה מהעוזר בזמן שהגלילה רחוקה מהתחתית. התג נעלם ברגע שגוללים חזרה להודעה האחרונה."
+          }
+        }
+      }
+    },
+    "Claude model picker in Preferences — choose which Claude variant to use.": {
+      "comment": "What's New release-note highlight for KozBon 4.3. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claude model picker in Preferences — choose which Claude variant to use."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selector de modelo de Claude en Preferencias: elige qué variante de Claude usar."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sélecteur de modèle Claude dans Préférences — choisissez la variante de Claude à utiliser."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claude-Modellauswahl in den Präferenzen — wähle, welche Claude-Variante verwendet werden soll."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「環境設定」にClaudeのモデルピッカーを追加しました。使用するClaudeのモデルを選べます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“偏好设置”中新增 Claude 模型选择器——可选择要使用的 Claude 版本。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "منتقي نماذج Claude في «التفضيلات» — اختر إصدار Claude الذي تريد استخدامه."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בוחר מודלים של Claude ב\"העדפות\" — אפשר לבחור באיזו גרסה של Claude להשתמש."
+          }
+        }
+      }
+    },
     "CoAP is a lightweight protocol designed for constrained IoT devices and low-power networks, similar to HTTP but optimized for machine-to-machine communication.": {
       "extractionState": "manual",
       "localizations": {
@@ -2011,6 +2875,114 @@
           "stringUnit": {
             "state": "translated",
             "value": "CoAP הוא פרוטוקול קל-משקל המיועד למכשירי IoT מוגבלי-משאבים ולרשתות בעלות צריכת חשמל נמוכה, דומה ל-HTTP אך מותאם לתקשורת מכונה-למכונה."
+          }
+        }
+      }
+    },
+    "Comprehensive accessibility audit — VoiceOver, Dynamic Type, Reduce Motion across every surface.": {
+      "comment": "What's New release-note highlight for KozBon 3.8. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comprehensive accessibility audit — VoiceOver, Dynamic Type, Reduce Motion across every surface."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Revisión completa de accesibilidad: VoiceOver, Texto dinámico y Reducir movimiento en todas las pantallas."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Audit complet de l’accessibilité — VoiceOver, police dynamique et Réduire les animations sur chaque écran."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Umfassende Prüfung der Bedienungshilfen — VoiceOver, Dynamic Type und „Bewegung reduzieren“ in allen Bereichen."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アクセシビリティを包括的に見直し、あらゆる画面でVoiceOver、Dynamic Type、「視差効果を減らす」に対応しました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "全面的辅助功能审查——所有界面均支持 VoiceOver、动态字体和减弱动态效果。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مراجعة شاملة لإمكانية الوصول — VoiceOver و«الخط الديناميكي» و«تقليل الحركة» في كل أجزاء التطبيق."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בדיקת נגישות מקיפה — VoiceOver, \"גופן דינמי\" ו\"הפחתת תנועה\" בכל הממשקים."
+          }
+        }
+      }
+    },
+    "Custom service type library with editable TXT records.": {
+      "comment": "What's New release-note highlight for KozBon 3.0. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Custom service type library with editable TXT records."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Biblioteca de tipos de servicio personalizados con registros TXT editables."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bibliothèque de types de service personnalisés avec enregistrements TXT modifiables."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bibliothek für eigene Diensttypen mit bearbeitbaren TXT-Einträgen."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TXTレコードを編集できるカスタムサービスタイプのライブラリ。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自定义服务类型库，支持编辑 TXT 记录。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مكتبة أنواع خدمات مخصّصة مع سجلات TXT قابلة للتعديل."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ספריית סוגי שירות מותאמים אישית עם רשומות TXT ניתנות לעריכה."
           }
         }
       }
@@ -2174,6 +3146,60 @@
         }
       }
     },
+    "Detail view navigation polish across platforms.": {
+      "comment": "What's New release-note highlight for KozBon 3.5. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detail view navigation polish across platforms."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mejoras en la navegación de la vista de detalle en todas las plataformas."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Navigation des vues de détail peaufinée sur toutes les plateformes."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Feinschliff bei der Navigation in der Detailansicht auf allen Plattformen."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "各プラットフォームで詳細画面のナビゲーションを改善しました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "优化各平台的详细信息视图导航。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تحسينات على التنقّل في عرض التفاصيل عبر المنصات."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ליטוש הניווט בתצוגת הפרטים בכל הפלטפורמות."
+          }
+        }
+      }
+    },
     "Domain Name System service for resolving hostnames to IP addresses.": {
       "extractionState": "manual",
       "localizations": {
@@ -2223,6 +3249,60 @@
           "stringUnit": {
             "state": "translated",
             "value": "שירות Domain Name System לתרגום שמות מארחים לכתובות IP."
+          }
+        }
+      }
+    },
+    "Done button on forms now stays disabled until inputs validate.": {
+      "comment": "What's New release-note highlight for KozBon 3.4. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done button on forms now stays disabled until inputs validate."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El botón Listo de los formularios permanece desactivado hasta que los datos son válidos."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le bouton OK des formulaires reste désormais désactivé tant que les champs ne sont pas valides."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Taste „Fertig“ in Formularen bleibt jetzt deaktiviert, bis die Eingaben gültig sind."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "フォームの「完了」ボタンは、入力内容が有効になるまで無効のままになります。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "表单上的“完成”按钮现在会保持停用，直到输入内容通过验证。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يبقى زر «تم» في النماذج معطّلًا الآن حتى تصبح المدخلات صالحة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הכפתור \"סיום\" בטפסים נשאר כעת מושבת עד שהקלט עובר אימות."
           }
         }
       }
@@ -2386,6 +3466,114 @@
         }
       }
     },
+    "Every AI Insights long-press now has a matching VoiceOver action, and the Broadcast forms move VoiceOver focus to the first error when a submit fails.": {
+      "comment": "What's New release-note highlight for KozBon 4.7. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every AI Insights long-press now has a matching VoiceOver action, and the Broadcast forms move VoiceOver focus to the first error when a submit fails."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cada pulsación prolongada de Información con IA tiene ahora una acción de VoiceOver equivalente, y los formularios de Transmitir llevan el foco de VoiceOver al primer error cuando falla un envío."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chaque appui long Aperçus dispose désormais d’une action VoiceOver équivalente, et les formulaires Diffuser placent le focus VoiceOver sur la première erreur en cas d’échec de l’envoi."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jedes lange Drücken für KI-Einblicke hat jetzt eine passende VoiceOver-Aktion, und die Formulare unter „Senden“ setzen den VoiceOver-Fokus auf den ersten Fehler, wenn das Absenden fehlschlägt."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AIインサイトの長押し操作すべてに対応するVoiceOverアクションを追加しました。また、ブロードキャストのフォームで送信に失敗すると、VoiceOverのフォーカスが最初のエラーに移動します。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每个 AI“洞察”长按操作现在都有对应的 VoiceOver 操作；“广播”表单提交失败时，VoiceOver 焦点会移至第一个错误。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أصبح لكل ضغطة مطوّلة لعرض «رؤى» الذكاء الاصطناعي إجراءٌ مقابل في VoiceOver، كما تنقل نماذج «بث» تركيز VoiceOver إلى أول خطأ عند فشل الإرسال."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "לכל לחיצה ארוכה של \"תובנות\" AI יש כעת פעולת VoiceOver תואמת, ובטופסי \"שדר\" מיקוד ה-VoiceOver עובר לשגיאה הראשונה כששליחה נכשלת."
+          }
+        }
+      }
+    },
+    "Every tab now sits on an ambient background — a slow colour wash that drifts like water, tinted differently per tab, and carried through to the detail pages you open from each one.": {
+      "comment": "What's New release-note highlight for KozBon 4.7. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every tab now sits on an ambient background — a slow colour wash that drifts like water, tinted differently per tab, and carried through to the detail pages you open from each one."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cada pestaña tiene ahora un fondo ambiental: un lento degradado de color que se mueve como el agua, con un tono distinto en cada pestaña, y que continúa en las páginas de detalle que abres desde cada una."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chaque onglet repose désormais sur un arrière-plan d’ambiance — un lent dégradé de couleurs qui ondule comme de l’eau, teinté différemment selon l’onglet et prolongé jusqu’aux pages de détail ouvertes depuis chacun d’eux."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jeder Tab hat jetzt einen Umgebungshintergrund — ein sanfter Farbverlauf, der wie Wasser dahinfließt, in jedem Tab anders getönt ist und sich bis in die Detailseiten fortsetzt, die du von dort aus öffnest."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すべてのタブにアンビエント背景が加わりました。水のようにゆっくりと揺らめく色のグラデーションで、タブごとに色合いが異なり、各タブから開く詳細ページにも引き継がれます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每个标签页现在都有氛围背景——一层如水般缓缓流动的色彩，每个标签页色调各不相同，并会延续到从该标签页打开的详细信息页面。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أصبحت كل علامة تبويب تظهر على خلفية محيطة — تدرّج لوني هادئ ينساب ببطء كالماء، بلون مختلف لكل علامة تبويب، ويمتد إلى صفحات التفاصيل التي تفتحها منها."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "כל כרטיסייה מוצגת כעת על רקע אווירה — שטיפת צבע איטית שנעה כמו מים, בגוון שונה לכל כרטיסייה, שנמשכת גם לדפי הפרטים שנפתחים ממנה."
+          }
+        }
+      }
+    },
     "Extensible Messaging and Presence Protocol (XMPP) for instant messaging and presence information. Formerly known as Jabber.": {
       "extractionState": "manual",
       "localizations": {
@@ -2488,6 +3676,60 @@
           "stringUnit": {
             "state": "translated",
             "value": "פרוטוקול Git לגישה למאגרי בקרת גרסאות מבוזרים."
+          }
+        }
+      }
+    },
+    "GitHub Models is gone — GitHub retired the service on July 30. If you were using it, KozBon switches you back to Apple Intelligence, and Settings offers to delete the saved GitHub token.": {
+      "comment": "What's New release-note highlight for KozBon 4.7. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub Models is gone — GitHub retired the service on July 30. If you were using it, KozBon switches you back to Apple Intelligence, and Settings offers to delete the saved GitHub token."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub Models ya no está disponible: GitHub retiró el servicio el 30 de julio. Si lo usabas, KozBon vuelve a Apple Intelligence y Ajustes te ofrece eliminar el token de GitHub guardado."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub Models, c’est fini — GitHub a mis fin au service le 30 juillet. Si vous l’utilisiez, KozBon vous ramène à Apple Intelligence, et Réglages vous propose de supprimer le jeton GitHub enregistré."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub Models ist nicht mehr verfügbar — GitHub hat den Dienst am 30. Juli eingestellt. Falls du ihn genutzt hast, wechselt KozBon zurück zu Apple Intelligence, und in den Einstellungen kannst du das gespeicherte GitHub-Token löschen."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub Modelsは、GitHubが7月30日にサービスを終了したため削除されました。ご利用中だった場合はApple Intelligenceに自動で切り替わり、「設定」で保存済みのGitHubトークンを削除できます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub Models 已下线——GitHub 已于 7 月 30 日停止该服务。如果你之前在使用它，KozBon 会将你切换回 Apple Intelligence，“设置”中也会提示你删除已保存的 GitHub 令牌。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لم تعد GitHub Models متاحة، إذ أوقفت GitHub الخدمة في 30 يوليو. إذا كنت تستخدمها، فسيعيدك KozBon إلى Apple Intelligence، وستعرض عليك «الإعدادات» حذف رمز GitHub المحفوظ."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub Models כבר לא זמין — GitHub הפסיקה את השירות ב-30 ביולי. אם השתמשת בו, KozBon מחזירה אותך ל-Apple Intelligence, וב\"הגדרות\" מוצעת מחיקה של אסימון GitHub השמור."
           }
         }
       }
@@ -2651,6 +3893,60 @@
         }
       }
     },
+    "Google Gemini joins Apple Intelligence and Anthropic Claude as an AI backend — add your own Google AI Studio key in Settings → Assistant. Each cloud provider remembers its own model choice, so switching back and forth keeps both.": {
+      "comment": "What's New release-note highlight for KozBon 4.7. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Google Gemini joins Apple Intelligence and Anthropic Claude as an AI backend — add your own Google AI Studio key in Settings → Assistant. Each cloud provider remembers its own model choice, so switching back and forth keeps both."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Google Gemini se une a Apple Intelligence y Anthropic Claude como motor de IA: añade tu propia clave de Google AI Studio en Ajustes → Asistente. Cada proveedor en la nube recuerda su propio modelo, así que puedes alternar entre ellos sin perder ninguna elección."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Google Gemini rejoint Apple Intelligence et Anthropic Claude parmi les moteurs d’IA — ajoutez votre propre clé Google AI Studio dans Réglages → Assistant. Chaque fournisseur cloud mémorise son propre choix de modèle : passer de l’un à l’autre conserve les deux."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Google Gemini ergänzt Apple Intelligence und Anthropic Claude als KI-Backend — füge deinen eigenen Google AI Studio-Schlüssel unter Einstellungen → Assistent hinzu. Jeder Cloud-Anbieter merkt sich seine eigene Modellauswahl, sodass beim Hin- und Herwechseln beide erhalten bleiben."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence、Anthropic Claudeに加えて、Google GeminiをAIバックエンドとして選べるようになりました。「設定」→「アシスタント」でご自身のGoogle AI Studioキーを追加してください。クラウドプロバイダごとにモデルの選択が保存されるため、切り替えても両方の設定が保たれます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Google Gemini 加入 Apple Intelligence 和 Anthropic Claude 的行列，成为新的 AI 后端——在“设置 → 助手”中添加你自己的 Google AI Studio 密钥即可。每个云端提供方都会各自记住所选模型，来回切换也不会丢失。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ينضم Google Gemini إلى Apple Intelligence وAnthropic Claude كمزوّد للذكاء الاصطناعي — أضِف مفتاحك الخاص من Google AI Studio في «الإعدادات ← المساعد». ويتذكّر كل مزوّد سحابي النموذج الذي اخترته له، فلا تفقد أيًّا من الاختيارين عند التبديل بينهما."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Google Gemini מצטרף ל-Apple Intelligence ול-Anthropic Claude כמנוע AI — אפשר להוסיף מפתח Google AI Studio אישי ב\"הגדרות ← עוזר\". כל ספק ענן זוכר את בחירת המודל שלו, כך שמעבר הלוך ושוב שומר על שתיהן."
+          }
+        }
+      }
+    },
     "HTTP service running on an alternate port (commonly 8080). Used by many web applications, development servers, and IoT devices.": {
       "extractionState": "manual",
       "localizations": {
@@ -2753,6 +4049,60 @@
           "stringUnit": {
             "state": "translated",
             "value": "HTTPS (HTTP מעל TLS) לתקשורת ווב מאובטחת. בשימוש דפדפנים, App Store, iCloud, FaceTime ורוב שירותי Apple הדורשים חיבורים מוצפנים."
+          }
+        }
+      }
+    },
+    "Haptic feedback when selecting a service type to broadcast.": {
+      "comment": "What's New release-note highlight for KozBon 3.7. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Haptic feedback when selecting a service type to broadcast."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Respuesta háptica al seleccionar un tipo de servicio para transmitir."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Retour haptique lors de la sélection d’un type de service à diffuser."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Haptisches Feedback bei der Auswahl eines Diensttyps zum Senden."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ブロードキャストするサービスタイプを選択したときに触覚フィードバックが返るようになりました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择要广播的服务类型时提供触感反馈。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ردود فعل لمسية عند اختيار نوع خدمة لبثّه."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "משוב הפטי בעת בחירת סוג שירות לשידור."
           }
         }
       }
@@ -2912,6 +4262,60 @@
           "stringUnit": {
             "state": "translated",
             "value": "HomeKit מדבר HomeKit Accessory Protocol (HAP), הפועל מעל BLE/Bluetooth Smart או מעל מחסנית HTTP/TCP/IP. אם אביזר אינו תומך ב-HAP ישירות, נדרש gateway."
+          }
+        }
+      }
+    },
+    "Hover effects, Dynamic Type cap, and busy-state hints across the chat tab for accessibility polish.": {
+      "comment": "What's New release-note highlight for KozBon 4.1. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hover effects, Dynamic Type cap, and busy-state hints across the chat tab for accessibility polish."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Efectos al pasar el puntero, límite de Texto dinámico e indicaciones de estado ocupado en la pestaña del chat para mejorar la accesibilidad."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Effets de survol, taille maximale pour la police dynamique et indications d’état occupé dans l’onglet Chat pour peaufiner l’accessibilité."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hover-Effekte, eine Obergrenze für Dynamic Type und Hinweise im Beschäftigt-Zustand im gesamten Chat-Tab für bessere Bedienungshilfen."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アクセシビリティの改善として、「チャット」タブ全体にホバーエフェクト、Dynamic Typeの上限、処理中を示すヒントを追加しました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“聊天”标签页新增悬停效果、动态字体上限和忙碌状态提示，进一步完善辅助功能。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تأثيرات التمرير فوق العناصر، وحدّ أقصى لـ«الخط الديناميكي»، وتلميحات لحالة الانشغال في علامة التبويب «محادثة» لتحسين إمكانية الوصول."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אפקטי ריחוף, הגבלת \"גופן דינמי\" ורמזים למצב עסוק בכל כרטיסיית הצ'אט, לשיפור הנגישות."
           }
         }
       }
@@ -3124,6 +4528,114 @@
           "stringUnit": {
             "state": "translated",
             "value": "אם Telnet מופעל, xinetd יפרסם אותו דרך Bonjour החל מ-Mac OS X 10.3. אפליקציית Terminal מחפשת שרתי Telnet החל מ-Mac OS X 10.3."
+          }
+        }
+      }
+    },
+    "Improved sorting on the nearby services list.": {
+      "comment": "What's New release-note highlight for KozBon 3.3. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Improved sorting on the nearby services list."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mejor ordenación en la lista de servicios cercanos."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tri amélioré dans la liste des services à proximité."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verbesserte Sortierung in der Liste der Dienste in der Nähe."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "近くのサービス一覧の並べ替えを改善しました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "改进附近服务列表的排序。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تحسين الترتيب في قائمة الخدمات القريبة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שיפור המיון ברשימת השירותים בקרבת מקום."
+          }
+        }
+      }
+    },
+    "Internal polish and Xcode 27 / iOS 26 compatibility — the assistant tab badge and brand icons render correctly on the new SDK.": {
+      "comment": "What's New release-note highlight for KozBon 4.6. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Internal polish and Xcode 27 / iOS 26 compatibility — the assistant tab badge and brand icons render correctly on the new SDK."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mejoras internas y compatibilidad con Xcode 27 / iOS 26: la insignia de la pestaña del asistente y los iconos de marca se muestran correctamente con el nuevo SDK."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finitions internes et compatibilité Xcode 27 / iOS 26 — le badge de l’onglet de l’assistant et les icônes de marque s’affichent correctement avec le nouveau SDK."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Interner Feinschliff und Kompatibilität mit Xcode 27 / iOS 26 — das Badge des Assistenten-Tabs und die Markensymbole werden mit dem neuen SDK korrekt dargestellt."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "内部的な改善と、Xcode 27 / iOS 26への対応を行いました。新しいSDKでもアシスタントタブのバッジやブランドアイコンが正しく表示されます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "内部优化，并兼容 Xcode 27 / iOS 26——助手标签页标记和品牌图标可在新 SDK 上正确显示。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تحسينات داخلية وتوافق مع Xcode 27 وiOS 26 — تظهر شارة علامة تبويب المساعد وأيقونات العلامات التجارية بشكل صحيح مع حزمة SDK الجديدة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ליטוש פנימי ותאימות ל-Xcode 27 / iOS 26 — תג כרטיסיית העוזר וסמלי המותגים מוצגים כראוי ב-SDK החדש."
           }
         }
       }
@@ -3658,6 +5170,60 @@
         }
       }
     },
+    "KozBon now requires iOS 26, iPadOS 26, macOS 26, or visionOS 26.": {
+      "comment": "What's New release-note highlight for KozBon 4.7. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBon now requires iOS 26, iPadOS 26, macOS 26, or visionOS 26."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBon ahora requiere iOS 26, iPadOS 26, macOS 26 o visionOS 26."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBon nécessite désormais iOS 26, iPadOS 26, macOS 26 ou visionOS 26."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBon erfordert jetzt iOS 26, iPadOS 26, macOS 26 oder visionOS 26."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBonの動作にはiOS 26、iPadOS 26、macOS 26、またはvisionOS 26が必要になりました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBon 现在需要 iOS 26、iPadOS 26、macOS 26 或 visionOS 26。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يتطلب KozBon الآن iOS 26 أو iPadOS 26 أو macOS 26 أو visionOS 26."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBon דורשת כעת iOS 26, iPadOS 26, macOS 26 או visionOS 26."
+          }
+        }
+      }
+    },
     "LIFX smart bulbs, Wi-Fi-connected color-changing lights that announce themselves on the local network for control by the LIFX app and smart-home hubs.": {
       "extractionState": "manual",
       "localizations": {
@@ -3817,6 +5383,168 @@
         }
       }
     },
+    "Loading spinner during initial scan; macOS sheet sizing fixed.": {
+      "comment": "What's New release-note highlight for KozBon 3.7. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading spinner during initial scan; macOS sheet sizing fixed."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Indicador de carga durante el primer escaneo; corregido el tamaño de las hojas en macOS."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Indicateur de chargement pendant l’analyse initiale ; taille des feuilles corrigée sur macOS."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ladeanzeige während des ersten Scans; Größe von Sheets unter macOS korrigiert."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最初のスキャン中に読み込みインジケータを表示するようにしました。macOSのシートのサイズも修正しました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "首次扫描时显示加载指示器；修复 macOS 表单尺寸问题。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مؤشر تحميل أثناء الفحص الأولي، وإصلاح أحجام النوافذ المنبثقة على macOS."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מחוון טעינה במהלך הסריקה הראשונית; תוקן גודל הגיליונות ב-macOS."
+          }
+        }
+      }
+    },
+    "Long-press any highlight on this page for an AI explanation of what it means for you, or ask the chat assistant \"what's new?\" to get answers drawn from these notes.": {
+      "comment": "What's New release-note highlight for KozBon 4.7. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Long-press any highlight on this page for an AI explanation of what it means for you, or ask the chat assistant \"what's new?\" to get answers drawn from these notes."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantén pulsada cualquier novedad de esta página para obtener una explicación con IA de lo que significa para ti, o pregunta al asistente del chat \"¿qué hay de nuevo?\" para obtener respuestas basadas en estas notas."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maintenez le doigt sur n’importe quelle nouveauté de cette page pour obtenir une explication par l’IA de ce qu’elle signifie pour vous, ou demandez à l’assistant de chat « quoi de neuf ? » pour obtenir des réponses tirées de ces notes."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drücke lange auf einen beliebigen Punkt auf dieser Seite, um per KI zu erfahren, was er für dich bedeutet, oder frag den Chat-Assistenten „Was ist neu?“, um Antworten auf Grundlage dieser Hinweise zu erhalten."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このページの項目を長押しすると、その内容があなたにとってどんな意味を持つかをAIが説明します。チャットアシスタントに「新機能は？」と尋ねれば、これらのリリースノートをもとに回答します。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "长按本页任意一条亮点，即可获取 AI 解读，了解它对你意味着什么；也可以问聊天助手“有什么新功能？”，从这些说明中获得解答。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اضغط مطوّلًا على أي بند في هذه الصفحة للحصول على شرح بالذكاء الاصطناعي لما يعنيه لك، أو اسأل مساعد المحادثة «ما الجديد؟» لتحصل على إجابات مستمدّة من هذه الملاحظات."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "לחיצה ארוכה על כל פריט בדף זה מציגה הסבר AI על המשמעות שלו עבורך, ואפשר גם לשאול את עוזר הצ'אט \"מה חדש?\" ולקבל תשובות המבוססות על הערות אלה."
+          }
+        }
+      }
+    },
+    "Long-press context menus throughout for copying service details.": {
+      "comment": "What's New release-note highlight for KozBon 3.6. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Long-press context menus throughout for copying service details."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menús contextuales con pulsación prolongada en toda la app para copiar los detalles de los servicios."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menus contextuels par appui long un peu partout pour copier les détails des services."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kontextmenüs per langem Drücken überall zum Kopieren von Dienstdetails."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "各所に長押しのコンテキストメニューを追加し、サービスの詳細をコピーできるようにしました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "全面支持长按上下文菜单，可拷贝服务详细信息。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قوائم سياقية بالضغط المطوّل في كل أنحاء التطبيق لنسخ تفاصيل الخدمة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "תפריטי הקשר בלחיצה ארוכה בכל האפליקציה להעתקת פרטי שירות."
+          }
+        }
+      }
+    },
     "Mac OS X Server machines advertise this service starting in Mac OS X 10.3. Server Admin browses for this service starting in Mac OS X Server 10.3.": {
       "extractionState": "manual",
       "localizations": {
@@ -3866,6 +5594,60 @@
           "stringUnit": {
             "state": "translated",
             "value": "מחשבי Mac OS X Server מפרסמים את השירות הזה החל מ-Mac OS X 10.3. Server Admin מחפש את השירות הזה החל מ-Mac OS X Server 10.3."
+          }
+        }
+      }
+    },
+    "Markdown rendering rewrite for richer AI explanations.": {
+      "comment": "What's New release-note highlight for KozBon 3.8. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Markdown rendering rewrite for richer AI explanations."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nuevo renderizado de Markdown para explicaciones de IA más completas."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rendu Markdown réécrit pour des explications d’IA plus riches."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Überarbeitete Markdown-Darstellung für reichhaltigere KI-Erklärungen."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Markdownのレンダリングを刷新し、AIの説明をより豊かに表示できるようにしました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重写 Markdown 渲染，AI 解读内容更丰富。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إعادة كتابة عرض Markdown لشروحات أغنى بالذكاء الاصطناعي."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שכתוב של עיבוד ה-Markdown להסברי AI עשירים יותר."
           }
         }
       }
@@ -4612,6 +6394,276 @@
         }
       }
     },
+    "New Ambient Background switch in Settings → Display turns the wash off and restores the plain system styling. It also steps aside automatically for Increase Contrast, Reduce Transparency, and Smart Invert, and holds still under Reduce Motion or Low Power Mode.": {
+      "comment": "What's New release-note highlight for KozBon 4.7. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New Ambient Background switch in Settings → Display turns the wash off and restores the plain system styling. It also steps aside automatically for Increase Contrast, Reduce Transparency, and Smart Invert, and holds still under Reduce Motion or Low Power Mode."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El nuevo interruptor Fondo ambiental en Ajustes → Pantalla desactiva el degradado y restaura el estilo estándar del sistema. También se retira automáticamente con Aumentar contraste, Reducir transparencia e Inversión inteligente, y se queda quieto con Reducir movimiento o el modo de bajo consumo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nouveau commutateur Arrière-plan d’ambiance dans Réglages → Affichage : il désactive le dégradé et rétablit l’apparence système standard. Il s’efface aussi automatiquement avec Augmenter le contraste, Réduire la transparence et Inversion intelligente, et reste immobile avec Réduire les animations ou le mode Économie d’énergie."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der neue Schalter „Umgebungshintergrund“ unter Einstellungen → Anzeige schaltet den Farbverlauf aus und stellt die schlichte Systemdarstellung wieder her. Bei „Kontrast erhöhen“, „Transparenz reduzieren“ und „Intelligente Umkehrung“ tritt er automatisch zurück, und bei „Bewegung reduzieren“ oder im Stromsparmodus bleibt er unbewegt."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「設定」→「表示」に新しい「アンビエント背景」スイッチを追加しました。オフにすると背景効果が消え、標準のシステムスタイルに戻ります。「コントラストを上げる」「透明度を下げる」「スマート反転」がオンのときは自動的にオフになり、「視差効果を減らす」や低電力モードのときは動きが止まります。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“设置 → 显示”中新增“氛围背景”开关，可关闭这层色彩并恢复朴素的系统样式。开启“增强对比度”“降低透明度”或“智能反转”时，它也会自动让位；在“减弱动态效果”或“低电量模式”下则保持静止。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مفتاح جديد باسم «الخلفية المحيطة» في «الإعدادات ← العرض» يوقف التدرّج اللوني ويعيد المظهر الافتراضي للنظام. كما يتنحّى تلقائيًا عند تفعيل «زيادة التباين» أو «تقليل الشفافية» أو «القلب الذكي»، ويتوقّف عن الحركة عند تفعيل «تقليل الحركة» أو «وضع الطاقة المنخفضة»."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מתג חדש, \"רקע אווירה\", ב\"הגדרות ← תצוגה\" מכבה את שטיפת הצבע ומחזיר את העיצוב הרגיל של המערכת. הוא גם מפנה את מקומו אוטומטית כשמופעלים \"הגברת ניגודיות\", \"הפחתת שקיפות\" ו\"היפוך חכם\", ונשאר קפוא תחת \"הפחתת תנועה\" או \"מצב צריכת חשמל נמוכה\"."
+          }
+        }
+      }
+    },
+    "New GitHub Models cloud backend (OpenAI GPT-4o via GitHub) joins Anthropic Claude as an opt-in cloud assistant.": {
+      "comment": "What's New release-note highlight for KozBon 4.3. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New GitHub Models cloud backend (OpenAI GPT-4o via GitHub) joins Anthropic Claude as an opt-in cloud assistant."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El nuevo motor en la nube GitHub Models (OpenAI GPT-4o a través de GitHub) se suma a Anthropic Claude como asistente en la nube opcional."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nouveau moteur cloud GitHub Models (OpenAI GPT-4o via GitHub), qui rejoint Anthropic Claude comme assistant cloud facultatif."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Das neue Cloud-Backend GitHub Models (OpenAI GPT-4o über GitHub) ergänzt Anthropic Claude als optionaler Cloud-Assistent."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新しいクラウドバックエンドとしてGitHub Models（GitHub経由のOpenAI GPT-4o）を追加しました。Anthropic Claudeと同様に、オプトインで使えるクラウドアシスタントです。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新增 GitHub Models 云端后端（通过 GitHub 使用 OpenAI GPT-4o），与 Anthropic Claude 一起作为可选的云端助手。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مزوّد سحابي جديد هو GitHub Models (نموذج OpenAI GPT-4o عبر GitHub) ينضم إلى Anthropic Claude كمساعد سحابي اختياري."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מנוע ענן חדש, GitHub Models ‏(OpenAI GPT-4o דרך GitHub), מצטרף ל-Anthropic Claude כעוזר ענן אופציונלי."
+          }
+        }
+      }
+    },
+    "New Smart Home filter, plus Thread and Matter service types in the library.": {
+      "comment": "What's New release-note highlight for KozBon 3.8. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New Smart Home filter, plus Thread and Matter service types in the library."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nuevo filtro Hogar inteligente, además de tipos de servicio Thread y Matter en la biblioteca."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nouveau filtre Maison connectée, et types de service Thread et Matter dans la bibliothèque."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neuer Filter „Smart Home“ sowie Thread- und Matter-Diensttypen in der Bibliothek."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新しい「スマートホーム」フィルタを追加し、ライブラリにThreadとMatterのサービスタイプを加えました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新增“智能家居”筛选器，资料库中也新增了 Thread 和 Matter 服务类型。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عامل تصفية جديد لـ«المنزل الذكي»، إضافة إلى أنواع خدمات Thread وMatter في المكتبة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מסנן \"בית חכם\" חדש, וגם סוגי שירות של Thread ו-Matter בספרייה."
+          }
+        }
+      }
+    },
+    "New What's New page in Preferences → About lists every release since 3.0.": {
+      "comment": "What's New release-note highlight for KozBon 4.5. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New What's New page in Preferences → About lists every release since 3.0."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La nueva página Novedades en Preferencias → Acerca de muestra todas las versiones desde la 3.0."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nouvelle page Nouveautés dans Préférences → À propos, qui répertorie toutes les versions depuis la 3.0."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die neue Seite „Neuigkeiten“ unter Präferenzen → Info listet alle Versionen seit 3.0 auf."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「環境設定」→「情報」に新しい「新機能」ページを追加しました。3.0以降のすべてのリリース内容を確認できます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“偏好设置 → 关于”中新增“新功能”页面，列出自 3.0 以来的每个版本。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "صفحة «ما الجديد» جديدة في «التفضيلات ← حول التطبيق» تعرض كل الإصدارات منذ 3.0."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "דף \"מה חדש\" חדש ב\"העדפות ← אודות\" מציג את כל הגרסאות מאז 3.0."
+          }
+        }
+      }
+    },
+    "New service filters, animated list transitions when sorting, and context-aware AI prompts.": {
+      "comment": "What's New release-note highlight for KozBon 4.0. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New service filters, animated list transitions when sorting, and context-aware AI prompts."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nuevos filtros de servicios, transiciones animadas de la lista al ordenar y mensajes de IA adaptados al contexto."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nouveaux filtres de services, transitions animées de la liste lors du tri et requêtes d’IA adaptées au contexte."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neue Dienstfilter, animierte Listenübergänge beim Sortieren und kontextbezogene KI-Prompts."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新しいサービスフィルタ、並べ替え時の一覧のアニメーション、状況に応じたAIプロンプトを追加しました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新增服务筛选器、排序时的列表动画过渡，以及可感知上下文的 AI 提示。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عوامل تصفية جديدة للخدمات، وانتقالات متحركة للقائمة عند الترتيب، وطلبات ذكاء اصطناعي تراعي السياق."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מסנני שירותים חדשים, מעברי רשימה מונפשים בעת מיון והנחיות AI מותאמות הקשר."
+          }
+        }
+      }
+    },
     "Newer variant of Apple's iOS-device sync protocol seen on iOS 17+ devices. Used alongside the v1 (`_apple-mobdev._tcp`) and v2 (`_apple-mobdev2._tcp`) services for Wi-Fi sync with Finder/iTunes.": {
       "extractionState": "manual",
       "localizations": {
@@ -4767,6 +6819,60 @@
           "stringUnit": {
             "state": "translated",
             "value": "שירות סנכרון של אפליקציות OmniGroup, בשימוש OmniGraffle, OmniOutliner ושאר אפליקציות הפרודוקטיביות של OmniGroup."
+          }
+        }
+      }
+    },
+    "On-device AI explanations for any service in the library and on Discover via long-press.": {
+      "comment": "What's New release-note highlight for KozBon 3.6. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On-device AI explanations for any service in the library and on Discover via long-press."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Explicaciones con IA en el dispositivo para cualquier servicio de la biblioteca y en Descubrir con una pulsación prolongada."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Explications par l’IA intégrée à l’appareil pour n’importe quel service de la bibliothèque et dans Découvrir, par appui long."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KI-Erklärungen auf dem Gerät für jeden Dienst in der Bibliothek und unter „Entdecken“ per langem Drücken."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ライブラリ内のすべてのサービスと「検出」のサービスで、長押しするとデバイス上のAIが説明します。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通过长按，即可在资料库和“发现”中获取任意服务的设备端 AI 解读。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شروحات بالذكاء الاصطناعي على الجهاز لأي خدمة في المكتبة وفي «الاكتشاف» بالضغط المطوّل."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הסברי AI במכשיר לכל שירות בספרייה וב\"גילוי\" באמצעות לחיצה ארוכה."
           }
         }
       }
@@ -5460,6 +7566,60 @@
         }
       }
     },
+    "Project polish for App Store Connect submission.": {
+      "comment": "What's New release-note highlight for KozBon 3.1. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Project polish for App Store Connect submission."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mejoras del proyecto para el envío a App Store Connect."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finitions du projet pour la soumission sur App Store Connect."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Feinschliff am Projekt für die Einreichung über App Store Connect."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App Store Connectへの提出に向けてプロジェクトを整えました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "为提交至 App Store Connect 进行项目优化。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تحسينات على المشروع استعدادًا للتقديم عبر App Store Connect."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ליטוש הפרויקט לקראת הגשה ל-App Store Connect."
+          }
+        }
+      }
+    },
     "Prometheus systems monitoring and alerting toolkit for collecting and querying metrics from configured targets.": {
       "extractionState": "manual",
       "localizations": {
@@ -5721,6 +7881,276 @@
           "stringUnit": {
             "state": "translated",
             "value": "Redis הוא מאגר נתוני מפתח-ערך בזיכרון בשימוש נרחב כמטמון, מתווך הודעות ובסיס נתונים זמני בערימות יישומים מודרניות."
+          }
+        }
+      }
+    },
+    "Reliability improvements across the chat surface, including a swipe-delete animation fix in the broadcast TXT-record list.": {
+      "comment": "What's New release-note highlight for KozBon 4.6. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reliability improvements across the chat surface, including a swipe-delete animation fix in the broadcast TXT-record list."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mejoras de fiabilidad en todo el chat, incluida una corrección de la animación al deslizar para eliminar en la lista de registros TXT de las transmisiones."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fiabilité améliorée dans tout le chat, notamment une correction de l’animation de suppression par balayage dans la liste des enregistrements TXT de diffusion."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zuverlässigkeitsverbesserungen im gesamten Chat-Bereich, darunter eine korrigierte Animation beim Löschen per Wischen in der TXT-Eintragsliste beim Senden."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "チャット画面全体の信頼性を向上しました。ブロードキャストのTXTレコード一覧で、スワイプして削除する際のアニメーションも修正しました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "聊天界面的稳定性全面提升，包括修复广播 TXT 记录列表中的轻扫删除动画。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تحسينات في الموثوقية عبر واجهة المحادثة، منها إصلاح حركة الحذف بالسحب في قائمة سجلات TXT الخاصة بالبث."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שיפורי אמינות בכל ממשק הצ'אט, כולל תיקון להנפשת המחיקה בהחלקה ברשימת רשומות ה-TXT בשידור."
+          }
+        }
+      }
+    },
+    "Removed legacy Bluetooth references.": {
+      "comment": "What's New release-note highlight for KozBon 3.3. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Removed legacy Bluetooth references."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eliminadas las referencias heredadas a Bluetooth."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suppression des anciennes références à Bluetooth."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Veraltete Bluetooth-Verweise entfernt."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "古いBluetooth関連の記述を削除しました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "移除旧版蓝牙相关内容。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إزالة الإشارات القديمة إلى Bluetooth."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הוסרו אזכורים ישנים ל-Bluetooth."
+          }
+        }
+      }
+    },
+    "Removed singletons from the scanner and publish manager for cleaner internals.": {
+      "comment": "What's New release-note highlight for KozBon 3.4. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Removed singletons from the scanner and publish manager for cleaner internals."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eliminados los singletons del escáner y del gestor de publicación para un código interno más limpio."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Singletons retirés de l’outil d’analyse et du gestionnaire de publication pour un code interne plus propre."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Singletons aus Scanner und Veröffentlichungsmanager entfernt, für sauberere Interna."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "スキャナとパブリッシュマネージャからシングルトンを取り除き、内部構造を整理しました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "移除扫描器和发布管理器中的单例，使内部结构更清晰。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إزالة الكائنات المفردة (singletons) من الماسح ومدير النشر لبنية داخلية أنظف."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הוסרו אובייקטי singleton מהסורק וממנהל הפרסום לקוד פנימי נקי יותר."
+          }
+        }
+      }
+    },
+    "Response-length preference (brief / standard / detailed) carries through every AI surface.": {
+      "comment": "What's New release-note highlight for KozBon 4.0. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Response-length preference (brief / standard / detailed) carries through every AI surface."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La preferencia de longitud de respuesta (breve / estándar / detallada) se aplica en todas las funciones de IA."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La préférence de longueur de réponse (bref / standard / détaillé) s’applique à toutes les fonctionnalités d’IA."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Einstellung zur Antwortlänge (kurz / Standard / ausführlich) gilt für alle KI-Funktionen."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "回答の長さの設定（短い／標準／詳細）が、すべてのAI機能に反映されます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "回复长度偏好（简短／标准／详尽）适用于所有 AI 功能。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ينطبق تفضيل طول الرد (موجز / قياسي / مفصّل) على جميع ميزات الذكاء الاصطناعي."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "העדפת אורך התגובה (תמציתי / סטנדרטי / מקיף) חלה על כל ממשקי ה-AI."
+          }
+        }
+      }
+    },
+    "Right-to-left support for Arabic and Hebrew added in a follow-up.": {
+      "comment": "What's New release-note highlight for KozBon 3.2. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Right-to-left support for Arabic and Hebrew added in a follow-up."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compatibilidad con escritura de derecha a izquierda para árabe y hebreo, añadida en una actualización posterior."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prise en charge de l’écriture de droite à gauche pour l’arabe et l’hébreu, ajoutée dans une mise à jour ultérieure."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rechts-nach-links-Unterstützung für Arabisch und Hebräisch in einem Folge-Update hinzugefügt."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "その後のアップデートで、アラビア語とヘブライ語の右から左への表示に対応しました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "后续更新中新增对阿拉伯语和希伯来语的从右到左支持。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أُضيف دعم الكتابة من اليمين إلى اليسار للعربية والعبرية في تحديث لاحق."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "תמיכה בכתיבה מימין לשמאל לערבית ולעברית נוספה בעדכון המשך."
           }
         }
       }
@@ -6096,6 +8526,60 @@
         }
       }
     },
+    "Service publishing — broadcast your own services from this device.": {
+      "comment": "What's New release-note highlight for KozBon 3.0. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Service publishing — broadcast your own services from this device."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Publicación de servicios: transmite tus propios servicios desde este dispositivo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Publication de services — diffusez vos propres services depuis cet appareil."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Veröffentlichen von Diensten — sende deine eigenen Dienste von diesem Gerät aus."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "サービスの公開 — このデバイスから独自のサービスをブロードキャストできます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "服务发布——从本设备广播你自己的服务。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نشر الخدمات — بُثّ خدماتك الخاصة من هذا الجهاز."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פרסום שירותים — שידור שירותים משלך מהמכשיר הזה."
+          }
+        }
+      }
+    },
     "Service related to Google Cast which is a technology for enabling multi-screen experiences. See developers.google.com/cast for more details": {
       "extractionState": "manual",
       "localizations": {
@@ -6202,6 +8686,60 @@
         }
       }
     },
+    "Service-type expertise level setting for adjusting AI explanations.": {
+      "comment": "What's New release-note highlight for KozBon 3.7. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Service-type expertise level setting for adjusting AI explanations."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajuste del nivel de conocimiento sobre tipos de servicio para adaptar las explicaciones de IA."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réglage du niveau d’expertise pour adapter les explications de l’IA sur les types de service."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Einstellung für den Kenntnisstand bei Diensttypen, um KI-Erklärungen anzupassen."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AIの説明を調整できる、サービスタイプの詳しさレベルの設定を追加しました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新增服务类型专业程度设置，用于调整 AI 解读。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إعداد لمستوى الخبرة بأنواع الخدمات لضبط شروحات الذكاء الاصطناعي."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הגדרת רמת מומחיות לסוגי שירות להתאמת הסברי ה-AI."
+          }
+        }
+      }
+    },
     "Session Initiation Protocol over UDP — the original transport for SIP signaling, still widely used by VoIP phones and PBX systems on the local network.": {
       "extractionState": "manual",
       "localizations": {
@@ -6304,6 +8842,60 @@
           "stringUnit": {
             "state": "translated",
             "value": "Session Initiation Protocol — פרוטוקול האיתות שמנהל משא ומתן על שיחות קול ווידאו. בשימוש טלפוני VoIP, גיבויי שמע של Apple FaceTime ומערכות שיחות תאגידיות."
+          }
+        }
+      }
+    },
+    "Settings deep-link surfaces when Apple Intelligence is disabled or unavailable so you can flip it on without leaving KozBon.": {
+      "comment": "What's New release-note highlight for KozBon 4.0. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings deep-link surfaces when Apple Intelligence is disabled or unavailable so you can flip it on without leaving KozBon."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aparece un enlace directo a Ajustes cuando Apple Intelligence está desactivado o no disponible, para que puedas activarlo sin salir de KozBon."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un lien vers les Réglages s’affiche lorsque Apple Intelligence est désactivé ou indisponible, pour l’activer sans quitter KozBon."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein direkter Link zu den Einstellungen erscheint, wenn Apple Intelligence deaktiviert oder nicht verfügbar ist, damit du es aktivieren kannst, ohne KozBon zu verlassen."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligenceがオフまたは利用できない場合に「設定」へのリンクが表示され、KozBonを離れずにオンにできるようになりました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "当 Apple Intelligence 已停用或不可用时，会显示前往“设置”的快捷链接，无需离开 KozBon 即可将其开启。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يظهر رابط مباشر إلى الإعدادات عندما يكون Apple Intelligence معطّلًا أو غير متاح، لتتمكن من تفعيله دون مغادرة KozBon."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "קישור ישיר להגדרות מופיע כש-Apple Intelligence כבוי או לא זמין, כדי שאפשר יהיה להפעיל אותו בלי לצאת מ-KozBon."
           }
         }
       }
@@ -6467,6 +9059,114 @@
         }
       }
     },
+    "Siri and the Shortcuts app now offer KozBon's scan and list-services shortcuts, localized in all eight languages. Permission prompts are now translated into Arabic and Hebrew as well.": {
+      "comment": "What's New release-note highlight for KozBon 4.7. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siri and the Shortcuts app now offer KozBon's scan and list-services shortcuts, localized in all eight languages. Permission prompts are now translated into Arabic and Hebrew as well."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siri y la app Atajos ahora ofrecen los atajos de KozBon para buscar y listar servicios, localizados en los ocho idiomas. Las solicitudes de permiso ahora también están traducidas al árabe y al hebreo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siri et l’app Raccourcis proposent désormais les raccourcis de KozBon pour lancer une analyse et lister les services, localisés dans les huit langues. Les demandes d’autorisation sont également traduites en arabe et en hébreu."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siri und die Kurzbefehle-App bieten jetzt die KozBon-Kurzbefehle zum Scannen und Auflisten von Diensten an, lokalisiert in allen acht Sprachen. Berechtigungsabfragen sind jetzt auch auf Arabisch und Hebräisch übersetzt."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siriとショートカットで、KozBonのスキャンとサービス一覧表示のショートカットが使えるようになりました。8言語すべてにローカライズされています。また、アクセス許可の確認メッセージがアラビア語とヘブライ語にも翻訳されました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siri 和“快捷指令” App 现已提供 KozBon 的扫描和列出服务快捷指令，并已本地化为全部八种语言。权限提示现在也已翻译成阿拉伯语和希伯来语。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أصبح Siri وتطبيق «الاختصارات» يقدّمان اختصارَي KozBon للفحص وعرض قائمة الخدمات، مترجمين إلى اللغات الثماني جميعها. كما أصبحت طلبات الأذونات مترجمة إلى العربية والعبرية أيضًا."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siri והאפליקציה \"קיצורים\" מציעות כעת את קיצורי הסריקה והצגת השירותים של KozBon, מתורגמים לכל שמונה השפות. גם בקשות ההרשאה מתורגמות כעת לערבית ולעברית."
+          }
+        }
+      }
+    },
+    "Six-language localization — English, Spanish, French, German, Japanese, Simplified Chinese.": {
+      "comment": "What's New release-note highlight for KozBon 3.2. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Six-language localization — English, Spanish, French, German, Japanese, Simplified Chinese."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Localización en seis idiomas: inglés, español, francés, alemán, japonés y chino simplificado."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Localisation en six langues — anglais, espagnol, français, allemand, japonais, chinois simplifié."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lokalisierung in sechs Sprachen — Englisch, Spanisch, Französisch, Deutsch, Japanisch, vereinfachtes Chinesisch."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "英語、スペイン語、フランス語、ドイツ語、日本語、簡体字中国語の6言語に対応しました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "支持六种语言——英语、西班牙语、法语、德语、日语和简体中文。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ترجمة إلى ست لغات — الإنجليزية والإسبانية والفرنسية والألمانية واليابانية والصينية المبسّطة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "לוקליזציה לשש שפות — אנגלית, ספרדית, צרפתית, גרמנית, יפנית וסינית פשוטה."
+          }
+        }
+      }
+    },
     "Sketch design app mirror service for previewing designs on iOS devices in real time.": {
       "extractionState": "manual",
       "localizations": {
@@ -6569,6 +9269,60 @@
           "stringUnit": {
             "state": "translated",
             "value": "פרוטוקול גילוי ושליטה לרמקולים אלחוטיים של Sonos."
+          }
+        }
+      }
+    },
+    "Sort order menu and IP-address context menus on service detail rows.": {
+      "comment": "What's New release-note highlight for KozBon 3.7. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sort order menu and IP-address context menus on service detail rows."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menú de orden y menús contextuales de direcciones IP en las filas de detalle del servicio."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menu d’ordre de tri et menus contextuels des adresses IP sur les lignes de détail des services."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menü für die Sortierreihenfolge und Kontextmenüs für IP-Adressen in den Detailzeilen von Diensten."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "並べ替えメニューと、サービス詳細の行でIPアドレスのコンテキストメニューを追加しました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "服务详细信息行新增排序菜单和 IP 地址上下文菜单。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قائمة لترتيب العرض وقوائم سياقية لعناوين IP في صفوف تفاصيل الخدمة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "תפריט סדר מיון ותפריטי הקשר לכתובות IP בשורות פרטי השירות."
           }
         }
       }
@@ -6679,6 +9433,60 @@
         }
       }
     },
+    "TXT record editing on published services.": {
+      "comment": "What's New release-note highlight for KozBon 3.1. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TXT record editing on published services."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edición de registros TXT en los servicios publicados."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modification des enregistrements TXT des services publiés."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bearbeiten von TXT-Einträgen bei veröffentlichten Diensten."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "公開中のサービスでTXTレコードを編集できるようになりました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "支持编辑已发布服务的 TXT 记录。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعديل سجلات TXT للخدمات المنشورة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "עריכת רשומות TXT בשירותים שפורסמו."
+          }
+        }
+      }
+    },
     "Tasmota, an open-source firmware for ESP8266/ESP32-based smart-home devices (Sonoff, Shelly, etc.). Commonly used to flash off-the-shelf smart plugs, switches, and bulbs for local-only control.": {
       "extractionState": "manual",
       "localizations": {
@@ -6728,6 +9536,60 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tasmota היא קושחה בקוד פתוח למכשירי בית חכם מבוססי ESP8266/ESP32 (Sonoff, Shelly וכו'). בשימוש נפוץ לצריבת שקעים חכמים, מתגים ונורות מוכנים מהמדף לשליטה מקומית בלבד."
+          }
+        }
+      }
+    },
+    "The Claude and Gemini model pickers now load each provider's current model list with your key, so new models show up without an app update. Offline, they fall back to a built-in list.": {
+      "comment": "What's New release-note highlight for KozBon 4.7. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Claude and Gemini model pickers now load each provider's current model list with your key, so new models show up without an app update. Offline, they fall back to a built-in list."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Los selectores de modelo de Claude y Gemini ahora cargan con tu clave la lista actual de modelos de cada proveedor, así que los modelos nuevos aparecen sin actualizar la app. Sin conexión, recurren a una lista integrada."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les sélecteurs de modèle Claude et Gemini chargent désormais la liste actuelle des modèles de chaque fournisseur avec votre clé : les nouveaux modèles apparaissent sans mise à jour de l’app. Hors ligne, ils se rabattent sur une liste intégrée."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Modellauswahl für Claude und Gemini lädt jetzt mit deinem Schlüssel die aktuelle Modellliste des jeweiligen Anbieters, sodass neue Modelle ohne App-Update erscheinen. Offline wird auf eine integrierte Liste zurückgegriffen."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ClaudeとGeminiのモデルピッカーが、お使いのキーで各プロバイダの最新モデル一覧を読み込むようになりました。新しいモデルがAppのアップデートなしで表示されます。オフライン時は内蔵の一覧を使用します。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claude 和 Gemini 的模型选择器现在会用你的密钥加载各提供方当前的模型列表，新模型无需更新 App 即可出现。离线时则回退到内置列表。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أصبح منتقيا نماذج Claude وGemini يحمّلان قائمة النماذج الحالية لكل مزوّد باستخدام مفتاحك، فتظهر النماذج الجديدة دون الحاجة إلى تحديث التطبيق. وعند عدم الاتصال بالإنترنت، تُستخدم قائمة مدمجة بدلًا منها."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בוחרי המודלים של Claude ו-Gemini טוענים כעת את רשימת המודלים העדכנית של כל ספק באמצעות המפתח שלך, כך שמודלים חדשים מופיעים בלי צורך בעדכון לאפליקציה. במצב לא מקוון הם חוזרים לרשימה מובנית."
           }
         }
       }
@@ -6838,6 +9700,114 @@
         }
       }
     },
+    "The Nearby list is now grouped into sections by service type, each with a short description of the type — or by device when you sort by host name.": {
+      "comment": "What's New release-note highlight for KozBon 4.7. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Nearby list is now grouped into sections by service type, each with a short description of the type — or by device when you sort by host name."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La lista Cercanos ahora se agrupa en secciones por tipo de servicio, cada una con una breve descripción del tipo, o por dispositivo cuando ordenas por nombre de host."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La liste À proximité est désormais organisée en sections par type de service, chacune accompagnée d’une courte description du type — ou par appareil lorsque vous triez par nom d’hôte."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Liste „In der Nähe“ ist jetzt nach Diensttyp in Abschnitte gegliedert, jeweils mit einer kurzen Beschreibung des Typs — oder nach Gerät, wenn du nach Hostname sortierst."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「近く」の一覧がサービスタイプ別のセクションに分かれ、各タイプの簡単な説明が表示されるようになりました。ホスト名で並べ替えた場合はデバイス別にまとめられます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“附近”列表现在按服务类型分组显示，每组都附有该类型的简短说明；按主机名排序时则按设备分组。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أصبحت قائمة «قريبة» مقسّمة إلى أقسام حسب نوع الخدمة، مع وصف موجز لكل نوع — أو حسب الجهاز عند الترتيب حسب اسم المضيف."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הרשימה \"בקרבת מקום\" מחולקת כעת למקטעים לפי סוג שירות, ולכל אחד תיאור קצר של הסוג — או לפי מכשיר במיון לפי שם מארח."
+          }
+        }
+      }
+    },
+    "The Preferences tab is now called Settings.": {
+      "comment": "What's New release-note highlight for KozBon 4.7. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Preferences tab is now called Settings."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La pestaña Preferencias ahora se llama Ajustes."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L’onglet Préférences s’appelle désormais Réglages."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Tab „Präferenzen“ heißt jetzt „Einstellungen“."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「環境設定」タブの名称が「設定」に変わりました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“偏好设置”标签页现已更名为“设置”。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أصبح اسم علامة التبويب «التفضيلات» الآن «الإعدادات»."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הכרטיסייה \"העדפות\" נקראת כעת \"הגדרות\"."
+          }
+        }
+      }
+    },
     "Thread Mesh Commissioning Protocol for Thread border routers such as Apple TV and HomePod. TXT records expose the Thread network name, channel, and PAN ID.": {
       "extractionState": "manual",
       "localizations": {
@@ -6891,6 +9861,114 @@
         }
       }
     },
+    "Tighter wide-window tab bar and detail layouts on iPad and macOS.": {
+      "comment": "What's New release-note highlight for KozBon 4.5. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tighter wide-window tab bar and detail layouts on iPad and macOS."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barra de pestañas y diseños de detalle más compactos en ventanas anchas en iPad y macOS."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barre d’onglets et dispositions de détail plus compactes en fenêtre large sur iPad et macOS."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kompaktere Tableiste und Detail-Layouts in breiten Fenstern auf dem iPad und unter macOS."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iPadとmacOSで、ワイドウインドウ時のタブバーと詳細レイアウトをより引き締まったデザインにしました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iPad 和 macOS 宽窗口中的标签栏和详细信息布局更加紧凑。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شريط علامات تبويب وتخطيطات تفاصيل أكثر إحكامًا في النوافذ العريضة على iPad وmacOS."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סרגל כרטיסיות ופריסות פרטים הדוקים יותר בחלונות רחבים ב-iPad וב-macOS."
+          }
+        }
+      }
+    },
+    "Toolbar icons simplified to plain SF Symbols without circle fills.": {
+      "comment": "What's New release-note highlight for KozBon 3.4. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toolbar icons simplified to plain SF Symbols without circle fills."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Iconos de la barra de herramientas simplificados a SF Symbols sencillos sin relleno circular."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Icônes de barre d’outils simplifiées en SF Symbols simples, sans fond circulaire."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Symbolleisten-Icons vereinfacht zu schlichten SF Symbols ohne Kreisfüllung."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ツールバーのアイコンを、円の塗りつぶしのないシンプルなSF Symbolsにしました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "工具栏图标简化为不带圆形填充的普通 SF Symbols。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تبسيط أيقونات شريط الأدوات لتصبح رموز SF Symbols بسيطة دون خلفيات دائرية."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סמלי סרגל הכלים פושטו ל-SF Symbols רגילים ללא מילוי עיגול."
+          }
+        }
+      }
+    },
     "Touchable app service for using an iOS device as a remote control for music production software like Ableton Live.": {
       "extractionState": "manual",
       "localizations": {
@@ -6940,6 +10018,60 @@
           "stringUnit": {
             "state": "translated",
             "value": "שירות אפליקציית Touchable לשימוש במכשיר iOS כשלט רחוק עבור תוכנות הפקת מוזיקה כמו Ableton Live."
+          }
+        }
+      }
+    },
+    "Trimmed unused assets from the catalog.": {
+      "comment": "What's New release-note highlight for KozBon 3.4. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trimmed unused assets from the catalog."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eliminados del catálogo los recursos que no se usaban."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ressources inutilisées retirées du catalogue."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nicht verwendete Assets aus dem Katalog entfernt."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "カタログから未使用のアセットを削除しました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "清理资源目录中未使用的素材。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حذف الأصول غير المستخدمة من الكتالوج."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הוסרו משאבים שאינם בשימוש מהקטלוג."
           }
         }
       }
@@ -8000,6 +11132,60 @@
           "stringUnit": {
             "state": "translated",
             "value": "שירות Wi-Fi Calling לביצוע ולקבלת שיחות טלפון על-פני רשת Wi-Fi במקום סלולר."
+          }
+        }
+      }
+    },
+    "Wider Discover and Library sidebars on macOS so hostnames and service-type identifiers fit on one line.": {
+      "comment": "What's New release-note highlight for KozBon 4.5. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wider Discover and Library sidebars on macOS so hostnames and service-type identifiers fit on one line."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barras laterales de Descubrir y Biblioteca más anchas en macOS para que los nombres de host y los identificadores de tipo de servicio quepan en una sola línea."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barres latérales Découvrir et Bibliothèque plus larges sur macOS, pour que les noms d’hôte et les identifiants de type de service tiennent sur une seule ligne."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Breitere Seitenleisten für „Entdecken“ und „Bibliothek“ unter macOS, damit Hostnamen und Diensttyp-Kennungen in eine Zeile passen."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOSで「検出」と「ライブラリ」のサイドバーを広げ、ホスト名やサービスタイプ識別子が1行に収まるようにしました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS 上的“发现”和“资料库”边栏更宽，主机名和服务类型标识符可以完整显示在一行内。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شريطان جانبيان أعرض في «الاكتشاف» و«المكتبة» على macOS لتتّسع أسماء المضيفين ومعرّفات أنواع الخدمات في سطر واحد."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סרגלי צד רחבים יותר ב\"גילוי\" וב\"ספרייה\" ב-macOS, כך ששמות מארחים ומזהי סוגי שירות נכנסים בשורה אחת."
           }
         }
       }
@@ -17917,6 +21103,60 @@
         }
       }
     },
+    "iPhone now supports landscape and wide layouts, including the iPhone Duo's inner display, where the sidebar and detail pane open side by side. Settings, Chat, and detail pages keep a readable width, and the service badge names the host too — \"AirPlay – Living Room\".": {
+      "comment": "What's New release-note highlight for KozBon 4.7. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iPhone now supports landscape and wide layouts, including the iPhone Duo's inner display, where the sidebar and detail pane open side by side. Settings, Chat, and detail pages keep a readable width, and the service badge names the host too — \"AirPlay – Living Room\"."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El iPhone ahora admite diseños en horizontal y panorámicos, incluida la pantalla interior del iPhone Duo, donde la barra lateral y el panel de detalle se abren uno al lado del otro. Ajustes, Chat y las páginas de detalle mantienen un ancho cómodo de leer, y la insignia del servicio también muestra el host: \"AirPlay – Salón\"."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L’iPhone prend désormais en charge les dispositions en paysage et en grand format, y compris l’écran intérieur de l’iPhone Duo, où la barre latérale et le volet de détail s’ouvrent côte à côte. Réglages, Chat et les pages de détail conservent une largeur confortable à lire, et le badge du service indique aussi l’hôte — « AirPlay – Salon »."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Das iPhone unterstützt jetzt Quer- und Breitformat-Layouts, auch auf dem inneren Display des iPhone Duo, wo Seitenleiste und Detailbereich nebeneinander geöffnet werden. Einstellungen, Chat und Detailseiten behalten eine gut lesbare Breite, und das Dienst-Badge nennt jetzt auch den Host — „AirPlay – Wohnzimmer“."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iPhoneで横向きやワイドレイアウトに対応しました。iPhone Duoの内側ディスプレイでは、サイドバーと詳細ペインが並んで表示されます。「設定」「チャット」、詳細ページは読みやすい幅に保たれ、サービスバッジにはホスト名も表示されます（例：「AirPlay – リビング」）。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iPhone 现已支持横屏和宽屏布局，包括 iPhone Duo 的内屏——边栏和详细信息面板会并排显示。“设置”、“聊天”和详细信息页面会保持易读的宽度，服务标记也会显示主机名，例如“AirPlay – 客厅”。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يدعم iPhone الآن الوضع الأفقي والتخطيطات العريضة، بما في ذلك الشاشة الداخلية في iPhone Duo، حيث يُفتح الشريط الجانبي وجزء التفاصيل جنبًا إلى جنب. وتحافظ «الإعدادات» و«محادثة» وصفحات التفاصيل على عرض مريح للقراءة، كما تعرض شارة الخدمة اسم المضيف أيضًا — «AirPlay – غرفة المعيشة»."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ב-iPhone יש כעת תמיכה בפריסות לרוחב ובפריסות רחבות, כולל המסך הפנימי של iPhone Duo, שבו סרגל הצד וחלונית הפרטים נפתחים זה לצד זה. \"הגדרות\", \"צ'אט\" ודפי הפרטים שומרים על רוחב נוח לקריאה, ותג השירות מציג גם את שם המארח — \"AirPlay – סלון\"."
+          }
+        }
+      }
+    },
     "iTunes Home Sharing for streaming music, movies, and TV shows between authorized computers and Apple devices on the same network.": {
       "extractionState": "manual",
       "localizations": {
@@ -18178,6 +21418,114 @@
           "stringUnit": {
             "state": "translated",
             "value": "שידור מידע על מכשירי macOS לזיהוי מחשבי Mac ברשת המקומית."
+          }
+        }
+      }
+    },
+    "macOS top tab bar fixes and tab icon polish.": {
+      "comment": "What's New release-note highlight for KozBon 3.3. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS top tab bar fixes and tab icon polish."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Correcciones en la barra de pestañas superior de macOS y mejoras en los iconos de las pestañas."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Corrections de la barre d’onglets supérieure sur macOS et icônes d’onglets peaufinées."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Korrekturen an der oberen Tableiste unter macOS und Feinschliff bei den Tab-Symbolen."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOSの上部タブバーを修正し、タブアイコンを改善しました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "修复 macOS 顶部标签栏问题，并优化标签页图标。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إصلاحات لشريط علامات التبويب العلوي على macOS وتحسينات على أيقونات علامات التبويب."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "תיקונים לסרגל הכרטיסיות העליון ב-macOS וליטוש סמלי הכרטיסיות."
+          }
+        }
+      }
+    },
+    "macOS-native app icon for the menu bar and Dock.": {
+      "comment": "What's New release-note highlight for KozBon 3.6. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS-native app icon for the menu bar and Dock."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Icono de app nativo de macOS para la barra de menús y el Dock."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Icône d’app native macOS pour la barre des menus et le Dock."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS-eigenes App-Symbol für Menüleiste und Dock."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "メニューバーとDock向けに、macOSネイティブのAppアイコンを用意しました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "为菜单栏和程序坞提供 macOS 原生 App 图标。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أيقونة تطبيق مصمّمة خصيصًا لـ macOS لشريط القائمة وشريط Dock."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סמל אפליקציה ייעודי ל-macOS עבור שורת התפריטים וה-Dock."
           }
         }
       }
@@ -24223,6 +27571,60 @@
           "stringUnit": {
             "state": "translated",
             "value": "ספרייה"
+          }
+        }
+      }
+    },
+    "visionOS and macOS toolbar styling fixes.": {
+      "comment": "What's New release-note highlight for KozBon 3.5. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "visionOS and macOS toolbar styling fixes."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Correcciones de estilo de la barra de herramientas en visionOS y macOS."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Corrections du style des barres d’outils sur visionOS et macOS."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Korrekturen am Symbolleisten-Design unter visionOS und macOS."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "visionOSとmacOSのツールバーのスタイルを修正しました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "修复 visionOS 和 macOS 工具栏样式问题。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إصلاحات لتصميم شريط الأدوات على visionOS وmacOS."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "תיקוני עיצוב של סרגלי הכלים ב-visionOS וב-macOS."
           }
         }
       }

@@ -92,13 +92,18 @@ struct WhatsNewView: View {
     /// gains a long-press Insights menu and a matching VoiceOver
     /// action; when disabled, it's a plain read-only row (no empty
     /// context menu).
+    ///
+    /// Displays the translated bullet but hands the English one to
+    /// the Insights sheet: the explainers answer in the user's
+    /// language anyway, and the English is the authored source.
     @ViewBuilder
     private func highlightRow(version: String, highlight: String) -> some View {
+        let displayed = Strings.Settings.releaseHighlight(highlight)
         let row = HStack(alignment: .firstTextBaseline, spacing: 8) {
             Text(verbatim: "•")
                 .foregroundStyle(.secondary)
                 .accessibilityHidden(true)
-            Text(verbatim: highlight)
+            Text(verbatim: displayed)
                 .multilineTextAlignment(.leading)
                 .fixedSize(horizontal: false, vertical: true)
         }
@@ -108,7 +113,7 @@ struct WhatsNewView: View {
         // VoiceOver versions despite `.accessibilityHidden(true)` —
         // the explicit label forecloses that.
         .accessibilityElement(children: .combine)
-        .accessibilityLabel(Text(verbatim: highlight))
+        .accessibilityLabel(Text(verbatim: displayed))
 
         if preferencesStore.aiAnalysisEnabled {
             row
