@@ -73,12 +73,29 @@ public enum ReleaseNotes {
     public static let all: [ReleaseNote] = [
         ReleaseNote(version: "4.7", highlights: [
             // swiftlint:disable:next line_length
+            "Google Gemini joins Apple Intelligence and Anthropic Claude as an AI backend — add your own Google AI Studio key in Settings → AI Backend. Each cloud provider remembers its own model choice, so switching back and forth keeps both.",
+            // swiftlint:disable:next line_length
+            "The Claude and Gemini model pickers now load each provider's current model list with your key, so new models show up without an app update. Offline, they fall back to a built-in list.",
+            // swiftlint:disable:next line_length
+            "GitHub Models is gone — GitHub retired the service on July 30. If you were using it, KozBon switches you back to Apple Intelligence, and Settings offers to delete the saved GitHub token.",
+            // swiftlint:disable:next line_length
+            "The Nearby list is now grouped into sections by service type, each with a short description of the type — or by device when you sort by host name.",
+            // swiftlint:disable:next line_length
             "Every tab now sits on an ambient background — a slow colour wash that drifts like water, tinted differently per tab, and carried through to the detail pages you open from each one.",
             // swiftlint:disable:next line_length
             "New Ambient Background switch in Settings → Display turns the wash off and restores the plain system styling. It also steps aside automatically for Increase Contrast, Reduce Transparency, and Smart Invert, and holds still under Reduce Motion or Low Power Mode.",
             // swiftlint:disable:next line_length
-            "Chat suggestions are now iMessage-style blue capsules with a send arrow, so they read as prompts you can send rather than links.",
-            "The Preferences tab is now called Settings."
+            "iPhone now supports landscape and wide layouts, including the iPhone Duo's inner display, where the sidebar and detail pane open side by side. Settings, Chat, and detail pages keep a readable width, and the service badge names the host too — \"AirPlay – Living Room\".",
+            // swiftlint:disable:next line_length
+            "Siri and the Shortcuts app now offer KozBon's scan and list-services shortcuts, localized in all eight languages. Permission prompts are now translated into Arabic and Hebrew as well.",
+            // swiftlint:disable:next line_length
+            "Long-press any highlight on this page for an AI explanation of what it means for you, or ask the chat assistant \"what's new?\" to get answers drawn from these notes.",
+            // swiftlint:disable:next line_length
+            "Every AI Insights long-press now has a matching VoiceOver action, and the Broadcast forms move VoiceOver focus to the first error when a submit fails.",
+            // swiftlint:disable:next line_length
+            "Chat suggestions are now iMessage-style blue capsules with a send arrow, so they read as prompts you can send rather than links. On iOS 27 the Chat tab keeps its own spot at the end of the tab bar.",
+            "The Preferences tab is now called Settings.",
+            "KozBon now requires iOS 26, iPadOS 26, macOS 26, or visionOS 26."
         ]),
         ReleaseNote(version: "4.6", highlights: [
             // Release-note prose is data, not code — breaking a
