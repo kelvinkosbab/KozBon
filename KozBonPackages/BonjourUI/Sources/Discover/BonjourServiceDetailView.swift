@@ -201,7 +201,11 @@ public struct BonjourServiceDetailView: View {
                     ServiceTypeBadge(
                         serviceType: viewModel.serviceType,
                         style: .basedOnSizeClass,
-                        size: .compact
+                        size: .compact,
+                        // Regular width has room the compact bar
+                        // doesn't, so the badge names the host as
+                        // well as the type: "AirPlay – Living Room".
+                        host: viewModel.service.service.name
                     )
                 }
             }

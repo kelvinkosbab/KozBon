@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import BonjourLocalization
 import BonjourModels
 
 // MARK: - ServiceTypeBadge
@@ -17,8 +18,15 @@ import BonjourModels
 public struct ServiceTypeBadge: View {
 
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     let serviceType: BonjourServiceType
+
+    /// Host the service was discovered on, appended to the title
+    /// when there's room for it. `nil` keeps the badge to the
+    /// service type alone.
+    let host: String?
+
     let style: Style
     let size: Size
 
@@ -74,10 +82,67 @@ public struct ServiceTypeBadge: View {
     ///   - size: Controls the capsule's overall dimension. Defaults to ``Size/regular``
     ///     (36pt) for list rows; pass ``Size/compact`` (28pt) when embedding the badge
     ///     in a navigation bar or toolbar where vertical space is tighter.
-    public init(serviceType: BonjourServiceType, style: Style, size: Size = .regular) {
+    ///   - host: Optional host name to pair with the service type
+    ///     ("AirPlay – Living Room"). Only rendered where the badge
+    ///     already shows its title, which on ``Style/basedOnSizeClass``
+    ///     means regular width — a compact navigation bar has no room
+    ///     for it. VoiceOver reads it in every configuration.
+    public init(
+        serviceType: BonjourServiceType,
+        style: Style,
+        size: Size = .regular,
+        host: String? = nil
+    ) {
         self.serviceType = serviceType
         self.style = style
         self.size = size
+        self.host = host
+    }
+
+    /// The badge's visible text.
+    ///
+    /// Drops the host at accessibility Dynamic Type sizes: a
+    /// navigation bar has one line to work with, and a truncated
+    /// "AirPlay – Livin…" is worse than the type alone. VoiceOver
+    /// still hears the host via ``accessibilityText``.
+    var title: String {
+        ServiceTypeBadge.title(
+            serviceType: serviceType.name,
+            host: dynamicTypeSize.isAccessibilitySize ? nil : host
+        )
+    }
+
+    /// The spoken form — always includes the host, independent of
+    /// size class and Dynamic Type, because the value to a VoiceOver
+    /// user doesn't depend on how much room the glyph has.
+    var accessibilityText: String {
+        ServiceTypeBadge.accessibilityText(serviceType: serviceType.name, host: host)
+    }
+
+    /// Pure composition, split out so it's testable without a
+    /// rendering pass.
+    ///
+    /// `nonisolated` because SwiftUI infers `@MainActor` for
+    /// `View`-conforming types, which would otherwise make this
+    /// string maths main-actor-bound and unusable from a test.
+    nonisolated static func title(serviceType: String, host: String?) -> String {
+        guard let host = usableHost(serviceType: serviceType, host: host) else { return serviceType }
+        return Strings.DetailRows.serviceTypeAndHost(serviceType, host)
+    }
+
+    /// Spoken counterpart to ``title(serviceType:host:)``.
+    nonisolated static func accessibilityText(serviceType: String, host: String?) -> String {
+        guard let host = usableHost(serviceType: serviceType, host: host) else { return serviceType }
+        return Strings.Accessibility.serviceTypeAndHost(serviceType, host)
+    }
+
+    /// The host, or `nil` when pairing it with the type would add
+    /// nothing: an unresolved service reports an empty name, and
+    /// plenty of devices advertise a name identical to their type,
+    /// where "AirPlay – AirPlay" is noise.
+    nonisolated private static func usableHost(serviceType: String, host: String?) -> String? {
+        guard let host, !host.isEmpty, host != serviceType else { return nil }
+        return host
     }
 
     /// Whether the rendered Label currently shows ONLY the icon
@@ -96,7 +161,7 @@ public struct ServiceTypeBadge: View {
 
     public var body: some View {
         HStack {
-            Label(serviceType.name, systemImage: serviceType.imageSystemName)
+            Label(title, systemImage: serviceType.imageSystemName)
                 .modifier(LabelStyleModifier(style: style))
                 // Pin the SF Symbol size to a known font so it renders
                 // consistently regardless of whatever ambient style the
@@ -106,6 +171,10 @@ public struct ServiceTypeBadge: View {
                 // roughly constant when the circle shrinks for nav-bar
                 // use.
                 .font(labelFont)
+                // One line in a navigation bar. Without this a long
+                // host wraps the capsule to two lines and blows out
+                // the bar's height.
+                .lineLimit(1)
                 // Title+icon badges need horizontal breathing room
                 // around the text. Icon-only badges are governed
                 // entirely by the fixed square frame below — adding
@@ -129,7 +198,10 @@ public struct ServiceTypeBadge: View {
         .clipShape(.capsule)
         #endif
         .accessibilityElement(children: .combine)
-        .accessibilityLabel(serviceType.name)
+        // Reads the host even when the visible badge is icon-only,
+        // so a compact navigation bar still announces which service
+        // on which host the screen is about.
+        .accessibilityLabel(accessibilityText)
         // `.hoverEffect` is unavailable on macOS — AppKit handles
         // pointer-hover through its native control styling. Limit the
         // modifier to the platforms where it actually exists.
@@ -191,4 +263,58 @@ public struct ServiceTypeBadge: View {
             }
         }
     }
+}
+
+// MARK: - Previews
+
+// Use the canvas's Dynamic Type and localization controls to check
+// the two adaptive behaviours: at an accessibility size the host
+// drops so the capsule stays one line, and under Arabic / Hebrew the
+// `Label` mirrors so the icon sits on the trailing edge.
+
+#Preview("Service Type Badge") {
+    let airplay = BonjourServiceType.serviceTypeLibrary.first { $0.name.contains("Airplay") }
+        ?? BonjourServiceType.serviceTypeLibrary[0]
+
+    VStack(alignment: .leading, spacing: 16) {
+        ServiceTypeBadge(serviceType: airplay, style: .titleAndIcon, size: .compact)
+        ServiceTypeBadge(
+            serviceType: airplay,
+            style: .titleAndIcon,
+            size: .compact,
+            host: "Living Room"
+        )
+        // A host that repeats the type collapses back to one name.
+        ServiceTypeBadge(
+            serviceType: airplay,
+            style: .titleAndIcon,
+            size: .compact,
+            host: airplay.name
+        )
+        ServiceTypeBadge(serviceType: airplay, style: .iconOnly, size: .compact, host: "Living Room")
+    }
+    .padding()
+}
+
+#Preview("Service Type Badge - RTL") {
+    // `layoutDirection` is settable, unlike most accessibility
+    // environment values, so the mirroring is checkable here rather
+    // than only under the RTL pseudolanguage on a device. The icon
+    // should sit on the trailing (left) edge and the capsules should
+    // align to the right.
+    let airplay = BonjourServiceType.serviceTypeLibrary.first { $0.name.contains("Airplay") }
+        ?? BonjourServiceType.serviceTypeLibrary[0]
+
+    VStack(alignment: .leading, spacing: 16) {
+        ServiceTypeBadge(serviceType: airplay, style: .titleAndIcon, size: .compact)
+        ServiceTypeBadge(
+            serviceType: airplay,
+            style: .titleAndIcon,
+            size: .compact,
+            host: "Living Room"
+        )
+    }
+    .frame(maxWidth: .infinity, alignment: .leading)
+    .padding()
+    .environment(\.layoutDirection, .rightToLeft)
 }

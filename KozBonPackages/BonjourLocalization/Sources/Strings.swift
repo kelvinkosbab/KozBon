@@ -141,6 +141,20 @@ public enum Strings {
 
     public enum DetailRows {
 
+        /// Wide-layout navigation label pairing a service type with
+        /// the host it was discovered on — "AirPlay – Living Room".
+        ///
+        /// A format string rather than call-site concatenation so
+        /// translators can reorder the halves and swap the
+        /// separator for one their locale uses.
+        public static func serviceTypeAndHost(_ serviceType: String, _ host: String) -> String {
+            String(
+                format: NSLocalizedString("detail_service_type_and_host", bundle: Bundle.module, comment: ""),
+                serviceType,
+                host
+            )
+        }
+
         public static var name: LocalizedStringResource {
             .init("detail_name", bundle: .atURL(Bundle.module.bundleURL))
         }
@@ -766,6 +780,18 @@ public enum Strings {
 
         public static var resetHint: LocalizedStringResource {
             .init("a11y_reset_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Spoken form of the service-type-and-host pairing. Uses the
+        /// locale's comma rather than the visible en dash, which
+        /// VoiceOver would announce as a symbol and a braille display
+        /// would render as literal noise.
+        public static func serviceTypeAndHost(_ serviceType: String, _ host: String) -> String {
+            String(
+                format: NSLocalizedString("a11y_service_type_and_host_format", bundle: Bundle.module, comment: ""),
+                serviceType,
+                host
+            )
         }
 
         public static var ambientBackgroundHint: LocalizedStringResource {
