@@ -106,7 +106,7 @@ public struct ServiceTypeBadge: View {
     /// "AirPlay – Livin…" is worse than the type alone. VoiceOver
     /// still hears the host via ``accessibilityText``.
     var title: String {
-        ServiceTypeBadge.title(
+        ServiceBadgeTitle.visible(
             serviceType: serviceType.name,
             host: dynamicTypeSize.isAccessibilitySize ? nil : host
         )
@@ -116,33 +116,7 @@ public struct ServiceTypeBadge: View {
     /// size class and Dynamic Type, because the value to a VoiceOver
     /// user doesn't depend on how much room the glyph has.
     var accessibilityText: String {
-        ServiceTypeBadge.accessibilityText(serviceType: serviceType.name, host: host)
-    }
-
-    /// Pure composition, split out so it's testable without a
-    /// rendering pass.
-    ///
-    /// `nonisolated` because SwiftUI infers `@MainActor` for
-    /// `View`-conforming types, which would otherwise make this
-    /// string maths main-actor-bound and unusable from a test.
-    nonisolated static func title(serviceType: String, host: String?) -> String {
-        guard let host = usableHost(serviceType: serviceType, host: host) else { return serviceType }
-        return Strings.DetailRows.serviceTypeAndHost(serviceType, host)
-    }
-
-    /// Spoken counterpart to ``title(serviceType:host:)``.
-    nonisolated static func accessibilityText(serviceType: String, host: String?) -> String {
-        guard let host = usableHost(serviceType: serviceType, host: host) else { return serviceType }
-        return Strings.Accessibility.serviceTypeAndHost(serviceType, host)
-    }
-
-    /// The host, or `nil` when pairing it with the type would add
-    /// nothing: an unresolved service reports an empty name, and
-    /// plenty of devices advertise a name identical to their type,
-    /// where "AirPlay – AirPlay" is noise.
-    nonisolated private static func usableHost(serviceType: String, host: String?) -> String? {
-        guard let host, !host.isEmpty, host != serviceType else { return nil }
-        return host
+        ServiceBadgeTitle.spoken(serviceType: serviceType.name, host: host)
     }
 
     /// Whether the rendered Label currently shows ONLY the icon
