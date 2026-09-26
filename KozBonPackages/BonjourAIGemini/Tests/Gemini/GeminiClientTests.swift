@@ -77,7 +77,7 @@ struct GeminiClientTests {
             .success(statusCode: 200, body: Self.sse([
                 #"{"candidates":[{"content":{"parts":[{"text":"Hel"}]}}]}"#,
                 #"{"candidates":[{"content":{"parts":[{"text":"lo"}]}}]}"#,
-                #"{"candidates":[{"finishReason":"STOP"}]}"#,
+                #"{"candidates":[{"finishReason":"STOP"}]}"#
             ]))
         }
         defer { StubURLProtocol.handler = nil }
@@ -96,7 +96,7 @@ struct GeminiClientTests {
             .success(statusCode: 200, body: Self.sse([
                 #"{"candidates":[{"content":{"parts":[{"text":"done"}]}}]}"#,
                 #"{"candidates":[{"finishReason":"STOP"}]}"#,
-                #"{"candidates":[{"content":{"parts":[{"text":"IGNORED"}]}}]}"#,
+                #"{"candidates":[{"content":{"parts":[{"text":"IGNORED"}]}}]}"#
             ]))
         }
         defer { StubURLProtocol.handler = nil }
@@ -117,7 +117,7 @@ struct GeminiClientTests {
         StubURLProtocol.handler = { request in
             captured.set(request)
             return .success(statusCode: 200, body: Self.sse([
-                #"{"candidates":[{"finishReason":"STOP"}]}"#,
+                #"{"candidates":[{"finishReason":"STOP"}]}"#
             ]))
         }
         defer { StubURLProtocol.handler = nil }
@@ -143,7 +143,7 @@ struct GeminiClientTests {
         StubURLProtocol.handler = { request in
             captured.set(request)
             return .success(statusCode: 200, body: Self.sse([
-                #"{"candidates":[{"finishReason":"STOP"}]}"#,
+                #"{"candidates":[{"finishReason":"STOP"}]}"#
             ]))
         }
         defer { StubURLProtocol.handler = nil }

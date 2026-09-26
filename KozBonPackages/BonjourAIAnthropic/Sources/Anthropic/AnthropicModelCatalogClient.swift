@@ -42,26 +42,6 @@ public protocol AnthropicModelCatalogClientProtocol: Sendable {
 /// is reasonable.
 public struct AnthropicModelCatalogClient: AnthropicModelCatalogClientProtocol {
 
-    // MARK: - Response DTOs
-
-    /// Only the fields KozBon needs. The endpoint also returns
-    /// `capabilities`, `max_tokens`, and pagination cursors;
-    /// decoding just these keeps the DTO stable as Anthropic adds
-    /// fields (`JSONDecoder` ignores unknown keys).
-    private struct ModelListResponse: Decodable {
-        let data: [Model]
-
-        struct Model: Decodable {
-            let id: String
-            let displayName: String
-
-            enum CodingKeys: String, CodingKey {
-                case id
-                case displayName = "display_name"
-            }
-        }
-    }
-
     // MARK: - Properties
 
     private let configuration: AnthropicConfiguration
@@ -161,5 +141,29 @@ public struct AnthropicModelCatalogClient: AnthropicModelCatalogClientProtocol {
         default:
             return .serverError(provider: .anthropic, message: body.isEmpty ? nil : body)
         }
+    }
+}
+
+// MARK: - Response DTOs
+
+/// Only the fields KozBon needs. The endpoint also returns
+/// `capabilities`, `max_tokens`, and pagination cursors; decoding
+/// just these keeps the DTO stable as Anthropic adds fields
+/// (`JSONDecoder` ignores unknown keys).
+///
+/// File-scoped rather than nested in the client so `CodingKeys`
+/// doesn't sit three type levels deep.
+private struct ModelListResponse: Decodable {
+    let data: [ModelListEntry]
+}
+
+/// One row of ``ModelListResponse``.
+private struct ModelListEntry: Decodable {
+    let id: String
+    let displayName: String
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case displayName = "display_name"
     }
 }

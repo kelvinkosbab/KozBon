@@ -41,22 +41,6 @@ public protocol GeminiModelCatalogClientProtocol: Sendable {
 /// reasonable.
 public struct GeminiModelCatalogClient: GeminiModelCatalogClientProtocol {
 
-    // MARK: - Response DTOs
-
-    /// Only the fields KozBon needs; `JSONDecoder` ignores the
-    /// rest (token limits, supported parameters, version strings)
-    /// so the DTO stays stable as Google adds fields.
-    private struct ModelListResponse: Decodable {
-        let models: [Model]
-
-        struct Model: Decodable {
-            /// Fully-qualified, e.g. `models/gemini-2.5-flash`.
-            let name: String
-            let displayName: String?
-            let supportedGenerationMethods: [String]?
-        }
-    }
-
     // MARK: - Properties
 
     private let configuration: GeminiConfiguration
@@ -125,7 +109,7 @@ public struct GeminiModelCatalogClient: GeminiModelCatalogClientProtocol {
     /// API rejects. `generateContent` support is the filter that
     /// keeps the list to models that can actually hold a
     /// conversation.
-    private static func makeOption(from model: ModelListResponse.Model) -> GeminiModelOption? {
+    private static func makeOption(from model: ModelListEntry) -> GeminiModelOption? {
         guard let methods = model.supportedGenerationMethods,
               methods.contains("generateContent") else {
             return nil
@@ -186,4 +170,24 @@ public struct GeminiModelCatalogClient: GeminiModelCatalogClientProtocol {
             return .serverError(provider: .gemini, message: body.isEmpty ? nil : body)
         }
     }
+}
+
+// MARK: - Response DTOs
+
+/// Only the fields KozBon needs; `JSONDecoder` ignores the rest
+/// (token limits, supported parameters, version strings) so the DTO
+/// stays stable as Google adds fields.
+///
+/// File-scoped rather than nested in the client to keep the entry
+/// type out of a third level of nesting.
+private struct ModelListResponse: Decodable {
+    let models: [ModelListEntry]
+}
+
+/// One row of ``ModelListResponse``.
+private struct ModelListEntry: Decodable {
+    /// Fully-qualified, e.g. `models/gemini-2.5-flash`.
+    let name: String
+    let displayName: String?
+    let supportedGenerationMethods: [String]?
 }

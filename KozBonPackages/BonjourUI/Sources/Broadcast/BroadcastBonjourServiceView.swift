@@ -18,23 +18,28 @@ import BonjourStorage
 // each piece reads context (`isCreatingBonjourService`,
 // validation state, the broadcast-form prefill paths used by
 // the chat assistant's `prepareBroadcast` tool) from the view
-// model's state, so splitting across files would force the
-// state through bindings or environment for no structural
-// benefit. Form state, validation, and the publish call moved
-// to `BroadcastBonjourServiceViewModel`.
+// model's state. Extracting any of it as a *separate view* would
+// force that state through bindings or environment for no
+// structural benefit, so the only split here is a same-type
+// extension: the TXT-record list lives in
+// `BroadcastBonjourServiceView+TxtRecords.swift`, which keeps
+// direct access to the same state. Form state, validation, and
+// the publish call moved to `BroadcastBonjourServiceViewModel`.
 
 // MARK: - BroadcastBonjourServiceView
 
 struct BroadcastBonjourServiceView: View {
 
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    // `internal` so `+TxtRecords` can read it — `private` doesn't span files.
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
     @Environment(\.preferencesStore) private var preferencesStore
 
     @Binding private var isPresented: Bool
     @Binding private var customPublishedServices: [BonjourService]
 
-    @State private var viewModel: BroadcastBonjourServiceViewModel
-    @State private var isCreateTxtRecordViewPresented = false
+    // `internal` for the same reason as `reduceMotion` above.
+    @State var viewModel: BroadcastBonjourServiceViewModel
+    @State var isCreateTxtRecordViewPresented = false
 
     /// Drives the Apple Intelligence Insights sheet from the
     /// service-type row's long-press menu. Stays on the View
@@ -306,55 +311,6 @@ struct BroadcastBonjourServiceView: View {
         }
     }
 
-    // MARK: - TXT Records Section
-
-    @ViewBuilder
-    private func txtRecordsSection() -> some View {
-        Section {
-            ForEach(viewModel.dataRecords, id: \.key) { dataRecord in
-                TitleDetailStackView(
-                    title: dataRecord.key,
-                    detail: dataRecord.value
-                )
-                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                    Button(role: .destructive) {
-                        removeDataRecord(dataRecord)
-                    } label: {
-                        Label(Strings.Buttons.remove, systemImage: Iconography.remove)
-                    }
-                    .accessibilityLabel(Strings.Accessibility.remove(dataRecord.key))
-                    .accessibilityHint(Strings.Accessibility.deleteTxtRecordHint)
-                    .tint(.red)
-                }
-                // Swipe actions are gesture-only — mirror delete so
-                // VoiceOver / Switch Control users can remove records.
-                .accessibilityActions {
-                    Button(Strings.Accessibility.remove(dataRecord.key)) {
-                        removeDataRecord(dataRecord)
-                    }
-                }
-            }
-
-            Button {
-                isCreateTxtRecordViewPresented = true
-            } label: {
-                Label(Strings.Buttons.addTxtRecord, systemImage: Iconography.add)
-            }
-            .accessibilityHint(Strings.Accessibility.addTxtRecordHint)
-        } header: {
-            Text(Strings.Sections.txtRecords)
-                .accessibilityAddTraits(.isHeader)
-        } footer: {
-            // TXT-record-specific explanation rather than form-wide
-            // tips. The other fields (Service Type, Port, Domain) all
-            // have their own per-field hints in their section footers
-            // now, so this footer can stay focused on the section it
-            // sits under: what TXT records are, when to add them, and
-            // when to leave the list empty.
-            Text(Strings.Guidance.txtRecord)
-        }
-    }
-
     // MARK: - Error Focus
 
     /// Routes VoiceOver focus to the first error footer, in form
@@ -371,24 +327,6 @@ struct BroadcastBonjourServiceView: View {
             } else if viewModel.domainError != nil {
                 focusedError = .domain
             }
-        }
-    }
-
-    // MARK: - TXT Record Removal
-
-    /// Removes the given TXT record with the standard animation.
-    /// Shared by the swipe-delete button and its VoiceOver
-    /// accessibility-action mirror so the two paths can't drift.
-    private func removeDataRecord(_ dataRecord: BonjourService.TxtDataRecord) {
-        guard let indexToRemove = viewModel.dataRecords.firstIndex(where: { record in
-            record.key == dataRecord.key
-        }) else { return }
-        withAnimation(reduceMotion ? nil : .default) {
-            // `Array.remove(at:)` returns the removed element;
-            // Xcode 27's `#NoUsage` diagnostic flags discarded
-            // results from `withAnimation` single-expression
-            // closures. Discard explicitly.
-            _ = viewModel.dataRecords.remove(at: indexToRemove)
         }
     }
 

@@ -53,6 +53,10 @@ identifier_name:
     - ip
     - a
     - b
+    # `c` completes the a/b/c fixture-naming run already allowed
+    # above — tests that build three sibling values shouldn't have
+    # to rename the third one.
+    - c
     - r1
     - r2
     - vm

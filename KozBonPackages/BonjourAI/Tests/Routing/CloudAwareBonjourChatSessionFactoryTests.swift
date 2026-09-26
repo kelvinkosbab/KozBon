@@ -21,7 +21,7 @@ import BonjourAIAnthropic
 /// tests assert against the routing decision without pulling in
 /// `FoundationModels` (which isn't available in test contexts).
 @MainActor
-final class StubAppleChatFactory: BonjourChatSessionFactoryProtocol, Sendable {
+final class StubAppleChatFactory: BonjourChatSessionFactoryProtocol {
 
     /// What to return from `makeForCurrentEnvironment`. Tests
     /// flip this between an `InMemoryAppleChatSession` and `nil`

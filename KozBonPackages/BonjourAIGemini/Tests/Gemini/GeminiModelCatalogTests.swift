@@ -79,7 +79,7 @@ struct GeminiModelCatalogTests {
     func successfulFetchReplacesOptions() async {
         let client = StubGeminiCatalogClient(.success([
             liveOption("gemini-3.0-pro", "Gemini 3.0 Pro"),
-            liveOption("gemini-3.0-flash", "Gemini 3.0 Flash"),
+            liveOption("gemini-3.0-flash", "Gemini 3.0 Flash")
         ]))
         let catalog = GeminiModelCatalog(client: client)
 
@@ -160,7 +160,7 @@ struct GeminiModelCatalogTests {
     func keepsPresentSelection() async {
         let client = StubGeminiCatalogClient(.success([
             liveOption("gemini-3.0-pro", "Gemini 3.0 Pro"),
-            liveOption("gemini-3.0-flash", "Gemini 3.0 Flash"),
+            liveOption("gemini-3.0-flash", "Gemini 3.0 Flash")
         ]))
         let catalog = GeminiModelCatalog(client: client)
 

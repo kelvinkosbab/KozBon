@@ -240,28 +240,39 @@ public final class GeminiClient: GeminiClientProtocol {
         case 500...599:
             return .serverError(provider: .gemini, message: message)
         case 400...499:
-            if let lowered = message?.lowercased() {
-                // Google phrases the over-long-prompt 400 in terms
-                // of the token limit; these phrases cover the
-                // wordings without being loose enough to catch an
-                // unrelated 400.
-                if lowered.contains("token count")
-                    || lowered.contains("input token")
-                    || lowered.contains("context length")
-                    || lowered.contains("exceeds the maximum") {
-                    return .contextWindowExceeded(provider: .gemini, message: message)
-                }
-                // Free-tier exhaustion and billing problems arrive
-                // as 400s mentioning billing, where the remediation
-                // is Google's console rather than anything in-app.
-                if lowered.contains("billing") || lowered.contains("quota") {
-                    return .creditBalanceTooLow(provider: .gemini, message: message)
-                }
-            }
-            return .invalidRequest(provider: .gemini, message: message)
+            return mapClientError(message: message)
         default:
             return .unexpectedStatus(provider: .gemini, statusCode: statusCode)
         }
+    }
+
+    /// The 4xx cases Google distinguishes only by message text.
+    ///
+    /// Split from ``mapHTTPError(statusCode:body:response:)`` because
+    /// the two phrase-matching branches below push that function's
+    /// complexity past the project limit — and because this is the
+    /// part most likely to grow as Google rewords its errors.
+    private func mapClientError(message: String?) -> AICloudError {
+        guard let lowered = message?.lowercased() else {
+            return .invalidRequest(provider: .gemini, message: message)
+        }
+
+        // Google phrases the over-long-prompt 400 in terms of the
+        // token limit; these phrases cover the wordings without
+        // being loose enough to catch an unrelated 400.
+        let contextPhrases = ["token count", "input token", "context length", "exceeds the maximum"]
+        if contextPhrases.contains(where: lowered.contains) {
+            return .contextWindowExceeded(provider: .gemini, message: message)
+        }
+
+        // Free-tier exhaustion and billing problems arrive as 400s
+        // mentioning billing, where the remediation is Google's
+        // console rather than anything in-app.
+        if ["billing", "quota"].contains(where: lowered.contains) {
+            return .creditBalanceTooLow(provider: .gemini, message: message)
+        }
+
+        return .invalidRequest(provider: .gemini, message: message)
     }
 
     private func extractErrorMessage(from body: String) -> String? {

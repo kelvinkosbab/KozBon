@@ -34,7 +34,6 @@ struct AIBackendStyleTests {
         #expect(AIBackend.anthropic.accentColor == Color.kozBonAnthropic)
     }
 
-
     @Test("The backends have distinct accents — never accidentally swap")
     func accentsAreDistinct() {
         // Belt-and-suspenders trip-wire: a refactor that swapped
@@ -71,7 +70,6 @@ struct AIBackendStyleTests {
         // the system name is the only Equatable surface.
         #expect(AIBackend.anthropic.iconSystemName == Iconography.anthropicClaude)
     }
-
 
     @Test("The backends use distinct icons")
     func iconsAreDistinct() {

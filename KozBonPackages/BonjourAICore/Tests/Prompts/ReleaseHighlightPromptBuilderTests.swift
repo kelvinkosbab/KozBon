@@ -1,5 +1,5 @@
 //
-//  BonjourReleaseHighlightPromptBuilderTests.swift
+//  ReleaseHighlightPromptBuilderTests.swift
 //  BonjourAICore
 //
 //  Copyright © 2016-present Kozinga. All rights reserved.
@@ -9,7 +9,7 @@ import Foundation
 import Testing
 @testable import BonjourAICore
 
-// MARK: - BonjourReleaseHighlightPromptBuilderTests
+// MARK: - ReleaseHighlightPromptBuilderTests
 
 /// Pins the release-highlight Insights prompt surface (the
 /// Preferences → What's New long-press "what this means for you"
@@ -18,7 +18,7 @@ import Testing
 /// toward short, user-impact-focused, anti-hallucination output.
 @Suite("BonjourServicePromptBuilder · Release Highlight")
 @MainActor
-struct BonjourReleaseHighlightPromptBuilderTests {
+struct ReleaseHighlightPromptBuilderTests {
 
     // MARK: - Prompt
 

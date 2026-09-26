@@ -1,5 +1,5 @@
 //
-//  BonjourServicesViewModelConnectivityTests.swift
+//  ServicesViewModelConnectivityTests.swift
 //  KozBon
 //
 //  Copyright © 2016-present Kozinga. All rights reserved.
@@ -17,7 +17,7 @@ import BonjourScanning
 
 @Suite("BonjourServicesViewModel · Network Connectivity")
 @MainActor
-struct BonjourServicesViewModelConnectivityTests {
+struct ServicesViewModelConnectivityTests {
 
     @Test("VM seeds `isOnLocalNetwork` from the monitor's initial value")
     func vmSeedsConnectivityFromMonitor() {
