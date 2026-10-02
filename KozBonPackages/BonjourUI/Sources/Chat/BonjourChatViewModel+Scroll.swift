@@ -87,25 +87,71 @@ extension BonjourChatViewModel {
         }
     }
 
+    /// What the transcript should scroll to when the compose
+    /// field takes focus.
+    ///
+    /// Split out from the `ScrollViewProxy` call below so the
+    /// choice of target is testable on its own —
+    /// `ScrollViewProxy` has no public initializer, so anything
+    /// holding one can't be unit-tested.
+    enum KeyboardScrollTarget: Equatable {
+
+        /// Ride the newest bubble up to sit above the keyboard.
+        case message(UUID)
+
+        /// No messages yet, so the empty-state block is the whole
+        /// content. Scrolled to its *bottom*, which lifts the
+        /// intro and suggestions above the keyboard instead of
+        /// leaving them behind it.
+        case emptyState
+    }
+
+    /// Where focus should send the transcript, or `nil` when it
+    /// shouldn't move at all.
+    ///
+    /// The empty case is the one that matters: a fresh chat has
+    /// no messages, and keying the scroll off `messages.last`
+    /// alone meant focusing the field did nothing — the intro and
+    /// suggestions stayed put under the keyboard.
+    func keyboardScrollTarget(
+        focused: Bool,
+        messages: [BonjourChatMessage]
+    ) -> KeyboardScrollTarget? {
+        guard focused else { return nil }
+        guard let last = messages.last else { return .emptyState }
+        return .message(last.id)
+    }
+
     /// When the user taps into the compose field, scroll the
-    /// latest message to the bottom of the visible region so
-    /// it sits right above the keyboard. A ~300 ms delay lets
-    /// the keyboard's safe-area insets propagate before we
-    /// compute the scroll position; scrolling synchronously
-    /// with the focus change would use the pre-keyboard
-    /// layout and leave the last message clipped under the
-    /// keyboard.
+    /// content up so the bottom of the transcript sits right
+    /// above the keyboard. A ~300 ms delay lets the keyboard's
+    /// safe-area insets propagate before we compute the scroll
+    /// position; scrolling synchronously with the focus change
+    /// would use the pre-keyboard layout and leave the content
+    /// clipped under the keyboard.
     func scrollLatestMessageAboveKeyboard(
         focused: Bool,
         session: any BonjourChatSessionProtocol,
         proxy: ScrollViewProxy,
+        emptyAnchorID: String,
         reduceMotion: Bool
     ) {
-        guard focused, let last = session.messages.last else { return }
+        guard let target = keyboardScrollTarget(
+            focused: focused,
+            messages: session.messages
+        ) else {
+            return
+        }
+
+        let id: AnyHashable = switch target {
+        case .message(let messageID): AnyHashable(messageID)
+        case .emptyState:             AnyHashable(emptyAnchorID)
+        }
+
         Task { @MainActor in
             try? await Task.sleep(for: .milliseconds(300))
             withAnimation(reduceMotion ? nil : .easeOut(duration: 0.25)) {
-                proxy.scrollTo(last.id, anchor: .bottom)
+                proxy.scrollTo(id, anchor: .bottom)
             }
         }
     }

@@ -90,6 +90,7 @@ extension BonjourChatView {
                     focused: focused,
                     session: session,
                     proxy: proxy,
+                    emptyAnchorID: Self.emptyStateAnchorID,
                     reduceMotion: reduceMotion
                 )
             }
