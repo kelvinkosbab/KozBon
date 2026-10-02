@@ -108,7 +108,7 @@ public final class AnthropicBonjourChatSession: BonjourChatSessionProtocol {
     /// this session. After the first turn, only changed contexts
     /// trigger a re-injection — keeps the prompt cache stable
     /// for the static parts of the conversation.
-    private var lastContextBlock: String?
+    private var lastContextSignature: String?
 
     // MARK: - Init
 
@@ -168,7 +168,7 @@ public final class AnthropicBonjourChatSession: BonjourChatSessionProtocol {
         )
         currentResponseLengthSnapshot = responseLength
         currentModel = selectedModel
-        lastContextBlock = nil
+        lastContextSignature = nil
     }
 
     // MARK: - Append User Message
@@ -265,16 +265,21 @@ public final class AnthropicBonjourChatSession: BonjourChatSessionProtocol {
         trimmed: String,
         context: BonjourChatPromptBuilder.ChatContext
     ) -> String {
-        let currentContextBlock = BonjourChatPromptBuilder.contextBlock(context: context)
-        let isFirstTurn = (lastContextBlock == nil)
-        let contextChanged = lastContextBlock != currentContextBlock
+        // Compare on the signature, not the rendered block: the
+        // block carries a live "Ns ago" scan counter, so comparing
+        // rendered text reported a change once per wall-clock
+        // second and re-sent the whole context on any turn more
+        // than a second after the last one.
+        let currentSignature = BonjourChatPromptBuilder.contextSignature(context: context)
+        let isFirstTurn = (lastContextSignature == nil)
+        let contextChanged = lastContextSignature != currentSignature
         let turnText = BonjourChatPromptBuilder.userTurn(
             message: trimmed,
             context: context,
             isFirstTurn: isFirstTurn,
             contextChanged: contextChanged
         )
-        lastContextBlock = currentContextBlock
+        lastContextSignature = currentSignature
         return turnText
     }
 
@@ -450,7 +455,7 @@ public final class AnthropicBonjourChatSession: BonjourChatSessionProtocol {
         systemBlock = nil
         currentResponseLengthSnapshot = nil
         currentModel = nil
-        lastContextBlock = nil
+        lastContextSignature = nil
         error = nil
         errorAction = nil
         isGenerating = false
@@ -470,7 +475,7 @@ public final class AnthropicBonjourChatSession: BonjourChatSessionProtocol {
         systemBlock = nil
         currentResponseLengthSnapshot = nil
         currentModel = nil
-        lastContextBlock = nil
+        lastContextSignature = nil
         error = nil
         errorAction = nil
         isGenerating = false

@@ -70,7 +70,7 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
 
     /// The last context block sent to the model. Used to detect when the live
     /// service context has materially changed.
-    private var lastContextBlock: String?
+    private var lastContextSignature: String?
 
     /// The service-type library snapshot used when constructing the
     /// current session's tools. Re-snapshotted on session recreation
@@ -154,7 +154,7 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
         librarySnapshot = BonjourServiceType.fetchAll()
         session = LanguageModelSession(instructions: instructions)
         sessionResponseLengthSnapshot = responseLength
-        lastContextBlock = nil
+        lastContextSignature = nil
     }
 
     // MARK: - Append User Message
@@ -242,16 +242,21 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
         prewarm()
 
         // Determine whether to prepend a context preamble.
-        let currentContextBlock = BonjourChatPromptBuilder.contextBlock(context: context)
-        let isFirstTurn = (lastContextBlock == nil)
-        let contextChanged = lastContextBlock != currentContextBlock
+        // Compare on the signature, not the rendered block: the
+        // block carries a live "Ns ago" scan counter, so comparing
+        // rendered text reported a change once per wall-clock
+        // second and re-sent the whole context on any turn more
+        // than a second after the last one.
+        let currentSignature = BonjourChatPromptBuilder.contextSignature(context: context)
+        let isFirstTurn = (lastContextSignature == nil)
+        let contextChanged = lastContextSignature != currentSignature
         let turnToSend = BonjourChatPromptBuilder.userTurn(
             message: trimmed,
             context: context,
             isFirstTurn: isFirstTurn,
             contextChanged: contextChanged
         )
-        lastContextBlock = currentContextBlock
+        lastContextSignature = currentSignature
 
         // Create a placeholder assistant message that we stream into.
         let assistantId = UUID()
@@ -338,7 +343,7 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
         messages.removeAll()
         session = nil
         sessionResponseLengthSnapshot = nil
-        lastContextBlock = nil
+        lastContextSignature = nil
         librarySnapshot = []
         error = nil
         isGenerating = false
@@ -361,7 +366,7 @@ public final class BonjourChatSession: BonjourChatSessionProtocol {
         self.messages = messages
         session = nil
         sessionResponseLengthSnapshot = nil
-        lastContextBlock = nil
+        lastContextSignature = nil
         error = nil
         isGenerating = false
     }

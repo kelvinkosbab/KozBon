@@ -66,6 +66,30 @@ extension BonjourChatPromptBuilder {
     ///    names only; query-specific full descriptions are injected
     ///    separately via ``queriedDescriptionsBlock(context:query:)``
     ///    to keep the stable block compact.
+    /// A change-detection key for the context block.
+    ///
+    /// Deliberately *not* the rendered block. ``scanStatusLine``
+    /// stamps a live "Ns ago" counter, so comparing rendered
+    /// blocks reports a change once per wall-clock second — which
+    /// made every turn more than a second after the previous one
+    /// re-send the whole context, burning tokens and breaking
+    /// Anthropic's prompt-cache reuse. Callers track this instead.
+    ///
+    /// Keeps every field that genuinely changes the context and
+    /// reduces the scan status to its *state*, so "scanning" vs
+    /// "idle" vs "never scanned" still counts as a change while
+    /// the ticking seconds don't.
+    @MainActor
+    public static func contextSignature(context: ChatContext) -> String {
+        var parts: [String] = [scanStatusState(context: context), ""]
+        parts.append(contentsOf: discoveredServicesLines(context: context))
+        parts.append("")
+        parts.append(contentsOf: publishedServicesLines(context: context))
+        parts.append("")
+        parts.append(contentsOf: libraryLines(context: context))
+        return parts.joined(separator: "\n")
+    }
+
     @MainActor
     public static func contextBlock(context: ChatContext) -> String {
         var parts: [String] = ["CURRENT CONTEXT:", ""]
@@ -85,7 +109,7 @@ extension BonjourChatPromptBuilder {
     /// service types mentioned in the user's message. Returns an empty
     /// string when no matches exist so multi-turn history stays compact
     /// for general questions. Called from ``userTurn`` on every user
-    /// message (NOT tracked by `lastContextBlock`, so it doesn't force
+    /// message (NOT tracked by `lastContextSignature`, so it doesn't force
     /// re-injection of the stable context on every turn).
     public static func queriedDescriptionsBlock(
         context: ChatContext,
@@ -130,7 +154,7 @@ extension BonjourChatPromptBuilder {
     /// otherwise so the block adds zero token cost to the common
     /// case (questions about the user's network). Called from
     /// ``userTurn`` on every user message and NOT tracked by
-    /// `lastContextBlock`, so its per-turn presence doesn't force
+    /// `lastContextSignature`, so its per-turn presence doesn't force
     /// re-injection of the stable context.
     ///
     /// Reads the static ``ReleaseNotes/all`` table directly rather
@@ -160,6 +184,16 @@ extension BonjourChatPromptBuilder {
     /// distinguish "data is fresh" from "data is stale" from "no scan
     /// has run". The model is instructed (via ACCURACY RULES) to caveat
     /// its answers when data is stale or missing.
+    /// The scan status reduced to a stable token — the part of
+    /// ``scanStatusLine`` that isn't a live clock. Used by
+    /// ``contextSignature(context:)``.
+    fileprivate static func scanStatusState(context: ChatContext) -> String {
+        if context.isScanning {
+            return "scan:in-progress"
+        }
+        return context.lastScanTime == nil ? "scan:none" : "scan:complete"
+    }
+
     fileprivate static func scanStatusLine(context: ChatContext) -> String {
         if context.isScanning {
             return "Scan status: in progress — results may still be populating."

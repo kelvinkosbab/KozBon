@@ -305,7 +305,7 @@ public enum BonjourChatPromptBuilder {
     ///   from bloating with duplicate data every turn.
     /// - **Queried descriptions** (library types the user's message
     ///   mentions by name) are computed fresh and re-injected every turn
-    ///   they're relevant. They're NOT tracked by `lastContextBlock`, so
+    ///   they're relevant. They're NOT tracked by `lastContextSignature`, so
     ///   varying them per-turn doesn't force the stable block to
     ///   re-send.
     ///
