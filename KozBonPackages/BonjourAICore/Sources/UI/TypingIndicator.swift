@@ -16,6 +16,12 @@ import SwiftUI
 /// the style of the Apple Messages typing bubble.
 ///
 /// Respects `accessibilityReduceMotion` by falling back to a static row of dots.
+///
+/// The pill is Liquid Glass rather than a material: the chat sits on
+/// an animated colour wash, and `.ultraThinMaterial` let so much of
+/// it through that the dots read as part of the background. Glass
+/// carries its own edge and shadow, so the indicator separates from
+/// whatever happens to be behind it.
 public struct TypingIndicator: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -34,7 +40,7 @@ public struct TypingIndicator: View {
     private static let dotCount = 3
 
     /// The diameter of each dot in points.
-    private let dotSize: CGFloat = 6
+    private let dotSize: CGFloat = 7
 
     /// Duration of a single pulse (one direction). With `autoreverses: true`
     /// the full cycle is `pulseDuration * 2`.
@@ -51,7 +57,11 @@ public struct TypingIndicator: View {
         HStack(spacing: 5) {
             ForEach(0..<Self.dotCount, id: \.self) { index in
                 Circle()
-                    .fill(Color.secondary)
+                    // `.primary`, not `.secondary` — secondary over a
+                    // translucent pill on a coloured background left
+                    // the dots barely legible at the bottom of their
+                    // pulse.
+                    .fill(Color.primary)
                     .frame(width: dotSize, height: dotSize)
                     .opacity(opacity(for: index))
                     .scaleEffect(scale(for: index))
@@ -62,7 +72,7 @@ public struct TypingIndicator: View {
         // capsule was ~22pt tall and felt cramped against the dots.
         .padding(.horizontal, 14)
         .padding(.vertical, 12)
-        .background(.ultraThinMaterial, in: Capsule())
+        .platformGlassBackground(in: Capsule())
         .padding(.top, 6)
         .onAppear {
             startAnimating()
@@ -71,14 +81,18 @@ public struct TypingIndicator: View {
 
     // MARK: - Per-Dot Style
 
+    /// Scale carries the wave; opacity only shades it. The old
+    /// 0.3 trough left the resting dots reading as grey-on-grey
+    /// against the pill, so every dot now stays firmly legible and
+    /// the ripple shows as size rather than near-disappearance.
     private func opacity(for index: Int) -> Double {
-        if reduceMotion { return 0.6 }
-        return isPulsing[index] ? 1.0 : 0.3
+        if reduceMotion { return 0.85 }
+        return isPulsing[index] ? 1.0 : 0.65
     }
 
     private func scale(for index: Int) -> CGFloat {
         if reduceMotion { return 1.0 }
-        return isPulsing[index] ? 1.0 : 0.6
+        return isPulsing[index] ? 1.0 : 0.55
     }
 
     // MARK: - Animation

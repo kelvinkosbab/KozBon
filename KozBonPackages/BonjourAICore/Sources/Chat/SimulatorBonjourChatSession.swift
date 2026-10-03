@@ -39,6 +39,18 @@ public final class SimulatorBonjourChatSession: BonjourChatSessionProtocol {
         self.intentBroker = intentBroker
     }
 
+    // MARK: - Tuning
+
+    /// Pause between the user's send and the first streamed word,
+    /// standing in for the time a real model spends before its
+    /// first token.
+    ///
+    /// Without it the stub starts streaming on the same runloop
+    /// turn the placeholder is appended, so the typing indicator
+    /// exists for a frame or two and is effectively untestable in
+    /// the simulator — which is the one place this session runs.
+    private static let processingDelay: Duration = .seconds(1)
+
     // MARK: - BonjourChatSessionProtocol
 
     /// Appends the user's message immediately so the bubble lands on
@@ -68,6 +80,14 @@ public final class SimulatorBonjourChatSession: BonjourChatSessionProtocol {
 
         let assistantId = UUID()
         messages.append(BonjourChatMessage(id: assistantId, role: .assistant, content: ""))
+
+        // The placeholder is on screen and empty, so this is the
+        // window where the typing indicator shows on its own.
+        // Cancellation during the pause is real — the user can
+        // leave the tab — so bail rather than streaming into a
+        // message nobody is watching.
+        try? await Task.sleep(for: Self.processingDelay)
+        if Task.isCancelled { return }
 
         // Stream a random lorem ipsum response word by word to mimic the real streaming UX.
         let fullResponse = SimulatorLoremIpsum.randomMarkdownResponse()

@@ -1,6 +1,6 @@
 //
 //  View+GlassBackground.swift
-//  BonjourUI
+//  BonjourAICore
 //
 //  Copyright © 2016-present Kozinga. All rights reserved.
 //
@@ -17,6 +17,11 @@ import SwiftUI
 // These helpers exist purely to route between those two spellings, so
 // views can ask for "the platform's glass" without each one carrying an
 // `#if os(visionOS)`.
+//
+// Lives in `BonjourAICore` rather than `BonjourUI`'s design system so
+// the UI primitives shipped from this module (`TypingIndicator`,
+// `ServiceExplanationSheet`) can reach it too — `BonjourUI` depends on
+// this module, not the other way round.
 
 public extension View {
 
