@@ -3029,56 +3029,56 @@
         }
       }
     },
-    "Google Gemini joins Apple Intelligence and Anthropic Claude as an AI option, and the Claude and Gemini model pickers now load each provider's latest models. GitHub Models is gone now that GitHub has retired the service — if you used it, KozBon switches you back to Apple Intelligence.\n\nKozBon also gets a fresh look: an ambient background on every tab (with a switch to turn it off), landscape and wide layouts on iPhone, and a Nearby list grouped by service type. Siri and Shortcuts can now scan and list services, and KozBon now requires iOS, iPadOS, macOS, or visionOS 26.": {
+    "Google Gemini joins Apple Intelligence and Anthropic Claude as an AI option, and the Claude and Gemini model pickers now load each provider's latest models. GitHub Models is gone now that GitHub has retired the service — if you used it, KozBon switches you back to Apple Intelligence.\n\nKozBon also gets a fresh look: an ambient background on every tab (with a switch to turn it off), landscape and wide layouts on iPhone, and a Nearby list organized into sections by device or service type. Siri and Shortcuts can now scan and list services, and KozBon now requires iOS, iPadOS, macOS, or visionOS 26.": {
       "comment": "What's New summary for KozBon 4.7. The English text is the key.",
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Google Gemini joins Apple Intelligence and Anthropic Claude as an AI option, and the Claude and Gemini model pickers now load each provider's latest models. GitHub Models is gone now that GitHub has retired the service — if you used it, KozBon switches you back to Apple Intelligence.\n\nKozBon also gets a fresh look: an ambient background on every tab (with a switch to turn it off), landscape and wide layouts on iPhone, and a Nearby list grouped by service type. Siri and Shortcuts can now scan and list services, and KozBon now requires iOS, iPadOS, macOS, or visionOS 26."
+            "value": "Google Gemini joins Apple Intelligence and Anthropic Claude as an AI option, and the Claude and Gemini model pickers now load each provider's latest models. GitHub Models is gone now that GitHub has retired the service — if you used it, KozBon switches you back to Apple Intelligence.\n\nKozBon also gets a fresh look: an ambient background on every tab (with a switch to turn it off), landscape and wide layouts on iPhone, and a Nearby list organized into sections by device or service type. Siri and Shortcuts can now scan and list services, and KozBon now requires iOS, iPadOS, macOS, or visionOS 26."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Google Gemini se suma a Apple Intelligence y Anthropic Claude como opción de IA, y los selectores de modelo de Claude y Gemini ahora cargan los modelos más recientes de cada proveedor. GitHub Models desaparece, ya que GitHub retiró el servicio; si lo usabas, KozBon te devuelve a Apple Intelligence.\n\nKozBon también estrena aspecto: un fondo ambiental en cada pestaña (con un interruptor para desactivarlo), diseños horizontales y amplios en el iPhone y una lista Cercanos agrupada por tipo de servicio. Siri y Atajos ahora pueden buscar y listar servicios, y KozBon requiere ahora iOS, iPadOS, macOS o visionOS 26."
+            "value": "Google Gemini se suma a Apple Intelligence y Anthropic Claude como opción de IA, y los selectores de modelo de Claude y Gemini ahora cargan los modelos más recientes de cada proveedor. GitHub Models desaparece, ya que GitHub retiró el servicio; si lo usabas, KozBon te devuelve a Apple Intelligence.\n\nKozBon también estrena aspecto: un fondo ambiental en cada pestaña (con un interruptor para desactivarlo), diseños horizontales y amplios en el iPhone y una lista Cercanos organizada en secciones por dispositivo o por tipo de servicio. Siri y Atajos ahora pueden buscar y listar servicios, y KozBon requiere ahora iOS, iPadOS, macOS o visionOS 26."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Google Gemini rejoint Apple Intelligence et Anthropic Claude parmi les options d’IA, et les sélecteurs de modèle de Claude et Gemini chargent désormais les modèles les plus récents de chaque fournisseur. GitHub Models disparaît, GitHub ayant retiré le service ; si vous l’utilisiez, KozBon vous ramène à Apple Intelligence.\n\nKozBon fait aussi peau neuve : un arrière-plan d’ambiance sur chaque onglet (avec un interrupteur pour le désactiver), des dispositions paysage et larges sur iPhone, et une liste À proximité regroupée par type de service. Siri et Raccourcis peuvent désormais lancer une analyse et lister les services, et KozBon nécessite désormais iOS, iPadOS, macOS ou visionOS 26."
+            "value": "Google Gemini rejoint Apple Intelligence et Anthropic Claude parmi les options d’IA, et les sélecteurs de modèle de Claude et Gemini chargent désormais les modèles les plus récents de chaque fournisseur. GitHub Models disparaît, GitHub ayant retiré le service ; si vous l’utilisiez, KozBon vous ramène à Apple Intelligence.\n\nKozBon fait aussi peau neuve : un arrière-plan d’ambiance sur chaque onglet (avec un interrupteur pour le désactiver), des dispositions paysage et larges sur iPhone, et une liste À proximité organisée en sections par appareil ou par type de service. Siri et Raccourcis peuvent désormais lancer une analyse et lister les services, et KozBon nécessite désormais iOS, iPadOS, macOS ou visionOS 26."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Google Gemini ergänzt Apple Intelligence und Anthropic Claude als KI-Option, und die Modellauswahl für Claude und Gemini lädt jetzt die neuesten Modelle des jeweiligen Anbieters. GitHub Models entfällt, da GitHub den Dienst eingestellt hat – falls du ihn genutzt hast, wechselt KozBon zurück zu Apple Intelligence.\n\nAußerdem bekommt KozBon einen neuen Look: einen Umgebungshintergrund in jedem Tab (mit einem Schalter zum Ausschalten), Quer- und Breitformat-Layouts auf dem iPhone und eine nach Diensttyp gruppierte Liste „In der Nähe“. Siri und Kurzbefehle können jetzt Dienste scannen und auflisten, und KozBon erfordert jetzt iOS, iPadOS, macOS oder visionOS 26."
+            "value": "Google Gemini ergänzt Apple Intelligence und Anthropic Claude als KI-Option, und die Modellauswahl für Claude und Gemini lädt jetzt die neuesten Modelle des jeweiligen Anbieters. GitHub Models entfällt, da GitHub den Dienst eingestellt hat – falls du ihn genutzt hast, wechselt KozBon zurück zu Apple Intelligence.\n\nAußerdem bekommt KozBon einen neuen Look: einen Umgebungshintergrund in jedem Tab (mit einem Schalter zum Ausschalten), Quer- und Breitformat-Layouts auf dem iPhone und eine Liste „In der Nähe“, die nach Gerät oder Diensttyp in Abschnitte gegliedert ist. Siri und Kurzbefehle können jetzt Dienste scannen und auflisten, und KozBon erfordert jetzt iOS, iPadOS, macOS oder visionOS 26."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "AIの選択肢として、Apple IntelligenceとAnthropic ClaudeにGoogle Geminiが加わりました。ClaudeとGeminiのモデル選択では、各プロバイダの最新モデルを読み込むようになりました。GitHubがサービスを終了したため、GitHub Modelsは廃止されました。ご利用中だった場合は、KozBonが自動的にApple Intelligenceに切り替えます。\n\nデザインも一新しました。すべてのタブにアンビエント背景が加わり（オフにするスイッチもあります）、iPhoneで横向きやワイドレイアウトに対応し、「近くのサービス」リストはサービスタイプ別にグループ化されます。Siriとショートカットでサービスのスキャンと一覧表示ができるようになりました。また、KozBonの動作にはiOS、iPadOS、macOS、またはvisionOS 26が必要になりました。"
+            "value": "AIの選択肢として、Apple IntelligenceとAnthropic ClaudeにGoogle Geminiが加わりました。ClaudeとGeminiのモデル選択では、各プロバイダの最新モデルを読み込むようになりました。GitHubがサービスを終了したため、GitHub Modelsは廃止されました。ご利用中だった場合は、KozBonが自動的にApple Intelligenceに切り替えます。\n\nデザインも一新しました。すべてのタブにアンビエント背景が加わり（オフにするスイッチもあります）、iPhoneで横向きやワイドレイアウトに対応し、「近くのサービス」リストはデバイス別またはサービスタイプ別のセクションに整理されます。Siriとショートカットでサービスのスキャンと一覧表示ができるようになりました。また、KozBonの動作にはiOS、iPadOS、macOS、またはvisionOS 26が必要になりました。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Google Gemini 加入 Apple Intelligence 和 Anthropic Claude，成为新的 AI 选项；Claude 和 Gemini 的模型选择器现在会载入各提供商的最新模型。由于 GitHub 已停止该服务，GitHub Models 已移除；如果你之前在使用它，KozBon 会将你切换回 Apple Intelligence。\n\nKozBon 还焕然一新：每个标签页都有氛围背景（可通过开关关闭），iPhone 支持横向和宽屏布局，“附近”列表按服务类型分组。Siri 和“快捷指令”现在可以扫描并列出服务，KozBon 现在需要 iOS、iPadOS、macOS 或 visionOS 26。"
+            "value": "Google Gemini 加入 Apple Intelligence 和 Anthropic Claude，成为新的 AI 选项；Claude 和 Gemini 的模型选择器现在会载入各提供商的最新模型。由于 GitHub 已停止该服务，GitHub Models 已移除；如果你之前在使用它，KozBon 会将你切换回 Apple Intelligence。\n\nKozBon 还焕然一新：每个标签页都有氛围背景（可通过开关关闭），iPhone 支持横向和宽屏布局，“附近”列表按设备或服务类型分组显示。Siri 和“快捷指令”现在可以扫描并列出服务，KozBon 现在需要 iOS、iPadOS、macOS 或 visionOS 26。"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "انضم Google Gemini إلى Apple Intelligence وAnthropic Claude كخيار للذكاء الاصطناعي، وأصبحت أدوات اختيار النماذج في Claude وGemini تحمّل أحدث نماذج كل مزوّد. أُزيل GitHub Models بعد أن أوقفت GitHub الخدمة — وإذا كنت تستخدمه، يعيدك KozBon إلى Apple Intelligence.\n\nيحصل KozBon أيضًا على مظهر جديد: خلفية محيطة في كل علامة تبويب (مع مفتاح لإيقافها)، وتخطيطات أفقية وعريضة على iPhone، وقائمة «القريبة» مجمّعة حسب نوع الخدمة. أصبح بإمكان Siri و«الاختصارات» فحص الخدمات وعرض قائمتها، ويتطلب KozBon الآن iOS أو iPadOS أو macOS أو visionOS 26."
+            "value": "انضم Google Gemini إلى Apple Intelligence وAnthropic Claude كخيار للذكاء الاصطناعي، وأصبحت أدوات اختيار النماذج في Claude وGemini تحمّل أحدث نماذج كل مزوّد. أُزيل GitHub Models بعد أن أوقفت GitHub الخدمة — وإذا كنت تستخدمه، يعيدك KozBon إلى Apple Intelligence.\n\nيحصل KozBon أيضًا على مظهر جديد: خلفية محيطة في كل علامة تبويب (مع مفتاح لإيقافها)، وتخطيطات أفقية وعريضة على iPhone، وقائمة «القريبة» مقسّمة إلى أقسام حسب الجهاز أو نوع الخدمة. أصبح بإمكان Siri و«الاختصارات» فحص الخدمات وعرض قائمتها، ويتطلب KozBon الآن iOS أو iPadOS أو macOS أو visionOS 26."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "Google Gemini מצטרף ל-Apple Intelligence ול-Anthropic Claude כאפשרות AI, ובוררי המודלים של Claude ו-Gemini טוענים כעת את המודלים העדכניים של כל ספק. GitHub Models הוסר לאחר ש-GitHub הפסיקה את השירות — אם השתמשת בו, KozBon מחזירה אותך ל-Apple Intelligence.\n\nKozBon גם מקבלת מראה חדש: רקע אווירה בכל כרטיסייה (עם מתג לכיבוי), פריסות לרוחב ורחבות ב-iPhone, ורשימת \"בסביבה\" שמקובצת לפי סוג שירות. Siri ו\"קיצורים\" יכולים כעת לסרוק שירותים ולהציג אותם, ו-KozBon דורשת כעת iOS,‏ iPadOS,‏ macOS או visionOS 26."
+            "value": "Google Gemini מצטרף ל-Apple Intelligence ול-Anthropic Claude כאפשרות AI, ובוררי המודלים של Claude ו-Gemini טוענים כעת את המודלים העדכניים של כל ספק. GitHub Models הוסר לאחר ש-GitHub הפסיקה את השירות — אם השתמשת בו, KozBon מחזירה אותך ל-Apple Intelligence.\n\nKozBon גם מקבלת מראה חדש: רקע אווירה בכל כרטיסייה (עם מתג לכיבוי), פריסות לרוחב ורחבות ב-iPhone, ורשימת \"בסביבה\" שמחולקת למקטעים לפי מכשיר או לפי סוג שירות. Siri ו\"קיצורים\" יכולים כעת לסרוק שירותים ולהציג אותם, ו-KozBon דורשת כעת iOS,‏ iPadOS,‏ macOS או visionOS 26."
           }
         }
       }

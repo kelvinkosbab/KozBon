@@ -82,7 +82,7 @@ public enum ReleaseNotes {
         ReleaseNote(
             version: "4.7",
             // swiftlint:disable:next line_length
-            summary: "Google Gemini joins Apple Intelligence and Anthropic Claude as an AI option, and the Claude and Gemini model pickers now load each provider's latest models. GitHub Models is gone now that GitHub has retired the service — if you used it, KozBon switches you back to Apple Intelligence.\n\nKozBon also gets a fresh look: an ambient background on every tab (with a switch to turn it off), landscape and wide layouts on iPhone, and a Nearby list grouped by service type. Siri and Shortcuts can now scan and list services, and KozBon now requires iOS, iPadOS, macOS, or visionOS 26.",
+            summary: "Google Gemini joins Apple Intelligence and Anthropic Claude as an AI option, and the Claude and Gemini model pickers now load each provider's latest models. GitHub Models is gone now that GitHub has retired the service — if you used it, KozBon switches you back to Apple Intelligence.\n\nKozBon also gets a fresh look: an ambient background on every tab (with a switch to turn it off), landscape and wide layouts on iPhone, and a Nearby list organized into sections by device or service type. Siri and Shortcuts can now scan and list services, and KozBon now requires iOS, iPadOS, macOS, or visionOS 26.",
             highlights: [
                 // swiftlint:disable:next line_length
                 "Google Gemini joins Apple Intelligence and Anthropic Claude as an AI backend — add your own Google AI Studio key in Settings → Assistant. Each cloud provider remembers its own model choice, so switching back and forth keeps both.",
@@ -91,7 +91,7 @@ public enum ReleaseNotes {
                 // swiftlint:disable:next line_length
                 "GitHub Models is gone — GitHub retired the service on July 30. If you were using it, KozBon switches you back to Apple Intelligence, and Settings offers to delete the saved GitHub token.",
                 // swiftlint:disable:next line_length
-                "The Nearby list is now grouped into sections by service type, each with a short description of the type — or by device when you sort by host name.",
+                "The Nearby list is now organized into sections — one per device by default, or one per service type with a short description of the type when you sort by service name.",
                 // swiftlint:disable:next line_length
                 "Every tab now sits on an ambient background — a slow colour wash that drifts like water, tinted differently per tab, and carried through to the detail pages you open from each one.",
                 // swiftlint:disable:next line_length
