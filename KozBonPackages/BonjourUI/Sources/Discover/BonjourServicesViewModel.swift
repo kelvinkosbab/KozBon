@@ -184,22 +184,23 @@ public final class BonjourServicesViewModel: BonjourServiceScannerDelegate, Loca
     /// Sections express the ordering the user asked for rather than
     /// competing with it:
     ///
-    /// - **Nothing applied** — the default. Per-type sections give
-    ///   the raw list structure without the user having asked for an
-    ///   order.
     /// - **A service-type sort** — per-type sections are simply the
     ///   visual form of that ordering.
     /// - **A host-name sort** — per-host sections likewise, one per
     ///   device, which is what that sort clusters anyway.
+    /// - **Nothing applied** — the same as Host name A → Z. `nil` is
+    ///   what Settings stores for that default, and the sort menu
+    ///   shows it checked, so the list has to match or the user has
+    ///   to re-pick the option the menu already claims is active.
     ///
     /// Category filters stay flat: the list is already scoped to a
     /// single bucket, so a second level of grouping adds chrome
     /// without adding information.
     var serviceGrouping: BonjourServiceGrouping {
         switch sortType {
-        case nil, .serviceNameAsc, .serviceNameDesc:
+        case .serviceNameAsc, .serviceNameDesc:
             return .serviceType
-        case .hostNameAsc, .hostNameDesc:
+        case nil, .hostNameAsc, .hostNameDesc:
             return .hostName
         case .smartHome, .appleDevices, .mediaAndStreaming,
              .printersAndScanners, .remoteAccess:

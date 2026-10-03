@@ -72,11 +72,22 @@ struct BonjourServicesViewModelGroupingTests {
 
     // MARK: - When Grouping Applies
 
-    @Test("Grouping is on by default, with nothing applied")
-    func groupsWhenNothingApplied() {
+    @Test("With nothing applied, the list groups by host — matching the Host name A → Z the menu shows checked")
+    func groupsByHostWhenNothingApplied() {
         let viewModel = makeViewModel()
         #expect(viewModel.sortType == nil)
-        #expect(viewModel.serviceGrouping == .serviceType)
+        #expect(viewModel.serviceGrouping == .hostName)
+    }
+
+    @Test("The default layout is identical to explicitly picking Host name A → Z")
+    func defaultMatchesHostNameAscending() {
+        // Settings stores `nil` for a Host name A → Z default, so a
+        // mismatch here means the user has to re-tap the option the
+        // menu already shows as selected.
+        let viewModel = makePopulatedViewModel()
+        let defaultTitles = viewModel.groupedActiveServices.map(\.title)
+        viewModel.sort(sortType: .hostNameAsc)
+        #expect(viewModel.groupedActiveServices.map(\.title) == defaultTitles)
     }
 
     @Test("Grouping is on for both service-type sorts")
@@ -123,6 +134,7 @@ struct BonjourServicesViewModelGroupingTests {
     @Test("Services bucket into one group per service type")
     func bucketsByServiceType() {
         let viewModel = makePopulatedViewModel()
+        viewModel.sort(sortType: .serviceNameAsc)
         let groups = viewModel.groupedActiveServices
 
         #expect(groups.count == 2)
@@ -142,6 +154,7 @@ struct BonjourServicesViewModelGroupingTests {
     @Test("Group id is the full type, so same-named types across transports stay distinct")
     func groupIdIsFullType() {
         let viewModel = makePopulatedViewModel()
+        viewModel.sort(sortType: .serviceNameAsc)
         let ids = viewModel.groupedActiveServices.map(\.id)
         // Unique ids matter: `ForEach` silently drops rows on a
         // collision, which a display-name key would invite.
@@ -152,9 +165,10 @@ struct BonjourServicesViewModelGroupingTests {
 
     // MARK: - Ordering
 
-    @Test("Groups are alphabetical by type name with nothing applied")
-    func groupsAlphabeticalByDefault() {
+    @Test("The ascending service-type sort orders groups alphabetically by type name")
+    func ascendingSortOrdersGroupsAlphabetically() {
         let viewModel = makePopulatedViewModel()
+        viewModel.sort(sortType: .serviceNameAsc)
         #expect(viewModel.groupedActiveServices.map(\.title) == ["AirPlay", "Printer"])
     }
 
@@ -168,7 +182,8 @@ struct BonjourServicesViewModelGroupingTests {
     @Test("Within a group, rows keep the order the active sort produced")
     func withinGroupOrderFollowsActiveSort() {
         let viewModel = makePopulatedViewModel()
-        // Default sorts by instance name, so the AirPlay bucket
+        viewModel.sort(sortType: .serviceNameAsc)
+        // Ties on type break by instance name, so the AirPlay bucket
         // reads Attic before Bedroom.
         let airPlay = viewModel.groupedActiveServices.first { $0.title == "AirPlay" }
         #expect(airPlay?.services.map(\.service.name) == ["Attic", "Bedroom"])
@@ -188,6 +203,7 @@ struct BonjourServicesViewModelGroupingTests {
             )
         )
 
+        viewModel.sort(sortType: .serviceNameAsc)
         let group = try #require(viewModel.groupedActiveServices.first)
         #expect(group.footerDetail == "Protocol for streaming audio / video content")
     }
@@ -206,6 +222,7 @@ struct BonjourServicesViewModelGroupingTests {
 
         // The empty string is normalized away too — an empty footer
         // still draws its padding.
+        viewModel.sort(sortType: .serviceNameAsc)
         let group = try #require(viewModel.groupedActiveServices.first)
         #expect(group.footerDetail == nil)
     }
@@ -292,6 +309,7 @@ struct BonjourServicesViewModelGroupingTests {
     @Test("Search narrows within groups and drops groups that empty out")
     func searchComposesWithGrouping() {
         let viewModel = makePopulatedViewModel()
+        viewModel.sort(sortType: .serviceNameAsc)
         viewModel.searchText = "Attic"
 
         let groups = viewModel.groupedActiveServices
@@ -305,7 +323,6 @@ struct BonjourServicesViewModelGroupingTests {
     @Test("No discovered services means no groups")
     func emptyProducesNoGroups() {
         let viewModel = makeViewModel()
-        #expect(viewModel.serviceGrouping == .serviceType)
         #expect(viewModel.groupedActiveServices.isEmpty)
     }
 }
