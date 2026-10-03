@@ -12,7 +12,7 @@ Agent execution conventions — plan multi-step edits before executing, fix cour
 
 ```bash
 # Build for iOS Simulator
-xcodebuild -workspace KozBon.xcworkspace -scheme KozBon -destination 'platform=iOS Simulator,name=iPhone 17 Pro,OS=27.0' build
+xcodebuild -workspace KozBon.xcworkspace -scheme KozBon -destination 'platform=iOS Simulator,name=iPhone 17 Pro' build
 
 # Build for macOS
 xcodebuild -workspace KozBon.xcworkspace -scheme KozBon -destination 'platform=macOS' build
@@ -42,8 +42,8 @@ The `KozBon` scheme has no test action configured; all tests run through SPM.
 ### Workspace
 
 `KozBon.xcworkspace` contains:
-- `KozBon.xcodeproj` — the app target (5 Swift files)
-- `KozBonPackages/` — local SPM package (11 modules)
+- `KozBon.xcodeproj` — the app target (2 Swift files)
+- `KozBonPackages/` — local SPM package (14 modules)
 
 ### App Target (KozBon/)
 
@@ -61,6 +61,8 @@ Each module follows the `{name}/Sources` and `{name}/Tests` layout:
 
 | Module | Purpose | Key Types |
 |--------|---------|-----------|
+| **AppCore** | Root scene, its view model, macOS menu commands, top-level tab destinations | `AppCoreScene`, `AppCoreViewModel`, `TopLevelDestination` |
+| **LocalNetworkMonitor** | `NWPathMonitor`-backed Wi-Fi / Ethernet path check so Discover can explain why a scan can't reach anything | `LocalNetworkMonitor`, its `@MainActor` protocol + mock |
 | **BonjourCore** | Value types, constants, utilities | `Constants`, `TransportLayer`, `InternetAddress`, `Logger`, `Clipboard` |
 | **BonjourStorage** | Persistence — SwiftData preferences + Core Data custom-service-type store | `PreferencesStore`, `UserPreferences`, `CustomServiceType`, `MyCoreDataStack`, `MyDataManagerObject` |
 | **BonjourLocalization** | Localized strings (8 languages, including RTL: ar, he) | `Strings` enum, `Localizable.xcstrings` |
@@ -235,7 +237,7 @@ Verify a change by building and inspecting `Metadata.appintents/extract.actionsd
 ## Testing
 
 - **Framework**: Swift Testing (`@Test`, `@Suite`, `#expect`)
-- **Runner**: `swift test --package-path KozBonPackages` is the only test runner. All tests live in `KozBonPackages/` — 1,165 tests across 96 suites covering BonjourCore, BonjourModels, BonjourScanning, BonjourUI, BonjourAICore, BonjourAIAnthropic, AppCore (including the former app-level `TopLevelDestinationTests`), etc.
+- **Runner**: `swift test --package-path KozBonPackages` is the only test runner. All tests live in `KozBonPackages/` — 1,184 tests across 99 suites covering BonjourCore, BonjourModels, BonjourScanning, BonjourUI, BonjourAICore, BonjourAIAnthropic, AppCore (including the former app-level `TopLevelDestinationTests`), etc.
 - **Naming**: `<TypeName>Tests.swift` (e.g., `TransportLayerTests.swift`)
 - **`@MainActor` tests**: Use `@MainActor` on the suite when testing `@MainActor`-isolated types
 - **Cross-module testing**: Use `@testable import <Module>` to access internal types, `import <Module>` for public API tests
