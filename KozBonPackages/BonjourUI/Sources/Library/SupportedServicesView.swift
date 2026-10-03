@@ -115,6 +115,10 @@ public struct SupportedServicesView: View {
                     systemImage: Iconography.list,
                     description: Text(Strings.EmptyStates.selectServiceTypeDescription)
                 )
+                // macOS sizes the placeholder to its content, and the
+                // wash takes the size of the view it backs — fill the
+                // column first so it reaches every edge.
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 // Lighter than the sidebar's wash — see the Discover
                 // placeholder for the reasoning.
                 .ambientMeshBackground(intensity: .subdued)

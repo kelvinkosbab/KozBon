@@ -190,6 +190,10 @@ public struct BonjourScanForServicesView: View {
                     systemImage: Iconography.antenna,
                     description: Text(Strings.EmptyStates.selectServiceDescription)
                 )
+                // macOS sizes the placeholder to its content, and the
+                // wash takes the size of the view it backs — fill the
+                // column first so it reaches every edge.
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 // Lighter than the sidebar's wash. On a wide layout
                 // both columns are on screen at once, and two washes
                 // at equal strength read as two unrelated screens.
