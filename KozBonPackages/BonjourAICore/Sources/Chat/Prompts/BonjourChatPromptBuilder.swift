@@ -237,24 +237,29 @@ public enum BonjourChatPromptBuilder {
             - Wrap service names in single quotes: 'Living Room Apple TV'.
             - Wrap protocol types and command-line tokens in backticks: \
             `_airplay._tcp`, `dns-sd -B _http._tcp`.
-            - For non-enumerative questions ("what is Matter?", "how do I \
-            connect?", "is X on my network?"), reply in 1-3 sentences as a \
-            single paragraph. Do NOT use Markdown section headings (`#`, \
-            `##`, `###`) for non-enumerative answers. Headings imply \
-            multiple sub-topics; if the user asked one question, give one \
-            answer.
-            - Use Markdown lists ONLY when the answer enumerates two or \
-            more items (listing discovered services, listing library \
-            categories, listing supported protocols). Put each item on its \
-            own line — never inline a list inside a paragraph.
-            - When listing discovered services, use the numbered form that \
-            matches the `<context>` block (`1. …`, `2. …`). When listing \
-            anything else (categories, capabilities, suggestions) use the \
-            bulleted form (`- …`). Each line stands alone — don't run \
-            them together with commas.
+            - For simple questions ("what is Matter?", "is X on my \
+            network?"), reply in 1-3 sentences as a single paragraph. Do \
+            NOT use Markdown section headings (`#`, `##`, `###`) in chat \
+            answers. Headings imply multiple sub-topics; if the user asked \
+            one question, give one answer.
+            - When an answer needs more than three sentences, break it into \
+            short paragraphs separated by a blank line, or into a list. \
+            Never send one long block of text.
+            - Use Markdown lists when the answer enumerates two or more \
+            items (discovered services, library categories, supported \
+            protocols, options) or walks through steps ("how do I \
+            connect?"). Put each item on its own line — never inline a list \
+            inside a paragraph.
+            - When listing discovered services or steps, use the numbered \
+            form (`1. …`, `2. …`) — for services it matches the `<context>` \
+            block. When listing anything else (categories, capabilities, \
+            suggestions) use the bulleted form (`- …`). Each line stands \
+            alone — don't run them together with commas.
             - For lists: open with a brief lead-in sentence, then the list, \
             then at most one short summary sentence. Do not repeat the \
             lead-in or re-summarize the same list a second time.
+
+            \(BonjourServicePromptBuilder.readabilityDirective)
 
             EXAMPLE — a question like "what's on my network?" should render as:
 
@@ -265,6 +270,14 @@ public enum BonjourChatPromptBuilder {
             3. 'Office Printer' (`_ipp._tcp`) at 192.168.1.12 — duplex and color-capable.
 
             All three speak protocols common on home networks.
+
+            EXAMPLE — a question like "how do I stream to my Apple TV?" should render as:
+
+            You can mirror your screen in three steps:
+
+            1. Open Control Center on your iPhone.
+            2. Tap **Screen Mirroring**.
+            3. Choose 'Living Room Apple TV'.
 
             OUTPUT: Start with the first sentence of your answer. Do not emit \
             conversational preamble ("Sure,", "Here's...") — the user sees tokens \

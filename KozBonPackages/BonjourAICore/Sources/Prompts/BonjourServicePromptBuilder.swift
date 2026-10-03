@@ -83,9 +83,32 @@ public enum BonjourServicePromptBuilder {
         /// Medium-length answer in 2-3 sentences per section. (Default)
         case standard
 
-        /// Comprehensive answer in 4-6 sentences per section with examples.
+        /// Comprehensive answer that adds examples and edge cases as extra
+        /// bullets and short paragraphs rather than longer ones.
         case thorough
     }
+
+    // MARK: - Readability
+
+    /// Shared directive that keeps model output scannable in a chat bubble.
+    ///
+    /// Models default to dense multi-sentence paragraphs, which read as a
+    /// wall of text on a phone. List rules stay flat because
+    /// `MarkdownContentView` renders line-by-line and has no nested-list
+    /// support.
+    public static let readabilityDirective = """
+        READABILITY — the reader is on a small screen, so make every answer easy to scan:
+        - Keep each paragraph to 1-3 short sentences (roughly 50 words at most). \
+        Never write one long block of text.
+        - Separate paragraphs, headings, and lists with a blank line.
+        - When you cover three or more distinct facts, options, or examples, use a \
+        bulleted list (`- …`) instead of packing them into one sentence.
+        - Use a numbered list (`1. …`) for steps the user follows in order.
+        - Keep each list item to a single short sentence. When it helps scanning, \
+        lead the item with a bold label: `- **Port:** …`.
+        - Keep lists flat — never indent or nest sub-items.
+        - Bold at most one or two key terms per paragraph; don't bold whole sentences.
+        """
 
     // MARK: - System Instructions
 
@@ -136,6 +159,8 @@ public enum BonjourServicePromptBuilder {
             FORMATTING: Wrap protocol names (`_airplay._tcp`), port numbers (`:5353`), \
             TXT-record keys (`rmodel`), and any command-line tokens in backticks.
 
+            \(readabilityDirective)
+
             OUTPUT: Start your response with the first section heading. The very first \
             character you emit must be `#`. No conversational preamble ("Sure,", \
             "Of course,", "Here's...") — it makes streaming feel slow.
@@ -153,16 +178,20 @@ public enum BonjourServicePromptBuilder {
             AirPlay by default so any nearby Apple device can stream content to them.")
 
             ## How to interact
-            (1-2 sentences on how to interact with this service from **your specific \
-            device** — iPhone, Mac, or Vision Pro — not devices in general. Name a \
-            concrete app, Control Center action, menu item, or command. If the service \
-            isn't useful to your device, say so. For example, "Open Control Center on \
-            your iPhone and tap Screen Mirroring to send content to this Apple TV.")
+            (How to interact with this service from **your specific device** — iPhone, \
+            Mac, or Vision Pro — not devices in general. Name a concrete app, Control \
+            Center action, menu item, or command. When it takes more than one action, \
+            write short numbered steps. If the service isn't useful to your device, say \
+            so in one sentence. For example:
+            1. Open Control Center on your iPhone.
+            2. Tap **Screen Mirroring**.
+            3. Choose this Apple TV.)
 
             ## Configuration details
-            (Only include this section if TXT records are present. Explain what the \
-            documented keys reveal about the service's configuration. Label unknown \
-            keys exactly as the TXT rule above specifies.)
+            (Only include this section if TXT records are present. Write one bullet per \
+            TXT key, leading with the key in backticks — for example, \
+            "- `model=AppleTV14,1` — identifies the hardware model." Label unknown keys \
+            exactly as the TXT rule above specifies.)
             """
     }
 
@@ -318,6 +347,8 @@ public enum BonjourServicePromptBuilder {
             FORMATTING: Wrap protocol names (`_http._tcp`), port numbers (`:80`), and \
             command-line tokens in backticks.
 
+            \(readabilityDirective)
+
             OUTPUT: Start your response with the first section heading. The very first \
             character you emit must be `#`. No conversational preamble.
 
@@ -328,9 +359,10 @@ public enum BonjourServicePromptBuilder {
             used by browsers to request web pages and APIs.")
 
             ## Common devices
-            (1-2 sentences on what kinds of devices or apps typically advertise this. \
-            For example, "Web servers, smart-home hubs, and network printers often \
-            advertise HTTP to expose local web interfaces.")
+            (A one-line lead-in followed by a short bulleted list of 2-4 kinds of devices \
+            or apps that typically advertise this. For example:
+            - **Smart-home hubs** — expose a local setup page.
+            - **Network printers** — serve a status and configuration page.)
 
             ## How it works
             (1-2 sentences on how this protocol works at a high level. For example, \
@@ -432,8 +464,10 @@ public enum BonjourServicePromptBuilder {
             return "LENGTH: Keep responses concise — at most 2-3 sentences per paragraph. " +
                 "Don't pad with background context the user didn't ask for."
         case .thorough:
-            return "LENGTH: Provide comprehensive answers with 4-6 sentences per section. " +
-                "Include relevant examples, edge cases, and context where helpful."
+            return "LENGTH: Provide comprehensive answers. Include relevant examples, edge " +
+                "cases, and context where helpful — add that depth as extra bullets or " +
+                "additional short paragraphs, never by making a paragraph longer than " +
+                "3 sentences."
         }
     }
 }
