@@ -133,6 +133,7 @@ extension BonjourChatViewModel {
         ) ?? .basic
         session.responseLength = detailLevel.responseLength
 
+        endScanningWindow()
         await session.send(trimmed, context: context)
     }
 
@@ -181,7 +182,20 @@ extension BonjourChatViewModel {
         ) ?? .basic
         session.responseLength = detailLevel.responseLength
 
+        endScanningWindow()
         await session.send(lastUserMessage, context: context)
+    }
+
+    /// Hides the "Scanning network…" bubble in the same main-actor turn
+    /// that `session.send` appends its assistant placeholder — every
+    /// session appends before its first `await` — so the scan bubble
+    /// and the typing bubble swap in a single render and the view can
+    /// morph one into the other instead of fading one out while the
+    /// other slides in.
+    func endScanningWindow() {
+        guard isScanningNetwork else { return }
+        isHandingOffFromScan = true
+        isScanningNetwork = false
     }
 
     /// Builds the `ChatContext` the assistant sees for the
@@ -200,6 +214,7 @@ extension BonjourChatViewModel {
     func buildChatContext(
         forMessage message: String
     ) async -> BonjourChatPromptBuilder.ChatContext {
+        isHandingOffFromScan = false
         let library = BonjourServiceType.fetchAll()
         let publishedServices = services.sortedPublishedServices
 
@@ -211,9 +226,10 @@ extension BonjourChatViewModel {
             // seconds while the scanner runs, which reads as a
             // frozen UI — particularly on the cloud backend
             // where additional network latency stacks onto the
-            // scan time.
+            // scan time. Cleared by `endScanningWindow()` right before
+            // the send, not here, so the bubble stays up until the
+            // assistant placeholder is ready to take its place.
             isScanningNetwork = true
-            defer { isScanningNetwork = false }
 
             let runner = BonjourOneShotScanner(scanner: BonjourServiceScanner())
             let freshServices = await runner.run(

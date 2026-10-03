@@ -21,6 +21,10 @@ extension BonjourChatView {
     /// visible again.
     static let emptyStateAnchorID = "chat_empty_state_anchor"
 
+    /// `matchedGeometryEffect` ID shared by the scan bubble and the
+    /// typing bubble that replaces it.
+    static let pendingAssistantBubbleID = "pending_assistant_bubble"
+
     /// The chat surface is a single ScrollView that ALWAYS contains
     /// the empty-state content (intro + suggestion buttons) plus
     /// any messages. On first send the ScrollView animates the
@@ -173,10 +177,15 @@ extension BonjourChatView {
                 )
                 .id(message.id)
                 .transition(.asymmetric(
-                    insertion: viewModel.messageInsertionTransition(
-                        for: message.role,
-                        reduceMotion: reduceMotion
-                    ),
+                    insertion: viewModel.isHandingOffFromScan && message.role == .assistant
+                        // The scan bubble morphs into this bubble's typing
+                        // indicator via `matchedGeometryEffect`; a slide
+                        // here would pull the morph off course.
+                        ? .opacity
+                        : viewModel.messageInsertionTransition(
+                            for: message.role,
+                            reduceMotion: reduceMotion
+                        ),
                     removal: .opacity
                 ))
             }
@@ -192,9 +201,16 @@ extension BonjourChatView {
             // single continuous motion rather than two separate
             // pops.
             if viewModel.isScanningNetwork {
-                ScanningNetworkIndicator()
-                    .id("scanningNetworkIndicator")
-                    .transition(.opacity)
+                HStack {
+                    ScanningNetworkIndicator()
+                        .matchedGeometryEffect(
+                            id: Self.pendingAssistantBubbleID,
+                            in: pendingAssistantNamespace
+                        )
+                    Spacer(minLength: 40)
+                }
+                .id("scanningNetworkIndicator")
+                .transition(.opacity)
             }
 
             if let error = session.error {
@@ -322,6 +338,7 @@ extension BonjourChatView {
                 VStack(alignment: .leading, spacing: 8) {
                     if !message.content.isEmpty {
                         MarkdownContentView(message.content)
+                            .transition(.opacity)
                     }
 
                     // Always show the typing indicator while this
@@ -331,12 +348,26 @@ extension BonjourChatView {
                     // visible indicator the chat looks frozen.
                     if isStreaming {
                         TypingIndicator()
+                            .matchedGeometryEffect(
+                                id: Self.pendingAssistantBubbleID,
+                                in: pendingAssistantNamespace
+                            )
                             .accessibilityLabel(Strings.Accessibility.chatAssistantThinking)
                             .transition(.opacity)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.vertical, 4)
+                // Fade the first streamed text in above the dots, and the
+                // dots out when generation ends, instead of popping.
+                .animation(
+                    reduceMotion ? nil : .easeOut(duration: 0.25),
+                    value: message.content.isEmpty
+                )
+                .animation(
+                    reduceMotion ? nil : .easeOut(duration: 0.25),
+                    value: isStreaming
+                )
                 // Gate the label swap on `!isStreaming`, NOT on
                 // whether content is empty. The previous form
                 // flipped to the partial content as soon as the

@@ -47,6 +47,11 @@ public struct BonjourChatView: View {
 
     @FocusState var isInputFocused: Bool
 
+    /// Shared by the "Scanning network…" bubble and the assistant's
+    /// typing bubble so the first morphs into the second when the
+    /// scan hands off to generation.
+    @Namespace var pendingAssistantNamespace
+
     /// Cached "is there an Anthropic API key in the Keychain
     /// right now?" flag. Refreshed on appearance and after the
     /// in-tab sign-in sheet dismisses. Same pattern Settings

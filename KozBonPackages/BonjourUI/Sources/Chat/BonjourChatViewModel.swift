@@ -92,10 +92,18 @@ final class BonjourChatViewModel {
     ///
     /// Toggled by the send pipeline in
     /// `BonjourChatViewModel+Send.swift`: `true` immediately
-    /// before the scanner's `run()` call and `false` immediately
-    /// after, regardless of which backend will handle the
-    /// resulting message.
+    /// before the scanner's `run()` call and `false` in
+    /// `endScanningWindow()`, right before the session appends
+    /// its assistant placeholder, regardless of which backend
+    /// will handle the resulting message.
     var isScanningNetwork = false
+
+    /// `true` from the moment the scan bubble hands off to the
+    /// assistant's typing bubble until the next send starts. The
+    /// view uses it to give that one assistant bubble an
+    /// opacity-only insertion, so its slide-in transition doesn't
+    /// fight the scan-to-typing morph.
+    var isHandingOffFromScan = false
 
     // MARK: - Scroll Coordination
 

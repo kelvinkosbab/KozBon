@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import BonjourAI
 import BonjourLocalization
 
 // MARK: - ScanningNetworkIndicator
@@ -26,41 +27,42 @@ import BonjourLocalization
 /// indicator for the other lands the assistant bubble in the
 /// same place the scan row was, keeping the scroll position
 /// stable across the transition.
+///
+/// Wears the same glass capsule as ``TypingIndicator`` (padding,
+/// shape, top inset) so the chat view can morph this bubble into
+/// the typing bubble when the scan hands off to generation.
 struct ScanningNetworkIndicator: View {
 
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
     var body: some View {
-        HStack {
-            ShimmeringText(text: String(localized: Strings.Chat.scanningNetwork))
-                .font(.subheadline)
-            Spacer(minLength: 0)
-        }
-        .padding(.horizontal, 14)
-        .padding(.vertical, 6)
-        // The scan happens for a known reason — the user asked a
-        // live-state question — so a static-text status read
-        // gives screen-reader users the right context. The
-        // shimmer is purely visual and adds no semantic value
-        // for VoiceOver; treating the row as one static-text
-        // element keeps the announcement tight.
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel(Strings.Chat.scanningNetwork)
-        .accessibilityAddTraits(.isStaticText)
-        // Actively announce the scan status when the indicator
-        // mounts. Without this, VoiceOver users get visual
-        // feedback that their message was sent (their bubble
-        // lands) but no auditory feedback during the ~3-second
-        // scan window — the surface feels dead until the
-        // assistant's first streamed token finally arrives.
-        // The announcement fires once per mount; SwiftUI
-        // unmounts the indicator when the scan finishes, so the
-        // announcement doesn't loop.
-        .onAppear {
-            AccessibilityNotification.Announcement(
-                String(localized: Strings.Chat.scanningNetwork)
-            ).post()
-        }
+        ShimmeringText(text: String(localized: Strings.Chat.scanningNetwork))
+            .font(.subheadline)
+            .padding(.horizontal, 14)
+            .padding(.vertical, 10)
+            .platformGlassBackground(in: Capsule())
+            .padding(.top, 6)
+            // The scan happens for a known reason — the user asked a
+            // live-state question — so a static-text status read
+            // gives screen-reader users the right context. The
+            // shimmer is purely visual and adds no semantic value
+            // for VoiceOver; treating the row as one static-text
+            // element keeps the announcement tight.
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel(Strings.Chat.scanningNetwork)
+            .accessibilityAddTraits(.isStaticText)
+            // Actively announce the scan status when the indicator
+            // mounts. Without this, VoiceOver users get visual
+            // feedback that their message was sent (their bubble
+            // lands) but no auditory feedback during the ~3-second
+            // scan window — the surface feels dead until the
+            // assistant's first streamed token finally arrives.
+            // The announcement fires once per mount; SwiftUI
+            // unmounts the indicator when the scan finishes, so the
+            // announcement doesn't loop.
+            .onAppear {
+                AccessibilityNotification.Announcement(
+                    String(localized: Strings.Chat.scanningNetwork)
+                ).post()
+            }
     }
 }
 
@@ -80,7 +82,7 @@ private struct ShimmeringText: View {
     let text: String
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @State private var animate = false
+    @Environment(\.layoutDirection) private var layoutDirection
 
     // MARK: - Tuning
 
@@ -98,6 +100,12 @@ private struct ShimmeringText: View {
     /// loops during the typical 3-second scan window.
     private static let sweepDuration: TimeInterval = 1.4
 
+    /// Explicit opacities rather than `.secondary` / `.primary`:
+    /// the Liquid Glass bubble applies vibrancy to hierarchical
+    /// styles, which flattened the two into nearly the same tone
+    /// and made the band invisible.
+    private static let baseOpacity: Double = 0.4
+
     // MARK: - Body
 
     var body: some View {
@@ -105,45 +113,46 @@ private struct ShimmeringText: View {
             Text(text)
                 .foregroundStyle(.secondary)
         } else {
-            shimmeringBody
+            // Driven by the timeline clock rather than a
+            // `repeatForever` started in `onAppear`: the bubble is
+            // inserted inside the chat's spring transaction and a
+            // matched-geometry morph, which swallowed the
+            // state-driven animation and left the text static.
+            TimelineView(.animation) { timeline in
+                shimmeringText(phase: Self.phase(at: timeline.date))
+            }
         }
     }
 
-    private var shimmeringBody: some View {
+    /// Progress through the current sweep, `0..<1`.
+    private static func phase(at date: Date) -> CGFloat {
+        let elapsed = date.timeIntervalSinceReferenceDate
+        return CGFloat(elapsed.truncatingRemainder(dividingBy: sweepDuration) / sweepDuration)
+    }
+
+    private func shimmeringText(phase: CGFloat) -> some View {
         Text(text)
-            .foregroundStyle(.secondary)
+            .foregroundStyle(Color.primary.opacity(Self.baseOpacity))
             .overlay {
                 GeometryReader { geometry in
                     let width = geometry.size.width
                     let bandWidth = width * Self.bandWidthFraction
-                    // The bright band starts fully off the
-                    // leading edge (offset = -bandWidth) and ends
-                    // fully off the trailing edge (offset =
-                    // width). That keeps the highlight from
-                    // popping in/out abruptly — it slides smoothly
-                    // through the text region.
+                    // The band starts fully off the leading edge and
+                    // ends fully off the trailing edge, so it slides
+                    // through rather than popping in and out.
+                    // `offset(x:)` doesn't mirror, so flip it under
+                    // right-to-left layouts.
+                    let travel = -bandWidth + (width + bandWidth) * phase
+                    let direction: CGFloat = layoutDirection == .rightToLeft ? -1 : 1
                     Text(text)
-                        .foregroundStyle(.primary)
-                        // Hidden from the accessibility tree —
-                        // it's a duplicate of the base text used
-                        // purely for the shimmer overlay. The
-                        // outer indicator already supplies one
-                        // explicit label via
-                        // `.accessibilityLabel(...)`; without
-                        // this hide the duplicate Text lingers
-                        // in the tree as dead weight.
+                        .foregroundStyle(Color.primary)
+                        // Duplicate of the base text used purely for
+                        // the highlight; the indicator supplies the
+                        // single accessibility label.
                         .accessibilityHidden(true)
-                        .mask {
-                            // The mask is a soft-edged
-                            // rectangular band. Where the
-                            // gradient is opaque, the .primary
-                            // overlay shows through; where it's
-                            // clear, the base .secondary text
-                            // shows. The two flanking clear
-                            // stops feather the leading and
-                            // trailing edges so the band fades
-                            // in/out rather than swiping a hard
-                            // line across.
+                        .mask(alignment: .leading) {
+                            // Feathered edges so the band fades in and
+                            // out instead of swiping a hard line.
                             Rectangle()
                                 .fill(
                                     LinearGradient(
@@ -153,30 +162,10 @@ private struct ShimmeringText: View {
                                     )
                                 )
                                 .frame(width: bandWidth)
-                                .offset(x: animate ? width : -bandWidth)
+                                .offset(x: travel * direction)
                         }
                 }
-                // Tell the GeometryReader not to grab vertical
-                // space — without this, the reader expands to
-                // fill the chat row's height and the band's
-                // vertical alignment drifts.
                 .allowsHitTesting(false)
-            }
-            .onAppear {
-                // Kick off the repeating sweep on the first
-                // body render. SwiftUI captures the animation
-                // configuration at this withAnimation call;
-                // toggling `animate` again later does nothing
-                // because the value is already in its end
-                // state. That's the desired behavior — the
-                // indicator only renders while the scan is in
-                // flight, so a single onAppear is enough.
-                withAnimation(
-                    .linear(duration: Self.sweepDuration)
-                        .repeatForever(autoreverses: false)
-                ) {
-                    animate = true
-                }
             }
     }
 }
