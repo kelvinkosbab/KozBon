@@ -125,10 +125,14 @@ extension BonjourChatView {
                 // uses, so a suggestion reads as "send this" rather
                 // than "open this". Straight up is direction-neutral,
                 // so unlike the previous diagonal glyph it needs no
-                // RTL mirroring.
+                // RTL mirroring. The solid accent disc keeps the white
+                // glyph legible on the glass chip in both appearances
+                // and mirrors the send button's backend tint.
                 Image.arrowUp
                     .font(.footnote.weight(.bold))
                     .foregroundStyle(.white)
+                    .padding(6)
+                    .background(Circle().fill(aiAccent))
                     .accessibilityHidden(true)
             }
             // Pill padding: roomier horizontally than vertically so
@@ -137,12 +141,11 @@ extension BonjourChatView {
             .padding(.vertical, 12)
         }
         // Custom ButtonStyle (instead of `.plain`) so the chip gets
-        // a tactile press animation: scale-down + deeper fill +
-        // dimmed label while the finger is down, snapping back on
-        // release. Without this, taps land with no visual
-        // confirmation, which on a chat surface where the streaming
-        // response takes a beat to start reads as "did I tap it?".
-        .buttonStyle(SuggestionCardButtonStyle(reduceMotion: reduceMotion))
+        // visible press feedback. Without it, taps land with no
+        // visual confirmation, which on a chat surface where the
+        // streaming response takes a beat to start reads as "did I
+        // tap it?".
+        .buttonStyle(SuggestionCardButtonStyle())
         // Cap Dynamic Type on the suggestion chips. The chip's
         // HStack is `Text + Spacer + arrow`, so at sizes above
         // `.accessibility2` the multi-line text wraps tall enough
@@ -161,70 +164,41 @@ extension BonjourChatView {
 
 // MARK: - SuggestionCardButtonStyle
 
-/// Press feedback for the recommended-prompt chips on the chat empty
-/// state. The chip scales down to ~94%, its fill deepens, and the
-/// whole label dims slightly while the finger is down — all snapping
-/// back on release. Tuned to feel like a single press of a physical
-/// key: enough visual difference to confirm the tap, brief enough
-/// not to delay the user's perception of the response starting to
-/// stream.
+/// Press feedback and surface for the recommended-prompt chips on the
+/// chat empty state.
 ///
-/// The `reduceMotion` flag swaps the spring scale for an opacity-only
-/// flicker so users with the system Reduce Motion preference still
-/// get press confirmation without the transform.
+/// The chips are controls floating over the ambient mesh, so they use
+/// interactive Liquid Glass: the system supplies the press bounce and
+/// highlight, and adapts the glass to light, dark, Reduce Transparency,
+/// and Increase Contrast. A translucent colored fill used to sit here,
+/// but it blended with the wash behind it into an off-tone blue.
+///
+/// The label also dims while pressed, so press confirmation survives
+/// Reduce Motion, which tones down the glass's own animation.
 ///
 /// On iOS / iPadOS / visionOS the style additionally applies the
 /// system `.hoverEffect()` so pointer-driven (iPad with trackpad)
-/// and gaze-driven (Vision Pro) input gets the same lift/highlight
-/// that the rest of Apple's UI uses on those platforms. Native
-/// macOS doesn't expose `hoverEffect`, so the modifier is gated
-/// out there — mouse hover on macOS still works because the
-/// underlying `Button` provides its own focus ring and a hand
-/// cursor by default.
+/// and gaze-driven (Vision Pro) input gets the same highlight the
+/// rest of Apple's UI uses. Native macOS doesn't expose
+/// `hoverEffect`; the underlying `Button` provides its own focus
+/// ring and cursor there.
 ///
 /// `.contentShape(.capsule)` pins the hit area to the visible pill
 /// rather than the label's intrinsic bounds, so taps near a
 /// multi-line suggestion's empty trailing region still register.
 private struct SuggestionCardButtonStyle: ButtonStyle {
 
-    let reduceMotion: Bool
-
-    /// Resting fill opacity.
-    ///
-    /// Well short of an iMessage bubble's solid fill: these chips
-    /// are suggestions behind the ambient mesh wash, not sent
-    /// messages, so the fill has to stay translucent enough that
-    /// the wash reads through it and light enough that `.primary`
-    /// label text keeps its contrast in both appearances.
-    private static let restingFill: Double = 0.55
-
-    /// Pressed fill opacity. The +0.20 delta is what makes a quick
-    /// (~80 ms) tap visibly register.
-    private static let pressedFill: Double = 0.75
-
     @ViewBuilder
     func makeBody(configuration: Configuration) -> some View {
-        let pressed = configuration.isPressed
-        // System blue rather than the chat surface's backend accent:
-        // these read as iMessage-style send affordances, and the
-        // iMessage association only holds in blue. The compose
-        // bar's send button and the user's own message bubbles
-        // still follow `aiAccent`, so the active backend is still
-        // visible on the surface.
         let chip = configuration.label
-            .background(
-                Capsule(style: .continuous)
-                    .fill(Color.blue.opacity(pressed ? Self.pressedFill : Self.restingFill))
-            )
+            .opacity(configuration.isPressed ? 0.6 : 1.0)
+            .animation(.easeOut(duration: 0.12), value: configuration.isPressed)
+            #if os(visionOS)
+            .glassBackgroundEffect(in: Capsule(style: .continuous))
+            #else
+            .glassEffect(.regular.interactive(), in: Capsule(style: .continuous))
+            #endif
             .contentShape(.capsule)
-            .scaleEffect(reduceMotion ? 1.0 : (pressed ? 0.94 : 1.0))
-            .opacity(pressed ? 0.70 : 1.0)
-            .animation(
-                reduceMotion
-                    ? .easeOut(duration: 0.12)
-                    : .spring(response: 0.18, dampingFraction: 0.6),
-                value: pressed
-            )
 
         #if !os(macOS)
         chip.hoverEffect(.highlight)
