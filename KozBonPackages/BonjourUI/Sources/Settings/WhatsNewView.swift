@@ -13,10 +13,10 @@ import BonjourStorage
 
 // MARK: - HighlightInsight
 
-/// Identifies which release highlight the user long-pressed so
+/// Identifies which release summary the user long-pressed so
 /// `.sheet(item:)` can present an AI explanation of what that
-/// change means for them. `id` is per-tap (a fresh `UUID`) rather
-/// than the text, so long-pressing the same bullet twice in a row
+/// release means for them. `id` is per-tap (a fresh `UUID`) rather
+/// than the text, so long-pressing the same summary twice in a row
 /// still re-presents the sheet.
 private struct HighlightInsight: Identifiable {
     let id = UUID()
@@ -35,7 +35,8 @@ private struct HighlightInsight: Identifiable {
 /// reads, so the "What's New" page and the assistant's answers
 /// can never drift apart.
 ///
-/// Each highlight long-presses (or, for VoiceOver, exposes an
+/// Each release shows a short summary rather than its full change
+/// list. The summary long-presses (or, for VoiceOver, exposes an
 /// accessibility action) into an AI "what this means for you"
 /// insight via the shared ``ServiceExplanationSheet`` — the same
 /// Insights surface the Discover and Library rows use, routed
@@ -49,9 +50,7 @@ struct WhatsNewView: View {
         List {
             ForEach(ReleaseNotes.all) { release in
                 Section {
-                    ForEach(release.highlights, id: \.self) { highlight in
-                        highlightRow(version: release.version, highlight: highlight)
-                    }
+                    summaryRow(version: release.version, summary: release.summary)
                 } header: {
                     // Visual: bare version string ("4.4" / "3.7")
                     // — pure digits and a dot, no localization
@@ -86,34 +85,22 @@ struct WhatsNewView: View {
         #endif
     }
 
-    // MARK: - Highlight Row
+    // MARK: - Summary Row
 
-    /// One highlight bullet. When AI analysis is enabled, the row
+    /// One release's summary. When AI analysis is enabled, the row
     /// gains a long-press Insights menu and a matching VoiceOver
     /// action; when disabled, it's a plain read-only row (no empty
     /// context menu).
     ///
-    /// Displays the translated bullet but hands the English one to
+    /// Displays the translated summary but hands the English one to
     /// the Insights sheet: the explainers answer in the user's
     /// language anyway, and the English is the authored source.
     @ViewBuilder
-    private func highlightRow(version: String, highlight: String) -> some View {
-        let displayed = Strings.Settings.releaseHighlight(highlight)
-        let row = HStack(alignment: .firstTextBaseline, spacing: 8) {
-            Text(verbatim: "•")
-                .foregroundStyle(.secondary)
-                .accessibilityHidden(true)
-            Text(verbatim: displayed)
-                .multilineTextAlignment(.leading)
-                .fixedSize(horizontal: false, vertical: true)
-        }
-        // Combine the bullet and text into one VoiceOver element,
-        // then pin the label to the highlight content. `.combine`
-        // alone would still leak a "bullet" pronunciation on some
-        // VoiceOver versions despite `.accessibilityHidden(true)` —
-        // the explicit label forecloses that.
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel(Text(verbatim: displayed))
+    private func summaryRow(version: String, summary: String) -> some View {
+        let row = Text(verbatim: Strings.Settings.releaseSummary(summary))
+            .multilineTextAlignment(.leading)
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(.vertical, 4)
 
         if preferencesStore.aiAnalysisEnabled {
             row
@@ -124,14 +111,14 @@ struct WhatsNewView: View {
                     // affordance the service rows use. Fires the
                     // selection haptic itself.
                     InsightsContextMenuItems(action: {
-                        insightTarget = HighlightInsight(version: version, text: highlight)
+                        insightTarget = HighlightInsight(version: version, text: summary)
                     })
                 }
                 // Context menus aren't reachable via VoiceOver's
                 // rotor, so mirror the Insights action explicitly.
                 .accessibilityActions {
                     InsightsAccessibilityAction(action: {
-                        insightTarget = HighlightInsight(version: version, text: highlight)
+                        insightTarget = HighlightInsight(version: version, text: summary)
                     })
                 }
         } else {
@@ -145,7 +132,7 @@ struct WhatsNewView: View {
 #if canImport(FoundationModels)
 
 /// Presents ``ServiceExplanationSheet`` for the long-pressed
-/// release highlight.
+/// release summary.
 private struct WhatsNewInsightSheetModifier: ViewModifier {
 
     @Binding var target: HighlightInsight?

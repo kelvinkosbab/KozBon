@@ -1405,18 +1405,18 @@ public enum Strings {
             .init("settings_whats_new", bundle: .atURL(Bundle.module.bundleURL))
         }
 
-        /// A "What's New" release highlight in the user's language.
+        /// A "What's New" release summary in the user's language.
         ///
-        /// The English bullet is itself the catalog key, the same
+        /// The English summary is itself the catalog key, the same
         /// scheme as `BonjourServiceType.localizedDetail`. Editing a
-        /// bullet therefore orphans its old translations, and the
+        /// summary therefore orphans its old translations, and the
         /// page falls back to the new English rather than showing a
         /// translation of text that no longer exists.
         ///
-        /// - Parameter english: A highlight from `ReleaseNotes.all`.
+        /// - Parameter english: A `summary` from `ReleaseNotes.all`.
         /// - Returns: The translation, or `english` when the catalog
         ///   has none.
-        public static func releaseHighlight(_ english: String) -> String {
+        public static func releaseSummary(_ english: String) -> String {
             String(localized: String.LocalizationValue(english), bundle: .module)
         }
     }

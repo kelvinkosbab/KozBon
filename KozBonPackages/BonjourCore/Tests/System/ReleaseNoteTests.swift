@@ -29,8 +29,22 @@ struct ReleaseNotesTests {
         #expect(Set(versions).count == versions.count)
     }
 
-    /// The view builds a `Section` per release, so an empty
-    /// highlights array renders a header with nothing under it.
+    /// The page renders one summary per release, so a blank summary
+    /// leaves a version header with an empty row under it.
+    @Test("Every release has a non-blank summary of at most two paragraphs")
+    func everyReleaseHasSummary() {
+        for release in ReleaseNotes.all {
+            #expect(
+                !release.summary.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+                "\(release.version) has a blank summary"
+            )
+            let paragraphs = release.summary.components(separatedBy: "\n\n")
+            #expect(paragraphs.count <= 2, "\(release.version) summary has \(paragraphs.count) paragraphs")
+        }
+    }
+
+    /// The chat assistant answers "what's new?" from these, so a
+    /// release with none gives it nothing to cite.
     @Test("Every release has at least one non-blank highlight")
     func everyReleaseHasHighlights() {
         for release in ReleaseNotes.all {

@@ -15,8 +15,8 @@ consumes them. Seven hard checks, each reported on stderr:
    a catalog key (the string itself is the key, via
    `BonjourServiceType.localizedDetail`). Drift here downgrades
    non-English users to English for that one service. The same holds
-   for every highlight in `ReleaseNotes.all` — each English bullet is
-   its own catalog key, resolved by `Strings.Settings.releaseHighlight`.
+   for every `summary` in `ReleaseNotes.all` — each English summary is
+   its own catalog key, resolved by `Strings.Settings.releaseSummary`.
 5. `InfoPlist.xcstrings` is valid JSON and locale-complete. These are
    the system-presented permission prompts (`NSLocalNetworkUsage-
    Description`, `NSSiriUsageDescription`); a missing locale means iOS
@@ -86,9 +86,10 @@ LIBRARY_PATH = (
     REPO_ROOT
     / "KozBonPackages/BonjourModels/Sources/ServiceType/MyServiceType+Library.swift"
 )
-# Release-note highlights are keyed the same way: each English bullet in
+# Release-note summaries are keyed the same way: each English `summary` in
 # `ReleaseNotes.all` is its own catalog key, resolved at runtime by
-# `Strings.Settings.releaseHighlight(_:)`.
+# `Strings.Settings.releaseSummary(_:)`. The `highlights` beside them are
+# English-only context for the chat assistant and aren't catalog keys.
 RELEASE_NOTES_PATH = (
     REPO_ROOT / "KozBonPackages/BonjourCore/Sources/System/ReleaseNote.swift"
 )
@@ -233,21 +234,21 @@ def extract_library_detail_keys() -> set[str]:
     return {_unescape_swift_string(match) for match in _DETAIL_PATTERN.findall(text)}
 
 
-# A highlight is a string literal alone on its line inside `ReleaseNotes.all`.
-_HIGHLIGHT_PATTERN = re.compile(r'^\s*"((?:[^"\\]|\\.)*)",?\s*$', re.MULTILINE)
+# A summary is the `summary:` argument of each `ReleaseNote(...)` entry.
+_SUMMARY_PATTERN = re.compile(r'^\s*summary:\s*"((?:[^"\\]|\\.)*)",?\s*$', re.MULTILINE)
 
 
 def extract_release_note_keys() -> set[str]:
-    """Parse `ReleaseNotes.all` and return every highlight literal.
+    """Parse `ReleaseNotes.all` and return every `summary` literal.
 
     Only the text after the `all` declaration is scanned, so string literals
-    in the type's own code can't be mistaken for highlights."""
+    in the type's own code can't be mistaken for summaries."""
     text = RELEASE_NOTES_PATH.read_text()
     marker = "public static let all"
     if marker not in text:
         raise SystemExit(f"ERROR: `{marker}` not found in {RELEASE_NOTES_PATH.name}")
     body = text[text.index(marker):]
-    return {_unescape_swift_string(match) for match in _HIGHLIGHT_PATTERN.findall(body)}
+    return {_unescape_swift_string(match) for match in _SUMMARY_PATTERN.findall(body)}
 
 
 def main() -> int:
@@ -293,7 +294,7 @@ def main() -> int:
 
     if dangling_release_notes:
         failures.append(
-            "Release-note highlights missing from the catalog (the What's New "
+            "Release-note summaries missing from the catalog (the What's New "
             "page shows English for these):"
         )
         for key in dangling_release_notes:
@@ -371,7 +372,7 @@ def main() -> int:
         f"{len(EXPECTED_LOCALES)} locales; "
         f"{len(swift_keys)} Swift references and "
         f"{len(library_keys)} service-type details and "
-        f"{len(release_note_keys)} release-note highlights resolved; "
+        f"{len(release_note_keys)} release-note summaries resolved; "
         f"{info_plist_translatable} InfoPlist keys and "
         f"{len(app_target_catalog.get('strings', {}))} app-target keys and "
         f"{len(app_shortcuts_catalog.get('strings', {}))} Siri phrases validated."

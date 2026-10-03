@@ -118,7 +118,7 @@ struct ReleaseNotesTests {
 
     @Test("`id` is the version string")
     func idIsVersion() {
-        let note = ReleaseNote(version: "9.9", highlights: ["test"])
+        let note = ReleaseNote(version: "9.9", summary: "test", highlights: ["test"])
         #expect(note.id == "9.9")
     }
 }

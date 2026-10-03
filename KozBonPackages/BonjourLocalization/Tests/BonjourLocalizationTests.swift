@@ -85,14 +85,14 @@ struct BonjourLocalizationTests {
         #expect(a.key != b.key)
     }
 
-    // MARK: - Release Highlights
+    // MARK: - Release Summaries
 
-    @Test("`releaseHighlight` falls back to the English text for a bullet with no catalog entry")
-    func releaseHighlightFallsBackToEnglish() {
-        // A reworded bullet is exactly this case until it's
+    @Test("`releaseSummary` falls back to the English text for a summary with no catalog entry")
+    func releaseSummaryFallsBackToEnglish() {
+        // A reworded summary is exactly this case until it's
         // re-keyed — the page must show the new English, not the
         // raw key or an empty row.
-        let english = "A highlight that was never added to the catalog."
-        #expect(Strings.Settings.releaseHighlight(english) == english)
+        let english = "A summary that was never added to the catalog."
+        #expect(Strings.Settings.releaseSummary(english) == english)
     }
 }
