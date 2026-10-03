@@ -222,4 +222,14 @@ struct BonjourChatPromptBuilderTests {
         #expect(instructions.contains("CANNOT take direct actions"))
         #expect(instructions.contains("in-app UI"))
     }
+
+    @Test("Empty-scan caveat is gated on an empty discovered list and offers no quotable sentence")
+    func emptyScanCaveatIsGatedOnEmptyList() {
+        // The prompt used to carry a verbatim example — "I don't see any
+        // services yet…" — that the on-device model parroted as the first
+        // line of answers even when the context listed services.
+        let instructions = BonjourChatPromptBuilder.systemInstructions()
+        #expect(!instructions.contains("I don't see any services"))
+        #expect(instructions.contains("lists one or more discovered services, the scan found them"))
+    }
 }

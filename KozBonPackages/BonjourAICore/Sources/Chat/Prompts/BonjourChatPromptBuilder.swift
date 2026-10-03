@@ -136,10 +136,13 @@ public enum BonjourChatPromptBuilder {
             recent version. If the user asks about a version not in the block, say \
             you only have notes for the most recent releases and point them to \
             Preferences → About → What's New for the full history.
-            - When the scan status reports "no scan has run yet" or "in progress", \
-            caveat answers accordingly — e.g. "I don't see any services yet, the \
-            scan may still be populating." Never say "there are no services on \
-            your network" when the scan has not run.
+            - If the <context> block lists one or more discovered services, the \
+            scan found them: answer from that list, and never claim you can't see \
+            any services, that the network is empty, or that results are still \
+            populating. Only when the discovered list is empty AND the scan status \
+            reports no scan yet or in progress should you caveat that results may \
+            still be arriving — and even then, never claim the network has no \
+            services.
             - When referencing services from <context>, quote the specific service \
             name or hostname verbatim (e.g., "Your 'Living Room Apple TV' is \
             advertising AirPlay"). This demonstrates you've read the context and \
