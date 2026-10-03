@@ -96,6 +96,16 @@ For full build commands per platform, see [Build](#build) below. For contributio
 - **SwiftLint** — project-wide rules plus a custom rule forbidding literal SF Symbol strings in favor of the `Image.xxx` façade
 - **CI** — GitHub Actions workflows for Native CI (iOS + macOS build matrix), SPM package tests, multi-platform builds (macOS + visionOS), SwiftLint, a String Catalog validator that pins translation completeness across all 8 locales, a Markdown link checker, and a Release workflow that publishes a GitHub Release whenever a `v*` tag is pushed
 
+### Where the structure comes from
+
+The shape above — a two-file Xcode app target sitting on a 14-module local SPM package — is not ad hoc. It follows the Apple-platform conventions installed by [AppBootstrapAI](https://github.com/kelvinkosbab/AppBootstrapAI):
+
+- **`apple-modular-architecture.md`** sets the thin-app-target-over-local-package layout, the one-way module dependency graph, and the rule that a cross-module need moves *down* a layer rather than becoming a feature-to-feature edge.
+- **`apple-spm-package-conventions.md`** supplies the manifest pattern: one `makeTargets(name:…)` call per module composed with `+`, a single `sharedSwiftSettings` pinning `.swiftLanguageMode(.v6)`, and a uniform `{Module}/Sources` + `{Module}/Tests` layout. Adding a module is a two-line change to [`Package.swift`](KozBonPackages/Package.swift).
+- 18 rules and 10 skills are committed under [`.claude/`](.claude/), so every agent session in this repo inherits the same conventions — accessibility, localization, Swift 6 strict concurrency, logging, testing strategy, and the TestFlight release path — instead of being told them again each time.
+
+Installed 2026-06-12 from bundle commit `b64ec75`. [`.claude/.appbootstrap-manifest.json`](.claude/.appbootstrap-manifest.json) records the installed file set with checksums, so the bundle can be updated without clobbering local edits.
+
 ## Build
 
 ```bash
