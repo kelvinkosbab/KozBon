@@ -141,9 +141,7 @@ public struct AppCoreScene: Scene {
                         BonjourChatView(viewModel: viewModel.servicesViewModel)
                     } label: {
                         ChatTabLabel(
-                            backend: viewModel.preferencesStore.aiBackend,
-                            hasUnread: viewModel.hasUnreadAssistantChatMessage,
-                            isSelected: viewModel.selectedTab == .chat
+                            backend: viewModel.preferencesStore.aiBackend
                         )
                     }
                 }
@@ -170,15 +168,6 @@ public struct AppCoreScene: Scene {
             .environment(\.serviceExplainer, viewModel.explainer)
             .environment(\.chatSession, viewModel.chatSession)
             .environment(\.preferencesStore, viewModel.preferencesStore)
-            // Hands the chat surface a closure that records
-            // the user as having seen the latest assistant
-            // message. The scroll view fires this when the
-            // user reaches the bottom edge — that's the only
-            // event that should clear the tab-bar badge.
-            .environment(
-                \.chatMessagesSeenAction,
-                ChatMessagesSeenAction { viewModel.markChatMessagesSeen() }
-            )
             // Animate the tab-bar tint + chat-tab icon swap
             // when the backend changes mid-session.
             .animation(
@@ -292,51 +281,16 @@ public struct AppCoreScene: Scene {
 /// (iPhone, iPad Slide Over) keeps the generic "Chat" / "Explore"
 /// title since the icon+text pair already reads cleanly in the
 /// bottom tab bar.
-///
-/// When `hasUnread` is true, a small red dot is painted in the
-/// top-trailing corner of the brand icon. The dot is rendered
-/// in-app via a `Circle` overlay rather than SwiftUI's `.badge()`
-/// modifier because the iOS 18+ Liquid Glass tab bar applies its
-/// own system-controlled (and noticeably larger) badge styling to
-/// the trailing `role: .search` tab — going through `.badge()`
-/// there gave us no size control. The overlay is identical
-/// across iPhone, iPad, and macOS.
 private struct ChatTabLabel: View {
 
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     let backend: AIBackend
-    let hasUnread: Bool
-    /// Whether the chat tab is the currently-selected tab.
-    /// Threaded through to ``ChatTabIcon`` so the
-    /// `ImageRenderer`-baked bitmap uses the correct tint —
-    /// `Color.kozBonBlue` when selected (matching the other
-    /// tabs' system tint), `Color.primary` otherwise.
-    let isSelected: Bool
 
     var body: some View {
         Label {
             Text(titleText)
         } icon: {
-            ChatTabIcon(
-                backend: backend,
-                // Gate the dot on container width, not device.
-                // `horizontalSizeClass` reflects the *layout*
-                // SwiftUI is rendering into — iPhone portrait,
-                // iPad Slide Over, a deliberately-narrow macOS
-                // window all read as `.compact` and get the
-                // badge; iPad full screen, iPhone Plus/Max in
-                // landscape, a wide macOS window, and visionOS
-                // all read as `.regular` and skip it. The
-                // assumption: when the user has room for a
-                // multi-pane / multi-window layout, the chat
-                // surface is already a single glance away and
-                // a passive tab indicator is more clutter than
-                // signal. When the window is condensed, the
-                // user is one-screen-at-a-time and the indicator
-                // earns its keep.
-                showsDot: hasUnread && horizontalSizeClass == .compact,
-                isSelected: isSelected
-            )
+            TopLevelDestination.chat.icon(activeBackend: backend)
         }
     }
 
@@ -351,116 +305,5 @@ private struct ChatTabLabel: View {
         }
         return TopLevelDestination.chat.titleString
         #endif
-    }
-}
-
-// MARK: - ChatTabIcon
-
-/// Renders the chat tab's brand icon optionally composited with
-/// a small red badge dot.
-///
-/// SwiftUI's `Tab { ... } label: { Label { … } icon: { … } }`
-/// API extracts only the underlying `Image` source from the
-/// `icon:` closure and discards every wrapping modifier — even
-/// being inside a `ZStack` — before forwarding to the platform
-/// tab renderer (UIKit's `UITabBarItem.image` on iPhone, the
-/// Liquid Glass capsule's icon channel on iPad, an `NSToolbar`-
-/// style item on macOS). Putting `.overlay { Circle() }` on
-/// the brand image silently vanishes; that's why every previous
-/// attempt at a custom dot never appeared.
-///
-/// The fix is to pre-flatten the composite via `ImageRenderer`
-/// — render the brand-icon-plus-dot view into a single
-/// `CGImage` here, then hand the tab renderer a brand-new
-/// `Image(decorative:scale:)` it can treat as an opaque source.
-/// `@Environment(\.displayScale)` keeps the bitmap sharp on
-/// Retina / non-Retina without depending on `UIScreen` /
-/// `NSScreen` and the platform import chain that goes with them.
-private struct ChatTabIcon: View {
-
-    let backend: AIBackend
-    let showsDot: Bool
-    /// Whether the chat tab is the currently-selected one.
-    /// Plumbed in from `AppCoreScene` (via `ChatTabLabel`) so
-    /// the rendered bitmap can bake the right tint colour in
-    /// before the TabView's icon channel strips everything
-    /// else — selected tabs match the global KozBon-blue
-    /// tint the other tabs get from the system, unselected
-    /// tabs fall back to an appearance-aware primary colour.
-    let isSelected: Bool
-
-    @Environment(\.displayScale) private var displayScale
-    /// Observed so `ImageRenderer` captures the brand icon
-    /// using the *current* appearance — SF Symbols and
-    /// template assets like the Apple Intelligence sparkle
-    /// would otherwise render as solid black (their light-
-    /// mode default) and disappear into the dark tab chrome.
-    /// `body` re-evaluates on every appearance change, which
-    /// re-runs `badgedImage` with a fresh `cgImage`.
-    @Environment(\.colorScheme) private var colorScheme
-
-    var body: some View {
-        if let badged = badgedImage {
-            badged
-                .renderingMode(.original)
-                .accessibilityHidden(true)
-        } else {
-            TopLevelDestination.chat.icon(activeBackend: backend)
-        }
-    }
-
-    private var badgedImage: Image? {
-        guard showsDot else { return nil }
-        // `ImageRenderer` does NOT auto-inherit the parent
-        // view's environment, so explicitly thread the current
-        // appearance + the selection-aware `foregroundStyle`
-        // through. The latter is a no-op on multi-colour brand
-        // assets (Claude / GitHub stay their brand colour) but
-        // pulls template assets like the Apple Intelligence
-        // symbol onto the system tint when selected and onto
-        // the primary colour when unselected — so the chat
-        // tab's selected-state appearance matches the other
-        // tabs instead of staying frozen at light-mode black.
-        let renderer = ImageRenderer(
-            content: composite
-                .foregroundStyle(iconTint)
-                .environment(\.colorScheme, colorScheme)
-        )
-        renderer.scale = displayScale
-        guard let cgImage = renderer.cgImage else { return nil }
-        return Image(decorative: cgImage, scale: displayScale)
-    }
-
-    /// The colour the brand icon (and only the brand icon —
-    /// the badge dot stays red regardless) is rendered with.
-    /// Mirrors how SwiftUI's `TabView` tints other tab icons
-    /// when the global `.tint(Color.kozBonBlue)` is in play:
-    /// selected → tint colour, unselected → an appearance-
-    /// aware primary fallback.
-    private var iconTint: Color {
-        isSelected ? Color.kozBonBlue : Color.primary
-    }
-
-    /// The view fed into `ImageRenderer`. Sized at a 28pt canvas
-    /// — slightly larger than the typical 24pt tab icon — so the
-    /// dot can sit in the top-trailing corner without spilling
-    /// outside the bitmap's bounds (anything outside the
-    /// renderer's frame is clipped at flatten-time).
-    private var composite: some View {
-        ZStack(alignment: .topTrailing) {
-            TopLevelDestination.chat.icon(activeBackend: backend)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 24, height: 24)
-                .padding(2)
-
-            Circle()
-                .fill(Color.red)
-                .frame(width: 8, height: 8)
-                .overlay {
-                    Circle().stroke(Color.white, lineWidth: 0.5)
-                }
-        }
-        .frame(width: 28, height: 28)
     }
 }

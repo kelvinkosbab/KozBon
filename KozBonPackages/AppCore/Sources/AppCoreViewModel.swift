@@ -97,67 +97,11 @@ public final class AppCoreViewModel {
     // MARK: - Tab Selection
 
     /// Currently-selected top-level tab. Bound to SwiftUI's
-    /// `TabView(selection:)` in ``AppCoreScene`` so the scene can
-    /// observe navigation to the chat tab and clear the unread
-    /// badge the moment the user opens it. Module-internal because
-    /// `TopLevelDestination` itself is internal — the binding only
-    /// ever crosses between this view model and the scene, both of
-    /// which live in `AppCore`.
+    /// `TabView(selection:)` in ``AppCoreScene``. Module-internal
+    /// because `TopLevelDestination` itself is internal — the
+    /// binding only ever crosses between this view model and the
+    /// scene, both of which live in `AppCore`.
     var selectedTab: TopLevelDestination = .bonjour
-
-    // MARK: - Chat Badge
-
-    /// `id` of the assistant message the user most recently saw —
-    /// either because the chat tab was visible when the message
-    /// streamed in, or because the user just opened the chat tab.
-    /// `nil` when no assistant message has ever been seen (fresh
-    /// session, or after `refreshAIBackend()` wipes the
-    /// conversation across a backend swap).
-    private var lastSeenAssistantMessageID: UUID?
-
-    /// True when the chat session has a completed assistant
-    /// message the user hasn't scrolled to the bottom of.
-    /// Drives the chat tab's red-dot badge.
-    ///
-    /// "Seen" means the user physically reached the bottom edge
-    /// of the message list — the chat surface's
-    /// `.onScrollGeometryChange` observer fires the
-    /// ``ChatMessagesSeenAction`` env callback (gated on
-    /// `!isGenerating`) which updates
-    /// ``lastSeenAssistantMessageID``.
-    ///
-    /// Suppressed while the session is mid-stream
-    /// (`isGenerating == true`) so the badge never flashes for
-    /// the empty assistant placeholder that gets appended at
-    /// the start of a turn — the placeholder's id is unequal
-    /// to whatever id was seen on the previous turn, but the
-    /// user obviously can't have "missed" content that hasn't
-    /// streamed in yet. The post-stream
-    /// `onChange(of: isGenerating)` handler in the chat surface
-    /// is the moment we reconcile: if the user is still at the
-    /// bottom when the turn finishes, the seen-id snaps to the
-    /// just-completed message; if not, the placeholder id
-    /// becomes the unread target and the badge lights up.
-    var hasUnreadAssistantChatMessage: Bool {
-        guard let chatSession, !chatSession.isGenerating else {
-            return false
-        }
-        guard let latestAssistantID = chatSession.messages
-            .last(where: { $0.role == .assistant })?.id
-        else {
-            return false
-        }
-        return latestAssistantID != lastSeenAssistantMessageID
-    }
-
-    /// Records the user as having seen the most recent assistant
-    /// message. Called by the scene when the chat tab becomes
-    /// selected and whenever a new message lands while it's
-    /// already visible.
-    func markChatMessagesSeen() {
-        lastSeenAssistantMessageID = chatSession?.messages
-            .last(where: { $0.role == .assistant })?.id
-    }
 
     // MARK: - Lifecycle
 

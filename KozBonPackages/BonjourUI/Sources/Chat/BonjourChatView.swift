@@ -45,26 +45,7 @@ public struct BonjourChatView: View {
     @Environment(\.accessibilityReduceMotion) var reduceMotion
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
-    /// Action injected by `AppCoreScene` that records the user
-    /// as having seen the latest assistant message. Called by
-    /// ``messageList(session:)`` the moment the scroll view's
-    /// geometry observer reports the user has reached the
-    /// bottom of the conversation. Defaults to a no-op so
-    /// previews / standalone tests render without any extra
-    /// plumbing.
-    @Environment(\.chatMessagesSeenAction) var chatMessagesSeenAction
-
     @FocusState var isInputFocused: Bool
-
-    /// Whether the message-list ScrollView is currently scrolled
-    /// to (or near) the bottom edge. Watched so message-id
-    /// changes that arrive while the user is at the bottom can
-    /// fire the seen-action without waiting for the auto-scroll
-    /// animation to redrive `.onScrollGeometryChange`. Initialised
-    /// `true` because an empty chat or a chat with the latest
-    /// message visible should not flash a stale badge on first
-    /// render.
-    @State var isAtChatBottom: Bool = true
 
     /// Cached "is there an Anthropic API key in the Keychain
     /// right now?" flag. Refreshed on appearance and after the
