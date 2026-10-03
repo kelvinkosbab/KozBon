@@ -194,15 +194,6 @@ struct BroadcastBonjourServiceView: View {
                         detail: viewModel.serviceType?.fullType
                     )
                 }
-                .listRowBackground(
-                    // Capsule clip mirrors `BlueSectionItemIconTitleDetailView`'s
-                    // own row background; without it the override falls back to
-                    // the system's rounded-rectangle row shape. The 40% opacity
-                    // keeps the unselected state reading as "tap to choose."
-                    Color.kozBonBlue
-                        .opacity(0.4)
-                        .clipShape(.capsule)
-                )
                 .contextMenu {
                     // Skip the menu before a selection — empty menus consume
                     // the long-press gesture without showing anything.

@@ -157,6 +157,7 @@ public struct ServiceTypeBadge: View {
                 // capsule's edge.
                 .padding(.horizontal, isEffectivelyIconOnly ? 0 : 16)
         }
+        .foregroundStyle(Color.kozBonBlue)
         .frame(
             width: isEffectivelyIconOnly ? badgeDimension : nil,
             height: badgeDimension
@@ -165,10 +166,18 @@ public struct ServiceTypeBadge: View {
         .glassBackgroundEffect()
         .clipShape(.capsule)
         #else
-        .background(
-            Color.kozBonBlue
-                .opacity(0.4)
-        )
+        .background {
+            // `.compact` is the toolbar variant, and the toolbar already
+            // wraps items in its shared Liquid Glass — a fill here would
+            // stack a second surface on the glass. List rows get a
+            // material instead, since glass belongs to the functional
+            // layer, not content.
+            if size == .regular {
+                Capsule()
+                    .fill(.regularMaterial)
+                    .overlay(Capsule().fill(Color.kozBonBlue.opacity(0.15)))
+            }
+        }
         .clipShape(.capsule)
         #endif
         .accessibilityElement(children: .combine)
