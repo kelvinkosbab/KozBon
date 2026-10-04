@@ -60,6 +60,15 @@ public extension Color {
     /// as well.
     /// Light: #1A73E8, Dark: #8AB4F8
     static let kozBonGemini = Color(.kozBonGemini)
+
+    /// OpenAI brand green. Used as the accent for AI surfaces when
+    /// the user has selected the OpenAI backend.
+    ///
+    /// OpenAI's #10A37F is only 3.2:1 under white text, so light
+    /// mode darkens it to #0D8065 (4.9:1, AA Normal); dark mode
+    /// keeps #10A37F, which reads at 5.3:1 on a dark ground.
+    /// Light: #0D8065, Dark: #10A37F
+    static let kozBonOpenAI = Color(.kozBonOpenAI)
 }
 
 #if canImport(UIKit)
@@ -141,6 +150,25 @@ extension UIColor {
             )
         }
     }
+
+    static let kozBonOpenAI = UIColor { traitCollection in
+        switch traitCollection.userInterfaceStyle {
+        case .dark:
+            return UIColor(
+                red: 0x10 / 255.0,
+                green: 0xA3 / 255.0,
+                blue: 0x7F / 255.0,
+                alpha: 1.0
+            )
+        default:
+            return UIColor(
+                red: 0x0D / 255.0,
+                green: 0x80 / 255.0,
+                blue: 0x65 / 255.0,
+                alpha: 1.0
+            )
+        }
+    }
 }
 #elseif canImport(AppKit)
 import AppKit
@@ -213,6 +241,24 @@ extension NSColor {
                 red: 0x1A / 255.0,
                 green: 0x73 / 255.0,
                 blue: 0xE8 / 255.0,
+                alpha: 1.0
+            )
+        }
+    }
+
+    static let kozBonOpenAI = NSColor(name: nil) { appearance in
+        if appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua {
+            return NSColor(
+                red: 0x10 / 255.0,
+                green: 0xA3 / 255.0,
+                blue: 0x7F / 255.0,
+                alpha: 1.0
+            )
+        } else {
+            return NSColor(
+                red: 0x0D / 255.0,
+                green: 0x80 / 255.0,
+                blue: 0x65 / 255.0,
                 alpha: 1.0
             )
         }

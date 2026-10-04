@@ -5472,6 +5472,60 @@
         }
       }
     },
+    "OpenAI GPT joins Apple Intelligence, Anthropic Claude, and Google Gemini as an AI option. Add your own OpenAI API key in Settings, and the GPT model picker loads the models your key can use. OpenAI bills API usage separately from a ChatGPT subscription.\n\nOn devices without Apple Intelligence, the Chat tab now appears whenever any cloud provider has a key, not just Claude.": {
+      "comment": "What's New summary for KozBon 4.8. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI GPT joins Apple Intelligence, Anthropic Claude, and Google Gemini as an AI option. Add your own OpenAI API key in Settings, and the GPT model picker loads the models your key can use. OpenAI bills API usage separately from a ChatGPT subscription.\n\nOn devices without Apple Intelligence, the Chat tab now appears whenever any cloud provider has a key, not just Claude."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI GPT se suma a Apple Intelligence, Anthropic Claude y Google Gemini como opción de IA. Añade tu propia clave de API de OpenAI en Ajustes y el selector de modelos de GPT cargará los modelos que tu clave puede usar. OpenAI factura el uso de la API aparte de una suscripción a ChatGPT.\n\nEn los dispositivos sin Apple Intelligence, la pestaña Chat ahora aparece siempre que algún proveedor en la nube tenga una clave, no solo Claude."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI GPT rejoint Apple Intelligence, Anthropic Claude et Google Gemini parmi les options d’IA. Ajoutez votre propre clé d’API OpenAI dans Réglages, et le sélecteur de modèle GPT charge les modèles que votre clé peut utiliser. OpenAI facture l’utilisation de l’API séparément d’un abonnement ChatGPT.\n\nSur les appareils sans Apple Intelligence, l’onglet Chat apparaît désormais dès qu’un fournisseur cloud dispose d’une clé, et plus seulement Claude."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI GPT ergänzt Apple Intelligence, Anthropic Claude und Google Gemini als KI-Option. Füge in den Einstellungen deinen eigenen OpenAI-API-Schlüssel hinzu, und die GPT-Modellauswahl lädt die Modelle, die dein Schlüssel nutzen kann. OpenAI rechnet die API-Nutzung getrennt von einem ChatGPT-Abo ab.\n\nAuf Geräten ohne Apple Intelligence erscheint der Chat-Tab jetzt, sobald irgendein Cloud-Anbieter einen Schlüssel hat – nicht mehr nur Claude."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AIの選択肢として、Apple Intelligence、Anthropic Claude、Google GeminiにOpenAI GPTが加わりました。設定でご自身のOpenAI APIキーを追加すると、GPTのモデル選択にそのキーで利用できるモデルが読み込まれます。APIの利用料金は、ChatGPTのサブスクリプションとは別にOpenAIから請求されます。\n\nApple Intelligenceに対応していないデバイスでも、いずれかのクラウドプロバイダのキーがあれば「チャット」タブが表示されるようになりました。これまではClaudeのキーのみが対象でした。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI GPT 加入 Apple Intelligence、Anthropic Claude 和 Google Gemini，成为新的 AI 选项。在“设置”中添加你自己的 OpenAI API 密钥后，GPT 模型选择器会载入该密钥可用的模型。OpenAI 对 API 用量的计费与 ChatGPT 订阅分开。\n\n在不支持 Apple Intelligence 的设备上，只要任一云端提供商有密钥，“聊天”标签页就会显示，而不再仅限于 Claude。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "انضم OpenAI GPT إلى Apple Intelligence وAnthropic Claude وGoogle Gemini كخيار للذكاء الاصطناعي. أضف مفتاح OpenAI API الخاص بك في الإعدادات، وستحمّل أداة اختيار نماذج GPT النماذج التي يمكن لمفتاحك استخدامها. تحتسب OpenAI استخدام الواجهة بشكل منفصل عن اشتراك ChatGPT.\n\nعلى الأجهزة التي لا تدعم Apple Intelligence، تظهر علامة تبويب «محادثة» الآن متى كان لدى أي مزوّد سحابي مفتاح، وليس Claude فقط."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI GPT מצטרף ל-Apple Intelligence, ל-Anthropic Claude ול-Google Gemini כאפשרות AI. הוסף מפתח OpenAI API משלך בהגדרות, ובורר המודלים של GPT יטען את המודלים שהמפתח שלך יכול להשתמש בהם. OpenAI מחייבת על השימוש ב-API בנפרד ממינוי ל-ChatGPT.\n\nבמכשירים ללא Apple Intelligence, הכרטיסייה \"צ'אט\" מופיעה כעת בכל פעם שלספק ענן כלשהו יש מפתח, ולא רק ל-Claude."
+          }
+        }
+      }
+    },
     "Original Apple TV discovery service for identifying first-generation Apple TV devices on the local network.": {
       "extractionState": "manual",
       "localizations": {
@@ -12473,6 +12527,59 @@
         }
       }
     },
+    "accessibility_ai_cloud_sign_in_learn_more_hint_openai": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opens platform.openai.com in your browser to create an API key"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abre platform.openai.com en tu navegador para crear una clave de API"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ouvre platform.openai.com dans votre navigateur pour créer une clé d’API"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Öffnet platform.openai.com im Browser, um einen API-Schlüssel zu erstellen"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ブラウザで platform.openai.com を開き、API キーを作成します"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在浏览器中打开 platform.openai.com 以创建 API 密钥"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يفتح platform.openai.com في متصفحك لإنشاء مفتاح API"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פותח את platform.openai.com בדפדפן כדי ליצור מפתח API"
+          }
+        }
+      }
+    },
     "action_copy_address": {
       "extractionState": "manual",
       "localizations": {
@@ -15702,6 +15809,112 @@
           "stringUnit": {
             "state": "translated",
             "value": "התחברות ל‑Gemini"
+          }
+        }
+      }
+    },
+    "chat_sign_in_to_openai_body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You’ve selected OpenAI GPT as your assistant. Sign in with your OpenAI API key to start chatting."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Has elegido OpenAI GPT como asistente. Inicia sesión con tu clave de API de OpenAI para empezar a chatear."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vous avez choisi OpenAI GPT comme assistant. Connectez-vous avec votre clé d’API OpenAI pour commencer à discuter."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du hast OpenAI GPT als Assistenten gewählt. Melde dich mit deinem OpenAI-API-Schlüssel an, um zu chatten."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アシスタントとして OpenAI GPT を選択しました。OpenAI の API キーでサインインするとチャットを開始できます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "你已选择 OpenAI GPT 作为助手。使用你的 OpenAI API 密钥登录即可开始聊天。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لقد اخترت OpenAI GPT كمساعد لك. سجّل الدخول باستخدام مفتاح واجهة برمجة التطبيقات من OpenAI لبدء المحادثة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחרת ב‑OpenAI GPT כעוזר שלך. התחבר עם מפתח ה‑API שלך מ‑OpenAI כדי להתחיל לשוחח."
+          }
+        }
+      }
+    },
+    "chat_sign_in_to_openai_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign in to OpenAI"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Iniciar sesión en OpenAI"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se connecter à OpenAI"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bei OpenAI anmelden"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI にサインイン"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "登录 OpenAI"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تسجيل الدخول إلى OpenAI"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "התחברות ל‑OpenAI"
           }
         }
       }
@@ -18940,6 +19153,59 @@
         }
       }
     },
+    "insights_sign_in_to_openai": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign in to OpenAI"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Iniciar sesión en OpenAI"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se connecter à OpenAI"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bei OpenAI anmelden"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI にサインイン"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "登录 OpenAI"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تسجيل الدخول إلى OpenAI"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "התחברות ל‑OpenAI"
+          }
+        }
+      }
+    },
     "loading_scanning_for_services": {
       "extractionState": "manual",
       "localizations": {
@@ -21593,6 +21859,165 @@
       },
       "comment": "do not translate"
     },
+    "settings_ai_backend_openai": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI GPT"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI GPT"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI GPT"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI GPT"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI GPT"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI GPT"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI GPT"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI GPT"
+          }
+        }
+      }
+    },
+    "settings_ai_backend_openai_privacy": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your questions and the service details they reference are sent to OpenAI."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tus preguntas y los detalles del servicio que mencionan se envían a OpenAI."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vos questions et les détails de service qu’elles mentionnent sont envoyés à OpenAI."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deine Fragen und die darin genannten Dienstdetails werden an OpenAI gesendet."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "質問と、そこで参照されるサービスの詳細は OpenAI に送信されます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "你的问题以及其中引用的服务详情会发送给 OpenAI。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تُرسَل أسئلتك وتفاصيل الخدمة التي تشير إليها إلى OpenAI."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "השאלות שלך ופרטי השירות שהן מפנות אליהם נשלחים ל‑OpenAI."
+          }
+        }
+      }
+    },
+    "settings_ai_backend_openai_subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cloud, via your own OpenAI API account. Billed per use."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En la nube, con tu propia cuenta de la API de OpenAI. Se factura por uso."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cloud, via votre compte API OpenAI. Facturé à l’usage."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cloud, über dein eigenes OpenAI-API-Konto. Abrechnung nach Nutzung."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "クラウド。ご自身の OpenAI API アカウントを使用します。利用量に応じて課金されます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "云端，使用你自己的 OpenAI API 账户。按用量计费。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "سحابي، عبر حساب OpenAI API الخاص بك. يُحتسب حسب الاستخدام."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בענן, דרך חשבון ה‑API שלך ב‑OpenAI. חיוב לפי שימוש."
+          }
+        }
+      }
+    },
     "settings_ai_backend_picker_label": {
       "extractionState": "manual",
       "localizations": {
@@ -21911,6 +22336,59 @@
         }
       }
     },
+    "settings_ai_cloud_api_key_field_label_openai": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "API Key"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clave de API"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clé d’API"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "API-Schlüssel"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "API キー"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "API 密钥"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مفتاح API"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מפתח API"
+          }
+        }
+      }
+    },
     "settings_ai_cloud_api_key_placeholder": {
       "extractionState": "manual",
       "localizations": {
@@ -22013,6 +22491,59 @@
           "stringUnit": {
             "state": "translated",
             "value": "AIza…"
+          }
+        }
+      }
+    },
+    "settings_ai_cloud_api_key_placeholder_openai": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "sk-…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "sk-…"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "sk-…"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "sk-…"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "sk-…"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "sk-…"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "sk-…"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "sk-…"
           }
         }
       }
@@ -22172,6 +22703,59 @@
           "stringUnit": {
             "state": "translated",
             "value": "זה לא נראה כמו מפתח API של Google AI Studio. מפתחות מתחילים ב‑”AIza“."
+          }
+        }
+      }
+    },
+    "settings_ai_cloud_invalid_key_openai": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "That doesn’t look like an OpenAI API key. Keys start with “sk-”."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eso no parece una clave de API de OpenAI. Las claves empiezan por «sk-»."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cela ne ressemble pas à une clé d’API OpenAI. Les clés commencent par « sk- »."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Das sieht nicht nach einem OpenAI-API-Schlüssel aus. Schlüssel beginnen mit „sk-“."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI の API キーではないようです。キーは「sk-」で始まります。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这看起来不像 OpenAI 的 API 密钥。密钥以“sk-”开头。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا يبدو هذا كمفتاح واجهة برمجة تطبيقات من OpenAI. تبدأ المفاتيح بـ ”sk-“."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "זה לא נראה כמו מפתח API של OpenAI. מפתחות מתחילים ב‑”sk-“."
           }
         }
       }
@@ -22441,6 +23025,165 @@
         }
       }
     },
+    "settings_ai_cloud_model_openai_flagship_subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Most capable. Best for deep reasoning about complex networks."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El más capaz. Ideal para razonar en profundidad sobre redes complejas."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le plus performant. Idéal pour raisonner en profondeur sur des réseaux complexes."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Am leistungsfähigsten. Ideal für tiefes Nachdenken über komplexe Netzwerke."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最も高性能。複雑なネットワークの詳細な推論に最適です。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "能力最强。最适合对复杂网络进行深入推理。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الأقوى. الأفضل للتفكير العميق في الشبكات المعقّدة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "החזק ביותר. מתאים לניתוח מעמיק של רשתות מורכבות."
+          }
+        }
+      }
+    },
+    "settings_ai_cloud_model_openai_mini_subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Balanced. Recommended for most questions about your network."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Equilibrado. Recomendado para la mayoría de preguntas sobre tu red."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Équilibré. Recommandé pour la plupart des questions sur votre réseau."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ausgewogen. Für die meisten Fragen zu deinem Netzwerk empfohlen."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "バランス型。ネットワークに関するほとんどの質問におすすめです。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "均衡。推荐用于大多数网络相关问题。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "متوازن. موصى به لمعظم الأسئلة حول شبكتك."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מאוזן. מומלץ לרוב השאלות על הרשת שלך."
+          }
+        }
+      }
+    },
+    "settings_ai_cloud_model_openai_nano_subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fastest, lowest cost. Best for quick service explanations."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El más rápido y económico. Ideal para explicaciones rápidas de servicios."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le plus rapide et le moins cher. Idéal pour des explications rapides de services."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Am schnellsten und günstigsten. Ideal für kurze Diensterklärungen."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最速・最安。サービスの簡単な説明に最適です。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最快、成本最低。最适合快速的服务说明。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الأسرع والأقل تكلفة. الأفضل للشروح السريعة للخدمات."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "המהיר והזול ביותר. מתאים להסברים מהירים על שירותים."
+          }
+        }
+      }
+    },
     "settings_ai_cloud_model_opus": {
       "extractionState": "manual",
       "localizations": {
@@ -22649,6 +23392,59 @@
           "stringUnit": {
             "state": "translated",
             "value": "מודל Gemini"
+          }
+        }
+      }
+    },
+    "settings_ai_cloud_model_picker_label_openai": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GPT Model"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modelo de GPT"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modèle GPT"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GPT-Modell"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GPT モデル"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GPT 模型"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نموذج GPT"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מודל GPT"
           }
         }
       }
@@ -22971,6 +23767,112 @@
         }
       }
     },
+    "settings_ai_cloud_sign_in_learn_more_openai": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Get an API key at platform.openai.com"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Consigue una clave de API en platform.openai.com"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Obtenez une clé d’API sur platform.openai.com"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "API-Schlüssel erhalten auf platform.openai.com"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "platform.openai.com で API キーを取得"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在 platform.openai.com 获取 API 密钥"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "احصل على مفتاح API من platform.openai.com"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "קבל מפתח API בכתובת platform.openai.com"
+          }
+        }
+      }
+    },
+    "settings_ai_cloud_sign_in_openai": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign in to OpenAI"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Iniciar sesión en OpenAI"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se connecter à OpenAI"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bei OpenAI anmelden"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI にサインイン"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "登录 OpenAI"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تسجيل الدخول إلى OpenAI"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "התחברות ל‑OpenAI"
+          }
+        }
+      }
+    },
     "settings_ai_cloud_sign_in_prompt": {
       "extractionState": "manual",
       "localizations": {
@@ -23073,6 +23975,59 @@
           "stringUnit": {
             "state": "translated",
             "value": "הדבק את מפתח ה‑API שלך מ‑Google AI Studio. ‏KozBon שומר אותו במחזיק המפתחות של המכשיר ומשתמש בו רק לבקשות ה‑AI שלך — ‏KozBon לעולם לא רואה את המפתח שלך בשרת."
+          }
+        }
+      }
+    },
+    "settings_ai_cloud_sign_in_prompt_openai": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paste your OpenAI API key. API usage is billed separately from a ChatGPT subscription. KozBon stores the key in the device Keychain and uses it only for your AI requests — KozBon never sees your key on a server."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pega tu clave de API de OpenAI. El uso de la API se factura aparte de una suscripción a ChatGPT. KozBon guarda la clave en el Llavero del dispositivo y solo la usa para tus solicitudes de IA; KozBon nunca ve tu clave en un servidor."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Collez votre clé d’API OpenAI. L’utilisation de l’API est facturée séparément d’un abonnement ChatGPT. KozBon stocke la clé dans le trousseau de l’appareil et ne l’utilise que pour vos requêtes d’IA — KozBon ne voit jamais votre clé sur un serveur."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Füge deinen OpenAI-API-Schlüssel ein. Die API-Nutzung wird getrennt von einem ChatGPT-Abo abgerechnet. KozBon speichert den Schlüssel im Schlüsselbund des Geräts und verwendet ihn nur für deine KI-Anfragen — KozBon sieht deinen Schlüssel nie auf einem Server."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI の API キーを貼り付けてください。API の利用料金は ChatGPT のサブスクリプションとは別に請求されます。KozBon はキーをデバイスのキーチェーンに保存し、あなたの AI リクエストにのみ使用します。KozBon がサーバー上でキーを見ることはありません。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "粘贴你的 OpenAI API 密钥。API 用量与 ChatGPT 订阅分开计费。KozBon 会将密钥存储在设备钥匙串中，且仅用于你的 AI 请求——KozBon 绝不会在服务器上看到你的密钥。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الصق مفتاح واجهة برمجة التطبيقات الخاص بك من OpenAI. يُحتسب استخدام الواجهة بشكل منفصل عن اشتراك ChatGPT. يخزّن KozBon المفتاح في سلسلة مفاتيح الجهاز ويستخدمه فقط لطلبات الذكاء الاصطناعي الخاصة بك — لا يرى KozBon مفتاحك على أي خادم."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הדבק את מפתח ה‑API שלך מ‑OpenAI. השימוש ב‑API מחויב בנפרד ממינוי ל‑ChatGPT. ‏KozBon שומר את המפתח במחזיק המפתחות של המכשיר ומשתמש בו רק לבקשות ה‑AI שלך — ‏KozBon לעולם לא רואה את המפתח שלך בשרת."
           }
         }
       }

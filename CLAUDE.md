@@ -43,7 +43,7 @@ The `KozBon` scheme has no test action configured; all tests run through SPM.
 
 `KozBon.xcworkspace` contains:
 - `KozBon.xcodeproj` — the app target (2 Swift files)
-- `KozBonPackages/` — local SPM package (14 modules)
+- `KozBonPackages/` — local SPM package (15 modules)
 
 ### App Target (KozBon/)
 
@@ -72,6 +72,7 @@ Each module follows the `{name}/Sources` and `{name}/Tests` layout:
 | **BonjourAIApple** | Apple Foundation Models implementations of the BonjourAICore protocols | `BonjourChatSession`, `BonjourChatSessionFactory`, `BonjourServiceExplainer`, `BonjourServiceExplainerFactory`, `AppleIntelligenceSupport`, `AIContextMenuItems`, prepare-tool wrappers |
 | **BonjourAIAnthropic** | Anthropic Claude implementations of the BonjourAICore protocols + the runtime model catalog and the `PreferencesStore.aiCloudModelIdentifier` bridge | `AnthropicModel` (offline fallback only), `AnthropicModelOption`, `AnthropicModelCatalog`, `AnthropicModelCatalogClient`, `AnthropicClient`, `AnthropicConfiguration`, `AnthropicBonjourChatSession`, `AnthropicBonjourServiceExplainer`, `MockAnthropicClient` |
 | **BonjourAIGemini** | Google Gemini implementations of the BonjourAICore protocols + the runtime model catalog. Uses the Gemini Developer API (`generativelanguage.googleapis.com`), not Vertex AI — Vertex needs service-account OAuth the paste-an-API-key sheet can't express. | `GeminiModel` (offline fallback only), `GeminiModelOption`, `GeminiModelCatalog`, `GeminiModelCatalogClient`, `GeminiClient`, `GeminiConfiguration`, `GeminiGenerateRequest`, `GeminiStreamEvent`, `GeminiBonjourChatSession`, `GeminiBonjourServiceExplainer`, `MockGeminiClient` |
+| **BonjourAIOpenAI** | OpenAI implementations of the BonjourAICore protocols + the runtime model catalog. Uses the Responses API (`/v1/responses`) with `store: false`, so OpenAI keeps no copy of the conversation. | `OpenAIModel` (offline fallback only), `OpenAIModelOption`, `OpenAIModelCatalog`, `OpenAIModelCatalogClient`, `OpenAIClient`, `OpenAIConfiguration`, `OpenAIResponseRequest`, `OpenAIStreamEvent`, `OpenAIBonjourChatSession`, `OpenAIBonjourServiceExplainer`, `MockOpenAIClient` |
 | **BonjourAI** | Umbrella module — cloud-aware routing factories + `@_exported import BonjourAICore` so legacy `import BonjourAI` consumers stay working | `CloudAwareBonjourChatSessionFactory`, `CloudAwareBonjourServiceExplainerFactory` |
 | **BonjourAppIntents** | The Siri / Shortcuts / Spotlight actions. Holds the intents and entity; the `AppShortcutsProvider` itself lives in the app target because Xcode won't extract or localize one declared in a package | `ScanForServicesIntent`, `ListDiscoveredServicesIntent`, `BonjourServiceEntity`, `BonjourServiceEntityQuery` |
 | **BonjourUI** | SwiftUI views and view models | All views, `BonjourServicesViewModel`, UI components |
@@ -81,11 +82,12 @@ Each module follows the `{name}/Sources` and `{name}/Tests` layout:
 ```
 App → AppCore, BonjourUI, BonjourAppIntents, BonjourScanning, BonjourModels, BonjourStorage, BonjourCore
 BonjourAppIntents → BonjourAI, BonjourModels, BonjourScanning
-BonjourUI → BonjourModels, BonjourScanning, BonjourLocalization, BonjourAI, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourStorage, CoreUI
-BonjourAI → BonjourAICore, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
+BonjourUI → BonjourModels, BonjourScanning, BonjourLocalization, BonjourAI, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourAIOpenAI, BonjourStorage, CoreUI
+BonjourAI → BonjourAICore, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourAIOpenAI, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
 BonjourAIApple → BonjourAICore, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
 BonjourAIAnthropic → BonjourAICore, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
 BonjourAIGemini → BonjourAICore, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
+BonjourAIOpenAI → BonjourAICore, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
 BonjourAICore → BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
 BonjourScanning → BonjourCore, BonjourModels, LocalNetworkMonitor
 BonjourModels → BonjourCore, BonjourStorage, BonjourLocalization
@@ -96,12 +98,14 @@ BonjourCore → Core (BasicSwiftUtilities)
 
 ### AI Backend Routing
 
-ADR 0005 introduces a pluggable AI backend. The Settings → AI Backend section
-exposes a picker between three options:
+ADR 0005 introduces a pluggable AI backend (extended by ADRs 0006 and 0007). The
+Settings → AI Backend section exposes a picker between four options:
 
 - **Apple Intelligence** (default) — on-device via `BonjourAIApple` and FoundationModels.
 - **Anthropic Claude** (opt-in) — cloud via `BonjourAIAnthropic` and the user's own API key.
 - **Google Gemini** (opt-in) — cloud via `BonjourAIGemini` and the user's own Google AI Studio key.
+- **OpenAI GPT** (opt-in) — cloud via `BonjourAIOpenAI` and the user's own OpenAI API key. Labelled
+  "OpenAI GPT", not "ChatGPT": a ChatGPT subscription doesn't include API access, and the sign-in copy says so.
 GitHub Models was a third option until GitHub retired the service on 2026-07-30.
 `AIBackend.github` and the whole `BonjourAIGitHub` module are gone; a stored
 `"github"` preference migrates to Apple Intelligence via
@@ -113,7 +117,7 @@ built from — so don't "finish the job" by deleting them.
 
 `CloudAwareBonjourChatSessionFactory` / `CloudAwareBonjourServiceExplainerFactory`
 live in the `BonjourAI` umbrella and sit above the per-provider factories in
-`BonjourAIApple` / `BonjourAIAnthropic` / `BonjourAIGemini`. They read `preferencesStore.aiBackend`
+`BonjourAIApple` / `BonjourAIAnthropic` / `BonjourAIGemini` / `BonjourAIOpenAI`. They read `preferencesStore.aiBackend`
 on every `makeForCurrentEnvironment(...)` call and route to the right implementation.
 `AppCoreScene` watches `preferencesStore.aiBackend` and `aiCloudModelIdentifier` via `.onChange`
 and calls `AppCoreViewModel.refreshAIBackend()` so flipping the picker takes effect
@@ -135,11 +139,20 @@ fetch → this session's cached fetch (1h TTL, in-memory) → the compiled-in li
 `BonjourAIGemini` mirrors this with `GeminiModelCatalog` against
 `GET /v1beta/models`, filtered to models advertising `generateContent` — the
 endpoint also returns embedding, image, and TTS variants that a chat picker
-must not offer.
+must not offer. `OpenAIModelCatalog` does the same against `GET /v1/models`,
+which advertises no capabilities at all, so its filter is by identifier family
+(`OpenAIModelCatalogClient.isChatModel`) — the piece to revisit when OpenAI
+adds a model family.
+
+OpenAI's reasoning models spend the output budget on hidden reasoning, so the
+OpenAI session caps turns at 4,096 tokens (not 1,024) and sends
+`reasoning.effort: "low"` only to families known to accept it
+(`OpenAIReasoning.forModel`) — an unsupported parameter fails the request.
 
 The selected model persists **per provider**: `aiCloudModelRawValue` holds the
-Claude choice and `aiGeminiModelRawValue` the Gemini one, so switching backends
-and back preserves both rather than handing Gemini a `claude-` identifier. Read
+Claude choice, `aiGeminiModelRawValue` the Gemini one, and `aiOpenAIModelRawValue`
+the OpenAI one, so switching backends and back preserves each rather than handing
+Gemini a `claude-` identifier. Read
 them through `PreferencesStore.aiCloudModelIdentifier(for:)` in `BonjourAICore`
 (the no-argument property resolves the currently-selected backend). Values are
 raw `String`s, and an identifier the binary doesn't recognize is **only**
@@ -237,7 +250,7 @@ Verify a change by building and inspecting `Metadata.appintents/extract.actionsd
 ## Testing
 
 - **Framework**: Swift Testing (`@Test`, `@Suite`, `#expect`)
-- **Runner**: `swift test --package-path KozBonPackages` is the only test runner. All tests live in `KozBonPackages/` — 1,184 tests across 99 suites covering BonjourCore, BonjourModels, BonjourScanning, BonjourUI, BonjourAICore, BonjourAIAnthropic, AppCore (including the former app-level `TopLevelDestinationTests`), etc.
+- **Runner**: `swift test --package-path KozBonPackages` is the only test runner. All tests live in `KozBonPackages/` — 1,271 tests across 110 suites covering BonjourCore, BonjourModels, BonjourScanning, BonjourUI, BonjourAICore, BonjourAIAnthropic, BonjourAIGemini, BonjourAIOpenAI, AppCore (including the former app-level `TopLevelDestinationTests`), etc.
 - **Naming**: `<TypeName>Tests.swift` (e.g., `TransportLayerTests.swift`)
 - **`@MainActor` tests**: Use `@MainActor` on the suite when testing `@MainActor`-isolated types
 - **Cross-module testing**: Use `@testable import <Module>` to access internal types, `import <Module>` for public API tests

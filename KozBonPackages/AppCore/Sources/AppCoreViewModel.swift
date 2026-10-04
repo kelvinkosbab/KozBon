@@ -84,14 +84,35 @@ public final class AppCoreViewModel {
 
     /// Whether the Chat tab renders in the root tab bar — true
     /// when AI is enabled AND at least one backend is reachable
-    /// (Apple Intelligence available, Anthropic key configured,
-    /// or the user explicitly selected Anthropic so the in-tab
-    /// sign-in prompt can surface).
+    /// (Apple Intelligence available, or a cloud backend usable or
+    /// selected — see ``hasCloudChatPath(selectedBackend:credentialsStore:)``).
     public var shouldShowChatTab: Bool {
         guard preferencesStore.aiAnalysisEnabled else { return false }
         if AppleIntelligenceSupport.isDeviceSupported { return true }
-        if credentialsStore?.hasAPIKey(for: .anthropic) == true { return true }
-        return preferencesStore.aiBackend == .anthropic
+        return Self.hasCloudChatPath(
+            selectedBackend: preferencesStore.aiBackend,
+            credentialsStore: credentialsStore
+        )
+    }
+
+    /// Whether a cloud backend can carry the Chat tab on hardware
+    /// without Apple Intelligence: any live provider has a key (the
+    /// routing factory falls back to it), or a cloud backend is
+    /// selected, so the in-tab sign-in prompt can surface.
+    ///
+    /// Enumerates `AIBackend.allCases` rather than naming providers,
+    /// so a provider added later is covered without an edit here —
+    /// and the retired GitHub token, which has no backend, doesn't
+    /// count.
+    static func hasCloudChatPath(
+        selectedBackend: AIBackend,
+        credentialsStore: (any AICloudCredentialsStore)?
+    ) -> Bool {
+        if selectedBackend.isCloud { return true }
+        guard let credentialsStore else { return false }
+        return AIBackend.allCases
+            .compactMap(\.cloudProvider)
+            .contains { credentialsStore.hasAPIKey(for: $0) }
     }
 
     // MARK: - Tab Selection

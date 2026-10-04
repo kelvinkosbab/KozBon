@@ -10,6 +10,7 @@ import BonjourCore
 import BonjourAICore
 import BonjourAIAnthropic
 import BonjourAIGemini
+import BonjourAIOpenAI
 import BonjourLocalization
 
 // MARK: - SettingsView + Model Pickers
@@ -194,6 +195,78 @@ extension SettingsView {
         case .pro:       return Strings.Settings.aiCloudModelGeminiProSubtitle
         case .flash:     return Strings.Settings.aiCloudModelGeminiFlashSubtitle
         case .flashLite: return Strings.Settings.aiCloudModelGeminiFlashLiteSubtitle
+        }
+    }
+
+    // MARK: - OpenAI Model Picker
+
+    /// The OpenAI counterpart to ``geminiModelPicker``, driven by
+    /// ``OpenAIModelCatalog``.
+    @ViewBuilder
+    var openAIModelPicker: some View {
+        LabeledContent {
+            Menu {
+                ForEach(openAIModelCatalog.options) { option in
+                    openAIModelMenuButton(for: option)
+                }
+            } label: {
+                Text(verbatim: openAIModelCatalog.displayName(for: selectedOpenAIModelIdentifier))
+                    .font(.subheadline)
+            }
+            .accessibilityLabel(Strings.Settings.aiCloudModelPickerLabelOpenAI)
+        } label: {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(Strings.Settings.aiCloudModelPickerLabelOpenAI)
+                openAIModelSubtitleView
+            }
+            .accessibilityElement(children: .combine)
+        }
+    }
+
+    @ViewBuilder
+    private func openAIModelMenuButton(for option: OpenAIModelOption) -> some View {
+        let isSelected = option.id == selectedOpenAIModelIdentifier
+        Button {
+            withAnimation(reduceMotion ? nil : .default) {
+                preferencesStore.setAICloudModelIdentifier(option.id, for: .openai)
+            }
+        } label: {
+            if isSelected {
+                Label(option.displayName, systemImage: Iconography.selected)
+            } else {
+                Text(verbatim: option.displayName)
+            }
+        }
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
+    }
+
+    /// Curated blurbs exist only for the compiled-in tiers; a
+    /// catalog-sourced model shows its identifier.
+    @ViewBuilder
+    private var openAIModelSubtitleView: some View {
+        if let builtIn = OpenAIModel(rawValue: selectedOpenAIModelIdentifier) {
+            Text(localizedSubtitle(for: builtIn))
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        } else {
+            Text(verbatim: selectedOpenAIModelIdentifier)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    /// Reconciled against the catalog, as for the other providers.
+    var selectedOpenAIModelIdentifier: String {
+        openAIModelCatalog.resolvedSelection(
+            for: preferencesStore.aiCloudModelIdentifier(for: .openai)
+        )
+    }
+
+    private func localizedSubtitle(for model: OpenAIModel) -> LocalizedStringResource {
+        switch model {
+        case .flagship: return Strings.Settings.aiCloudModelOpenAIFlagshipSubtitle
+        case .mini:     return Strings.Settings.aiCloudModelOpenAIMiniSubtitle
+        case .nano:     return Strings.Settings.aiCloudModelOpenAINanoSubtitle
         }
     }
 

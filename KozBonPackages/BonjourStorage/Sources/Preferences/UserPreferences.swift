@@ -55,6 +55,12 @@ public final class UserPreferences {
     /// the `BonjourAIGemini` typed bridge.
     public static let defaultAIGeminiModelRawValue = "gemini-2.5-flash"
 
+    /// Default value for ``aiOpenAIModelRawValue``.
+    ///
+    /// `"gpt-5.4-mini"` corresponds to `OpenAIModel.mini` in the
+    /// `BonjourAIOpenAI` typed bridge.
+    public static let defaultAIOpenAIModelRawValue = "gpt-5.4-mini"
+
     /// Default value for ``ambientBackgroundEnabled``.
     ///
     /// On by default — the wash is part of the app's look, and the
@@ -106,6 +112,13 @@ public final class UserPreferences {
     /// Additive, so existing rows decode with the default and no
     /// migration plan is required.
     public var aiGeminiModelRawValue: String = UserPreferences.defaultAIGeminiModelRawValue
+
+    /// The user's selected **OpenAI** model identifier — the
+    /// per-provider counterpart to ``aiCloudModelRawValue``.
+    ///
+    /// Additive, so existing rows decode with the default and no
+    /// migration plan is required.
+    public var aiOpenAIModelRawValue: String = UserPreferences.defaultAIOpenAIModelRawValue
 
     /// Whether the animated ambient mesh background is drawn behind
     /// each tab's content. When off, every tab falls back to the

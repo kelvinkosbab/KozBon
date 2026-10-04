@@ -67,6 +67,7 @@ let package = Package(
         .library(name: "BonjourAIApple", targets: ["BonjourAIApple"]),
         .library(name: "BonjourAIAnthropic", targets: ["BonjourAIAnthropic"]),
         .library(name: "BonjourAIGemini", targets: ["BonjourAIGemini"]),
+        .library(name: "BonjourAIOpenAI", targets: ["BonjourAIOpenAI"]),
         .library(name: "BonjourAI", targets: ["BonjourAI"]),
         .library(name: "BonjourStorage", targets: ["BonjourStorage"]),
         .library(name: "BonjourUI", targets: ["BonjourUI"]),
@@ -159,15 +160,28 @@ let package = Package(
         hasResources: true
     )
     + makeTargets(
+        name: "BonjourAIOpenAI",
+        dependencies: [
+            "BonjourAICore",
+            "BonjourCore",
+            "BonjourModels",
+            "BonjourLocalization",
+            "BonjourScanning",
+            "BonjourStorage"
+        ],
+        hasResources: true
+    )
+    + makeTargets(
         name: "BonjourAI",
         // Umbrella: re-exports `BonjourAICore` and hosts the
         // cloud-aware routing factories that sit above the
-        // Apple-, Anthropic-, and Gemini-specific modules.
+        // Apple-, Anthropic-, Gemini-, and OpenAI-specific modules.
         dependencies: [
             "BonjourAICore",
             "BonjourAIApple",
             "BonjourAIAnthropic",
             "BonjourAIGemini",
+            "BonjourAIOpenAI",
             "BonjourCore",
             "BonjourModels",
             "BonjourLocalization",
@@ -196,6 +210,7 @@ let package = Package(
             "BonjourAIApple",
             "BonjourAIAnthropic",
             "BonjourAIGemini",
+            "BonjourAIOpenAI",
             "BonjourStorage",
             .product(name: "CoreUI", package: "Core")
         ]
@@ -222,6 +237,7 @@ let package = Package(
             "BonjourAIApple",
             "BonjourAIAnthropic",
             "BonjourAIGemini",
+            "BonjourAIOpenAI",
             "BonjourStorage",
             "BonjourUI",
             .product(name: "CoreUI", package: "Core")

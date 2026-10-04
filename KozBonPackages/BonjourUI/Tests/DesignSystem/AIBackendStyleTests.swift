@@ -34,6 +34,11 @@ struct AIBackendStyleTests {
         #expect(AIBackend.anthropic.accentColor == Color.kozBonAnthropic)
     }
 
+    @Test("OpenAI uses `kozBonOpenAI` (OpenAI green)")
+    func openAIAccentIsGreen() {
+        #expect(AIBackend.openai.accentColor == Color.kozBonOpenAI)
+    }
+
     @Test("The backends have distinct accents — never accidentally swap")
     func accentsAreDistinct() {
         // Belt-and-suspenders trip-wire: a refactor that swapped
@@ -41,10 +46,7 @@ struct AIBackendStyleTests {
         // pass the per-case assertions above if the swap was
         // symmetric. This catches the case where two ended up
         // pointing at the same value.
-        let accents = [
-            AIBackend.appleIntelligence.accentColor,
-            AIBackend.anthropic.accentColor
-        ]
+        let accents = AIBackend.allCases.map(\.accentColor)
         #expect(Set(accents.map(String.init(describing:))).count == accents.count)
     }
 
@@ -71,12 +73,14 @@ struct AIBackendStyleTests {
         #expect(AIBackend.anthropic.iconSystemName == Iconography.anthropicClaude)
     }
 
+    @Test("`iconSystemName` for OpenAI is the hexagon fallback behind the bundled mark")
+    func openAIIconFallback() {
+        #expect(AIBackend.openai.iconSystemName == Iconography.openAI)
+    }
+
     @Test("The backends use distinct icons")
     func iconsAreDistinct() {
-        let names = [
-            AIBackend.appleIntelligence.iconSystemName,
-            AIBackend.anthropic.iconSystemName
-        ]
+        let names = AIBackend.allCases.map(\.iconSystemName)
         #expect(Set(names).count == names.count)
     }
 }

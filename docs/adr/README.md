@@ -13,6 +13,8 @@ The convention follows [`.claude/rules/project-documentation.md`](../../.claude/
 | [0003](0003-shared-services-view-model.md) | One shared `BonjourServicesViewModel` across Discover and Chat tabs | Accepted |
 | [0004](0004-on-device-only-ai.md) | On-device only AI via Apple Foundation Models | Superseded by [0005](0005-pluggable-ai-backend.md) |
 | [0005](0005-pluggable-ai-backend.md) | Pluggable AI backend — Apple Foundation Models or Anthropic Claude | Accepted |
+| [0006](0006-google-gemini-backend.md) | Add Google Gemini as a third AI backend | Accepted |
+| [0007](0007-openai-backend.md) | Add OpenAI as a fourth AI backend | Accepted |
 
 ## Conventions
 

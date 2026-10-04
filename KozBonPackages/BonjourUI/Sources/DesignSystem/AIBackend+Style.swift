@@ -9,6 +9,7 @@ import SwiftUI
 import BonjourAICore
 import BonjourAIAnthropic
 import BonjourAIGemini
+import BonjourAIOpenAI
 import BonjourCore
 
 // MARK: - AIBackend + Style
@@ -36,6 +37,8 @@ public extension AIBackend {
     ///   contrast.
     /// - `.gemini` → ``Color/kozBonGemini`` — Google's published
     ///   blues (#1A73E8 / #8AB4F8).
+    /// - `.openai` → ``Color/kozBonOpenAI`` — OpenAI's green,
+    ///   darkened in light mode for contrast.
     var accentColor: Color {
         switch self {
         case .appleIntelligence:
@@ -44,6 +47,8 @@ public extension AIBackend {
             return .kozBonAnthropic
         case .gemini:
             return .kozBonGemini
+        case .openai:
+            return .kozBonOpenAI
         }
     }
 
@@ -52,6 +57,7 @@ public extension AIBackend {
     /// - `.appleIntelligence` → the Apple Intelligence glyph.
     /// - `.anthropic` → the bundled Claude vector mark.
     /// - `.gemini` → the bundled Gemini spark vector mark.
+    /// - `.openai` → the bundled OpenAI vector mark.
     var icon: Image {
         switch self {
         case .appleIntelligence:
@@ -60,6 +66,8 @@ public extension AIBackend {
             return .anthropicClaude
         case .gemini:
             return .googleGemini
+        case .openai:
+            return .openAI
         }
     }
 
@@ -74,6 +82,8 @@ public extension AIBackend {
             return Iconography.anthropicClaude
         case .gemini:
             return Iconography.googleGemini
+        case .openai:
+            return Iconography.openAI
         }
     }
 }
@@ -105,6 +115,8 @@ public extension AICloudProvider {
             return .kozBonAnthropic
         case .gemini:
             return .kozBonGemini
+        case .openai:
+            return .kozBonOpenAI
         case .github:
             return .kozBonGitHub
         }

@@ -71,6 +71,10 @@ public struct BonjourChatView: View {
     /// Same refresh contract.
     @State var hasGeminiKey: Bool = false
 
+    /// Mirror of ``hasAnthropicKey`` for the OpenAI backend.
+    /// Same refresh contract.
+    @State var hasOpenAIKey: Bool = false
+
     /// Presents the in-tab `AICloudSignInSheet` when the user
     /// taps the sign-in prompt below the chat tab's empty
     /// state. The sheet routes its content to whichever cloud
@@ -142,6 +146,7 @@ public struct BonjourChatView: View {
         case .appleIntelligence: return false
         case .anthropic:         return !hasAnthropicKey
         case .gemini:            return !hasGeminiKey
+        case .openai:            return !hasOpenAIKey
         }
     }
 
@@ -152,6 +157,7 @@ public struct BonjourChatView: View {
     func refreshCloudKeyState() {
         hasAnthropicKey = credentialsStore.hasAPIKey(for: .anthropic)
         hasGeminiKey = credentialsStore.hasAPIKey(for: .gemini)
+        hasOpenAIKey = credentialsStore.hasAPIKey(for: .openai)
         hasGitHubKey = credentialsStore.hasAPIKey(for: .github)
     }
 

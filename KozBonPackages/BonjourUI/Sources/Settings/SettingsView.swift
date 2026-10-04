@@ -10,6 +10,7 @@ import CoreData
 import BonjourAI
 import BonjourAIAnthropic
 import BonjourAIGemini
+import BonjourAIOpenAI
 import BonjourAIApple
 import BonjourCore
 import BonjourLocalization
@@ -63,6 +64,9 @@ public struct SettingsView: View {
     /// Mirror of ``hasAnthropicKey`` for the Gemini backend.
     @State var hasGeminiKey: Bool = false
 
+    /// Mirror of ``hasAnthropicKey`` for the OpenAI backend.
+    @State var hasOpenAIKey: Bool = false
+
     /// Live list of Claude models the user's key can call.
     ///
     /// Owned by the view (rather than injected) because the
@@ -77,6 +81,10 @@ public struct SettingsView: View {
     /// picker doesn't refetch every time the user toggles between
     /// providers to compare them.
     @State var geminiModelCatalog = GeminiModelCatalog()
+
+    /// OpenAI counterpart to ``anthropicModelCatalog``, held for the
+    /// same reason as ``geminiModelCatalog``.
+    @State var openAIModelCatalog = OpenAIModelCatalog()
 
     /// Cached "the user has at least one persisted custom service
     /// type" flag. Refreshed on `.onAppear` and on every Core Data
@@ -167,6 +175,7 @@ public struct SettingsView: View {
             .animation(reduceMotion ? nil : .default, value: hasAnthropicKey)
             .animation(reduceMotion ? nil : .default, value: hasGitHubKey)
             .animation(reduceMotion ? nil : .default, value: hasGeminiKey)
+            .animation(reduceMotion ? nil : .default, value: hasOpenAIKey)
             // Refresh the cached custom-types flag on first
             // appearance so the Reset to Defaults section's
             // visibility is correct the moment the form lands.
@@ -185,6 +194,9 @@ public struct SettingsView: View {
                 )
                 await geminiModelCatalog.refreshIfNeeded(
                     apiKey: try? credentialsStore.apiKey(for: .gemini)
+                )
+                await openAIModelCatalog.refreshIfNeeded(
+                    apiKey: try? credentialsStore.apiKey(for: .openai)
                 )
             }
             // Refresh on any Core Data save (the custom-types

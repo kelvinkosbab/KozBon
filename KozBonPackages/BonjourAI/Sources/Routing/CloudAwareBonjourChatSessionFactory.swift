@@ -10,6 +10,7 @@ import BonjourAICore
 import BonjourAIApple
 import BonjourAIAnthropic
 import BonjourAIGemini
+import BonjourAIOpenAI
 import BonjourCore
 import BonjourScanning
 import BonjourStorage
@@ -17,9 +18,9 @@ import BonjourStorage
 // MARK: - CloudAwareBonjourChatSessionFactory
 
 /// Cloud-aware ``BonjourChatSessionFactoryProtocol`` that picks
-/// between the on-device Apple Foundation Models session, the
-/// Anthropic Claude session, and the Google Gemini session based
-/// on the user's current preferences.
+/// between the on-device Apple Foundation Models session and the
+/// Anthropic Claude, Google Gemini, and OpenAI sessions based on
+/// the user's current preferences.
 ///
 /// Sits on top of the existing ``BonjourChatSessionFactory``
 /// (which knows how to build the Apple-side session) rather than
@@ -44,6 +45,8 @@ import BonjourStorage
 ///   credentials store; if present, return a
 ///   ``GeminiBonjourChatSession``. Same fall-back-to-Apple
 ///   semantics as the Anthropic branch.
+/// - **`.openai`** — the same, with the OpenAI key and an
+///   ``OpenAIBonjourChatSession``.
 /// - **Neither available** — return `nil`, matching the legacy
 ///   contract that hides the Chat tab.
 ///
@@ -58,6 +61,7 @@ public struct CloudAwareBonjourChatSessionFactory: BonjourChatSessionFactoryProt
     private let preferencesStore: PreferencesStore
     private let anthropicClient: any AnthropicClientProtocol
     private let geminiClient: any GeminiClientProtocol
+    private let openAIClient: any OpenAIClientProtocol
 
     /// Subsystem-scoped logger for cloud-fallback diagnostics.
     /// Console.app filters by category
@@ -88,18 +92,23 @@ public struct CloudAwareBonjourChatSessionFactory: BonjourChatSessionFactoryProt
     ///     hits the Gemini path. Defaults to a real
     ///     ``GeminiClient`` against
     ///     `generativelanguage.googleapis.com`.
+    ///   - openAIClient: The OpenAI API client used when routing
+    ///     hits the OpenAI path. Defaults to a real
+    ///     ``OpenAIClient`` against `api.openai.com`.
     public init(
         appleFactory: any BonjourChatSessionFactoryProtocol = BonjourChatSessionFactory(),
         credentialsStore: any AICloudCredentialsStore & Sendable,
         preferencesStore: PreferencesStore,
         anthropicClient: any AnthropicClientProtocol = AnthropicClient(),
         geminiClient: any GeminiClientProtocol = GeminiClient(),
+        openAIClient: any OpenAIClientProtocol = OpenAIClient(),
     ) {
         self.appleFactory = appleFactory
         self.credentialsStore = credentialsStore
         self.preferencesStore = preferencesStore
         self.anthropicClient = anthropicClient
         self.geminiClient = geminiClient
+        self.openAIClient = openAIClient
     }
 
     // MARK: - BonjourChatSessionFactoryProtocol
@@ -122,8 +131,9 @@ public struct CloudAwareBonjourChatSessionFactory: BonjourChatSessionFactoryProt
             }
             return makeCloudSessionIfPossible(for: .anthropic)
                 ?? makeCloudSessionIfPossible(for: .gemini)
+                ?? makeCloudSessionIfPossible(for: .openai)
 
-        case .anthropic, .gemini:
+        case .anthropic, .gemini, .openai:
             // User picked a cloud provider. Use it when possible;
             // fall back to the Apple session if no credentials so
             // the tab still surfaces.
@@ -146,7 +156,9 @@ public struct CloudAwareBonjourChatSessionFactory: BonjourChatSessionFactoryProt
         // Intelligence availability — for the cloud path that
         // check would unhelpfully skip the warmup. Pick the
         // right strategy based on what we actually got back.
-        if session is AnthropicBonjourChatSession || session is GeminiBonjourChatSession {
+        if session is AnthropicBonjourChatSession
+            || session is GeminiBonjourChatSession
+            || session is OpenAIBonjourChatSession {
             await Task.yield()
             session.prewarm()
         } else {
@@ -189,6 +201,13 @@ public struct CloudAwareBonjourChatSessionFactory: BonjourChatSessionFactoryProt
         case .gemini:
             let session = GeminiBonjourChatSession(
                 client: geminiClient,
+                credentialsStore: credentialsStore
+            )
+            session.selectedModel = model
+            return session
+        case .openai:
+            let session = OpenAIBonjourChatSession(
+                client: openAIClient,
                 credentialsStore: credentialsStore
             )
             session.selectedModel = model

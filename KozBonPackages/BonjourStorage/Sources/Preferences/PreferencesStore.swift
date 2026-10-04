@@ -174,6 +174,17 @@ public final class PreferencesStore {
         }
     }
 
+    /// The user's selected OpenAI model identifier, as a raw
+    /// string — the per-provider counterpart to
+    /// ``aiCloudModelRawValue``.
+    public var aiOpenAIModelRawValue: String {
+        get { preferences?.aiOpenAIModelRawValue ?? UserPreferences.defaultAIOpenAIModelRawValue }
+        set {
+            preferences?.aiOpenAIModelRawValue = newValue
+            save()
+        }
+    }
+
     /// Whether the animated ambient mesh background is drawn behind
     /// each tab's content.
     ///
@@ -201,6 +212,7 @@ public final class PreferencesStore {
         preferences?.aiBackendRawValue = UserPreferences.defaultAIBackendRawValue
         preferences?.aiCloudModelRawValue = UserPreferences.defaultAICloudModelRawValue
         preferences?.aiGeminiModelRawValue = UserPreferences.defaultAIGeminiModelRawValue
+        preferences?.aiOpenAIModelRawValue = UserPreferences.defaultAIOpenAIModelRawValue
         preferences?.ambientBackgroundEnabled = UserPreferences.defaultAmbientBackgroundEnabled
         save()
     }

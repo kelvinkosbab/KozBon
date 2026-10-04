@@ -15,7 +15,7 @@ import BonjourLocalization
 /// Defined as an enum (rather than a string preference) so each
 /// provider gets compile-time enforcement everywhere it surfaces:
 /// the credentials store, the model picker, the factory routing.
-/// Adding a new provider (OpenAI, Gemini, etc.) is a single new
+/// Adding a new provider is a single new
 /// case here, plus the implementations of the matching session and
 /// explainer types.
 ///
@@ -44,6 +44,13 @@ public enum AICloudProvider: String, Sendable, CaseIterable, Codable, Identifiab
     /// paste-an-API-key flow in Settings can't express.
     case gemini
 
+    /// OpenAI's GPT family, via the Responses API
+    /// (`api.openai.com`). The user supplies their own API key from
+    /// `platform.openai.com`; KozBon never operates the key. A
+    /// ChatGPT subscription doesn't include API access, which is
+    /// why the sign-in copy says so.
+    case openai
+
     /// GitHub Models — OpenAI-compatible inference endpoint
     /// (`models.inference.ai.azure.com`) brokered by GitHub. The
     /// user supplies a GitHub Personal Access Token from
@@ -61,6 +68,8 @@ public enum AICloudProvider: String, Sendable, CaseIterable, Codable, Identifiab
             return Strings.Settings.aiBackendAnthropic
         case .gemini:
             return Strings.Settings.aiBackendGemini
+        case .openai:
+            return Strings.Settings.aiBackendOpenAI
         case .github:
             return Strings.Settings.aiBackendGitHub
         }
@@ -80,6 +89,8 @@ public enum AICloudProvider: String, Sendable, CaseIterable, Codable, Identifiab
             return "claude-sonnet-4-5"
         case .gemini:
             return "gemini-2.5-flash"
+        case .openai:
+            return "gpt-5.4-mini"
         case .github:
             // Retired 2026-07-30; the case survives only so
             // Settings can delete the stranded token.

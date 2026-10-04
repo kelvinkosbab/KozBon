@@ -11,6 +11,7 @@ import BonjourAIApple
 import BonjourAICore
 import BonjourAIAnthropic
 import BonjourAIGemini
+import BonjourAIOpenAI
 import BonjourCore
 import BonjourLocalization
 
@@ -54,6 +55,12 @@ extension SettingsView {
                 if hasGeminiKey {
                     geminiModelPicker
                 }
+            case .openai:
+                openAISignInRow
+
+                if hasOpenAIKey {
+                    openAIModelPicker
+                }
             }
         } header: {
             Text(Strings.Settings.aiBackendSection)
@@ -73,6 +80,8 @@ extension SettingsView {
                     Text(Strings.Settings.aiCloudFooter)
                 case .gemini:
                     Text(Strings.Settings.aiBackendGeminiPrivacy)
+                case .openai:
+                    Text(Strings.Settings.aiBackendOpenAIPrivacy)
                 }
             }
         }
@@ -194,6 +203,16 @@ extension SettingsView {
             provider: .gemini,
             isConnected: hasGeminiKey,
             signInLabel: Strings.Settings.aiCloudSignInGemini
+        )
+    }
+
+    /// OpenAI-specific signed-in / sign-in row.
+    @ViewBuilder
+    private var openAISignInRow: some View {
+        signInRow(
+            provider: .openai,
+            isConnected: hasOpenAIKey,
+            signInLabel: Strings.Settings.aiCloudSignInOpenAI
         )
     }
 
@@ -344,6 +363,7 @@ extension SettingsView {
     func refreshCloudKeyState() {
         hasAnthropicKey = credentialsStore.hasAPIKey(for: .anthropic)
         hasGeminiKey = credentialsStore.hasAPIKey(for: .gemini)
+        hasOpenAIKey = credentialsStore.hasAPIKey(for: .openai)
         hasGitHubKey = credentialsStore.hasAPIKey(for: .github)
     }
 }

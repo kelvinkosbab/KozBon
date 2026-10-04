@@ -48,6 +48,8 @@ public extension PreferencesStore {
             aiCloudModelRawValue = identifier
         case .gemini:
             aiGeminiModelRawValue = identifier
+        case .openai:
+            aiOpenAIModelRawValue = identifier
         case .github:
             // Retired provider — nothing reads this back.
             break
@@ -76,6 +78,8 @@ public extension PreferencesStore {
             return aiCloudModelRawValue
         case .gemini:
             return aiGeminiModelRawValue
+        case .openai:
+            return aiOpenAIModelRawValue
         case .github:
             return ""
         }

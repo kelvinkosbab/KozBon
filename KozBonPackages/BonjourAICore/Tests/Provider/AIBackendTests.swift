@@ -38,11 +38,13 @@ struct AIBackendTests {
     func resolvedMatchesKnownIdentifiers() {
         #expect(AIBackend.resolved(rawValue: "apple") == .appleIntelligence)
         #expect(AIBackend.resolved(rawValue: "anthropic") == .anthropic)
+        #expect(AIBackend.resolved(rawValue: "gemini") == .gemini)
+        #expect(AIBackend.resolved(rawValue: "openai") == .openai)
     }
 
     @Test("`resolved(rawValue:)` falls back to default for unknown / nil values")
     func resolvedFallsBackForUnknown() {
-        #expect(AIBackend.resolved(rawValue: "openai") == .default)
+        #expect(AIBackend.resolved(rawValue: "mistral") == .default)
         // GitHub Models was retired 2026-07-30 and the case removed —
         // stored preferences must migrate to the default, not dangle.
         #expect(AIBackend.resolved(rawValue: "github") == .default)
@@ -56,12 +58,14 @@ struct AIBackendTests {
     func isCloudPerCase() {
         #expect(!AIBackend.appleIntelligence.isCloud)
         #expect(AIBackend.anthropic.isCloud)
+        #expect(AIBackend.openai.isCloud)
     }
 
     @Test("`cloudProvider` is nil for Apple and matches the picker case for cloud backends")
     func cloudProviderPerCase() {
         #expect(AIBackend.appleIntelligence.cloudProvider == nil)
         #expect(AIBackend.anthropic.cloudProvider == .anthropic)
+        #expect(AIBackend.openai.cloudProvider == .openai)
     }
 
     // MARK: - PreferencesStore Bridge

@@ -80,6 +80,21 @@ public enum ReleaseNotes {
     /// Newest-first releases since 3.0.
     public static let all: [ReleaseNote] = [
         ReleaseNote(
+            version: "4.8",
+            // swiftlint:disable:next line_length
+            summary: "OpenAI GPT joins Apple Intelligence, Anthropic Claude, and Google Gemini as an AI option. Add your own OpenAI API key in Settings, and the GPT model picker loads the models your key can use. OpenAI bills API usage separately from a ChatGPT subscription.\n\nOn devices without Apple Intelligence, the Chat tab now appears whenever any cloud provider has a key, not just Claude.",
+            highlights: [
+                // swiftlint:disable:next line_length
+                "OpenAI GPT joins Apple Intelligence, Anthropic Claude, and Google Gemini as an AI backend — add your own OpenAI API key in Settings → Assistant. OpenAI bills API usage separately from any ChatGPT subscription.",
+                // swiftlint:disable:next line_length
+                "The GPT model picker loads the models your OpenAI key can use, so new models show up without an app update. Offline, it falls back to a built-in list.",
+                // swiftlint:disable:next line_length
+                "Requests to OpenAI are sent with storage turned off, so OpenAI doesn't keep a copy of your conversation — KozBon replays the conversation itself on each turn.",
+                // swiftlint:disable:next line_length
+                "On devices without Apple Intelligence, the Chat tab now appears whenever any cloud provider has a key. Previously only a Claude key counted, which hid the tab from Gemini users."
+            ]
+        ),
+        ReleaseNote(
             version: "4.7",
             // swiftlint:disable:next line_length
             summary: "Google Gemini joins Apple Intelligence and Anthropic Claude as an AI option, and the Claude and Gemini model pickers now load each provider's latest models. GitHub Models is gone now that GitHub has retired the service — if you used it, KozBon switches you back to Apple Intelligence.\n\nKozBon also gets a fresh look: an ambient background on every tab (with a switch to turn it off), landscape and wide layouts on iPhone, and a Nearby list organized into sections by device or service type. Siri and Shortcuts can now scan and list services, and KozBon now requires iOS, iPadOS, macOS, or visionOS 26.",

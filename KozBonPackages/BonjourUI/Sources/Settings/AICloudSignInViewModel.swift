@@ -43,9 +43,7 @@ final class AICloudSignInViewModel {
     /// previews and tests pass an `InMemoryAICloudCredentialsStore`.
     private let credentialsStore: any AICloudCredentialsStore
 
-    /// The provider we're signing into. Single value today
-    /// (`.anthropic`) but parameterized so adding OpenAI / Gemini
-    /// later doesn't restructure the view-model surface.
+    /// The provider we're signing into.
     private let provider: AICloudProvider
 
     /// Localized "save" error to surface in the sheet's footer when
@@ -135,6 +133,14 @@ final class AICloudSignInViewModel {
             // the prefix is checked — length has changed before,
             // and the real validation is the first API call.
             return value.hasPrefix("AIza") && value.count > "AIza".count
+        case .openai:
+            // OpenAI keys start `sk-` (`sk-proj-` for project keys,
+            // `sk-svcacct-` for service accounts). An Anthropic key
+            // also starts `sk-`, so `sk-ant-` is rejected to catch
+            // the most likely wrong paste.
+            return value.hasPrefix("sk-")
+                && !value.hasPrefix("sk-ant-")
+                && value.count > "sk-".count
         case .github:
             // GitHub PATs ship in three families:
             //   - `ghp_…` classic personal-access tokens

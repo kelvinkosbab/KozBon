@@ -60,6 +60,14 @@ public enum Iconography {
     /// the rest of the cue.
     public static let googleGemini = "asterisk"
 
+    /// OpenAI mark, the SF Symbol fallback for call sites that need
+    /// a `systemImage:` name. The official bundled mark is
+    /// `Image.openAI` in `BonjourAIOpenAI`.
+    ///
+    /// `hexagon` echoes the hexagonal knot of OpenAI's logo and is
+    /// distinct from the other providers' `sparkle` and `asterisk`.
+    public static let openAI = "hexagon"
+
     /// AirPort Extreme base station icon.
     public static let airportExtreme = "airport.extreme"
 

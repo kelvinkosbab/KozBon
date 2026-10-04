@@ -17,7 +17,7 @@ import BonjourLocalization
 /// Presented from `SettingsView` (and from `BonjourChatView`'s
 /// in-tab prompt) when the user taps a sign-in row. The sheet's
 /// view model handles per-provider format validation
-/// (`sk-ant-` for Anthropic, `AIza` for Gemini, `ghp_` /
+/// (`sk-ant-` for Anthropic, `AIza` for Gemini, `sk-` for OpenAI, `ghp_` /
 /// `github_pat_` / `gho_` for
 /// GitHub) and persists via the injected credentials store. On a
 /// successful save the sheet dismisses; the parent observes the
@@ -202,6 +202,7 @@ public struct AICloudSignInSheet: View {
         switch provider {
         case .anthropic: return Strings.Settings.aiCloudSignInPrompt
         case .gemini:    return Strings.Settings.aiCloudSignInPromptGemini
+        case .openai:    return Strings.Settings.aiCloudSignInPromptOpenAI
         case .github:    return Strings.Settings.aiCloudSignInPromptGitHub
         }
     }
@@ -210,6 +211,7 @@ public struct AICloudSignInSheet: View {
         switch provider {
         case .anthropic: return Strings.Settings.aiCloudAPIKeyPlaceholder
         case .gemini:    return Strings.Settings.aiCloudAPIKeyPlaceholderGemini
+        case .openai:    return Strings.Settings.aiCloudAPIKeyPlaceholderOpenAI
         case .github:    return Strings.Settings.aiCloudAPIKeyPlaceholderGitHub
         }
     }
@@ -218,6 +220,7 @@ public struct AICloudSignInSheet: View {
         switch provider {
         case .anthropic: return Strings.Settings.aiCloudAPIKeyFieldLabel
         case .gemini:    return Strings.Settings.aiCloudAPIKeyFieldLabelGemini
+        case .openai:    return Strings.Settings.aiCloudAPIKeyFieldLabelOpenAI
         case .github:    return Strings.Settings.aiCloudAPIKeyFieldLabelGitHub
         }
     }
@@ -226,6 +229,7 @@ public struct AICloudSignInSheet: View {
         switch provider {
         case .anthropic: return Strings.Settings.aiCloudInvalidKey
         case .gemini:    return Strings.Settings.aiCloudInvalidKeyGemini
+        case .openai:    return Strings.Settings.aiCloudInvalidKeyOpenAI
         case .github:    return Strings.Settings.aiCloudInvalidKeyGitHub
         }
     }
@@ -234,6 +238,7 @@ public struct AICloudSignInSheet: View {
         switch provider {
         case .anthropic: return Strings.Settings.aiCloudSignInLearnMore
         case .gemini:    return Strings.Settings.aiCloudSignInLearnMoreGemini
+        case .openai:    return Strings.Settings.aiCloudSignInLearnMoreOpenAI
         case .github:    return Strings.Settings.aiCloudSignInLearnMoreGitHub
         }
     }
@@ -242,6 +247,7 @@ public struct AICloudSignInSheet: View {
         switch provider {
         case .anthropic: return Strings.Accessibility.aiCloudSignInLearnMoreHint
         case .gemini:    return Strings.Accessibility.aiCloudSignInLearnMoreHintGemini
+        case .openai:    return Strings.Accessibility.aiCloudSignInLearnMoreHintOpenAI
         case .github:    return Strings.Accessibility.chatOpenGitHubPATHint
         }
     }
@@ -250,6 +256,7 @@ public struct AICloudSignInSheet: View {
         switch provider {
         case .anthropic: return "https://console.anthropic.com/settings/keys"
         case .gemini:    return "https://aistudio.google.com/app/apikey"
+        case .openai:    return "https://platform.openai.com/api-keys"
         case .github:    return "https://github.com/settings/tokens"
         }
     }

@@ -7,7 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-Nothing yet.
+### Added
+
+- **OpenAI GPT backend ([ADR 0007](docs/adr/0007-openai-backend.md))** — a fourth AI option alongside Apple Intelligence, Anthropic Claude, and Google Gemini, using your own OpenAI API key from Settings → Assistant. Runs against the Responses API with `store: false`, so OpenAI keeps no copy of the conversation; the key lives in the Keychain like the others.
+- A GPT model picker that loads the models your key can use, filtered to chat-capable families, falling back to a compiled-in list offline.
+
+### Fixed
+
+- On devices without Apple Intelligence, the Chat tab now appears when any cloud provider has a key. It previously counted only a Claude key, hiding the tab from Gemini users.
 
 ## [4.7] - 2026-10-03
 

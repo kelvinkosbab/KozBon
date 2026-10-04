@@ -10,6 +10,7 @@ import BonjourAICore
 import BonjourAIApple
 import BonjourAIAnthropic
 import BonjourAIGemini
+import BonjourAIOpenAI
 import BonjourCore
 import BonjourStorage
 
@@ -32,6 +33,7 @@ public struct CloudAwareBonjourServiceExplainerFactory: BonjourServiceExplainerF
     private let preferencesStore: PreferencesStore
     private let anthropicClient: any AnthropicClientProtocol
     private let geminiClient: any GeminiClientProtocol
+    private let openAIClient: any OpenAIClientProtocol
 
     /// Subsystem-scoped logger. Console.app filters by category
     /// `CloudAwareBonjourServiceExplainerFactory`.
@@ -48,12 +50,14 @@ public struct CloudAwareBonjourServiceExplainerFactory: BonjourServiceExplainerF
         preferencesStore: PreferencesStore,
         anthropicClient: any AnthropicClientProtocol = AnthropicClient(),
         geminiClient: any GeminiClientProtocol = GeminiClient(),
+        openAIClient: any OpenAIClientProtocol = OpenAIClient(),
     ) {
         self.appleFactory = appleFactory
         self.credentialsStore = credentialsStore
         self.preferencesStore = preferencesStore
         self.anthropicClient = anthropicClient
         self.geminiClient = geminiClient
+        self.openAIClient = openAIClient
     }
 
     // MARK: - BonjourServiceExplainerFactoryProtocol
@@ -70,8 +74,9 @@ public struct CloudAwareBonjourServiceExplainerFactory: BonjourServiceExplainerF
             }
             return makeCloudExplainerIfPossible(for: .anthropic)
                 ?? makeCloudExplainerIfPossible(for: .gemini)
+                ?? makeCloudExplainerIfPossible(for: .openai)
 
-        case .anthropic, .gemini:
+        case .anthropic, .gemini, .openai:
             if let provider = backend.cloudProvider,
                let cloudExplainer = makeCloudExplainerIfPossible(for: provider) {
                 return cloudExplainer
@@ -108,6 +113,13 @@ public struct CloudAwareBonjourServiceExplainerFactory: BonjourServiceExplainerF
         case .gemini:
             let explainer = GeminiBonjourServiceExplainer(
                 client: geminiClient,
+                credentialsStore: credentialsStore
+            )
+            explainer.selectedModel = model
+            return explainer
+        case .openai:
+            let explainer = OpenAIBonjourServiceExplainer(
+                client: openAIClient,
                 credentialsStore: credentialsStore
             )
             explainer.selectedModel = model

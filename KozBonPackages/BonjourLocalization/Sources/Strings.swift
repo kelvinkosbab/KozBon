@@ -789,6 +789,12 @@ public enum Strings {
             .init("accessibility_ai_cloud_sign_in_learn_more_hint_gemini", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        /// Hint for the "Get an API key at platform.openai.com" link in the
+        /// OpenAI sign-in sheet.
+        public static var aiCloudSignInLearnMoreHintOpenAI: LocalizedStringResource {
+            .init("accessibility_ai_cloud_sign_in_learn_more_hint_openai", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var resetHint: LocalizedStringResource {
             .init("a11y_reset_hint", bundle: .atURL(Bundle.module.bundleURL))
         }
@@ -1130,6 +1136,26 @@ public enum Strings {
             .init("settings_ai_cloud_model_gemini_flash_lite_subtitle", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        /// "GPT Model" — label for the OpenAI model picker.
+        public static var aiCloudModelPickerLabelOpenAI: LocalizedStringResource {
+            .init("settings_ai_cloud_model_picker_label_openai", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Subtitle for the OpenAI flagship tier.
+        public static var aiCloudModelOpenAIFlagshipSubtitle: LocalizedStringResource {
+            .init("settings_ai_cloud_model_openai_flagship_subtitle", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Subtitle for the OpenAI mini tier.
+        public static var aiCloudModelOpenAIMiniSubtitle: LocalizedStringResource {
+            .init("settings_ai_cloud_model_openai_mini_subtitle", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Subtitle for the OpenAI nano tier.
+        public static var aiCloudModelOpenAINanoSubtitle: LocalizedStringResource {
+            .init("settings_ai_cloud_model_openai_nano_subtitle", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         /// "Google Gemini" — display name for the Gemini cloud
         /// backend option.
         public static var aiBackendGemini: LocalizedStringResource {
@@ -1175,6 +1201,52 @@ public enum Strings {
         /// "Get an API key at aistudio.google.com" link text.
         public static var aiCloudSignInLearnMoreGemini: LocalizedStringResource {
             .init("settings_ai_cloud_sign_in_learn_more_gemini", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// "OpenAI GPT" — display name for the OpenAI cloud backend option.
+        public static var aiBackendOpenAI: LocalizedStringResource {
+            .init("settings_ai_backend_openai", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// One-line description shown under the OpenAI GPT option.
+        public static var aiBackendOpenAISubtitle: LocalizedStringResource {
+            .init("settings_ai_backend_openai_subtitle", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Privacy note shown when OpenAI is the selected backend.
+        public static var aiBackendOpenAIPrivacy: LocalizedStringResource {
+            .init("settings_ai_backend_openai_privacy", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Sign-in button title for OpenAI.
+        public static var aiCloudSignInOpenAI: LocalizedStringResource {
+            .init("settings_ai_cloud_sign_in_openai", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Explanatory body in the OpenAI sign-in sheet. Notes that API
+        /// usage is billed separately from a ChatGPT subscription.
+        public static var aiCloudSignInPromptOpenAI: LocalizedStringResource {
+            .init("settings_ai_cloud_sign_in_prompt_openai", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Placeholder for the OpenAI API-key field.
+        public static var aiCloudAPIKeyPlaceholderOpenAI: LocalizedStringResource {
+            .init("settings_ai_cloud_api_key_placeholder_openai", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Field label for the OpenAI API key.
+        public static var aiCloudAPIKeyFieldLabelOpenAI: LocalizedStringResource {
+            .init("settings_ai_cloud_api_key_field_label_openai", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Validation message for a key that isn't an OpenAI one.
+        public static var aiCloudInvalidKeyOpenAI: LocalizedStringResource {
+            .init("settings_ai_cloud_invalid_key_openai", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// "Get an API key at platform.openai.com" link text.
+        public static var aiCloudSignInLearnMoreOpenAI: LocalizedStringResource {
+            .init("settings_ai_cloud_sign_in_learn_more_openai", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         /// One-line description shown under the GitHub Models option.
@@ -1450,6 +1522,12 @@ public enum Strings {
             .init("insights_sign_in_to_gemini", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        /// "Sign in to OpenAI" — Insights menu row when OpenAI is selected
+        /// but no key is stored.
+        public static var signInToOpenAI: LocalizedStringResource {
+            .init("insights_sign_in_to_openai", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var signInToClaude: LocalizedStringResource {
             .init("insights_sign_in_to_claude", bundle: .atURL(Bundle.module.bundleURL))
         }
@@ -1542,6 +1620,17 @@ public enum Strings {
         /// Body of the in-tab sign-in prompt for Gemini.
         public static var signInToGeminiBody: LocalizedStringResource {
             .init("chat_sign_in_to_gemini_body", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Title of the in-tab sign-in prompt when OpenAI is the selected
+        /// backend.
+        public static var signInToOpenAITitle: LocalizedStringResource {
+            .init("chat_sign_in_to_openai_title", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Body of the in-tab sign-in prompt for OpenAI.
+        public static var signInToOpenAIBody: LocalizedStringResource {
+            .init("chat_sign_in_to_openai_body", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         public static var signInToClaudeTitle: LocalizedStringResource {

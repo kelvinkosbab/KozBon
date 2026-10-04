@@ -51,11 +51,12 @@ For full build commands per platform, see [Build](#build) below. For contributio
 - **Query-triggered descriptions** — Mention a type by name in chat and the assistant pulls in authoritative descriptions from the catalog inline
 - **Scan freshness awareness** — The assistant knows whether results are fresh, stale, or still populating and hedges answers accordingly
 - **Prompt safety** — Source-priority hierarchy (TXT > type description > model training), named uncertainty phrasing, TXT-key allowlist, client-side refusal for prompt injection and off-topic queries
-- **Pluggable backend** — a Settings picker between three paths ([ADR 0005](docs/adr/0005-pluggable-ai-backend.md), [ADR 0006](docs/adr/0006-google-gemini-backend.md)):
+- **Pluggable backend** — a Settings picker between four paths ([ADR 0005](docs/adr/0005-pluggable-ai-backend.md), [ADR 0006](docs/adr/0006-google-gemini-backend.md), [ADR 0007](docs/adr/0007-openai-backend.md)):
   - **Apple Intelligence (default)** — Everything runs through Apple's Foundation Models on-device; no data leaves the device. Available on Apple-Intelligence-eligible hardware with the feature turned on.
   - **Anthropic Claude (opt-in)** — Sign in with your own Anthropic API key (stored in the iOS Keychain; KozBon never sees the key on a server). Requests are sent to Anthropic's API and billed to your Anthropic account. Available on any device — including older iPhones, non-M-series Macs, and devices where Apple Intelligence is disabled.
   - **Google Gemini (opt-in)** — Same shape, with your own Google AI Studio key against the Gemini Developer API.
-  - The Claude and Gemini model pickers load each provider's current model list using your key, so new models appear without an app update; offline they fall back to a compiled-in list. Each provider remembers its own choice, so switching back and forth preserves both.
+  - **OpenAI GPT (opt-in)** — Same shape, with your own OpenAI API key against the Responses API. Requests opt out of server-side storage. API usage is billed by OpenAI, separately from a ChatGPT subscription.
+  - The Claude, Gemini, and GPT model pickers load each provider's current model list using your key, so new models appear without an app update; offline they fall back to a compiled-in list. Each provider remembers its own choice, so switching back and forth preserves both.
 - **Configurable** — Single Detail level setting (Basic / Technical) drives both vocabulary and response length, so the two settings can't drift out of sync
 
 ### Polish
@@ -84,7 +85,7 @@ The minimums were raised to 26 together so no `#available` gating is needed for 
 
 - **Swift 6.2** with strict concurrency (`Sendable`, `@MainActor`, structured concurrency, `defer`-guarded state resets)
 - **SwiftUI** with MVVM, `@Observable` view models, `NavigationSplitView` for adaptive list-detail layouts
-- **Modular SPM packages** in `KozBonPackages/` — 14 modules, each a library product. The `KozBon/` Xcode target carries only the `@main` shim and the resources that must live in the main bundle, so contributors can move fast under `swift test` without touching project settings:
+- **Modular SPM packages** in `KozBonPackages/` — 15 modules, each a library product. The `KozBon/` Xcode target carries only the `@main` shim and the resources that must live in the main bundle, so contributors can move fast under `swift test` without touching project settings:
   - **`AppCore`** — the root scene (`AppCoreScene`), its view model (`AppCoreViewModel`), macOS menu commands, and the top-level tab destinations. The Xcode app target's `@main` struct is a 30-line shim that just renders `AppCoreScene()`.
   - **`BonjourCore`** — shared value types, constants, and utilities (`Constants`, `TransportLayer`, `InternetAddress`, `Logger`, `Clipboard`, `HapticFeedback`). Re-exports `Core` so downstream modules pick up `Logger` / `Loggable` without an explicit import.
   - **`BonjourStorage`** — all persistence in one module: the SwiftData preferences container (`PreferencesStore`, `UserPreferences`) and the legacy Core Data custom-service-type store (`CustomServiceType`, `MyCoreDataStack`, `MyDataManagerObject`).
@@ -96,21 +97,22 @@ The minimums were raised to 26 together so no `#available` gating is needed for 
   - **`BonjourAIApple`** — the on-device implementation on Apple's FoundationModels, plus `AppleIntelligenceSupport` for availability gating.
   - **`BonjourAIAnthropic`** — Anthropic Claude over a native `URLSession` + SSE streaming client (no third-party SDK), with prompt caching for the static system block and `AnthropicModelCatalog` fetching the live model list.
   - **`BonjourAIGemini`** — Google Gemini against the Gemini Developer API, with `GeminiModelCatalog` filtered to models advertising `generateContent`. Keys ride in the `x-goog-api-key` header, never the query string.
+  - **`BonjourAIOpenAI`** — OpenAI GPT against the Responses API, with `store: false` on every request and `OpenAIModelCatalog` filtered to chat-capable model families.
   - **`BonjourAI`** — the umbrella. `CloudAwareBonjourChatSessionFactory` / `CloudAwareBonjourServiceExplainerFactory` read `preferencesStore.aiBackend` and route to the right provider; `@_exported import BonjourAICore` keeps older `import BonjourAI` call sites working.
   - **`BonjourUI`** — every SwiftUI view, view model, and the design-system primitives consumed by every screen (semantic `CGFloat` tokens, the `Image.xxx` SF-Symbol façade, the `AmbientMeshBackground` colour wash).
   - **`BonjourAppIntents`** — App Intents (`ScanForServicesIntent`, `ListDiscoveredServicesIntent`) for Siri / Shortcuts integration, plus the `BonjourService` / `BonjourServiceType` entity projections.
 - **Dependency injection** via `DependencyContainer` + SwiftUI environment; the shared `BonjourServicesViewModel` is owned by `AppCoreViewModel` so the Discover and Chat tabs see the same scanner delegate
 - **FoundationModels** for on-device AI, with availability gating that hides the AI surfaces on ineligible hardware rather than failing at call time
-- **Pluggable AI backend** ([ADR 0005](docs/adr/0005-pluggable-ai-backend.md), extended by [ADR 0006](docs/adr/0006-google-gemini-backend.md)) — one protocol layer, three implementations, selected in Settings and swapped without an app restart. Each cloud provider's model list is fetched at runtime from its own API, falling back to a compiled-in list offline, and each remembers its own model choice. API keys live only in the Keychain (`whenUnlockedThisDeviceOnly`, never iCloud-synced); KozBon never operates them
+- **Pluggable AI backend** ([ADR 0005](docs/adr/0005-pluggable-ai-backend.md), extended by [ADR 0006](docs/adr/0006-google-gemini-backend.md) and [ADR 0007](docs/adr/0007-openai-backend.md)) — one protocol layer, four implementations, selected in Settings and swapped without an app restart. Each cloud provider's model list is fetched at runtime from its own API, falling back to a compiled-in list offline, and each remembers its own model choice. API keys live only in the Keychain (`whenUnlockedThisDeviceOnly`, never iCloud-synced); KozBon never operates them
 - **Liquid Glass** via a single `platformGlassBackground` helper that routes to `.glassEffect(in:)` on iOS / macOS and `.glassBackgroundEffect()` on visionOS
 - **HapticFeedback** provider injected via environment so view models can request haptics without direct UIKit dependencies
-- **Swift Testing** — 1,184 tests across 99 suites covering prompt-quality invariants, view-model logic, state machines (sentence haptic tracker, broadcast publish flow), design-token value pins, haptic mocks, scanner delegate flows, streaming-client wire formats, and chat-session rejection paths
+- **Swift Testing** — 1,271 tests across 110 suites covering prompt-quality invariants, view-model logic, state machines (sentence haptic tracker, broadcast publish flow), design-token value pins, haptic mocks, scanner delegate flows, streaming-client wire formats, and chat-session rejection paths
 - **SwiftLint** — project-wide rules plus a custom rule forbidding literal SF Symbol strings in favor of the `Image.xxx` façade
 - **CI** — GitHub Actions workflows for Native CI (iOS + macOS build matrix), SPM package tests, multi-platform builds (macOS + visionOS), SwiftLint, a String Catalog validator that pins translation completeness across all 8 locales, a Markdown link checker, and a Release workflow that publishes a GitHub Release whenever a `v*` tag is pushed
 
 ### Where the structure comes from
 
-The shape above — a two-file Xcode app target sitting on a 14-module local SPM package — is not ad hoc. It follows the Apple-platform conventions installed by [AppBootstrapAI](https://github.com/kelvinkosbab/AppBootstrapAI):
+The shape above — a two-file Xcode app target sitting on a 15-module local SPM package — is not ad hoc. It follows the Apple-platform conventions installed by [AppBootstrapAI](https://github.com/kelvinkosbab/AppBootstrapAI):
 
 - **`apple-modular-architecture.md`** sets the thin-app-target-over-local-package layout, the one-way module dependency graph, and the rule that a cross-module need moves *down* a layer rather than becoming a feature-to-feature edge.
 - **`apple-spm-package-conventions.md`** supplies the manifest pattern: one `makeTargets(name:…)` call per module composed with `+`, a single `sharedSwiftSettings` pinning `.swiftLanguageMode(.v6)`, and a uniform `{Module}/Sources` + `{Module}/Tests` layout. Adding a module is a two-line change to [`Package.swift`](KozBonPackages/Package.swift).

@@ -37,6 +37,10 @@ public enum AIBackend: String, Sendable, CaseIterable, Codable, Identifiable {
     /// the user to paste a key from Google AI Studio.
     case gemini
 
+    /// OpenAI's GPT models via the user's own API key. Opt-in;
+    /// requires the user to paste a key from `platform.openai.com`.
+    case openai
+
     // NOTE: `case github` was removed when GitHub retired GitHub
     // Models on 2026-07-30 — the playground, model catalog,
     // inference API, and BYOK all went away, and the endpoint
@@ -92,7 +96,7 @@ public enum AIBackend: String, Sendable, CaseIterable, Codable, Identifiable {
         switch self {
         case .appleIntelligence:
             return false
-        case .anthropic, .gemini:
+        case .anthropic, .gemini, .openai:
             return true
         }
     }
@@ -111,6 +115,8 @@ public enum AIBackend: String, Sendable, CaseIterable, Codable, Identifiable {
             return .anthropic
         case .gemini:
             return .gemini
+        case .openai:
+            return .openai
         }
     }
 
@@ -126,6 +132,8 @@ public enum AIBackend: String, Sendable, CaseIterable, Codable, Identifiable {
             return Strings.Settings.aiBackendAnthropic
         case .gemini:
             return Strings.Settings.aiBackendGemini
+        case .openai:
+            return Strings.Settings.aiBackendOpenAI
         }
     }
 
@@ -140,6 +148,8 @@ public enum AIBackend: String, Sendable, CaseIterable, Codable, Identifiable {
             return Strings.Settings.aiBackendAnthropicSubtitle
         case .gemini:
             return Strings.Settings.aiBackendGeminiSubtitle
+        case .openai:
+            return Strings.Settings.aiBackendOpenAISubtitle
         }
     }
 }

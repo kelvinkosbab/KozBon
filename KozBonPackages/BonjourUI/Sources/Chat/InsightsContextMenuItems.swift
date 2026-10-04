@@ -9,6 +9,7 @@ import SwiftUI
 import BonjourAI
 import BonjourAIAnthropic
 import BonjourAIGemini
+import BonjourAIOpenAI
 import BonjourAIApple
 import BonjourAICore
 import BonjourCore
@@ -70,6 +71,9 @@ public struct InsightsContextMenuItems: View {
 
             case .gemini:
                 geminiMenu
+
+            case .openai:
+                openAIMenu
             }
         }
     }
@@ -109,6 +113,31 @@ public struct InsightsContextMenuItems: View {
                 provider: .gemini,
                 label: Strings.Insights.signInToGemini,
                 icon: Image.googleGemini
+            )
+        }
+    }
+
+    // MARK: - OpenAI
+
+    @ViewBuilder
+    private var openAIMenu: some View {
+        if credentialsStore.hasAPIKey(for: .openai) {
+            Divider()
+            Button {
+                hapticFeedback.play(.medium)
+                action()
+            } label: {
+                Label {
+                    Text(Strings.Insights.explainWithAI)
+                } icon: {
+                    Image.openAI
+                }
+            }
+        } else {
+            cloudSignInItem(
+                provider: .openai,
+                label: Strings.Insights.signInToOpenAI,
+                icon: Image.openAI
             )
         }
     }
