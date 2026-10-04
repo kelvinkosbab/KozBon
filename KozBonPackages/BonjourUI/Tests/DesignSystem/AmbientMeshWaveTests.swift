@@ -7,6 +7,8 @@
 
 import Testing
 import Foundation
+import SwiftUI
+import BonjourAICore
 @testable import BonjourUI
 
 @Suite("AmbientMeshWave · mesh geometry")
@@ -154,7 +156,7 @@ struct AmbientMeshWaveTests {
             AmbientMeshPalette.discover,
             .library,
             .preferences,
-            .chat
+            .chat(.appleIntelligence)
         ].map(\.phaseOffset)
 
         #expect(Set(offsets).count == offsets.count)
@@ -195,5 +197,34 @@ struct AmbientMeshIntensityTests {
         #expect(AmbientMeshIntensity.standard.opacityScale == 1.0)
         #expect(AmbientMeshIntensity.subdued.opacityScale < AmbientMeshIntensity.standard.opacityScale)
         #expect(AmbientMeshIntensity.subdued.opacityScale > 0)
+    }
+}
+
+// MARK: - AmbientMeshPaletteChatTests
+
+/// The chat wash follows the AI backend, the same cue the send
+/// button and bubbles carry.
+@Suite("AmbientMeshPalette · Chat")
+struct AmbientMeshPaletteChatTests {
+
+    @Test("Every backend gets its own chat wash")
+    func chatPalettesAreDistinct() {
+        let washes = AIBackend.allCases.map { backend in
+            AmbientMeshPalette.chat(backend).hues.map(String.init(describing:))
+        }
+        #expect(Set(washes).count == AIBackend.allCases.count)
+    }
+
+    @Test("The chat wash anchors on the backend's accent colour", arguments: AIBackend.allCases)
+    func chatPaletteAnchorsOnAccent(backend: AIBackend) {
+        // Cell 0 is the anchor (see `accentLayout`), so the wash and
+        // the send button share the dominant hue.
+        #expect(AmbientMeshPalette.chat(backend).hues.first == backend.accentColor)
+    }
+
+    @Test("Every backend's chat wash keeps the chat tab's wave phase")
+    func chatPhaseIsBackendIndependent() {
+        let phases = Set(AIBackend.allCases.map { AmbientMeshPalette.chat($0).phaseOffset })
+        #expect(phases.count == 1)
     }
 }

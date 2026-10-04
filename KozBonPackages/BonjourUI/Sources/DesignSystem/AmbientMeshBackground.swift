@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import BonjourAICore
 
 // MARK: - AmbientMeshBackground
 
@@ -122,7 +123,17 @@ struct AmbientMeshBackground: View {
         AmbientMeshBackground(palette: .discover)
         AmbientMeshBackground(palette: .library)
         AmbientMeshBackground(palette: .preferences)
-        AmbientMeshBackground(palette: .chat)
+        AmbientMeshBackground(palette: .chat(.appleIntelligence))
+    }
+}
+
+#Preview("Ambient Mesh - Chat Backends") {
+    // One band per AI backend, to check each provider's wash reads
+    // as that provider and none overpowers chat text.
+    VStack(spacing: 0) {
+        ForEach(AIBackend.allCases) { backend in
+            AmbientMeshBackground(palette: .chat(backend))
+        }
     }
 }
 

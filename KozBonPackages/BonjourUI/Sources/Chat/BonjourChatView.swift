@@ -291,7 +291,7 @@ public struct BonjourChatView: View {
         }
         // Declared on the `NavigationStack` so anything the
         // chat surface pushes inherits the Chat wash.
-        .ambientMeshPalette(.chat)
+        .ambientMeshPalette(.chat(preferencesStore.aiBackend))
     }
 
     /// Inner content of the chat surface — message list + compose

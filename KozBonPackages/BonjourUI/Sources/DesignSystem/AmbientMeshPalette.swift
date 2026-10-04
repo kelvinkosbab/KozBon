@@ -6,20 +6,25 @@
 //
 
 import SwiftUI
+import BonjourAICore
 
 // MARK: - AmbientMeshPalette
 
 /// Per-tab colour scheme for ``AmbientMeshBackground``.
 ///
-/// Every palette anchors on brand blue and varies only its two
-/// accents, so moving between tabs reads as the same water under a
-/// slightly different sky rather than as four unrelated screens.
-enum AmbientMeshPalette {
+/// The three browsing tabs anchor on brand blue and vary only their
+/// two accents, so moving between them reads as the same water
+/// under a slightly different sky rather than as unrelated screens.
+///
+/// Chat is the exception: it takes the colours of whichever AI
+/// backend is answering, the same cue ``AIBackend/accentColor``
+/// gives the send button and bubbles, carried into the wash.
+enum AmbientMeshPalette: Hashable {
 
     case discover
     case library
     case preferences
-    case chat
+    case chat(AIBackend)
 
     /// Where each accent sits in the 4×4 mesh. Shared across
     /// palettes so the *shape* of the wash is identical everywhere
@@ -74,10 +79,51 @@ enum AmbientMeshPalette {
         // anchor.
         case .preferences: [.kozBonBlue, .indigo, .purple]
 
-        // Brightest of the four, matching the chat surface's own
-        // glass tinting.
-        case .chat:        [.kozBonBlue, .cyan, .teal]
+        case .chat(let backend): Self.chatAccents(for: backend)
         }
+    }
+
+    /// Each provider's own brand colours, anchored on the backend's
+    /// accent so the wash and the send button agree.
+    private static func chatAccents(for backend: AIBackend) -> [Color] {
+        switch backend {
+        // Apple Intelligence's glow runs blue → purple → pink →
+        // orange. Purple and orange take the accent cells, and the
+        // mesh's colour smoothing blends pink between them.
+        case .appleIntelligence:
+            [.kozBonBlue, Color(hex: 0xC959DD), Color(hex: 0xFF9004)]
+
+        // Anthropic's "Kraft" and "Crail" either side of the Claude
+        // orange: one lighter, one deeper, so the warm wash still
+        // has depth.
+        case .anthropic:
+            [.kozBonAnthropic, Color(hex: 0xD4A27F), Color(hex: 0xC15F3C)]
+
+        // The three stops of the Gemini spark's gradient.
+        case .gemini:
+            [.kozBonGemini, Color(hex: 0x9168C0), Color(hex: 0x1BA1E3)]
+
+        // OpenAI's mark is monochrome, so the wash takes ChatGPT's
+        // greens: a brighter green and a muted sage.
+        case .openai:
+            [.kozBonOpenAI, Color(hex: 0x19C37D), Color(hex: 0x74AA9C)]
+        }
+    }
+}
+
+// MARK: - Color + Hex
+
+private extension Color {
+
+    /// An sRGB colour from a `0xRRGGBB` literal — brand palettes are
+    /// published as hex.
+    init(hex: UInt32) {
+        self.init(
+            .sRGB,
+            red: Double((hex >> 16) & 0xFF) / 255,
+            green: Double((hex >> 8) & 0xFF) / 255,
+            blue: Double(hex & 0xFF) / 255
+        )
     }
 }
 
