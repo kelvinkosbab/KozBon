@@ -5472,56 +5472,56 @@
         }
       }
     },
-    "OpenAI GPT joins Apple Intelligence, Anthropic Claude, and Google Gemini as an AI option. Add your own OpenAI API key in Settings, and the GPT model picker loads the models your key can use. OpenAI bills API usage separately from a ChatGPT subscription.\n\nOn devices without Apple Intelligence, the Chat tab now appears whenever any cloud provider has a key, not just Claude.": {
+    "OpenAI GPT joins Apple Intelligence, Anthropic Claude, and Google Gemini as an AI option. Add your own OpenAI API key in Settings, and the GPT model picker loads the models your key can use. OpenAI bills API usage separately from a ChatGPT subscription.\n\nThe Chat tab now takes on the colours of the AI you've selected. On devices without Apple Intelligence, it also appears whenever any cloud provider has a key, not just Claude.": {
       "comment": "What's New summary for KozBon 4.8. The English text is the key.",
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "OpenAI GPT joins Apple Intelligence, Anthropic Claude, and Google Gemini as an AI option. Add your own OpenAI API key in Settings, and the GPT model picker loads the models your key can use. OpenAI bills API usage separately from a ChatGPT subscription.\n\nOn devices without Apple Intelligence, the Chat tab now appears whenever any cloud provider has a key, not just Claude."
+            "value": "OpenAI GPT joins Apple Intelligence, Anthropic Claude, and Google Gemini as an AI option. Add your own OpenAI API key in Settings, and the GPT model picker loads the models your key can use. OpenAI bills API usage separately from a ChatGPT subscription.\n\nThe Chat tab now takes on the colours of the AI you've selected. On devices without Apple Intelligence, it also appears whenever any cloud provider has a key, not just Claude."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "OpenAI GPT se suma a Apple Intelligence, Anthropic Claude y Google Gemini como opción de IA. Añade tu propia clave de API de OpenAI en Ajustes y el selector de modelos de GPT cargará los modelos que tu clave puede usar. OpenAI factura el uso de la API aparte de una suscripción a ChatGPT.\n\nEn los dispositivos sin Apple Intelligence, la pestaña Chat ahora aparece siempre que algún proveedor en la nube tenga una clave, no solo Claude."
+            "value": "OpenAI GPT se suma a Apple Intelligence, Anthropic Claude y Google Gemini como opción de IA. Añade tu propia clave de API de OpenAI en Ajustes y el selector de modelos de GPT cargará los modelos que tu clave puede usar. OpenAI factura el uso de la API aparte de una suscripción a ChatGPT.\n\nLa pestaña Chat ahora adopta los colores de la IA que hayas elegido. En los dispositivos sin Apple Intelligence, también aparece siempre que algún proveedor en la nube tenga una clave, no solo Claude."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "OpenAI GPT rejoint Apple Intelligence, Anthropic Claude et Google Gemini parmi les options d’IA. Ajoutez votre propre clé d’API OpenAI dans Réglages, et le sélecteur de modèle GPT charge les modèles que votre clé peut utiliser. OpenAI facture l’utilisation de l’API séparément d’un abonnement ChatGPT.\n\nSur les appareils sans Apple Intelligence, l’onglet Chat apparaît désormais dès qu’un fournisseur cloud dispose d’une clé, et plus seulement Claude."
+            "value": "OpenAI GPT rejoint Apple Intelligence, Anthropic Claude et Google Gemini parmi les options d’IA. Ajoutez votre propre clé d’API OpenAI dans Réglages, et le sélecteur de modèle GPT charge les modèles que votre clé peut utiliser. OpenAI facture l’utilisation de l’API séparément d’un abonnement ChatGPT.\n\nL’onglet Chat adopte désormais les couleurs de l’IA que vous avez choisie. Sur les appareils sans Apple Intelligence, il apparaît aussi dès qu’un fournisseur cloud dispose d’une clé, et plus seulement Claude."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "OpenAI GPT ergänzt Apple Intelligence, Anthropic Claude und Google Gemini als KI-Option. Füge in den Einstellungen deinen eigenen OpenAI-API-Schlüssel hinzu, und die GPT-Modellauswahl lädt die Modelle, die dein Schlüssel nutzen kann. OpenAI rechnet die API-Nutzung getrennt von einem ChatGPT-Abo ab.\n\nAuf Geräten ohne Apple Intelligence erscheint der Chat-Tab jetzt, sobald irgendein Cloud-Anbieter einen Schlüssel hat – nicht mehr nur Claude."
+            "value": "OpenAI GPT ergänzt Apple Intelligence, Anthropic Claude und Google Gemini als KI-Option. Füge in den Einstellungen deinen eigenen OpenAI-API-Schlüssel hinzu, und die GPT-Modellauswahl lädt die Modelle, die dein Schlüssel nutzen kann. OpenAI rechnet die API-Nutzung getrennt von einem ChatGPT-Abo ab.\n\nDer Chat-Tab übernimmt jetzt die Farben der gewählten KI. Auf Geräten ohne Apple Intelligence erscheint er außerdem, sobald irgendein Cloud-Anbieter einen Schlüssel hat – nicht mehr nur Claude."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "AIの選択肢として、Apple Intelligence、Anthropic Claude、Google GeminiにOpenAI GPTが加わりました。設定でご自身のOpenAI APIキーを追加すると、GPTのモデル選択にそのキーで利用できるモデルが読み込まれます。APIの利用料金は、ChatGPTのサブスクリプションとは別にOpenAIから請求されます。\n\nApple Intelligenceに対応していないデバイスでも、いずれかのクラウドプロバイダのキーがあれば「チャット」タブが表示されるようになりました。これまではClaudeのキーのみが対象でした。"
+            "value": "AIの選択肢として、Apple Intelligence、Anthropic Claude、Google GeminiにOpenAI GPTが加わりました。設定でご自身のOpenAI APIキーを追加すると、GPTのモデル選択にそのキーで利用できるモデルが読み込まれます。APIの利用料金は、ChatGPTのサブスクリプションとは別にOpenAIから請求されます。\n\n「チャット」タブが、選択したAIのカラーで表示されるようになりました。また、Apple Intelligenceに対応していないデバイスでも、いずれかのクラウドプロバイダのキーがあればタブが表示されます。これまではClaudeのキーのみが対象でした。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "OpenAI GPT 加入 Apple Intelligence、Anthropic Claude 和 Google Gemini，成为新的 AI 选项。在“设置”中添加你自己的 OpenAI API 密钥后，GPT 模型选择器会载入该密钥可用的模型。OpenAI 对 API 用量的计费与 ChatGPT 订阅分开。\n\n在不支持 Apple Intelligence 的设备上，只要任一云端提供商有密钥，“聊天”标签页就会显示，而不再仅限于 Claude。"
+            "value": "OpenAI GPT 加入 Apple Intelligence、Anthropic Claude 和 Google Gemini，成为新的 AI 选项。在“设置”中添加你自己的 OpenAI API 密钥后，GPT 模型选择器会载入该密钥可用的模型。OpenAI 对 API 用量的计费与 ChatGPT 订阅分开。\n\n“聊天”标签页现在会呈现你所选 AI 的配色。在不支持 Apple Intelligence 的设备上，只要任一云端提供商有密钥，该标签页也会显示，而不再仅限于 Claude。"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "انضم OpenAI GPT إلى Apple Intelligence وAnthropic Claude وGoogle Gemini كخيار للذكاء الاصطناعي. أضف مفتاح OpenAI API الخاص بك في الإعدادات، وستحمّل أداة اختيار نماذج GPT النماذج التي يمكن لمفتاحك استخدامها. تحتسب OpenAI استخدام الواجهة بشكل منفصل عن اشتراك ChatGPT.\n\nعلى الأجهزة التي لا تدعم Apple Intelligence، تظهر علامة تبويب «محادثة» الآن متى كان لدى أي مزوّد سحابي مفتاح، وليس Claude فقط."
+            "value": "انضم OpenAI GPT إلى Apple Intelligence وAnthropic Claude وGoogle Gemini كخيار للذكاء الاصطناعي. أضف مفتاح OpenAI API الخاص بك في الإعدادات، وستحمّل أداة اختيار نماذج GPT النماذج التي يمكن لمفتاحك استخدامها. تحتسب OpenAI استخدام الواجهة بشكل منفصل عن اشتراك ChatGPT.\n\nتتخذ علامة تبويب «محادثة» الآن ألوان الذكاء الاصطناعي الذي اخترته. وعلى الأجهزة التي لا تدعم Apple Intelligence، تظهر أيضًا متى كان لدى أي مزوّد سحابي مفتاح، وليس Claude فقط."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "OpenAI GPT מצטרף ל-Apple Intelligence, ל-Anthropic Claude ול-Google Gemini כאפשרות AI. הוסף מפתח OpenAI API משלך בהגדרות, ובורר המודלים של GPT יטען את המודלים שהמפתח שלך יכול להשתמש בהם. OpenAI מחייבת על השימוש ב-API בנפרד ממינוי ל-ChatGPT.\n\nבמכשירים ללא Apple Intelligence, הכרטיסייה \"צ'אט\" מופיעה כעת בכל פעם שלספק ענן כלשהו יש מפתח, ולא רק ל-Claude."
+            "value": "OpenAI GPT מצטרף ל-Apple Intelligence, ל-Anthropic Claude ול-Google Gemini כאפשרות AI. הוסף מפתח OpenAI API משלך בהגדרות, ובורר המודלים של GPT יטען את המודלים שהמפתח שלך יכול להשתמש בהם. OpenAI מחייבת על השימוש ב-API בנפרד ממינוי ל-ChatGPT.\n\nהכרטיסייה \"צ'אט\" מקבלת כעת את הצבעים של ה-AI שבחרת. במכשירים ללא Apple Intelligence, היא גם מופיעה בכל פעם שלספק ענן כלשהו יש מפתח, ולא רק ל-Claude."
           }
         }
       }
