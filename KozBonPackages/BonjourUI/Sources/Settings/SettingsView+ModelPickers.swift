@@ -33,28 +33,15 @@ extension SettingsView {
     /// the enum survives only as the offline fallback.
     @ViewBuilder
     var claudeModelPicker: some View {
-        LabeledContent {
-            Menu {
-                ForEach(anthropicModelCatalog.options) { option in
-                    modelMenuButton(for: option)
-                }
-            } label: {
-                Text(verbatim: modelDisplayName(for: selectedModelIdentifier))
-                    .font(.subheadline)
+        modelPickerRow(
+            label: Strings.Settings.aiCloudModelPickerLabel,
+            selectedName: modelDisplayName(for: selectedModelIdentifier)
+        ) {
+            ForEach(anthropicModelCatalog.options) { option in
+                modelMenuButton(for: option)
             }
-            .accessibilityLabel(Strings.Settings.aiCloudModelPickerLabel)
-        } label: {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(Strings.Settings.aiCloudModelPickerLabel)
-                modelSubtitleView
-            }
-            // Combine title + subtitle into one VoiceOver
-            // element so users hear "Claude Model, Balanced.
-            // 200K context window, Recommended for most
-            // questions about your network." as a single read
-            // rather than two separate elements requiring an
-            // extra swipe.
-            .accessibilityElement(children: .combine)
+        } subtitle: {
+            modelSubtitleView
         }
     }
 
@@ -119,22 +106,15 @@ extension SettingsView {
     /// organized per provider.
     @ViewBuilder
     var geminiModelPicker: some View {
-        LabeledContent {
-            Menu {
-                ForEach(geminiModelCatalog.options) { option in
-                    geminiModelMenuButton(for: option)
-                }
-            } label: {
-                Text(verbatim: geminiModelDisplayName(for: selectedGeminiModelIdentifier))
-                    .font(.subheadline)
+        modelPickerRow(
+            label: Strings.Settings.aiCloudModelPickerLabelGemini,
+            selectedName: geminiModelDisplayName(for: selectedGeminiModelIdentifier)
+        ) {
+            ForEach(geminiModelCatalog.options) { option in
+                geminiModelMenuButton(for: option)
             }
-            .accessibilityLabel(Strings.Settings.aiCloudModelPickerLabelGemini)
-        } label: {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(Strings.Settings.aiCloudModelPickerLabelGemini)
-                geminiModelSubtitleView
-            }
-            .accessibilityElement(children: .combine)
+        } subtitle: {
+            geminiModelSubtitleView
         }
     }
 
@@ -204,22 +184,15 @@ extension SettingsView {
     /// ``OpenAIModelCatalog``.
     @ViewBuilder
     var openAIModelPicker: some View {
-        LabeledContent {
-            Menu {
-                ForEach(openAIModelCatalog.options) { option in
-                    openAIModelMenuButton(for: option)
-                }
-            } label: {
-                Text(verbatim: openAIModelCatalog.displayName(for: selectedOpenAIModelIdentifier))
-                    .font(.subheadline)
+        modelPickerRow(
+            label: Strings.Settings.aiCloudModelPickerLabelOpenAI,
+            selectedName: openAIModelCatalog.displayName(for: selectedOpenAIModelIdentifier)
+        ) {
+            ForEach(openAIModelCatalog.options) { option in
+                openAIModelMenuButton(for: option)
             }
-            .accessibilityLabel(Strings.Settings.aiCloudModelPickerLabelOpenAI)
-        } label: {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(Strings.Settings.aiCloudModelPickerLabelOpenAI)
-                openAIModelSubtitleView
-            }
-            .accessibilityElement(children: .combine)
+        } subtitle: {
+            openAIModelSubtitleView
         }
     }
 
@@ -268,6 +241,87 @@ extension SettingsView {
         case .mini:     return Strings.Settings.aiCloudModelOpenAIMiniSubtitle
         case .nano:     return Strings.Settings.aiCloudModelOpenAINanoSubtitle
         }
+    }
+
+    // MARK: - Shared Picker Row
+
+    /// The layout every provider's model picker shares: the label
+    /// on the leading edge, the current model as a tinted capsule
+    /// menu on the trailing edge, and the model's description
+    /// underneath at full width.
+    ///
+    /// A capsule with an up/down chevron rather than plain text:
+    /// as a bare menu label the model name read as a static value,
+    /// not as something the user could change.
+    @ViewBuilder
+    private func modelPickerRow<Options: View, Subtitle: View>(
+        label: LocalizedStringResource,
+        selectedName: String,
+        @ViewBuilder options: () -> Options,
+        @ViewBuilder subtitle: () -> Subtitle
+    ) -> some View {
+        let menu = modelMenu(label: label, selectedName: selectedName, options: options)
+
+        VStack(alignment: .leading, spacing: 6) {
+            // Side by side when both fit; otherwise the label takes
+            // its own line and the capsule keeps the trailing edge
+            // below it. A long model name ("Claude Sonnet 4.5") or a
+            // large Dynamic Type size would otherwise truncate the
+            // label to "Claude Mo…".
+            ViewThatFits(in: .horizontal) {
+                HStack(spacing: 12) {
+                    pickerLabel(label)
+                    Spacer(minLength: 8)
+                    menu
+                }
+                VStack(alignment: .leading, spacing: 6) {
+                    pickerLabel(label)
+                    HStack {
+                        Spacer(minLength: 0)
+                        menu
+                    }
+                }
+            }
+
+            subtitle()
+        }
+    }
+
+    /// The visible label, hidden from VoiceOver because the menu
+    /// carries it as its accessibility label.
+    private func pickerLabel(_ label: LocalizedStringResource) -> some View {
+        Text(label)
+            .fixedSize()
+            .accessibilityHidden(true)
+    }
+
+    /// The current model as a tinted capsule menu with an up/down
+    /// chevron.
+    private func modelMenu<Options: View>(
+        label: LocalizedStringResource,
+        selectedName: String,
+        @ViewBuilder options: () -> Options
+    ) -> some View {
+        Menu {
+            options()
+        } label: {
+            HStack(spacing: 4) {
+                Text(verbatim: selectedName)
+                    .lineLimit(1)
+                Image.menuIndicator
+                    .imageScale(.small)
+                    .accessibilityHidden(true)
+            }
+            .font(.subheadline.weight(.semibold))
+        }
+        .menuStyle(.button)
+        .buttonStyle(.bordered)
+        .buttonBorderShape(.capsule)
+        .tint(preferencesStore.aiBackend.accentColor)
+        .fixedSize()
+        // VoiceOver hears "Claude Model, Sonnet 4.5, pop-up button".
+        .accessibilityLabel(label)
+        .accessibilityValue(Text(verbatim: selectedName))
     }
 
     // MARK: - Model Selection Helpers

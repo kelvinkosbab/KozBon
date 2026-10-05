@@ -326,6 +326,10 @@ public enum Iconography {
     /// to signal "tapping here presents another surface."
     public static let disclosure = "chevron.right"
 
+    /// Up/down chevron pair — the platform cue that a control opens
+    /// a menu of choices (the Settings model picker).
+    public static let menuIndicator = "chevron.up.chevron.down"
+
     /// Outward-pointing arrow in a square — signals that
     /// tapping leaves the app and opens an external surface
     /// (typically a web page in the user's default browser).

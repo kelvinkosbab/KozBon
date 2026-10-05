@@ -19,7 +19,7 @@ import BonjourLocalization
 //
 // ADR 0005 introduces a pluggable AI backend. This file owns the
 // section view-builders, model-name localization helpers, and the
-// sign-out flow. State (`isSignInSheetPresented`,
+// sign-out flow. State (`providerPendingSignIn`,
 // `isSignOutConfirmationPresented`, `hasAnthropicKey`) stays on
 // `SettingsView` itself because SwiftUI's `@State` ownership
 // can't cross a file boundary; everything else moves here to keep
@@ -38,29 +38,12 @@ extension SettingsView {
                 gitHubRetirementNotice
             }
 
-            backendPicker
-
-            switch preferencesStore.aiBackend {
-            case .appleIntelligence:
-                EmptyView()
-            case .anthropic:
-                anthropicSignInRow
-
-                if hasAnthropicKey {
-                    claudeModelPicker
-                }
-            case .gemini:
-                geminiSignInRow
-
-                if hasGeminiKey {
-                    geminiModelPicker
-                }
-            case .openai:
-                openAISignInRow
-
-                if hasOpenAIKey {
-                    openAIModelPicker
-                }
+            // Enumerated rather than listed row by row: a hardcoded
+            // list silently omitted Gemini when it was added, and no
+            // switch meant no compiler error. Adding a case to
+            // `AIBackend` surfaces it here for free.
+            ForEach(AIBackend.allCases) { backend in
+                backendRow(backend)
             }
         } header: {
             Text(Strings.Settings.aiBackendSection)
@@ -87,86 +70,61 @@ extension SettingsView {
         }
     }
 
-    // MARK: - Backend Picker
+    // MARK: - Backend Rows
 
-    /// Inline picker so every option surfaces simultaneously —
-    /// each with its provider glyph tinted in the matching brand
-    /// color (blue for Apple Intelligence, Cara orange for
-    /// Anthropic, Google blue for Gemini). The visible branding
-    /// makes the active provider scannable without reading the
-    /// subtitle, and having every row present lets users compare
-    /// the subtitles (which describe the privacy posture and cost
-    /// trade-off) side by side.
+    /// One selectable backend, with the selected cloud backend's
+    /// model picker and sign-in controls folded into its own row.
     ///
-    /// `.labelsHidden()` suppresses the picker's own header row —
-    /// the "Assistant" section header already announces the
-    /// purpose, so the intermediate "Provider" label row would
-    /// just be visual noise. The label is preserved semantically
-    /// for VoiceOver (`accessibilityLabel` + `accessibilityHint`)
-    /// so screen-reader users still get the picker's role when
-    /// they land on the control.
+    /// A hand-built list rather than an inline `Picker`: a picker
+    /// row is a single selection target and can't host the menu and
+    /// buttons the selected provider needs, which previously sat in
+    /// separate rows at the bottom of the section — far from the
+    /// option they configure. Every row stays visible so the
+    /// subtitles (privacy posture, cost) can be compared side by
+    /// side, and the selection carries `.isSelected` for VoiceOver,
+    /// which is what the picker used to provide.
     @ViewBuilder
-    private var backendPicker: some View {
-        Picker(
-            selection: Binding(
-                get: { preferencesStore.aiBackend },
-                // Wrap the mutation in a `withAnimation`
-                // transaction so the resulting color changes
-                // ripple through the view tree smoothly: the
-                // global `.tint(...)` in `AppCoreScene` reads
-                // `aiBackend.accentColor` and propagates through
-                // every tinted control (the picker's checkmark,
-                // the sign-in/sign-out buttons, the chat tab's
-                // icon highlight). Without an animation
-                // transaction the colors pop between blue and
-                // Cara orange in a single frame.
-                //
-                // The Form's existing `.animation(_:value:
-                // aiBackend)` only covers descendants of the
-                // Form — `withAnimation` covers everything that
-                // re-renders from this mutation, including the
-                // tint propagation upstream.
-                set: { newValue in
-                    withAnimation(reduceMotion ? nil : .default) {
-                        preferencesStore.aiBackend = newValue
-                    }
+    private func backendRow(_ backend: AIBackend) -> some View {
+        let isSelected = preferencesStore.aiBackend == backend
+
+        VStack(alignment: .leading, spacing: 12) {
+            Button {
+                // `withAnimation` rather than relying on the Form's
+                // `.animation(_:value:)`: the global tint in
+                // `AppCoreScene` reads `aiBackend.accentColor`, and
+                // only a transaction reaches that far up the tree.
+                withAnimation(reduceMotion ? nil : .default) {
+                    preferencesStore.aiBackend = backend
                 }
-            )
-        ) {
-            // Enumerated rather than listed row by row: a
-            // hardcoded list silently omitted Gemini when it was
-            // added, and no switch meant no compiler error. Adding
-            // a case to `AIBackend` now surfaces it here for free.
-            ForEach(AIBackend.allCases) { backend in
-                backendOption(backend)
-                    .tag(backend)
+            } label: {
+                backendOption(backend, isSelected: isSelected)
             }
-        } label: {
-            Text(Strings.Settings.aiBackendPickerLabel)
+            .buttonStyle(.plain)
+            .accessibilityAddTraits(isSelected ? .isSelected : [])
+            .accessibilityHint(Strings.Accessibility.aiBackendPickerHint)
+            .accessibilityIdentifier("aiBackend.option.\(backend.rawValue)")
+
+            if isSelected, let provider = backend.cloudProvider {
+                cloudControls(for: provider)
+                    // Aligns with the title column: the 28pt icon
+                    // frame plus the row's 12pt spacing.
+                    .padding(.leading, 40)
+                    .transition(.opacity)
+            }
         }
-        .pickerStyle(.inline)
-        .labelsHidden()
-        .accessibilityLabel(Strings.Settings.aiBackendPickerLabel)
-        .accessibilityHint(Strings.Accessibility.aiBackendPickerHint)
+        .padding(.vertical, 2)
+        .accessibilityElement(children: .contain)
     }
 
-    /// One row of the inline backend picker.
+    /// The label half of a backend row: brand glyph, name,
+    /// subtitle, and a trailing checkmark on the selected row.
     ///
-    /// Leading slot is the backend's brand glyph (Apple
-    /// Intelligence sparkle for `.appleIntelligence`, the
-    /// bundled Claude vector mark for `.anthropic`), tinted with
-    /// the matching accent color (`Color.kozBonBlue` /
-    /// `Color.kozBonAnthropic`) so each row carries a coherent
-    /// visual identity. The icon sits in a fixed-width frame so
-    /// the trailing text columns align across rows regardless of
-    /// the icon's intrinsic width.
-    ///
-    /// The icon is decorative (`accessibilityHidden`) — the row's
-    /// VoiceOver label is composed from the title and subtitle so
-    /// screen-reader users get the same comparison content
-    /// sighted users get.
+    /// The glyph sits in a fixed-width frame so the text columns
+    /// align across rows regardless of each mark's intrinsic width.
+    /// It's decorative — VoiceOver reads the combined name and
+    /// subtitle, and the selection is a trait.
     @ViewBuilder
-    private func backendOption(_ backend: AIBackend) -> some View {
+    private func backendOption(_ backend: AIBackend, isSelected: Bool) -> some View {
         HStack(spacing: 12) {
             backend.icon
                 .font(.title3)
@@ -180,40 +138,77 @@ extension SettingsView {
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
+
+            Spacer(minLength: 8)
+
+            if isSelected {
+                Image.confirm
+                    .font(.body.weight(.semibold))
+                    .foregroundStyle(backend.accentColor)
+                    .accessibilityHidden(true)
+            }
         }
+        // The whole row is the tap target, not just its text.
+        .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
     }
 
-    // MARK: - Sign-In Rows
+    // MARK: - Cloud Controls
 
-    /// Anthropic-specific signed-in / sign-in row.
+    /// The selected cloud provider's model picker and account
+    /// controls, shown inside its row.
+    ///
+    /// `.borderless` because several buttons now share one list
+    /// row; with the default style a tap anywhere in the row fires
+    /// all of them.
     @ViewBuilder
-    private var anthropicSignInRow: some View {
-        signInRow(
-            provider: .anthropic,
-            isConnected: hasAnthropicKey,
-            signInLabel: Strings.Settings.aiCloudSignIn
-        )
+    private func cloudControls(for provider: AICloudProvider) -> some View {
+        let isConnected = hasAPIKey(for: provider)
+
+        VStack(alignment: .leading, spacing: 4) {
+            if isConnected {
+                modelPicker(for: provider)
+                    .frame(minHeight: 44)
+            }
+            signInRow(
+                provider: provider,
+                isConnected: isConnected,
+                signInLabel: signInLabel(for: provider)
+            )
+        }
+        .buttonStyle(.borderless)
     }
 
-    /// Gemini-specific signed-in / sign-in row.
+    /// The model picker for `provider`; each lives in
+    /// `SettingsView+ModelPickers.swift`.
     @ViewBuilder
-    private var geminiSignInRow: some View {
-        signInRow(
-            provider: .gemini,
-            isConnected: hasGeminiKey,
-            signInLabel: Strings.Settings.aiCloudSignInGemini
-        )
+    private func modelPicker(for provider: AICloudProvider) -> some View {
+        switch provider {
+        case .anthropic: claudeModelPicker
+        case .gemini:    geminiModelPicker
+        case .openai:    openAIModelPicker
+        case .github:    EmptyView()
+        }
     }
 
-    /// OpenAI-specific signed-in / sign-in row.
-    @ViewBuilder
-    private var openAISignInRow: some View {
-        signInRow(
-            provider: .openai,
-            isConnected: hasOpenAIKey,
-            signInLabel: Strings.Settings.aiCloudSignInOpenAI
-        )
+    /// The cached key-presence flag for `provider`.
+    private func hasAPIKey(for provider: AICloudProvider) -> Bool {
+        switch provider {
+        case .anthropic: hasAnthropicKey
+        case .gemini:    hasGeminiKey
+        case .openai:    hasOpenAIKey
+        case .github:    hasGitHubKey
+        }
+    }
+
+    private func signInLabel(for provider: AICloudProvider) -> LocalizedStringResource {
+        switch provider {
+        case .anthropic: Strings.Settings.aiCloudSignIn
+        case .gemini:    Strings.Settings.aiCloudSignInGemini
+        case .openai:    Strings.Settings.aiCloudSignInOpenAI
+        // Retired; never selectable, so never asked for.
+        case .github:    Strings.Settings.aiCloudSignIn
+        }
     }
 
     // MARK: - GitHub Retirement Notice
@@ -275,14 +270,14 @@ extension SettingsView {
         signInLabel: LocalizedStringResource
     ) -> some View {
         if isConnected {
-            HStack {
-                Label {
-                    Text(Strings.Settings.aiCloudSignedIn)
-                } icon: {
-                    Image.signedIn
-                        .foregroundStyle(.green)
-                        .accessibilityHidden(true)
-                }
+            // A tight icon-text pair rather than a `Label`, whose
+            // icon column pushed the text ~40pt in from the model
+            // picker's left edge once the row moved inline.
+            HStack(spacing: 6) {
+                Image.signedIn
+                    .foregroundStyle(.green)
+                    .accessibilityHidden(true)
+                Text(Strings.Settings.aiCloudSignedIn)
                 Spacer()
                 Button(role: .destructive) {
                     providerPendingSignOut = provider
@@ -292,25 +287,26 @@ extension SettingsView {
                 .accessibilityHint(Strings.Accessibility.aiCloudSignOutHint)
                 .accessibilityIdentifier("aiCloud.signOut.\(provider.rawValue)")
             }
+            .frame(minHeight: 44)
             .accessibilityElement(children: .combine)
         } else {
             Button {
                 providerPendingSignIn = provider
-                isSignInSheetPresented = true
             } label: {
-                HStack {
-                    Label {
-                        Text(signInLabel)
-                    } icon: {
-                        Image.signIn
-                            .accessibilityHidden(true)
-                    }
+                HStack(spacing: 6) {
+                    Image.signIn
+                        .accessibilityHidden(true)
+                    Text(signInLabel)
                     Spacer()
                     Image.disclosure
                         .font(.caption.weight(.semibold))
                         .foregroundStyle(.secondary)
                         .accessibilityHidden(true)
                 }
+                // Full-width, 44pt target: borderless buttons only
+                // hit-test their visible content.
+                .frame(minHeight: 44)
+                .contentShape(Rectangle())
             }
             .accessibilityHint(Strings.Accessibility.aiCloudSignInHint)
             .accessibilityIdentifier("aiCloud.signIn.\(provider.rawValue)")

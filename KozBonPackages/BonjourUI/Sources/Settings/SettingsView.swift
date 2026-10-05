@@ -36,15 +36,15 @@ public struct SettingsView: View {
     @Environment(\.accessibilityReduceMotion) var reduceMotion
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @State private var isResetConfirmationPresented = false
-    @State var isSignInSheetPresented = false
 
     /// Provider whose sign-out is being confirmed. Drives the
     /// alert's title + destructive target so taps on the
     /// non-active row don't remove the active provider's key.
     @State var providerPendingSignOut: AICloudProvider?
 
-    /// Provider whose sign-in sheet is about to mount. Captured
-    /// from the tapped row so per-provider copy matches.
+    /// Provider whose sign-in sheet is presented; non-`nil` is
+    /// what presents it. Captured from the tapped row so the copy,
+    /// key validation, and Keychain slot all match.
     @State var providerPendingSignIn: AICloudProvider?
 
     /// Reflects "is there an Anthropic API key in the
@@ -250,20 +250,15 @@ public struct SettingsView: View {
                     providerPendingSignOut = nil
                 }
             }
-            .sheet(isPresented: $isSignInSheetPresented) {
-                // Route to the provider whose row was tapped.
-                // Anthropic fallback is defensive — the sheet
-                // shouldn't open without `providerPendingSignIn`
-                // being set, but if the rare race happens we
-                // land on the historical default.
-                AICloudSignInSheet(
-                    credentialsStore: credentialsStore,
-                    provider: providerPendingSignIn ?? .anthropic
-                )
-                    .onDisappear {
-                        refreshCloudKeyState()
-                        providerPendingSignIn = nil
-                    }
+            // Item-driven rather than a Bool plus a separate provider:
+            // with two `@State` writes, the first presentation after
+            // launch built the sheet before the provider landed, and
+            // the sheet's `@State` view model kept the Anthropic
+            // fallback — OpenAI copy over Anthropic validation, and a
+            // key saved to the wrong Keychain slot.
+            .sheet(item: $providerPendingSignIn) { provider in
+                AICloudSignInSheet(credentialsStore: credentialsStore, provider: provider)
+                    .onDisappear { refreshCloudKeyState() }
             }
         }
         // Declared on the `NavigationStack` so a pushed
@@ -367,7 +362,7 @@ public struct SettingsView: View {
     //
     // Implementation lives in `SettingsView+AIBackend.swift` —
     // section view-builders, model-name localization helpers, and
-    // the sign-out flow. The state vars (`isSignInSheetPresented`,
+    // the sign-out flow. The state vars (`providerPendingSignIn`,
     // `isSignOutConfirmationPresented`, `hasAnthropicKey`) stay on
     // `SettingsView` itself since SwiftUI's `@State` ownership
     // can't cross the file boundary.

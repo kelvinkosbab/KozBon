@@ -187,6 +187,7 @@ public extension Image {
 
     static var signIn: Image { Image(systemName: Iconography.signIn) }
     static var disclosure: Image { Image(systemName: Iconography.disclosure) }
+    static var menuIndicator: Image { Image(systemName: Iconography.menuIndicator) }
     static var signedIn: Image { Image(systemName: Iconography.signedIn) }
     static var externalLink: Image { Image(systemName: Iconography.externalLink) }
 
