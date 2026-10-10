@@ -5,7 +5,7 @@ globs: "**/*.{swift,h,m,mm,kt,kts}"
 
 # Git Branch Workflows
 
-Task switching is constant: a PR review lands mid-feature, a hotfix jumps the queue, then back to the feature. The goal is that a switch costs seconds and nothing is ever lost — and that merged branches get cleaned up instead of accumulating. Run the bundle's [`scripts/setup-git-shortcuts.sh`](../../scripts/setup-git-shortcuts.sh) once to install the aliases referenced below.
+Task switching is constant: a PR review lands mid-feature, a hotfix jumps the queue, then back to the feature. The goal is that a switch costs seconds and nothing is ever lost — and that merged branches get cleaned up instead of accumulating. Run the AppBootstrapAI bundle's `scripts/setup-git-shortcuts.sh` (not vendored in this repo) once to install the aliases referenced below.
 
 ## Switching tasks
 
