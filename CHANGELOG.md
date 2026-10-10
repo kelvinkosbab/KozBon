@@ -7,14 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.8] - 2026-10-10
+
 ### Added
 
 - **OpenAI GPT backend ([ADR 0007](docs/adr/0007-openai-backend.md))** — a fourth AI option alongside Apple Intelligence, Anthropic Claude, and Google Gemini, using your own OpenAI API key from Settings → Assistant. Runs against the Responses API with `store: false`, so OpenAI keeps no copy of the conversation; the key lives in the Keychain like the others.
 - A GPT model picker that loads the models your key can use, filtered to chat-capable families, falling back to a compiled-in list offline.
 - The Chat tab's ambient background takes on the selected AI backend's brand colours, anchored on the same accent as the send button and bubbles.
 
+### Changed
+
+- Settings → Assistant shows each cloud backend's model picker and sign-in controls inside that backend's own row, with the model as a tinted capsule, instead of at the bottom of the section.
+
 ### Fixed
 
+- The first Settings sign-in after launch could save a Gemini or OpenAI key as an Anthropic one; the sign-in sheet now always validates and stores the key for the provider you opened it from.
 - On devices without Apple Intelligence, the Chat tab now appears when any cloud provider has a key. It previously counted only a Claude key, hiding the tab from Gemini users.
 
 ## [4.7] - 2026-10-03
@@ -107,7 +114,8 @@ First versioned changelog entry. The 4.3 release ships:
 - Six languages: English, Spanish, French, German, Japanese, Simplified Chinese.
 - iOS 18.6+, iPadOS 18.6+, macOS 15.6+, visionOS 2.0+ — Liquid Glass on iOS 26 / macOS 26.
 
-[Unreleased]: https://github.com/kelvinkosbab/KozBon/compare/v4.7...HEAD
+[Unreleased]: https://github.com/kelvinkosbab/KozBon/compare/v4.8...HEAD
+[4.8]: https://github.com/kelvinkosbab/KozBon/releases/tag/v4.8
 [4.7]: https://github.com/kelvinkosbab/KozBon/releases/tag/v4.7
 [4.6]: https://github.com/kelvinkosbab/KozBon/releases/tag/v4.6
 [4.5]: https://github.com/kelvinkosbab/KozBon/releases/tag/v4.5
