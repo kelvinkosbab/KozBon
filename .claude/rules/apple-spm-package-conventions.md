@@ -7,7 +7,7 @@ globs: "Package.swift,**/Package.swift"
 
 Authoring strategy for `Package.swift`. Complements the `swift-package-pro` skill (which reviews public API, module organization, and dependency hygiene) by covering the manifest itself — what to pin, where to declare platforms, how to lay out modules, and which modern SPM features to opt into.
 
-> **Starter template:** [`templates/Package.template.swift`](../../templates/Package.template.swift) is a ready-to-edit `Package.swift` that uses the `makeTargets()` helper pattern below. For a new package, copy that file in instead of writing the manifest from scratch.
+> **Starter template:** the AppBootstrapAI bundle's `templates/Package.template.swift` (not vendored in this repo) is a ready-to-edit `Package.swift` that uses the `makeTargets()` helper pattern below. For a new package, copy that file in instead of writing the manifest from scratch.
 
 ## Tool Version Pinning
 
@@ -82,7 +82,7 @@ MyPackage/
 
 ## `makeTargets()` Helper for Many Similar Modules
 
-When 2+ modules share the same shape (paired source + test target, optional resources, uniform Swift settings), reduce duplication with a helper at the bottom of `Package.swift`. The canonical version lives in [`templates/Package.template.swift`](../../templates/Package.template.swift) — copy that file rather than rewriting the helper each project. Signature:
+When 2+ modules share the same shape (paired source + test target, optional resources, uniform Swift settings), reduce duplication with a helper at the bottom of `Package.swift`. The canonical version lives in the AppBootstrapAI bundle's `templates/Package.template.swift` — copy that file rather than rewriting the helper each project. Signature:
 
 ```swift
 func makeTargets(
@@ -202,7 +202,7 @@ swiftSettings: [
 
 - **`.unsafeFlags(...)` in a published library** — packages using it cannot be consumed as a dependency from a *release* of another package. Fine in apps and CLI tools; avoid in libraries you publish. If you need a flag that only `unsafeFlags` exposes, file a Swift evolution proposal or wrap behind a `.when(configuration: .debug)` so release builds don't carry it.
 - **Mixing `enableExperimentalFeature` and `enableUpcomingFeature` for the same feature** — a feature lives in one bucket at a time. Mixing means one branch is dead code; the dead branch is the one you'll forget to remove.
-- **Setting `swiftSettings` on each target individually when they're meant to be uniform** — drift creeps in. Define `sharedSwiftSettings` once, reference it from every target (see [`templates/Package.template.swift`](../../templates/Package.template.swift)).
+- **Setting `swiftSettings` on each target individually when they're meant to be uniform** — drift creeps in. Define `sharedSwiftSettings` once, reference it from every target (see the bundle's `templates/Package.template.swift`).
 - **`OTHER_SWIFT_FLAGS` from Xcode project settings leaking into SPM expectations** — Xcode and SPM have different flag surfaces. Don't copy-paste Xcode build settings into `unsafeFlags`; check what SPM's `SwiftSetting` API exposes first.
 - **`-ld_classic` in `linkerSettings` / `unsafeFlags`** — Xcode 27 (Swift 6.4) **removed the `ld64` classic linker; `-ld_classic` is no longer accepted** and fails the link. If a package carried it as a workaround for an old linker bug, drop it — the modern linker is the only option now.
 - **Enabling concurrency strictness only in tests** — tests built against `.v5` source code while the source target is `.v6` will surface false positives in test failures. Keep language mode uniform across source and test targets in the same module.
@@ -323,7 +323,7 @@ Common plugin packages:
 
 ## Patterns to Follow
 
-The canonical version of this pattern lives in [`templates/Package.template.swift`](../../templates/Package.template.swift). Abridged here for reference:
+The canonical version of this pattern lives in the bundle's `templates/Package.template.swift`. Abridged here for reference:
 
 ```swift
 // swift-tools-version: 6.0

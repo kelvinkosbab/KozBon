@@ -7,7 +7,7 @@ globs: "Package.swift,**/Package.swift,**/*App.swift"
 
 The target shape: a **thin Xcode app target** that holds almost no code, sitting on top of a **local Swift package** where the real app lives — split into many small modules. The `.xcodeproj` owns the bundle, entitlements, Info.plist, and app icon; everything else is a package module the app links.
 
-This rule covers the *architecture decision* and *migration*. For authoring the manifest itself (tool-version, products, resources, settings), see [`apple-spm-package-conventions.md`](./apple-spm-package-conventions.md). To scaffold the package, use the bundle's [`scripts/scaffold-spm-package.sh`](../../scripts/scaffold-spm-package.sh). For a deep manifest/API review, invoke the `swift-package-pro` skill.
+This rule covers the *architecture decision* and *migration*. For authoring the manifest itself (tool-version, products, resources, settings), see [`apple-spm-package-conventions.md`](./apple-spm-package-conventions.md). To scaffold the package, use the AppBootstrapAI bundle's `scripts/scaffold-spm-package.sh` (not vendored in this repo). For a deep manifest/API review, invoke the `swift-package-pro` skill.
 
 > **Reference layout.** This is how KozBon (`KozBonPackages/`) and BasicSwiftUtilities are organized — a single local package at the repo root, one directory per module, a `makeTargets()` helper in `Package.swift`, and an `AppCore` umbrella the app target links.
 
