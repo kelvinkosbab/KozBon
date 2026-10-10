@@ -114,8 +114,7 @@ First versioned changelog entry. The 4.3 release ships:
 - Six languages: English, Spanish, French, German, Japanese, Simplified Chinese.
 - iOS 18.6+, iPadOS 18.6+, macOS 15.6+, visionOS 2.0+ — Liquid Glass on iOS 26 / macOS 26.
 
-[Unreleased]: https://github.com/kelvinkosbab/KozBon/compare/v4.8...HEAD
-[4.8]: https://github.com/kelvinkosbab/KozBon/releases/tag/v4.8
+[Unreleased]: https://github.com/kelvinkosbab/KozBon/compare/v4.7...HEAD
 [4.7]: https://github.com/kelvinkosbab/KozBon/releases/tag/v4.7
 [4.6]: https://github.com/kelvinkosbab/KozBon/releases/tag/v4.6
 [4.5]: https://github.com/kelvinkosbab/KozBon/releases/tag/v4.5
