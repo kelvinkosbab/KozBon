@@ -145,10 +145,8 @@ public struct ServiceExplanationSheet: View {
                     // Streaming explanation — mirrors the chat view's
                     // streaming surface so both Insights presentations feel
                     // the same:
-                    //   - Pre-first-token: `TypingIndicator` + "Generating…"
-                    //     label (not a default spinner — we established the
-                    //     three-dot bubble as the app's "model is working"
-                    //     visual).
+                    //   - Pre-first-token: a shimmering "Generating…" glass
+                    //     capsule, matching the chat's scanning row.
                     //   - First token onward: rendered Markdown, with the
                     //     typing indicator pinned below until streaming
                     //     ends so the user can see more is coming.
@@ -159,13 +157,16 @@ public struct ServiceExplanationSheet: View {
                             .foregroundStyle(.red)
                             .accessibilityLabel(Strings.Accessibility.error(error))
                     } else if explainer.explanation.isEmpty && explainer.isGenerating {
-                        HStack(spacing: 8) {
-                            TypingIndicator()
-                                .accessibilityLabel(Strings.Insights.generating)
-                            Text(Strings.Insights.generating)
-                                .foregroundStyle(.secondary)
-                        }
-                        .accessibilityElement(children: .combine)
+                        // Same glass capsule and shimmer as the chat's
+                        // "Scanning network…" row.
+                        ShimmeringText(text: String(localized: Strings.Insights.generating))
+                            .font(.subheadline)
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 10)
+                            .platformGlassBackground(in: Capsule())
+                            .accessibilityElement(children: .ignore)
+                            .accessibilityLabel(Strings.Insights.generating)
+                            .accessibilityAddTraits(.isStaticText)
                     } else {
                         MarkdownContentView(explainer.explanation)
                     }
