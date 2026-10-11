@@ -86,14 +86,26 @@ public struct BonjourServiceTypeEntityQuery: EntityStringQuery {
             return nil
         }
 
-        return types
-            .compactMap { type in rank(type).map { (type, $0) } }
-            .sorted { lhs, rhs in
-                lhs.1 != rhs.1
-                    ? lhs.1 < rhs.1
-                    : lhs.0.name.localizedStandardCompare(rhs.0.name) == .orderedAscending
+        var ranked: [RankedType] = []
+        for type in types {
+            if let score = rank(type) {
+                ranked.append(RankedType(type: type, rank: score))
             }
-            .map(\.0)
+        }
+        ranked.sort(by: RankedType.precedes)
+        return ranked.map(\.type)
+    }
+
+    private struct RankedType {
+        let type: BonjourServiceType
+        let rank: Int
+
+        static func precedes(_ lhs: RankedType, _ rhs: RankedType) -> Bool {
+            if lhs.rank != rhs.rank {
+                return lhs.rank < rhs.rank
+            }
+            return lhs.type.name.localizedStandardCompare(rhs.type.name) == .orderedAscending
+        }
     }
 
     private static func normalized(_ text: String) -> String {
