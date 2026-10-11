@@ -1466,38 +1466,6 @@ public enum Strings {
             .init("settings_using_shortcuts", bundle: .atURL(Bundle.module.bundleURL))
         }
 
-        public static var shortcutsIntro: LocalizedStringResource {
-            .init("settings_shortcuts_intro", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
-        public static var shortcutsIdeas: LocalizedStringResource {
-            .init("settings_shortcuts_ideas", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
-        public static var shortcutsIdeaMorningTitle: LocalizedStringResource {
-            .init("settings_shortcuts_idea_morning_title", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
-        public static var shortcutsIdeaMorningDetail: LocalizedStringResource {
-            .init("settings_shortcuts_idea_morning_detail", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
-        public static var shortcutsIdeaOfflineTitle: LocalizedStringResource {
-            .init("settings_shortcuts_idea_offline_title", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
-        public static var shortcutsIdeaOfflineDetail: LocalizedStringResource {
-            .init("settings_shortcuts_idea_offline_detail", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
-        public static var shortcutsIdeaBroadcastTitle: LocalizedStringResource {
-            .init("settings_shortcuts_idea_broadcast_title", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
-        public static var shortcutsIdeaBroadcastDetail: LocalizedStringResource {
-            .init("settings_shortcuts_idea_broadcast_detail", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
         public static var siriSay: LocalizedStringResource {
             .init("settings_siri_say", bundle: .atURL(Bundle.module.bundleURL))
         }
@@ -1558,6 +1526,42 @@ public enum Strings {
         ///   has none.
         public static func releaseSummary(_ english: String) -> String {
             String(localized: String.LocalizationValue(english), bundle: .module)
+        }
+    }
+
+    /// The "Using KozBon with Shortcuts" page pushed from Settings.
+    public enum ShortcutsGuide {
+
+        public static var intro: LocalizedStringResource {
+            .init("settings_shortcuts_intro", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var ideas: LocalizedStringResource {
+            .init("settings_shortcuts_ideas", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var morningTitle: LocalizedStringResource {
+            .init("settings_shortcuts_idea_morning_title", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var morningDetail: LocalizedStringResource {
+            .init("settings_shortcuts_idea_morning_detail", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var offlineTitle: LocalizedStringResource {
+            .init("settings_shortcuts_idea_offline_title", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var offlineDetail: LocalizedStringResource {
+            .init("settings_shortcuts_idea_offline_detail", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var broadcastTitle: LocalizedStringResource {
+            .init("settings_shortcuts_idea_broadcast_title", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var broadcastDetail: LocalizedStringResource {
+            .init("settings_shortcuts_idea_broadcast_detail", bundle: .atURL(Bundle.module.bundleURL))
         }
     }
 

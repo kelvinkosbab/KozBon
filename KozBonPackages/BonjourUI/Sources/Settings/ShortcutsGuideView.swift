@@ -30,25 +30,25 @@ struct ShortcutsGuideView: View {
     private static let ideas: [Idea] = [
         Idea(
             id: "morning",
-            title: Strings.Settings.shortcutsIdeaMorningTitle,
-            detail: Strings.Settings.shortcutsIdeaMorningDetail
+            title: Strings.ShortcutsGuide.morningTitle,
+            detail: Strings.ShortcutsGuide.morningDetail
         ),
         Idea(
             id: "offline",
-            title: Strings.Settings.shortcutsIdeaOfflineTitle,
-            detail: Strings.Settings.shortcutsIdeaOfflineDetail
+            title: Strings.ShortcutsGuide.offlineTitle,
+            detail: Strings.ShortcutsGuide.offlineDetail
         ),
         Idea(
             id: "broadcast",
-            title: Strings.Settings.shortcutsIdeaBroadcastTitle,
-            detail: Strings.Settings.shortcutsIdeaBroadcastDetail
+            title: Strings.ShortcutsGuide.broadcastTitle,
+            detail: Strings.ShortcutsGuide.broadcastDetail
         )
     ]
 
     var body: some View {
         List {
             Section {
-                Text(Strings.Settings.shortcutsIntro)
+                Text(Strings.ShortcutsGuide.intro)
 
                 ShortcutsLink()
                     .frame(maxWidth: .infinity)
@@ -69,7 +69,7 @@ struct ShortcutsGuideView: View {
                     .accessibilityElement(children: .combine)
                 }
             } header: {
-                Text(Strings.Settings.shortcutsIdeas)
+                Text(Strings.ShortcutsGuide.ideas)
                     .accessibilityAddTraits(.isHeader)
             }
         }
