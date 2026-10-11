@@ -12,17 +12,9 @@
 		F6240E692A92CF0600951875 /* KozBonApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6240E682A92CF0600951875 /* KozBonApp.swift */; };
 		F6SHCT0BF0001 /* KozBonAppShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6SHCT0FR0001 /* KozBonAppShortcuts.swift */; };
 		F690B5FB2561E9B600902DAB /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F690B5FA2561E9B600902DAB /* NetworkExtension.framework */; };
-		F6C472F52C1A1EAB00BBB0F9 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = F6C472F42C1A1EAB00BBB0F9 /* Core */; };
-		F6C472F72C1A1EAB00BBB0F9 /* CoreStorage in Frameworks */ = {isa = PBXBuildFile; productRef = F6C472F62C1A1EAB00BBB0F9 /* CoreStorage */; };
-		F6C472F92C1A1EAB00BBB0F9 /* CoreUI in Frameworks */ = {isa = PBXBuildFile; productRef = F6C472F82C1A1EAB00BBB0F9 /* CoreUI */; };
 		F6INFO0BF0001 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = F6INFO0FR0001 /* InfoPlist.xcstrings */; };
 		F6SHRT0BF0001 /* AppShortcuts.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = F6SHRT0FR0001 /* AppShortcuts.xcstrings */; };
 		F6LOCL0BF0001 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = F6LOCL0FR0001 /* Localizable.xcstrings */; };
-		F6KOZPKG0BF0001 /* BonjourCore in Frameworks */ = {isa = PBXBuildFile; productRef = F6KOZPKG0PD0001 /* BonjourCore */; };
-		F6KOZPKG0BF0002 /* BonjourStorage in Frameworks */ = {isa = PBXBuildFile; productRef = F6KOZPKG0PD0002 /* BonjourStorage */; };
-		F6KOZPKG0BF0003 /* BonjourModels in Frameworks */ = {isa = PBXBuildFile; productRef = F6KOZPKG0PD0003 /* BonjourModels */; };
-		F6KOZPKG0BF0004 /* BonjourScanning in Frameworks */ = {isa = PBXBuildFile; productRef = F6KOZPKG0PD0004 /* BonjourScanning */; };
-		F6KOZPKG0BF0005 /* BonjourUI in Frameworks */ = {isa = PBXBuildFile; productRef = F6KOZPKG0PD0005 /* BonjourUI */; };
 		F6KOZPKG0BF0006 /* BonjourAppIntents in Frameworks */ = {isa = PBXBuildFile; productRef = F6KOZPKG0PD0006 /* BonjourAppIntents */; };
 		F6KOZPKG0BF0007 /* AppCore in Frameworks */ = {isa = PBXBuildFile; productRef = F6KOZPKG0PD0007 /* AppCore */; };
 		F6PRIV0BF0001 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = F6PRIV0FR0001 /* PrivacyInfo.xcprivacy */; };
@@ -49,16 +41,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6C472F72C1A1EAB00BBB0F9 /* CoreStorage in Frameworks */,
-				F6C472F92C1A1EAB00BBB0F9 /* CoreUI in Frameworks */,
 				F690B5FB2561E9B600902DAB /* NetworkExtension.framework in Frameworks */,
-				F6C472F52C1A1EAB00BBB0F9 /* Core in Frameworks */,
 				F6KOZPKG0BF0007 /* AppCore in Frameworks */,
-				F6KOZPKG0BF0001 /* BonjourCore in Frameworks */,
-				F6KOZPKG0BF0002 /* BonjourStorage in Frameworks */,
-				F6KOZPKG0BF0003 /* BonjourModels in Frameworks */,
-				F6KOZPKG0BF0004 /* BonjourScanning in Frameworks */,
-				F6KOZPKG0BF0005 /* BonjourUI in Frameworks */,
 				F6KOZPKG0BF0006 /* BonjourAppIntents in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -126,15 +110,7 @@
 			);
 			name = KozBon;
 			packageProductDependencies = (
-				F6C472F42C1A1EAB00BBB0F9 /* Core */,
-				F6C472F62C1A1EAB00BBB0F9 /* CoreStorage */,
-				F6C472F82C1A1EAB00BBB0F9 /* CoreUI */,
 				F6KOZPKG0PD0007 /* AppCore */,
-				F6KOZPKG0PD0001 /* BonjourCore */,
-				F6KOZPKG0PD0002 /* BonjourStorage */,
-				F6KOZPKG0PD0003 /* BonjourModels */,
-				F6KOZPKG0PD0004 /* BonjourScanning */,
-				F6KOZPKG0PD0005 /* BonjourUI */,
 				F6KOZPKG0PD0006 /* BonjourAppIntents */,
 			);
 			productName = iDiscover;
@@ -176,9 +152,6 @@
 				he,
 			);
 			mainGroup = B6CE1D1B1E1208C1003D4FFA;
-			packageReferences = (
-				F6C472F32C1A1EAB00BBB0F9 /* XCRemoteSwiftPackageReference "Core" */,
-			);
 			productRefGroup = B6CE1D251E1208C1003D4FFA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -351,8 +324,6 @@
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				INFOPLIST_FILE = KozBon/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = KozBon;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -383,8 +354,6 @@
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				INFOPLIST_FILE = KozBon/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = KozBon;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -428,53 +397,7 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		F6C472F32C1A1EAB00BBB0F9 /* XCRemoteSwiftPackageReference "Core" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kelvinkosbab/Core.git";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		F6C472F42C1A1EAB00BBB0F9 /* Core */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F6C472F32C1A1EAB00BBB0F9 /* XCRemoteSwiftPackageReference "Core" */;
-			productName = Core;
-		};
-		F6C472F62C1A1EAB00BBB0F9 /* CoreStorage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F6C472F32C1A1EAB00BBB0F9 /* XCRemoteSwiftPackageReference "Core" */;
-			productName = CoreStorage;
-		};
-		F6C472F82C1A1EAB00BBB0F9 /* CoreUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F6C472F32C1A1EAB00BBB0F9 /* XCRemoteSwiftPackageReference "Core" */;
-			productName = CoreUI;
-		};
-		F6KOZPKG0PD0001 /* BonjourCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = BonjourCore;
-		};
-		F6KOZPKG0PD0002 /* BonjourStorage */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = BonjourStorage;
-		};
-		F6KOZPKG0PD0003 /* BonjourModels */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = BonjourModels;
-		};
-		F6KOZPKG0PD0004 /* BonjourScanning */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = BonjourScanning;
-		};
-		F6KOZPKG0PD0005 /* BonjourUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = BonjourUI;
-		};
 		F6KOZPKG0PD0006 /* BonjourAppIntents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BonjourAppIntents;
