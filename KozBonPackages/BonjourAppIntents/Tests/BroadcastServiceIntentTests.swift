@@ -74,7 +74,12 @@ struct BroadcastServiceIntentTests {
     @Test("Without the app's publish manager, Siri asks to open the app")
     func needsApp() async {
         let error = await #expect(throws: SiriIntentError.self) {
-            try await BroadcastServiceIntent.broadcast(fullType: "_http._tcp", port: 8080, bridge: AppIntentsBridge(), serviceTypes: library)
+            try await BroadcastServiceIntent.broadcast(
+                fullType: "_http._tcp",
+                port: 8080,
+                bridge: AppIntentsBridge(),
+                serviceTypes: library
+            )
         }
         #expect(error?.message == Strings.Siri.openAppAndRetry)
     }
