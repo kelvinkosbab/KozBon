@@ -42,14 +42,21 @@ public struct BroadcastServiceIntent: AppIntent {
 
     // MARK: - Helpers
 
-    /// Publishes the service and returns what Siri says.
+    /// Publishes the service and returns what Siri says. `serviceTypes`
+    /// defaults to the library plus custom types; tests pass the
+    /// built-in library to stay clear of Core Data.
     ///
     /// - Throws: ``SiriIntentError`` for a UDP type (the Broadcast form
     ///   is TCP-only too), a port out of range, a missing publish
     ///   manager, or a failed publish.
     @MainActor
-    static func broadcast(fullType: String, port: Int, bridge: AppIntentsBridge) async throws -> String {
-        guard let serviceType = BonjourServiceType.fetch(fullType: fullType),
+    static func broadcast(
+        fullType: String,
+        port: Int,
+        bridge: AppIntentsBridge,
+        serviceTypes: [BonjourServiceType]? = nil
+    ) async throws -> String {
+        guard let serviceType = BonjourServiceType.fetch(serviceTypes: serviceTypes, fullType: fullType),
               let publishManager = bridge.publishManager else {
             throw SiriIntentError(message: Strings.Siri.openAppAndRetry)
         }

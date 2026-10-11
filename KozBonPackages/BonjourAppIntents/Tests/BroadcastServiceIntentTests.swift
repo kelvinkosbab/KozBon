@@ -19,6 +19,10 @@ import BonjourScanning
 @MainActor
 struct BroadcastServiceIntentTests {
 
+    /// The built-in types only; the full lookup also reads Core Data,
+    /// which `swift test` can't load.
+    private let library = BonjourServiceType.serviceTypeLibrary
+
     private struct PublishError: Error {}
 
     /// Collects what the bridge's callbacks report.
@@ -41,7 +45,7 @@ struct BroadcastServiceIntentTests {
         let recorder = Recorder()
         bridge.didPublish = { recorder.published.append($0) }
 
-        let reply = try await BroadcastServiceIntent.broadcast(fullType: "_http._tcp", port: 8080, bridge: bridge)
+        let reply = try await BroadcastServiceIntent.broadcast(fullType: "_http._tcp", port: 8080, bridge: bridge, serviceTypes: library)
 
         #expect(publishManager.publishCallCount == 1)
         #expect(recorder.published.count == 1)
@@ -52,7 +56,7 @@ struct BroadcastServiceIntentTests {
     func refusesUDP() async {
         let (bridge, publishManager) = makeBridge()
         let error = await #expect(throws: SiriIntentError.self) {
-            try await BroadcastServiceIntent.broadcast(fullType: "_airplay._udp", port: 8080, bridge: bridge)
+            try await BroadcastServiceIntent.broadcast(fullType: "_airplay._udp", port: 8080, bridge: bridge, serviceTypes: library)
         }
         #expect(error?.message == Strings.Siri.broadcastTCPOnly)
         #expect(publishManager.publishCallCount == 0)
@@ -62,7 +66,7 @@ struct BroadcastServiceIntentTests {
     func refusesLowPort() async {
         let (bridge, _) = makeBridge()
         let error = await #expect(throws: SiriIntentError.self) {
-            try await BroadcastServiceIntent.broadcast(fullType: "_http._tcp", port: 80, bridge: bridge)
+            try await BroadcastServiceIntent.broadcast(fullType: "_http._tcp", port: 80, bridge: bridge, serviceTypes: library)
         }
         #expect(error?.message == Strings.Errors.portMin(Constants.Network.minimumPort))
     }
@@ -70,7 +74,7 @@ struct BroadcastServiceIntentTests {
     @Test("Without the app's publish manager, Siri asks to open the app")
     func needsApp() async {
         let error = await #expect(throws: SiriIntentError.self) {
-            try await BroadcastServiceIntent.broadcast(fullType: "_http._tcp", port: 8080, bridge: AppIntentsBridge())
+            try await BroadcastServiceIntent.broadcast(fullType: "_http._tcp", port: 8080, bridge: AppIntentsBridge(), serviceTypes: library)
         }
         #expect(error?.message == Strings.Siri.openAppAndRetry)
     }
@@ -81,7 +85,7 @@ struct BroadcastServiceIntentTests {
         publishManager.shouldSucceed = false
         publishManager.errorToThrow = PublishError()
         await #expect(throws: SiriIntentError.self) {
-            try await BroadcastServiceIntent.broadcast(fullType: "_http._tcp", port: 8080, bridge: bridge)
+            try await BroadcastServiceIntent.broadcast(fullType: "_http._tcp", port: 8080, bridge: bridge, serviceTypes: library)
         }
     }
 
@@ -90,7 +94,7 @@ struct BroadcastServiceIntentTests {
         let (bridge, publishManager) = makeBridge()
         let recorder = Recorder()
         bridge.didStopAllBroadcasts = { recorder.stopped = true }
-        _ = try await BroadcastServiceIntent.broadcast(fullType: "_http._tcp", port: 8080, bridge: bridge)
+        _ = try await BroadcastServiceIntent.broadcast(fullType: "_http._tcp", port: 8080, bridge: bridge, serviceTypes: library)
 
         let reply = await StopBroadcastingIntent.stopAll(bridge: bridge)
 

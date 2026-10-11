@@ -42,10 +42,15 @@ public struct ExplainServiceTypeIntent: AppIntent {
     // MARK: - Helpers
 
     /// A brief explanation as plain text, or `nil` when no backend is
-    /// available or generation fails.
+    /// available or generation fails. `serviceTypes` defaults to the
+    /// library plus custom types.
     @MainActor
-    static func explanation(fullType: String, bridge: AppIntentsBridge) async -> String? {
-        guard let serviceType = BonjourServiceType.fetch(fullType: fullType),
+    static func explanation(
+        fullType: String,
+        bridge: AppIntentsBridge,
+        serviceTypes: [BonjourServiceType]? = nil
+    ) async -> String? {
+        guard let serviceType = BonjourServiceType.fetch(serviceTypes: serviceTypes, fullType: fullType),
               let explainer = bridge.makeExplainer?(),
               explainer.isAvailable else {
             return nil
