@@ -1462,6 +1462,10 @@ public enum Strings {
             .init("settings_using_siri_footer", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        public static var usingShortcuts: LocalizedStringResource {
+            .init("settings_using_shortcuts", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var siriSay: LocalizedStringResource {
             .init("settings_siri_say", bundle: .atURL(Bundle.module.bundleURL))
         }

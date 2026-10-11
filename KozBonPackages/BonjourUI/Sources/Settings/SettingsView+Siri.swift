@@ -5,18 +5,16 @@
 //  Copyright © 2016-present Kozinga. All rights reserved.
 //
 
-import AppIntents
 import SwiftUI
 import BonjourLocalization
 
 // MARK: - SettingsView + Siri
 
 /// The "Using Siri with KozBon" section: one row that cycles through
-/// Siri phrases for KozBon's most useful actions, and a button that
-/// opens KozBon's page in the Shortcuts app.
+/// Siri phrases for KozBon's most useful actions, and on iPhone and
+/// iPad a row that opens the Shortcuts app.
 ///
-/// iOS and visionOS only. `ShortcutsLink` is unavailable on macOS, so
-/// the section isn't shown there.
+/// Not shown on macOS.
 extension SettingsView {
 
     @ViewBuilder
@@ -25,10 +23,22 @@ extension SettingsView {
         Section {
             SiriPhraseRow(phrases: Strings.Settings.siriPhrases)
 
-            ShortcutsLink()
-                .frame(maxWidth: .infinity)
-                .listRowBackground(Color.clear)
+            #if os(iOS)
+            if let url = URL(string: "shortcuts://") {
+                Link(destination: url) {
+                    HStack {
+                        Text(Strings.Settings.usingShortcuts)
+                            .foregroundStyle(.primary)
+                        Spacer()
+                        Image.externalLink
+                            .foregroundStyle(.secondary)
+                            .imageScale(.medium)
+                            .accessibilityHidden(true)
+                    }
+                }
                 .accessibilityIdentifier("settings.shortcutsLink")
+            }
+            #endif
         } header: {
             Text(Strings.Settings.usingSiri)
                 .accessibilityAddTraits(.isHeader)

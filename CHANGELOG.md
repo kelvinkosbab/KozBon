@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Open Service in KozBon: a Shortcuts action that opens the app on a service a List or Find step returned.
 - Explain a Service Type: Siri reads a short Insights explanation from the AI selected in Settings.
 - Broadcast a Service and Stop Broadcasting: start a TCP broadcast on a port, or stop them all, from Siri or an automation.
-- A "Using Siri with KozBon" section in Settings (iPhone, iPad and Vision Pro) cycles through Siri phrases for KozBon's most useful actions in a single row, with a button that opens KozBon in the Shortcuts app.
+- A "Using Siri with KozBon" section in Settings (iPhone, iPad and Vision Pro) cycles through Siri phrases for KozBon's most useful actions in a single row, with a "Using KozBon with Shortcuts" link that opens the Shortcuts app.
 - Chat has a "How do I use Siri and Shortcuts with KozBon?" suggestion, and answers Siri and Shortcuts questions from KozBon's real action list.
 - Siri also accepts "Koz Bon", "Kos Bon", and "Cause Bon" for the app's name, since it often mishears "KozBon".
 
