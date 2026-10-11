@@ -363,9 +363,29 @@ KozBon מאתר ומסביר את השירותים שמכשירים מפרסמי
 • תמיכה ב-VoiceOver, בגופן דינמי ובהפחתת תנועה
 • זמין בעברית, אנגלית, ספרדית, צרפתית, גרמנית, יפנית, סינית פשוטה וערבית
 
-## What's New in This Version (4.8)
+## What's New in This Version (4.9)
 
-Paste into each localization's What's New field. None of them names OpenAI: the last sentence covers the China mainland exclusion without naming the provider, which the listing can't do.
+4.8 shipped on iOS and iPadOS only, so the platforms get different text. On **iOS and iPadOS**, paste the 4.9 line alone. On **macOS and visionOS**, paste the 4.9 line followed by a blank line and the 4.8 text below it, since those users are updating from 4.7.
+
+**English (U.S.):** KozBon has a new icon: a blue dot sending out ripples, like a scan sweeping the network around it.
+
+**Spanish (Spain):** KozBon tiene un nuevo icono: un punto azul que emite ondas, como un escaneo que recorre la red a su alrededor.
+
+**French:** KozBon a une nouvelle icône : un point bleu qui émet des ondes, comme un balayage du réseau qui l'entoure.
+
+**German:** KozBon hat ein neues Symbol: einen blauen Punkt, der Wellen aussendet – wie ein Scan, der das Netzwerk um ihn herum absucht.
+
+**Japanese:** KozBon のアイコンが新しくなりました。周囲のネットワークをスキャンするように、青い点から波紋が広がるデザインです。
+
+**Chinese (Simplified):** KozBon 换上了新图标：一个蓝点向外发出涟漪，就像在扫描周围的网络。
+
+**Arabic:** لدى KozBon أيقونة جديدة: نقطة زرقاء تُطلق تموّجات، كأنها تمسح الشبكة من حولها.
+
+**Hebrew:** ל-KozBon יש סמל חדש: נקודה כחולה שמפיצה אדוות, כמו סריקה של הרשת שסביבה.
+
+### Carried over from 4.8 (macOS and visionOS only)
+
+None of these names OpenAI: the last sentence covers the China mainland exclusion without naming the provider, which the listing can't do.
 
 **English (U.S.):** Settings → Assistant now keeps each AI provider's model and sign-in controls in its own row, and the Chat tab takes on the colours of the AI you've selected. On devices without Apple Intelligence, the Chat tab now appears whenever any supported cloud provider has a key. Some cloud AI providers aren't available on the China mainland App Store.
 

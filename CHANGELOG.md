@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.9] - 2026-10-11
+
+### Changed
+
+- A new app icon: a blue dot with broken ripples that fade as they sweep up and to the right, replacing an emblem App Review found too close to Apple's Bonjour logo. On visionOS the ripples float above a white back layer.
+
 ## [4.8] - 2026-10-10
 
 ### Added
@@ -17,7 +23,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- A new app icon: a blue dot with broken ripples that fade as they sweep up and to the right, replacing an emblem App Review found too close to Apple's Bonjour logo. On visionOS the ripples float above a white back layer.
 - The OpenAI GPT backend isn't offered on the China mainland App Store storefront, where App Review requires ChatGPT-associated features to be off. A stored OpenAI selection there reverts to Apple Intelligence, and an OpenAI key is never used as a fallback.
 - Settings → Assistant shows each cloud backend's model picker and sign-in controls inside that backend's own row, with the model as a tinted capsule, instead of at the bottom of the section.
 

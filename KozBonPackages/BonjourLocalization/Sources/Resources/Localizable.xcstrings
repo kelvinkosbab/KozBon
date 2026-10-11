@@ -5472,6 +5472,60 @@
         }
       }
     },
+    "KozBon has a new icon: a blue dot sending out ripples, like a scan sweeping the network around it. On Apple Vision Pro, the ripples float in front of a white background.": {
+      "comment": "What's New summary for KozBon 4.9. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBon has a new icon: a blue dot sending out ripples, like a scan sweeping the network around it. On Apple Vision Pro, the ripples float in front of a white background."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBon tiene un nuevo icono: un punto azul que emite ondas, como un escaneo que recorre la red a su alrededor. En Apple Vision Pro, las ondas flotan delante de un fondo blanco."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBon a une nouvelle icône : un point bleu qui émet des ondes, comme un balayage du réseau qui l'entoure. Sur Apple Vision Pro, les ondes flottent devant un fond blanc."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBon hat ein neues Symbol: einen blauen Punkt, der Wellen aussendet – wie ein Scan, der das Netzwerk um ihn herum absucht. Auf der Apple Vision Pro schweben die Wellen vor einem weißen Hintergrund."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBon のアイコンが新しくなりました。周囲のネットワークをスキャンするように、青い点から波紋が広がるデザインです。Apple Vision Pro では、波紋が白い背景の手前に浮かび上がります。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBon 换上了新图标：一个蓝点向外发出涟漪，就像在扫描周围的网络。在 Apple Vision Pro 上，涟漪会浮现在白色背景前方。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لدى KozBon أيقونة جديدة: نقطة زرقاء تُطلق تموّجات، كأنها تمسح الشبكة من حولها. على Apple Vision Pro، تطفو التموّجات أمام خلفية بيضاء."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ל-KozBon יש סמל חדש: נקודה כחולה שמפיצה אדוות, כמו סריקה של הרשת שסביבה. ב-Apple Vision Pro, האדוות מרחפות לפני רקע לבן."
+          }
+        }
+      }
+    },
     "OpenAI GPT joins Apple Intelligence, Anthropic Claude, and Google Gemini as an AI option. Add your own OpenAI API key in Settings, and the GPT model picker loads the models your key can use. OpenAI bills API usage separately from a ChatGPT subscription. OpenAI GPT isn't offered on the China mainland App Store.\n\nThe Chat tab now takes on the colours of the AI you've selected. On devices without Apple Intelligence, it also appears whenever any cloud provider has a key, not just Claude.": {
       "comment": "What's New summary for KozBon 4.8. The English text is the key.",
       "extractionState": "manual",
