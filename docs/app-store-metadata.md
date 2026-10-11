@@ -365,40 +365,148 @@ KozBon מאתר ומסביר את השירותים שמכשירים מפרסמי
 
 ## What's New in This Version (4.9)
 
-4.8 shipped on iOS and iPadOS only, so the platforms get different text. On **iOS and iPadOS**, paste the 4.9 line alone. On **macOS and visionOS**, paste the 4.9 line followed by a blank line and the 4.8 text below it, since those users are updating from 4.7.
+Use the same text on every platform. It recaps all of version 4, so it also covers 4.8 for macOS and visionOS, which skipped that release. Paste each language's block as is; the bullets are plain text.
 
-**English (U.S.):** KozBon has a new icon: a blue dot sending out ripples, like a scan sweeping the network around it. Service and library details now have an Insights button that asks your chosen AI to explain the service, and TXT records come with a note on what they're for.
+**English (U.S.):**
 
-**Spanish (Spain):** KozBon tiene un nuevo icono: un punto azul que emite ondas, como un escaneo que recorre la red a su alrededor. Los detalles de servicios y de la biblioteca tienen ahora un botón Información que pide a la IA elegida que explique el servicio, y los registros TXT incluyen una nota sobre para qué sirven.
+```text
+New in 4.9
+KozBon has a new icon: a blue dot sending out ripples, like a scan sweeping the network around it. Service and library details now have an Insights button that asks your chosen AI to explain the service, and TXT records come with a note on what they're for.
 
-**French:** KozBon a une nouvelle icône : un point bleu qui émet des ondes, comme un balayage du réseau qui l'entoure. Les détails des services et de la bibliothèque ont désormais un bouton Aperçus qui demande à l'IA choisie d'expliquer le service, et les enregistrements TXT sont accompagnés d'une note sur leur utilité.
+Everything new in version 4
+• Chat: ask an AI assistant about the services on your network. It runs a fresh scan when you ask what's out there.
+• Your choice of AI: on-device Apple Intelligence, or a cloud AI provider with your own API key and an up-to-date model picker.
+• Insights: one tap on a service or library page explains what it does.
+• A fresh look: an ambient background on every tab, with a switch to turn it off.
+• A Nearby list organized by device or by service type, with filters and animated sorting.
+• Landscape and wide layouts on iPhone, and better layouts on iPad and Mac.
+• Siri and Shortcuts can scan for services and list what was found.
+• A What's New page in Settings.
+• Requires iOS, iPadOS, macOS, or visionOS 26.
+```
 
-**German:** KozBon hat ein neues Symbol: einen blauen Punkt, der Wellen aussendet – wie ein Scan, der das Netzwerk um ihn herum absucht. Dienst- und Bibliotheksdetails haben jetzt eine Schaltfläche „Einblicke“, mit der die gewählte KI den Dienst erklärt, und TXT-Einträge enthalten einen Hinweis, wofür sie dienen.
+**Spanish (Spain):**
 
-**Japanese:** KozBon のアイコンが新しくなりました。周囲のネットワークをスキャンするように、青い点から波紋が広がるデザインです。サービスとライブラリの詳細画面に「インサイト」ボタンが追加され、選択したAIがサービスについて説明します。TXTレコードには、その用途を説明するメモが付くようになりました。
+```text
+Novedades de la 4.9
+KozBon tiene un nuevo icono: un punto azul que emite ondas, como un escaneo que recorre la red a su alrededor. Los detalles de servicios y de la biblioteca tienen ahora un botón Información que pide a la IA elegida que explique el servicio, y los registros TXT incluyen una nota sobre para qué sirven.
 
-**Chinese (Simplified):** KozBon 换上了新图标：一个蓝点向外发出涟漪，就像在扫描周围的网络。服务和资源库的详细信息页面新增了“洞察”按钮，可让你选择的 AI 解释该服务；TXT 记录也附有说明其用途的注释。
+Todo lo nuevo de la versión 4
+• Chat: pregunta a un asistente de IA por los servicios de tu red. Hace un escaneo nuevo cuando preguntas qué hay a tu alrededor.
+• Tú eliges la IA: Apple Intelligence en el dispositivo, o un proveedor de IA en la nube con tu propia clave de API y un selector de modelos siempre al día.
+• Información: con un toque en la página de un servicio o de la biblioteca, sabrás para qué sirve.
+• Un aspecto renovado: un fondo ambiental en cada pestaña, con un interruptor para desactivarlo.
+• Una lista Cercanos organizada por dispositivo o por tipo de servicio, con filtros y ordenación animada.
+• Diseños horizontales y amplios en el iPhone, y diseños mejorados en el iPad y el Mac.
+• Siri y Atajos pueden buscar servicios y mostrar lo que encuentran.
+• Una página de Novedades en Ajustes.
+• Requiere iOS, iPadOS, macOS o visionOS 26.
+```
 
-**Arabic:** لدى KozBon أيقونة جديدة: نقطة زرقاء تُطلق تموّجات، كأنها تمسح الشبكة من حولها. تتضمن الآن تفاصيل الخدمات والمكتبة زر «رؤى» الذي يطلب من الذكاء الاصطناعي الذي اخترته شرح الخدمة، وتأتي سجلات TXT مع ملاحظة توضّح الغرض منها.
+**French:**
 
-**Hebrew:** ל-KozBon יש סמל חדש: נקודה כחולה שמפיצה אדוות, כמו סריקה של הרשת שסביבה. בפרטי השירותים והספרייה יש עכשיו כפתור ״תובנות״ שמבקש מהבינה המלאכותית שבחרתם להסביר את השירות, ולרשומות TXT מצורפת הערה על מה הן משמשות.
+```text
+Nouveautés de la 4.9
+KozBon a une nouvelle icône : un point bleu qui émet des ondes, comme un balayage du réseau qui l'entoure. Les détails des services et de la bibliothèque ont désormais un bouton Aperçus qui demande à l'IA choisie d'expliquer le service, et les enregistrements TXT sont accompagnés d'une note sur leur utilité.
 
-### Carried over from 4.8 (macOS and visionOS only)
+Toutes les nouveautés de la version 4
+• Chat : interrogez un assistant IA sur les services de votre réseau. Il lance un nouveau scan quand vous demandez ce qui vous entoure.
+• L'IA de votre choix : Apple Intelligence sur l'appareil, ou un fournisseur d'IA cloud avec votre propre clé API et un sélecteur de modèles toujours à jour.
+• Aperçus : un toucher sur la page d'un service ou de la bibliothèque explique à quoi il sert.
+• Un nouveau look : un arrière-plan d'ambiance sur chaque onglet, avec un interrupteur pour le désactiver.
+• Une liste À proximité organisée par appareil ou par type de service, avec des filtres et un tri animé.
+• Des mises en page paysage et larges sur iPhone, et de meilleures mises en page sur iPad et Mac.
+• Siri et Raccourcis peuvent rechercher des services et lister ce qu'ils trouvent.
+• Une page Nouveautés dans Réglages.
+• Nécessite iOS, iPadOS, macOS ou visionOS 26.
+```
 
-None of these names OpenAI: the last sentence covers the China mainland exclusion without naming the provider, which the listing can't do.
+**German:**
 
-**English (U.S.):** Settings → Assistant now keeps each AI provider's model and sign-in controls in its own row, and the Chat tab takes on the colours of the AI you've selected. On devices without Apple Intelligence, the Chat tab now appears whenever any supported cloud provider has a key. Some cloud AI providers aren't available on the China mainland App Store.
+```text
+Neu in 4.9
+KozBon hat ein neues Symbol: einen blauen Punkt, der Wellen aussendet – wie ein Scan, der das Netzwerk um ihn herum absucht. Dienst- und Bibliotheksdetails haben jetzt eine Schaltfläche „Einblicke“, mit der die gewählte KI den Dienst erklärt, und TXT-Einträge enthalten einen Hinweis, wofür sie dienen.
 
-**Spanish (Spain):** Ajustes → Asistente ahora muestra el modelo y el inicio de sesión de cada proveedor de IA en su propia fila, y la pestaña Chat adopta los colores de la IA que hayas elegido. En dispositivos sin Apple Intelligence, la pestaña Chat aparece siempre que haya una clave de cualquier proveedor en la nube compatible. Algunos proveedores de IA en la nube no están disponibles en el App Store de China continental.
+Alles Neue in Version 4
+• Chat: Frag einen KI-Assistenten nach den Diensten in deinem Netzwerk. Er startet einen neuen Scan, wenn du wissen willst, was es in der Nähe gibt.
+• Deine Wahl der KI: Apple Intelligence auf dem Gerät oder ein Cloud-KI-Anbieter mit deinem eigenen API-Schlüssel und einer stets aktuellen Modellauswahl.
+• Einblicke: Ein Tippen auf der Seite eines Dienstes oder der Bibliothek erklärt, wofür er da ist.
+• Ein neuer Look: ein Ambient-Hintergrund auf jedem Tab, mit einem Schalter zum Ausschalten.
+• Eine Liste „In der Nähe“, sortiert nach Gerät oder Diensttyp, mit Filtern und animierter Sortierung.
+• Quer- und Breitformat-Layouts auf dem iPhone sowie bessere Layouts auf iPad und Mac.
+• Siri und Kurzbefehle können nach Diensten suchen und die Funde auflisten.
+• Eine Seite „Neuigkeiten“ in den Einstellungen.
+• Erfordert iOS, iPadOS, macOS oder visionOS 26.
+```
 
-**French:** Réglages → Assistant affiche désormais le modèle et la connexion de chaque fournisseur d'IA dans sa propre ligne, et l'onglet Chat prend les couleurs de l'IA choisie. Sur les appareils sans Apple Intelligence, l'onglet Chat apparaît dès qu'un fournisseur cloud compatible dispose d'une clé. Certains fournisseurs d'IA cloud ne sont pas proposés sur l'App Store de Chine continentale.
+**Japanese:**
 
-**German:** Einstellungen → Assistent zeigt Modell und Anmeldung jedes KI-Anbieters jetzt in einer eigenen Zeile, und der Chat-Tab übernimmt die Farben der ausgewählten KI. Auf Geräten ohne Apple Intelligence erscheint der Chat-Tab, sobald für einen unterstützten Cloud-Anbieter ein Schlüssel hinterlegt ist. Einige Cloud-KI-Anbieter sind im App Store für das chinesische Festland nicht verfügbar.
+```text
+4.9の新機能
+KozBon のアイコンが新しくなりました。周囲のネットワークをスキャンするように、青い点から波紋が広がるデザインです。サービスとライブラリの詳細画面に「インサイト」ボタンが追加され、選択したAIがサービスについて説明します。TXTレコードには、その用途を説明するメモが付くようになりました。
 
-**Japanese:** 設定 → アシスタントで、各AIプロバイダのモデルとサインインがそれぞれの行に表示されるようになりました。チャットタブは選択したAIの色で表示されます。Apple Intelligenceに対応していないデバイスでも、対応するクラウドプロバイダのキーがあればチャットタブが表示されます。一部のクラウドAIプロバイダは、中国本土のApp Storeでは利用できません。
+バージョン4の新機能まとめ
+• チャット：ネットワーク上のサービスについてAIアシスタントに質問できます。周りに何があるかを尋ねると、新たにスキャンを実行します。
+• AIを選べる：デバイス上のApple Intelligence、または自分のAPIキーで使うクラウドAIプロバイダ。モデルの選択肢も常に最新です。
+• インサイト：サービスやライブラリのページでタップするだけで、その役割を説明します。
+• 新しいデザイン：すべてのタブにアンビエント背景。スイッチでオフにもできます。
+• 「近く」のリストをデバイス別またはサービスの種類別に整理。フィルタとアニメーション付きの並べ替えにも対応。
+• iPhoneで横向きとワイドレイアウトに対応し、iPadとMacのレイアウトも改善。
+• Siriとショートカットでサービスをスキャンし、見つかったものを一覧表示できます。
+• 設定に「新機能」ページを追加。
+• iOS、iPadOS、macOS、またはvisionOS 26が必要です。
+```
 
-**Chinese (Simplified):** “设置 → 助手”现在会在各 AI 提供商自己的行中显示其模型和登录选项，“聊天”标签页也会采用你所选 AI 的配色。在不支持 Apple Intelligence 的设备上,只要任一受支持的云端提供商已添加密钥，“聊天”标签页就会显示。部分云端 AI 提供商在中国大陆 App Store 中不可用。
+**Chinese (Simplified):**
 
-**Arabic:** يعرض قسم الإعدادات ← المساعد الآن نموذج كل مزوّد ذكاء اصطناعي وتسجيل الدخول إليه في صفّه الخاص، وتتخذ علامة تبويب الدردشة ألوان الذكاء الاصطناعي الذي اخترته. على الأجهزة التي لا تدعم Apple Intelligence، تظهر علامة تبويب الدردشة متى توفّر مفتاح لأي مزوّد سحابي مدعوم. بعض مزوّدي الذكاء الاصطناعي السحابي غير متوفرين في متجر App Store في البر الرئيسي للصين.
+```text
+4.9 新功能
+KozBon 换上了新图标：一个蓝点向外发出涟漪，就像在扫描周围的网络。服务和资料库的详细信息页面新增了“洞察”按钮，可让你选择的 AI 解释该服务；TXT 记录也附有说明其用途的注释。
 
-**Hebrew:** בהגדרות ← עוזר, המודל וההתחברות של כל ספק בינה מלאכותית מוצגים עכשיו בשורה משלו, ולשונית הצ׳אט מקבלת את צבעי הבינה המלאכותית שבחרתם. במכשירים ללא Apple Intelligence, לשונית הצ׳אט מופיעה בכל פעם שיש מפתח לספק ענן נתמך כלשהו. חלק מספקי הבינה המלאכותית בענן אינם זמינים ב-App Store של סין היבשתית.
+版本 4 全部新功能
+• 聊天：向 AI 助手询问你网络中的服务。当你问周围有什么时，它会重新扫描一次。
+• 自选 AI：设备端的 Apple Intelligence，或使用你自己的 API 密钥接入云端 AI 提供商，模型选择器始终保持最新。
+• 洞察：在服务或资料库页面轻点一下，即可了解它的用途。
+• 全新外观：每个标签页都有氛围背景，并可通过开关关闭。
+• “附近”列表可按设备或服务类型分组，支持筛选和动画排序。
+• iPhone 支持横屏和宽屏布局，iPad 和 Mac 的布局也更出色。
+• Siri 和快捷指令可以扫描服务并列出找到的内容。
+• “设置”中新增“新功能”页面。
+• 需要 iOS、iPadOS、macOS 或 visionOS 26。
+```
+
+**Arabic:**
+
+```text
+الجديد في 4.9
+لدى KozBon أيقونة جديدة: نقطة زرقاء تُطلق تموّجات، كأنها تمسح الشبكة من حولها. تتضمن الآن تفاصيل الخدمات والمكتبة زر «رؤى» الذي يطلب من الذكاء الاصطناعي الذي اخترته شرح الخدمة، وتأتي سجلات TXT مع ملاحظة توضّح الغرض منها.
+
+كل جديد الإصدار 4
+• المحادثة: اسأل مساعد ذكاء اصطناعي عن الخدمات على شبكتك. يُجري فحصًا جديدًا عندما تسأل عمّا حولك.
+• اختر الذكاء الاصطناعي الذي تريده: Apple Intelligence على الجهاز، أو مزوّد ذكاء اصطناعي سحابي بمفتاح API الخاص بك مع قائمة نماذج محدّثة دائمًا.
+• رؤى: نقرة واحدة في صفحة خدمة أو في المكتبة تشرح وظيفتها.
+• مظهر جديد: خلفية محيطية في كل علامة تبويب، مع مفتاح لإيقافها.
+• قائمة «قريبة» منظّمة حسب الجهاز أو نوع الخدمة، مع عوامل تصفية وفرز متحرّك.
+• تخطيطات أفقية وعريضة على iPhone، وتخطيطات أفضل على iPad وMac.
+• يمكن لـ Siri والاختصارات البحث عن الخدمات وعرض ما عُثر عليه.
+• صفحة «ما الجديد» في الإعدادات.
+• يتطلب iOS أو iPadOS أو macOS أو visionOS 26.
+```
+
+**Hebrew:**
+
+```text
+חדש ב-4.9
+ל-KozBon יש סמל חדש: נקודה כחולה שמפיצה אדוות, כמו סריקה של הרשת שסביבה. בפרטי השירותים והספרייה יש עכשיו כפתור ״תובנות״ שמבקש מהבינה המלאכותית שבחרתם להסביר את השירות, ולרשומות TXT מצורפת הערה על מה הן משמשות.
+
+כל החידושים בגרסה 4
+• צ'אט: שאלו עוזר בינה מלאכותית על השירותים ברשת שלכם. הוא מריץ סריקה חדשה כשאתם שואלים מה יש בסביבה.
+• בינה מלאכותית לבחירתכם: Apple Intelligence במכשיר, או ספק בינה מלאכותית בענן עם מפתח API משלכם ובורר מודלים שמתעדכן תמיד.
+• תובנות: הקשה אחת בדף של שירות או בספרייה מסבירה מה הוא עושה.
+• מראה חדש: רקע אווירה בכל לשונית, עם מתג לכיבוי.
+• רשימת ״בקרבת מקום״ מאורגנת לפי מכשיר או לפי סוג שירות, עם מסננים ומיון מונפש.
+• פריסות לרוחב ופריסות רחבות ב-iPhone, ופריסות משופרות ב-iPad וב-Mac.
+• Siri וקיצורים יכולים לסרוק שירותים ולהציג את מה שנמצא.
+• דף ״מה חדש״ בהגדרות.
+• נדרש iOS‏, iPadOS‏, macOS או visionOS 26.
+```
