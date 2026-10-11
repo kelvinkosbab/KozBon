@@ -10,7 +10,7 @@ import BonjourLocalization
 
 // MARK: - SiriPhraseRow
 
-/// A list row, used in Settings and on Discover, that keeps "Say"
+/// A list row, used in Settings and on Discover, that keeps "Ask Siri"
 /// fixed and cycles through Siri phrases beneath it.
 struct SiriPhraseRow: View {
 
@@ -29,7 +29,7 @@ struct SiriPhraseRow: View {
                 .accessibilityHidden(true)
 
             VStack(alignment: .leading, spacing: 2) {
-                Text(Strings.Settings.siriSay)
+                Text(Strings.Settings.askSiri)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
 
@@ -56,7 +56,7 @@ struct SiriPhraseRow: View {
         // The phrases change on a timer, so VoiceOver reads them all at
         // once instead of whichever one happens to be showing.
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text(Strings.Settings.siriSay))
+        .accessibilityLabel(Text(Strings.Settings.askSiri))
         .accessibilityValue(phrases.map { String(localized: $0) }.formatted(.list(type: .or)))
         .accessibilityIdentifier("siriPhrases")
         .task { await cycle() }

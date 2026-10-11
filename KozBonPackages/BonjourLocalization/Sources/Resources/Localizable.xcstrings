@@ -25571,55 +25571,55 @@
         }
       }
     },
-    "settings_siri_say": {
+    "settings_ask_siri": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Say"
+            "value": "Ask Siri"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Di"
+            "value": "Pregúntale a Siri"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dites"
+            "value": "Demandez à Siri"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sag"
+            "value": "Frag Siri"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Siriに話しかけてみよう"
+            "value": "Siriに頼む"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "对 Siri 说"
+            "value": "问 Siri"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "قل"
+            "value": "اسأل Siri"
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "אמרו"
+            "value": "בקשו מ-Siri"
           }
         }
       }
