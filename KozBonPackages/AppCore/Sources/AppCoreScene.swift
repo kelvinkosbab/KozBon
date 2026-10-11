@@ -46,20 +46,26 @@ public struct AppCoreScene: Scene {
         // instances would each spin up their own SwiftData
         // container and writes wouldn't propagate.
         let preferencesStore = MainActor.assumeIsolated { PreferencesStore() }
+        // Shared for the same reason: Settings and routing must agree
+        // on which backends this storefront allows.
+        let availability = MainActor.assumeIsolated { AIBackendAvailability() }
         let chatFactory = CloudAwareBonjourChatSessionFactory(
             credentialsStore: credentialsStore,
-            preferencesStore: preferencesStore
+            preferencesStore: preferencesStore,
+            isBackendOffered: { availability.isOffered($0) }
         )
         let explainerFactory = CloudAwareBonjourServiceExplainerFactory(
             credentialsStore: credentialsStore,
-            preferencesStore: preferencesStore
+            preferencesStore: preferencesStore,
+            isBackendOffered: { availability.isOffered($0) }
         )
         self.init(
             dependencies: DependencyContainer(),
             explainerFactory: explainerFactory,
             chatSessionFactory: chatFactory,
             credentialsStore: credentialsStore,
-            preferencesStore: preferencesStore
+            preferencesStore: preferencesStore,
+            aiBackendAvailability: availability
         )
     }
 
@@ -70,14 +76,16 @@ public struct AppCoreScene: Scene {
         explainerFactory: any BonjourServiceExplainerFactoryProtocol,
         chatSessionFactory: any BonjourChatSessionFactoryProtocol,
         credentialsStore: (any AICloudCredentialsStore & Sendable)? = nil,
-        preferencesStore: PreferencesStore? = nil
+        preferencesStore: PreferencesStore? = nil,
+        aiBackendAvailability: AIBackendAvailability? = nil
     ) {
         _viewModel = State(initialValue: AppCoreViewModel(
             dependencies: dependencies,
             explainerFactory: explainerFactory,
             chatSessionFactory: chatSessionFactory,
             credentialsStore: credentialsStore,
-            preferencesStore: preferencesStore
+            preferencesStore: preferencesStore,
+            aiBackendAvailability: aiBackendAvailability
         ))
     }
 
@@ -168,6 +176,7 @@ public struct AppCoreScene: Scene {
             .environment(\.serviceExplainer, viewModel.explainer)
             .environment(\.chatSession, viewModel.chatSession)
             .environment(\.preferencesStore, viewModel.preferencesStore)
+            .environment(\.aiBackendAvailability, viewModel.aiBackendAvailability)
             // Animate the tab-bar tint + chat-tab icon swap
             // when the backend changes mid-session.
             .animation(
@@ -176,6 +185,12 @@ public struct AppCoreScene: Scene {
             )
             .task {
                 await viewModel.prewarmChatSession()
+            }
+            .task {
+                await viewModel.monitorStorefront()
+            }
+            .onChange(of: viewModel.aiBackendAvailability.storefrontCountryCode) {
+                viewModel.applyBackendAvailability()
             }
             .onChange(of: viewModel.preferencesStore.aiBackend) {
                 viewModel.refreshAIBackend()
@@ -219,6 +234,7 @@ public struct AppCoreScene: Scene {
 
         Settings {
             SettingsView()
+                .environment(\.aiBackendAvailability, viewModel.aiBackendAvailability)
         }
         #endif
 

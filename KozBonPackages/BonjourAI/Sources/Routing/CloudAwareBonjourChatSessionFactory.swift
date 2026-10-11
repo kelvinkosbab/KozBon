@@ -62,6 +62,7 @@ public struct CloudAwareBonjourChatSessionFactory: BonjourChatSessionFactoryProt
     private let anthropicClient: any AnthropicClientProtocol
     private let geminiClient: any GeminiClientProtocol
     private let openAIClient: any OpenAIClientProtocol
+    private let isBackendOffered: @MainActor @Sendable (AIBackend) -> Bool
 
     /// Subsystem-scoped logger for cloud-fallback diagnostics.
     /// Console.app filters by category
@@ -95,6 +96,10 @@ public struct CloudAwareBonjourChatSessionFactory: BonjourChatSessionFactoryProt
     ///   - openAIClient: The OpenAI API client used when routing
     ///     hits the OpenAI path. Defaults to a real
     ///     ``OpenAIClient`` against `api.openai.com`.
+    ///   - isBackendOffered: Whether the current storefront allows a
+    ///     backend. A backend it withholds is never routed to, even
+    ///     as a fallback — see ``AIBackendAvailability``. Defaults to
+    ///     offering every backend.
     public init(
         appleFactory: any BonjourChatSessionFactoryProtocol = BonjourChatSessionFactory(),
         credentialsStore: any AICloudCredentialsStore & Sendable,
@@ -102,6 +107,7 @@ public struct CloudAwareBonjourChatSessionFactory: BonjourChatSessionFactoryProt
         anthropicClient: any AnthropicClientProtocol = AnthropicClient(),
         geminiClient: any GeminiClientProtocol = GeminiClient(),
         openAIClient: any OpenAIClientProtocol = OpenAIClient(),
+        isBackendOffered: @escaping @MainActor @Sendable (AIBackend) -> Bool = { _ in true },
     ) {
         self.appleFactory = appleFactory
         self.credentialsStore = credentialsStore
@@ -109,6 +115,7 @@ public struct CloudAwareBonjourChatSessionFactory: BonjourChatSessionFactoryProt
         self.anthropicClient = anthropicClient
         self.geminiClient = geminiClient
         self.openAIClient = openAIClient
+        self.isBackendOffered = isBackendOffered
     }
 
     // MARK: - BonjourChatSessionFactoryProtocol
@@ -137,7 +144,8 @@ public struct CloudAwareBonjourChatSessionFactory: BonjourChatSessionFactoryProt
             // User picked a cloud provider. Use it when possible;
             // fall back to the Apple session if no credentials so
             // the tab still surfaces.
-            if let provider = backend.cloudProvider,
+            if isBackendOffered(backend),
+               let provider = backend.cloudProvider,
                let cloudSession = makeCloudSessionIfPossible(for: provider) {
                 return cloudSession
             }
@@ -181,6 +189,10 @@ public struct CloudAwareBonjourChatSessionFactory: BonjourChatSessionFactoryProt
     private func makeCloudSessionIfPossible(
         for provider: AICloudProvider
     ) -> (any BonjourChatSessionProtocol)? {
+        guard AIBackend.allCases.contains(where: { $0.cloudProvider == provider && isBackendOffered($0) }) else {
+            routingLogger.debug("Cloud backend withheld on this storefront.")
+            return nil
+        }
         guard credentialsStore.hasAPIKey(for: provider) else {
             routingLogger.debug("Cloud backend requested but no API key configured.")
             return nil

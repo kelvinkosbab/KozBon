@@ -28,6 +28,11 @@ public final class AppCoreViewModel {
     public let dependencies: DependencyContainer
     public let preferencesStore: PreferencesStore
 
+    /// Which backends the App Store storefront allows. Must be the
+    /// instance the routing factories consult, so a storefront
+    /// change reaches routing and Settings together.
+    public let aiBackendAvailability: AIBackendAvailability
+
     /// AI explainer for long-press Insights. Routed by the
     /// cloud-aware factory; mutable so ``refreshAIBackend()`` can
     /// swap it when the user changes backend in Settings.
@@ -61,18 +66,23 @@ public final class AppCoreViewModel {
     ///   the runtime backend swap stops working. `nil` for tests
     ///   that want a throwaway store; production callers pass the
     ///   shared instance from `AppCoreScene`.
+    /// - Parameter aiBackendAvailability: Same sharing rule as
+    ///   `preferencesStore`, against the factories' `isBackendOffered`.
+    ///   `nil` offers every backend.
     public init(
         dependencies: DependencyContainer,
         explainerFactory: any BonjourServiceExplainerFactoryProtocol,
         chatSessionFactory: any BonjourChatSessionFactoryProtocol,
         credentialsStore: (any AICloudCredentialsStore & Sendable)? = nil,
-        preferencesStore: PreferencesStore? = nil
+        preferencesStore: PreferencesStore? = nil,
+        aiBackendAvailability: AIBackendAvailability? = nil
     ) {
         self.dependencies = dependencies
         self.chatSessionFactory = chatSessionFactory
         self.explainerFactory = explainerFactory
         self.credentialsStore = credentialsStore
         self.preferencesStore = preferencesStore ?? PreferencesStore()
+        self.aiBackendAvailability = aiBackendAvailability ?? AIBackendAvailability()
         self.servicesViewModel = BonjourServicesViewModel(dependencies: dependencies)
         self.explainer = explainerFactory.makeForCurrentEnvironment()
         self.chatSession = chatSessionFactory.makeForCurrentEnvironment(
@@ -91,7 +101,8 @@ public final class AppCoreViewModel {
         if AppleIntelligenceSupport.isDeviceSupported { return true }
         return Self.hasCloudChatPath(
             selectedBackend: preferencesStore.aiBackend,
-            credentialsStore: credentialsStore
+            credentialsStore: credentialsStore,
+            isOffered: { aiBackendAvailability.isOffered($0) }
         )
     }
 
@@ -103,14 +114,16 @@ public final class AppCoreViewModel {
     /// Enumerates `AIBackend.allCases` rather than naming providers,
     /// so a provider added later is covered without an edit here —
     /// and the retired GitHub token, which has no backend, doesn't
-    /// count.
+    /// count. Backends the storefront withholds don't count either.
     static func hasCloudChatPath(
         selectedBackend: AIBackend,
-        credentialsStore: (any AICloudCredentialsStore)?
+        credentialsStore: (any AICloudCredentialsStore)?,
+        isOffered: (AIBackend) -> Bool = { _ in true }
     ) -> Bool {
-        if selectedBackend.isCloud { return true }
+        if selectedBackend.isCloud, isOffered(selectedBackend) { return true }
         guard let credentialsStore else { return false }
         return AIBackend.allCases
+            .filter(isOffered)
             .compactMap(\.cloudProvider)
             .contains { credentialsStore.hasAPIKey(for: $0) }
     }
@@ -146,5 +159,24 @@ public final class AppCoreViewModel {
         chatSession = chatSessionFactory.makeForCurrentEnvironment(
             publishManager: dependencies.bonjourPublishManager
         )
+    }
+
+    // MARK: - Storefront
+
+    /// Follows the App Store storefront for the life of the calling
+    /// task. Run from the scene's `.task`.
+    public func monitorStorefront() async {
+        await aiBackendAvailability.monitorStorefront()
+    }
+
+    /// Moves a selection the storefront now withholds back to
+    /// ``AIBackend/default`` and rebuilds the sessions, so a
+    /// fallback path can't reach a withheld backend either. Called
+    /// when the storefront changes.
+    public func applyBackendAvailability() {
+        if !aiBackendAvailability.isOffered(preferencesStore.aiBackend) {
+            preferencesStore.aiBackend = .default
+        }
+        refreshAIBackend()
     }
 }

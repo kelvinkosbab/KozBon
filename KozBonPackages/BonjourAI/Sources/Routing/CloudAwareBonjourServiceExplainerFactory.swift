@@ -34,6 +34,7 @@ public struct CloudAwareBonjourServiceExplainerFactory: BonjourServiceExplainerF
     private let anthropicClient: any AnthropicClientProtocol
     private let geminiClient: any GeminiClientProtocol
     private let openAIClient: any OpenAIClientProtocol
+    private let isBackendOffered: @MainActor @Sendable (AIBackend) -> Bool
 
     /// Subsystem-scoped logger. Console.app filters by category
     /// `CloudAwareBonjourServiceExplainerFactory`.
@@ -51,6 +52,7 @@ public struct CloudAwareBonjourServiceExplainerFactory: BonjourServiceExplainerF
         anthropicClient: any AnthropicClientProtocol = AnthropicClient(),
         geminiClient: any GeminiClientProtocol = GeminiClient(),
         openAIClient: any OpenAIClientProtocol = OpenAIClient(),
+        isBackendOffered: @escaping @MainActor @Sendable (AIBackend) -> Bool = { _ in true },
     ) {
         self.appleFactory = appleFactory
         self.credentialsStore = credentialsStore
@@ -58,6 +60,7 @@ public struct CloudAwareBonjourServiceExplainerFactory: BonjourServiceExplainerF
         self.anthropicClient = anthropicClient
         self.geminiClient = geminiClient
         self.openAIClient = openAIClient
+        self.isBackendOffered = isBackendOffered
     }
 
     // MARK: - BonjourServiceExplainerFactoryProtocol
@@ -77,7 +80,8 @@ public struct CloudAwareBonjourServiceExplainerFactory: BonjourServiceExplainerF
                 ?? makeCloudExplainerIfPossible(for: .openai)
 
         case .anthropic, .gemini, .openai:
-            if let provider = backend.cloudProvider,
+            if isBackendOffered(backend),
+               let provider = backend.cloudProvider,
                let cloudExplainer = makeCloudExplainerIfPossible(for: provider) {
                 return cloudExplainer
             }
@@ -94,6 +98,10 @@ public struct CloudAwareBonjourServiceExplainerFactory: BonjourServiceExplainerF
     private func makeCloudExplainerIfPossible(
         for provider: AICloudProvider
     ) -> (any BonjourServiceExplainerProtocol)? {
+        guard AIBackend.allCases.contains(where: { $0.cloudProvider == provider && isBackendOffered($0) }) else {
+            explainerRoutingLogger.debug("Cloud backend withheld on this storefront.")
+            return nil
+        }
         guard credentialsStore.hasAPIKey(for: provider) else {
             explainerRoutingLogger.debug("Cloud backend requested but no API key configured.")
             return nil

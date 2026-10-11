@@ -144,6 +144,15 @@ which advertises no capabilities at all, so its filter is by identifier family
 (`OpenAIModelCatalogClient.isChatModel`) — the piece to revisit when OpenAI
 adds a model family.
 
+`AIBackendAvailability` (in `BonjourAICore`) withholds `.openai` on the China
+mainland App Store storefront (`Storefront.countryCode == "CHN"`): App Review
+rejected 4.8 under Guideline 5 because ChatGPT-associated features need a
+permit there. Settings lists only `offeredBackends`, both routing factories
+take an `isBackendOffered` closure that also blocks fallbacks, and a storefront
+change resets a withheld selection to the default. An unknown storefront offers
+everything. App Store metadata in every locale stays free of OpenAI, GPT, and
+ChatGPT — see `docs/app-store-metadata.md`.
+
 OpenAI's reasoning models spend the output budget on hidden reasoning, so the
 OpenAI session caps turns at 4,096 tokens (not 1,024) and sends
 `reasoning.effort: "low"` only to families known to accept it

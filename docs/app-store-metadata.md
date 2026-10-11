@@ -8,6 +8,13 @@ under Guideline 5.2.5 for it in the subtitle. Keep other Apple trademarks
 (AirPlay, HomeKit) and third-party names (Claude, Gemini) out of the subtitle,
 promotional text, and keywords; the description may reference them factually.
 
+**Do not mention OpenAI, GPT, or ChatGPT in any field, including What's New
+and screenshots** — App Review rejected 4.8 (build 125) on every platform
+under Guideline 5 (Legal) because China mainland law requires a permit for
+ChatGPT-associated services. The app withholds the OpenAI backend on that
+storefront, and localizations are shared across storefronts, so the listing
+can't name it in any language. Say so in the Review Notes on each submission.
+
 Limits: name and subtitle 30 characters, promotional text 170, description
 4,000, keywords 100. Words in the name and subtitle are already indexed, so
 keywords don't repeat them.
@@ -355,3 +362,23 @@ KozBon מאתר ומסביר את השירותים שמכשירים מפרסמי
 • Siri וקיצורים: סריקת שירותים והצגת מה שנמצא
 • תמיכה ב-VoiceOver, בגופן דינמי ובהפחתת תנועה
 • זמין בעברית, אנגלית, ספרדית, צרפתית, גרמנית, יפנית, סינית פשוטה וערבית
+
+## What's New in This Version (4.8)
+
+Paste into each localization's What's New field. None of them names OpenAI.
+
+**English (U.S.):** Settings → Assistant now keeps each AI provider's model and sign-in controls in its own row, and the Chat tab takes on the colours of the AI you've selected. On devices without Apple Intelligence, the Chat tab now appears whenever any supported cloud provider has a key.
+
+**Spanish (Spain):** Ajustes → Asistente ahora muestra el modelo y el inicio de sesión de cada proveedor de IA en su propia fila, y la pestaña Chat adopta los colores de la IA que hayas elegido. En dispositivos sin Apple Intelligence, la pestaña Chat aparece siempre que haya una clave de cualquier proveedor en la nube compatible.
+
+**French:** Réglages → Assistant affiche désormais le modèle et la connexion de chaque fournisseur d'IA dans sa propre ligne, et l'onglet Chat prend les couleurs de l'IA choisie. Sur les appareils sans Apple Intelligence, l'onglet Chat apparaît dès qu'un fournisseur cloud compatible dispose d'une clé.
+
+**German:** Einstellungen → Assistent zeigt Modell und Anmeldung jedes KI-Anbieters jetzt in einer eigenen Zeile, und der Chat-Tab übernimmt die Farben der ausgewählten KI. Auf Geräten ohne Apple Intelligence erscheint der Chat-Tab, sobald für einen unterstützten Cloud-Anbieter ein Schlüssel hinterlegt ist.
+
+**Japanese:** 設定 → アシスタントで、各AIプロバイダのモデルとサインインがそれぞれの行に表示されるようになりました。チャットタブは選択したAIの色で表示されます。Apple Intelligenceに対応していないデバイスでも、対応するクラウドプロバイダのキーがあればチャットタブが表示されます。
+
+**Chinese (Simplified):** “设置 → 助手”现在会在各 AI 提供商自己的行中显示其模型和登录选项,“聊天”标签页也会采用你所选 AI 的配色。在不支持 Apple Intelligence 的设备上,只要任一受支持的云端提供商已添加密钥,“聊天”标签页就会显示。
+
+**Arabic:** يعرض قسم الإعدادات ← المساعد الآن نموذج كل مزوّد ذكاء اصطناعي وتسجيل الدخول إليه في صفّه الخاص، وتتخذ علامة تبويب الدردشة ألوان الذكاء الاصطناعي الذي اخترته. على الأجهزة التي لا تدعم Apple Intelligence، تظهر علامة تبويب الدردشة متى توفّر مفتاح لأي مزوّد سحابي مدعوم.
+
+**Hebrew:** בהגדרות ← עוזר, המודל וההתחברות של כל ספק בינה מלאכותית מוצגים עכשיו בשורה משלו, ולשונית הצ׳אט מקבלת את צבעי הבינה המלאכותית שבחרתם. במכשירים ללא Apple Intelligence, לשונית הצ׳אט מופיעה בכל פעם שיש מפתח לספק ענן נתמך כלשהו.

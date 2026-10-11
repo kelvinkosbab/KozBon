@@ -41,8 +41,9 @@ extension SettingsView {
             // Enumerated rather than listed row by row: a hardcoded
             // list silently omitted Gemini when it was added, and no
             // switch meant no compiler error. Adding a case to
-            // `AIBackend` surfaces it here for free.
-            ForEach(AIBackend.allCases) { backend in
+            // `AIBackend` surfaces it here for free, minus any the
+            // App Store storefront withholds.
+            ForEach(aiBackendAvailability.offeredBackends) { backend in
                 backendRow(backend)
             }
         } header: {
