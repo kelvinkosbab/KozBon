@@ -7,6 +7,7 @@
 
 import Testing
 import BonjourAI
+import BonjourModels
 @testable import BonjourAppIntents
 
 // MARK: - ExplainServiceTypeIntentTests
