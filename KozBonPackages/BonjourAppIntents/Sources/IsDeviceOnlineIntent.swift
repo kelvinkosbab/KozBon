@@ -44,6 +44,7 @@ public struct IsDeviceOnlineIntent: AppIntent {
     /// hostname matches `query`, ignoring case and accents. An exact
     /// match wins over one that only contains the query, so "Office"
     /// prefers "Office" to "Office Printer".
+    @MainActor
     static func device(named query: String, in services: [BonjourService]) -> SiriDevice? {
         let needle = normalized(query)
         guard !needle.isEmpty else { return nil }
@@ -60,6 +61,7 @@ public struct IsDeviceOnlineIntent: AppIntent {
         }
     }
 
+    @MainActor
     static func reply(query: String, match: SiriDevice?, scanned: IntentScanResult) -> String {
         if let match {
             return Strings.Siri.deviceOnline(match.name)

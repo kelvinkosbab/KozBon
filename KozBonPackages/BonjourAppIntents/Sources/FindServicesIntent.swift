@@ -54,6 +54,7 @@ public struct FindServicesIntent: AppIntent {
 
     // MARK: - Helpers
 
+    @MainActor
     static func filter(
         _ services: [BonjourService],
         category: BonjourServiceCategory?,
@@ -70,6 +71,7 @@ public struct FindServicesIntent: AppIntent {
 
     /// The List reply for the matches, or a "nothing matched" reply
     /// when the scan found services but none fit.
+    @MainActor
     static func reply(matches: [BonjourService], scanned: IntentScanResult) -> String {
         if matches.isEmpty, !scanned.services.isEmpty {
             return Strings.Siri.noMatchingServices

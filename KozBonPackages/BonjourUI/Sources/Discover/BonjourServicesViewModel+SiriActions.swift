@@ -15,6 +15,7 @@ struct PendingServiceSelection {
     let name: String
     let fullType: String
 
+    @MainActor
     func matches(_ service: BonjourService) -> Bool {
         service.service.name == name && service.serviceType.fullType == fullType
     }
@@ -28,7 +29,7 @@ extension BonjourServicesViewModel {
     /// scan to find it. Used by the Open in KozBon Siri action.
     public func selectService(named name: String, fullType: String) {
         let wanted = PendingServiceSelection(name: name, fullType: fullType)
-        if let match = activeServices.first(where: wanted.matches) {
+        if let match = activeServices.first(where: { wanted.matches($0) }) {
             selectedService = match
             pendingSelection = nil
         } else {
