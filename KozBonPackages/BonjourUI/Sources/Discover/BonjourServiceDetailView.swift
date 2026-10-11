@@ -47,9 +47,7 @@ public struct BonjourServiceDetailView: View {
                     imageSystemName: viewModel.serviceType.imageSystemName,
                     title: viewModel.service.service.name,
                     detail: viewModel.serviceType.name
-                ) {
-                    InsightsLink(action: { viewModel.isAIExplanationPresented = true })
-                }
+                )
                 .onAppear {
                     withAnimation(reduceMotion ? nil : .default) {
                         viewModel.isNavigationHeaderShown = false
@@ -60,6 +58,10 @@ public struct BonjourServiceDetailView: View {
                         viewModel.isNavigationHeaderShown = true
                     }
                 }
+            }
+
+            Section {
+                InsightsLink(action: { viewModel.isAIExplanationPresented = true })
             }
 
             Section(String(localized: Strings.Sections.information)) {

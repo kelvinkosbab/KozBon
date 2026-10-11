@@ -22,11 +22,11 @@ import UIKit
 
 // MARK: - InsightsLink
 
-/// A tappable Insights link for a detail screen's header capsule.
+/// A plain Insights link row for detail screens.
 ///
 /// The long-press ``InsightsContextMenuItems`` is easy to miss, so
 /// the discovered-service and library detail screens also show
-/// Insights as a link inside their header. It resolves the same
+/// Insights as a link row with no card behind it. It resolves the same
 /// states as the context menu: an Insights link tinted for the
 /// selected backend, an "Enable Apple Intelligence" or "Sign in to …"
 /// call to action, or nothing at all when AI is off or the device
@@ -109,9 +109,10 @@ struct InsightsLink: View {
             .contentShape(Rectangle())
         }
         // Borderless so only the link is tappable, not the whole
-        // header row the List would otherwise turn into a button.
+        // row the List would otherwise turn into a button.
         .buttonStyle(.borderless)
         .foregroundStyle(tint)
+        .listRowBackground(Color.clear)
     }
 
     // MARK: - State

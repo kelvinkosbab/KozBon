@@ -43,9 +43,7 @@ public struct SupportedServiceDetailView: View {
                     imageSystemName: serviceType.imageSystemName,
                     title: serviceType.name,
                     detail: serviceType.fullType
-                ) {
-                    InsightsLink(action: { isAIExplanationPresented = true })
-                }
+                )
                 .onAppear {
                     withAnimation(reduceMotion ? nil : .default) {
                         isNavigationHeaderShown = false
@@ -56,6 +54,10 @@ public struct SupportedServiceDetailView: View {
                         isNavigationHeaderShown = true
                     }
                 }
+            }
+
+            Section {
+                InsightsLink(action: { isAIExplanationPresented = true })
             }
 
             Section {
