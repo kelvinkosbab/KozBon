@@ -5472,56 +5472,56 @@
         }
       }
     },
-    "KozBon has a new icon: a blue dot sending out ripples, like a scan sweeping the network around it. On Apple Vision Pro, the ripples float in front of a white background.": {
+    "KozBon has a new icon: a blue dot sending out ripples, like a scan sweeping the network around it. On Apple Vision Pro, the ripples float in front of a white background.\n\nService and library details now have an Insights button that asks your chosen AI to explain the service, and TXT records come with a note on what they're for. In Settings, each signed-in cloud AI now shows a single Sign out button.": {
       "comment": "What's New summary for KozBon 4.9. The English text is the key.",
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "KozBon has a new icon: a blue dot sending out ripples, like a scan sweeping the network around it. On Apple Vision Pro, the ripples float in front of a white background."
+            "value": "KozBon has a new icon: a blue dot sending out ripples, like a scan sweeping the network around it. On Apple Vision Pro, the ripples float in front of a white background.\n\nService and library details now have an Insights button that asks your chosen AI to explain the service, and TXT records come with a note on what they're for. In Settings, each signed-in cloud AI now shows a single Sign out button."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "KozBon tiene un nuevo icono: un punto azul que emite ondas, como un escaneo que recorre la red a su alrededor. En Apple Vision Pro, las ondas flotan delante de un fondo blanco."
+            "value": "KozBon tiene un nuevo icono: un punto azul que emite ondas, como un escaneo que recorre la red a su alrededor. En Apple Vision Pro, las ondas flotan delante de un fondo blanco.\n\nLos detalles de servicios y de la biblioteca tienen ahora un botón Información que pide a la IA elegida que explique el servicio, y los registros TXT incluyen una nota sobre para qué sirven. En Ajustes, cada IA en la nube con sesión iniciada muestra ahora un único botón Cerrar sesión."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "KozBon a une nouvelle icône : un point bleu qui émet des ondes, comme un balayage du réseau qui l'entoure. Sur Apple Vision Pro, les ondes flottent devant un fond blanc."
+            "value": "KozBon a une nouvelle icône : un point bleu qui émet des ondes, comme un balayage du réseau qui l'entoure. Sur Apple Vision Pro, les ondes flottent devant un fond blanc.\n\nLes détails des services et de la bibliothèque ont désormais un bouton Aperçus qui demande à l'IA choisie d'expliquer le service, et les enregistrements TXT sont accompagnés d'une note sur leur utilité. Dans Réglages, chaque IA cloud connectée affiche désormais un seul bouton Se déconnecter."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "KozBon hat ein neues Symbol: einen blauen Punkt, der Wellen aussendet – wie ein Scan, der das Netzwerk um ihn herum absucht. Auf der Apple Vision Pro schweben die Wellen vor einem weißen Hintergrund."
+            "value": "KozBon hat ein neues Symbol: einen blauen Punkt, der Wellen aussendet – wie ein Scan, der das Netzwerk um ihn herum absucht. Auf der Apple Vision Pro schweben die Wellen vor einem weißen Hintergrund.\n\nDienst- und Bibliotheksdetails haben jetzt eine Schaltfläche „Einblicke“, mit der die gewählte KI den Dienst erklärt, und TXT-Einträge enthalten einen Hinweis, wofür sie dienen. In den Einstellungen zeigt jede angemeldete Cloud-KI jetzt nur noch eine Schaltfläche „Abmelden“."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "KozBon のアイコンが新しくなりました。周囲のネットワークをスキャンするように、青い点から波紋が広がるデザインです。Apple Vision Pro では、波紋が白い背景の手前に浮かび上がります。"
+            "value": "KozBon のアイコンが新しくなりました。周囲のネットワークをスキャンするように、青い点から波紋が広がるデザインです。Apple Vision Pro では、波紋が白い背景の手前に浮かび上がります。\n\nサービスとライブラリの詳細画面に「インサイト」ボタンが追加され、選択したAIがサービスについて説明します。TXTレコードには、その用途を説明するメモが付くようになりました。設定では、サインイン中のクラウドAIに「サインアウト」ボタンだけが表示されるようになりました。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "KozBon 换上了新图标：一个蓝点向外发出涟漪，就像在扫描周围的网络。在 Apple Vision Pro 上，涟漪会浮现在白色背景前方。"
+            "value": "KozBon 换上了新图标：一个蓝点向外发出涟漪，就像在扫描周围的网络。在 Apple Vision Pro 上，涟漪会浮现在白色背景前方。\n\n服务和资源库的详细信息页面新增了“洞察”按钮，可让你选择的 AI 解释该服务；TXT 记录也附有说明其用途的注释。在“设置”中，已登录的云端 AI 现在只显示一个“退出登录”按钮。"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "لدى KozBon أيقونة جديدة: نقطة زرقاء تُطلق تموّجات، كأنها تمسح الشبكة من حولها. على Apple Vision Pro، تطفو التموّجات أمام خلفية بيضاء."
+            "value": "لدى KozBon أيقونة جديدة: نقطة زرقاء تُطلق تموّجات، كأنها تمسح الشبكة من حولها. على Apple Vision Pro، تطفو التموّجات أمام خلفية بيضاء.\n\nتتضمن الآن تفاصيل الخدمات والمكتبة زر «رؤى» الذي يطلب من الذكاء الاصطناعي الذي اخترته شرح الخدمة، وتأتي سجلات TXT مع ملاحظة توضّح الغرض منها. في الإعدادات، يعرض كل ذكاء اصطناعي سحابي سجّلت الدخول إليه الآن زرًا واحدًا لتسجيل الخروج."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "ל-KozBon יש סמל חדש: נקודה כחולה שמפיצה אדוות, כמו סריקה של הרשת שסביבה. ב-Apple Vision Pro, האדוות מרחפות לפני רקע לבן."
+            "value": "ל-KozBon יש סמל חדש: נקודה כחולה שמפיצה אדוות, כמו סריקה של הרשת שסביבה. ב-Apple Vision Pro, האדוות מרחפות לפני רקע לבן.\n\nבפרטי השירותים והספרייה יש עכשיו כפתור ״תובנות״ שמבקש מהבינה המלאכותית שבחרתם להסביר את השירות, ולרשומות TXT מצורפת הערה על מה הן משמשות. בהגדרות, כל בינה מלאכותית בענן שאתם מחוברים אליה מציגה עכשיו כפתור ״התנתקות״ יחיד."
           }
         }
       }

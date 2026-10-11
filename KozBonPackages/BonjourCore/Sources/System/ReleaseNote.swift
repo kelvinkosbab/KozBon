@@ -82,11 +82,17 @@ public enum ReleaseNotes {
         ReleaseNote(
             version: "4.9",
             // swiftlint:disable:next line_length
-            summary: "KozBon has a new icon: a blue dot sending out ripples, like a scan sweeping the network around it. On Apple Vision Pro, the ripples float in front of a white background.",
+            summary: "KozBon has a new icon: a blue dot sending out ripples, like a scan sweeping the network around it. On Apple Vision Pro, the ripples float in front of a white background.\n\nService and library details now have an Insights button that asks your chosen AI to explain the service, and TXT records come with a note on what they're for. In Settings, each signed-in cloud AI now shows a single Sign out button.",
             highlights: [
                 // swiftlint:disable:next line_length
                 "KozBon has a new app icon on every platform: a blue dot with broken ripples that fade as they sweep up and to the right, like a scan of the network around it.",
-                "On Apple Vision Pro, the dot and ripples sit on the icon's front layer, so they float in front of the white background."
+                "On Apple Vision Pro, the dot and ripples sit on the icon's front layer, so they float in front of the white background.",
+                // swiftlint:disable:next line_length
+                "Discovered-service and library detail pages have an Insights button under the header that asks the selected AI to explain the service. It takes on that AI's colours, and offers sign-in or Apple Intelligence setup when the AI isn't ready.",
+                // swiftlint:disable:next line_length
+                "A note under a service's TXT records explains what they are: key-value details like model name, firmware version, and supported features.",
+                // swiftlint:disable:next line_length
+                "In Settings, a signed-in cloud AI's row shows a single glass Sign out button instead of a \"Signed in\" label, and the model picker no longer repeats the model's identifier underneath."
             ]
         ),
         ReleaseNote(
