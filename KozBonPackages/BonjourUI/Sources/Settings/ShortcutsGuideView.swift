@@ -12,7 +12,7 @@ import BonjourLocalization
 // MARK: - ShortcutsGuideView
 
 /// The "Using KozBon with Shortcuts" page pushed from Settings: a
-/// row that opens the Shortcuts app, and a few automations to try.
+/// few automations to try, then a row that opens the Shortcuts app.
 ///
 /// A plain link rather than Apple's `ShortcutsLink` button, which
 /// looked out of place in the list. The trade-off is that it opens
@@ -45,23 +45,6 @@ struct ShortcutsGuideView: View {
 
     var body: some View {
         List {
-            if let url = URL(string: "shortcuts://") {
-                Section {
-                    Link(destination: url) {
-                        HStack {
-                            Text(Strings.ShortcutsGuide.openShortcuts)
-                                .foregroundStyle(.primary)
-                            Spacer()
-                            Image.externalLink
-                                .foregroundStyle(.secondary)
-                                .imageScale(.medium)
-                                .accessibilityHidden(true)
-                        }
-                    }
-                    .accessibilityIdentifier("shortcuts_guide.link")
-                }
-            }
-
             Section {
                 ForEach(Self.ideas) { idea in
                     VStack(alignment: .leading, spacing: 4) {
@@ -77,6 +60,23 @@ struct ShortcutsGuideView: View {
             } header: {
                 Text(Strings.ShortcutsGuide.ideas)
                     .accessibilityAddTraits(.isHeader)
+            }
+
+            if let url = URL(string: "shortcuts://") {
+                Section {
+                    Link(destination: url) {
+                        HStack {
+                            Text(Strings.ShortcutsGuide.openShortcuts)
+                                .foregroundStyle(.primary)
+                            Spacer()
+                            Image.externalLink
+                                .foregroundStyle(.secondary)
+                                .imageScale(.medium)
+                                .accessibilityHidden(true)
+                        }
+                    }
+                    .accessibilityIdentifier("shortcuts_guide.link")
+                }
             }
         }
         // Inherits the Preferences palette from the pushing
