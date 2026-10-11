@@ -48,6 +48,17 @@ public struct BonjourScanForServicesView: View {
     public var body: some View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
             List(selection: $viewModel.selectedService) {
+                #if os(iOS) || os(visionOS)
+                // Teaches the Siri phrases where people scan. No
+                // header, and hidden while searching or on first
+                // load so it never competes with results.
+                if !viewModel.isInitialLoad, viewModel.searchText.isEmpty {
+                    Section {
+                        SiriPhraseRow(phrases: Strings.Settings.siriPhrases)
+                    }
+                }
+                #endif
+
                 if !viewModel.sortedPublishedServices.isEmpty {
                     Section {
                         forEach(services: viewModel.sortedPublishedServices)

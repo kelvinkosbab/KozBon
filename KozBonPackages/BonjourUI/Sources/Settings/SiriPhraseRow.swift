@@ -10,9 +10,8 @@ import BonjourLocalization
 
 // MARK: - SiriPhraseRow
 
-/// One Settings row that keeps "Say" fixed and cycles through Siri
-/// phrases beneath it, so a single row shows everything the separate
-/// Siri tips used to.
+/// A list row, used in Settings and on Discover, that keeps "Say"
+/// fixed and cycles through Siri phrases beneath it.
 struct SiriPhraseRow: View {
 
     let phrases: [LocalizedStringResource]
@@ -59,7 +58,7 @@ struct SiriPhraseRow: View {
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text(Strings.Settings.siriSay))
         .accessibilityValue(phrases.map { String(localized: $0) }.formatted(.list(type: .or)))
-        .accessibilityIdentifier("settings.siriPhrases")
+        .accessibilityIdentifier("siriPhrases")
         .task { await cycle() }
     }
 
