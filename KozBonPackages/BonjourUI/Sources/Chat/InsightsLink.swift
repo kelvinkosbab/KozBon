@@ -22,25 +22,33 @@ import UIKit
 
 // MARK: - InsightsLink
 
-/// A plain Insights link row for detail screens.
+/// A compact Liquid Glass Insights capsule for detail screens.
 ///
 /// The long-press ``InsightsContextMenuItems`` is easy to miss, so
 /// the discovered-service and library detail screens also show
-/// Insights as a link in its own section with no card behind it. It resolves the same
-/// states as the context menu: an Insights link tinted for the
-/// selected backend, an "Enable Apple Intelligence" or "Sign in to …"
-/// call to action, or nothing at all when AI is off or the device
-/// can't run the selected backend.
+/// Insights as a small capsule just below their header. The glass
+/// separates it from the ambient wash, and the label takes the
+/// selected assistant's chat colours (``AmbientMeshPalette/chat(_:)``)
+/// so it reads as that assistant's entry point.
+///
+/// It resolves the same states as the context menu: an Insights
+/// capsule, an "Enable Apple Intelligence" or "Sign in to …" call
+/// to action, or nothing at all when AI is off or the device can't
+/// run the selected backend.
+///
+/// Renders a bare list row with no section of its own, so place it
+/// in the header's section to keep it tight under the header.
 struct InsightsLink: View {
 
     @Environment(\.preferencesStore) private var preferencesStore
     @Environment(\.aiCloudCredentialsStore) private var credentialsStore
     @Environment(\.hapticFeedback) private var hapticFeedback
     @Environment(\.openURL) private var openURL
+    @Environment(\.colorSchemeContrast) private var colorSchemeContrast
 
     private let action: () -> Void
 
-    /// Creates the Insights link.
+    /// Creates the Insights capsule.
     ///
     /// - Parameter action: Presents the Insights sheet. Called after
     ///   a `.medium` haptic has already fired.
@@ -49,43 +57,22 @@ struct InsightsLink: View {
     }
 
     var body: some View {
-        // The section lives here, not at the call site, so a hidden
-        // link leaves no empty section (and its spacing) behind.
-        if state != .hidden {
-            Section { content }
-        }
-    }
-
-    @ViewBuilder
-    private var content: some View {
         switch state {
         case .explain(let backend):
-            link(
-                title: Strings.Insights.explainWithAI,
-                icon: backend.icon,
-                tint: backend.accentColor
-            ) {
+            capsule(title: Strings.Insights.explainWithAI, backend: backend) {
                 hapticFeedback.play(.medium)
                 action()
             }
             .accessibilityIdentifier("insights_link")
 
         case .enableAppleIntelligence:
-            link(
-                title: Strings.Insights.enableAppleIntelligence,
-                icon: AIBackend.appleIntelligence.icon,
-                tint: AIBackend.appleIntelligence.accentColor
-            ) {
+            capsule(title: Strings.Insights.enableAppleIntelligence, backend: .appleIntelligence) {
                 hapticFeedback.play(.light)
                 openAppleIntelligenceSettings()
             }
 
         case .signIn(let backend, let provider):
-            link(
-                title: Self.signInTitle(for: provider),
-                icon: backend.icon,
-                tint: backend.accentColor
-            ) {
+            capsule(title: Self.signInTitle(for: provider), backend: backend) {
                 hapticFeedback.play(.light)
                 NotificationCenter.default.post(
                     name: .aiCloudSignInRequested,
@@ -99,29 +86,46 @@ struct InsightsLink: View {
         }
     }
 
-    // MARK: - Link
+    // MARK: - Capsule
 
-    private func link(
+    private func capsule(
         title: LocalizedStringResource,
-        icon: Image,
-        tint: Color,
+        backend: AIBackend,
         perform: @escaping () -> Void
     ) -> some View {
         Button(action: perform) {
             Label {
                 Text(title)
             } icon: {
-                icon
+                backend.icon
             }
             .font(.subheadline.weight(.semibold))
-            .frame(minHeight: 44)
-            .contentShape(Rectangle())
+            .foregroundStyle(labelStyle(for: backend))
+            .padding(.horizontal, 14)
+            .padding(.vertical, 8)
         }
-        // Borderless so only the link is tappable, not the whole
-        // row the List would otherwise turn into a button.
-        .buttonStyle(.borderless)
-        .foregroundStyle(tint)
+        .buttonStyle(InsightsCapsuleButtonStyle(tint: backend.accentColor))
+        .frame(minHeight: 44)
+        .dynamicTypeSize(...DynamicTypeSize.accessibility2)
         .listRowBackground(Color.clear)
+        .listRowSeparator(.hidden)
+        .listRowInsets(EdgeInsets(top: 0, leading: 8, bottom: 4, trailing: 8))
+    }
+
+    /// The chat wash's colours as a gradient, or the backend's solid
+    /// accent under Increase Contrast — the lighter gradient stops
+    /// don't hold contrast on glass.
+    private func labelStyle(for backend: AIBackend) -> AnyShapeStyle {
+        if colorSchemeContrast == .increased {
+            return AnyShapeStyle(backend.accentColor)
+        }
+        return AnyShapeStyle(
+            LinearGradient(
+                colors: AmbientMeshPalette.chatAccents(for: backend),
+                startPoint: .leading,
+                endPoint: .trailing
+            )
+        )
     }
 
     // MARK: - State
@@ -169,6 +173,35 @@ struct InsightsLink: View {
         if let url = URL(string: "x-apple.systempreferences:com.apple.preference.appleintelligencea") {
             openURL(url)
         }
+        #endif
+    }
+}
+
+// MARK: - InsightsCapsuleButtonStyle
+
+/// Interactive Liquid Glass capsule, lightly tinted with the
+/// assistant's accent. Mirrors the chat suggestion chips; the label
+/// dims while pressed so feedback survives Reduce Motion.
+private struct InsightsCapsuleButtonStyle: ButtonStyle {
+
+    let tint: Color
+
+    @ViewBuilder
+    func makeBody(configuration: Configuration) -> some View {
+        let capsule = configuration.label
+            .opacity(configuration.isPressed ? 0.6 : 1.0)
+            .animation(.easeOut(duration: 0.12), value: configuration.isPressed)
+            #if os(visionOS)
+            .glassBackgroundEffect(in: Capsule(style: .continuous))
+            #else
+            .glassEffect(.regular.tint(tint.opacity(0.15)).interactive(), in: Capsule(style: .continuous))
+            #endif
+            .contentShape(.capsule)
+
+        #if !os(macOS)
+        capsule.hoverEffect(.highlight)
+        #else
+        capsule
         #endif
     }
 }
