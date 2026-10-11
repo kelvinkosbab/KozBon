@@ -50,9 +50,11 @@ public struct BonjourScanForServicesView: View {
             List(selection: $viewModel.selectedService) {
                 #if os(iOS) || os(visionOS)
                 // Teaches the Siri phrases where people scan. No
-                // header, and hidden while searching or on first
-                // load so it never competes with results.
-                if !viewModel.isInitialLoad, viewModel.searchText.isEmpty {
+                // header, and hidden while searching so it never
+                // competes with results. Present from the first
+                // frame: inserting it above the list after the first
+                // scan pushed the search field out of view.
+                if viewModel.searchText.isEmpty {
                     Section {
                         SiriPhraseRow(phrases: Strings.Settings.siriPhrases)
                     }
