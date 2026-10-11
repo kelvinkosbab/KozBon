@@ -54,6 +54,8 @@ public struct SupportedServiceDetailView: View {
                         isNavigationHeaderShown = true
                     }
                 }
+
+                InsightsLink(action: { isAIExplanationPresented = true })
             }
 
             Section {

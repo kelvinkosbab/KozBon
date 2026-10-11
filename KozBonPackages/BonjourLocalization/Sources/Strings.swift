@@ -92,6 +92,11 @@ public enum Strings {
             .init("section_txt_records", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        /// Footer under the TXT records list explaining what they're for.
+        public static var txtRecordsFooter: LocalizedStringResource {
+            .init("section_txt_records_footer", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var serviceType: LocalizedStringResource {
             .init("section_service_type", bundle: .atURL(Bundle.module.bundleURL))
         }

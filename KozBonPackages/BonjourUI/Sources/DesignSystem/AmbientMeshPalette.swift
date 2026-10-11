@@ -84,8 +84,9 @@ enum AmbientMeshPalette: Hashable {
     }
 
     /// Each provider's own brand colours, anchored on the backend's
-    /// accent so the wash and the send button agree.
-    private static func chatAccents(for backend: AIBackend) -> [Color] {
+    /// accent so the wash and the send button agree. The Insights
+    /// capsule reuses them for its label.
+    static func chatAccents(for backend: AIBackend) -> [Color] {
         switch backend {
         // Apple Intelligence's glow runs blue → purple → pink →
         // orange. Purple and orange take the accent cells, and the
