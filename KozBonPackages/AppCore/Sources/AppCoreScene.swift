@@ -14,6 +14,7 @@ import BonjourAI
 import BonjourAIApple
 import BonjourAICore
 import BonjourAIAnthropic
+import BonjourAppIntents
 import BonjourStorage
 
 // MARK: - AppCoreScene
@@ -37,36 +38,19 @@ public struct AppCoreScene: Scene {
     /// without each of them having to plumb its own sheet state.
     @State private var pendingCloudSignInProvider: AICloudProvider?
 
-    /// Production initializer — wires the default
-    /// ``DependencyContainer`` and the cloud-aware factories.
+    /// Production initializer. Uses the process-wide view model from
+    /// ``prepareForLaunch()``.
     public init() {
-        let credentialsStore = MainActor.assumeIsolated { KeychainAICloudCredentialsStore() }
-        // ONE shared preferences store: the factories consult it
-        // for routing and Settings writes through it. Separate
-        // instances would each spin up their own SwiftData
-        // container and writes wouldn't propagate.
-        let preferencesStore = MainActor.assumeIsolated { PreferencesStore() }
-        // Shared for the same reason: Settings and routing must agree
-        // on which backends this storefront allows.
-        let availability = MainActor.assumeIsolated { AIBackendAvailability() }
-        let chatFactory = CloudAwareBonjourChatSessionFactory(
-            credentialsStore: credentialsStore,
-            preferencesStore: preferencesStore,
-            isBackendOffered: { availability.isOffered($0) }
-        )
-        let explainerFactory = CloudAwareBonjourServiceExplainerFactory(
-            credentialsStore: credentialsStore,
-            preferencesStore: preferencesStore,
-            isBackendOffered: { availability.isOffered($0) }
-        )
-        self.init(
-            dependencies: DependencyContainer(),
-            explainerFactory: explainerFactory,
-            chatSessionFactory: chatFactory,
-            credentialsStore: credentialsStore,
-            preferencesStore: preferencesStore,
-            aiBackendAvailability: availability
-        )
+        _viewModel = State(initialValue: MainActor.assumeIsolated { AppLaunch.viewModel })
+    }
+
+    /// Builds the app's dependencies and hands the Siri actions what
+    /// they need. Call from the app's initializer, which runs even when
+    /// the system launches KozBon in the background for an action.
+    public nonisolated static func prepareForLaunch() {
+        MainActor.assumeIsolated {
+            _ = AppLaunch.viewModel
+        }
     }
 
     /// Designated init for tests and previews; production calls
@@ -207,6 +191,10 @@ public struct AppCoreScene: Scene {
                 )
             ) { _ in
                 viewModel.refreshAIBackend()
+            }
+            // Open in KozBon: show the service the action asked for.
+            .onChange(of: AppIntentsBridge.shared.pendingOpenRequest, initial: true) {
+                viewModel.handleOpenRequest(from: AppIntentsBridge.shared)
             }
             .modifier(CloudSignInSheetPresentation(
                 pendingProvider: $pendingCloudSignInProvider,

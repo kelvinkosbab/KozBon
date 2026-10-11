@@ -31,13 +31,18 @@ public final class BonjourServicesViewModel: BonjourServiceScannerDelegate, Loca
     // MARK: - Properties
 
     /// All services currently discovered by the scanner.
-    private var activeServices: [BonjourService] = []
+    private(set) var activeServices: [BonjourService] = []
 
     /// Services that the user has published (broadcast) from this device.
     var customPublishedServices: [BonjourService] = []
 
     /// The currently selected service in the navigation split view.
     var selectedService: BonjourService?
+
+    /// A service Open in KozBon asked for that the scan hasn't found
+    /// yet. Selected as soon as it appears.
+    @ObservationIgnored
+    var pendingSelection: PendingServiceSelection?
 
     /// The current sort order applied to service lists.
     var sortType: BonjourServiceSortType?
@@ -424,6 +429,7 @@ public final class BonjourServicesViewModel: BonjourServiceScannerDelegate, Loca
                 self.activeServices.append(service)
             }
         }
+        selectIfPending(service)
     }
 
     /// Called when a previously discovered service is no longer available.

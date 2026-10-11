@@ -1,6 +1,168 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "Broadcast a service with ${applicationName}": {
+      "comment": "Spoken Siri phrase. Must read as a natural spoken command and must keep the ${applicationName} token, which Siri replaces with the app name.",
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بث خدمة باستخدام ${applicationName}"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Übertrage einen Dienst mit ${applicationName}"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Broadcast a service with ${applicationName}"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transmite un servicio con ${applicationName}"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diffuse un service avec ${applicationName}"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שדר שירות עם ${applicationName}"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "${applicationName}でサービスをブロードキャストして"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用 ${applicationName} 广播一个服务"
+          }
+        }
+      }
+    },
+    "Check if a device is on my network with ${applicationName}": {
+      "comment": "Spoken Siri phrase. Must read as a natural spoken command and must keep the ${applicationName} token, which Siri replaces with the app name.",
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تحقق مما إذا كان جهاز على شبكتي باستخدام ${applicationName}"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prüfe mit ${applicationName}, ob ein Gerät in meinem Netzwerk ist"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check if a device is on my network with ${applicationName}"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comprueba si un dispositivo está en mi red con ${applicationName}"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vérifie si un appareil est sur mon réseau avec ${applicationName}"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בדוק אם מכשיר נמצא ברשת שלי עם ${applicationName}"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "${applicationName}でデバイスがネットワーク上にあるか確認して"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用 ${applicationName} 检查设备是否在我的网络上"
+          }
+        }
+      }
+    },
+    "Check if a device is online with ${applicationName}": {
+      "comment": "Spoken Siri phrase. Must read as a natural spoken command and must keep the ${applicationName} token, which Siri replaces with the app name.",
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تحقق مما إذا كان جهاز متصلًا باستخدام ${applicationName}"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prüfe mit ${applicationName}, ob ein Gerät online ist"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check if a device is online with ${applicationName}"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comprueba si un dispositivo está conectado con ${applicationName}"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vérifie si un appareil est en ligne avec ${applicationName}"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בדוק אם מכשיר מחובר עם ${applicationName}"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "${applicationName}でデバイスがオンラインか確認して"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用 ${applicationName} 检查设备是否在线"
+          }
+        }
+      }
+    },
     "Count devices on my network with ${applicationName}": {
       "comment": "Spoken Siri phrase. Must read as a natural spoken command and must keep the ${applicationName} token, which Siri replaces with the app name.",
       "extractionState": "manual",
@@ -51,6 +213,276 @@
           "stringUnit": {
             "state": "translated",
             "value": "用${applicationName}数一数我的网络上的设备"
+          }
+        }
+      }
+    },
+    "Explain a Bonjour service with ${applicationName}": {
+      "comment": "Spoken Siri phrase. Must read as a natural spoken command and must keep the ${applicationName} token, which Siri replaces with the app name.",
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اشرح خدمة Bonjour باستخدام ${applicationName}"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erkläre einen Bonjour-Dienst mit ${applicationName}"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Explain a Bonjour service with ${applicationName}"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Explica un servicio Bonjour con ${applicationName}"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Explique un service Bonjour avec ${applicationName}"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הסבר שירות Bonjour עם ${applicationName}"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "${applicationName}でBonjourサービスを解説して"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用 ${applicationName} 解读一种 Bonjour 服务"
+          }
+        }
+      }
+    },
+    "Explain a service type with ${applicationName}": {
+      "comment": "Spoken Siri phrase. Must read as a natural spoken command and must keep the ${applicationName} token, which Siri replaces with the app name.",
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اشرح نوع خدمة باستخدام ${applicationName}"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erkläre einen Diensttyp mit ${applicationName}"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Explain a service type with ${applicationName}"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Explica un tipo de servicio con ${applicationName}"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Explique un type de service avec ${applicationName}"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הסבר סוג שירות עם ${applicationName}"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "${applicationName}でサービスタイプを解説して"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用 ${applicationName} 解读一种服务类型"
+          }
+        }
+      }
+    },
+    "Find ${category} on my network with ${applicationName}": {
+      "comment": "Spoken Siri phrase. Must read as a natural spoken command and must keep the ${applicationName} token, which Siri replaces with the app name. Must also keep the ${category} token, which Siri fills with a service category such as “printers”.",
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ابحث عن ${category} على شبكتي باستخدام ${applicationName}"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finde ${category} in meinem Netzwerk mit ${applicationName}"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Find ${category} on my network with ${applicationName}"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Busca ${category} en mi red con ${applicationName}"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trouve ${category} sur mon réseau avec ${applicationName}"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "חפש ${category} ברשת שלי עם ${applicationName}"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "${applicationName}でネットワーク上の${category}を探して"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用 ${applicationName} 查找我网络上的${category}"
+          }
+        }
+      }
+    },
+    "Find ${category} with ${applicationName}": {
+      "comment": "Spoken Siri phrase. Must read as a natural spoken command and must keep the ${applicationName} token, which Siri replaces with the app name. Must also keep the ${category} token, which Siri fills with a service category such as “printers”.",
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ابحث عن ${category} باستخدام ${applicationName}"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finde ${category} mit ${applicationName}"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Find ${category} with ${applicationName}"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Busca ${category} con ${applicationName}"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trouve ${category} avec ${applicationName}"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "חפש ${category} עם ${applicationName}"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "${applicationName}で${category}を探して"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用 ${applicationName} 查找${category}"
+          }
+        }
+      }
+    },
+    "Find services by category with ${applicationName}": {
+      "comment": "Spoken Siri phrase. Must read as a natural spoken command and must keep the ${applicationName} token, which Siri replaces with the app name.",
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ابحث عن الخدمات حسب الفئة باستخدام ${applicationName}"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finde Dienste nach Kategorie mit ${applicationName}"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Find services by category with ${applicationName}"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Busca servicios por categoría con ${applicationName}"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trouve des services par catégorie avec ${applicationName}"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "חפש שירותים לפי קטגוריה עם ${applicationName}"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "${applicationName}でカテゴリ別にサービスを探して"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用 ${applicationName} 按类别查找服务"
           }
         }
       }
@@ -483,6 +915,168 @@
           "stringUnit": {
             "state": "translated",
             "value": "用${applicationName}显示我的网络上的设备"
+          }
+        }
+      }
+    },
+    "Start a Bonjour broadcast with ${applicationName}": {
+      "comment": "Spoken Siri phrase. Must read as a natural spoken command and must keep the ${applicationName} token, which Siri replaces with the app name.",
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ابدأ بث Bonjour باستخدام ${applicationName}"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Starte eine Bonjour-Übertragung mit ${applicationName}"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start a Bonjour broadcast with ${applicationName}"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inicia una transmisión Bonjour con ${applicationName}"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lance une diffusion Bonjour avec ${applicationName}"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "התחל שידור Bonjour עם ${applicationName}"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "${applicationName}でBonjourのブロードキャストを開始して"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用 ${applicationName} 开始 Bonjour 广播"
+          }
+        }
+      }
+    },
+    "Stop all broadcasts with ${applicationName}": {
+      "comment": "Spoken Siri phrase. Must read as a natural spoken command and must keep the ${applicationName} token, which Siri replaces with the app name.",
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أوقف كل عمليات البث باستخدام ${applicationName}"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beende alle Übertragungen mit ${applicationName}"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop all broadcasts with ${applicationName}"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detén todas las transmisiones con ${applicationName}"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrête toutes les diffusions avec ${applicationName}"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הפסק את כל השידורים עם ${applicationName}"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "${applicationName}ですべてのブロードキャストを停止して"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用 ${applicationName} 停止所有广播"
+          }
+        }
+      }
+    },
+    "Stop broadcasting with ${applicationName}": {
+      "comment": "Spoken Siri phrase. Must read as a natural spoken command and must keep the ${applicationName} token, which Siri replaces with the app name.",
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أوقف البث باستخدام ${applicationName}"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beende die Übertragung mit ${applicationName}"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop broadcasting with ${applicationName}"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deja de transmitir con ${applicationName}"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrête de diffuser avec ${applicationName}"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הפסק לשדר עם ${applicationName}"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "${applicationName}でブロードキャストを停止して"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用 ${applicationName} 停止广播"
           }
         }
       }

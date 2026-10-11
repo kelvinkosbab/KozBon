@@ -11,6 +11,7 @@ import Testing
 import BonjourAICore
 import BonjourStorage
 import BonjourAIApple
+import BonjourAppIntents
 import BonjourScanning
 @testable import AppCore
 
@@ -48,6 +49,37 @@ struct AppCoreViewModelTests {
         let viewModel = makeViewModel()
         viewModel.selectedTab = .chat
         #expect(viewModel.selectedTab == .chat)
+    }
+
+    // MARK: - Siri Actions
+
+    @Test("Open in KozBon switches to Discover and is handled once")
+    func openRequestSwitchesToDiscover() {
+        let viewModel = makeViewModel()
+        let bridge = AppIntentsBridge()
+        viewModel.selectedTab = .bonjourServiceTypes
+        bridge.requestOpen(OpenServiceRequest(name: "Office", serviceType: "_ipp._tcp"))
+
+        viewModel.handleOpenRequest(from: bridge)
+
+        #expect(viewModel.selectedTab == .bonjour)
+        #expect(bridge.pendingOpenRequest == nil)
+    }
+
+    @Test("Connecting gives the Siri actions the app's publish manager")
+    func connectSharesPublishManager() {
+        let viewModel = makeViewModel()
+        let bridge = AppIntentsBridge()
+        viewModel.connect(to: bridge)
+        #expect(bridge.publishManager === viewModel.dependencies.bonjourPublishManager)
+    }
+
+    @Test("Without a pending request the tab stays put")
+    func noRequestKeepsTab() {
+        let viewModel = makeViewModel()
+        viewModel.selectedTab = .bonjourServiceTypes
+        viewModel.handleOpenRequest(from: AppIntentsBridge())
+        #expect(viewModel.selectedTab == .bonjourServiceTypes)
     }
 
     // MARK: - Chat Tab Without Apple Intelligence

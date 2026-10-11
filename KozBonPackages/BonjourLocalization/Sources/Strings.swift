@@ -1920,6 +1920,102 @@ public enum Strings {
                 count
             )
         }
+
+        // MARK: Find, Is Online, Explain, Broadcast
+
+        public static var noMatchingServices: String {
+            NSLocalizedString(
+                "siri_no_matching_services",
+                bundle: Bundle.module,
+                value: "I didn't find any matching services on your network.",
+                comment: ""
+            )
+        }
+
+        /// "Yes, Living Room TV is on your network."
+        public static func deviceOnline(_ name: String) -> String {
+            String(
+                format: NSLocalizedString(
+                    "siri_device_online",
+                    bundle: Bundle.module,
+                    value: "Yes, %@ is on your network.",
+                    comment: ""
+                ),
+                name
+            )
+        }
+
+        /// "I couldn't find Living Room TV on your network."
+        public static func deviceNotFound(_ name: String) -> String {
+            String(
+                format: NSLocalizedString(
+                    "siri_device_not_found",
+                    bundle: Bundle.module,
+                    value: "I couldn't find %@ on your network.",
+                    comment: ""
+                ),
+                name
+            )
+        }
+
+        public static var explanationUnavailable: String {
+            NSLocalizedString(
+                "siri_explanation_unavailable",
+                bundle: Bundle.module,
+                value: "Insights aren't available right now. Check the AI settings in KozBon.",
+                comment: ""
+            )
+        }
+
+        /// "Broadcasting AirPlay on port 7000." The port is passed as
+        /// text so it isn't read with a thousands separator.
+        public static func broadcastStarted(_ name: String, port: String) -> String {
+            String(
+                format: NSLocalizedString(
+                    "siri_broadcast_started",
+                    bundle: Bundle.module,
+                    value: "Broadcasting %1$@ on port %2$@.",
+                    comment: ""
+                ),
+                name,
+                port
+            )
+        }
+
+        public static var broadcastTCPOnly: String {
+            NSLocalizedString(
+                "siri_broadcast_tcp_only",
+                bundle: Bundle.module,
+                value: "KozBon can only broadcast TCP services.",
+                comment: ""
+            )
+        }
+
+        public static var openAppAndRetry: String {
+            NSLocalizedString(
+                "siri_open_app_and_retry",
+                bundle: Bundle.module,
+                value: "Open KozBon and try again.",
+                comment: ""
+            )
+        }
+
+        /// "Stopped 2 broadcasts.", with plural variations.
+        public static func stoppedBroadcasts(_ count: Int) -> String {
+            String.localizedStringWithFormat(
+                NSLocalizedString("siri_stopped_broadcasts", bundle: Bundle.module, value: "Stopped %lld broadcasts.", comment: ""),
+                count
+            )
+        }
+
+        public static var noBroadcasts: String {
+            NSLocalizedString(
+                "siri_no_broadcasts",
+                bundle: Bundle.module,
+                value: "Nothing is broadcasting right now.",
+                comment: ""
+            )
+        }
     }
 
     // MARK: - Help Menu (macOS)

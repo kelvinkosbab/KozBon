@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Find Services: "Find printers with KozBon" scans and returns only one category of services, or one service type in Shortcuts.
+- Check If Device Is Online: says whether a named device is on your network, and returns yes or no for Shortcuts automations.
+- Open Service in KozBon: a Shortcuts action that opens the app on a service a List or Find step returned.
+- Explain a Service Type: Siri reads a short Insights explanation from the AI selected in Settings.
+- Broadcast a Service and Stop Broadcasting: start a TCP broadcast on a port, or stop them all, from Siri or an automation.
+
 ### Changed
 
 - Siri now answers in your language, counts devices rather than services (an Apple TV is one Apple device, not three), and says when you're not on Wi-Fi or Ethernet instead of blaming permissions.
