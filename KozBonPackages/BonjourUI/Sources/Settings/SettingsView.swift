@@ -128,9 +128,9 @@ public struct SettingsView: View {
                     aiBackendSection
                 }
 
-                displaySection
-
                 siriSection
+
+                displaySection
 
                 resetSection
 
