@@ -24,7 +24,7 @@ struct SiriPhraseRow: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            Image(systemName: "waveform")
+            Image.siri
                 .font(.title2)
                 .foregroundStyle(.tint)
                 .accessibilityHidden(true)

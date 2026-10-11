@@ -34,6 +34,9 @@ public enum Iconography {
     /// (ADR 0005).
     public static let appleIntelligence = "apple.intelligence"
 
+    /// Siri glyph for the Settings row that cycles Siri phrases.
+    public static let siri = "waveform"
+
     /// Anthropic Claude glyph. Used as the Chat tab and Insights
     /// glyph when the user has the Anthropic backend selected so
     /// the active provider is visible at a glance — the same
