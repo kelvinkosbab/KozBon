@@ -80,9 +80,10 @@ Each module follows the `{name}/Sources` and `{name}/Tests` layout:
 ### Dependency Graph
 
 ```
-App → AppCore, BonjourUI, BonjourAppIntents, BonjourScanning, BonjourModels, BonjourStorage, BonjourCore
-BonjourAppIntents → BonjourAI, BonjourModels, BonjourScanning
-BonjourUI → BonjourModels, BonjourScanning, BonjourLocalization, BonjourAI, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourAIOpenAI, BonjourStorage, CoreUI
+App → AppCore, BonjourAppIntents
+AppCore → BonjourUI, BonjourAI, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourAIOpenAI, BonjourScanning, BonjourModels, BonjourStorage, BonjourLocalization, BonjourCore, Core, CoreUI
+BonjourAppIntents → BonjourAI, BonjourModels, BonjourScanning, BonjourCore
+BonjourUI → BonjourModels, BonjourScanning, BonjourLocalization, BonjourAI, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourAIOpenAI, BonjourStorage, BonjourCore, Core, CoreUI
 BonjourAI → BonjourAICore, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourAIOpenAI, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
 BonjourAIApple → BonjourAICore, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
 BonjourAIAnthropic → BonjourAICore, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
@@ -93,6 +94,7 @@ BonjourScanning → BonjourCore, BonjourModels, LocalNetworkMonitor
 BonjourModels → BonjourCore, BonjourStorage, BonjourLocalization
 BonjourStorage → BonjourCore
 BonjourLocalization → (Foundation only)
+LocalNetworkMonitor → Core
 BonjourCore → Core (BasicSwiftUtilities)
 ```
 

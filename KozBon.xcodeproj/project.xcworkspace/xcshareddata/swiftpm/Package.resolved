@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kelvinkosbab/Core.git",
       "state" : {
-        "branch" : "main",
-        "revision" : "67c0bac84605edb361b0dea60a56d0703fc3800e"
+        "revision" : "583c99bf314f4f71a149a163c23abec86d38bfbf",
+        "version" : "1.0.1"
       }
     }
   ],

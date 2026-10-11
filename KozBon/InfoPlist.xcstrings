@@ -11,7 +11,8 @@
             "value" : "KozBon"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "CFBundleName" : {
       "comment" : "Bundle name. Product brand name, do not translate.",
@@ -23,9 +24,11 @@
             "value" : "KozBon"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "NSLocalNetworkUsageDescription" : {
+      "comment" : "Permission prompt shown the first time KozBon browses the local network. Explains why the app needs local network access to find and publish Bonjour services.",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
@@ -79,6 +82,7 @@
       }
     },
     "NSSiriUsageDescription" : {
+      "comment" : "Permission prompt shown when KozBon first asks to use Siri. Explains that Siri and Shortcuts can scan for and list nearby network services.",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {

@@ -41,6 +41,10 @@ build/
 .build/
 .swiftpm/
 Package.resolved
+# KozBon is an app: commit its resolved pins so CI and every machine agree.
+!KozBonPackages/Package.resolved
+!KozBon.xcworkspace/xcshareddata/swiftpm/Package.resolved
+!KozBon.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
 Carthage/Build/
 fastlane/report.xml
 fastlane/test_output
