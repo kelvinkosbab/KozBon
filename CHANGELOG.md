@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.9] - 2026-10-11
+
+### Changed
+
+- A new app icon: a blue dot with broken ripples that fade as they sweep up and to the right, replacing an emblem App Review found too close to Apple's Bonjour logo. On visionOS the ripples float above a white back layer.
+
 ## [4.8] - 2026-10-10
 
 ### Added

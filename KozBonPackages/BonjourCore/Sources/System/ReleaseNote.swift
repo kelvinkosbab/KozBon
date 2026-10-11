@@ -80,6 +80,16 @@ public enum ReleaseNotes {
     /// Newest-first releases since 3.0.
     public static let all: [ReleaseNote] = [
         ReleaseNote(
+            version: "4.9",
+            // swiftlint:disable:next line_length
+            summary: "KozBon has a new icon: a blue dot sending out ripples, like a scan sweeping the network around it. On Apple Vision Pro, the ripples float in front of a white background.",
+            highlights: [
+                // swiftlint:disable:next line_length
+                "KozBon has a new app icon on every platform: a blue dot with broken ripples that fade as they sweep up and to the right, like a scan of the network around it.",
+                "On Apple Vision Pro, the dot and ripples sit on the icon's front layer, so they float in front of the white background."
+            ]
+        ),
+        ReleaseNote(
             version: "4.8",
             // swiftlint:disable:next line_length
             summary: "OpenAI GPT joins Apple Intelligence, Anthropic Claude, and Google Gemini as an AI option. Add your own OpenAI API key in Settings, and the GPT model picker loads the models your key can use. OpenAI bills API usage separately from a ChatGPT subscription. OpenAI GPT isn't offered on the China mainland App Store.\n\nThe Chat tab now takes on the colours of the AI you've selected. On devices without Apple Intelligence, it also appears whenever any cloud provider has a key, not just Claude.",
