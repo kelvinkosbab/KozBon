@@ -33,7 +33,9 @@ import Foundation
 /// The `\(.applicationName)` token expands to "KozBon" in every
 /// locale. The phrases themselves are translated in
 /// `AppShortcuts.xcstrings`, and the `shortTitle`s in
-/// `Localizable.xcstrings`, both in this target.
+/// `Localizable.xcstrings`, both in this target. The Settings row
+/// shows a few of these phrases from `Strings.Settings.siriPhrases`;
+/// reword one here and it must change there too.
 ///
 /// The conversational `AskKozBonIntent` (and its supporting
 /// `BonjourSiriPromptBuilder` / `SiriResponsePostProcessor`) was

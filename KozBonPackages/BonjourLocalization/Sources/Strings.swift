@@ -1462,6 +1462,25 @@ public enum Strings {
             .init("settings_using_siri_footer", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        public static var siriSay: LocalizedStringResource {
+            .init("settings_siri_say", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Quoted Siri phrases the Settings row cycles through. Each
+        /// must match a phrase in `KozBonAppShortcuts` and its
+        /// translation in `AppShortcuts.xcstrings`, or Siri won't
+        /// recognize what the row tells people to say.
+        public static var siriPhrases: [LocalizedStringResource] {
+            [
+                .init("settings_siri_phrase_scan", bundle: .atURL(Bundle.module.bundleURL)),
+                .init("settings_siri_phrase_how_many", bundle: .atURL(Bundle.module.bundleURL)),
+                .init("settings_siri_phrase_whats_on", bundle: .atURL(Bundle.module.bundleURL)),
+                .init("settings_siri_phrase_find_printers", bundle: .atURL(Bundle.module.bundleURL)),
+                .init("settings_siri_phrase_device_online", bundle: .atURL(Bundle.module.bundleURL)),
+                .init("settings_siri_phrase_explain", bundle: .atURL(Bundle.module.bundleURL))
+            ]
+        }
+
         public static var resetFooter: LocalizedStringResource {
             .init("settings_reset_footer", bundle: .atURL(Bundle.module.bundleURL))
         }

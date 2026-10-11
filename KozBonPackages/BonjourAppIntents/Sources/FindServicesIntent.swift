@@ -34,12 +34,6 @@ public struct FindServicesIntent: AppIntent {
 
     public init() {}
 
-    /// A Find action preset to one category, so a Siri tip can
-    /// suggest "Find printers with KozBon".
-    public init(category: ServiceCategoryAppEnum) {
-        self.category = category
-    }
-
     @MainActor
     public func perform() async throws
         -> some IntentResult & ReturnsValue<[BonjourServiceEntity]> & ProvidesDialog {
