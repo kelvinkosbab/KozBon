@@ -26,7 +26,7 @@ import UIKit
 ///
 /// The long-press ``InsightsContextMenuItems`` is easy to miss, so
 /// the discovered-service and library detail screens also show
-/// Insights as a link row with no card behind it. It resolves the same
+/// Insights as a link in its own section with no card behind it. It resolves the same
 /// states as the context menu: an Insights link tinted for the
 /// selected backend, an "Enable Apple Intelligence" or "Sign in to …"
 /// call to action, or nothing at all when AI is off or the device
@@ -49,6 +49,15 @@ struct InsightsLink: View {
     }
 
     var body: some View {
+        // The section lives here, not at the call site, so a hidden
+        // link leaves no empty section (and its spacing) behind.
+        if state != .hidden {
+            Section { content }
+        }
+    }
+
+    @ViewBuilder
+    private var content: some View {
         switch state {
         case .explain(let backend):
             link(

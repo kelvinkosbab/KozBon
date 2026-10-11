@@ -56,9 +56,7 @@ public struct SupportedServiceDetailView: View {
                 }
             }
 
-            Section {
-                InsightsLink(action: { isAIExplanationPresented = true })
-            }
+            InsightsLink(action: { isAIExplanationPresented = true })
 
             Section {
                 copyableDetailRow(
