@@ -40,6 +40,10 @@ struct AmbientMeshBackground: View {
     /// Power Mode.
     @State private var isLowPowerMode = ProcessInfo.processInfo.isLowPowerModeEnabled
 
+    /// Holds the current frame across a pause instead of snapping to
+    /// another one, and resumes from it.
+    @State private var clock = AmbientMeshClock()
+
     // MARK: - Tuning
 
     /// 30fps, not the display's native rate. The wave periods are
@@ -58,7 +62,7 @@ struct AmbientMeshBackground: View {
 
     var body: some View {
         TimelineView(.animation(minimumInterval: Self.frameInterval, paused: isPaused)) { context in
-            let time = isPaused ? 0 : context.date.timeIntervalSinceReferenceDate
+            let time = clock.time(at: context.date.timeIntervalSinceReferenceDate)
 
             MeshGradient(
                 width: AmbientMeshWave.resolution,
@@ -77,6 +81,19 @@ struct AmbientMeshBackground: View {
             NotificationCenter.default.publisher(for: .NSProcessInfoPowerStateDidChange)
         ) { _ in
             isLowPowerMode = ProcessInfo.processInfo.isLowPowerModeEnabled
+        }
+        // On appear too: a wash that starts paused must resume from the
+        // frame it showed, not from wall-clock time.
+        .onAppear(perform: syncClock)
+        .onChange(of: isPaused) { syncClock() }
+    }
+
+    private func syncClock() {
+        let now = Date.now.timeIntervalSinceReferenceDate
+        if isPaused {
+            clock.pause(at: now)
+        } else {
+            clock.resume(at: now)
         }
     }
 
