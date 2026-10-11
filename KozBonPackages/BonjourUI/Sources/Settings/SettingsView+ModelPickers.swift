@@ -74,19 +74,14 @@ extension SettingsView {
         .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 
-    /// Subtitle under the picker label. The curated, localized
-    /// blurbs only exist for the three built-in tiers; a model
-    /// that came from the live catalog shows its identifier
-    /// instead, which is more useful than nothing and needs no
-    /// translation.
+    /// Subtitle under the picker label. Curated, localized blurbs
+    /// exist only for the three built-in tiers; a model from the
+    /// live catalog shows none, since its identifier would only
+    /// repeat the name already in the menu.
     @ViewBuilder
     private var modelSubtitleView: some View {
         if let builtIn = AnthropicModel(rawValue: selectedModelIdentifier) {
             Text(localizedSubtitle(for: builtIn))
-                .font(.caption)
-                .foregroundStyle(.secondary)
-        } else {
-            Text(verbatim: selectedModelIdentifier)
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
@@ -136,16 +131,11 @@ extension SettingsView {
     }
 
     /// Curated blurbs exist only for the compiled-in tiers; a
-    /// catalog-sourced model shows its identifier, which beats
-    /// showing nothing and needs no translation.
+    /// catalog-sourced model shows none.
     @ViewBuilder
     private var geminiModelSubtitleView: some View {
         if let builtIn = GeminiModel(rawValue: selectedGeminiModelIdentifier) {
             Text(localizedSubtitle(for: builtIn))
-                .font(.caption)
-                .foregroundStyle(.secondary)
-        } else {
-            Text(verbatim: selectedGeminiModelIdentifier)
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
@@ -214,15 +204,11 @@ extension SettingsView {
     }
 
     /// Curated blurbs exist only for the compiled-in tiers; a
-    /// catalog-sourced model shows its identifier.
+    /// catalog-sourced model shows none.
     @ViewBuilder
     private var openAIModelSubtitleView: some View {
         if let builtIn = OpenAIModel(rawValue: selectedOpenAIModelIdentifier) {
             Text(localizedSubtitle(for: builtIn))
-                .font(.caption)
-                .foregroundStyle(.secondary)
-        } else {
-            Text(verbatim: selectedOpenAIModelIdentifier)
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
