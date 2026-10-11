@@ -106,6 +106,28 @@ struct AmbientMeshWaveTests {
         #expect(start[5] != later[5])
     }
 
+    /// The view feeds seconds since the reference date (~8×10⁸). At
+    /// that magnitude a `Float` steps in 64-second increments, which
+    /// froze the mesh and then jumped it once a minute. One frame
+    /// apart must move, and only a little.
+    @Test("Moves smoothly frame to frame at a real-world clock value")
+    func movesSmoothlyAtRealEpoch() {
+        let epoch: TimeInterval = 813_448_263.4
+        let frame: TimeInterval = 1.0 / 30.0
+
+        let start = AmbientMeshWave.points(at: epoch)
+        let next = AmbientMeshWave.points(at: epoch + frame)
+        let drift = abs(next[5].x - start[5].x) + abs(next[5].y - start[5].y)
+
+        #expect(drift > 0)
+        #expect(drift < 0.01)
+
+        let startAlphas = AmbientMeshWave.alphas(at: epoch)
+        let nextAlphas = AmbientMeshWave.alphas(at: epoch + frame)
+        #expect(startAlphas != nextAlphas)
+        #expect(zip(startAlphas, nextAlphas).allSatisfy { abs($0 - $1) < 0.02 })
+    }
+
     /// The colour count has to match the point count or `MeshGradient`
     /// traps the same way a short point array does.
     @Test("Produces one alpha per control point")
