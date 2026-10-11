@@ -136,6 +136,10 @@ public enum BonjourChatPromptBuilder {
             recent version. If the user asks about a version not in the block, say \
             you only have notes for the most recent releases and point them to \
             Preferences → About → What's New for the full history.
+            - The <siri> block (when present) lists KozBon's real Siri actions and \
+            phrases. Answer Siri and Shortcuts questions ONLY from it and never make \
+            up phrases; when answering in another language, translate its phrases \
+            naturally.
             - If the <context> block lists one or more discovered services, the \
             scan found them: answer from that list, and never claim you can't see \
             any services, that the network is empty, or that results are still \
@@ -201,6 +205,8 @@ public enum BonjourChatPromptBuilder {
             broadcasting; filtering and sorting)
             - What's new in recent KozBon releases — new features, changes, and \
             fixes — when the <whats_new> block is present (see ACCURACY RULES)
+            - Using KozBon with Siri and the Shortcuts app — when the <siri> block \
+            is present (see ACCURACY RULES)
 
             **Stay narrowly on what was asked.** Don't expand into related \
             topics. If a question is ambiguous or could mean several things, \
@@ -357,6 +363,11 @@ public enum BonjourChatPromptBuilder {
         let whatsNew = whatsNewBlock(query: userMessage)
         if !whatsNew.isEmpty {
             sections.append("<whats_new>\n\(whatsNew)\n</whats_new>\n")
+        }
+
+        let siri = siriBlock(query: userMessage)
+        if !siri.isEmpty {
+            sections.append("<siri>\n\(siri)\n</siri>\n")
         }
 
         sections.append(userMessage)

@@ -68,9 +68,6 @@ public final class UserPreferences {
     /// it without the user having to find this toggle.
     public static let defaultAmbientBackgroundEnabled = true
 
-    /// Default value for ``siriTipsEnabled``.
-    public static let defaultSiriTipsEnabled = true
-
     // MARK: - Properties
 
     /// Whether AI-powered service explanations are enabled.
@@ -129,13 +126,6 @@ public final class UserPreferences {
     ///
     /// Additive, so existing rows decode with the default.
     public var ambientBackgroundEnabled: Bool = UserPreferences.defaultAmbientBackgroundEnabled
-
-    /// Whether Discover and the service detail screen suggest Siri
-    /// phrases. Dismissing a tip turns this off; Settings turns it
-    /// back on.
-    ///
-    /// Additive, so existing rows decode with the default.
-    public var siriTipsEnabled: Bool = UserPreferences.defaultSiriTipsEnabled
 
     /// Creates a new preferences instance with default values.
     public init() {}

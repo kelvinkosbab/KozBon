@@ -110,18 +110,6 @@ struct PreferencesStoreTests {
         #expect(!store2.ambientBackgroundEnabled)
     }
 
-    @Test("Siri tips are on by default and stay off once dismissed")
-    func siriTipsEnabledPersists() throws {
-        let container = try makeContainer()
-
-        let store1 = PreferencesStore(container: container)
-        #expect(store1.siriTipsEnabled)
-        store1.siriTipsEnabled = false
-
-        let store2 = PreferencesStore(container: container)
-        #expect(!store2.siriTipsEnabled)
-    }
-
     // MARK: - Reset
 
     @Test("`resetToDefaults` restores every preference to its documented default value")
@@ -131,7 +119,6 @@ struct PreferencesStoreTests {
         store.aiExpertiseLevel = "technical"
         store.defaultSortOrder = "serviceNameDesc"
         store.ambientBackgroundEnabled = false
-        store.siriTipsEnabled = false
 
         store.resetToDefaults()
 
@@ -139,7 +126,6 @@ struct PreferencesStoreTests {
         #expect(store.aiExpertiseLevel == "basic")
         #expect(store.defaultSortOrder == "")
         #expect(store.ambientBackgroundEnabled)
-        #expect(store.siriTipsEnabled)
     }
 
     // MARK: - Single Row

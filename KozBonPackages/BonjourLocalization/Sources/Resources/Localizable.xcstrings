@@ -9400,59 +9400,6 @@
         }
       }
     },
-    "a11y_show_siri_tips_hint": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Suggests Siri phrases on the Nearby list and on service details."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sugiere frases para Siri en la lista Cercanos y en los detalles de cada servicio."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Suggère des phrases Siri dans la liste À proximité et dans le détail des services."
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Schlägt Siri-Sätze in der Liste „In der Nähe“ und in den Dienstdetails vor."
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "「近く」リストとサービスの詳細でSiriのフレーズを提案します。"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "在“附近”列表和服务详情中建议 Siri 短语。"
-          }
-        },
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "يقترح عبارات Siri في قائمة الأجهزة القريبة وفي تفاصيل الخدمات."
-          }
-        },
-        "he": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "מציע משפטים ל-Siri ברשימת 'בקרבת מקום' ובפרטי השירות."
-          }
-        }
-      }
-    },
     "a11y_bonjour_type": {
       "extractionState": "manual",
       "localizations": {
@@ -16393,6 +16340,59 @@
           "stringUnit": {
             "state": "translated",
             "value": "מה חדש בגרסה זו?"
+          }
+        }
+      }
+    },
+    "chat_suggestion_8": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How do I use Siri and Shortcuts with KozBon?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Cómo uso Siri y Atajos con KozBon?"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comment utiliser Siri et Raccourcis avec KozBon ?"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wie nutze ich Siri und Kurzbefehle mit KozBon?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBonでSiriとショートカットを使うには？"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "如何在 KozBon 中使用 Siri 和快捷指令？"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "كيف أستخدم Siri والاختصارات مع KozBon؟"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "איך משתמשים ב-Siri ובקיצורים עם KozBon?"
           }
         }
       }
@@ -24988,161 +24988,108 @@
         }
       }
     },
-    "settings_show_siri_tips": {
+    "settings_tips": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Show Siri Tips"
+            "value": "Tips"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Mostrar sugerencias de Siri"
+            "value": "Consejos"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Afficher les suggestions Siri"
+            "value": "Astuces"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Siri-Tipps anzeigen"
+            "value": "Tipps"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Siriのヒントを表示"
+            "value": "ヒント"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "显示 Siri 提示"
+            "value": "提示"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "عرض تلميحات Siri"
+            "value": "نصائح"
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "הצגת טיפים של Siri"
+            "value": "טיפים"
           }
         }
       }
     },
-    "settings_siri_shortcuts": {
+    "settings_tips_footer": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Siri & Shortcuts"
+            "value": "Say any of these to Siri. Open Shortcuts to see every KozBon action and combine them into shortcuts of your own."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Siri y Atajos"
+            "value": "Di cualquiera de estas frases a Siri. Abre Atajos para ver todas las acciones de KozBon y combinarlas en tus propios atajos."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Siri et Raccourcis"
+            "value": "Dites l’une de ces phrases à Siri. Ouvrez Raccourcis pour voir toutes les actions de KozBon et les combiner dans vos propres raccourcis."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Siri & Kurzbefehle"
+            "value": "Sag einen dieser Sätze zu Siri. Öffne Kurzbefehle, um alle Aktionen von KozBon zu sehen und sie zu eigenen Kurzbefehlen zu kombinieren."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Siriとショートカット"
+            "value": "これらのフレーズをSiriに話しかけてください。ショートカットを開くと、KozBonのすべてのアクションを確認し、組み合わせて独自のショートカットを作成できます。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Siri 与快捷指令"
+            "value": "对 Siri 说出其中任意一句即可。打开“快捷指令”可查看 KozBon 的所有操作，并将它们组合成你自己的快捷指令。"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Siri والاختصارات"
+            "value": "قل أيًا من هذه العبارات لـ Siri. افتح الاختصارات لرؤية كل إجراءات KozBon ودمجها في اختصاراتك الخاصة."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "Siri וקיצורים"
-          }
-        }
-      }
-    },
-    "settings_siri_shortcuts_footer": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Siri tips suggest what to say to run KozBon's actions. Open Shortcuts to see every action and build your own."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Las sugerencias de Siri indican qué decir para ejecutar las acciones de KozBon. Abre Atajos para ver todas las acciones y crear las tuyas."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les suggestions Siri indiquent quoi dire pour lancer les actions de KozBon. Ouvrez Raccourcis pour voir toutes les actions et créer les vôtres."
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Siri-Tipps zeigen, was du sagen kannst, um die Aktionen von KozBon auszuführen. Öffne Kurzbefehle, um alle Aktionen zu sehen und eigene zu erstellen."
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Siriのヒントは、KozBonのアクションを実行するときの話しかけ方を提案します。ショートカットを開くと、すべてのアクションを確認したり、独自のショートカットを作成したりできます。"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Siri 提示会建议运行 KozBon 操作时可以说的话。打开“快捷指令”可查看所有操作并创建自己的快捷指令。"
-          }
-        },
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "تقترح تلميحات Siri ما يمكنك قوله لتشغيل إجراءات KozBon. افتح الاختصارات لرؤية كل الإجراءات وإنشاء اختصاراتك الخاصة."
-          }
-        },
-        "he": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "טיפים של Siri מציעים מה לומר כדי להפעיל את הפעולות של KozBon. פתחו את 'קיצורים' כדי לראות את כל הפעולות וליצור קיצורים משלכם."
+            "value": "אמרו ל-Siri כל אחד מהמשפטים האלה. פתחו את 'קיצורים' כדי לראות את כל הפעולות של KozBon ולשלב אותן בקיצורים משלכם."
           }
         }
       }

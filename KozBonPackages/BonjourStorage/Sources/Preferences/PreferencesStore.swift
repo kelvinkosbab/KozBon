@@ -201,15 +201,6 @@ public final class PreferencesStore {
         }
     }
 
-    /// Whether the app suggests Siri phrases for its actions.
-    public var siriTipsEnabled: Bool {
-        get { preferences?.siriTipsEnabled ?? UserPreferences.defaultSiriTipsEnabled }
-        set {
-            preferences?.siriTipsEnabled = newValue
-            save()
-        }
-    }
-
     // MARK: - Actions
 
     /// Resets all preferences to their default values.
@@ -223,7 +214,6 @@ public final class PreferencesStore {
         preferences?.aiGeminiModelRawValue = UserPreferences.defaultAIGeminiModelRawValue
         preferences?.aiOpenAIModelRawValue = UserPreferences.defaultAIOpenAIModelRawValue
         preferences?.ambientBackgroundEnabled = UserPreferences.defaultAmbientBackgroundEnabled
-        preferences?.siriTipsEnabled = UserPreferences.defaultSiriTipsEnabled
         save()
     }
 

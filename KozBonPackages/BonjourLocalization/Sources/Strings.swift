@@ -827,10 +827,6 @@ public enum Strings {
             .init("a11y_ambient_background_hint", bundle: .atURL(Bundle.module.bundleURL))
         }
 
-        public static var showSiriTipsHint: LocalizedStringResource {
-            .init("a11y_show_siri_tips_hint", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
         public static var formIncompleteHint: LocalizedStringResource {
             .init("a11y_form_incomplete_hint", bundle: .atURL(Bundle.module.bundleURL))
         }
@@ -1458,16 +1454,12 @@ public enum Strings {
             .init("settings_ambient_background_footer", bundle: .atURL(Bundle.module.bundleURL))
         }
 
-        public static var siriAndShortcuts: LocalizedStringResource {
-            .init("settings_siri_shortcuts", bundle: .atURL(Bundle.module.bundleURL))
+        public static var tips: LocalizedStringResource {
+            .init("settings_tips", bundle: .atURL(Bundle.module.bundleURL))
         }
 
-        public static var showSiriTips: LocalizedStringResource {
-            .init("settings_show_siri_tips", bundle: .atURL(Bundle.module.bundleURL))
-        }
-
-        public static var siriAndShortcutsFooter: LocalizedStringResource {
-            .init("settings_siri_shortcuts_footer", bundle: .atURL(Bundle.module.bundleURL))
+        public static var tipsFooter: LocalizedStringResource {
+            .init("settings_tips_footer", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         public static var resetFooter: LocalizedStringResource {
@@ -1694,6 +1686,10 @@ public enum Strings {
 
         public static var suggestion7: LocalizedStringResource {
             .init("chat_suggestion_7", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var suggestion8: LocalizedStringResource {
+            .init("chat_suggestion_8", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         public static var errorTooLong: LocalizedStringResource {

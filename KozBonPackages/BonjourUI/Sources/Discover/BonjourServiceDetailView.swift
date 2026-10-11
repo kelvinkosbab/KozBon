@@ -10,7 +10,6 @@ import BonjourCore
 import BonjourLocalization
 import BonjourModels
 import BonjourAI
-import BonjourAppIntents
 import BonjourStorage
 
 // MARK: - BonjourServiceDetailView
@@ -61,12 +60,6 @@ public struct BonjourServiceDetailView: View {
                 }
 
                 InsightsLink(action: { viewModel.isAIExplanationPresented = true })
-            }
-
-            if SiriTips.isSupported, preferencesStore.siriTipsEnabled, let category = viewModel.siriTipCategory {
-                Section {
-                    SiriTipRow(intent: FindServicesIntent(category: ServiceCategoryAppEnum(category)))
-                }
             }
 
             Section(String(localized: Strings.Sections.information)) {

@@ -130,7 +130,7 @@ public struct SettingsView: View {
 
                 displaySection
 
-                siriSection
+                tipsSection
 
                 resetSection
 
@@ -406,7 +406,6 @@ public struct SettingsView: View {
             && preferencesStore.aiResponseLength == UserPreferences.defaultAIResponseLength
             && preferencesStore.defaultSortOrder == UserPreferences.defaultSortOrder
             && preferencesStore.ambientBackgroundEnabled == UserPreferences.defaultAmbientBackgroundEnabled
-            && preferencesStore.siriTipsEnabled == UserPreferences.defaultSiriTipsEnabled
             && !hasCustomServiceTypes
     }
 

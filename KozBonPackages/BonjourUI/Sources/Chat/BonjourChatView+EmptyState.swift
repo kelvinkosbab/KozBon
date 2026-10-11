@@ -82,6 +82,15 @@ extension BonjourChatView {
                     identifier: "chat_suggestion_7",
                     session: session
                 )
+                // "How do I use Siri and Shortcuts with KozBon?" —
+                // every localized value contains "Siri", which
+                // `ChatSiriIntentDetector` matches, so tapping it
+                // injects the real action list and phrases.
+                suggestionButton(
+                    text: String(localized: Strings.Chat.suggestion8),
+                    identifier: "chat_suggestion_8",
+                    session: session
+                )
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
