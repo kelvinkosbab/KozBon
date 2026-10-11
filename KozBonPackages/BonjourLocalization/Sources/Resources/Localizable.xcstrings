@@ -24988,60 +24988,60 @@
         }
       }
     },
-    "settings_tips": {
+    "settings_using_siri": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tips"
+            "value": "Using Siri with KozBon"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Consejos"
+            "value": "Usar Siri con KozBon"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Astuces"
+            "value": "Utiliser Siri avec KozBon"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tipps"
+            "value": "Siri mit KozBon verwenden"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "ヒント"
+            "value": "KozBonでSiriを使う"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "提示"
+            "value": "在 KozBon 中使用 Siri"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "نصائح"
+            "value": "استخدام Siri مع KozBon"
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "טיפים"
+            "value": "שימוש ב-Siri עם KozBon"
           }
         }
       }
     },
-    "settings_tips_footer": {
+    "settings_using_siri_footer": {
       "extractionState": "manual",
       "localizations": {
         "en": {

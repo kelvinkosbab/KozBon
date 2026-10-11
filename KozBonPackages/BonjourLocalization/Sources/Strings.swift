@@ -1454,12 +1454,12 @@ public enum Strings {
             .init("settings_ambient_background_footer", bundle: .atURL(Bundle.module.bundleURL))
         }
 
-        public static var tips: LocalizedStringResource {
-            .init("settings_tips", bundle: .atURL(Bundle.module.bundleURL))
+        public static var usingSiri: LocalizedStringResource {
+            .init("settings_using_siri", bundle: .atURL(Bundle.module.bundleURL))
         }
 
-        public static var tipsFooter: LocalizedStringResource {
-            .init("settings_tips_footer", bundle: .atURL(Bundle.module.bundleURL))
+        public static var usingSiriFooter: LocalizedStringResource {
+            .init("settings_using_siri_footer", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         public static var resetFooter: LocalizedStringResource {

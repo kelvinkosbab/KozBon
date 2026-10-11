@@ -1,5 +1,5 @@
 //
-//  SettingsView+Tips.swift
+//  SettingsView+Siri.swift
 //  KozBon
 //
 //  Copyright © 2016-present Kozinga. All rights reserved.
@@ -10,31 +10,35 @@ import SwiftUI
 import BonjourAppIntents
 import BonjourLocalization
 
-// MARK: - SettingsView + Tips
+// MARK: - SettingsView + Siri
 
-/// The Tips section: Siri phrases for KozBon's most useful actions,
-/// and a button that opens KozBon's page in the Shortcuts app.
+/// The "Using Siri with KozBon" section: Siri phrases for KozBon's
+/// most useful actions, and a button that opens KozBon's page in the
+/// Shortcuts app.
 ///
 /// iOS and visionOS only. `SiriTipView` and `ShortcutsLink` are
 /// unavailable on macOS, so the section isn't shown there.
 extension SettingsView {
 
     @ViewBuilder
-    var tipsSection: some View {
+    var siriSection: some View {
         #if os(iOS) || os(visionOS)
         Section {
             siriTip(ScanForServicesIntent())
             siriTip(FindServicesIntent(category: .printersAndScanners))
             siriTip(IsDeviceOnlineIntent())
 
+            // Floats like the tips above it, so the section reads as
+            // one group rather than three loose cards and a row.
             ShortcutsLink()
                 .frame(maxWidth: .infinity)
+                .listRowBackground(Color.clear)
                 .accessibilityIdentifier("settings.shortcutsLink")
         } header: {
-            Text(Strings.Settings.tips)
+            Text(Strings.Settings.usingSiri)
                 .accessibilityAddTraits(.isHeader)
         } footer: {
-            Text(Strings.Settings.tipsFooter)
+            Text(Strings.Settings.usingSiriFooter)
         }
         #endif
     }

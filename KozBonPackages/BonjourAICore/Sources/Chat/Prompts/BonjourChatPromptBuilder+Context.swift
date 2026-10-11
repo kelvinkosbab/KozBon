@@ -214,7 +214,7 @@ extension BonjourChatPromptBuilder {
         whether the printer is online and then show a notification. Personal \
         automations can run them when the device joins a Wi-Fi network, and they \
         can be assigned to the Action Button. On iPhone, iPad, and Vision Pro, \
-        KozBon's Settings tab has a Tips section with these phrases and a button \
+        KozBon's Settings tab has a "Using Siri with KozBon" section with these phrases and a button \
         that opens KozBon in the Shortcuts app.
         """
     }

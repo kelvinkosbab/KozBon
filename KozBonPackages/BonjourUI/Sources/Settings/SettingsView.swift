@@ -130,7 +130,7 @@ public struct SettingsView: View {
 
                 displaySection
 
-                tipsSection
+                siriSection
 
                 resetSection
 
