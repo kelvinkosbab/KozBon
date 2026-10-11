@@ -63,7 +63,7 @@ public struct BonjourServiceDetailView: View {
                 InsightsLink(action: { viewModel.isAIExplanationPresented = true })
             }
 
-            if preferencesStore.siriTipsEnabled, let category = viewModel.siriTipCategory {
+            if SiriTips.isSupported, preferencesStore.siriTipsEnabled, let category = viewModel.siriTipCategory {
                 Section {
                     SiriTipRow(intent: FindServicesIntent(category: ServiceCategoryAppEnum(category)))
                 }

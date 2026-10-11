@@ -9,6 +9,18 @@ import AppIntents
 import SwiftUI
 import BonjourStorage
 
+// MARK: - SiriTips
+
+/// Where Siri tips can show. `SiriTipView` and `ShortcutsLink` are
+/// unavailable on macOS, tvOS and watchOS.
+enum SiriTips {
+    #if os(iOS) || os(visionOS)
+    static let isSupported = true
+    #else
+    static let isSupported = false
+    #endif
+}
+
 // MARK: - SiriTipRow
 
 /// A list row suggesting the Siri phrase for `intent`.
@@ -23,7 +35,7 @@ struct SiriTipRow<Intent: AppIntent>: View {
     let intent: Intent
 
     var body: some View {
-        #if !os(tvOS) && !os(watchOS)
+        #if os(iOS) || os(visionOS)
         SiriTipView(intent: intent, isVisible: isVisible)
             .listRowInsets(EdgeInsets())
             .listRowBackground(Color.clear)

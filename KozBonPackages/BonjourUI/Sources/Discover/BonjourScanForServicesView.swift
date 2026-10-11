@@ -51,7 +51,7 @@ public struct BonjourScanForServicesView: View {
             List(selection: $viewModel.selectedService) {
                 // Only once something is listed, so the tip never
                 // sits above the scanning or empty-state overlays.
-                if preferencesStore.siriTipsEnabled, !viewModel.flatActiveServices.isEmpty {
+                if SiriTips.isSupported, preferencesStore.siriTipsEnabled, !viewModel.flatActiveServices.isEmpty {
                     Section {
                         SiriTipRow(intent: ScanForServicesIntent())
                     }

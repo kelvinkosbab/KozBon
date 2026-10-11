@@ -12,12 +12,13 @@ import BonjourLocalization
 // MARK: - SettingsView + Siri
 
 /// The Siri & Shortcuts section: brings back dismissed Siri tips and
-/// opens KozBon's page in the Shortcuts app.
+/// opens KozBon's page in the Shortcuts app. iOS and visionOS only,
+/// like the tips themselves.
 extension SettingsView {
 
     @ViewBuilder
     var siriSection: some View {
-        #if !os(tvOS) && !os(watchOS)
+        #if os(iOS) || os(visionOS)
         Section {
             Toggle(isOn: siriTipsBinding) {
                 Text(Strings.Settings.showSiriTips)
