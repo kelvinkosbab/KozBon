@@ -34,18 +34,23 @@ struct AmbientMeshWave {
     static let resolution = 4
 
     /// Amplitude of the primary swell, in unit-square coordinates.
-    private static let swellAmplitude: Float = 0.09
+    private static let swellAmplitude: Double = 0.09
 
     /// Amplitude of the cross-running ripple. Summed with the swell,
     /// the total stays under half the 1/3 grid spacing so no two
     /// control points can cross and crease the mesh.
-    private static let rippleAmplitude: Float = 0.045
+    private static let rippleAmplitude: Double = 0.045
 
     /// Single knob for how fast the water moves. Scales every wave's
     /// angular frequency together, so raising it speeds the motion up
     /// without changing the shape of the surface. At `2.5` the four
     /// waves run at 4–7 second periods.
-    private static let waveSpeed: Float = 2.5
+    ///
+    /// All wave maths runs in `Double`. The view passes seconds since
+    /// the reference date (~8×10⁸), where a `Float` can only step in
+    /// 64-second increments — the mesh would sit frozen and then jump
+    /// to an unrelated frame once a minute.
+    private static let waveSpeed: Double = 2.5
 
     /// Mid-point of the per-cell alpha swing.
     /// ``AmbientMeshBackground`` then scales the whole thing by its
@@ -69,31 +74,29 @@ struct AmbientMeshWave {
     ///   - phase: Constant offset added to every wave, so two
     ///     palettes on screen at once aren't on the same frame.
     static func points(at time: TimeInterval, phase: Float = 0) -> [SIMD2<Float>] {
-        let time = Float(time)
+        let phase = Double(phase)
         let lastIndex = resolution - 1
-        let spacing = Float(lastIndex)
+        let spacing = Double(lastIndex)
 
         var points: [SIMD2<Float>] = []
         points.reserveCapacity(resolution * resolution)
 
         for row in 0..<resolution {
             for column in 0..<resolution {
-                let restX = Float(column) / spacing
-                let restY = Float(row) / spacing
+                let restX = Double(column) / spacing
+                let restY = Double(row) / spacing
 
                 let onVerticalEdge = column == 0 || column == lastIndex
                 let onHorizontalEdge = row == 0 || row == lastIndex
 
-                points.append(
-                    SIMD2(
-                        onVerticalEdge
-                            ? restX
-                            : restX + lateralOffset(unitX: restX, unitY: restY, time: time, phase: phase),
-                        onHorizontalEdge
-                            ? restY
-                            : restY + swellOffset(unitX: restX, unitY: restY, time: time, phase: phase)
-                    )
-                )
+                let x = onVerticalEdge
+                    ? restX
+                    : restX + lateralOffset(unitX: restX, unitY: restY, time: time, phase: phase)
+                let y = onHorizontalEdge
+                    ? restY
+                    : restY + swellOffset(unitX: restX, unitY: restY, time: time, phase: phase)
+
+                points.append(SIMD2(Float(x), Float(y)))
             }
         }
 
@@ -105,7 +108,7 @@ struct AmbientMeshWave {
     /// The `-x` phase term is what makes it *travel*: a crest holds
     /// its shape and moves toward the trailing edge instead of the
     /// whole row rising together.
-    private static func swellOffset(unitX: Float, unitY: Float, time: Float, phase: Float) -> Float {
+    private static func swellOffset(unitX: Double, unitY: Double, time: Double, phase: Double) -> Double {
         swellAmplitude * sin(waveSpeed * 0.42 * time - 3.1 * unitX + 0.9 * unitY + phase)
             + rippleAmplitude * sin(waveSpeed * 0.61 * time + 2.2 * unitX - 1.7 * unitY + 2.4 + phase)
     }
@@ -113,7 +116,7 @@ struct AmbientMeshWave {
     /// Horizontal displacement — the lateral push that leans a crest
     /// as it passes. Without it the wave reads as a flag ripple
     /// rather than water.
-    private static func lateralOffset(unitX: Float, unitY: Float, time: Float, phase: Float) -> Float {
+    private static func lateralOffset(unitX: Double, unitY: Double, time: Double, phase: Double) -> Double {
         swellAmplitude * sin(waveSpeed * 0.37 * time - 2.6 * unitY + 1.6 + phase)
             + rippleAmplitude * sin(waveSpeed * 0.53 * time + 1.9 * unitX + 3.0 * unitY + 0.7 + phase)
     }
@@ -132,15 +135,15 @@ struct AmbientMeshWave {
     ///   - time: Elapsed time in seconds.
     ///   - phase: The palette's wave offset, in radians.
     static func alphas(at time: TimeInterval, phase: Float = 0) -> [Double] {
-        let time = Float(time)
-        let spacing = Float(resolution - 1)
+        let phase = Double(phase)
+        let spacing = Double(resolution - 1)
 
         return (0..<(resolution * resolution)).map { index in
-            let row = Float(index / resolution) / spacing
-            let column = Float(index % resolution) / spacing
+            let row = Double(index / resolution) / spacing
+            let column = Double(index % resolution) / spacing
             let crest = sin(waveSpeed * 0.45 * time - 2.4 * column + 1.1 * row + phase)
 
-            return baseAlpha + alphaSwing * Double(crest)
+            return baseAlpha + alphaSwing * crest
         }
     }
 }
