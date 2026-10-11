@@ -271,25 +271,19 @@ extension SettingsView {
         signInLabel: LocalizedStringResource
     ) -> some View {
         if isConnected {
-            // A tight icon-text pair rather than a `Label`, whose
-            // icon column pushed the text ~40pt in from the model
-            // picker's left edge once the row moved inline.
-            HStack(spacing: 6) {
-                Image.signedIn
-                    .foregroundStyle(.green)
-                    .accessibilityHidden(true)
-                Text(Strings.Settings.aiCloudSignedIn)
-                Spacer()
-                Button(role: .destructive) {
-                    providerPendingSignOut = provider
-                } label: {
-                    Text(Strings.Settings.aiCloudSignOut)
-                }
-                .accessibilityHint(Strings.Accessibility.aiCloudSignOutHint)
-                .accessibilityIdentifier("aiCloud.signOut.\(provider.rawValue)")
+            Button(role: .destructive) {
+                providerPendingSignOut = provider
+            } label: {
+                Text(Strings.Settings.aiCloudSignOut)
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(.red)
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 8)
             }
-            .frame(minHeight: 44)
-            .accessibilityElement(children: .combine)
+            .buttonStyle(SignOutCapsuleButtonStyle())
+            .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+            .accessibilityHint(Strings.Accessibility.aiCloudSignOutHint)
+            .accessibilityIdentifier("aiCloud.signOut.\(provider.rawValue)")
         } else {
             Button {
                 providerPendingSignIn = provider
@@ -362,5 +356,32 @@ extension SettingsView {
         hasGeminiKey = credentialsStore.hasAPIKey(for: .gemini)
         hasOpenAIKey = credentialsStore.hasAPIKey(for: .openai)
         hasGitHubKey = credentialsStore.hasAPIKey(for: .github)
+    }
+}
+
+// MARK: - SignOutCapsuleButtonStyle
+
+/// Interactive Liquid Glass capsule for the Sign Out control, matching
+/// the Insights capsule on the detail pages. The label also dims while
+/// pressed so feedback survives Reduce Motion.
+private struct SignOutCapsuleButtonStyle: ButtonStyle {
+
+    @ViewBuilder
+    func makeBody(configuration: Configuration) -> some View {
+        let capsule = configuration.label
+            .opacity(configuration.isPressed ? 0.6 : 1.0)
+            .animation(.easeOut(duration: 0.12), value: configuration.isPressed)
+            #if os(visionOS)
+            .glassBackgroundEffect(in: Capsule(style: .continuous))
+            #else
+            .glassEffect(.regular.tint(Color.red.opacity(0.12)).interactive(), in: Capsule(style: .continuous))
+            #endif
+            .contentShape(.capsule)
+
+        #if !os(macOS)
+        capsule.hoverEffect(.highlight)
+        #else
+        capsule
+        #endif
     }
 }
