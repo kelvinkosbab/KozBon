@@ -109,7 +109,7 @@ struct InsightsLink: View {
         .dynamicTypeSize(...DynamicTypeSize.accessibility2)
         .listRowBackground(Color.clear)
         .listRowSeparator(.hidden)
-        .listRowInsets(EdgeInsets(top: 0, leading: 8, bottom: 4, trailing: 8))
+        .listRowInsets(EdgeInsets(top: 12, leading: 8, bottom: 4, trailing: 8))
     }
 
     /// The chat wash's colours as a gradient, or the backend's solid
