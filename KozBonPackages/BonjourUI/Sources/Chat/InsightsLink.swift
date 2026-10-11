@@ -1,5 +1,5 @@
 //
-//  InsightsButtonSection.swift
+//  InsightsLink.swift
 //  BonjourUI
 //
 //  Copyright © 2016-present Kozinga. All rights reserved.
@@ -20,18 +20,18 @@ import BonjourStorage
 import UIKit
 #endif
 
-// MARK: - InsightsButtonSection
+// MARK: - InsightsLink
 
-/// A visible, tappable Insights row for detail screens.
+/// A tappable Insights link for a detail screen's header capsule.
 ///
 /// The long-press ``InsightsContextMenuItems`` is easy to miss, so
-/// the discovered-service and library detail screens also offer
-/// Insights as a full-width list row. It resolves the same states
-/// as the context menu: an Insights button tinted for the selected
-/// backend, an "Enable Apple Intelligence" or "Sign in to …" call
-/// to action, or nothing at all when AI is off or the device can't
-/// run the selected backend.
-struct InsightsButtonSection: View {
+/// the discovered-service and library detail screens also show
+/// Insights as a link inside their header. It resolves the same
+/// states as the context menu: an Insights link tinted for the
+/// selected backend, an "Enable Apple Intelligence" or "Sign in to …"
+/// call to action, or nothing at all when AI is off or the device
+/// can't run the selected backend.
+struct InsightsLink: View {
 
     @Environment(\.preferencesStore) private var preferencesStore
     @Environment(\.aiCloudCredentialsStore) private var credentialsStore
@@ -40,7 +40,7 @@ struct InsightsButtonSection: View {
 
     private let action: () -> Void
 
-    /// Creates the Insights row.
+    /// Creates the Insights link.
     ///
     /// - Parameter action: Presents the Insights sheet. Called after
     ///   a `.medium` haptic has already fired.
@@ -51,44 +51,38 @@ struct InsightsButtonSection: View {
     var body: some View {
         switch state {
         case .explain(let backend):
-            Section {
-                row(
-                    title: Strings.Insights.explainWithAI,
-                    icon: backend.icon,
-                    tint: backend.accentColor
-                ) {
-                    hapticFeedback.play(.medium)
-                    action()
-                }
-                .accessibilityIdentifier("insights_button")
+            link(
+                title: Strings.Insights.explainWithAI,
+                icon: backend.icon,
+                tint: backend.accentColor
+            ) {
+                hapticFeedback.play(.medium)
+                action()
             }
+            .accessibilityIdentifier("insights_link")
 
         case .enableAppleIntelligence:
-            Section {
-                row(
-                    title: Strings.Insights.enableAppleIntelligence,
-                    icon: AIBackend.appleIntelligence.icon,
-                    tint: AIBackend.appleIntelligence.accentColor
-                ) {
-                    hapticFeedback.play(.light)
-                    openAppleIntelligenceSettings()
-                }
+            link(
+                title: Strings.Insights.enableAppleIntelligence,
+                icon: AIBackend.appleIntelligence.icon,
+                tint: AIBackend.appleIntelligence.accentColor
+            ) {
+                hapticFeedback.play(.light)
+                openAppleIntelligenceSettings()
             }
 
         case .signIn(let backend, let provider):
-            Section {
-                row(
-                    title: Self.signInTitle(for: provider),
-                    icon: backend.icon,
-                    tint: backend.accentColor
-                ) {
-                    hapticFeedback.play(.light)
-                    NotificationCenter.default.post(
-                        name: .aiCloudSignInRequested,
-                        object: nil,
-                        userInfo: [aiCloudSignInRequestedProviderKey: provider.rawValue]
-                    )
-                }
+            link(
+                title: Self.signInTitle(for: provider),
+                icon: backend.icon,
+                tint: backend.accentColor
+            ) {
+                hapticFeedback.play(.light)
+                NotificationCenter.default.post(
+                    name: .aiCloudSignInRequested,
+                    object: nil,
+                    userInfo: [aiCloudSignInRequestedProviderKey: provider.rawValue]
+                )
             }
 
         case .hidden:
@@ -96,29 +90,28 @@ struct InsightsButtonSection: View {
         }
     }
 
-    // MARK: - Row
+    // MARK: - Link
 
-    private func row(
+    private func link(
         title: LocalizedStringResource,
         icon: Image,
         tint: Color,
         perform: @escaping () -> Void
     ) -> some View {
         Button(action: perform) {
-            HStack {
-                Spacer()
-                Label {
-                    Text(title)
-                } icon: {
-                    icon
-                }
-                .font(.headline)
-                .padding(.vertical)
-                Spacer()
+            Label {
+                Text(title)
+            } icon: {
+                icon
             }
+            .font(.subheadline.weight(.semibold))
+            .frame(minHeight: 44)
+            .contentShape(Rectangle())
         }
+        // Borderless so only the link is tappable, not the whole
+        // header row the List would otherwise turn into a button.
+        .buttonStyle(.borderless)
         .foregroundStyle(tint)
-        .listRowBackground(tint.opacity(0.2))
     }
 
     // MARK: - State
@@ -172,7 +165,7 @@ struct InsightsButtonSection: View {
 
 // MARK: - InsightsButtonState
 
-/// What ``InsightsButtonSection`` shows for a given backend setup.
+/// What ``InsightsLink`` shows for a given backend setup.
 enum InsightsButtonState: Equatable {
     /// Insights is ready on this backend.
     case explain(AIBackend)
