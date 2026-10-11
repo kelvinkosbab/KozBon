@@ -213,6 +213,10 @@ public struct BonjourServiceDetailView: View {
                     )
                 }
             }
+
+            ToolbarItem(placement: .primaryAction) {
+                InsightsLink(style: .toolbar, action: { viewModel.isAIExplanationPresented = true })
+            }
         }
         .sheet(
             isPresented: Binding(

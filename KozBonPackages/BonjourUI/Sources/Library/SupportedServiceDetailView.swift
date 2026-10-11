@@ -217,6 +217,10 @@ public struct SupportedServiceDetailView: View {
                     )
                 }
             }
+
+            ToolbarItem(placement: .primaryAction) {
+                InsightsLink(style: .toolbar, action: { isAIExplanationPresented = true })
+            }
         }
         #if canImport(FoundationModels)
         .modifier(AIServiceTypeSheetModifier(

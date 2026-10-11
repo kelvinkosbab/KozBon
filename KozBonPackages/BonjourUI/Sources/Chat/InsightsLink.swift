@@ -36,9 +36,19 @@ import UIKit
 /// to action, or nothing at all when AI is off or the device can't
 /// run the selected backend.
 ///
-/// Renders a bare list row with no section of its own, so place it
-/// in the header's section to keep it tight under the header.
+/// The ``Style/capsule`` style renders a bare list row with no section
+/// of its own, so place it in the header's section to keep it tight
+/// under the header. The ``Style/toolbar`` style renders an icon-only
+/// button for a navigation bar.
 struct InsightsLink: View {
+
+    /// Where the Insights control appears.
+    enum Style {
+        /// A glass capsule row under a detail header.
+        case capsule
+        /// An icon-only navigation bar button.
+        case toolbar
+    }
 
     @Environment(\.preferencesStore) private var preferencesStore
     @Environment(\.aiCloudCredentialsStore) private var credentialsStore
@@ -46,33 +56,37 @@ struct InsightsLink: View {
     @Environment(\.openURL) private var openURL
     @Environment(\.colorSchemeContrast) private var colorSchemeContrast
 
+    private let style: Style
     private let action: () -> Void
 
-    /// Creates the Insights capsule.
+    /// Creates the Insights control.
     ///
-    /// - Parameter action: Presents the Insights sheet. Called after
-    ///   a `.medium` haptic has already fired.
-    init(action: @escaping () -> Void) {
+    /// - Parameters:
+    ///   - style: Where the control appears.
+    ///   - action: Presents the Insights sheet. Called after a
+    ///     `.medium` haptic has already fired.
+    init(style: Style = .capsule, action: @escaping () -> Void) {
+        self.style = style
         self.action = action
     }
 
     var body: some View {
         switch state {
         case .explain(let backend):
-            capsule(title: Strings.Insights.explainWithAI, backend: backend) {
+            control(title: Strings.Insights.explainWithAI, backend: backend) {
                 hapticFeedback.play(.medium)
                 action()
             }
             .accessibilityIdentifier("insights_link")
 
         case .enableAppleIntelligence:
-            capsule(title: Strings.Insights.enableAppleIntelligence, backend: .appleIntelligence) {
+            control(title: Strings.Insights.enableAppleIntelligence, backend: .appleIntelligence) {
                 hapticFeedback.play(.light)
                 openAppleIntelligenceSettings()
             }
 
         case .signIn(let backend, let provider):
-            capsule(title: Self.signInTitle(for: provider), backend: backend) {
+            control(title: Self.signInTitle(for: provider), backend: backend) {
                 hapticFeedback.play(.light)
                 NotificationCenter.default.post(
                     name: .aiCloudSignInRequested,
@@ -83,6 +97,39 @@ struct InsightsLink: View {
 
         case .hidden:
             EmptyView()
+        }
+    }
+
+    // MARK: - Control
+
+    @ViewBuilder
+    private func control(
+        title: LocalizedStringResource,
+        backend: AIBackend,
+        perform: @escaping () -> Void
+    ) -> some View {
+        switch style {
+        case .capsule:
+            capsule(title: title, backend: backend, perform: perform)
+        case .toolbar:
+            toolbarButton(title: title, backend: backend, perform: perform)
+        }
+    }
+
+    /// Icon-only, but the title stays the VoiceOver label.
+    private func toolbarButton(
+        title: LocalizedStringResource,
+        backend: AIBackend,
+        perform: @escaping () -> Void
+    ) -> some View {
+        Button(action: perform) {
+            Label {
+                Text(title)
+            } icon: {
+                backend.icon
+                    .foregroundStyle(labelStyle(for: backend))
+            }
+            .labelStyle(.iconOnly)
         }
     }
 
