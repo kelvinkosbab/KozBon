@@ -281,7 +281,7 @@ extension SettingsView {
                     .padding(.vertical, 8)
             }
             .buttonStyle(SignOutCapsuleButtonStyle())
-            .frame(maxWidth: .infinity, minHeight: 44)
+            .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
             .accessibilityHint(Strings.Accessibility.aiCloudSignOutHint)
             .accessibilityIdentifier("aiCloud.signOut.\(provider.rawValue)")
         } else {
