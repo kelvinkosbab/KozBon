@@ -21,7 +21,7 @@ Write these:
   ```
 
 - **Trap warnings** — "this looks redundant but removing it breaks X."
-- Doc comments per [`apple-documentation-strategy.md`](./apple-documentation-strategy.md) / [`android-documentation-strategy.md`](./android-documentation-strategy.md) — a separate concern with its own rules.
+- Doc comments per [`apple-documentation-strategy.md`](./apple-documentation-strategy.md) / `android-documentation-strategy.md` (AppBootstrapAI bundle) — a separate concern with its own rules.
 
 Never write these (the AI-assistant signature moves):
 
