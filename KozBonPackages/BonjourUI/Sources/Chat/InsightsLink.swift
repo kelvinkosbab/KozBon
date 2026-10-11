@@ -131,6 +131,9 @@ struct InsightsLink: View {
             }
             .labelStyle(.iconOnly)
         }
+        // The bar's own tinting overrides the label's gradient, so
+        // tint the button with the assistant's accent instead.
+        .tint(backend.accentColor)
     }
 
     // MARK: - Capsule
