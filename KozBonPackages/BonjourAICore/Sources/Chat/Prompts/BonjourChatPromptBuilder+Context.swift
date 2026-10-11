@@ -199,7 +199,7 @@ extension BonjourChatPromptBuilder {
         - List Discovered Services: "What's on my network with KozBon" or "Show \
         Bonjour services with KozBon". Lists every service found.
         - Find Services: "Find printers with KozBon". Also works with Apple \
-        devices, smart home, AirPlay or media, and remote access or SSH.
+        devices, smart home, speakers, AirPlay or media, and remote access or SSH.
         - Check If Device Is Online: "Check if a device is online with KozBon". \
         Asks for the device name and answers yes or no.
         - Explain a Service Type: "Explain a service type with KozBon". Asks \

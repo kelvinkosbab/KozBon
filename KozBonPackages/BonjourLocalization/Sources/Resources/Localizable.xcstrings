@@ -25359,55 +25359,55 @@
         }
       }
     },
-    "settings_siri_phrase_find_printers": {
+    "settings_siri_phrase_find_speakers": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "“Find printers with KozBon”"
+            "value": "“Find speakers with KozBon”"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "«Busca impresoras con KozBon»"
+            "value": "«Busca altavoces con KozBon»"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "« Trouve les imprimantes avec KozBon »"
+            "value": "« Trouve les enceintes avec KozBon »"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "„Finde Drucker mit KozBon“"
+            "value": "„Finde Lautsprecher mit KozBon“"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "「KozBonでプリンタを探して」"
+            "value": "「KozBonでスピーカーを探して」"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "“用 KozBon 查找打印机”"
+            "value": "“用 KozBon 查找音箱”"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "«ابحث عن الطابعات باستخدام KozBon»"
+            "value": "«ابحث عن مكبرات الصوت باستخدام KozBon»"
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "„חפש מדפסות עם KozBon“"
+            "value": "„חפש רמקולים עם KozBon“"
           }
         }
       }
