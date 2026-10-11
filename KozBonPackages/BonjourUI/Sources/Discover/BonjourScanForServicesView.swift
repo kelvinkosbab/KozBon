@@ -10,6 +10,7 @@ import BonjourCore
 import BonjourLocalization
 import BonjourModels
 import BonjourAI
+import BonjourAppIntents
 import BonjourScanning
 import BonjourStorage
 
@@ -48,6 +49,14 @@ public struct BonjourScanForServicesView: View {
     public var body: some View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
             List(selection: $viewModel.selectedService) {
+                // Only once something is listed, so the tip never
+                // sits above the scanning or empty-state overlays.
+                if preferencesStore.siriTipsEnabled, !viewModel.flatActiveServices.isEmpty {
+                    Section {
+                        SiriTipRow(intent: ScanForServicesIntent())
+                    }
+                }
+
                 if !viewModel.sortedPublishedServices.isEmpty {
                     Section {
                         forEach(services: viewModel.sortedPublishedServices)

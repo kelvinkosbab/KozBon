@@ -27,6 +27,23 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
+	<key>INAlternativeAppNames</key>
+	<array>
+		<dict>
+			<key>INAlternativeAppName</key>
+			<string>Koz Bon</string>
+			<key>INAlternativeAppNamePronunciationHint</key>
+			<string>kahz bahn</string>
+		</dict>
+		<dict>
+			<key>INAlternativeAppName</key>
+			<string>Kos Bon</string>
+		</dict>
+		<dict>
+			<key>INAlternativeAppName</key>
+			<string>Cause Bon</string>
+		</dict>
+	</array>
 	<key>NSBonjourServices</key>
 	<array>
 		<string>_carplay_ctrl._tcp</string>

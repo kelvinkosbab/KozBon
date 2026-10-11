@@ -27,4 +27,11 @@ struct ServiceCategoryAppEnumTests {
             #expect(ServiceCategoryAppEnum.caseDisplayRepresentations[value] != nil)
         }
     }
+
+    @Test("Every library category maps to the Siri category that maps back to it")
+    func roundTrips() {
+        for category in BonjourServiceCategory.allCases {
+            #expect(ServiceCategoryAppEnum(category).category == category)
+        }
+    }
 }

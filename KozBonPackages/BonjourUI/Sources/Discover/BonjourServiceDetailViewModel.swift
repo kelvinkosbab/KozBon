@@ -62,6 +62,14 @@ final class BonjourServiceDetailViewModel: MyNetServiceDelegate {
         service.delegate = self
     }
 
+    // MARK: - Siri
+
+    /// The category a "Find … with KozBon" tip suggests for this
+    /// service, or `nil` when its type belongs to none.
+    var siriTipCategory: BonjourServiceCategory? {
+        BonjourServiceCategory.allCases.first { $0.matches(serviceType) }
+    }
+
     // MARK: - TXT Record Editing
 
     /// Deletes a TXT record and updates the underlying service.

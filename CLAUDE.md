@@ -83,7 +83,7 @@ Each module follows the `{name}/Sources` and `{name}/Tests` layout:
 App → AppCore, BonjourAppIntents
 AppCore → BonjourUI, BonjourAppIntents, BonjourAI, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourAIOpenAI, BonjourScanning, BonjourModels, BonjourStorage, BonjourLocalization, BonjourCore, Core, CoreUI
 BonjourAppIntents → BonjourAI, BonjourModels, BonjourScanning, BonjourLocalization, LocalNetworkMonitor, BonjourCore
-BonjourUI → BonjourModels, BonjourScanning, BonjourLocalization, BonjourAI, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourAIOpenAI, BonjourStorage, BonjourCore, Core, CoreUI
+BonjourUI → BonjourModels, BonjourScanning, BonjourLocalization, BonjourAI, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourAIOpenAI, BonjourAppIntents, BonjourStorage, BonjourCore, Core, CoreUI
 BonjourAI → BonjourAICore, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourAIOpenAI, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
 BonjourAIApple → BonjourAICore, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
 BonjourAIAnthropic → BonjourAICore, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage

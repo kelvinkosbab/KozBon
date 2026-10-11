@@ -210,6 +210,7 @@ let package = Package(
             "BonjourAIAnthropic",
             "BonjourAIGemini",
             "BonjourAIOpenAI",
+            "BonjourAppIntents",
             "BonjourStorage",
             .product(name: "CoreUI", package: "Core")
         ]

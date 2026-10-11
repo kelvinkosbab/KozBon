@@ -49,6 +49,17 @@ public enum ServiceCategoryAppEnum: String, AppEnum, Sendable {
     ]
 
     /// The model category this case filters by.
+    /// The Siri category for a library category.
+    public init(_ category: BonjourServiceCategory) {
+        switch category {
+        case .appleDevices: self = .appleDevices
+        case .printersAndScanners: self = .printersAndScanners
+        case .smartHome: self = .smartHome
+        case .mediaAndStreaming: self = .mediaAndStreaming
+        case .remoteAccess: self = .remoteAccess
+        }
+    }
+
     var category: BonjourServiceCategory {
         switch self {
         case .appleDevices: .appleDevices
