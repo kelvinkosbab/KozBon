@@ -66,8 +66,14 @@ struct ShortcutsGuideView: View {
                 Section {
                     Link(destination: url) {
                         HStack {
-                            Text(Strings.ShortcutsGuide.openShortcuts)
-                                .foregroundStyle(.primary)
+                            Label {
+                                Text(Strings.ShortcutsGuide.openShortcuts)
+                                    .foregroundStyle(.primary)
+                            } icon: {
+                                Image.shortcuts
+                                    .symbolRenderingMode(.hierarchical)
+                                    .foregroundStyle(.tint)
+                            }
                             Spacer()
                             Image.externalLink
                                 .foregroundStyle(.secondary)

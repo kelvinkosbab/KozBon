@@ -37,6 +37,10 @@ public enum Iconography {
     /// Siri glyph for the Settings row that cycles Siri phrases.
     public static let siri = "waveform"
 
+    /// Stand-in for the Shortcuts app's layered glyph, which has no
+    /// SF Symbol of its own. Used on the Open Shortcuts row.
+    public static let shortcuts = "square.2.layers.3d.top.filled"
+
     /// Anthropic Claude glyph. Used as the Chat tab and Insights
     /// glyph when the user has the Anthropic backend selected so
     /// the active provider is visible at a glance — the same
