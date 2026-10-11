@@ -24,6 +24,13 @@ import AppCore
 /// straightforward composition over the package's public API.
 @main
 struct KozBonApp: App {
+
+    /// Runs before any scene, including when the system launches the
+    /// app in the background for a Siri action.
+    init() {
+        AppCoreScene.prepareForLaunch()
+    }
+
     var body: some Scene {
         AppCoreScene()
     }

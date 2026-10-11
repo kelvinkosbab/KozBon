@@ -41,7 +41,10 @@ import Foundation
 /// for free-form Q&A produced inconsistent answers and made the
 /// Siri experience feel less polished than the in-app chat. Users
 /// who want chat should open the Chat tab; Siri is reserved for
-/// concrete actions (scan, list).
+/// concrete actions.
+///
+/// Open in KozBon has no phrase: it takes a service from an earlier
+/// List or Find step, so it only makes sense inside a Shortcut.
 public struct KozBonAppShortcuts: AppShortcutsProvider {
 
     /// Tint applied to the Shortcut's icon in the Shortcuts app.
@@ -80,6 +83,61 @@ public struct KozBonAppShortcuts: AppShortcutsProvider {
             ],
             shortTitle: "List Discovered Services",
             systemImageName: "list.bullet"
+        )
+
+        AppShortcut(
+            intent: FindServicesIntent(),
+            phrases: [
+                // "Find" belongs to no other action. The category
+                // token takes a case name or synonym ("printers").
+                "Find \(\.$category) with \(.applicationName)",
+                "Find \(\.$category) on my network with \(.applicationName)",
+                "Find services by category with \(.applicationName)"
+            ],
+            shortTitle: "Find Services",
+            systemImageName: "magnifyingglass"
+        )
+
+        AppShortcut(
+            intent: IsDeviceOnlineIntent(),
+            phrases: [
+                // A device name is free text, which a phrase can't
+                // carry, so Siri asks for it.
+                "Check if a device is online with \(.applicationName)",
+                "Check if a device is on my network with \(.applicationName)"
+            ],
+            shortTitle: "Check If Device Is Online",
+            systemImageName: "checkmark.circle"
+        )
+
+        AppShortcut(
+            intent: ExplainServiceTypeIntent(),
+            phrases: [
+                "Explain a service type with \(.applicationName)",
+                "Explain a Bonjour service with \(.applicationName)"
+            ],
+            shortTitle: "Explain a Service Type",
+            systemImageName: "sparkles"
+        )
+
+        AppShortcut(
+            intent: BroadcastServiceIntent(),
+            phrases: [
+                "Broadcast a service with \(.applicationName)",
+                "Start a Bonjour broadcast with \(.applicationName)"
+            ],
+            shortTitle: "Broadcast a Service",
+            systemImageName: "antenna.radiowaves.left.and.right"
+        )
+
+        AppShortcut(
+            intent: StopBroadcastingIntent(),
+            phrases: [
+                "Stop broadcasting with \(.applicationName)",
+                "Stop all broadcasts with \(.applicationName)"
+            ],
+            shortTitle: "Stop Broadcasting",
+            systemImageName: "stop.circle"
         )
     }
 }

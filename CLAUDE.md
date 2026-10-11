@@ -74,14 +74,14 @@ Each module follows the `{name}/Sources` and `{name}/Tests` layout:
 | **BonjourAIGemini** | Google Gemini implementations of the BonjourAICore protocols + the runtime model catalog. Uses the Gemini Developer API (`generativelanguage.googleapis.com`), not Vertex AI — Vertex needs service-account OAuth the paste-an-API-key sheet can't express. | `GeminiModel` (offline fallback only), `GeminiModelOption`, `GeminiModelCatalog`, `GeminiModelCatalogClient`, `GeminiClient`, `GeminiConfiguration`, `GeminiGenerateRequest`, `GeminiStreamEvent`, `GeminiBonjourChatSession`, `GeminiBonjourServiceExplainer`, `MockGeminiClient` |
 | **BonjourAIOpenAI** | OpenAI implementations of the BonjourAICore protocols + the runtime model catalog. Uses the Responses API (`/v1/responses`) with `store: false`, so OpenAI keeps no copy of the conversation. | `OpenAIModel` (offline fallback only), `OpenAIModelOption`, `OpenAIModelCatalog`, `OpenAIModelCatalogClient`, `OpenAIClient`, `OpenAIConfiguration`, `OpenAIResponseRequest`, `OpenAIStreamEvent`, `OpenAIBonjourChatSession`, `OpenAIBonjourServiceExplainer`, `MockOpenAIClient` |
 | **BonjourAI** | Umbrella module — cloud-aware routing factories + `@_exported import BonjourAICore` so legacy `import BonjourAI` consumers stay working | `CloudAwareBonjourChatSessionFactory`, `CloudAwareBonjourServiceExplainerFactory` |
-| **BonjourAppIntents** | The Siri / Shortcuts / Spotlight actions. Holds the intents and entity; the `AppShortcutsProvider` itself lives in the app target because Xcode won't extract or localize one declared in a package | `ScanForServicesIntent`, `ListDiscoveredServicesIntent`, `BonjourServiceEntity`, `BonjourServiceEntityQuery`, `RecentServiceEntities`, `SiriNetworkSummary`, `IntentScan` |
+| **BonjourAppIntents** | The Siri / Shortcuts / Spotlight actions. Holds the intents and entity; the `AppShortcutsProvider` itself lives in the app target because Xcode won't extract or localize one declared in a package | `ScanForServicesIntent`, `ListDiscoveredServicesIntent`, `FindServicesIntent`, `IsDeviceOnlineIntent`, `OpenServiceIntent`, `ExplainServiceTypeIntent`, `BroadcastServiceIntent`, `StopBroadcastingIntent`, `BonjourServiceEntity`, `BonjourServiceTypeEntity`, `ServiceCategoryAppEnum`, `AppIntentsBridge`, `RecentServiceEntities`, `SiriNetworkSummary`, `IntentScan` |
 | **BonjourUI** | SwiftUI views and view models | All views, `BonjourServicesViewModel`, UI components |
 
 ### Dependency Graph
 
 ```
 App → AppCore, BonjourAppIntents
-AppCore → BonjourUI, BonjourAI, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourAIOpenAI, BonjourScanning, BonjourModels, BonjourStorage, BonjourLocalization, BonjourCore, Core, CoreUI
+AppCore → BonjourUI, BonjourAppIntents, BonjourAI, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourAIOpenAI, BonjourScanning, BonjourModels, BonjourStorage, BonjourLocalization, BonjourCore, Core, CoreUI
 BonjourAppIntents → BonjourAI, BonjourModels, BonjourScanning, BonjourLocalization, LocalNetworkMonitor, BonjourCore
 BonjourUI → BonjourModels, BonjourScanning, BonjourLocalization, BonjourAI, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourAIOpenAI, BonjourStorage, BonjourCore, Core, CoreUI
 BonjourAI → BonjourAICore, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourAIOpenAI, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
@@ -170,6 +170,16 @@ raw `String`s, and an identifier the binary doesn't recognize is **only**
 discarded when a live list proves it retired — otherwise a model newer than the
 build would be silently replaced by the default.
 
+### Siri Actions and App State
+
+Most Siri actions scan with their own `IntentScan` and need nothing from
+the app. The ones that act on app state (Broadcast, Stop Broadcasting,
+Explain, Open in KozBon) go through `AppIntentsBridge.shared`, which
+`AppCoreViewModel.connect(to:)` fills in. That happens in `AppLaunch`,
+reached from `KozBonApp.init()` via `AppCoreScene.prepareForLaunch()`,
+because the system can launch the app in the background for an action
+and never build a scene. Keep that wiring out of the scene.
+
 ## Code Conventions
 
 - Use `// MARK: -` section headers to organize code within files
@@ -237,7 +247,7 @@ App Intents strings are the one place the `BonjourLocalization.Strings.*` rule d
 | Catalog | Holds | Referenced from |
 |---------|-------|-----------------|
 | `KozBon/Localizable.xcstrings` | intent titles, descriptions, Spotlight keywords, entity type name, shortcut tile `shortTitle`s | `.init("intent_…")` in `BonjourAppIntents` |
-| `KozBon/AppShortcuts.xcstrings` | the 10 spoken Siri phrases **only** | extracted from `KozBonAppShortcuts.swift` |
+| `KozBon/AppShortcuts.xcstrings` | the spoken Siri phrases **only** | extracted from `KozBonAppShortcuts.swift` |
 | `KozBon/InfoPlist.xcstrings` | permission usage descriptions | read by iOS directly |
 
 **`KozBonAppShortcuts` must stay in the app target.** Xcode passes `--no-app-shortcuts-localization` to the App Intents extractor for every SPM target and omits it only for the app target. Declared in a package, the phrases can't be localized *and* never reach `Metadata.appintents` at all — `autoShortcuts` comes out empty and Siri offers nothing.

@@ -220,10 +220,14 @@ let package = Package(
     )
     + makeTargets(
         name: "BonjourAppIntents",
-        dependencies: ["BonjourAI", "BonjourModels", "BonjourScanning", "BonjourLocalization", "LocalNetworkMonitor"],
-        // `BonjourCore` is reached transitively at runtime but
-        // the tests construct its types directly.
-        additionalTestDependencies: [.byName(name: "BonjourCore")]
+        dependencies: [
+            "BonjourAI",
+            "BonjourCore",
+            "BonjourModels",
+            "BonjourScanning",
+            "BonjourLocalization",
+            "LocalNetworkMonitor"
+        ]
     )
     + makeTargets(
         name: "AppCore",
@@ -239,6 +243,7 @@ let package = Package(
             "BonjourAIOpenAI",
             "BonjourStorage",
             "BonjourUI",
+            "BonjourAppIntents",
             .product(name: "CoreUI", package: "Core")
         ]
     )

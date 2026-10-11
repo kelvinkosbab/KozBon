@@ -11,6 +11,8 @@ import BonjourScanning
 import BonjourAI
 import BonjourAIApple
 import BonjourAICore
+import BonjourAppIntents
+import BonjourModels
 import BonjourStorage
 
 // MARK: - AppCoreViewModel
@@ -159,6 +161,32 @@ public final class AppCoreViewModel {
         chatSession = chatSessionFactory.makeForCurrentEnvironment(
             publishManager: dependencies.bonjourPublishManager
         )
+    }
+
+    // MARK: - Siri Actions
+
+    /// Gives the Siri actions the app's publish manager and explainer
+    /// factory, and keeps the Discover tab in step with broadcasts they
+    /// start or stop.
+    public func connect(to bridge: AppIntentsBridge) {
+        bridge.publishManager = dependencies.bonjourPublishManager
+        bridge.makeExplainer = { [weak self] in
+            self?.explainerFactory.makeForCurrentEnvironment()
+        }
+        bridge.didPublish = { [weak self] service in
+            self?.servicesViewModel.recordPublishedService(service)
+        }
+        bridge.didStopAllBroadcasts = { [weak self] in
+            self?.servicesViewModel.removeAllPublishedServices()
+        }
+    }
+
+    /// Shows the service Open in KozBon asked for: switches to Discover
+    /// and selects it, now or once the scan finds it.
+    public func handleOpenRequest(from bridge: AppIntentsBridge) {
+        guard let request = bridge.consumeOpenRequest() else { return }
+        selectedTab = .bonjour
+        servicesViewModel.selectService(named: request.name, fullType: request.serviceType)
     }
 
     // MARK: - Storefront
