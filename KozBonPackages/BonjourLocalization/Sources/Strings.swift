@@ -1454,6 +1454,37 @@ public enum Strings {
             .init("settings_ambient_background_footer", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        public static var usingSiri: LocalizedStringResource {
+            .init("settings_using_siri", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var usingSiriFooter: LocalizedStringResource {
+            .init("settings_using_siri_footer", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var usingShortcuts: LocalizedStringResource {
+            .init("settings_using_shortcuts", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var siriSay: LocalizedStringResource {
+            .init("settings_siri_say", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Quoted Siri phrases the Settings row cycles through. Each
+        /// must match a phrase in `KozBonAppShortcuts` and its
+        /// translation in `AppShortcuts.xcstrings`, or Siri won't
+        /// recognize what the row tells people to say.
+        public static var siriPhrases: [LocalizedStringResource] {
+            [
+                .init("settings_siri_phrase_scan", bundle: .atURL(Bundle.module.bundleURL)),
+                .init("settings_siri_phrase_how_many", bundle: .atURL(Bundle.module.bundleURL)),
+                .init("settings_siri_phrase_whats_on", bundle: .atURL(Bundle.module.bundleURL)),
+                .init("settings_siri_phrase_find_speakers", bundle: .atURL(Bundle.module.bundleURL)),
+                .init("settings_siri_phrase_device_online", bundle: .atURL(Bundle.module.bundleURL)),
+                .init("settings_siri_phrase_explain", bundle: .atURL(Bundle.module.bundleURL))
+            ]
+        }
+
         public static var resetFooter: LocalizedStringResource {
             .init("settings_reset_footer", bundle: .atURL(Bundle.module.bundleURL))
         }
@@ -1495,6 +1526,42 @@ public enum Strings {
         ///   has none.
         public static func releaseSummary(_ english: String) -> String {
             String(localized: String.LocalizationValue(english), bundle: .module)
+        }
+    }
+
+    /// The "Using KozBon with Shortcuts" page pushed from Settings.
+    public enum ShortcutsGuide {
+
+        public static var intro: LocalizedStringResource {
+            .init("settings_shortcuts_intro", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var ideas: LocalizedStringResource {
+            .init("settings_shortcuts_ideas", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var morningTitle: LocalizedStringResource {
+            .init("settings_shortcuts_idea_morning_title", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var morningDetail: LocalizedStringResource {
+            .init("settings_shortcuts_idea_morning_detail", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var offlineTitle: LocalizedStringResource {
+            .init("settings_shortcuts_idea_offline_title", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var offlineDetail: LocalizedStringResource {
+            .init("settings_shortcuts_idea_offline_detail", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var broadcastTitle: LocalizedStringResource {
+            .init("settings_shortcuts_idea_broadcast_title", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var broadcastDetail: LocalizedStringResource {
+            .init("settings_shortcuts_idea_broadcast_detail", bundle: .atURL(Bundle.module.bundleURL))
         }
     }
 
@@ -1678,6 +1745,10 @@ public enum Strings {
 
         public static var suggestion7: LocalizedStringResource {
             .init("chat_suggestion_7", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var suggestion8: LocalizedStringResource {
+            .init("chat_suggestion_8", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         public static var errorTooLong: LocalizedStringResource {

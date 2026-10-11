@@ -95,4 +95,16 @@ struct BonjourLocalizationTests {
         let english = "A summary that was never added to the catalog."
         #expect(Strings.Settings.releaseSummary(english) == english)
     }
+
+    // MARK: - Siri Phrases
+
+    @Test("`siriPhrases` gives the Settings row several distinct phrases to cycle through")
+    func siriPhrasesAreDistinct() {
+        let keys = Strings.Settings.siriPhrases.map(\.key)
+        #expect(keys.count > 1)
+        #expect(Set(keys).count == keys.count)
+        for phrase in Strings.Settings.siriPhrases {
+            #expect(!String(localized: phrase).isEmpty)
+        }
+    }
 }

@@ -178,6 +178,47 @@ extension BonjourChatPromptBuilder {
         return parts.joined(separator: "\n")
     }
 
+    /// Query-triggered block listing KozBon's Siri actions and
+    /// their phrases, for questions about Siri or the Shortcuts app.
+    /// Empty otherwise, so like ``whatsNewBlock(query:)`` it costs
+    /// nothing on ordinary network questions.
+    ///
+    /// The phrases must match `KozBonAppShortcuts` in the app target;
+    /// update both together.
+    public static func siriBlock(query: String) -> String {
+        guard ChatSiriIntentDetector.wantsSiriHelp(message: query) else {
+            return ""
+        }
+        return """
+        KOZBON SIRI & SHORTCUTS (answer Siri and Shortcuts questions ONLY from \
+        this list; never invent phrases or actions). Every phrase ends with \
+        "with KozBon" and is spoken in the language Siri is set to. Siri learns \
+        them after KozBon has been opened once.
+        - Scan for Services: "Scan my network with KozBon" or "How many devices \
+        are on my network with KozBon". Says how many devices and services it found.
+        - List Discovered Services: "What's on my network with KozBon" or "Show \
+        Bonjour services with KozBon". Lists every service found.
+        - Find Services: "Find printers with KozBon". Also works with Apple \
+        devices, smart home, speakers, AirPlay or media, and remote access or SSH.
+        - Check If Device Is Online: "Check if a device is online with KozBon". \
+        Asks for the device name and answers yes or no.
+        - Explain a Service Type: "Explain a service type with KozBon". Asks \
+        which type and reads a short explanation.
+        - Broadcast a Service: "Broadcast a service with KozBon". Asks for a TCP \
+        service type and a port, then advertises it.
+        - Stop Broadcasting: "Stop broadcasting with KozBon".
+        - Open Service in KozBon: Shortcuts app only, no phrase. Opens a service \
+        an earlier step returned.
+        In the Shortcuts app, tap KozBon to see every action, or add the actions \
+        to a new shortcut and combine them with other steps, for example check \
+        whether the printer is online and then show a notification. Personal \
+        automations can run them when the device joins a Wi-Fi network, and they \
+        can be assigned to the Action Button. On iPhone, iPad, and Vision Pro, \
+        KozBon's Settings tab has a "Using Siri with KozBon" section with these phrases and a button \
+        that opens KozBon in the Shortcuts app.
+        """
+    }
+
     // MARK: - Context Section Builders
 
     /// Renders a single-line scan-freshness summary so the model can

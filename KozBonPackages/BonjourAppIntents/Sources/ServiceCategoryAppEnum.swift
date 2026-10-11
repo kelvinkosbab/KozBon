@@ -40,7 +40,7 @@ public enum ServiceCategoryAppEnum: String, AppEnum, Sendable {
         ),
         .mediaAndStreaming: DisplayRepresentation(
             title: .init("intent_category_media"),
-            synonyms: [.init("intent_category_synonym_airplay")]
+            synonyms: [.init("intent_category_synonym_airplay"), .init("intent_category_synonym_speakers")]
         ),
         .remoteAccess: DisplayRepresentation(
             title: .init("intent_category_remote_access"),

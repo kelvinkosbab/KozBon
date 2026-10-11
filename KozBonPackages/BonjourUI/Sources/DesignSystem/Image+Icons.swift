@@ -45,6 +45,7 @@ public extension Image {
 
     static var bonjour: Image { Image(systemName: Iconography.bonjour) }
     static var appleIntelligence: Image { Image(systemName: Iconography.appleIntelligence) }
+    static var siri: Image { Image(systemName: Iconography.siri) }
 
     // `Image.anthropicClaude` and `Image.googleGemini` are
     // defined in `BonjourAIAnthropic/Image+AnthropicBrand.swift`

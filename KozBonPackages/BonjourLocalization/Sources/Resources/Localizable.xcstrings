@@ -16344,6 +16344,59 @@
         }
       }
     },
+    "chat_suggestion_8": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How do I use Siri and Shortcuts with KozBon?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Cómo uso Siri y Atajos con KozBon?"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comment utiliser Siri et Raccourcis avec KozBon ?"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wie nutze ich Siri und Kurzbefehle mit KozBon?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBonでSiriとショートカットを使うには？"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "如何在 KozBon 中使用 Siri 和快捷指令？"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "كيف أستخدم Siri والاختصارات مع KozBon؟"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "איך משתמשים ב-Siri ובקיצורים עם KozBon?"
+          }
+        }
+      }
+    },
     "detail_details": {
       "extractionState": "manual",
       "localizations": {
@@ -24931,6 +24984,960 @@
           "stringUnit": {
             "state": "translated",
             "value": "מציף כל כרטיסייה במפל צבע שנע באיטיות. נכבה אוטומטית כאשר הגברת ניגודיות, הפחתת שקיפות או היפוך חכם פעילים, ונשאר קבוע במצב הפחתת תנועה או מצב חיסכון בסוללה."
+          }
+        }
+      }
+    },
+    "settings_using_siri": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Using Siri with KozBon"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usar Siri con KozBon"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utiliser Siri avec KozBon"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siri mit KozBon verwenden"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBonでSiriを使う"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在 KozBon 中使用 Siri"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "استخدام Siri مع KozBon"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שימוש ב-Siri עם KozBon"
+          }
+        }
+      }
+    },
+    "settings_using_siri_footer": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Say any of the phrases above to Siri to scan your network, find devices, and more. In the Shortcuts app, you can combine KozBon's actions into your own shortcuts and automations."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Di a Siri cualquiera de las frases anteriores para escanear tu red, encontrar dispositivos y mucho más. En la app Atajos, puedes combinar las acciones de KozBon en tus propios atajos y automatizaciones."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dites à Siri l’une des phrases ci-dessus pour analyser votre réseau, trouver des appareils et bien plus. Dans l’app Raccourcis, vous pouvez combiner les actions de KozBon dans vos propres raccourcis et automatisations."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sag Siri einen der Sätze oben, um dein Netzwerk zu scannen, Geräte zu finden und mehr. In der Kurzbefehle-App kannst du die Aktionen von KozBon zu eigenen Kurzbefehlen und Automationen kombinieren."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "上のフレーズをSiriに話しかけると、ネットワークのスキャンやデバイスの検索などができます。ショートカットAppでは、KozBonのアクションを組み合わせて独自のショートカットやオートメーションを作成できます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "对 Siri 说出上面任意一句，即可扫描你的网络、查找设备等。在“快捷指令”App 中，你可以将 KozBon 的操作组合成自己的快捷指令和自动化。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قل لـ Siri أيًا من العبارات أعلاه لفحص شبكتك والعثور على الأجهزة والمزيد. في تطبيق الاختصارات، يمكنك دمج إجراءات KozBon في اختصاراتك وأتمتتك الخاصة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אמרו ל-Siri כל אחד מהמשפטים שלמעלה כדי לסרוק את הרשת, למצוא מכשירים ועוד. ביישום 'קיצורים' אפשר לשלב את הפעולות של KozBon בקיצורים ובאוטומציות משלכם."
+          }
+        }
+      }
+    },
+    "settings_using_shortcuts": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Using KozBon with Shortcuts"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usar KozBon con Atajos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utiliser KozBon avec Raccourcis"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBon mit Kurzbefehlen verwenden"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ショートカットでKozBonを使う"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在快捷指令中使用 KozBon"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "استخدام KozBon مع الاختصارات"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שימוש ב-KozBon עם קיצורים"
+          }
+        }
+      }
+    },
+    "settings_shortcuts_intro": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBon's actions are in the Shortcuts app. Add them to your own shortcuts, or run them automatically with an automation."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Las acciones de KozBon están en la app Atajos. Añádelas a tus propios atajos o ejecútalas automáticamente con una automatización."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les actions de KozBon se trouvent dans l'app Raccourcis. Ajoutez-les à vos propres raccourcis ou lancez-les automatiquement avec une automatisation."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Aktionen von KozBon findest du in der App „Kurzbefehle“. Füge sie deinen eigenen Kurzbefehlen hinzu oder führe sie mit einer Automation automatisch aus."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBonのアクションはショートカットAppにあります。自分のショートカットに追加したり、オートメーションで自動的に実行したりできます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBon 的操作位于“快捷指令”App 中。你可以将它们添加到自己的快捷指令，或通过自动化自动运行。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تتوفر إجراءات KozBon في تطبيق الاختصارات. أضفها إلى اختصاراتك الخاصة، أو شغّلها تلقائيًا باستخدام أتمتة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הפעולות של KozBon נמצאות ביישום קיצורים. אפשר להוסיף אותן לקיצורים שלך, או להריץ אותן אוטומטית בעזרת אוטומציה."
+          }
+        }
+      }
+    },
+    "settings_shortcuts_ideas": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ideas to Try"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ideas para probar"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Idées à essayer"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ideen zum Ausprobieren"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "試してみたいアイデア"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "可以试试的点子"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أفكار للتجربة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "רעיונות לנסות"
+          }
+        }
+      }
+    },
+    "settings_shortcuts_idea_morning_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check your network every morning"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Revisa tu red cada mañana"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vérifiez votre réseau chaque matin"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jeden Morgen dein Netzwerk prüfen"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "毎朝ネットワークを確認"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每天早上检查网络"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "افحص شبكتك كل صباح"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בדיקת הרשת בכל בוקר"
+          }
+        }
+      }
+    },
+    "settings_shortcuts_idea_morning_detail": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create a Time of Day automation that runs List Discovered Services and shows the result in a notification."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crea una automatización por hora del día que ejecute Enumerar servicios descubiertos y muestre el resultado en una notificación."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Créez une automatisation à une heure de la journée qui exécute Lister les services découverts et affiche le résultat dans une notification."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erstelle eine Automation zu einer Tageszeit, die „Gefundene Dienste auflisten“ ausführt und das Ergebnis in einer Mitteilung zeigt."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "時刻のオートメーションを作成し、「検出されたサービスを一覧表示」を実行して結果を通知で表示します。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "创建一个“特定时间”自动化，运行“列出已发现的服务”并在通知中显示结果。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أنشئ أتمتة حسب وقت اليوم تشغّل «سرد الخدمات المكتشفة» وتعرض النتيجة في إشعار."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "יוצרים אוטומציה לפי שעה ביום שמריצה את „רשימת השירותים שהתגלו” ומציגה את התוצאה בהודעה."
+          }
+        }
+      }
+    },
+    "settings_shortcuts_idea_offline_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Get an alert when a device goes offline"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recibe un aviso si un dispositivo se desconecta"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Soyez averti quand un appareil se déconnecte"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Benachrichtigung, wenn ein Gerät offline geht"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "デバイスがオフラインになったら通知"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "设备离线时收到提醒"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تلقَّ تنبيهًا عند انقطاع اتصال جهاز"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "התראה כשמכשיר מתנתק"
+          }
+        }
+      }
+    },
+    "settings_shortcuts_idea_offline_detail": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Run Check If a Device Is Online on a schedule, then use If to notify you when the answer is No."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ejecuta Comprobar si un dispositivo está conectado de forma programada y usa Si para avisarte cuando la respuesta sea No."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exécutez Vérifier si un appareil est en ligne à intervalles réguliers, puis utilisez Si pour être averti quand la réponse est Non."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Führe „Prüfen, ob ein Gerät online ist“ zeitgesteuert aus und lass dich mit „Wenn“ benachrichtigen, wenn die Antwort „Nein“ lautet."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「デバイスがオンラインか確認」をスケジュールで実行し、「if文」で答えが「いいえ」のときに通知します。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "按计划运行“检查设备是否在线”，再用“如果”在结果为“否”时通知你。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شغّل «التحقق من اتصال جهاز» وفق جدول، ثم استخدم «إذا» لتنبيهك عندما تكون الإجابة «لا»."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מריצים את „בדיקה אם מכשיר מחובר” לפי לוח זמנים, ומשתמשים ב„אם” כדי לקבל הודעה כשהתשובה היא „לא”."
+          }
+        }
+      }
+    },
+    "settings_shortcuts_idea_broadcast_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Broadcast while you work"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transmite mientras trabajas"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diffusez pendant que vous travaillez"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Während der Arbeit übertragen"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仕事中だけブロードキャスト"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "工作时广播服务"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "البث أثناء العمل"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שידור בזמן העבודה"
+          }
+        }
+      }
+    },
+    "settings_shortcuts_idea_broadcast_detail": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Make a Focus automation that runs Broadcast a Service when your Work Focus turns on, and Stop Broadcasting when it turns off."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crea una automatización de Concentración que ejecute Transmitir un servicio al activar Trabajo y Detener transmisiones al desactivarlo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Créez une automatisation de concentration qui exécute Diffuser un service quand le mode Travail s'active, et Arrêter les diffusions quand il se désactive."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erstelle eine Fokus-Automation, die „Dienst übertragen“ ausführt, wenn dein Fokus „Arbeiten“ startet, und „Übertragungen beenden“, wenn er endet."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "集中モードのオートメーションを作成し、「仕事」がオンになったら「サービスをブロードキャスト」、オフになったら「ブロードキャストを停止」を実行します。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "创建一个专注模式自动化：“工作”打开时运行“广播服务”，关闭时运行“停止广播”。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أنشئ أتمتة تركيز تشغّل «بث خدمة» عند تشغيل تركيز العمل، و«إيقاف البث» عند إيقافه."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "יוצרים אוטומציה של מצב ריכוז שמריצה את „שידור שירות” כשמצב עבודה מופעל, ואת „הפסקת שידורים” כשהוא כבוי."
+          }
+        }
+      }
+    },
+    "settings_siri_say": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Say"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Di"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dites"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sag"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siriに話しかけてみよう"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "对 Siri 说"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قل"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אמרו"
+          }
+        }
+      }
+    },
+    "settings_siri_phrase_scan": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“Scan my network with KozBon”"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "«Escanea mi red con KozBon»"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "« Analyse mon réseau avec KozBon »"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "„Scanne mein Netzwerk mit KozBon“"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「KozBonでネットワークをスキャン」"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“用KozBon扫描我的网络”"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "«افحص شبكتي باستخدام KozBon»"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "„סרוק את הרשת שלי עם KozBon“"
+          }
+        }
+      }
+    },
+    "settings_siri_phrase_how_many": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“How many devices are on my network with KozBon”"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "«Cuántos dispositivos hay en mi red con KozBon»"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "« Combien d’appareils sont sur mon réseau avec KozBon »"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "„Wie viele Geräte sind in meinem Netzwerk mit KozBon“"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「KozBonでネットワークにデバイスが何台あるか」"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“用KozBon查看我的网络上有多少台设备”"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "«كم جهازًا على شبكتي باستخدام KozBon»"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "„כמה מכשירים יש ברשת שלי עם KozBon“"
+          }
+        }
+      }
+    },
+    "settings_siri_phrase_whats_on": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“What’s on my network with KozBon”"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "«Qué hay en mi red con KozBon»"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "« Qu’y a-t-il sur mon réseau avec KozBon »"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "„Was ist in meinem Netzwerk mit KozBon“"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「KozBonでネットワークに何があるか」"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“用KozBon看看我的网络上有什么”"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "«ما الموجود على شبكتي باستخدام KozBon»"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "„מה יש ברשת שלי עם KozBon“"
+          }
+        }
+      }
+    },
+    "settings_siri_phrase_find_speakers": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“Find speakers with KozBon”"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "«Busca altavoces con KozBon»"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "« Trouve les enceintes avec KozBon »"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "„Finde Lautsprecher mit KozBon“"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「KozBonでスピーカーを探して」"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“用 KozBon 查找音箱”"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "«ابحث عن مكبرات الصوت باستخدام KozBon»"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "„חפש רמקולים עם KozBon“"
+          }
+        }
+      }
+    },
+    "settings_siri_phrase_device_online": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“Check if a device is online with KozBon”"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "«Comprueba si un dispositivo está conectado con KozBon»"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "« Vérifie si un appareil est en ligne avec KozBon »"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "„Prüfe mit KozBon, ob ein Gerät online ist“"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「KozBonでデバイスがオンラインか確認して」"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“用 KozBon 检查设备是否在线”"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "«تحقق مما إذا كان جهاز متصلًا باستخدام KozBon»"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "„בדוק אם מכשיר מחובר עם KozBon“"
+          }
+        }
+      }
+    },
+    "settings_siri_phrase_explain": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“Explain a service type with KozBon”"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "«Explica un tipo de servicio con KozBon»"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "« Explique un type de service avec KozBon »"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "„Erkläre einen Diensttyp mit KozBon“"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「KozBonでサービスタイプを解説して」"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“用 KozBon 解读一种服务类型”"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "«اشرح نوع خدمة باستخدام KozBon»"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "„הסבר סוג שירות עם KozBon“"
           }
         }
       }

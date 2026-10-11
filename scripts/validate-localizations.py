@@ -31,6 +31,9 @@ consumes them. Seven hard checks, each reported on stderr:
    translated Siri phrase keeps the `${applicationName}` token. These
    must live in the app target — Xcode disables App Shortcut
    localization for SPM targets.
+8. Every `settings_siri_phrase_*` entry, the phrases the Settings row
+   shows, matches a real Siri phrase in `AppShortcuts.xcstrings` in the
+   same locale, so the row never teaches a phrase Siri won't recognize.
 
 Exits 0 on success, 1 on any failure. Run locally:
 
@@ -153,6 +156,46 @@ def check_app_name_token(catalog: dict) -> list[str]:
             value = localization.get("stringUnit", {}).get("value", "")
             if APP_NAME_TOKEN not in value:
                 failures.append(f"  {key!r} [{locale}]: dropped {APP_NAME_TOKEN}")
+    return failures
+
+
+SIRI_PHRASE_KEY_PREFIX = "settings_siri_phrase_"
+QUOTE_CHARS = "\"'“”„«»「」\u00a0 "
+
+
+def _normalize_phrase(text: str) -> str:
+    """Fold the differences a displayed phrase may have from the spoken
+    one: case, curly apostrophes, and whitespace."""
+    return re.sub(r"\s+", "", text.replace("’", "'").casefold())
+
+
+def check_settings_siri_phrases(catalog: dict, shortcuts_catalog: dict) -> list[str]:
+    """Each phrase the Settings row shows, once its quotes are removed and
+    "KozBon" stands in for the app-name token, must match one of the
+    spoken phrases for that locale. A `${category}` slot matches any
+    text, since the row shows a filled-in example such as printers."""
+    templates: dict[str, list[re.Pattern]] = {}
+    for key, entry in shortcuts_catalog.get("strings", {}).items():
+        for locale, localization in entry.get("localizations", {}).items():
+            value = localization.get("stringUnit", {}).get("value", "")
+            parts = re.split(r"(\$\{\w+\})", value)
+            pattern = "".join(
+                re.escape(_normalize_phrase("KozBon")) if part == APP_NAME_TOKEN
+                else ".+" if re.fullmatch(r"\$\{\w+\}", part)
+                else re.escape(_normalize_phrase(part))
+                for part in parts
+            )
+            templates.setdefault(locale, []).append(re.compile(pattern))
+
+    failures: list[str] = []
+    for key, entry in sorted(catalog.get("strings", {}).items()):
+        if not key.startswith(SIRI_PHRASE_KEY_PREFIX):
+            continue
+        for locale, localization in sorted(entry.get("localizations", {}).items()):
+            shown = localization.get("stringUnit", {}).get("value", "").strip(QUOTE_CHARS)
+            normalized = _normalize_phrase(shown)
+            if not any(t.fullmatch(normalized) for t in templates.get(locale, [])):
+                failures.append(f"  {key!r} [{locale}]: {shown!r}")
     return failures
 
 
@@ -357,6 +400,15 @@ def main() -> int:
             "(Siri cannot match a phrase with no app name in it):"
         )
         failures.extend(dropped_token)
+
+    # Check 8: the phrases the Settings row shows are real Siri phrases.
+    unknown_phrases = check_settings_siri_phrases(catalog, app_shortcuts_catalog)
+    if unknown_phrases:
+        failures.append(
+            "Settings Siri phrases that match no phrase in AppShortcuts.xcstrings "
+            "(Siri won't recognize what the row tells people to say):"
+        )
+        failures.extend(unknown_phrases)
 
     if failures:
         print("\n".join(failures), file=sys.stderr)
