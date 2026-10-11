@@ -89,14 +89,14 @@ struct AmbientMeshWave {
                 let onVerticalEdge = column == 0 || column == lastIndex
                 let onHorizontalEdge = row == 0 || row == lastIndex
 
-                let x = onVerticalEdge
+                let pointX = onVerticalEdge
                     ? restX
                     : restX + lateralOffset(unitX: restX, unitY: restY, time: time, phase: phase)
-                let y = onHorizontalEdge
+                let pointY = onHorizontalEdge
                     ? restY
                     : restY + swellOffset(unitX: restX, unitY: restY, time: time, phase: phase)
 
-                points.append(SIMD2(Float(x), Float(y)))
+                points.append(SIMD2(Float(pointX), Float(pointY)))
             }
         }
 
