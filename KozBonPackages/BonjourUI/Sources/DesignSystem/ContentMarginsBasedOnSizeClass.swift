@@ -14,17 +14,17 @@ private struct ContentMarginsBasedOnSizeClass: ViewModifier {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
     func body(content: Content) -> some View {
+        // One view tree for both size classes: an if/else here would
+        // rebuild the list (losing scroll position and row state)
+        // whenever an iPad window resizes or a Duo folds. A nil
+        // length keeps the system's default margins in compact.
         GeometryReader { geometry in
-            if horizontalSizeClass == .regular {
-                content
-                    .contentMargins(
-                        .horizontal,
-                        margin(for: geometry.size.width),
-                        for: .scrollContent
-                    )
-            } else {
-                content
-            }
+            content
+                .contentMargins(
+                    .horizontal,
+                    horizontalSizeClass == .regular ? margin(for: geometry.size.width) : nil,
+                    for: .scrollContent
+                )
         }
     }
 
