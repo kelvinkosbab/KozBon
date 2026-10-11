@@ -26,7 +26,7 @@ import UIKit
 ///
 /// The long-press ``InsightsContextMenuItems`` is easy to miss, so
 /// the discovered-service and library detail screens also show
-/// Insights as a small capsule just below their header. The glass
+/// Insights as a small centred capsule just below their header. The glass
 /// separates it from the ambient wash, and the label takes the
 /// selected assistant's chat colours (``AmbientMeshPalette/chat(_:)``)
 /// so it reads as that assistant's entry point.
@@ -105,7 +105,7 @@ struct InsightsLink: View {
             .padding(.vertical, 8)
         }
         .buttonStyle(InsightsCapsuleButtonStyle(tint: backend.accentColor))
-        .frame(minHeight: 44)
+        .frame(maxWidth: .infinity, minHeight: 44)
         .dynamicTypeSize(...DynamicTypeSize.accessibility2)
         .listRowBackground(Color.clear)
         .listRowSeparator(.hidden)
