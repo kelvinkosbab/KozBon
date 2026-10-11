@@ -1793,6 +1793,135 @@ public enum Strings {
         }
     }
 
+    // MARK: - Siri
+    //
+    // What Siri says after the Scan and List actions run. Returned as
+    // resolved `String`s because the replies are assembled from several
+    // pieces at runtime. Each lookup carries its English text as the
+    // fallback so the reply still reads correctly where the catalog
+    // doesn't resolve (`swift test` from the CLI).
+
+    public enum Siri {
+
+        /// "%lld devices", with plural variations.
+        public static func deviceCount(_ count: Int) -> String {
+            String.localizedStringWithFormat(
+                NSLocalizedString("siri_device_count", bundle: Bundle.module, value: "%lld devices", comment: ""),
+                count
+            )
+        }
+
+        /// "%lld Bonjour services", with plural variations.
+        public static func serviceCount(_ count: Int) -> String {
+            String.localizedStringWithFormat(
+                NSLocalizedString("siri_service_count", bundle: Bundle.module, value: "%lld Bonjour services", comment: ""),
+                count
+            )
+        }
+
+        /// "Found 3 devices advertising 7 Bonjour services: 2 Apple devices and 1 printer."
+        public static func foundSummary(devices: String, services: String, breakdown: String) -> String {
+            String(
+                format: NSLocalizedString(
+                    "siri_found_summary",
+                    bundle: Bundle.module,
+                    value: "Found %1$@ advertising %2$@: %3$@.",
+                    comment: ""
+                ),
+                devices,
+                services,
+                breakdown
+            )
+        }
+
+        /// "It's Living Room." Names the only device found.
+        public static func singleDevice(_ name: String) -> String {
+            String(
+                format: NSLocalizedString("siri_single_device", bundle: Bundle.module, value: "It's %@.", comment: ""),
+                name
+            )
+        }
+
+        /// "They include Living Room, Office Printer, and 2 more."
+        public static func theyInclude(_ names: String) -> String {
+            String(
+                format: NSLocalizedString("siri_they_include", bundle: Bundle.module, value: "They include %@.", comment: ""),
+                names
+            )
+        }
+
+        /// "%lld more", with plural variations. The tail of a list of names.
+        public static func moreCount(_ count: Int) -> String {
+            String.localizedStringWithFormat(
+                NSLocalizedString("siri_more_count", bundle: Bundle.module, value: "%lld more", comment: ""),
+                count
+            )
+        }
+
+        public static var noServicesFound: String {
+            NSLocalizedString(
+                "siri_no_services_found",
+                bundle: Bundle.module,
+                value: "I didn't find any Bonjour services on your network. "
+                    + "If you haven't allowed KozBon to access your local network, open the app once to allow it.",
+                comment: ""
+            )
+        }
+
+        public static var notOnLocalNetwork: String {
+            NSLocalizedString(
+                "siri_not_on_local_network",
+                bundle: Bundle.module,
+                value: "You're not connected to Wi-Fi or Ethernet, so there's no local network to scan.",
+                comment: ""
+            )
+        }
+
+        // MARK: Device Categories
+
+        public static func appleDevices(_ count: Int) -> String {
+            String.localizedStringWithFormat(
+                NSLocalizedString("siri_category_apple_devices", bundle: Bundle.module, value: "%lld Apple devices", comment: ""),
+                count
+            )
+        }
+
+        public static func mediaDevices(_ count: Int) -> String {
+            String.localizedStringWithFormat(
+                NSLocalizedString("siri_category_media_devices", bundle: Bundle.module, value: "%lld media devices", comment: ""),
+                count
+            )
+        }
+
+        public static func printers(_ count: Int) -> String {
+            String.localizedStringWithFormat(
+                NSLocalizedString("siri_category_printers", bundle: Bundle.module, value: "%lld printers or scanners", comment: ""),
+                count
+            )
+        }
+
+        public static func smartHomeDevices(_ count: Int) -> String {
+            String.localizedStringWithFormat(
+                NSLocalizedString("siri_category_smart_home", bundle: Bundle.module, value: "%lld smart home devices", comment: ""),
+                count
+            )
+        }
+
+        public static func computers(_ count: Int) -> String {
+            String.localizedStringWithFormat(
+                NSLocalizedString("siri_category_computers", bundle: Bundle.module, value: "%lld computers or servers", comment: ""),
+                count
+            )
+        }
+
+        public static func otherDevices(_ count: Int) -> String {
+            String.localizedStringWithFormat(
+                NSLocalizedString("siri_category_other_devices", bundle: Bundle.module, value: "%lld other devices", comment: ""),
+                count
+            )
+        }
+    }
+
     // MARK: - Help Menu (macOS)
     //
     // Items shown in the macOS Help menu via `CommandGroup(replacing: .help)`.

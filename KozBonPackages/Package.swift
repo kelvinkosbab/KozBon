@@ -220,7 +220,7 @@ let package = Package(
     )
     + makeTargets(
         name: "BonjourAppIntents",
-        dependencies: ["BonjourAI", "BonjourModels", "BonjourScanning"],
+        dependencies: ["BonjourAI", "BonjourModels", "BonjourScanning", "BonjourLocalization", "LocalNetworkMonitor"],
         // `BonjourCore` is reached transitively at runtime but
         // the tests construct its types directly.
         additionalTestDependencies: [.byName(name: "BonjourCore")]

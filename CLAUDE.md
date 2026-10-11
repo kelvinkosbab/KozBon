@@ -74,7 +74,7 @@ Each module follows the `{name}/Sources` and `{name}/Tests` layout:
 | **BonjourAIGemini** | Google Gemini implementations of the BonjourAICore protocols + the runtime model catalog. Uses the Gemini Developer API (`generativelanguage.googleapis.com`), not Vertex AI — Vertex needs service-account OAuth the paste-an-API-key sheet can't express. | `GeminiModel` (offline fallback only), `GeminiModelOption`, `GeminiModelCatalog`, `GeminiModelCatalogClient`, `GeminiClient`, `GeminiConfiguration`, `GeminiGenerateRequest`, `GeminiStreamEvent`, `GeminiBonjourChatSession`, `GeminiBonjourServiceExplainer`, `MockGeminiClient` |
 | **BonjourAIOpenAI** | OpenAI implementations of the BonjourAICore protocols + the runtime model catalog. Uses the Responses API (`/v1/responses`) with `store: false`, so OpenAI keeps no copy of the conversation. | `OpenAIModel` (offline fallback only), `OpenAIModelOption`, `OpenAIModelCatalog`, `OpenAIModelCatalogClient`, `OpenAIClient`, `OpenAIConfiguration`, `OpenAIResponseRequest`, `OpenAIStreamEvent`, `OpenAIBonjourChatSession`, `OpenAIBonjourServiceExplainer`, `MockOpenAIClient` |
 | **BonjourAI** | Umbrella module — cloud-aware routing factories + `@_exported import BonjourAICore` so legacy `import BonjourAI` consumers stay working | `CloudAwareBonjourChatSessionFactory`, `CloudAwareBonjourServiceExplainerFactory` |
-| **BonjourAppIntents** | The Siri / Shortcuts / Spotlight actions. Holds the intents and entity; the `AppShortcutsProvider` itself lives in the app target because Xcode won't extract or localize one declared in a package | `ScanForServicesIntent`, `ListDiscoveredServicesIntent`, `BonjourServiceEntity`, `BonjourServiceEntityQuery` |
+| **BonjourAppIntents** | The Siri / Shortcuts / Spotlight actions. Holds the intents and entity; the `AppShortcutsProvider` itself lives in the app target because Xcode won't extract or localize one declared in a package | `ScanForServicesIntent`, `ListDiscoveredServicesIntent`, `BonjourServiceEntity`, `BonjourServiceEntityQuery`, `RecentServiceEntities`, `SiriNetworkSummary`, `IntentScan` |
 | **BonjourUI** | SwiftUI views and view models | All views, `BonjourServicesViewModel`, UI components |
 
 ### Dependency Graph
@@ -82,7 +82,7 @@ Each module follows the `{name}/Sources` and `{name}/Tests` layout:
 ```
 App → AppCore, BonjourAppIntents
 AppCore → BonjourUI, BonjourAI, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourAIOpenAI, BonjourScanning, BonjourModels, BonjourStorage, BonjourLocalization, BonjourCore, Core, CoreUI
-BonjourAppIntents → BonjourAI, BonjourModels, BonjourScanning, BonjourCore
+BonjourAppIntents → BonjourAI, BonjourModels, BonjourScanning, BonjourLocalization, LocalNetworkMonitor, BonjourCore
 BonjourUI → BonjourModels, BonjourScanning, BonjourLocalization, BonjourAI, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourAIOpenAI, BonjourStorage, BonjourCore, Core, CoreUI
 BonjourAI → BonjourAICore, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourAIOpenAI, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
 BonjourAIApple → BonjourAICore, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
@@ -179,7 +179,7 @@ build would be silently replaced by the default.
 - Use `[weak self]` in `Task` closures that capture `self` with a delay (e.g., `Task.sleep`), to avoid retaining objects past their lifetime
 - Respect `@Environment(\.accessibilityReduceMotion)` — use `withAnimation(reduceMotion ? nil : .default)` instead of bare `withAnimation`
 - Use semantic fonts (`.font(.headline)`) not `.font(.system(.headline))` for Dynamic Type support
-- All user-facing strings must use `BonjourLocalization.Strings.*` — never hardcode English strings in views. **Two compiler-enforced exceptions**, both in the app target (see "App Intents & Siri Strings" below): App Intents metadata and App Shortcut phrases cannot resolve against a package bundle.
+- All user-facing strings must use `BonjourLocalization.Strings.*` — never hardcode English strings in views. **Two compiler-enforced exceptions**, both in the app target (see "App Intents & Siri Strings" below): App Intents metadata and App Shortcut phrases cannot resolve against a package bundle. What Siri *says* at runtime is not metadata, so it goes through `Strings.Siri` like any other string.
 - Service type definitions go in `MyServiceType+Library.swift` — each new type needs a `static private let` definition AND an entry in `tcpServiceTypes` or `udpServiceTypes` array AND a corresponding `NSBonjourServices` entry in `Info.plist`
 
 ## Swift 6.2 Strict Concurrency

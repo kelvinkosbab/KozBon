@@ -24,7 +24,8 @@ import BonjourModels
 /// the result travels safely. These tests pin that the
 /// capture is faithful for both user-given names ("Living
 /// Room TV") and auto-generated hostname-style names that
-/// need voice-friendly substitution.
+/// need voice-friendly substitution, and that unresolved values
+/// reach Shortcuts as `nil`.
 @Suite("BonjourServiceEntity")
 @MainActor
 struct BonjourServiceEntityTests {
@@ -66,6 +67,19 @@ struct BonjourServiceEntityTests {
         #expect(entity.port == 8080)
     }
 
+    @Test("An unresolved port is `nil`, not 0, so Shortcuts sees no value")
+    func unresolvedPortIsNil() {
+        let entity = BonjourServiceEntity(from: makeService(port: 0))
+        #expect(entity.port == nil)
+    }
+
+    @Test("An unresolved hostname is `nil`, not the display sentinel \"NA\"")
+    func unresolvedHostnameIsNil() {
+        // A NetService built in a test never resolves a host.
+        let entity = BonjourServiceEntity(from: makeService())
+        #expect(entity.hostname == nil)
+    }
+
     @Test("`init(from:)` captures the wire `_<type>._tcp` form for Shortcuts pipelines")
     func capturesWireServiceType() {
         let entity = BonjourServiceEntity(from: makeService(type: "airplay"))
@@ -99,17 +113,36 @@ struct BonjourServiceEntityTests {
 
     // MARK: - EntityQuery
 
-    @Test("`BonjourServiceEntityQuery.entities(for:)` returns empty (Bonjour discoveries don't persist)")
-    func queryEntitiesIsEmpty() async throws {
-        let query = BonjourServiceEntityQuery()
-        let result = try await query.entities(for: ["any-id"])
+    @Test("The query finds entities from the latest List result by id")
+    func queryFindsRecentEntitiesById() async throws {
+        let store = RecentServiceEntities()
+        let tv = BonjourServiceEntity(from: makeService(name: "Living Room TV"))
+        let printer = BonjourServiceEntity(from: makeService(name: "Office Printer", type: "ipp"))
+        await store.replace(with: [tv, printer])
+
+        let query = BonjourServiceEntityQuery(store: store)
+        let result = try await query.entities(for: [printer.id])
+        #expect(result == [printer])
+    }
+
+    @Test("Unknown ids resolve to nothing")
+    func queryReturnsEmptyForUnknownIds() async throws {
+        let store = RecentServiceEntities()
+        await store.replace(with: [BonjourServiceEntity(from: makeService())])
+
+        let query = BonjourServiceEntityQuery(store: store)
+        let result = try await query.entities(for: ["not-a-service"])
         #expect(result.isEmpty)
     }
 
-    @Test("`BonjourServiceEntityQuery.suggestedEntities()` returns empty")
-    func querySuggestedIsEmpty() async throws {
-        let query = BonjourServiceEntityQuery()
-        let result = try await query.suggestedEntities()
-        #expect(result.isEmpty)
+    @Test("Suggestions are the latest List result, and empty before any scan")
+    func querySuggestsRecentEntities() async throws {
+        let store = RecentServiceEntities()
+        let query = BonjourServiceEntityQuery(store: store)
+        #expect(try await query.suggestedEntities().isEmpty)
+
+        let entity = BonjourServiceEntity(from: makeService())
+        await store.replace(with: [entity])
+        #expect(try await query.suggestedEntities() == [entity])
     }
 }
