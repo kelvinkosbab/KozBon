@@ -25047,49 +25047,49 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Say any of these to Siri. Open Shortcuts to see every KozBon action and combine them into shortcuts of your own."
+            "value": "Say any of the phrases above to Siri to scan your network, find devices, and more. In the Shortcuts app, you can combine KozBon's actions into your own shortcuts and automations."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Di cualquiera de estas frases a Siri. Abre Atajos para ver todas las acciones de KozBon y combinarlas en tus propios atajos."
+            "value": "Di a Siri cualquiera de las frases anteriores para escanear tu red, encontrar dispositivos y mucho más. En la app Atajos, puedes combinar las acciones de KozBon en tus propios atajos y automatizaciones."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dites l’une de ces phrases à Siri. Ouvrez Raccourcis pour voir toutes les actions de KozBon et les combiner dans vos propres raccourcis."
+            "value": "Dites à Siri l’une des phrases ci-dessus pour analyser votre réseau, trouver des appareils et bien plus. Dans l’app Raccourcis, vous pouvez combiner les actions de KozBon dans vos propres raccourcis et automatisations."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sag einen dieser Sätze zu Siri. Öffne Kurzbefehle, um alle Aktionen von KozBon zu sehen und sie zu eigenen Kurzbefehlen zu kombinieren."
+            "value": "Sag Siri einen der Sätze oben, um dein Netzwerk zu scannen, Geräte zu finden und mehr. In der Kurzbefehle-App kannst du die Aktionen von KozBon zu eigenen Kurzbefehlen und Automationen kombinieren."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "これらのフレーズをSiriに話しかけてください。ショートカットを開くと、KozBonのすべてのアクションを確認し、組み合わせて独自のショートカットを作成できます。"
+            "value": "上のフレーズをSiriに話しかけると、ネットワークのスキャンやデバイスの検索などができます。ショートカットAppでは、KozBonのアクションを組み合わせて独自のショートカットやオートメーションを作成できます。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "对 Siri 说出其中任意一句即可。打开“快捷指令”可查看 KozBon 的所有操作，并将它们组合成你自己的快捷指令。"
+            "value": "对 Siri 说出上面任意一句，即可扫描你的网络、查找设备等。在“快捷指令”App 中，你可以将 KozBon 的操作组合成自己的快捷指令和自动化。"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "قل أيًا من هذه العبارات لـ Siri. افتح الاختصارات لرؤية كل إجراءات KozBon ودمجها في اختصاراتك الخاصة."
+            "value": "قل لـ Siri أيًا من العبارات أعلاه لفحص شبكتك والعثور على الأجهزة والمزيد. في تطبيق الاختصارات، يمكنك دمج إجراءات KozBon في اختصاراتك وأتمتتك الخاصة."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "אמרו ל-Siri כל אחד מהמשפטים האלה. פתחו את 'קיצורים' כדי לראות את כל הפעולות של KozBon ולשלב אותן בקיצורים משלכם."
+            "value": "אמרו ל-Siri כל אחד מהמשפטים שלמעלה כדי לסרוק את הרשת, למצוא מכשירים ועוד. ביישום 'קיצורים' אפשר לשלב את הפעולות של KozBon בקיצורים ובאוטומציות משלכם."
           }
         }
       }
