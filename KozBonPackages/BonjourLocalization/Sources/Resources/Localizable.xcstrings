@@ -21062,6 +21062,60 @@
         }
       }
     },
+    "section_txt_records_footer": {
+      "comment": "Footer under the TXT records list on a service's detail page, explaining what TXT records are for. \"TXT\" is a DNS record type; do not translate it.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TXT records are key-value pairs a service advertises alongside its address, such as a model name, firmware version, supported features, or the path to connect to. Apps use them to identify devices and decide how to talk to them before connecting."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Los registros TXT son pares clave-valor que un servicio anuncia junto con su dirección, como el nombre del modelo, la versión de firmware, las funciones compatibles o la ruta para conectarse. Las apps los usan para identificar dispositivos y decidir cómo comunicarse con ellos antes de conectarse."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les enregistrements TXT sont des paires clé-valeur qu’un service annonce avec son adresse, comme le nom du modèle, la version du firmware, les fonctionnalités prises en charge ou le chemin de connexion. Les apps s’en servent pour identifier les appareils et choisir comment communiquer avec eux avant de se connecter."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TXT-Einträge sind Schlüssel-Wert-Paare, die ein Dienst zusammen mit seiner Adresse bekannt gibt, etwa Modellname, Firmware-Version, unterstützte Funktionen oder den Pfad zum Verbinden. Apps nutzen sie, um Geräte zu erkennen und vor dem Verbinden zu entscheiden, wie sie mit ihnen kommunizieren."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TXTレコードは、サービスがアドレスと一緒に公開するキーと値のペアです。モデル名、ファームウェアのバージョン、対応機能、接続先のパスなどが含まれます。アプリはこれを使って、接続する前にデバイスを識別し、通信方法を判断します。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TXT 记录是服务随地址一起公布的键值对，例如型号名称、固件版本、支持的功能或连接路径。应用会在连接之前使用这些信息来识别设备并决定如何与其通信。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "سجلات TXT هي أزواج من المفاتيح والقيم تعلنها الخدمة مع عنوانها، مثل اسم الطراز أو إصدار البرنامج الثابت أو الميزات المدعومة أو مسار الاتصال. تستخدمها التطبيقات للتعرّف على الأجهزة وتحديد طريقة التواصل معها قبل الاتصال."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "רשומות TXT הן צמדי מפתח-ערך שהשירות מפרסם יחד עם הכתובת שלו, כמו שם הדגם, גרסת הקושחה, התכונות הנתמכות או הנתיב להתחברות. אפליקציות משתמשות בהן כדי לזהות מכשירים ולהחליט איך לתקשר איתם לפני ההתחברות."
+          }
+        }
+      }
+    },
     "settings_about": {
       "extractionState": "manual",
       "localizations": {

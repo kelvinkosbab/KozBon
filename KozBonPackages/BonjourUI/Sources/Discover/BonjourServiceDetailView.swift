@@ -244,7 +244,7 @@ public struct BonjourServiceDetailView: View {
 
     @ViewBuilder
     private func editableTxtRecordsSection() -> some View {
-        Section(String(localized: Strings.Sections.txtRecords)) {
+        Section {
             ForEach(viewModel.dataRecords, id: \.key) { dataRecord in
                 editableTxtRecordRow(dataRecord)
             }
@@ -257,6 +257,10 @@ public struct BonjourServiceDetailView: View {
             }
             .accessibilityHint(Strings.Accessibility.addTxtRecordHint)
             .accessibilityIdentifier("txt_record_add_button")
+        } header: {
+            txtRecordsHeader
+        } footer: {
+            Text(Strings.Sections.txtRecordsFooter)
         }
     }
 
@@ -301,7 +305,7 @@ public struct BonjourServiceDetailView: View {
 
     @ViewBuilder
     private func readOnlyTxtRecordsSection() -> some View {
-        Section(String(localized: Strings.Sections.txtRecords)) {
+        Section {
             ForEach(viewModel.dataRecords, id: \.key) { dataRecord in
                 TitleDetailStackView(title: dataRecord.key, detail: dataRecord.value)
                     .draggable("\(dataRecord.key)=\(dataRecord.value)")
@@ -317,7 +321,16 @@ public struct BonjourServiceDetailView: View {
                     }
                     .contextMenu { copyRecordContextMenu(for: dataRecord) }
             }
+        } header: {
+            txtRecordsHeader
+        } footer: {
+            Text(Strings.Sections.txtRecordsFooter)
         }
+    }
+
+    private var txtRecordsHeader: some View {
+        Text(Strings.Sections.txtRecords)
+            .accessibilityAddTraits(.isHeader)
     }
 
     /// Shared "Copy record / Copy value" context menu used by both editable
