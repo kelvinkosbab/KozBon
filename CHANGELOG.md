@@ -9,9 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [4.9] - 2026-10-11
 
+### Added
+
+- An Insights button on discovered-service and library detail pages, under the header, that asks the selected AI to explain the service. It takes on that AI's colours, and offers sign-in or Apple Intelligence setup when the AI isn't ready (#66).
+- A footer under a service's TXT records explaining what they are and how apps use them (#66).
+
 ### Changed
 
 - A new app icon: a blue dot with broken ripples that fade as they sweep up and to the right, replacing an emblem App Review found too close to Apple's Bonjour logo. On visionOS the ripples float above a white back layer.
+- In Settings → Assistant, a signed-in cloud AI shows a single glass Sign out button instead of a "Signed in" label, and the model picker no longer repeats the model's identifier underneath (#68).
 
 ## [4.8] - 2026-10-10
 

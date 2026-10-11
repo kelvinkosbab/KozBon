@@ -367,21 +367,21 @@ KozBon מאתר ומסביר את השירותים שמכשירים מפרסמי
 
 4.8 shipped on iOS and iPadOS only, so the platforms get different text. On **iOS and iPadOS**, paste the 4.9 line alone. On **macOS and visionOS**, paste the 4.9 line followed by a blank line and the 4.8 text below it, since those users are updating from 4.7.
 
-**English (U.S.):** KozBon has a new icon: a blue dot sending out ripples, like a scan sweeping the network around it.
+**English (U.S.):** KozBon has a new icon: a blue dot sending out ripples, like a scan sweeping the network around it. Service and library details now have an Insights button that asks your chosen AI to explain the service, and TXT records come with a note on what they're for.
 
-**Spanish (Spain):** KozBon tiene un nuevo icono: un punto azul que emite ondas, como un escaneo que recorre la red a su alrededor.
+**Spanish (Spain):** KozBon tiene un nuevo icono: un punto azul que emite ondas, como un escaneo que recorre la red a su alrededor. Los detalles de servicios y de la biblioteca tienen ahora un botón Información que pide a la IA elegida que explique el servicio, y los registros TXT incluyen una nota sobre para qué sirven.
 
-**French:** KozBon a une nouvelle icône : un point bleu qui émet des ondes, comme un balayage du réseau qui l'entoure.
+**French:** KozBon a une nouvelle icône : un point bleu qui émet des ondes, comme un balayage du réseau qui l'entoure. Les détails des services et de la bibliothèque ont désormais un bouton Aperçus qui demande à l'IA choisie d'expliquer le service, et les enregistrements TXT sont accompagnés d'une note sur leur utilité.
 
-**German:** KozBon hat ein neues Symbol: einen blauen Punkt, der Wellen aussendet – wie ein Scan, der das Netzwerk um ihn herum absucht.
+**German:** KozBon hat ein neues Symbol: einen blauen Punkt, der Wellen aussendet – wie ein Scan, der das Netzwerk um ihn herum absucht. Dienst- und Bibliotheksdetails haben jetzt eine Schaltfläche „Einblicke“, mit der die gewählte KI den Dienst erklärt, und TXT-Einträge enthalten einen Hinweis, wofür sie dienen.
 
-**Japanese:** KozBon のアイコンが新しくなりました。周囲のネットワークをスキャンするように、青い点から波紋が広がるデザインです。
+**Japanese:** KozBon のアイコンが新しくなりました。周囲のネットワークをスキャンするように、青い点から波紋が広がるデザインです。サービスとライブラリの詳細画面に「インサイト」ボタンが追加され、選択したAIがサービスについて説明します。TXTレコードには、その用途を説明するメモが付くようになりました。
 
-**Chinese (Simplified):** KozBon 换上了新图标：一个蓝点向外发出涟漪，就像在扫描周围的网络。
+**Chinese (Simplified):** KozBon 换上了新图标：一个蓝点向外发出涟漪，就像在扫描周围的网络。服务和资源库的详细信息页面新增了“洞察”按钮，可让你选择的 AI 解释该服务；TXT 记录也附有说明其用途的注释。
 
-**Arabic:** لدى KozBon أيقونة جديدة: نقطة زرقاء تُطلق تموّجات، كأنها تمسح الشبكة من حولها.
+**Arabic:** لدى KozBon أيقونة جديدة: نقطة زرقاء تُطلق تموّجات، كأنها تمسح الشبكة من حولها. تتضمن الآن تفاصيل الخدمات والمكتبة زر «رؤى» الذي يطلب من الذكاء الاصطناعي الذي اخترته شرح الخدمة، وتأتي سجلات TXT مع ملاحظة توضّح الغرض منها.
 
-**Hebrew:** ל-KozBon יש סמל חדש: נקודה כחולה שמפיצה אדוות, כמו סריקה של הרשת שסביבה.
+**Hebrew:** ל-KozBon יש סמל חדש: נקודה כחולה שמפיצה אדוות, כמו סריקה של הרשת שסביבה. בפרטי השירותים והספרייה יש עכשיו כפתור ״תובנות״ שמבקש מהבינה המלאכותית שבחרתם להסביר את השירות, ולרשומות TXT מצורפת הערה על מה הן משמשות.
 
 ### Carried over from 4.8 (macOS and visionOS only)
 
