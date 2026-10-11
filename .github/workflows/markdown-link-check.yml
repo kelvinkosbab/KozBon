@@ -81,6 +81,9 @@ jobs:
             --accept 200,206,429
             ${{ steps.changed.outputs.files }}
           fail: true
+          # A changed file with no links (e.g. docs/app-store-metadata.md)
+          # has nothing to check, which isn't a failure.
+          failIfEmpty: false
 
   full-sweep:
     name: Nightly full sweep
