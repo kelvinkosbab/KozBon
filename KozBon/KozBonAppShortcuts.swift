@@ -30,13 +30,10 @@ import Foundation
 /// - **Action Button** (iPhone 15 Pro+) — assignable target
 /// - **Apple Intelligence** (iOS 26+) — natural-language match
 ///
-/// The `\(.applicationName)` token expands to the app's display
-/// name — which is "KozBon" in every locale. It does not localize
-/// the phrase: the surrounding text below is an untranslated
-/// literal, so a Spanish user still has to say "Scan my network
-/// with KozBon". Localizing these (and `shortTitle`) requires an
-/// `AppShortcuts.xcstrings` catalog in this module; none exists
-/// yet, so the whole Siri surface ships English-only.
+/// The `\(.applicationName)` token expands to "KozBon" in every
+/// locale. The phrases themselves are translated in
+/// `AppShortcuts.xcstrings`, and the `shortTitle`s in
+/// `Localizable.xcstrings`, both in this target.
 ///
 /// The conversational `AskKozBonIntent` (and its supporting
 /// `BonjourSiriPromptBuilder` / `SiriResponsePostProcessor`) was
@@ -56,19 +53,15 @@ public struct KozBonAppShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: ScanForServicesIntent(),
             phrases: [
-                // Voice-first phrasing: the user wants Siri to
-                // run the scan and read back a count. Five
-                // phrases cover the major verb variations a
-                // user might reach for ("scan", "discover",
-                // "look for", "run a scan") without diluting
-                // disambiguation against `ListDiscovered…`,
-                // which uses different verbs ("list", "show",
-                // "find", "what's on").
+                // Voice-first: Siri scans and reads back counts.
+                // Scan owns "scan", "count", and "how many"; List
+                // owns "list", "show", and "what's on". No verb
+                // belongs to both, so Siri can't pick the wrong one.
                 "Scan my network with \(.applicationName)",
                 "Scan for Bonjour services with \(.applicationName)",
-                "Discover services with \(.applicationName)",
-                "Look for Bonjour services with \(.applicationName)",
-                "Run a Bonjour scan with \(.applicationName)"
+                "Run a Bonjour scan with \(.applicationName)",
+                "Count devices on my network with \(.applicationName)",
+                "How many devices are on my network with \(.applicationName)"
             ],
             shortTitle: "Scan for Services",
             systemImageName: "wifi"
@@ -77,19 +70,13 @@ public struct KozBonAppShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: ListDiscoveredServicesIntent(),
             phrases: [
-                // Data-first phrasing. "Show" is more natural
-                // than "list" in casual voice but "list" is
-                // more natural in Shortcuts-builder context;
-                // both forms ship so the same intent surfaces
-                // for either user mental model. The
-                // question-form phrase ("What's on my
-                // network…") catches users who think in
-                // questions rather than commands.
+                // Data-first: "list" suits the Shortcuts editor,
+                // "show" and "what's on" suit casual speech.
                 "List Bonjour services with \(.applicationName)",
                 "Show Bonjour services with \(.applicationName)",
                 "What's on my network with \(.applicationName)",
                 "List services on my network with \(.applicationName)",
-                "Find Bonjour services with \(.applicationName)"
+                "Show devices on my network with \(.applicationName)"
             ],
             shortTitle: "List Discovered Services",
             systemImageName: "list.bullet"

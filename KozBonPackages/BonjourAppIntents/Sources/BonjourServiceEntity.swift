@@ -22,26 +22,19 @@ import BonjourModels
 /// represent a stable identity the user can hold onto across
 /// invocations and pipe between Shortcuts steps.
 ///
-/// This entity captures the four fields a Shortcuts user is most
-/// likely to consume — **name**, **service type**, **hostname**,
-/// **port** — projected to plain `String`/`Int` so the values
-/// travel through Shortcuts cleanly.
+/// The fields Shortcuts can read are declared with `@Property`, so a
+/// later step can pull out the name, type, hostname, or port. Without
+/// it Shortcuts sees only the title and subtitle.
 public struct BonjourServiceEntity: AppEntity, Sendable, Hashable {
 
     // MARK: - Identity
 
     /// Stable per-session identifier from `BonjourService.id`
     /// (derived from `NetService.hashValue`). Stable across the
-    /// life of a single scan but not across launches — the
-    /// `EntityQuery` below treats lookups by id as ephemeral
-    /// matches against a recent snapshot.
+    /// life of a single scan but not across launches, so
+    /// ``BonjourServiceEntityQuery`` can only resolve ids from the
+    /// latest scan in this process.
     public let id: String
-
-    // MARK: - Display Fields
-
-    /// User-facing service name (e.g. "Living Room TV"). What
-    /// Siri reads aloud and what Shortcuts shows in the picker.
-    public let name: String
 
     /// Voice-friendly version of ``name``. For most services
     /// this is identical to `name`. For auto-generated
@@ -52,42 +45,39 @@ public struct BonjourServiceEntity: AppEntity, Sendable, Hashable {
     /// device class instead of pronouncing the hex character
     /// by character.
     ///
-    /// Stored alongside `name` rather than replacing it because
-    /// Shortcuts users may want the raw advertised name (for
-    /// "copy to clipboard" / "send via SMS" steps), while the
-    /// voice-rendering path wants the friendly form. Two
-    /// fields, two consumers.
+    /// Not a Shortcuts property: steps that copy or send the
+    /// name want the advertised one.
     public let voiceFriendlyName: String
 
-    /// Full DNS-SD service type (e.g. `_airplay._tcp`). Surface
-    /// the wire form rather than a friendly name because
-    /// Shortcuts users plumbing this through to a "tap to copy"
-    /// or "send via Mac" step probably want the canonical
-    /// identifier.
-    public let serviceType: String
+    // MARK: - Shortcuts Properties
 
-    /// Voice- and UI-friendly display name for the service type
-    /// (e.g. "AirPlay" rather than `_airplay._tcp`). Captured at
-    /// init time from `BonjourServiceType.name` so the entity
-    /// stays `Sendable` — without this projection, the
-    /// `displayRepresentation` getter would need access to the
-    /// `@MainActor`-isolated library lookup, which doesn't
-    /// compose with `AppEntity`'s synchronous protocol.
-    ///
-    /// Falls back to the wire `serviceType` when the service's
-    /// type record has no display name (custom types created
-    /// without one, or rare malformed entries).
-    public let serviceTypeDisplayName: String
+    /// User-facing service name (e.g. "Living Room TV"). What
+    /// Siri reads aloud and what Shortcuts shows in the picker.
+    @Property(title: .init("intent_entity_property_name"))
+    public var name: String
 
-    /// Resolved hostname (`SomeMac.local.`) or the literal
-    /// sentinel `"NA"` when the service hasn't resolved yet.
-    /// Mirrors `BonjourService.hostName` semantics.
-    public let hostname: String
+    /// Display name for the service type (e.g. "AirPlay"). Captured at
+    /// init because the library lookup is `@MainActor` and
+    /// `displayRepresentation` is synchronous. Falls back to the wire
+    /// ``serviceType`` when the type has no display name.
+    @Property(title: .init("intent_entity_property_type"))
+    public var serviceTypeDisplayName: String
 
-    /// Service port. `0` if the service hasn't resolved a port
-    /// yet — the runtime model exposes `Int32`, which we widen
-    /// to `Int` for Shortcuts.
-    public let port: Int
+    /// Full DNS-SD service type (e.g. `_airplay._tcp`).
+    @Property(title: .init("intent_entity_property_bonjour_type"))
+    public var serviceType: String
+
+    /// The resolved DNS hostname (`Living-Room.local.`), or `nil` when
+    /// the service didn't resolve during the scan. Unlike
+    /// `BonjourService.hostName`, this is the raw value, usable in a
+    /// URL or an SSH step.
+    @Property(title: .init("intent_entity_property_hostname"))
+    public var hostname: String?
+
+    /// The service port, or `nil` when it didn't resolve during the
+    /// scan.
+    @Property(title: .init("intent_entity_property_port"))
+    public var port: Int?
 
     // MARK: - AppEntity
 
@@ -117,66 +107,67 @@ public struct BonjourServiceEntity: AppEntity, Sendable, Hashable {
     /// the App Intents boundary.
     @MainActor
     public init(from service: BonjourService) {
-        // `BonjourService.id` is `Int` (the cached
-        // `NetService.hashValue`). App Intents `EntityIdentifier`
-        // requires the id type to be `Hashable & Sendable`; any of
-        // the standard scalar types qualify, but we project to
-        // `String` so the id is stable across the App Intents
-        // archive format and survives Shortcuts' display
-        // serialization without surprises.
+        // `BonjourService.id` is `Int`; a `String` id survives the
+        // App Intents archive format and Shortcuts' serialization
+        // without surprises.
         self.id = String(service.id)
-        self.name = service.service.name
-        // Capture the voice-friendly form too. The renderer
-        // returns the original verbatim for user-given names
-        // ("Living Room TV") and substitutes a friendly device
-        // class for hostname-style names ("iPhone-1F2A" →
-        // "iPhone"), so this is safe to compute up-front for
-        // every entity.
+        // Returns user-given names ("Living Room TV") verbatim and
+        // substitutes a device class for hostname-style ones
+        // ("iPhone-1F2A" → "iPhone").
         self.voiceFriendlyName = SiriServiceNameRenderer.voiceFriendlyName(for: service)
-        self.serviceType = service.serviceType.fullType
-        // Capture the friendly type name now while we're on the
-        // MainActor — falls back to the wire form when the type's
-        // display name is empty (custom types lacking one).
+        self.name = service.service.name
         let friendlyName = service.serviceType.name
         self.serviceTypeDisplayName = friendlyName.isEmpty
             ? service.serviceType.fullType
             : friendlyName
-        self.hostname = service.hostName
-        self.port = service.service.port
+        self.serviceType = service.serviceType.fullType
+        self.hostname = service.service.hostName.flatMap { $0.isEmpty ? nil : $0 }
+        let port = service.service.port
+        self.port = port > 0 ? port : nil
+    }
+
+    // MARK: - Hashable
+
+    // Written by hand because the `@Property` wrappers aren't Hashable.
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.id == rhs.id
+            && lhs.name == rhs.name
+            && lhs.serviceType == rhs.serviceType
+            && lhs.hostname == rhs.hostname
+            && lhs.port == rhs.port
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
 
 // MARK: - BonjourServiceEntityQuery
 
-/// Minimal `EntityQuery` for ``BonjourServiceEntity``.
+/// Resolves ``BonjourServiceEntity`` ids against the latest List
+/// result in this process.
 ///
-/// App Intents requires `defaultQuery` on every `AppEntity`, but
-/// our entities are ephemeral discoveries — there's no persistent
-/// store to query. The query intentionally returns empty arrays
-/// for both lookup paths: callers are expected to obtain
-/// entities by running ``ListDiscoveredServicesIntent`` and using
-/// the returned values directly, not by re-querying by id later.
-///
-/// If a future iteration wants stable Shortcuts that reference a
-/// specific service by name across sessions, the query body
-/// can be filled in to drive a fresh scan and match by id —
-/// but for Phase 2 the empty default is honest about the
-/// transient nature of Bonjour state.
+/// Bonjour discoveries don't persist, so an id from an earlier launch
+/// resolves to nothing. The query never starts a scan of its own: a
+/// lookup can run in contexts where a local-network prompt would
+/// surprise the user.
 public struct BonjourServiceEntityQuery: EntityQuery {
 
-    public init() {}
+    private let store: RecentServiceEntities
+
+    public init() {
+        self.store = .shared
+    }
+
+    init(store: RecentServiceEntities) {
+        self.store = store
+    }
 
     public func entities(for identifiers: [BonjourServiceEntity.ID]) async throws -> [BonjourServiceEntity] {
-        // Bonjour discoveries don't persist across sessions, so a
-        // lookup by id from a Shortcut step run hours later
-        // wouldn't find anything useful. Return empty rather than
-        // run a fresh scan — the latter would surprise the user
-        // with permission prompts in unexpected contexts.
-        []
+        await store.entities(for: identifiers)
     }
 
     public func suggestedEntities() async throws -> [BonjourServiceEntity] {
-        // Same reasoning — no stable suggestions to surface.
-        []
+        await store.all()
     }
 }

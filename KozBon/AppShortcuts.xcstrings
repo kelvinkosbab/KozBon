@@ -1,110 +1,110 @@
 {
   "sourceLanguage": "en",
   "strings": {
-    "Discover services with ${applicationName}": {
+    "Count devices on my network with ${applicationName}": {
       "comment": "Spoken Siri phrase. Must read as a natural spoken command and must keep the ${applicationName} token, which Siri replaces with the app name.",
       "extractionState": "manual",
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "اكتشف الخدمات باستخدام ${applicationName}"
+            "value": "عُدّ الأجهزة على شبكتي باستخدام ${applicationName}"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Entdecke Dienste mit ${applicationName}"
+            "value": "Zähle die Geräte in meinem Netzwerk mit ${applicationName}"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Discover services with ${applicationName}"
+            "value": "Count devices on my network with ${applicationName}"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Descubre servicios con ${applicationName}"
+            "value": "Cuenta los dispositivos de mi red con ${applicationName}"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Découvre les services avec ${applicationName}"
+            "value": "Compte les appareils sur mon réseau avec ${applicationName}"
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "גלה שירותים עם ${applicationName}"
+            "value": "ספור את המכשירים ברשת שלי עם ${applicationName}"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "${applicationName}でサービスを検出"
+            "value": "${applicationName}でネットワーク上のデバイスを数えて"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "用${applicationName}发现服务"
+            "value": "用${applicationName}数一数我的网络上的设备"
           }
         }
       }
     },
-    "Find Bonjour services with ${applicationName}": {
+    "How many devices are on my network with ${applicationName}": {
       "comment": "Spoken Siri phrase. Must read as a natural spoken command and must keep the ${applicationName} token, which Siri replaces with the app name.",
       "extractionState": "manual",
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "جد خدمات Bonjour باستخدام ${applicationName}"
+            "value": "كم جهازًا على شبكتي باستخدام ${applicationName}"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Finde Bonjour-Dienste mit ${applicationName}"
+            "value": "Wie viele Geräte sind in meinem Netzwerk mit ${applicationName}"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Find Bonjour services with ${applicationName}"
+            "value": "How many devices are on my network with ${applicationName}"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Encuentra servicios Bonjour con ${applicationName}"
+            "value": "Cuántos dispositivos hay en mi red con ${applicationName}"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Trouve des services Bonjour avec ${applicationName}"
+            "value": "Combien d'appareils sont sur mon réseau avec ${applicationName}"
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "מצא שירותי Bonjour עם ${applicationName}"
+            "value": "כמה מכשירים יש ברשת שלי עם ${applicationName}"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "${applicationName}でBonjourサービスを見つける"
+            "value": "${applicationName}でネットワークにデバイスが何台あるか"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "用${applicationName}查找 Bonjour 服务"
+            "value": "用${applicationName}查看我的网络上有多少台设备"
           }
         }
       }
@@ -213,60 +213,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "用${applicationName}列出我网络上的服务"
-          }
-        }
-      }
-    },
-    "Look for Bonjour services with ${applicationName}": {
-      "comment": "Spoken Siri phrase. Must read as a natural spoken command and must keep the ${applicationName} token, which Siri replaces with the app name.",
-      "extractionState": "manual",
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ابحث عن خدمات Bonjour القريبة باستخدام ${applicationName}"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sieh nach Bonjour-Diensten mit ${applicationName}"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Look for Bonjour services with ${applicationName}"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Localiza servicios Bonjour con ${applicationName}"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cherche des services Bonjour avec ${applicationName}"
-          }
-        },
-        "he": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "חפש שירותי Bonjour עם ${applicationName}"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "${applicationName}でBonjourサービスを探す"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "用${applicationName}查找 Bonjour 服务"
           }
         }
       }
@@ -483,6 +429,60 @@
           "stringUnit": {
             "state": "translated",
             "value": "用${applicationName}显示 Bonjour 服务"
+          }
+        }
+      }
+    },
+    "Show devices on my network with ${applicationName}": {
+      "comment": "Spoken Siri phrase. Must read as a natural spoken command and must keep the ${applicationName} token, which Siri replaces with the app name.",
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أظهر الأجهزة على شبكتي باستخدام ${applicationName}"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zeige die Geräte in meinem Netzwerk mit ${applicationName}"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show devices on my network with ${applicationName}"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Muestra los dispositivos de mi red con ${applicationName}"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Affiche les appareils sur mon réseau avec ${applicationName}"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הצג את המכשירים ברשת שלי עם ${applicationName}"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "${applicationName}でネットワーク上のデバイスを表示"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用${applicationName}显示我的网络上的设备"
           }
         }
       }

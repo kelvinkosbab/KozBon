@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Siri now answers in your language, counts devices rather than services (an Apple TV is one Apple device, not three), and says when you're not on Wi-Fi or Ethernet instead of blaming permissions.
+- Services returned by the List Discovered Services shortcut expose their name, type, hostname, and port to later steps, and can be passed between steps. An unresolved hostname or port is empty rather than "NA" or 0.
+- The Scan and List Siri actions no longer share verbs: Scan answers "scan", "count", and "how many"; List answers "list", "show", and "what's on".
+- "Generating explanation…" in the Insights sheet shows in the same shimmering glass capsule as the chat's scanning row (#71).
+
+### Removed
+
+- The SiriKit entitlement and Siri permission text left over from the retired Ask KozBon feature; Siri actions don't need them.
+
 ## [4.9] - 2026-10-11
 
 ### Added

@@ -18,8 +18,8 @@ consumes them. Seven hard checks, each reported on stderr:
    for every `summary` in `ReleaseNotes.all` — each English summary is
    its own catalog key, resolved by `Strings.Settings.releaseSummary`.
 5. `InfoPlist.xcstrings` is valid JSON and locale-complete. These are
-   the system-presented permission prompts (`NSLocalNetworkUsage-
-   Description`, `NSSiriUsageDescription`); a missing locale means iOS
+   the system-presented permission prompt (`NSLocalNetworkUsage-
+   Description`) and the app name; a missing locale means iOS
    shows an English prompt in an otherwise localized alert. Entries
    marked "do not translate" (the app's brand name) are exempt.
 6. `KozBon/Localizable.xcstrings` is valid JSON and locale-complete.

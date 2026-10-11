@@ -1,22 +1,20 @@
 //
 //  BonjourService+HostIdentifier.swift
-//  BonjourUI
+//  BonjourModels
 //
 //  Copyright © 2016-present Kozinga. All rights reserved.
 //
 
 import Foundation
-import BonjourModels
 
 // MARK: - BonjourService + HostIdentifier
 
-extension BonjourService {
+public extension BonjourService {
 
     /// The name identifying the device this service runs on.
     ///
-    /// Shared by the row title and the host section header so the two
-    /// can't drift — a header that reads differently from every row
-    /// beneath it is worse than no header.
+    /// Shared by the Discover row title, its host section header, and
+    /// the Siri summary's device count, so the three can't drift.
     ///
     /// Handles the `"NA"` sentinel that ``BonjourService/hostName``
     /// returns when the underlying `NetService.hostName` is `nil`
