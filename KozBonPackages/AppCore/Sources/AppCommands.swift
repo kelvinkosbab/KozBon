@@ -48,7 +48,6 @@ struct AppCommands: Commands {
 
         // URLs are hardcoded constants — `Link` requires a
         // non-optional `URL`, and these can't fail at runtime.
-        // swiftlint:disable force_unwrapping
         CommandGroup(replacing: .help) {
             Link(
                 String(localized: Strings.Help.kozbonOnGitHub),
@@ -81,7 +80,6 @@ struct AppCommands: Commands {
                 destination: URL(string: "https://datatracker.ietf.org/doc/html/rfc6763")!
             )
         }
-        // swiftlint:enable force_unwrapping
     }
 }
 #endif
