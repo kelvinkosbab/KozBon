@@ -1466,8 +1466,8 @@ public enum Strings {
             .init("settings_using_shortcuts", bundle: .atURL(Bundle.module.bundleURL))
         }
 
-        public static var siriSay: LocalizedStringResource {
-            .init("settings_siri_say", bundle: .atURL(Bundle.module.bundleURL))
+        public static var askSiri: LocalizedStringResource {
+            .init("settings_ask_siri", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         /// Quoted Siri phrases the Settings row cycles through. Each
