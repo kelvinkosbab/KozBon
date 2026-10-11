@@ -76,8 +76,7 @@ let package = Package(
         .library(name: "LocalNetworkMonitor", targets: ["LocalNetworkMonitor"])
     ],
     dependencies: [
-        .package(url: "https://github.com/kelvinkosbab/Core.git", branch: "main"),
-        .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", from: "0.63.2")
+        .package(url: "https://github.com/kelvinkosbab/Core.git", from: "1.0.1")
     ],
     targets: makeTargets(
         name: "BonjourCore",
