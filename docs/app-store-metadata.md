@@ -365,20 +365,20 @@ KozBon מאתר ומסביר את השירותים שמכשירים מפרסמי
 
 ## What's New in This Version (4.8)
 
-Paste into each localization's What's New field. None of them names OpenAI.
+Paste into each localization's What's New field. None of them names OpenAI: the last sentence covers the China mainland exclusion without naming the provider, which the listing can't do.
 
-**English (U.S.):** Settings → Assistant now keeps each AI provider's model and sign-in controls in its own row, and the Chat tab takes on the colours of the AI you've selected. On devices without Apple Intelligence, the Chat tab now appears whenever any supported cloud provider has a key.
+**English (U.S.):** Settings → Assistant now keeps each AI provider's model and sign-in controls in its own row, and the Chat tab takes on the colours of the AI you've selected. On devices without Apple Intelligence, the Chat tab now appears whenever any supported cloud provider has a key. Some cloud AI providers aren't available on the China mainland App Store.
 
-**Spanish (Spain):** Ajustes → Asistente ahora muestra el modelo y el inicio de sesión de cada proveedor de IA en su propia fila, y la pestaña Chat adopta los colores de la IA que hayas elegido. En dispositivos sin Apple Intelligence, la pestaña Chat aparece siempre que haya una clave de cualquier proveedor en la nube compatible.
+**Spanish (Spain):** Ajustes → Asistente ahora muestra el modelo y el inicio de sesión de cada proveedor de IA en su propia fila, y la pestaña Chat adopta los colores de la IA que hayas elegido. En dispositivos sin Apple Intelligence, la pestaña Chat aparece siempre que haya una clave de cualquier proveedor en la nube compatible. Algunos proveedores de IA en la nube no están disponibles en el App Store de China continental.
 
-**French:** Réglages → Assistant affiche désormais le modèle et la connexion de chaque fournisseur d'IA dans sa propre ligne, et l'onglet Chat prend les couleurs de l'IA choisie. Sur les appareils sans Apple Intelligence, l'onglet Chat apparaît dès qu'un fournisseur cloud compatible dispose d'une clé.
+**French:** Réglages → Assistant affiche désormais le modèle et la connexion de chaque fournisseur d'IA dans sa propre ligne, et l'onglet Chat prend les couleurs de l'IA choisie. Sur les appareils sans Apple Intelligence, l'onglet Chat apparaît dès qu'un fournisseur cloud compatible dispose d'une clé. Certains fournisseurs d'IA cloud ne sont pas proposés sur l'App Store de Chine continentale.
 
-**German:** Einstellungen → Assistent zeigt Modell und Anmeldung jedes KI-Anbieters jetzt in einer eigenen Zeile, und der Chat-Tab übernimmt die Farben der ausgewählten KI. Auf Geräten ohne Apple Intelligence erscheint der Chat-Tab, sobald für einen unterstützten Cloud-Anbieter ein Schlüssel hinterlegt ist.
+**German:** Einstellungen → Assistent zeigt Modell und Anmeldung jedes KI-Anbieters jetzt in einer eigenen Zeile, und der Chat-Tab übernimmt die Farben der ausgewählten KI. Auf Geräten ohne Apple Intelligence erscheint der Chat-Tab, sobald für einen unterstützten Cloud-Anbieter ein Schlüssel hinterlegt ist. Einige Cloud-KI-Anbieter sind im App Store für das chinesische Festland nicht verfügbar.
 
-**Japanese:** 設定 → アシスタントで、各AIプロバイダのモデルとサインインがそれぞれの行に表示されるようになりました。チャットタブは選択したAIの色で表示されます。Apple Intelligenceに対応していないデバイスでも、対応するクラウドプロバイダのキーがあればチャットタブが表示されます。
+**Japanese:** 設定 → アシスタントで、各AIプロバイダのモデルとサインインがそれぞれの行に表示されるようになりました。チャットタブは選択したAIの色で表示されます。Apple Intelligenceに対応していないデバイスでも、対応するクラウドプロバイダのキーがあればチャットタブが表示されます。一部のクラウドAIプロバイダは、中国本土のApp Storeでは利用できません。
 
-**Chinese (Simplified):** “设置 → 助手”现在会在各 AI 提供商自己的行中显示其模型和登录选项,“聊天”标签页也会采用你所选 AI 的配色。在不支持 Apple Intelligence 的设备上,只要任一受支持的云端提供商已添加密钥,“聊天”标签页就会显示。
+**Chinese (Simplified):** “设置 → 助手”现在会在各 AI 提供商自己的行中显示其模型和登录选项，“聊天”标签页也会采用你所选 AI 的配色。在不支持 Apple Intelligence 的设备上,只要任一受支持的云端提供商已添加密钥，“聊天”标签页就会显示。部分云端 AI 提供商在中国大陆 App Store 中不可用。
 
-**Arabic:** يعرض قسم الإعدادات ← المساعد الآن نموذج كل مزوّد ذكاء اصطناعي وتسجيل الدخول إليه في صفّه الخاص، وتتخذ علامة تبويب الدردشة ألوان الذكاء الاصطناعي الذي اخترته. على الأجهزة التي لا تدعم Apple Intelligence، تظهر علامة تبويب الدردشة متى توفّر مفتاح لأي مزوّد سحابي مدعوم.
+**Arabic:** يعرض قسم الإعدادات ← المساعد الآن نموذج كل مزوّد ذكاء اصطناعي وتسجيل الدخول إليه في صفّه الخاص، وتتخذ علامة تبويب الدردشة ألوان الذكاء الاصطناعي الذي اخترته. على الأجهزة التي لا تدعم Apple Intelligence، تظهر علامة تبويب الدردشة متى توفّر مفتاح لأي مزوّد سحابي مدعوم. بعض مزوّدي الذكاء الاصطناعي السحابي غير متوفرين في متجر App Store في البر الرئيسي للصين.
 
-**Hebrew:** בהגדרות ← עוזר, המודל וההתחברות של כל ספק בינה מלאכותית מוצגים עכשיו בשורה משלו, ולשונית הצ׳אט מקבלת את צבעי הבינה המלאכותית שבחרתם. במכשירים ללא Apple Intelligence, לשונית הצ׳אט מופיעה בכל פעם שיש מפתח לספק ענן נתמך כלשהו.
+**Hebrew:** בהגדרות ← עוזר, המודל וההתחברות של כל ספק בינה מלאכותית מוצגים עכשיו בשורה משלו, ולשונית הצ׳אט מקבלת את צבעי הבינה המלאכותית שבחרתם. במכשירים ללא Apple Intelligence, לשונית הצ׳אט מופיעה בכל פעם שיש מפתח לספק ענן נתמך כלשהו. חלק מספקי הבינה המלאכותית בענן אינם זמינים ב-App Store של סין היבשתית.

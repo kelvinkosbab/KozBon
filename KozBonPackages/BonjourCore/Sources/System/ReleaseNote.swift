@@ -82,7 +82,7 @@ public enum ReleaseNotes {
         ReleaseNote(
             version: "4.8",
             // swiftlint:disable:next line_length
-            summary: "OpenAI GPT joins Apple Intelligence, Anthropic Claude, and Google Gemini as an AI option. Add your own OpenAI API key in Settings, and the GPT model picker loads the models your key can use. OpenAI bills API usage separately from a ChatGPT subscription.\n\nThe Chat tab now takes on the colours of the AI you've selected. On devices without Apple Intelligence, it also appears whenever any cloud provider has a key, not just Claude.",
+            summary: "OpenAI GPT joins Apple Intelligence, Anthropic Claude, and Google Gemini as an AI option. Add your own OpenAI API key in Settings, and the GPT model picker loads the models your key can use. OpenAI bills API usage separately from a ChatGPT subscription. OpenAI GPT isn't offered on the China mainland App Store.\n\nThe Chat tab now takes on the colours of the AI you've selected. On devices without Apple Intelligence, it also appears whenever any cloud provider has a key, not just Claude.",
             highlights: [
                 // swiftlint:disable:next line_length
                 "OpenAI GPT joins Apple Intelligence, Anthropic Claude, and Google Gemini as an AI backend — add your own OpenAI API key in Settings → Assistant. OpenAI bills API usage separately from any ChatGPT subscription.",
@@ -93,7 +93,9 @@ public enum ReleaseNotes {
                 // swiftlint:disable:next line_length
                 "The Chat tab's ambient background now takes on the colours of the selected AI — Apple Intelligence's glow, Claude's warm orange, Gemini's blue and violet, or OpenAI's greens — matching the send button and message bubbles.",
                 // swiftlint:disable:next line_length
-                "On devices without Apple Intelligence, the Chat tab now appears whenever any cloud provider has a key. Previously only a Claude key counted, which hid the tab from Gemini users."
+                "On devices without Apple Intelligence, the Chat tab now appears whenever any cloud provider has a key. Previously only a Claude key counted, which hid the tab from Gemini users.",
+                // swiftlint:disable:next line_length
+                "OpenAI GPT isn't offered on the China mainland App Store, where App Review requires ChatGPT-associated features to be turned off. Anyone there who had it selected is switched back to Apple Intelligence."
             ]
         ),
         ReleaseNote(
