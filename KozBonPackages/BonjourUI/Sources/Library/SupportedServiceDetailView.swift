@@ -56,6 +56,8 @@ public struct SupportedServiceDetailView: View {
                 }
             }
 
+            InsightsButtonSection(action: { isAIExplanationPresented = true })
+
             Section {
                 copyableDetailRow(
                     title: String(localized: Strings.DetailRows.name),

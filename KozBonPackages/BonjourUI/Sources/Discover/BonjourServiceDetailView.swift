@@ -60,6 +60,8 @@ public struct BonjourServiceDetailView: View {
                 }
             }
 
+            InsightsButtonSection(action: { viewModel.isAIExplanationPresented = true })
+
             Section(String(localized: Strings.Sections.information)) {
                 TitleDetailStackView(
                     title: String(localized: Strings.DetailRows.name),
