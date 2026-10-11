@@ -31,6 +31,7 @@ public struct SettingsView: View {
     // `@Environment` on the View struct itself because SwiftUI
     // ownership can't traverse a class boundary.
     @Environment(\.preferencesStore) var preferencesStore
+    @Environment(\.aiBackendAvailability) var aiBackendAvailability
     @Environment(\.aiCloudCredentialsStore) var credentialsStore
     // `internal` so the `+AIBackend` companion file can read it.
     @Environment(\.accessibilityReduceMotion) var reduceMotion

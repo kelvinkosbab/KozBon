@@ -34,13 +34,15 @@ struct CloudAwareOpenAIRoutingTests {
     private func makeChatFactory(
         preferencesStore: PreferencesStore,
         seed: [AICloudProvider: String],
-        appleSession: (any BonjourChatSessionProtocol)? = nil
+        appleSession: (any BonjourChatSessionProtocol)? = nil,
+        storefront: String? = nil
     ) -> CloudAwareBonjourChatSessionFactory {
         CloudAwareBonjourChatSessionFactory(
             appleFactory: StubAppleChatFactory(sessionToReturn: appleSession),
             credentialsStore: InMemoryAICloudCredentialsStore(seed: seed),
             preferencesStore: preferencesStore,
-            openAIClient: MockOpenAIClient()
+            openAIClient: MockOpenAIClient(),
+            isBackendOffered: { AIBackendAvailability.isOffered($0, inStorefront: storefront) }
         )
     }
 
@@ -90,6 +92,57 @@ struct CloudAwareOpenAIRoutingTests {
 
         let session = factory.makeForCurrentEnvironment(publishManager: MockBonjourPublishManager())
         #expect(session is OpenAIBonjourChatSession)
+    }
+
+    // MARK: - China Mainland Storefront
+
+    @Test("On the China storefront, a selected OpenAI backend with a key routes to Apple")
+    func chinaStorefrontNeverRoutesSelectedOpenAI() throws {
+        let preferencesStore = try makeStore()
+        preferencesStore.aiBackend = .openai
+        let appleSession = StubAppleChatSession()
+
+        let factory = makeChatFactory(
+            preferencesStore: preferencesStore,
+            seed: [.openai: "sk-proj-test"],
+            appleSession: appleSession,
+            storefront: AIBackendAvailability.chinaMainlandStorefront
+        )
+
+        let session = factory.makeForCurrentEnvironment(publishManager: MockBonjourPublishManager())
+        #expect(session === appleSession)
+    }
+
+    @Test("On the China storefront, ineligible hardware doesn't fall back to OpenAI")
+    func chinaStorefrontSkipsOpenAIFallback() throws {
+        let preferencesStore = try makeStore()
+        preferencesStore.aiBackend = .appleIntelligence
+
+        let factory = makeChatFactory(
+            preferencesStore: preferencesStore,
+            seed: [.openai: "sk-proj-test"],
+            storefront: AIBackendAvailability.chinaMainlandStorefront
+        )
+
+        #expect(factory.makeForCurrentEnvironment(publishManager: MockBonjourPublishManager()) == nil)
+    }
+
+    @Test("On the China storefront, the explainer doesn't route to OpenAI")
+    func chinaStorefrontExplainerSkipsOpenAI() throws {
+        let preferencesStore = try makeStore()
+        preferencesStore.aiBackend = .openai
+
+        let factory = CloudAwareBonjourServiceExplainerFactory(
+            appleFactory: StubAppleExplainerFactory(explainerToReturn: nil),
+            credentialsStore: InMemoryAICloudCredentialsStore(seed: [.openai: "sk-proj-test"]),
+            preferencesStore: preferencesStore,
+            openAIClient: MockOpenAIClient(),
+            isBackendOffered: {
+                AIBackendAvailability.isOffered($0, inStorefront: AIBackendAvailability.chinaMainlandStorefront)
+            }
+        )
+
+        #expect(factory.makeForCurrentEnvironment() == nil)
     }
 
     // MARK: - Explainer

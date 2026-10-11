@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- The OpenAI GPT backend isn't offered on the China mainland App Store storefront, where App Review requires ChatGPT-associated features to be off. A stored OpenAI selection there reverts to Apple Intelligence, and an OpenAI key is never used as a fallback.
 - Settings → Assistant shows each cloud backend's model picker and sign-in controls inside that backend's own row, with the model as a tinted capsule, instead of at the bottom of the section.
 
 ### Fixed

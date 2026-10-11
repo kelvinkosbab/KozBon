@@ -137,6 +137,7 @@ public enum ReleaseNotes {
                 // hurts the thing being read here.
                 // swiftlint:disable:next line_length
                 "Internal polish and Xcode 27 / iOS 26 compatibility — the assistant tab badge and brand icons render correctly on the new SDK.",
+                // swiftlint:disable:next line_length
                 "Reliability improvements across the chat surface, including a swipe-delete animation fix in the broadcast TXT-record list.",
                 "Brand names (Apple Intelligence, Claude, GitHub) now reliably stay in English across every locale."
             ]
@@ -184,6 +185,7 @@ public enum ReleaseNotes {
                 "Response-length preference (brief / standard / detailed) carries through every AI surface.",
                 "Chat remembers the conversation while the app is running.",
                 "New service filters, animated list transitions when sorting, and context-aware AI prompts.",
+                // swiftlint:disable:next line_length
                 "Settings deep-link surfaces when Apple Intelligence is disabled or unavailable so you can flip it on without leaving KozBon."
             ]
         ),

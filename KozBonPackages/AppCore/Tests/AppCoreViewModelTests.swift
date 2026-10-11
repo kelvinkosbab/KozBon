@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import SwiftData
 import Testing
 import BonjourAICore
+import BonjourStorage
 import BonjourAIApple
 import BonjourScanning
 @testable import AppCore
@@ -70,6 +72,71 @@ struct AppCoreViewModelTests {
     func retiredTokenDoesNotKeepChatTab() {
         let store = InMemoryAICloudCredentialsStore(seed: [.github: "ghp_old"])
         #expect(!AppCoreViewModel.hasCloudChatPath(selectedBackend: .appleIntelligence, credentialsStore: store))
+    }
+
+    // MARK: - Storefront Availability
+
+    @Test("A key for a backend the storefront withholds doesn't keep the Chat tab")
+    func withheldProviderKeyDoesNotKeepChatTab() {
+        let store = InMemoryAICloudCredentialsStore(seed: [.openai: "sk-proj-test"])
+        #expect(!AppCoreViewModel.hasCloudChatPath(
+            selectedBackend: .appleIntelligence,
+            credentialsStore: store,
+            isOffered: { $0 != .openai }
+        ))
+    }
+
+    @Test("A withheld backend left selected doesn't keep the Chat tab")
+    func withheldSelectedBackendDoesNotKeepChatTab() {
+        #expect(!AppCoreViewModel.hasCloudChatPath(
+            selectedBackend: .openai,
+            credentialsStore: InMemoryAICloudCredentialsStore(),
+            isOffered: { $0 != .openai }
+        ))
+    }
+
+    @Test("A storefront that withholds the selected backend resets it to the default")
+    func applyBackendAvailabilityResetsWithheldSelection() throws {
+        let preferencesStore = try makeInMemoryPreferencesStore()
+        preferencesStore.aiBackend = .openai
+        let viewModel = makeViewModel(
+            preferencesStore: preferencesStore,
+            storefront: AIBackendAvailability.chinaMainlandStorefront
+        )
+
+        viewModel.applyBackendAvailability()
+
+        #expect(preferencesStore.aiBackend == .default)
+    }
+
+    @Test("A storefront change keeps a backend it still offers")
+    func applyBackendAvailabilityKeepsOfferedSelection() throws {
+        let preferencesStore = try makeInMemoryPreferencesStore()
+        preferencesStore.aiBackend = .gemini
+        let viewModel = makeViewModel(
+            preferencesStore: preferencesStore,
+            storefront: AIBackendAvailability.chinaMainlandStorefront
+        )
+
+        viewModel.applyBackendAvailability()
+
+        #expect(preferencesStore.aiBackend == .gemini)
+    }
+
+    private func makeInMemoryPreferencesStore() throws -> PreferencesStore {
+        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        let container = try ModelContainer(for: UserPreferences.self, configurations: config)
+        return PreferencesStore(container: container)
+    }
+
+    private func makeViewModel(preferencesStore: PreferencesStore, storefront: String) -> AppCoreViewModel {
+        AppCoreViewModel(
+            dependencies: .mock(),
+            explainerFactory: TestExplainerFactory(),
+            chatSessionFactory: TestChatSessionFactory(),
+            preferencesStore: preferencesStore,
+            aiBackendAvailability: AIBackendAvailability(storefrontCountryCode: storefront)
+        )
     }
 }
 

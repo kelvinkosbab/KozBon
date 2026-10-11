@@ -484,18 +484,10 @@ public final class GeminiBonjourChatSession: BonjourChatSessionProtocol {
 
     // MARK: - Model Selection
 
-    /// The model the session sends to. Reads through to the
-    /// `currentModel` snapshot — set by ``prewarm()`` — falling
-    /// back to ``GeminiModel/default`` for the first turn.
-    ///
-    /// Held as a stored snapshot rather than reading
-    /// `PreferencesStore` directly so the session stays
-    /// preferences-store-agnostic; the consumer
-    /// (`BonjourChatSessionFactory` or its cloud-aware future
-    /// sibling) decides when to inject which model.
-    /// API identifier of the model to send (e.g.
-    /// `claude-opus-5`). A raw `String` rather than
-    /// ``GeminiModel`` because the catalog is fetched at
+    /// API identifier of the model to send. A raw `String` rather
+    /// than ``GeminiModel`` because the catalog is fetched at
     /// runtime — see `PreferencesStore.aiCloudModelIdentifier`.
+    /// The cloud-aware factory injects it from the preferences
+    /// store, so the session stays preferences-store-agnostic.
     public var selectedModel: String = GeminiModel.default.rawValue
 }
