@@ -103,6 +103,8 @@ public struct SettingsView: View {
     public var body: some View {
         NavigationStack {
             Form {
+                siriSection
+
                 // Pre-ADR-0005 this section was gated solely on
                 // `AppleIntelligenceSupport.isDeviceSupported` —
                 // older iPhones / non-M-series Macs never saw the
@@ -127,8 +129,6 @@ public struct SettingsView: View {
                 if preferencesStore.aiAnalysisEnabled {
                     aiBackendSection
                 }
-
-                siriSection
 
                 displaySection
 
