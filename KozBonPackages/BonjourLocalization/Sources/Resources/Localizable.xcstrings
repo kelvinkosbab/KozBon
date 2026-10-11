@@ -25147,6 +25147,430 @@
         }
       }
     },
+    "settings_shortcuts_intro": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBon's actions are in the Shortcuts app. Add them to your own shortcuts, or run them automatically with an automation."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Las acciones de KozBon están en la app Atajos. Añádelas a tus propios atajos o ejecútalas automáticamente con una automatización."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les actions de KozBon se trouvent dans l'app Raccourcis. Ajoutez-les à vos propres raccourcis ou lancez-les automatiquement avec une automatisation."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Aktionen von KozBon findest du in der App „Kurzbefehle“. Füge sie deinen eigenen Kurzbefehlen hinzu oder führe sie mit einer Automation automatisch aus."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBonのアクションはショートカットAppにあります。自分のショートカットに追加したり、オートメーションで自動的に実行したりできます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBon 的操作位于“快捷指令”App 中。你可以将它们添加到自己的快捷指令，或通过自动化自动运行。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تتوفر إجراءات KozBon في تطبيق الاختصارات. أضفها إلى اختصاراتك الخاصة، أو شغّلها تلقائيًا باستخدام أتمتة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הפעולות של KozBon נמצאות ביישום קיצורים. אפשר להוסיף אותן לקיצורים שלך, או להריץ אותן אוטומטית בעזרת אוטומציה."
+          }
+        }
+      }
+    },
+    "settings_shortcuts_ideas": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ideas to Try"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ideas para probar"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Idées à essayer"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ideen zum Ausprobieren"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "試してみたいアイデア"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "可以试试的点子"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أفكار للتجربة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "רעיונות לנסות"
+          }
+        }
+      }
+    },
+    "settings_shortcuts_idea_morning_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check your network every morning"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Revisa tu red cada mañana"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vérifiez votre réseau chaque matin"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jeden Morgen dein Netzwerk prüfen"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "毎朝ネットワークを確認"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每天早上检查网络"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "افحص شبكتك كل صباح"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בדיקת הרשת בכל בוקר"
+          }
+        }
+      }
+    },
+    "settings_shortcuts_idea_morning_detail": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create a Time of Day automation that runs List Discovered Services and shows the result in a notification."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crea una automatización por hora del día que ejecute Enumerar servicios descubiertos y muestre el resultado en una notificación."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Créez une automatisation à une heure de la journée qui exécute Lister les services découverts et affiche le résultat dans une notification."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erstelle eine Automation zu einer Tageszeit, die „Gefundene Dienste auflisten“ ausführt und das Ergebnis in einer Mitteilung zeigt."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "時刻のオートメーションを作成し、「検出されたサービスを一覧表示」を実行して結果を通知で表示します。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "创建一个“特定时间”自动化，运行“列出已发现的服务”并在通知中显示结果。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أنشئ أتمتة حسب وقت اليوم تشغّل «سرد الخدمات المكتشفة» وتعرض النتيجة في إشعار."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "יוצרים אוטומציה לפי שעה ביום שמריצה את „רשימת השירותים שהתגלו” ומציגה את התוצאה בהודעה."
+          }
+        }
+      }
+    },
+    "settings_shortcuts_idea_offline_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Get an alert when a device goes offline"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recibe un aviso si un dispositivo se desconecta"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Soyez averti quand un appareil se déconnecte"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Benachrichtigung, wenn ein Gerät offline geht"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "デバイスがオフラインになったら通知"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "设备离线时收到提醒"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تلقَّ تنبيهًا عند انقطاع اتصال جهاز"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "התראה כשמכשיר מתנתק"
+          }
+        }
+      }
+    },
+    "settings_shortcuts_idea_offline_detail": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Run Check If a Device Is Online on a schedule, then use If to notify you when the answer is No."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ejecuta Comprobar si un dispositivo está conectado de forma programada y usa Si para avisarte cuando la respuesta sea No."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exécutez Vérifier si un appareil est en ligne à intervalles réguliers, puis utilisez Si pour être averti quand la réponse est Non."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Führe „Prüfen, ob ein Gerät online ist“ zeitgesteuert aus und lass dich mit „Wenn“ benachrichtigen, wenn die Antwort „Nein“ lautet."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「デバイスがオンラインか確認」をスケジュールで実行し、「if文」で答えが「いいえ」のときに通知します。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "按计划运行“检查设备是否在线”，再用“如果”在结果为“否”时通知你。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شغّل «التحقق من اتصال جهاز» وفق جدول، ثم استخدم «إذا» لتنبيهك عندما تكون الإجابة «لا»."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מריצים את „בדיקה אם מכשיר מחובר” לפי לוח זמנים, ומשתמשים ב„אם” כדי לקבל הודעה כשהתשובה היא „לא”."
+          }
+        }
+      }
+    },
+    "settings_shortcuts_idea_broadcast_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Broadcast while you work"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transmite mientras trabajas"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diffusez pendant que vous travaillez"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Während der Arbeit übertragen"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仕事中だけブロードキャスト"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "工作时广播服务"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "البث أثناء العمل"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שידור בזמן העבודה"
+          }
+        }
+      }
+    },
+    "settings_shortcuts_idea_broadcast_detail": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Make a Focus automation that runs Broadcast a Service when your Work Focus turns on, and Stop Broadcasting when it turns off."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crea una automatización de Concentración que ejecute Transmitir un servicio al activar Trabajo y Detener transmisiones al desactivarlo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Créez une automatisation de concentration qui exécute Diffuser un service quand le mode Travail s'active, et Arrêter les diffusions quand il se désactive."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erstelle eine Fokus-Automation, die „Dienst übertragen“ ausführt, wenn dein Fokus „Arbeiten“ startet, und „Übertragungen beenden“, wenn er endet."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "集中モードのオートメーションを作成し、「仕事」がオンになったら「サービスをブロードキャスト」、オフになったら「ブロードキャストを停止」を実行します。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "创建一个专注模式自动化：“工作”打开时运行“广播服务”，关闭时运行“停止广播”。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أنشئ أتمتة تركيز تشغّل «بث خدمة» عند تشغيل تركيز العمل، و«إيقاف البث» عند إيقافه."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "יוצרים אוטומציה של מצב ריכוז שמריצה את „שידור שירות” כשמצב עבודה מופעל, ואת „הפסקת שידורים” כשהוא כבוי."
+          }
+        }
+      }
+    },
     "settings_siri_say": {
       "extractionState": "manual",
       "localizations": {

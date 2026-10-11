@@ -1466,6 +1466,38 @@ public enum Strings {
             .init("settings_using_shortcuts", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        public static var shortcutsIntro: LocalizedStringResource {
+            .init("settings_shortcuts_intro", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var shortcutsIdeas: LocalizedStringResource {
+            .init("settings_shortcuts_ideas", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var shortcutsIdeaMorningTitle: LocalizedStringResource {
+            .init("settings_shortcuts_idea_morning_title", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var shortcutsIdeaMorningDetail: LocalizedStringResource {
+            .init("settings_shortcuts_idea_morning_detail", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var shortcutsIdeaOfflineTitle: LocalizedStringResource {
+            .init("settings_shortcuts_idea_offline_title", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var shortcutsIdeaOfflineDetail: LocalizedStringResource {
+            .init("settings_shortcuts_idea_offline_detail", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var shortcutsIdeaBroadcastTitle: LocalizedStringResource {
+            .init("settings_shortcuts_idea_broadcast_title", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var shortcutsIdeaBroadcastDetail: LocalizedStringResource {
+            .init("settings_shortcuts_idea_broadcast_detail", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var siriSay: LocalizedStringResource {
             .init("settings_siri_say", bundle: .atURL(Bundle.module.bundleURL))
         }

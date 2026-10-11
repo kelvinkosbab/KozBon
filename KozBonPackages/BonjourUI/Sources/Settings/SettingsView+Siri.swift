@@ -12,7 +12,7 @@ import BonjourLocalization
 
 /// The "Using Siri with KozBon" section: one row that cycles through
 /// Siri phrases for KozBon's most useful actions, and on iPhone and
-/// iPad a row that opens the Shortcuts app.
+/// iPad a row that pushes ``ShortcutsGuideView``.
 ///
 /// Not shown on macOS.
 extension SettingsView {
@@ -24,20 +24,12 @@ extension SettingsView {
             SiriPhraseRow(phrases: Strings.Settings.siriPhrases)
 
             #if os(iOS)
-            if let url = URL(string: "shortcuts://") {
-                Link(destination: url) {
-                    HStack {
-                        Text(Strings.Settings.usingShortcuts)
-                            .foregroundStyle(.primary)
-                        Spacer()
-                        Image.externalLink
-                            .foregroundStyle(.secondary)
-                            .imageScale(.medium)
-                            .accessibilityHidden(true)
-                    }
-                }
-                .accessibilityIdentifier("settings.shortcutsLink")
+            NavigationLink {
+                ShortcutsGuideView()
+            } label: {
+                Text(Strings.Settings.usingShortcuts)
             }
+            .accessibilityIdentifier("settings.shortcutsLink")
             #endif
         } header: {
             Text(Strings.Settings.usingSiri)
