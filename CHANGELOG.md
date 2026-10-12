@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.10] - 2026-10-12
+
 ### Added
 
 - Find Services: "Find printers with KozBon" scans and returns only one category of services, or one service type in Shortcuts.
@@ -17,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - A "Using Siri with KozBon" section in Settings (iPhone, iPad and Vision Pro) cycles through Siri phrases for KozBon's most useful actions in a single row (also shown at the top of Discover), with a "Using KozBon with Shortcuts" page that links to the Shortcuts app and suggests a few automations.
 - Chat has a "How do I use Siri and Shortcuts with KozBon?" suggestion, and answers Siri and Shortcuts questions from KozBon's real action list.
 - Siri also accepts "Koz Bon", "Kos Bon", and "Cause Bon" for the app's name, since it often mishears "KozBon".
+- On service and library detail pages, the Insights button moves into the navigation bar once its capsule scrolls out of view (#80).
 
 ### Changed
 
@@ -24,6 +27,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Services returned by the List Discovered Services shortcut expose their name, type, hostname, and port to later steps, and can be passed between steps. An unresolved hostname or port is empty rather than "NA" or 0.
 - The Scan and List Siri actions no longer share verbs: Scan answers "scan", "count", and "how many"; List answers "list", "show", and "what's on".
 - "Generating explanation…" in the Insights sheet shows in the same shimmering glass capsule as the chat's scanning row (#71).
+
+### Fixed
+
+- The ambient background holds its current frame while paused and resumes from it instead of jumping (#76), and it drifts smoothly again instead of sitting still and jumping to a new shape about once a minute (#75).
 
 ### Removed
 

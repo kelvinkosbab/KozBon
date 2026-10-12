@@ -43,14 +43,14 @@ struct AmbientMeshWave {
 
     /// Single knob for how fast the water moves. Scales every wave's
     /// angular frequency together, so raising it speeds the motion up
-    /// without changing the shape of the surface. At `2.5` the four
-    /// waves run at 4–7 second periods.
+    /// without changing the shape of the surface. At `1.875` the four
+    /// waves run at 5.5–9 second periods.
     ///
     /// All wave maths runs in `Double`. The view passes seconds since
     /// the reference date (~8×10⁸), where a `Float` can only step in
     /// 64-second increments — the mesh would sit frozen and then jump
     /// to an unrelated frame once a minute.
-    private static let waveSpeed: Double = 2.5
+    private static let waveSpeed: Double = 1.875
 
     /// Mid-point of the per-cell alpha swing.
     /// ``AmbientMeshBackground`` then scales the whole thing by its
