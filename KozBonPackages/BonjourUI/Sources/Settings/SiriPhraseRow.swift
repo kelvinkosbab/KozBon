@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import BonjourAICore
 import BonjourLocalization
 
 // MARK: - SiriPhraseRow
@@ -17,6 +18,7 @@ struct SiriPhraseRow: View {
     let phrases: [LocalizedStringResource]
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorSchemeContrast) private var colorSchemeContrast
     @State private var index = 0
 
     private static let interval: Duration = .seconds(3)
@@ -30,8 +32,8 @@ struct SiriPhraseRow: View {
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(Strings.Settings.askSiri)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(askSiriStyle)
 
                 ZStack(alignment: .leading) {
                     // Every phrase laid out invisibly so the row is as
@@ -60,6 +62,22 @@ struct SiriPhraseRow: View {
         .accessibilityValue(phrases.map { String(localized: $0) }.formatted(.list(type: .or)))
         .accessibilityIdentifier("siriPhrases")
         .task { await cycle() }
+    }
+
+    /// The Apple Intelligence gradient the Insights button uses, or
+    /// its solid accent under Increase Contrast, where the lighter
+    /// stops don't hold contrast.
+    private var askSiriStyle: AnyShapeStyle {
+        if colorSchemeContrast == .increased {
+            return AnyShapeStyle(AIBackend.appleIntelligence.accentColor)
+        }
+        return AnyShapeStyle(
+            LinearGradient(
+                colors: AmbientMeshPalette.chatAccents(for: .appleIntelligence),
+                startPoint: .leading,
+                endPoint: .trailing
+            )
+        )
     }
 
     private func cycle() async {
