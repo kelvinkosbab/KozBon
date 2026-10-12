@@ -25,6 +25,16 @@ struct ShortcutsGuideView: View {
         let detail: LocalizedStringResource
     }
 
+    /// The Shortcuts app icon's pink → purple → blue, used on the
+    /// link while the ambient wash is showing.
+    private static let shortcutsColors: [Color] = [
+        Color(hex: 0xF2557A),
+        Color(hex: 0xA25CE6),
+        Color(hex: 0x4A6CF2)
+    ]
+
+    @Environment(\.isAmbientMeshShowing) private var isAmbientMeshShowing
+
     private static let ideas: [Idea] = [
         Idea(
             id: "morning",
@@ -68,11 +78,11 @@ struct ShortcutsGuideView: View {
                         HStack {
                             Label {
                                 Text(Strings.ShortcutsGuide.openShortcuts)
-                                    .foregroundStyle(.primary)
+                                    .foregroundStyle(titleStyle)
                             } icon: {
                                 Image.shortcuts
                                     .symbolRenderingMode(.hierarchical)
-                                    .foregroundStyle(.tint)
+                                    .foregroundStyle(iconStyle)
                             }
                             Spacer()
                             Image.externalLink
@@ -91,6 +101,22 @@ struct ShortcutsGuideView: View {
         .navigationTitle(String(localized: Strings.Settings.usingShortcuts))
         .navigationBarTitleDisplayMode(.inline)
         .accessibilityIdentifier("shortcuts_guide_list")
+    }
+
+    // MARK: - Link Styling
+
+    private var shortcutsGradient: AnyShapeStyle {
+        AnyShapeStyle(
+            LinearGradient(colors: Self.shortcutsColors, startPoint: .leading, endPoint: .trailing)
+        )
+    }
+
+    private var titleStyle: AnyShapeStyle {
+        isAmbientMeshShowing ? shortcutsGradient : AnyShapeStyle(.primary)
+    }
+
+    private var iconStyle: AnyShapeStyle {
+        isAmbientMeshShowing ? shortcutsGradient : AnyShapeStyle(.tint)
     }
 }
 
