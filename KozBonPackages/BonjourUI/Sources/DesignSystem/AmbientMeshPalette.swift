@@ -114,7 +114,7 @@ enum AmbientMeshPalette: Hashable {
 
 // MARK: - Color + Hex
 
-private extension Color {
+extension Color {
 
     /// An sRGB colour from a `0xRRGGBB` literal — brand palettes are
     /// published as hex.

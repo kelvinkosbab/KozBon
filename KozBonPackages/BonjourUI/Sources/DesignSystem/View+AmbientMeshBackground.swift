@@ -21,6 +21,11 @@ extension EnvironmentValues {
     /// colour of the tab the user came from rather than in a
     /// palette hardcoded at its own call site.
     @Entry var ambientMeshPalette: AmbientMeshPalette = .discover
+
+    /// Whether ``AmbientMeshBackground`` is drawn behind this part of
+    /// the view tree, so content can opt into colour that only reads
+    /// well over the wash.
+    @Entry var isAmbientMeshShowing = false
 }
 
 // MARK: - View + ambientMeshBackground
@@ -97,6 +102,7 @@ struct AmbientMeshBackgroundModifier: ViewModifier {
                 .background {
                     AmbientMeshBackground(palette: palette, intensity: intensity)
                 }
+                .environment(\.isAmbientMeshShowing, true)
         }
     }
 
