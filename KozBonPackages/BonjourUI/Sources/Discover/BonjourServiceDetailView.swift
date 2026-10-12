@@ -60,6 +60,16 @@ public struct BonjourServiceDetailView: View {
                 }
 
                 InsightsLink(action: { viewModel.isAIExplanationPresented = true })
+                    .onAppear {
+                        withAnimation(reduceMotion ? nil : .default) {
+                            viewModel.isNavigationInsightsShown = false
+                        }
+                    }
+                    .onDisappear {
+                        withAnimation(reduceMotion ? nil : .default) {
+                            viewModel.isNavigationInsightsShown = true
+                        }
+                    }
             }
 
             Section(String(localized: Strings.Sections.information)) {
@@ -197,23 +207,7 @@ public struct BonjourServiceDetailView: View {
         .task {
             viewModel.service.resolve()
         }
-        .toolbar {
-            if viewModel.isNavigationHeaderShown {
-                ToolbarItem(
-                    placement: horizontalSizeClass == .compact ? .principal : .confirmationAction
-                ) {
-                    ServiceTypeBadge(
-                        serviceType: viewModel.serviceType,
-                        style: .basedOnSizeClass,
-                        size: .compact,
-                        // Regular width has room the compact bar
-                        // doesn't, so the badge names the host as
-                        // well as the type: "AirPlay – Living Room".
-                        host: viewModel.service.service.name
-                    )
-                }
-            }
-        }
+        .toolbar { detailToolbar }
         .sheet(
             isPresented: Binding(
                 get: { viewModel.isCreateTxtRecordPresented },
@@ -348,6 +342,37 @@ public struct BonjourServiceDetailView: View {
             Clipboard.copy(dataRecord.value)
         } label: {
             Label(Strings.Actions.copyValue, systemImage: Iconography.copyAlternate)
+        }
+    }
+}
+
+// MARK: - Toolbar
+
+private extension BonjourServiceDetailView {
+
+    /// The service badge and the Insights button, each shown once
+    /// its in-list counterpart has scrolled away.
+    @ToolbarContentBuilder
+    var detailToolbar: some ToolbarContent {
+        if viewModel.isNavigationHeaderShown {
+            ToolbarItem(
+                placement: horizontalSizeClass == .compact ? .principal : .confirmationAction
+            ) {
+                ServiceTypeBadge(
+                    serviceType: viewModel.serviceType,
+                    style: .basedOnSizeClass,
+                    size: .compact,
+                    // Regular width has room the compact bar
+                    // doesn't, so the badge names the host as
+                    // well as the type: "AirPlay – Living Room".
+                    host: viewModel.service.service.name
+                )
+            }
+        }
+        if viewModel.isNavigationInsightsShown {
+            ToolbarItem(placement: .primaryAction) {
+                InsightsLink(style: .toolbar, action: { viewModel.isAIExplanationPresented = true })
+            }
         }
     }
 }

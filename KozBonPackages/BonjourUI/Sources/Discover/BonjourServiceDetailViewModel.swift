@@ -50,6 +50,9 @@ final class BonjourServiceDetailViewModel: MyNetServiceDelegate {
     private(set) var addresses: [InternetAddress] = []
     var dataRecords: [BonjourService.TxtDataRecord] = []
     var isNavigationHeaderShown = false
+    /// Whether the Insights capsule has scrolled off screen, so the
+    /// navigation bar shows it instead.
+    var isNavigationInsightsShown = false
     var isCreateTxtRecordPresented = false
     var isAIExplanationPresented = false
     var txtRecordToEdit: BonjourService.TxtDataRecord?
