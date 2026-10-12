@@ -25147,55 +25147,55 @@
         }
       }
     },
-    "settings_shortcuts_intro": {
+    "settings_shortcuts_open": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "KozBon's actions are in the Shortcuts app. Add them to your own shortcuts, or run them automatically with an automation."
+            "value": "Open Shortcuts"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Las acciones de KozBon están en la app Atajos. Añádelas a tus propios atajos o ejecútalas automáticamente con una automatización."
+            "value": "Abrir Atajos"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les actions de KozBon se trouvent dans l'app Raccourcis. Ajoutez-les à vos propres raccourcis ou lancez-les automatiquement avec une automatisation."
+            "value": "Ouvrir Raccourcis"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Die Aktionen von KozBon findest du in der App „Kurzbefehle“. Füge sie deinen eigenen Kurzbefehlen hinzu oder führe sie mit einer Automation automatisch aus."
+            "value": "Kurzbefehle öffnen"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "KozBonのアクションはショートカットAppにあります。自分のショートカットに追加したり、オートメーションで自動的に実行したりできます。"
+            "value": "ショートカットを開く"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "KozBon 的操作位于“快捷指令”App 中。你可以将它们添加到自己的快捷指令，或通过自动化自动运行。"
+            "value": "打开快捷指令"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "تتوفر إجراءات KozBon في تطبيق الاختصارات. أضفها إلى اختصاراتك الخاصة، أو شغّلها تلقائيًا باستخدام أتمتة."
+            "value": "فتح الاختصارات"
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "הפעולות של KozBon נמצאות ביישום קיצורים. אפשר להוסיף אותן לקיצורים שלך, או להריץ אותן אוטומטית בעזרת אוטומציה."
+            "value": "פתיחת קיצורים"
           }
         }
       }

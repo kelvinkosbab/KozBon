@@ -1532,8 +1532,8 @@ public enum Strings {
     /// The "Using KozBon with Shortcuts" page pushed from Settings.
     public enum ShortcutsGuide {
 
-        public static var intro: LocalizedStringResource {
-            .init("settings_shortcuts_intro", bundle: .atURL(Bundle.module.bundleURL))
+        public static var openShortcuts: LocalizedStringResource {
+            .init("settings_shortcuts_open", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         public static var ideas: LocalizedStringResource {
