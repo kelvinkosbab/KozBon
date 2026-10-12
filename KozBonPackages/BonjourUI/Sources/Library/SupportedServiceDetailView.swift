@@ -34,6 +34,7 @@ public struct SupportedServiceDetailView: View {
     @State private var showDeleteConfirmation = false
     @State private var showEditConfirmation = false
     @State private var isNavigationHeaderShown = false
+    @State private var isNavigationInsightsShown = false
     @State private var isAIExplanationPresented = false
 
     public var body: some View {
@@ -56,6 +57,16 @@ public struct SupportedServiceDetailView: View {
                 }
 
                 InsightsLink(action: { isAIExplanationPresented = true })
+                    .onAppear {
+                        withAnimation(reduceMotion ? nil : .default) {
+                            isNavigationInsightsShown = false
+                        }
+                    }
+                    .onDisappear {
+                        withAnimation(reduceMotion ? nil : .default) {
+                            isNavigationInsightsShown = true
+                        }
+                    }
             }
 
             Section {
@@ -215,6 +226,11 @@ public struct SupportedServiceDetailView: View {
                         style: .basedOnSizeClass,
                         size: .compact
                     )
+                }
+            }
+            if isNavigationInsightsShown {
+                ToolbarItem(placement: .primaryAction) {
+                    InsightsLink(style: .toolbar, action: { isAIExplanationPresented = true })
                 }
             }
         }
