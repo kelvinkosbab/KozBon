@@ -11,8 +11,8 @@ import BonjourLocalization
 
 // MARK: - SiriPhraseRow
 
-/// A list row, used in Settings and on Discover, that keeps "Ask Siri"
-/// fixed and cycles through Siri phrases beneath it.
+/// A list row, used in Settings and on Discover, that keeps the Siri
+/// icon and "Ask Siri" fixed and cycles through Siri phrases beneath them.
 struct SiriPhraseRow: View {
 
     let phrases: [LocalizedStringResource]
@@ -24,35 +24,32 @@ struct SiriPhraseRow: View {
     private static let interval: Duration = .seconds(3)
 
     var body: some View {
-        HStack(spacing: 12) {
-            Image.siri
-                .font(.title2)
-                .foregroundStyle(appleIntelligenceStyle)
-                .accessibilityHidden(true)
-
-            VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack(spacing: 6) {
+                Image.siri
+                    .accessibilityHidden(true)
                 Text(Strings.Settings.askSiri)
-                    .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(appleIntelligenceStyle)
-
-                ZStack(alignment: .leading) {
-                    // Every phrase laid out invisibly so the row is as
-                    // tall as the longest one and doesn't jump as they
-                    // change.
-                    ForEach(phrases.indices, id: \.self) { phraseIndex in
-                        Text(phrases[phraseIndex]).hidden()
-                    }
-
-                    if phrases.indices.contains(index) {
-                        Text(phrases[index])
-                            .id(index)
-                            .transition(reduceMotion ? .opacity : .push(from: .bottom))
-                    }
-                }
-                .font(.headline)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .clipped()
             }
+            .font(.subheadline.weight(.semibold))
+            .foregroundStyle(appleIntelligenceStyle)
+
+            ZStack(alignment: .leading) {
+                // Every phrase laid out invisibly so the row is as
+                // tall as the longest one and doesn't jump as they
+                // change.
+                ForEach(phrases.indices, id: \.self) { phraseIndex in
+                    Text(phrases[phraseIndex]).hidden()
+                }
+
+                if phrases.indices.contains(index) {
+                    Text(phrases[index])
+                        .id(index)
+                        .transition(reduceMotion ? .opacity : .push(from: .bottom))
+                }
+            }
+            .font(.headline)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .clipped()
         }
         .padding(.vertical, 4)
         // The phrases change on a timer, so VoiceOver reads them all at
