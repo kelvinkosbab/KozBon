@@ -47,7 +47,7 @@ struct AmbientMeshBackground: View {
     // MARK: - Tuning
 
     /// 30fps, not the display's native rate. The wave periods are
-    /// long enough (4–7s) that the dropped frames don't show as
+    /// long enough (5.5–9s) that the dropped frames don't show as
     /// stepping, and they're the entire point on a screen that also
     /// runs a continuous Bonjour scan.
     private static let frameInterval: TimeInterval = 1.0 / 30.0
