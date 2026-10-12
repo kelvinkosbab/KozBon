@@ -80,6 +80,28 @@ public enum ReleaseNotes {
     /// Newest-first releases since 3.0.
     public static let all: [ReleaseNote] = [
         ReleaseNote(
+            version: "4.10",
+            // swiftlint:disable:next line_length
+            summary: "Siri can do much more with KozBon: find a kind of device, check whether one is online, explain a service type, and start or stop broadcasting, all in your language. A new Using Siri with KozBon section in Settings suggests phrases to try, with a page of ideas for Shortcuts automations.\n\nOn service and library details, the Insights button now moves into the navigation bar as you scroll, so it stays in reach.",
+            highlights: [
+                // swiftlint:disable:next line_length
+                "Siri and Shortcuts gain new actions: Find Services (\"Find printers with KozBon\"), Check If Device Is Online, Open Service in KozBon, Explain a Service Type (read aloud from the AI selected in Settings), and Broadcast a Service and Stop Broadcasting.",
+                // swiftlint:disable:next line_length
+                "Siri now answers in your language, counts devices rather than services (an Apple TV is one device, not three), and says when you're not on Wi-Fi or Ethernet. It also accepts \"Koz Bon\", \"Kos Bon\", and \"Cause Bon\" for the app's name.",
+                // swiftlint:disable:next line_length
+                "A Using Siri with KozBon section at the top of Settings on iPhone, iPad, and Vision Pro has an \"Ask Siri\" row that cycles through phrases in Apple Intelligence colours. The same row sits at the top of Discover.",
+                // swiftlint:disable:next line_length
+                "A Using KozBon with Shortcuts page suggests automations to build, like a morning scan or an alert when a device goes offline, and links to the Shortcuts app.",
+                // swiftlint:disable:next line_length
+                "Chat has a \"How do I use Siri and Shortcuts with KozBon?\" suggestion, and answers from KozBon's real list of Siri actions.",
+                // swiftlint:disable:next line_length
+                "On service and library detail pages, the Insights button moves into the navigation bar once its capsule scrolls out of view, next to the service badge.",
+                "\"Generating explanation…\" in the Insights sheet now shows in a shimmering glass capsule, like the chat's scanning row.",
+                // swiftlint:disable:next line_length
+                "The ambient background drifts smoothly again instead of sitting still and jumping about once a minute, and holds its frame while paused rather than snapping on resume."
+            ]
+        ),
+        ReleaseNote(
             version: "4.9",
             // swiftlint:disable:next line_length
             summary: "KozBon has a new icon: a blue dot sending out ripples, like a scan sweeping the network around it. On Apple Vision Pro, the ripples float in front of a white background.\n\nService and library details now have an Insights button that asks your chosen AI to explain the service, and TXT records come with a note on what they're for. In Settings, each signed-in cloud AI now shows a single Sign out button.",

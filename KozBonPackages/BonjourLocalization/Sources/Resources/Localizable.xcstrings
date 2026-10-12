@@ -6534,6 +6534,60 @@
         }
       }
     },
+    "Siri can do much more with KozBon: find a kind of device, check whether one is online, explain a service type, and start or stop broadcasting, all in your language. A new Using Siri with KozBon section in Settings suggests phrases to try, with a page of ideas for Shortcuts automations.\n\nOn service and library details, the Insights button now moves into the navigation bar as you scroll, so it stays in reach.": {
+      "comment": "What's New summary for KozBon 4.10. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siri can do much more with KozBon: find a kind of device, check whether one is online, explain a service type, and start or stop broadcasting, all in your language. A new Using Siri with KozBon section in Settings suggests phrases to try, with a page of ideas for Shortcuts automations.\n\nOn service and library details, the Insights button now moves into the navigation bar as you scroll, so it stays in reach."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siri puede hacer mucho más con KozBon: encontrar un tipo de dispositivo, comprobar si uno está conectado, explicar un tipo de servicio e iniciar o detener una emisión, todo en tu idioma. Una nueva sección Usar Siri con KozBon en Ajustes sugiere frases para probar, con una página de ideas de automatizaciones para Atajos.\n\nEn los detalles de servicios y de la biblioteca, el botón Información pasa ahora a la barra de navegación al desplazarte, para que siempre esté a mano."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siri en fait bien plus avec KozBon : trouver un type d'appareil, vérifier si un appareil est en ligne, expliquer un type de service, et lancer ou arrêter une diffusion, le tout dans votre langue. Une nouvelle section Utiliser Siri avec KozBon dans Réglages propose des phrases à essayer, avec une page d'idées d'automatisations pour Raccourcis.\n\nDans les détails des services et de la bibliothèque, le bouton Aperçus passe désormais dans la barre de navigation quand vous faites défiler, pour rester à portée de main."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siri kann mit KozBon jetzt viel mehr: einen Gerätetyp finden, prüfen, ob ein Gerät online ist, einen Diensttyp erklären und eine Übertragung starten oder stoppen – alles in deiner Sprache. Ein neuer Bereich „Siri mit KozBon verwenden“ in den Einstellungen schlägt Sätze zum Ausprobieren vor, dazu eine Seite mit Ideen für Automationen in Kurzbefehle.\n\nIn Dienst- und Bibliotheksdetails wandert die Schaltfläche „Einblicke“ beim Scrollen jetzt in die Navigationsleiste, damit sie immer erreichbar bleibt."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SiriでKozBonにできることが大幅に増えました。デバイスの種類を探す、デバイスがオンラインか確かめる、サービスタイプを説明する、ブロードキャストを開始・停止する、といった操作をお使いの言語で行えます。設定の新しい「KozBonでSiriを使う」セクションでは試せるフレーズを紹介し、ショートカットのオートメーションのアイデアをまとめたページもあります。\n\nサービスとライブラリの詳細画面では、スクロールすると「インサイト」ボタンがナビゲーションバーに移動し、いつでも押せるようになりました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siri 现在可以在 KozBon 中做更多事情：查找某类设备、检查设备是否在线、解释服务类型，以及开始或停止广播，并且全部使用你的语言。“设置”中新增了“在 KozBon 中使用 Siri”部分，推荐可以尝试的说法，还有一页快捷指令自动化的点子。\n\n在服务和资料库的详细信息页面中，滚动时“洞察”按钮现在会移到导航栏，随时可以点按。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أصبح بإمكان Siri فعل المزيد مع KozBon: العثور على نوع من الأجهزة، والتحقق مما إذا كان جهاز ما متصلًا، وشرح نوع خدمة، وبدء البث أو إيقافه، وكل ذلك بلغتك. يقترح قسم «استخدام Siri مع KozBon» الجديد في الإعدادات عبارات لتجربتها، مع صفحة بأفكار لأتمتة الاختصارات.\n\nفي تفاصيل الخدمات والمكتبة، ينتقل زر «رؤى» الآن إلى شريط التنقل عند التمرير، ليبقى في متناول يدك."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siri יכולה לעשות הרבה יותר עם KozBon: למצוא סוג של מכשיר, לבדוק אם מכשיר מחובר, להסביר סוג שירות, ולהתחיל או להפסיק שידור, והכול בשפה שלכם. מקטע חדש בהגדרות, ״שימוש ב-Siri עם KozBon״, מציע משפטים לנסות, לצד עמוד עם רעיונות לאוטומציות בקיצורים.\n\nבפרטי השירותים והספרייה, כפתור ״תובנות״ עובר עכשיו לסרגל הניווט בזמן הגלילה, כך שהוא תמיד בהישג יד."
+          }
+        }
+      }
+    },
     "SMB2/SMB3 file sharing protocol used by modern Windows systems for improved performance and security over the original SMB protocol.": {
       "extractionState": "manual",
       "localizations": {
