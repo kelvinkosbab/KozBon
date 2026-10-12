@@ -27,13 +27,13 @@ struct SiriPhraseRow: View {
         HStack(spacing: 12) {
             Image.siri
                 .font(.title2)
-                .foregroundStyle(.tint)
+                .foregroundStyle(appleIntelligenceStyle)
                 .accessibilityHidden(true)
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(Strings.Settings.askSiri)
                     .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(askSiriStyle)
+                    .foregroundStyle(appleIntelligenceStyle)
 
                 ZStack(alignment: .leading) {
                     // Every phrase laid out invisibly so the row is as
@@ -67,7 +67,7 @@ struct SiriPhraseRow: View {
     /// The Apple Intelligence gradient the Insights button uses, or
     /// its solid accent under Increase Contrast, where the lighter
     /// stops don't hold contrast.
-    private var askSiriStyle: AnyShapeStyle {
+    private var appleIntelligenceStyle: AnyShapeStyle {
         if colorSchemeContrast == .increased {
             return AnyShapeStyle(AIBackend.appleIntelligence.accentColor)
         }
