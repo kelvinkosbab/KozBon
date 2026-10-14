@@ -44,11 +44,12 @@ private struct HighlightInsight: Identifiable {
 struct WhatsNewView: View {
 
     @Environment(\.preferencesStore) private var preferencesStore
+    @Environment(\.aiBackendAvailability) private var aiBackendAvailability
     @State private var insightTarget: HighlightInsight?
 
     var body: some View {
         List {
-            ForEach(ReleaseNotes.all) { release in
+            ForEach(ReleaseNotes.displayed(offeringOpenAI: aiBackendAvailability.isOffered(.openai))) { release in
                 Section {
                     summaryRow(version: release.version, summary: release.summary)
                 } header: {

@@ -97,4 +97,26 @@ struct ReleaseNotesTests {
 
         #expect(newest.id == newest.version)
     }
+
+    /// App Review rejects listings that name ChatGPT-associated
+    /// services on the China mainland storefront, and What's New
+    /// shows there. Any summary naming them must carry the flag that
+    /// hides it.
+    @Test("Summaries naming OpenAI or GPT are flagged")
+    func openAISummariesAreFlagged() {
+        for release in ReleaseNotes.all where release.summary.contains("OpenAI") || release.summary.contains("GPT") {
+            #expect(release.mentionsOpenAI, "\(release.version) names OpenAI but isn't flagged")
+        }
+    }
+
+    @Test("Releases naming OpenAI are hidden only where it isn't offered")
+    func displayedReleasesFollowOpenAIAvailability() {
+        #expect(ReleaseNotes.displayed(offeringOpenAI: true) == ReleaseNotes.all)
+
+        let withheld = ReleaseNotes.displayed(offeringOpenAI: false)
+        #expect(withheld.allSatisfy { !$0.mentionsOpenAI })
+        #expect(withheld.count == ReleaseNotes.all.filter { !$0.mentionsOpenAI }.count)
+        #expect(withheld.count < ReleaseNotes.all.count)
+    }
+
 }
