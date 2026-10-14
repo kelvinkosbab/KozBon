@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - The ambient background holds its current frame while paused and resumes from it instead of jumping (#76), and it drifts smoothly again instead of sitting still and jumping to a new shape about once a minute (#75).
+- What's New no longer shows the 4.8 entry, which names OpenAI, on the China mainland App Store, where App Review requires ChatGPT references to be removed.
 
 ### Removed
 

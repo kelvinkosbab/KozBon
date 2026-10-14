@@ -48,12 +48,18 @@ public struct ReleaseNote: Identifiable, Hashable, Sendable {
     /// English-only context for the chat assistant (see type doc).
     public let highlights: [String]
 
+    /// Whether `summary` names OpenAI. Such entries are left off the
+    /// What's New page on storefronts where the OpenAI backend is
+    /// withheld (App Review, Guideline 5).
+    public let mentionsOpenAI: Bool
+
     public var id: String { version }
 
-    public init(version: String, summary: String, highlights: [String]) {
+    public init(version: String, summary: String, highlights: [String], mentionsOpenAI: Bool = false) {
         self.version = version
         self.summary = summary
         self.highlights = highlights
+        self.mentionsOpenAI = mentionsOpenAI
     }
 }
 
@@ -76,6 +82,12 @@ public struct ReleaseNote: Identifiable, Hashable, Sendable {
 /// prompt builder (so "what's new?" questions answer from real
 /// data instead of hallucinated version history).
 public enum ReleaseNotes {
+
+    /// The releases to show on What's New: all of them, minus any
+    /// whose summary names OpenAI when the storefront doesn't offer it.
+    public static func displayed(offeringOpenAI: Bool) -> [ReleaseNote] {
+        offeringOpenAI ? all : all.filter { !$0.mentionsOpenAI }
+    }
 
     /// Newest-first releases since 3.0.
     public static let all: [ReleaseNote] = [
@@ -134,7 +146,8 @@ public enum ReleaseNotes {
                 "On devices without Apple Intelligence, the Chat tab now appears whenever any cloud provider has a key. Previously only a Claude key counted, which hid the tab from Gemini users.",
                 // swiftlint:disable:next line_length
                 "OpenAI GPT isn't offered on the China mainland App Store, where App Review requires ChatGPT-associated features to be turned off. Anyone there who had it selected is switched back to Apple Intelligence."
-            ]
+            ],
+            mentionsOpenAI: true
         ),
         ReleaseNote(
             version: "4.7",
