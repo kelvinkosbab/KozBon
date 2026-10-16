@@ -237,4 +237,44 @@ struct CloudAwareBonjourChatSessionFactoryTests {
         let session = factory.makeForCurrentEnvironment(publishManager: MockBonjourPublishManager())
         #expect(session === appleSession)
     }
+
+    // MARK: - China Mainland Storefront
+
+    @Test("On the China storefront, a selected Claude backend with a key routes to Apple")
+    func chinaStorefrontNeverRoutesSelectedAnthropic() throws {
+        let preferencesStore = try makeStore()
+        preferencesStore.aiBackend = .anthropic
+
+        let appleSession = StubAppleChatSession()
+        let factory = CloudAwareBonjourChatSessionFactory(
+            appleFactory: StubAppleChatFactory(sessionToReturn: appleSession),
+            credentialsStore: InMemoryAICloudCredentialsStore(seed: [.anthropic: "sk-ant-test"]),
+            preferencesStore: preferencesStore,
+            anthropicClient: MockAnthropicClient(),
+            isBackendOffered: {
+                AIBackendAvailability.isOffered($0, inStorefront: AIBackendAvailability.chinaMainlandStorefront)
+            }
+        )
+
+        let session = factory.makeForCurrentEnvironment(publishManager: MockBonjourPublishManager())
+        #expect(session === appleSession)
+    }
+
+    @Test("On the China storefront, ineligible hardware doesn't fall back to Claude")
+    func chinaStorefrontSkipsAnthropicFallback() throws {
+        let preferencesStore = try makeStore()
+        preferencesStore.aiBackend = .appleIntelligence
+
+        let factory = CloudAwareBonjourChatSessionFactory(
+            appleFactory: StubAppleChatFactory(sessionToReturn: nil),
+            credentialsStore: InMemoryAICloudCredentialsStore(seed: [.anthropic: "sk-ant-test"]),
+            preferencesStore: preferencesStore,
+            anthropicClient: MockAnthropicClient(),
+            isBackendOffered: {
+                AIBackendAvailability.isOffered($0, inStorefront: AIBackendAvailability.chinaMainlandStorefront)
+            }
+        )
+
+        #expect(factory.makeForCurrentEnvironment(publishManager: MockBonjourPublishManager()) == nil)
+    }
 }

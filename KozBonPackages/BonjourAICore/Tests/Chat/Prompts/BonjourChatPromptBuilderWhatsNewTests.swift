@@ -125,13 +125,16 @@ struct ReleaseNotesTests {
     // MARK: - Storefront
 
     /// On the China mainland storefront the chat must not repeat
-    /// release notes naming OpenAI (App Review, Guideline 5).
-    @Test("Leaves out OpenAI release notes where OpenAI isn't offered")
-    func omitsOpenAIWhereNotOffered() {
-        let withheld = BonjourChatPromptBuilder.whatsNewBlock(query: "what's new?", offeringOpenAI: false)
+    /// release notes naming a cloud AI provider (App Review,
+    /// Guideline 5).
+    @Test("Leaves out cloud-provider release notes where none is offered")
+    func omitsCloudProvidersWhereNotOffered() {
+        let withheld = BonjourChatPromptBuilder.whatsNewBlock(query: "what's new?", offeringCloudProviders: false)
         #expect(!withheld.isEmpty)
         #expect(!withheld.contains("OpenAI"))
         #expect(!withheld.contains("GPT"))
+        #expect(!withheld.contains("Claude"))
+        #expect(!withheld.contains("Gemini"))
     }
 
 }

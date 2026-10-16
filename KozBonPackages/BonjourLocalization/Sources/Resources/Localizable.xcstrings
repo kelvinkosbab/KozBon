@@ -9195,49 +9195,49 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Choose between on-device Apple Intelligence and your own Anthropic Claude account."
+            "value": "Uses this assistant for Chat and Insights."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Elige entre Apple Intelligence en el dispositivo y tu propia cuenta de Anthropic Claude."
+            "value": "Usa este asistente para Chat e Información."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Choisissez entre Apple Intelligence sur l'appareil et votre propre compte Anthropic Claude."
+            "value": "Utilise cet assistant pour Chat et Aperçus."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Wählen Sie zwischen Apple Intelligence auf dem Gerät und Ihrem eigenen Anthropic-Claude-Konto."
+            "value": "Verwendet diesen Assistenten für Chat und Einblicke."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "デバイス上の Apple Intelligence と、ご自身の Anthropic Claude アカウントから選択します。"
+            "value": "このアシスタントをチャットとインサイトに使用します。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "在设备端 Apple Intelligence 与您自己的 Anthropic Claude 账户之间选择。"
+            "value": "将此助手用于聊天和洞察。"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "اختر بين Apple Intelligence على الجهاز وحساب Anthropic Claude الخاص بك."
+            "value": "يستخدم هذا المساعد للمحادثة والرؤى."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "בחר בין Apple Intelligence במכשיר לבין חשבון Anthropic Claude האישי שלך."
+            "value": "משתמש בעוזר הזה עבור צ'אט ותובנות."
           }
         }
       }

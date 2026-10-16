@@ -756,10 +756,10 @@ public enum Strings {
             .init("a11y_toggle_ai_hint", bundle: .atURL(Bundle.module.bundleURL))
         }
 
-        /// VoiceOver hint for the AI backend picker. Explains the
-        /// privacy trade-off so screen-reader users get the same
-        /// context the picker's visible subtitles convey to sighted
-        /// users.
+        /// VoiceOver hint on each AI backend row. Provider-neutral:
+        /// the row's name and subtitle already say which provider it
+        /// is, and the China mainland storefront lists only Apple
+        /// Intelligence.
         public static var aiBackendPickerHint: LocalizedStringResource {
             .init("a11y_ai_backend_picker_hint", bundle: .atURL(Bundle.module.bundleURL))
         }

@@ -80,7 +80,7 @@ extension BonjourChatView {
                         using: session,
                         preferencesStore: preferencesStore,
                         reduceMotion: reduceMotion,
-                        isOpenAIOffered: aiBackendAvailability.isOffered(.openai)
+                        areCloudProvidersOffered: aiBackendAvailability.offersCloudProviders
                     )
                 }
             }
@@ -112,7 +112,7 @@ extension BonjourChatView {
                         using: session,
                         preferencesStore: preferencesStore,
                         reduceMotion: reduceMotion,
-                        isOpenAIOffered: aiBackendAvailability.isOffered(.openai)
+                        areCloudProvidersOffered: aiBackendAvailability.offersCloudProviders
                     )
                 }
             } label: {

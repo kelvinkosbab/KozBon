@@ -71,14 +71,14 @@ extension BonjourChatViewModel {
     ///   - reduceMotion: Forwarded into the input-clear
     ///     animation; the rest of the pipeline doesn't
     ///     animate.
-    ///   - isOpenAIOffered: Whether the storefront offers the
-    ///     OpenAI backend; see ``BonjourChatPromptBuilder/ChatContext``.
+    ///   - areCloudProvidersOffered: Whether the storefront offers any
+    ///     cloud backend; see ``BonjourChatPromptBuilder/ChatContext``.
     func sendMessage(
         _ text: String,
         using session: any BonjourChatSessionProtocol,
         preferencesStore: PreferencesStore,
         reduceMotion: Bool,
-        isOpenAIOffered: Bool = true
+        areCloudProvidersOffered: Bool = true
     ) async {
         guard !session.isGenerating else { return }
 
@@ -127,7 +127,7 @@ extension BonjourChatViewModel {
         // surface was frozen post-tap.
         session.appendUserMessage(trimmed)
 
-        let context = await buildChatContext(forMessage: trimmed, isOpenAIOffered: isOpenAIOffered)
+        let context = await buildChatContext(forMessage: trimmed, areCloudProvidersOffered: areCloudProvidersOffered)
 
         // Response length is derived from the user's Detail-level
         // preference. Basic → standard, Technical → thorough.
@@ -165,7 +165,7 @@ extension BonjourChatViewModel {
         using session: any BonjourChatSessionProtocol,
         preferencesStore: PreferencesStore,
         reduceMotion: Bool,
-        isOpenAIOffered: Bool = true
+        areCloudProvidersOffered: Bool = true
     ) async {
         guard !session.isGenerating else { return }
         guard let lastUserMessage = session.messages
@@ -179,7 +179,7 @@ extension BonjourChatViewModel {
         // a fresh send.
         session.clearError()
 
-        let context = await buildChatContext(forMessage: lastUserMessage, isOpenAIOffered: isOpenAIOffered)
+        let context = await buildChatContext(forMessage: lastUserMessage, areCloudProvidersOffered: areCloudProvidersOffered)
 
         let detailLevel = BonjourServicePromptBuilder.ExpertiseLevel(
             rawValue: preferencesStore.aiExpertiseLevel
@@ -217,7 +217,7 @@ extension BonjourChatViewModel {
     /// Siri intents use.
     func buildChatContext(
         forMessage message: String,
-        isOpenAIOffered: Bool = true
+        areCloudProvidersOffered: Bool = true
     ) async -> BonjourChatPromptBuilder.ChatContext {
         isHandingOffFromScan = false
         let library = BonjourServiceType.fetchAll()
@@ -267,7 +267,7 @@ extension BonjourChatViewModel {
                 // stale."
                 lastScanTime: Date(),
                 isScanning: false,
-                isOpenAIOffered: isOpenAIOffered
+                areCloudProvidersOffered: areCloudProvidersOffered
             )
         }
 
@@ -277,7 +277,7 @@ extension BonjourChatViewModel {
             serviceTypeLibrary: library,
             lastScanTime: services.lastScanTime,
             isScanning: services.serviceScanner.isProcessing,
-            isOpenAIOffered: isOpenAIOffered
+            areCloudProvidersOffered: areCloudProvidersOffered
         )
     }
 

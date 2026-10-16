@@ -64,10 +64,10 @@ public enum BonjourChatPromptBuilder {
         /// as definitive.
         public let isScanning: Bool
 
-        /// Whether the storefront offers the OpenAI backend. When it
-        /// doesn't, release notes naming OpenAI stay out of the
-        /// prompt (App Review, Guideline 5).
-        public let isOpenAIOffered: Bool
+        /// Whether the storefront offers any cloud backend. When it
+        /// doesn't, release notes naming a cloud AI provider stay out
+        /// of the prompt (App Review, Guideline 5).
+        public let areCloudProvidersOffered: Bool
 
         public init(
             discoveredServices: [BonjourService] = [],
@@ -75,14 +75,14 @@ public enum BonjourChatPromptBuilder {
             serviceTypeLibrary: [BonjourServiceType] = [],
             lastScanTime: Date? = nil,
             isScanning: Bool = false,
-            isOpenAIOffered: Bool = true
+            areCloudProvidersOffered: Bool = true
         ) {
             self.discoveredServices = discoveredServices
             self.publishedServices = publishedServices
             self.serviceTypeLibrary = serviceTypeLibrary
             self.lastScanTime = lastScanTime
             self.isScanning = isScanning
-            self.isOpenAIOffered = isOpenAIOffered
+            self.areCloudProvidersOffered = areCloudProvidersOffered
         }
     }
 
@@ -367,7 +367,7 @@ public enum BonjourChatPromptBuilder {
         // about what's new — same per-turn, query-conditional
         // policy as `<referenced>`, so it never bloats the stable
         // context or multi-turn history for unrelated questions.
-        let whatsNew = whatsNewBlock(query: userMessage, offeringOpenAI: context.isOpenAIOffered)
+        let whatsNew = whatsNewBlock(query: userMessage, offeringCloudProviders: context.areCloudProvidersOffered)
         if !whatsNew.isEmpty {
             sections.append("<whats_new>\n\(whatsNew)\n</whats_new>\n")
         }
