@@ -270,7 +270,8 @@ extension BonjourChatView {
                 await viewModel.retryLastSend(
                     using: session,
                     preferencesStore: preferencesStore,
-                    reduceMotion: reduceMotion
+                    reduceMotion: reduceMotion,
+                    isOpenAIOffered: aiBackendAvailability.isOffered(.openai)
                 )
             }
         }

@@ -122,7 +122,8 @@ extension BonjourChatView {
                     text,
                     using: session,
                     preferencesStore: preferencesStore,
-                    reduceMotion: reduceMotion
+                    reduceMotion: reduceMotion,
+                    isOpenAIOffered: aiBackendAvailability.isOffered(.openai)
                 )
             }
         } label: {
