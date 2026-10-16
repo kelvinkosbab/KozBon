@@ -160,8 +160,9 @@ extension BonjourChatPromptBuilder {
     /// Reads the static ``ReleaseNotes/all`` table directly rather
     /// than threading it through ``ChatContext`` — release notes
     /// are compile-time constant, unlike the per-session network
-    /// state the context carries.
-    public static func whatsNewBlock(query: String) -> String {
+    /// state the context carries. `offeringOpenAI` drops releases
+    /// whose notes name OpenAI, matching the What's New page.
+    public static func whatsNewBlock(query: String, offeringOpenAI: Bool = true) -> String {
         guard ChatWhatsNewIntentDetector.wantsWhatsNew(message: query) else {
             return ""
         }
@@ -169,7 +170,7 @@ extension BonjourChatPromptBuilder {
             "RECENT KOZBON RELEASES (newest first — answer \"what's new\" " +
             "questions ONLY from this list; never invent versions or changes):"
         ]
-        for release in ReleaseNotes.all.prefix(recentReleaseCap) {
+        for release in ReleaseNotes.displayed(offeringOpenAI: offeringOpenAI).prefix(recentReleaseCap) {
             parts.append("Version \(release.version):")
             for highlight in release.highlights {
                 parts.append("- \(highlight)")

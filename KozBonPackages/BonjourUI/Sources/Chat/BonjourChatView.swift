@@ -42,6 +42,7 @@ public struct BonjourChatView: View {
     @Environment(\.chatSession) var injectedSession
     @Environment(\.preferencesStore) var preferencesStore
     @Environment(\.aiCloudCredentialsStore) var credentialsStore
+    @Environment(\.aiBackendAvailability) var aiBackendAvailability
     @Environment(\.accessibilityReduceMotion) var reduceMotion
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 

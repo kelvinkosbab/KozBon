@@ -79,7 +79,8 @@ extension BonjourChatView {
                         viewModel.inputText,
                         using: session,
                         preferencesStore: preferencesStore,
-                        reduceMotion: reduceMotion
+                        reduceMotion: reduceMotion,
+                        isOpenAIOffered: aiBackendAvailability.isOffered(.openai)
                     )
                 }
             }
@@ -110,7 +111,8 @@ extension BonjourChatView {
                         viewModel.inputText,
                         using: session,
                         preferencesStore: preferencesStore,
-                        reduceMotion: reduceMotion
+                        reduceMotion: reduceMotion,
+                        isOpenAIOffered: aiBackendAvailability.isOffered(.openai)
                     )
                 }
             } label: {

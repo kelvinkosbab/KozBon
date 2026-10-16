@@ -48,9 +48,9 @@ public struct ReleaseNote: Identifiable, Hashable, Sendable {
     /// English-only context for the chat assistant (see type doc).
     public let highlights: [String]
 
-    /// Whether `summary` names OpenAI. Such entries are left off the
-    /// What's New page on storefronts where the OpenAI backend is
-    /// withheld (App Review, Guideline 5).
+    /// Whether `summary` or `highlights` name OpenAI. Such entries are
+    /// left off What's New and out of the chat prompt on storefronts
+    /// where the OpenAI backend is withheld (App Review, Guideline 5).
     public let mentionsOpenAI: Bool
 
     public var id: String { version }
@@ -83,8 +83,9 @@ public struct ReleaseNote: Identifiable, Hashable, Sendable {
 /// data instead of hallucinated version history).
 public enum ReleaseNotes {
 
-    /// The releases to show on What's New: all of them, minus any
-    /// whose summary names OpenAI when the storefront doesn't offer it.
+    /// The releases to show on What's New and in the chat prompt: all
+    /// of them, minus any naming OpenAI when the storefront doesn't
+    /// offer it.
     public static func displayed(offeringOpenAI: Bool) -> [ReleaseNote] {
         offeringOpenAI ? all : all.filter { !$0.mentionsOpenAI }
     }
@@ -216,7 +217,8 @@ public enum ReleaseNotes {
                 "New GitHub Models cloud backend (OpenAI GPT-4o via GitHub) joins Anthropic Claude as an opt-in cloud assistant.",
                 "Claude model picker in Preferences — choose which Claude variant to use.",
                 "Brand-tinted in-app sign-in pages for each cloud provider with native link rows to your API key console."
-            ]
+            ],
+            mentionsOpenAI: true
         ),
         ReleaseNote(
             version: "4.1",

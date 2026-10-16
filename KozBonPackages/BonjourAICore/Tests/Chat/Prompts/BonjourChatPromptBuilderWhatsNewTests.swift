@@ -121,4 +121,17 @@ struct ReleaseNotesTests {
         let note = ReleaseNote(version: "9.9", summary: "test", highlights: ["test"])
         #expect(note.id == "9.9")
     }
+
+    // MARK: - Storefront
+
+    /// On the China mainland storefront the chat must not repeat
+    /// release notes naming OpenAI (App Review, Guideline 5).
+    @Test("Leaves out OpenAI release notes where OpenAI isn't offered")
+    func omitsOpenAIWhereNotOffered() {
+        let withheld = BonjourChatPromptBuilder.whatsNewBlock(query: "what's new?", offeringOpenAI: false)
+        #expect(!withheld.isEmpty)
+        #expect(!withheld.contains("OpenAI"))
+        #expect(!withheld.contains("GPT"))
+    }
+
 }

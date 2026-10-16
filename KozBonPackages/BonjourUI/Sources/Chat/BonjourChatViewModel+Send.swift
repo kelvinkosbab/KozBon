@@ -71,11 +71,14 @@ extension BonjourChatViewModel {
     ///   - reduceMotion: Forwarded into the input-clear
     ///     animation; the rest of the pipeline doesn't
     ///     animate.
+    ///   - isOpenAIOffered: Whether the storefront offers the
+    ///     OpenAI backend; see ``BonjourChatPromptBuilder/ChatContext``.
     func sendMessage(
         _ text: String,
         using session: any BonjourChatSessionProtocol,
         preferencesStore: PreferencesStore,
-        reduceMotion: Bool
+        reduceMotion: Bool,
+        isOpenAIOffered: Bool = true
     ) async {
         guard !session.isGenerating else { return }
 
@@ -124,7 +127,7 @@ extension BonjourChatViewModel {
         // surface was frozen post-tap.
         session.appendUserMessage(trimmed)
 
-        let context = await buildChatContext(forMessage: trimmed)
+        let context = await buildChatContext(forMessage: trimmed, isOpenAIOffered: isOpenAIOffered)
 
         // Response length is derived from the user's Detail-level
         // preference. Basic → standard, Technical → thorough.
@@ -161,7 +164,8 @@ extension BonjourChatViewModel {
     func retryLastSend(
         using session: any BonjourChatSessionProtocol,
         preferencesStore: PreferencesStore,
-        reduceMotion: Bool
+        reduceMotion: Bool,
+        isOpenAIOffered: Bool = true
     ) async {
         guard !session.isGenerating else { return }
         guard let lastUserMessage = session.messages
@@ -175,7 +179,7 @@ extension BonjourChatViewModel {
         // a fresh send.
         session.clearError()
 
-        let context = await buildChatContext(forMessage: lastUserMessage)
+        let context = await buildChatContext(forMessage: lastUserMessage, isOpenAIOffered: isOpenAIOffered)
 
         let detailLevel = BonjourServicePromptBuilder.ExpertiseLevel(
             rawValue: preferencesStore.aiExpertiseLevel
@@ -212,7 +216,8 @@ extension BonjourChatViewModel {
     /// continuous observation — same isolation pattern the
     /// Siri intents use.
     func buildChatContext(
-        forMessage message: String
+        forMessage message: String,
+        isOpenAIOffered: Bool = true
     ) async -> BonjourChatPromptBuilder.ChatContext {
         isHandingOffFromScan = false
         let library = BonjourServiceType.fetchAll()
@@ -261,7 +266,8 @@ extension BonjourChatViewModel {
                 // "data is fresh" rather than "data may be
                 // stale."
                 lastScanTime: Date(),
-                isScanning: false
+                isScanning: false,
+                isOpenAIOffered: isOpenAIOffered
             )
         }
 
@@ -270,7 +276,8 @@ extension BonjourChatViewModel {
             publishedServices: publishedServices,
             serviceTypeLibrary: library,
             lastScanTime: services.lastScanTime,
-            isScanning: services.serviceScanner.isProcessing
+            isScanning: services.serviceScanner.isProcessing,
+            isOpenAIOffered: isOpenAIOffered
         )
     }
 

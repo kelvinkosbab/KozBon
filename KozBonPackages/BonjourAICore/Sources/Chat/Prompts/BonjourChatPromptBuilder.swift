@@ -64,18 +64,25 @@ public enum BonjourChatPromptBuilder {
         /// as definitive.
         public let isScanning: Bool
 
+        /// Whether the storefront offers the OpenAI backend. When it
+        /// doesn't, release notes naming OpenAI stay out of the
+        /// prompt (App Review, Guideline 5).
+        public let isOpenAIOffered: Bool
+
         public init(
             discoveredServices: [BonjourService] = [],
             publishedServices: [BonjourService] = [],
             serviceTypeLibrary: [BonjourServiceType] = [],
             lastScanTime: Date? = nil,
-            isScanning: Bool = false
+            isScanning: Bool = false,
+            isOpenAIOffered: Bool = true
         ) {
             self.discoveredServices = discoveredServices
             self.publishedServices = publishedServices
             self.serviceTypeLibrary = serviceTypeLibrary
             self.lastScanTime = lastScanTime
             self.isScanning = isScanning
+            self.isOpenAIOffered = isOpenAIOffered
         }
     }
 
@@ -360,7 +367,7 @@ public enum BonjourChatPromptBuilder {
         // about what's new — same per-turn, query-conditional
         // policy as `<referenced>`, so it never bloats the stable
         // context or multi-turn history for unrelated questions.
-        let whatsNew = whatsNewBlock(query: userMessage)
+        let whatsNew = whatsNewBlock(query: userMessage, offeringOpenAI: context.isOpenAIOffered)
         if !whatsNew.isEmpty {
             sections.append("<whats_new>\n\(whatsNew)\n</whats_new>\n")
         }
