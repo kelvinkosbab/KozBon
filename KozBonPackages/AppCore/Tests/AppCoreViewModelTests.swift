@@ -145,6 +145,17 @@ struct AppCoreViewModelTests {
     func applyBackendAvailabilityKeepsOfferedSelection() throws {
         let preferencesStore = try makeInMemoryPreferencesStore()
         preferencesStore.aiBackend = .gemini
+        let viewModel = makeViewModel(preferencesStore: preferencesStore, storefront: "USA")
+
+        viewModel.applyBackendAvailability()
+
+        #expect(preferencesStore.aiBackend == .gemini)
+    }
+
+    @Test("The China storefront resets a selected Gemini backend to the default")
+    func applyBackendAvailabilityResetsGeminiInChina() throws {
+        let preferencesStore = try makeInMemoryPreferencesStore()
+        preferencesStore.aiBackend = .gemini
         let viewModel = makeViewModel(
             preferencesStore: preferencesStore,
             storefront: AIBackendAvailability.chinaMainlandStorefront
@@ -152,7 +163,7 @@ struct AppCoreViewModelTests {
 
         viewModel.applyBackendAvailability()
 
-        #expect(preferencesStore.aiBackend == .gemini)
+        #expect(preferencesStore.aiBackend == .default)
     }
 
     private func makeInMemoryPreferencesStore() throws -> PreferencesStore {
