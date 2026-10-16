@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
-  "installed_at": "2026-06-12T03:02:30Z",
-  "bundle_commit": "b64ec75fa58d21f5c27bebb448a67654c97e57eb",
+  "installed_at": "2026-10-16T05:02:34Z",
+  "bundle_commit": "9c0a7e65bcb8d3a047bb3d630f3b21877d8bc1e0",
   "selection": {
     "platform": "apple",
     "apple_language": "swift",
@@ -314,7 +314,7 @@
       "path": ".claude/skills/swift-testing-pro/references/async-tests.md",
       "type": "skill-file",
       "category": "testing",
-      "sha256": "52892a8f7014c11c132013f87f271c1becd76776fffc087e8086b8cb2d888201",
+      "sha256": "bc6e0eabd10377b5796e9e554a4965a78b7d1aaba8f11021c2a63b6e8a9e669a",
       "skill": "swift-testing-pro"
     },
     {
@@ -377,63 +377,63 @@
       "path": ".claude/skills/swiftui-pro/references/swift.md",
       "type": "skill-file",
       "category": "ui",
-      "sha256": "8c31c5f5f99b3fa9586f0260cd1a4b1688dc7bda5e8de2891eb3f9d6a791125a",
+      "sha256": "c21c2f906d902444ad41179cf4481fb1484679f8b2c61c87122e35648aee8cd9",
       "skill": "swiftui-pro"
     },
     {
       "path": ".claude/skills/swiftui-pro/references/hygiene.md",
       "type": "skill-file",
       "category": "ui",
-      "sha256": "91d96f45f3ffa02f5553c288415f3c3d5f317cab7d8d9c6c60240ea6c44a2b01",
+      "sha256": "18c945717a842912180c218c10e7e76b496c11a87a77c1be65a504c70850877c",
       "skill": "swiftui-pro"
     },
     {
       "path": ".claude/skills/swiftui-pro/references/api.md",
       "type": "skill-file",
       "category": "ui",
-      "sha256": "12fa73d65a19c9d08224f925801db8eec914b1cedf5b2f86a38cdda04a66377a",
+      "sha256": "a12fb9dcc02093b560dd82e2882556d7cd2d6652edc0006eb24ebc14bc669448",
       "skill": "swiftui-pro"
     },
     {
       "path": ".claude/skills/swiftui-pro/references/views.md",
       "type": "skill-file",
       "category": "ui",
-      "sha256": "87cdd3d96e8e562aefe35070a59664e3536cfcc014bd8437cff603477f7e5a1d",
+      "sha256": "293e2ce342d28b10b00d0d053da8355378ad6701c85066c90e4da48bf553dac5",
       "skill": "swiftui-pro"
     },
     {
       "path": ".claude/skills/swiftui-pro/references/data.md",
       "type": "skill-file",
       "category": "ui",
-      "sha256": "5cc50484c525f748839e12174c065f7ea5fdd4380ce04b6885a906ecd6e6a318",
+      "sha256": "291a81fb0fc1befebcafe576d9e35cc8d47bb4d63baef50f6f2292300be797dd",
       "skill": "swiftui-pro"
     },
     {
       "path": ".claude/skills/swiftui-pro/references/accessibility.md",
       "type": "skill-file",
       "category": "ui",
-      "sha256": "0752544f0b6042ab87321e774203bb3bfb8c1eb3da0207c46ce4a9162d4456c0",
+      "sha256": "46f865d3e5cf63f4394e8d55628e06897bf9eec7409d69331931225eac69a198",
       "skill": "swiftui-pro"
     },
     {
       "path": ".claude/skills/swiftui-pro/references/navigation.md",
       "type": "skill-file",
       "category": "ui",
-      "sha256": "a3adb302455993aff85bbb6b5845ed2fcffa137c8b2ded99c937f3e4b7fcd77b",
+      "sha256": "24b95bbaa01970ff0a6625a7a201d81191ab1746dbe317bd7583d1f3f7ce53a3",
       "skill": "swiftui-pro"
     },
     {
       "path": ".claude/skills/swiftui-pro/references/performance.md",
       "type": "skill-file",
       "category": "ui",
-      "sha256": "1b503e3807e216d6b34b45f18bfba89214cea2fa1b88dd7ae8f482ebf0f03616",
+      "sha256": "82ee00cc74109dd7e6296dc872d410742a8584ad6d0bc4ae902fad0220392e38",
       "skill": "swiftui-pro"
     },
     {
       "path": ".claude/skills/swiftui-pro/references/design.md",
       "type": "skill-file",
       "category": "ui",
-      "sha256": "a730e05be38f166f38784cfbceed8b6c28adf174181d8fdd02980f7d8c621391",
+      "sha256": "8f2d05504e4d51dc2a0d91d2b0a580457cd98d0145826e4c0bc35dc67f006793",
       "skill": "swiftui-pro"
     },
     {
@@ -447,7 +447,7 @@
       "path": ".claude/skills/swiftui-pro/SKILL.md",
       "type": "skill-file",
       "category": "ui",
-      "sha256": "016a4fb9cad11596fa2038dd3eb4c8ff10b1a054025fe8fea104ad3cc5d9ff89",
+      "sha256": "c88c396456ccd3e1feb18070283352fd8db1c92c0a64ae59d7fe0032674c0129",
       "skill": "swiftui-pro"
     },
     {
@@ -468,7 +468,7 @@
       "path": ".claude/rules/apple-accessibility-best-practices.md",
       "type": "rule",
       "category": "ui",
-      "sha256": "60a54c413a7fc3a2c9e99f63ffef7fd3570ce3e6f35cfa846dabb22db917f3d1"
+      "sha256": "ec9071216a1a27d5e4f6f2c53d6c64ed19f61f18ae1b1a9b534881f51b994e03"
     },
     {
       "path": ".claude/rules/apple-documentation-strategy.md",
@@ -480,7 +480,7 @@
       "path": ".claude/rules/apple-foundation-models.md",
       "type": "rule",
       "category": "ai",
-      "sha256": "f6a82699a0e830775e5f83a9959aa6fa2d58fe6bf8040136871753a0956fd3d9"
+      "sha256": "ba94929de289b00038d98870b053ce18e6d82ab216837bb246ce6aa57238944c"
     },
     {
       "path": ".claude/rules/apple-linting-strategy.md",
@@ -504,7 +504,7 @@
       "path": ".claude/rules/apple-spm-package-conventions.md",
       "type": "rule",
       "category": "packaging",
-      "sha256": "a6a9fb4dd2a9d191ff659222f50f5d3ac75ae8c79c487c12f19aadb4c9b82de8"
+      "sha256": "fd83250b0a70e5f491aea606f42e984961d7aeaa5bb9b70eb621653e538b6d48"
     },
     {
       "path": ".claude/rules/apple-swift6-strict-concurrency.md",
@@ -598,6 +598,222 @@
       "category": "persistence",
       "sha256": "623c3195fccdec0ec95c0291223ced7491025b04e59c0b4f4fe5ffd23eb1019b",
       "skill": "swiftdata-pro"
+    },
+    {
+      "path": ".claude/rules/apple-adaptive-layout.md",
+      "type": "rule",
+      "category": "ui",
+      "sha256": "48086b3a3ab7316e0da6bceb0f04d227983ca91fc6879e2fffd3e0801b50c2b6"
+    },
+    {
+      "path": ".claude/rules/apple-design-system.md",
+      "type": "rule",
+      "category": "ui",
+      "sha256": "1fb77aaf83dcbb5c060d402849fdc82a4341e7c943d5197d4f25fe7138130d4a"
+    },
+    {
+      "path": ".claude/rules/apple-iconography.md",
+      "type": "rule",
+      "category": "ui",
+      "sha256": "c343caf0381d3b3613df3228835daf9721872b9416b8893dc9d35c48196fc7c6"
+    },
+    {
+      "path": ".claude/rules/apple-infoplist-localization.md",
+      "type": "rule",
+      "category": "localization",
+      "sha256": "5801ce21bcc77d53d1fa3373499cec71ea3949406bca5b039aa435f90a378abe"
+    },
+    {
+      "path": ".claude/rules/apple-modular-architecture.md",
+      "type": "rule",
+      "category": "packaging",
+      "sha256": "c3f8123f07f555b18004ffa67586e9040dc8a54569f092c8070102ac57105086"
+    },
+    {
+      "path": ".claude/rules/apple-regional-compliance.md",
+      "type": "rule",
+      "category": "compliance",
+      "sha256": "e6ce2b27f4e71a8cd629125b224ac347e86cbc62293c19af62a7b5648fd248d5"
+    },
+    {
+      "path": ".claude/rules/concise-comments-and-commits.md",
+      "type": "rule",
+      "category": "core",
+      "sha256": "fb98b4a6872a47ac73b6849e4885b34d2e4efb71c78cddf07e6d07c3f2505d2d"
+    },
+    {
+      "path": ".claude/rules/git-branch-workflows.md",
+      "type": "rule",
+      "category": "-",
+      "sha256": "b33c316e7139db4f49576b7c1a5cfa2adf0c5b9ae28c2924aee0370ab132b002"
+    },
+    {
+      "path": ".claude/skills/store-compliance-pro/SKILL.md",
+      "type": "skill-file",
+      "category": "compliance",
+      "sha256": "5d22177fab6d3951fed6265b28e83e9fb1315dfb1a751af5a286a248d50bf6ae",
+      "skill": "store-compliance-pro"
+    },
+    {
+      "path": ".claude/skills/store-compliance-pro/references/audit.md",
+      "type": "skill-file",
+      "category": "compliance",
+      "sha256": "c9419428cd4dbbce60ef3775c6f83e902033f54ee3b5c01bdc788863548e15cb",
+      "skill": "store-compliance-pro"
+    },
+    {
+      "path": ".claude/skills/store-compliance-pro/references/regions.md",
+      "type": "skill-file",
+      "category": "compliance",
+      "sha256": "fc8d17eaf82354bb9d294ff908d37a9e98678ece9f79c78009a2d2db18d597bf",
+      "skill": "store-compliance-pro"
+    },
+    {
+      "path": ".claude/skills/store-compliance-pro/references/rejection-response.md",
+      "type": "skill-file",
+      "category": "compliance",
+      "sha256": "b112b32b8fc5e2b01a9bc8512392e37d7d9e8df46f66421b9131ee54e71e69f2",
+      "skill": "store-compliance-pro"
+    },
+    {
+      "path": ".claude/skills/swift-accessibility-pro/SKILL.md",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "820f402d711fafbee91382e2a7ad769c17a12aa424f92292aca32fdeac79431a",
+      "skill": "swift-accessibility-pro"
+    },
+    {
+      "path": ".claude/skills/swift-accessibility-pro/references/bluetooth-input.md",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "298501f165aea7f89913b329a06e3685ead982cc6ed71b2b9dcb8683f90c7ea0",
+      "skill": "swift-accessibility-pro"
+    },
+    {
+      "path": ".claude/skills/swift-accessibility-pro/references/visual.md",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "dcf960f29cb08ed260da65d7abec0cb6b33937b5d1f13183f8947ca62e431968",
+      "skill": "swift-accessibility-pro"
+    },
+    {
+      "path": ".claude/skills/swift-accessibility-pro/references/voiceover.md",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "b7638e7915af3d08b66e1011809b6c8973b1c9128ee4d87d33bf2d15c5e28c6c",
+      "skill": "swift-accessibility-pro"
+    },
+    {
+      "path": ".claude/skills/swift-adaptive-layout-pro/SKILL.md",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "68538cb64ec83505ad41bc8f6f2fda74cf247b0ec6b66332bb87d673044d4787",
+      "skill": "swift-adaptive-layout-pro"
+    },
+    {
+      "path": ".claude/skills/swift-adaptive-layout-pro/references/duo-and-poses.md",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "686d05ced815e4ff94e75e2eeac5ac508980345f221f4e9db4d6650bdce5d2d8",
+      "skill": "swift-adaptive-layout-pro"
+    },
+    {
+      "path": ".claude/skills/swift-adaptive-layout-pro/references/readiness-checklist.md",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "38d43e4434a6663e285ac3e6c36dad774adaf36e12633dbdde2895933e63b1be",
+      "skill": "swift-adaptive-layout-pro"
+    },
+    {
+      "path": ".claude/skills/swift-adaptive-layout-pro/references/size-classes-and-idiom.md",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "0970d6b89fa16d7a583f3091f9e9bdc43d59e5395952a810af5b97482764e6d9",
+      "skill": "swift-adaptive-layout-pro"
+    },
+    {
+      "path": ".claude/skills/swift-design-system-pro/SKILL.md",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "daeeeceba7f3f0ee3174db49b9ea1e5759e102fb407c66c03b3c8d03ee7e73a1",
+      "skill": "swift-design-system-pro"
+    },
+    {
+      "path": ".claude/skills/swift-design-system-pro/references/bootstrap.md",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "fdcb2624f3a6ef06e7c15e2a7f7139427cfb409c232ad9fd46149a6ea658abc3",
+      "skill": "swift-design-system-pro"
+    },
+    {
+      "path": ".claude/skills/swift-design-system-pro/references/components.md",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "46830870d9165dd00bc0f1010b9c6c73057cd081a5d15839b00b3ab8d8c47ae6",
+      "skill": "swift-design-system-pro"
+    },
+    {
+      "path": ".claude/skills/swift-design-system-pro/references/iconography.md",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "3f5abacee1d8a3960e1a3fdd1e8a492b0c99ca2a88d08ae63e27d7898a4c04da",
+      "skill": "swift-design-system-pro"
+    },
+    {
+      "path": ".claude/skills/swift-design-system-pro/references/tokens-and-theming.md",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "c26586a295b7fcbdb00ab43f8b36f1ae0c6447abf3f2ba4e6b9fafbdf00d1922",
+      "skill": "swift-design-system-pro"
+    },
+    {
+      "path": ".claude/skills/swift-modularization-pro/SKILL.md",
+      "type": "skill-file",
+      "category": "packaging",
+      "sha256": "cca14d9e5cb7e4d1a6b7dceee10a8bc3442777b690edd6b146216fa0596563e8",
+      "skill": "swift-modularization-pro"
+    },
+    {
+      "path": ".claude/skills/swift-modularization-pro/references/audit.md",
+      "type": "skill-file",
+      "category": "packaging",
+      "sha256": "90d02c0142e38652e63970afeea88d5f385a0ede61e9a8e3c666bc01e153f0f5",
+      "skill": "swift-modularization-pro"
+    },
+    {
+      "path": ".claude/skills/swift-modularization-pro/references/migration.md",
+      "type": "skill-file",
+      "category": "packaging",
+      "sha256": "9f2f097f958cdb1878fd3b3195474edb958646de0c03318a47b4f2c51a976384",
+      "skill": "swift-modularization-pro"
+    },
+    {
+      "path": ".claude/skills/swift-modularization-pro/references/module-graph.md",
+      "type": "skill-file",
+      "category": "packaging",
+      "sha256": "edca85573ef5b35a1fae24ddd4cb99ae35d633350fd8ef06bca7993a241338db",
+      "skill": "swift-modularization-pro"
+    },
+    {
+      "path": ".claude/skills/swiftui-pro/references/localization.md",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "54f1d15bd8f726409a72622964005d2732148da614dc022bf7729f68ab246571",
+      "skill": "swiftui-pro"
+    },
+    {
+      "path": ".claude/skills/swiftui-pro/references/performance-plus.md",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "b7c77ac07548f9f8b6440daab607b0fa22796fc498ca644e3fa9890ee7912068",
+      "skill": "swiftui-pro"
+    },
+    {
+      "path": ".claude/skills/swiftui-pro/references/resizability.md",
+      "type": "skill-file",
+      "category": "ui",
+      "sha256": "2e1a88a675fe2eaf326fb1a50fafae4123725e6b4278c311c875335651a60226",
+      "skill": "swiftui-pro"
     }
   ],
   "mcps_installed": []
