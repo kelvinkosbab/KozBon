@@ -49,7 +49,7 @@ struct WhatsNewView: View {
 
     var body: some View {
         List {
-            ForEach(ReleaseNotes.displayed(offeringOpenAI: aiBackendAvailability.isOffered(.openai))) { release in
+            ForEach(ReleaseNotes.displayed(offeringCloudProviders: aiBackendAvailability.offersCloudProviders)) { release in
                 Section {
                     summaryRow(version: release.version, summary: release.summary)
                 } header: {

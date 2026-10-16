@@ -14,10 +14,11 @@ import StoreKit
 /// Which ``AIBackend`` cases the current App Store storefront may
 /// offer.
 ///
-/// App Review requires ChatGPT-associated functionality to be
-/// deactivated in the version of the app distributed on the China
-/// mainland storefront (Guideline 5 – Legal, deep-synthesis
-/// permitting), so ``AIBackend/openai`` is withheld there.
+/// The China mainland storefront offers only Apple Intelligence.
+/// China requires public generative-AI services to be filed with the
+/// regulator, and none of KozBon's cloud providers are. App Review
+/// rejected 4.8 under Guideline 5 for ChatGPT-associated features, and
+/// naming any unfiled provider carries the same risk.
 ///
 /// Keyed on the App Store storefront rather than the device locale:
 /// the storefront is what the rule attaches to, and a Chinese-locale
@@ -53,14 +54,20 @@ public final class AIBackendAvailability {
         AIBackend.allCases.filter { isOffered($0) }
     }
 
+    /// Whether any cloud backend is offered. When none is, release
+    /// notes naming a cloud AI provider are hidden as well.
+    public var offersCloudProviders: Bool {
+        AIBackend.allCases.contains { $0.isCloud && isOffered($0) }
+    }
+
     /// Whether `backend` may be offered on the storefront with the
     /// given country code. A `nil` storefront offers everything.
     public nonisolated static func isOffered(_ backend: AIBackend, inStorefront countryCode: String?) -> Bool {
         switch backend {
-        case .openai:
-            return countryCode?.uppercased() != chinaMainlandStorefront
-        case .appleIntelligence, .anthropic, .gemini:
+        case .appleIntelligence:
             return true
+        case .anthropic, .gemini, .openai:
+            return countryCode?.uppercased() != chinaMainlandStorefront
         }
     }
 

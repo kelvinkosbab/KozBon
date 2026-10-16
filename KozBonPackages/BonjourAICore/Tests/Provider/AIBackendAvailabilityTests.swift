@@ -14,17 +14,18 @@ import Testing
 @MainActor
 struct AIBackendAvailabilityTests {
 
-    @Test("The China mainland storefront withholds OpenAI and nothing else")
-    func chinaWithholdsOnlyOpenAI() {
+    @Test("The China mainland storefront offers only Apple Intelligence")
+    func chinaOffersOnlyAppleIntelligence() {
         let availability = AIBackendAvailability(storefrontCountryCode: "CHN")
-        #expect(!availability.isOffered(.openai))
-        #expect(availability.offeredBackends == [.appleIntelligence, .anthropic, .gemini])
+        #expect(availability.offeredBackends == [.appleIntelligence])
+        #expect(!availability.offersCloudProviders)
     }
 
     @Test("Other storefronts offer every backend", arguments: ["USA", "HKG", "TWN", "JPN"])
     func otherStorefrontsOfferEverything(countryCode: String) {
         let availability = AIBackendAvailability(storefrontCountryCode: countryCode)
         #expect(availability.offeredBackends == AIBackend.allCases)
+        #expect(availability.offersCloudProviders)
     }
 
     @Test("An unknown storefront offers every backend")
@@ -34,7 +35,7 @@ struct AIBackendAvailabilityTests {
 
     @Test("The country code match ignores case")
     func countryCodeIsCaseInsensitive() {
-        #expect(!AIBackendAvailability.isOffered(.openai, inStorefront: "chn"))
+        #expect(!AIBackendAvailability.isOffered(.anthropic, inStorefront: "chn"))
     }
 
     @Test("Updating the storefront changes what's offered")
@@ -42,6 +43,6 @@ struct AIBackendAvailabilityTests {
         let availability = AIBackendAvailability(storefrontCountryCode: "USA")
         availability.update(storefrontCountryCode: "CHN")
         #expect(availability.storefrontCountryCode == "CHN")
-        #expect(!availability.isOffered(.openai))
+        #expect(!availability.isOffered(.gemini))
     }
 }

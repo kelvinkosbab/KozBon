@@ -5,15 +5,18 @@ matching localization in App Store Connect.
 
 **Do not use "Bonjour" in any field** — Apple rejected the visionOS listing
 under Guideline 5.2.5 for it in the subtitle. Keep other Apple trademarks
-(AirPlay, HomeKit) and third-party names (Claude, Gemini) out of the subtitle,
-promotional text, and keywords; the description may reference them factually.
+(AirPlay, HomeKit) out of the subtitle, promotional text, and keywords; the
+description may reference them factually.
 
-**Do not mention OpenAI, GPT, or ChatGPT in any field, including What's New
-and screenshots** — App Review rejected 4.8 (build 125) on every platform
-under Guideline 5 (Legal) because China mainland law requires a permit for
-ChatGPT-associated services. The app withholds the OpenAI backend on that
-storefront, and localizations are shared across storefronts, so the listing
-can't name it in any language. Say so in the Review Notes on each submission.
+**Do not name any cloud AI provider or model (Anthropic, Claude, Google
+Gemini, OpenAI, GPT, ChatGPT) in any field, including What's New and
+screenshots** — App Review rejected 4.8 (build 125) on every platform under
+Guideline 5 (Legal) because China mainland law requires a permit for
+ChatGPT-associated services, and the same rule covers every unfiled
+generative-AI provider. The China mainland storefront offers only Apple
+Intelligence, and localizations are shared across storefronts, so the listing
+says "a cloud AI provider" in every language. Say so in the Review Notes on
+each submission.
 
 Limits: name and subtitle 30 characters, promotional text 170, description
 4,000, keywords 100. Words in the name and subtitle are already indexed, so
@@ -54,7 +57,7 @@ UNDERSTAND
 • Ask what any service does, why a device advertises it, and how to use it
 • Chat with an assistant that knows what's on your network right now
 • Runs on-device with Apple Intelligence by default — nothing leaves your device
-• Optionally connect your own Anthropic Claude or Google Gemini API key
+• Optionally use a cloud AI provider with your own API key
 
 EVERYWHERE
 • iPhone, iPad, Mac, and Apple Vision Pro
@@ -97,7 +100,7 @@ COMPRENDE
 • Pregunta qué hace un servicio, por qué un dispositivo lo anuncia y cómo usarlo
 • Conversa con un asistente que sabe qué hay en tu red en este momento
 • Funciona en el dispositivo con Apple Intelligence de forma predeterminada: nada sale de tu dispositivo
-• Opcionalmente, conecta tu propia clave de API de Anthropic Claude o Google Gemini
+• Opcionalmente, usa un proveedor de IA en la nube con tu propia clave de API
 
 EN TODAS PARTES
 • iPhone, iPad, Mac y Apple Vision Pro
@@ -140,7 +143,7 @@ COMPRENDRE
 • Demandez à quoi sert un service, pourquoi un appareil l'annonce et comment l'utiliser
 • Discutez avec un assistant qui sait ce qui se trouve sur votre réseau en ce moment
 • Fonctionne sur l'appareil avec Apple Intelligence par défaut : rien ne quitte votre appareil
-• En option, connectez votre propre clé API Anthropic Claude ou Google Gemini
+• En option, utilisez un fournisseur d'IA dans le cloud avec votre propre clé API
 
 PARTOUT
 • iPhone, iPad, Mac et Apple Vision Pro
@@ -183,7 +186,7 @@ VERSTEHEN
 • Frag, was ein Dienst macht, warum ein Gerät ihn ankündigt und wie du ihn nutzt
 • Chatte mit einem Assistenten, der weiß, was sich gerade in deinem Netzwerk befindet
 • Läuft standardmäßig auf dem Gerät mit Apple Intelligence – nichts verlässt dein Gerät
-• Optional deinen eigenen API-Schlüssel für Anthropic Claude oder Google Gemini verbinden
+• Optional einen Cloud-KI-Anbieter mit deinem eigenen API-Schlüssel nutzen
 
 ÜBERALL
 • iPhone, iPad, Mac und Apple Vision Pro
@@ -226,7 +229,7 @@ KozBonは、ローカルネットワーク上のデバイスが公開してい�
 • サービスの役割、デバイスが公開している理由、使い方を質問
 • 今ネットワーク上にあるものを把握しているアシスタントとチャット
 • デフォルトではApple Intelligenceによりデバイス上で動作し、データはデバイスの外に出ません
-• 必要に応じて、ご自身のAnthropic ClaudeまたはGoogle GeminiのAPIキーを接続可能
+• 必要に応じて、ご自身のAPIキーでクラウドAIプロバイダを利用可能
 
 あらゆるデバイスで
 • iPhone、iPad、Mac、Apple Vision Pro
@@ -269,7 +272,7 @@ KozBon 可以发现并解释设备在你的局域网中广播的服务。
 • 询问某项服务的用途、设备为何广播它以及如何使用
 • 与了解你当前网络状况的助手对话
 • 默认通过 Apple Intelligence 在设备端运行——数据不会离开你的设备
-• 也可以选择连接你自己的 Anthropic Claude 或 Google Gemini API 密钥
+• 也可以选择使用你自己的 API 密钥连接云端 AI 服务
 
 随处可用
 • iPhone、iPad、Mac 和 Apple Vision Pro
@@ -312,7 +315,7 @@ mdns,dns-sd,zeroconf,ماسح,wifi,lan,طابعة,المنزل الذكي,ssh,ع
 • اسأل عن وظيفة أي خدمة، ولماذا يعلن عنها الجهاز، وكيفية استخدامها
 • تحدّث مع مساعد يعرف ما الموجود على شبكتك الآن
 • يعمل على الجهاز باستخدام Apple Intelligence افتراضيًا، فلا تغادر بياناتك جهازك
-• يمكنك اختياريًا ربط مفتاح API الخاص بك من Anthropic Claude أو Google Gemini
+• يمكنك اختياريًا استخدام مزوّد ذكاء اصطناعي سحابي بمفتاح API الخاص بك
 
 في كل مكان
 • iPhone وiPad وMac وApple Vision Pro
@@ -355,7 +358,7 @@ KozBon מאתר ומסביר את השירותים שמכשירים מפרסמי
 • שאלו מה שירות עושה, למה מכשיר מפרסם אותו ואיך להשתמש בו
 • שוחחו עם עוזר שיודע מה נמצא ברשת שלכם ברגע זה
 • פועל במכשיר עם Apple Intelligence כברירת מחדל – שום דבר לא יוצא מהמכשיר
-• אפשרות לחבר מפתח API משלכם של Anthropic Claude או Google Gemini
+• אפשרות להשתמש בספק בינה מלאכותית בענן עם מפתח API משלכם
 
 בכל מקום
 • iPhone‏, iPad‏, Mac ו-Apple Vision Pro

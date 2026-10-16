@@ -48,18 +48,19 @@ public struct ReleaseNote: Identifiable, Hashable, Sendable {
     /// English-only context for the chat assistant (see type doc).
     public let highlights: [String]
 
-    /// Whether `summary` or `highlights` name OpenAI. Such entries are
-    /// left off What's New and out of the chat prompt on storefronts
-    /// where the OpenAI backend is withheld (App Review, Guideline 5).
-    public let mentionsOpenAI: Bool
+    /// Whether `summary` or `highlights` name a cloud AI provider.
+    /// Such entries are left off What's New and out of the chat prompt
+    /// on storefronts that offer no cloud backend (App Review,
+    /// Guideline 5).
+    public let namesCloudProvider: Bool
 
     public var id: String { version }
 
-    public init(version: String, summary: String, highlights: [String], mentionsOpenAI: Bool = false) {
+    public init(version: String, summary: String, highlights: [String], namesCloudProvider: Bool = false) {
         self.version = version
         self.summary = summary
         self.highlights = highlights
-        self.mentionsOpenAI = mentionsOpenAI
+        self.namesCloudProvider = namesCloudProvider
     }
 }
 
@@ -84,10 +85,10 @@ public struct ReleaseNote: Identifiable, Hashable, Sendable {
 public enum ReleaseNotes {
 
     /// The releases to show on What's New and in the chat prompt: all
-    /// of them, minus any naming OpenAI when the storefront doesn't
-    /// offer it.
-    public static func displayed(offeringOpenAI: Bool) -> [ReleaseNote] {
-        offeringOpenAI ? all : all.filter { !$0.mentionsOpenAI }
+    /// of them, minus any naming a cloud AI provider when the
+    /// storefront offers none.
+    public static func displayed(offeringCloudProviders: Bool) -> [ReleaseNote] {
+        offeringCloudProviders ? all : all.filter { !$0.namesCloudProvider }
     }
 
     /// Newest-first releases since 3.0.
@@ -148,7 +149,7 @@ public enum ReleaseNotes {
                 // swiftlint:disable:next line_length
                 "OpenAI GPT isn't offered on the China mainland App Store, where App Review requires ChatGPT-associated features to be turned off. Anyone there who had it selected is switched back to Apple Intelligence."
             ],
-            mentionsOpenAI: true
+            namesCloudProvider: true
         ),
         ReleaseNote(
             version: "4.7",
@@ -179,7 +180,8 @@ public enum ReleaseNotes {
                 "Chat suggestions are now iMessage-style blue capsules with a send arrow, so they read as prompts you can send rather than links. On iOS 27 the Chat tab keeps its own spot at the end of the tab bar.",
                 "The Preferences tab is now called Settings.",
                 "KozBon now requires iOS 26, iPadOS 26, macOS 26, or visionOS 26."
-            ]
+            ],
+            namesCloudProvider: true
         ),
         ReleaseNote(
             version: "4.6",
@@ -194,7 +196,8 @@ public enum ReleaseNotes {
                 // swiftlint:disable:next line_length
                 "Reliability improvements across the chat surface, including a swipe-delete animation fix in the broadcast TXT-record list.",
                 "Brand names (Apple Intelligence, Claude, GitHub) now reliably stay in English across every locale."
-            ]
+            ],
+            namesCloudProvider: true
         ),
         ReleaseNote(
             version: "4.5",
@@ -218,7 +221,7 @@ public enum ReleaseNotes {
                 "Claude model picker in Preferences — choose which Claude variant to use.",
                 "Brand-tinted in-app sign-in pages for each cloud provider with native link rows to your API key console."
             ],
-            mentionsOpenAI: true
+            namesCloudProvider: true
         ),
         ReleaseNote(
             version: "4.1",

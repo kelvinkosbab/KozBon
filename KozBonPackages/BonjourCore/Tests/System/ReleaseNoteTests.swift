@@ -98,27 +98,27 @@ struct ReleaseNotesTests {
         #expect(newest.id == newest.version)
     }
 
-    /// App Review rejects listings that name ChatGPT-associated
-    /// services on the China mainland storefront, and What's New and
-    /// the chat prompt both show release notes there. Any release
-    /// naming them must carry the flag that hides it.
-    @Test("Releases naming OpenAI or GPT are flagged")
-    func openAIReleasesAreFlagged() {
+    /// The China mainland storefront offers no cloud AI provider, and
+    /// What's New and the chat prompt both show release notes there.
+    /// Any release naming a provider must carry the flag that hides it.
+    @Test("Releases naming a cloud AI provider are flagged")
+    func cloudProviderReleasesAreFlagged() {
+        let names = ["OpenAI", "GPT", "Anthropic", "Claude", "Gemini"]
         for release in ReleaseNotes.all {
             let text = ([release.summary] + release.highlights).joined(separator: "\n")
-            if text.contains("OpenAI") || text.contains("GPT") {
-                #expect(release.mentionsOpenAI, "\(release.version) names OpenAI but isn't flagged")
+            if let name = names.first(where: text.contains) {
+                #expect(release.namesCloudProvider, "\(release.version) names \(name) but isn't flagged")
             }
         }
     }
 
-    @Test("Releases naming OpenAI are hidden only where it isn't offered")
-    func displayedReleasesFollowOpenAIAvailability() {
-        #expect(ReleaseNotes.displayed(offeringOpenAI: true) == ReleaseNotes.all)
+    @Test("Releases naming a cloud provider are hidden only where none is offered")
+    func displayedReleasesFollowCloudAvailability() {
+        #expect(ReleaseNotes.displayed(offeringCloudProviders: true) == ReleaseNotes.all)
 
-        let withheld = ReleaseNotes.displayed(offeringOpenAI: false)
-        #expect(withheld.allSatisfy { !$0.mentionsOpenAI })
-        #expect(withheld.count == ReleaseNotes.all.filter { !$0.mentionsOpenAI }.count)
+        let withheld = ReleaseNotes.displayed(offeringCloudProviders: false)
+        #expect(withheld.allSatisfy { !$0.namesCloudProvider })
+        #expect(withheld.count == ReleaseNotes.all.filter { !$0.namesCloudProvider }.count)
         #expect(withheld.count < ReleaseNotes.all.count)
     }
 
