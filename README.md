@@ -1,6 +1,8 @@
 # KozBon
 
-A multi-platform Apple app for discovering, broadcasting, and understanding Bonjour (mDNS/DNS-SD) network services. Rich service inspection, filter categories, a 158-entry service-type library, and AI-powered explanations — on-device by default, with optional Anthropic Claude or Google Gemini integration — on iPhone, iPad, Mac, and Apple Vision Pro.
+A multi-platform Apple app for discovering, broadcasting, and understanding Bonjour (mDNS/DNS-SD) network services. Rich service inspection, filter categories, a 158-entry service-type library, Siri and Shortcuts actions, and AI-powered Insights — on-device with Apple Intelligence by default, or with your own Anthropic Claude or Google Gemini API key — on iPhone, iPad, Mac, and Apple Vision Pro.
+
+Current release: **4.9.1** — see the [changelog](CHANGELOG.md).
 
 📲 [Download on the App Store](https://apps.apple.com/app/kozbon/id1193790136)
 
@@ -36,17 +38,30 @@ For full build commands per platform, see [Build](#build) below. For contributio
 - **Context menus everywhere** — Copy service names, hostnames, IP addresses, full type strings, and individual TXT keys/values with a long-press
 - **Best-practice footnotes** on the create-service-type, broadcast, and add-TXT-record forms
 - **Sectioned Nearby list** — grouped one section per device by default, or one per service type (with a short description of the type) when sorting by service name
-- **Siri and Shortcuts** — `Scan for Services` and `List Discovered Services` are exposed as App Intents with spoken phrases localized in all 8 languages, so they work from Siri, the Shortcuts app, and Spotlight
+
+### Siri and Shortcuts
+
+Eight App Intents, with spoken phrases localized in all 8 languages, work from Siri, the Shortcuts app, and Spotlight:
+
+- **Scan for Services** — counts the devices on your network ("an Apple TV is one Apple device, not three") and says when you're not on Wi-Fi or Ethernet
+- **List Discovered Services** — returns services whose name, type, hostname, and port flow into later Shortcuts steps
+- **Find Services** — "Find printers with KozBon" scans for one category, or one service type in Shortcuts
+- **Check If Device Is Online** — answers yes or no for a named device, ready for automations
+- **Open Service in KozBon** — opens the app on a service a List or Find step returned
+- **Explain a Service Type** — Siri reads a short Insights explanation from the AI selected in Settings
+- **Broadcast a Service** / **Stop Broadcasting** — start a TCP broadcast on a port, or stop them all
+
+A **Using Siri with KozBon** row (top of Settings and Discover on iPhone, iPad, and Vision Pro) cycles through example phrases, and a **Using KozBon with Shortcuts** page links to the Shortcuts app with suggested automations. Siri also accepts the common mishearings "Koz Bon", "Kos Bon", and "Cause Bon".
 
 ### Settings
 
-- **Dedicated Settings tab** for display options, Insights configuration, and library management
+- **Dedicated Settings tab** for Siri phrases, display options, Insights and AI backend configuration, and library management
 - **Ambient background switch** turns off the per-tab colour wash and restores plain system styling; it also steps aside automatically for Increase Contrast, Reduce Transparency, and Smart Invert
 - **Reset to defaults** restores built-in settings and clears custom service types
 
 ### AI insights (pluggable backend)
 
-- **Insights** — Long-press any service or library type to stream a Markdown-formatted explanation of what it does, why devices advertise it, and how to interact with it from *your* device
+- **Insights** — Tap the Insights button on any service or library detail page, or long-press a row, to stream a Markdown-formatted explanation of what it does, why devices advertise it, and how to interact with it from *your* device. The button takes on the selected AI's colours, moves into the navigation bar once it scrolls out of view, and offers sign-in or Apple Intelligence setup when the AI isn't ready
 - **Chat (or Explore on macOS/visionOS)** — Conversational assistant grounded in your live network: discovered services with their IP addresses, transport layer, and TXT records; published services; and the type library grouped by category
 - **Query-triggered descriptions** — Mention a type by name in chat and the assistant pulls in authoritative descriptions from the catalog inline
 - **Scan freshness awareness** — The assistant knows whether results are fresh, stale, or still populating and hedges answers accordingly
@@ -55,12 +70,13 @@ For full build commands per platform, see [Build](#build) below. For contributio
   - **Apple Intelligence (default)** — Everything runs through Apple's Foundation Models on-device; no data leaves the device. Available on Apple-Intelligence-eligible hardware with the feature turned on.
   - **Anthropic Claude (opt-in)** — Sign in with your own Anthropic API key (stored in the iOS Keychain; KozBon never sees the key on a server). Requests are sent to Anthropic's API and billed to your Anthropic account. Available on any device — including older iPhones, non-M-series Macs, and devices where Apple Intelligence is disabled.
   - **Google Gemini (opt-in)** — Same shape, with your own Google AI Studio key against the Gemini Developer API.
-  - **OpenAI GPT (opt-in)** — Same shape, with your own OpenAI API key against the Responses API. Requests opt out of server-side storage. API usage is billed by OpenAI, separately from a ChatGPT subscription.
+  - **OpenAI GPT (opt-in)** — Same shape, with your own OpenAI API key against the Responses API. Requests opt out of server-side storage. API usage is billed by OpenAI, separately from a ChatGPT subscription. Not offered on the China mainland App Store storefront, where App Review requires ChatGPT-associated features to be off; there the choice is Apple Intelligence, Claude, or Gemini. Store listings never name it — see [`docs/app-store-metadata.md`](docs/app-store-metadata.md).
   - The Claude, Gemini, and GPT model pickers load each provider's current model list using your key, so new models appear without an app update; offline they fall back to a compiled-in list. Each provider remembers its own choice, so switching back and forth preserves both.
 - **Configurable** — Single Detail level setting (Basic / Technical) drives both vocabulary and response length, so the two settings can't drift out of sync
 
 ### Polish
 
+- **App icon** — a blue dot with broken ripples that sweep up and to the right; on visionOS the ripples float above a white back layer
 - **Ambient background** — a slow mesh-gradient colour wash that drifts behind every tab, tinted per tab and carried into the detail pages opened from it; holds still under Reduce Motion or Low Power Mode
 - **Liquid Glass** — translucent compose bars, tinted send buttons, and floating capsules, routed through one helper that uses `.glassEffect(in:)` on iOS / macOS and `.glassBackgroundEffect()` on visionOS
 - **Haptic feedback** — medium tap on send, light tap per sentence while the model streams, selection taps on sort and navigation actions
@@ -77,7 +93,7 @@ For full build commands per platform, see [Build](#build) below. For contributio
 | **iOS**      | 26.0 | Pull-to-refresh, context menus, interactive keyboard dismiss, Liquid Glass compose bar, landscape and wide layouts including the iPhone Duo inner display |
 | **iPadOS**   | 26.0 | Split-view navigation, drag-and-drop, trackpad hover, multi-column layouts |
 | **macOS**    | 26.0 | Menu-bar commands, keyboard shortcuts, Settings scene, multi-window service details |
-| **visionOS** | 26.0 | Native translucent surfaces, pointer hover, platform-appropriate tab labeling |
+| **visionOS** | 26.0 | Native translucent surfaces, pointer hover, platform-appropriate tab labeling, layered app icon, Siri phrases in Settings |
 
 The minimums were raised to 26 together so no `#available` gating is needed for 26-era APIs — Liquid Glass, Foundation Models, and the Apple Intelligence surfaces are all unconditional.
 
@@ -100,13 +116,13 @@ The minimums were raised to 26 together so no `#available` gating is needed for 
   - **`BonjourAIOpenAI`** — OpenAI GPT against the Responses API, with `store: false` on every request and `OpenAIModelCatalog` filtered to chat-capable model families.
   - **`BonjourAI`** — the umbrella. `CloudAwareBonjourChatSessionFactory` / `CloudAwareBonjourServiceExplainerFactory` read `preferencesStore.aiBackend` and route to the right provider; `@_exported import BonjourAICore` keeps older `import BonjourAI` call sites working.
   - **`BonjourUI`** — every SwiftUI view, view model, and the design-system primitives consumed by every screen (semantic `CGFloat` tokens, the `Image.xxx` SF-Symbol façade, the `AmbientMeshBackground` colour wash).
-  - **`BonjourAppIntents`** — App Intents (`ScanForServicesIntent`, `ListDiscoveredServicesIntent`) for Siri / Shortcuts integration, plus the `BonjourService` / `BonjourServiceType` entity projections.
+  - **`BonjourAppIntents`** — the eight Siri / Shortcuts App Intents (scan, list, find, is-device-online, open, explain, broadcast, stop broadcasting), the `BonjourService` / `BonjourServiceType` entity projections, and `AppIntentsBridge`, which `AppCore` fills in at launch so actions that touch app state work even when the system launches KozBon in the background. The `AppShortcutsProvider` itself stays in the app target, because Xcode only extracts and localizes Siri phrases there.
 - **Dependency injection** via `DependencyContainer` + SwiftUI environment; the shared `BonjourServicesViewModel` is owned by `AppCoreViewModel` so the Discover and Chat tabs see the same scanner delegate
 - **FoundationModels** for on-device AI, with availability gating that hides the AI surfaces on ineligible hardware rather than failing at call time
 - **Pluggable AI backend** ([ADR 0005](docs/adr/0005-pluggable-ai-backend.md), extended by [ADR 0006](docs/adr/0006-google-gemini-backend.md) and [ADR 0007](docs/adr/0007-openai-backend.md)) — one protocol layer, four implementations, selected in Settings and swapped without an app restart. Each cloud provider's model list is fetched at runtime from its own API, falling back to a compiled-in list offline, and each remembers its own model choice. API keys live only in the Keychain (`whenUnlockedThisDeviceOnly`, never iCloud-synced); KozBon never operates them
 - **Liquid Glass** via a single `platformGlassBackground` helper that routes to `.glassEffect(in:)` on iOS / macOS and `.glassBackgroundEffect()` on visionOS
 - **HapticFeedback** provider injected via environment so view models can request haptics without direct UIKit dependencies
-- **Swift Testing** — 1,271 tests across 110 suites covering prompt-quality invariants, view-model logic, state machines (sentence haptic tracker, broadcast publish flow), design-token value pins, haptic mocks, scanner delegate flows, streaming-client wire formats, and chat-session rejection paths
+- **Swift Testing** — more than 1,350 tests covering prompt-quality invariants, Siri intent responses, view-model logic, state machines (sentence haptic tracker, broadcast publish flow), design-token value pins, haptic mocks, scanner delegate flows, streaming-client wire formats, and chat-session rejection paths
 - **SwiftLint** — project-wide rules plus a custom rule forbidding literal SF Symbol strings in favor of the `Image.xxx` façade
 - **CI** — GitHub Actions workflows for Native CI (iOS + macOS build matrix), SPM package tests, multi-platform builds (macOS + visionOS), SwiftLint, a String Catalog validator that pins translation completeness across all 8 locales, a Markdown link checker, and a Release workflow that publishes a GitHub Release whenever a `v*` tag is pushed
 
