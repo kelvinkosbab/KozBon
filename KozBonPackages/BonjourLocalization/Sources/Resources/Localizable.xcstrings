@@ -29633,6 +29633,60 @@
           }
         }
       }
+    },
+    "KozBon is ready for iPhone Duo. On its inner display, the sidebar and detail pane open side by side, and Settings, Chat, and detail pages keep a readable width.\n\nOn the China mainland App Store, the assistant now uses Apple Intelligence only.": {
+      "comment": "What's New summary for KozBon 4.9.2. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBon is ready for iPhone Duo. On its inner display, the sidebar and detail pane open side by side, and Settings, Chat, and detail pages keep a readable width.\n\nOn the China mainland App Store, the assistant now uses Apple Intelligence only."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBon está listo para el iPhone Duo. En su pantalla interior, la barra lateral y el panel de detalles se abren uno al lado del otro, y Ajustes, Chat y las páginas de detalles mantienen un ancho cómodo de leer.\n\nEn el App Store de China continental, el asistente ahora usa solo Apple Intelligence."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBon est prêt pour l'iPhone Duo. Sur son écran intérieur, la barre latérale et le volet de détails s'ouvrent côte à côte, et Réglages, Chat et les pages de détails gardent une largeur confortable à lire.\n\nSur l'App Store de Chine continentale, l'assistant utilise désormais uniquement Apple Intelligence."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBon ist bereit für das iPhone Duo. Auf dem inneren Display öffnen sich Seitenleiste und Detailbereich nebeneinander, und Einstellungen, Chat und Detailseiten behalten eine gut lesbare Breite.\n\nIm App Store für das chinesische Festland nutzt der Assistent jetzt nur noch Apple Intelligence."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBonがiPhone Duoに対応しました。内側のディスプレイでは、サイドバーと詳細パネルが横に並んで開き、設定、チャット、詳細画面は読みやすい幅を保ちます。\n\n中国本土のApp Storeでは、アシスタントはApple Intelligenceのみを使用するようになりました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBon 已为 iPhone Duo 做好准备。在内屏上，边栏和详细信息面板并排打开，“设置”、“聊天”和详细信息页面保持易于阅读的宽度。\n\n在中国大陆 App Store 中，助手现在仅使用 Apple 智能。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أصبح KozBon جاهزًا لـ iPhone Duo. على شاشته الداخلية، يُفتح الشريط الجانبي ولوحة التفاصيل جنبًا إلى جنب، وتحافظ الإعدادات والدردشة وصفحات التفاصيل على عرض مريح للقراءة.\n\nفي App Store في البر الرئيسي للصين، أصبح المساعد يستخدم Apple Intelligence فقط."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBon מוכנה ל-iPhone Duo. במסך הפנימי, סרגל הצד וחלונית הפרטים נפתחים זה לצד זה, וההגדרות, הצ׳אט ועמודי הפרטים שומרים על רוחב נוח לקריאה.\n\nב-App Store של סין היבשתית, העוזר משתמש עכשיו רק ב-Apple Intelligence."
+          }
+        }
+      }
     }
   },
   "version": "1.0"

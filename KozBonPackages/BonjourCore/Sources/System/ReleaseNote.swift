@@ -94,6 +94,17 @@ public enum ReleaseNotes {
     /// Newest-first releases since 3.0.
     public static let all: [ReleaseNote] = [
         ReleaseNote(
+            version: "4.9.2",
+            // swiftlint:disable:next line_length
+            summary: "KozBon is ready for iPhone Duo. On its inner display, the sidebar and detail pane open side by side, and Settings, Chat, and detail pages keep a readable width.\n\nOn the China mainland App Store, the assistant now uses Apple Intelligence only.",
+            highlights: [
+                // swiftlint:disable:next line_length
+                "Built with the iOS 27.1 SDK for iPhone Duo. On the inner display, the sidebar and detail pane open side by side, and Settings, Chat, and detail pages keep a readable width.",
+                // swiftlint:disable:next line_length
+                "On the China mainland App Store, the assistant runs only on Apple Intelligence, and anyone who had a cloud AI selected there is switched back to it."
+            ]
+        ),
+        ReleaseNote(
             version: "4.9.1",
             // swiftlint:disable:next line_length
             summary: "Siri can do much more with KozBon: find a kind of device, check whether one is online, explain a service type, and start or stop broadcasting, all in your language. A new Using Siri with KozBon section in Settings suggests phrases to try, with a page of ideas for Shortcuts automations.\n\nOn service and library details, the Insights button now moves into the navigation bar as you scroll, so it stays in reach.",

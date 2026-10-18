@@ -7,8 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.9.2] - 2026-10-18
+
 ### Changed
 
+- Built with the iOS 27.1 SDK for iPhone Duo, with a What's New entry for 4.9.2.
 - On the China mainland App Store, the assistant now runs only on Apple Intelligence. Anthropic Claude and Google Gemini are no longer offered there, and anyone who had one selected is switched back to Apple Intelligence.
 
 ## [4.9.1] - 2026-10-16
