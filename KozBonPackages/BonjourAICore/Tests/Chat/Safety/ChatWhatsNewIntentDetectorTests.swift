@@ -17,11 +17,10 @@ import Testing
 /// `false` for network-state and concept questions (so it doesn't
 /// waste the on-device model's context window).
 ///
-/// The most load-bearing assertion is that every localized
-/// "What's new in this version?" suggestion-button value matches —
-/// if one didn't, tapping the button in that locale would silently
-/// fail to inject release notes and the assistant would answer
-/// from nothing.
+/// The most load-bearing assertion is that "What's new in this
+/// version?" matches in every locale — if one didn't, asking it in
+/// that language would silently skip the release notes and the
+/// assistant would answer from nothing.
 @Suite("ChatWhatsNewIntentDetector")
 struct ChatWhatsNewIntentDetectorTests {
 
@@ -37,9 +36,9 @@ struct ChatWhatsNewIntentDetectorTests {
         #expect(ChatWhatsNewIntentDetector.wantsWhatsNew(message: "What new features were added recently?"))
     }
 
-    // MARK: - Positive — Suggestion-button values (every locale)
+    // MARK: - Positive — Every locale
 
-    @Test("Every localized suggestion-button value triggers", arguments: [
+    @Test("Every localized what's-new question triggers", arguments: [
         "What's new in this version?",          // en
         "¿Qué hay de nuevo en esta versión?",   // es
         "Quoi de neuf dans cette version ?",    // fr
@@ -49,10 +48,10 @@ struct ChatWhatsNewIntentDetectorTests {
         "ما الجديد في هذا الإصدار؟",             // ar
         "מה חדש בגרסה זו?"                       // he
     ])
-    func localizedSuggestionButtonValuesTrigger(_ value: String) {
+    func localizedWhatsNewQuestionsTrigger(_ value: String) {
         #expect(
             ChatWhatsNewIntentDetector.wantsWhatsNew(message: value),
-            "Suggestion value should inject release notes: \(value)"
+            "Question should inject release notes: \(value)"
         )
     }
 
