@@ -307,6 +307,42 @@ extension BonjourChatPromptBuilder {
         """
     }
 
+    /// Query-triggered block describing KozBon's own screens and
+    /// controls, for "how do I broadcast / create a type / sort"
+    /// questions. Empty otherwise, so like ``siriBlock(query:)`` it
+    /// costs nothing on the common case. Names no AI provider, so it
+    /// is safe on every storefront.
+    public static func appHelpBlock(query: String) -> String {
+        guard ChatAppHelpIntentDetector.wantsAppHelp(message: query) else {
+            return ""
+        }
+        return """
+        KOZBON APP HELP (describe KozBon's screens and controls ONLY from this \
+        list; never invent buttons, menus, or settings). Tabs: Discover lists \
+        services found on the network, Library lists every service type KozBon \
+        knows, Chat (called Explore on Mac and Apple Vision Pro) is this \
+        assistant, and Settings holds preferences and About.
+        - Broadcast a service: in Discover, tap Broadcast (the antenna button) \
+        in the toolbar. Pick a service type, enter a port number, optionally \
+        change the domain and add TXT records, then tap Done. KozBon broadcasts \
+        TCP services only. To stop every broadcast, say "Stop broadcasting with \
+        KozBon" to Siri.
+        - Create a custom service type: in Library, open the Create (+) menu in \
+        the toolbar and choose Create custom service type. To edit or delete a \
+        custom type, open it in Library and use Edit or Delete.
+        - Sort and filter: Discover's Sort menu sorts by host or service name \
+        and filters by category (smart home, Apple devices, media and \
+        streaming, printers and scanners, remote access). Library's filter \
+        menu filters by the same categories. Both tabs have a search field.
+        - Insights: long-press a service or service type (right-click on Mac) \
+        and choose Insights for an AI explanation of it.
+        - Assistant settings: Settings has an Assistant section for choosing \
+        the provider (Apple Intelligence, or a cloud provider using the user's \
+        own API key), and a Detail level (Basic or Technical) that sets how \
+        detailed answers are.
+        """
+    }
+
     // MARK: - Context Section Builders
 
     /// Renders a single-line scan-freshness summary so the model can

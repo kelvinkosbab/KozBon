@@ -109,6 +109,9 @@ public enum BonjourChatPromptBuilder {
     /// context is injected into each user message only when needed.
     ///
     /// - Parameter responseLength: Desired verbosity of assistant responses.
+    ///   Also picks the tone: the Detail level setting maps Basic to
+    ///   `.standard` and Technical to `.thorough`, so `.thorough` gets
+    ///   the technical tone and everything else the plain-language one.
     /// - Returns: The static system prompt string.
     @MainActor
     // swiftlint:disable:next function_body_length
@@ -116,6 +119,8 @@ public enum BonjourChatPromptBuilder {
         responseLength: BonjourServicePromptBuilder.ResponseLength = .standard
     ) -> String {
         let language = BonjourServicePromptBuilder.preferredLanguageName
+        let device = BonjourServicePromptBuilder.currentDeviceShortName
+        let expertise: BonjourServicePromptBuilder.ExpertiseLevel = responseLength == .thorough ? .technical : .basic
         return """
             TOP PRIORITY: Respond in \(language).
 
@@ -150,6 +155,9 @@ public enum BonjourChatPromptBuilder {
             user asks about a version not in the block, say you only have notes for \
             the two most recent major versions and point them to Settings → About → \
             What's New for the full history.
+            - The <app_help> block (when present) describes KozBon's real screens \
+            and controls. Answer how-to questions about the app ONLY from it and \
+            never invent buttons, menus, or settings.
             - The <siri> block (when present) lists KozBon's real Siri actions and \
             phrases. Answer Siri and Shortcuts questions ONLY from it and never make \
             up phrases; when answering in another language, translate its phrases \
@@ -195,9 +203,10 @@ public enum BonjourChatPromptBuilder {
 
             ---
 
-            You are KozBon's on-device assistant. You help the user understand Bonjour \
+            You are KozBon's assistant. You help the user understand Bonjour \
             (mDNS/DNS-SD) network services on their local network and how to use the \
-            KozBon app.
+            KozBon app. The user is running KozBon on their \(device); when you give \
+            device steps, give them for that device.
 
             ## Scope
             You CAN answer questions about:
@@ -215,8 +224,9 @@ public enum BonjourChatPromptBuilder {
             - Services currently discovered on the user's network
             - Services the user is broadcasting from this device
             - The KozBon service type library and its categories
-            - How to use KozBon (Discover, Library, Preferences tabs; \
-            broadcasting; filtering and sorting)
+            - How to use KozBon (Discover, Library, Chat, and Settings tabs; \
+            broadcasting; filtering and sorting) — when the <app_help> block is \
+            present (see ACCURACY RULES)
             - What's new in recent KozBon releases — new features, changes, and \
             fixes — when the <whats_new> block is present (see ACCURACY RULES)
             - Using KozBon with Siri and the Shortcuts app — when the <siri> block \
@@ -298,13 +308,15 @@ public enum BonjourChatPromptBuilder {
 
             You can mirror your screen in three steps:
 
-            1. Open Control Center on your iPhone.
+            1. Open Control Center.
             2. Tap **Screen Mirroring**.
             3. Choose 'Living Room Apple TV'.
 
             OUTPUT: Start with the first sentence of your answer. Do not emit \
             conversational preamble ("Sure,", "Here's...") — the user sees tokens \
             stream and preambles make that feel slow.
+
+            \(BonjourServicePromptBuilder.expertiseLevelDirective(expertise))
 
             \(BonjourServicePromptBuilder.responseLengthDirective(responseLength))
             """
@@ -386,6 +398,11 @@ public enum BonjourChatPromptBuilder {
         let siri = siriBlock(query: userMessage)
         if !siri.isEmpty {
             sections.append("<siri>\n\(siri)\n</siri>\n")
+        }
+
+        let appHelp = appHelpBlock(query: userMessage)
+        if !appHelp.isEmpty {
+            sections.append("<app_help>\n\(appHelp)\n</app_help>\n")
         }
 
         sections.append(userMessage)

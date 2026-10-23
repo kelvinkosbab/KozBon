@@ -79,12 +79,33 @@ struct BonjourChatPromptBuilderTests {
         #expect(instructions.contains("Respond in \(language)"))
     }
 
-    @Test("System instructions reference the app's three primary tabs by name for navigation help")
+    @Test("System instructions name the app's tabs as they appear in the tab bar")
     func systemInstructionsMentionsTabs() {
         let instructions = BonjourChatPromptBuilder.systemInstructions()
-        #expect(instructions.contains("Discover"))
-        #expect(instructions.contains("Library"))
-        #expect(instructions.contains("Preferences"))
+        #expect(instructions.contains("Discover, Library, Chat, and Settings tabs"))
+        #expect(!instructions.contains("Preferences"))
+    }
+
+    @Test("System instructions don't claim the assistant runs on-device, since cloud backends share them")
+    func systemInstructionsAreBackendNeutral() {
+        let instructions = BonjourChatPromptBuilder.systemInstructions()
+        #expect(instructions.contains("You are KozBon's assistant."))
+        #expect(!instructions.contains("on-device assistant"))
+    }
+
+    @Test("System instructions name the device the user is on")
+    func systemInstructionsNameTheDevice() {
+        let instructions = BonjourChatPromptBuilder.systemInstructions()
+        let device = BonjourServicePromptBuilder.currentDeviceShortName
+        #expect(instructions.contains("running KozBon on their \(device)"))
+    }
+
+    @Test("Detail level sets the tone: Technical for thorough answers, plain language otherwise")
+    func systemInstructionsCarryDetailLevelTone() {
+        let technical = BonjourChatPromptBuilder.systemInstructions(responseLength: .thorough)
+        let basic = BonjourChatPromptBuilder.systemInstructions(responseLength: .standard)
+        #expect(technical.contains(BonjourServicePromptBuilder.expertiseLevelDirective(.technical)))
+        #expect(basic.contains(BonjourServicePromptBuilder.expertiseLevelDirective(.basic)))
     }
 
     @Test("Language directive is the first line so it survives mid-prompt context truncation")
