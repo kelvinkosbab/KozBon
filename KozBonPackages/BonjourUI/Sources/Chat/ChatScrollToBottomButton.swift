@@ -21,6 +21,10 @@ struct ChatScrollToBottomButton: View {
     /// control whatever its own scaled size.
     var centerTrailingInset: CGFloat = 0
 
+    /// Lifts the button this far clear of the top edge of the
+    /// container it's top-aligned to, so it floats above it.
+    var gapAboveTopEdge: CGFloat = 0
+
     let action: () -> Void
 
     @Environment(\.colorSchemeContrast) private var colorSchemeContrast
@@ -56,7 +60,10 @@ struct ChatScrollToBottomButton: View {
         #if !os(macOS)
         .hoverEffect(.highlight)
         #endif
+        // Padding and an offset rather than alignment guides, which
+        // the compose bar's overlay didn't honor on device.
         .padding(.trailing, max(0, centerTrailingInset - diameter / 2))
+        .offset(y: -(diameter + gapAboveTopEdge))
     }
 }
 

@@ -391,11 +391,11 @@ public struct BonjourChatView: View {
                     .overlay(alignment: .topTrailing) {
                         if showsScrollToBottomButton(session) {
                             ChatScrollToBottomButton(
-                                centerTrailingInset: Self.sendButtonCenterTrailingInset
+                                centerTrailingInset: Self.sendButtonCenterTrailingInset,
+                                gapAboveTopEdge: .space8
                             ) {
                                 viewModel.scrollToBottomRequestCount &+= 1
                             }
-                            .alignmentGuide(.top) { $0[.bottom] + .space8 }
                             .transition(
                                 reduceMotion
                                     ? .opacity
