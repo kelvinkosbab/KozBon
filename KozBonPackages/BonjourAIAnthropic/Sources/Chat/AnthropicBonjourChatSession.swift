@@ -9,7 +9,6 @@ import Foundation
 import BonjourAICore
 import BonjourCore
 import BonjourLocalization
-import InternetConnectivity
 
 // MARK: - AnthropicBonjourChatSession
 
@@ -53,10 +52,6 @@ public final class AnthropicBonjourChatSession: BonjourChatSessionProtocol {
     public private(set) var isGenerating: Bool = false
     public var error: String?
     public private(set) var errorAction: ChatErrorAction?
-
-    /// Every turn calls the provider's API.
-    public var connectivityRequirement: ConnectivityRequirement { .internet }
-
     public var responseLength: BonjourServicePromptBuilder.ResponseLength = .standard
     public let intentBroker: BonjourChatIntentBroker
 
