@@ -109,10 +109,7 @@ public struct AICloudSignInSheet: View {
                                 Text(getKeyLabel)
                                     .foregroundStyle(.primary)
                                 Spacer()
-                                Image.externalLink
-                                    .foregroundStyle(.secondary)
-                                    .imageScale(.medium)
-                                    .accessibilityHidden(true)
+                                ExternalLinkIndicator()
                             }
                         }
                         .accessibilityHint(getKeyHint)

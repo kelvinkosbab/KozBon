@@ -337,11 +337,12 @@ public enum Iconography {
     /// a menu of choices (the Settings model picker).
     public static let menuIndicator = "chevron.up.chevron.down"
 
-    /// Outward-pointing arrow in a square — signals that
-    /// tapping leaves the app and opens an external surface
-    /// (typically a web page in the user's default browser).
-    /// Used by "Get an API key" in the Claude sign-in sheet.
-    public static let externalLink = "arrow.up.right.square"
+    /// Outward-pointing arrow in a square — signals that tapping
+    /// leaves the app for another app or a website. Every such row
+    /// shows it through `ExternalLinkIndicator` (BonjourUI): Open
+    /// Shortcuts, the GitHub repository row, and "Get an API key".
+    /// `.forward` rather than `.right` so it mirrors in RTL.
+    public static let externalLink = "arrow.up.forward.square"
 
     /// Filled checkmark inside a circle. Used by the Settings
     /// AI Backend "Signed in" status row. Distinct from

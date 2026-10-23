@@ -43,6 +43,11 @@ struct IconographyTests {
         #expect(Iconography.arrowUpRight == "arrow.up.right")
     }
 
+    @Test("`externalLink` is the direction-aware square arrow every leave-the-app row shows")
+    func externalLinkIsForwardSquareArrow() {
+        #expect(Iconography.externalLink == "arrow.up.forward.square")
+    }
+
     // MARK: - Catalog invariant
 
     /// Every published constant must be a non-empty SF Symbol name. An
@@ -151,6 +156,8 @@ struct IconographyTests {
         Iconography.paintbrushPointed,
         // Administration
         Iconography.adminPanels,
+        // Accounts & Sign-In
+        Iconography.externalLink,
         // Status
         Iconography.errorBanner,
         // Default

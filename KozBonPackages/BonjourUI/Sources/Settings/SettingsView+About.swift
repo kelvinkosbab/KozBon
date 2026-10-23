@@ -50,11 +50,7 @@ extension SettingsView {
                     Spacer()
                     // Marks the row as leaving the app, where the
                     // What's New row above shows a push chevron.
-                    Image.arrowUpRight
-                        .font(.footnote)
-                        .foregroundStyle(Color.secondary)
-                        .flipsForRightToLeftLayoutDirection(true)
-                        .accessibilityHidden(true)
+                    ExternalLinkIndicator()
                 }
             }
             .accessibilityHint(Strings.Accessibility.sourceCodeHint)
