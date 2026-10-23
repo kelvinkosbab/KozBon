@@ -29796,6 +29796,324 @@
           }
         }
       }
+    },
+    "connectivity_offline_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No Internet Connection"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin conexión a Internet"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucune connexion Internet"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keine Internetverbindung"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "インターネット接続がありません"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "没有互联网连接"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا يوجد اتصال بالإنترنت"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אין חיבור לאינטרנט"
+          }
+        }
+      }
+    },
+    "connectivity_offline_cloud_ai": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The selected AI model runs in the cloud and needs an internet connection. Bonjour scanning and on-device features still work offline."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El modelo de IA seleccionado se ejecuta en la nube y necesita conexión a Internet. El escaneo Bonjour y las funciones del dispositivo siguen funcionando sin conexión."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le modèle d’IA sélectionné fonctionne dans le cloud et nécessite une connexion Internet. La recherche Bonjour et les fonctionnalités sur l’appareil restent disponibles hors ligne."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Das ausgewählte KI-Modell läuft in der Cloud und benötigt eine Internetverbindung. Die Bonjour-Suche und Funktionen auf dem Gerät funktionieren auch offline."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "選択したAIモデルはクラウドで動作するため、インターネット接続が必要です。Bonjourのスキャンとデバイス上の機能はオフラインでも使えます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "所选 AI 模型在云端运行，需要互联网连接。Bonjour 扫描和设备端功能在离线时仍可使用。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يعمل نموذج الذكاء الاصطناعي المحدد في السحابة ويحتاج إلى اتصال بالإنترنت. يظل فحص Bonjour والميزات على الجهاز متاحين دون اتصال."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מודל הבינה המלאכותית שנבחר פועל בענן וזקוק לחיבור לאינטרנט. סריקת Bonjour והתכונות שבמכשיר ממשיכות לעבוד גם במצב לא מקוון."
+          }
+        }
+      }
+    },
+    "connectivity_request_failed": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't reach the AI service. Check your internet connection and try again."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo conectar con el servicio de IA. Comprueba tu conexión a Internet e inténtalo de nuevo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible de joindre le service d’IA. Vérifiez votre connexion Internet et réessayez."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der KI-Dienst ist nicht erreichbar. Prüfe deine Internetverbindung und versuche es erneut."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AIサービスに接続できませんでした。インターネット接続を確認して、もう一度お試しください。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法连接到 AI 服务。请检查你的互联网连接，然后重试。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعذر الوصول إلى خدمة الذكاء الاصطناعي. تحقق من اتصالك بالإنترنت وحاول مرة أخرى."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "לא ניתן להתחבר לשירות הבינה המלאכותית. יש לבדוק את החיבור לאינטרנט ולנסות שוב."
+          }
+        }
+      }
+    },
+    "connectivity_settings_offline_note": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You're offline. This model needs an internet connection, so the model list and chat resume when you reconnect."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No tienes conexión. Este modelo necesita Internet, así que la lista de modelos y el chat se reanudarán cuando vuelvas a conectarte."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vous êtes hors ligne. Ce modèle nécessite Internet : la liste des modèles et la discussion reprendront dès que vous serez reconnecté."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du bist offline. Dieses Modell benötigt eine Internetverbindung. Modellliste und Chat sind wieder verfügbar, sobald du verbunden bist."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オフラインです。このモデルにはインターネット接続が必要なため、モデルの一覧とチャットは再接続後に再開します。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "你当前处于离线状态。此模型需要互联网连接，重新连接后模型列表和聊天将恢复。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أنت غير متصل. يحتاج هذا النموذج إلى اتصال بالإنترنت، لذا ستُستأنف قائمة النماذج والدردشة عند إعادة الاتصال."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אין חיבור לאינטרנט. המודל הזה זקוק לחיבור, ולכן רשימת המודלים והצ׳אט יחזרו לפעול כשהחיבור יחודש."
+          }
+        }
+      }
+    },
+    "connectivity_send_offline_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connect to the internet to send messages to the selected AI model."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conéctate a Internet para enviar mensajes al modelo de IA seleccionado."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connectez-vous à Internet pour envoyer des messages au modèle d’IA sélectionné."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stelle eine Internetverbindung her, um Nachrichten an das ausgewählte KI-Modell zu senden."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "選択したAIモデルにメッセージを送信するには、インターネットに接続してください。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请连接互联网，以便向所选 AI 模型发送消息。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اتصل بالإنترنت لإرسال الرسائل إلى نموذج الذكاء الاصطناعي المحدد."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "יש להתחבר לאינטרנט כדי לשלוח הודעות למודל הבינה המלאכותית שנבחר."
+          }
+        }
+      }
+    },
+    "siri_explanation_offline": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Insights need an internet connection with the AI model selected in KozBon. Try again when you're back online."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Las explicaciones necesitan conexión a Internet con el modelo de IA seleccionado en KozBon. Inténtalo de nuevo cuando vuelvas a estar en línea."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les explications nécessitent une connexion Internet avec le modèle d’IA sélectionné dans KozBon. Réessayez une fois reconnecté."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erklärungen benötigen mit dem in KozBon ausgewählten KI-Modell eine Internetverbindung. Versuche es erneut, sobald du online bist."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBonで選択しているAIモデルでは、解説にインターネット接続が必要です。オンラインに戻ったら、もう一度お試しください。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用 KozBon 中所选的 AI 模型时，解读需要互联网连接。恢复联网后请重试。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تحتاج الشروحات إلى اتصال بالإنترنت مع نموذج الذكاء الاصطناعي المحدد في KozBon. حاول مرة أخرى عند عودة الاتصال."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "עם מודל הבינה המלאכותית שנבחר ב-KozBon, ההסברים זקוקים לחיבור לאינטרנט. יש לנסות שוב כשהחיבור יחזור."
+          }
+        }
+      }
     }
   },
   "version": "1.0"

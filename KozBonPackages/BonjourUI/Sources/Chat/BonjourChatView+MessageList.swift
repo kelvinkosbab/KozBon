@@ -271,7 +271,8 @@ extension BonjourChatView {
                     using: session,
                     preferencesStore: preferencesStore,
                     reduceMotion: reduceMotion,
-                    areCloudProvidersOffered: aiBackendAvailability.offersCloudProviders
+                    areCloudProvidersOffered: aiBackendAvailability.offersCloudProviders,
+                    isOffline: isOffline(session)
                 )
             }
         }

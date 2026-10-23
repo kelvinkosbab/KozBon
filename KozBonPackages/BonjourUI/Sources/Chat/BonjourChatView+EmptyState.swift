@@ -122,7 +122,8 @@ extension BonjourChatView {
                     using: session,
                     preferencesStore: preferencesStore,
                     reduceMotion: reduceMotion,
-                    areCloudProvidersOffered: aiBackendAvailability.offersCloudProviders
+                    areCloudProvidersOffered: aiBackendAvailability.offersCloudProviders,
+                    isOffline: isOffline(session)
                 )
             }
         } label: {
@@ -155,6 +156,9 @@ extension BonjourChatView {
         // streaming response takes a beat to start reads as "did I
         // tap it?".
         .buttonStyle(SuggestionCardButtonStyle())
+        // A cloud model can't answer offline; the banner above the
+        // compose bar says why.
+        .disabled(isOffline(session))
         // Cap Dynamic Type on the suggestion chips. The chip's
         // HStack is `Text + Spacer + arrow`, so at sizes above
         // `.accessibility2` the multi-line text wraps tall enough

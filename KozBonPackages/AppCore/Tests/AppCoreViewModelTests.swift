@@ -13,6 +13,7 @@ import BonjourStorage
 import BonjourAIApple
 import BonjourAppIntents
 import BonjourScanning
+import InternetConnectivity
 @testable import AppCore
 
 // MARK: - AppCoreViewModelTests
@@ -72,6 +73,25 @@ struct AppCoreViewModelTests {
         let bridge = AppIntentsBridge()
         viewModel.connect(to: bridge)
         #expect(bridge.publishManager === viewModel.dependencies.bonjourPublishManager)
+    }
+
+    @Test("Connecting gives the Siri actions the app's connectivity")
+    func connectSharesConnectivity() throws {
+        let monitor = MockInternetConnectivityMonitor(isConnected: false)
+        let viewModel = AppCoreViewModel(
+            dependencies: .mock(),
+            explainerFactory: TestExplainerFactory(),
+            chatSessionFactory: TestChatSessionFactory(),
+            internetConnectivity: monitor
+        )
+        let bridge = AppIntentsBridge()
+        viewModel.connect(to: bridge)
+
+        let isConnected = try #require(bridge.isInternetConnected)
+        #expect(!isConnected())
+        monitor.isConnected = true
+        #expect(isConnected())
+        #expect(monitor.startCallCount == 1)
     }
 
     @Test("Without a pending request the tab stays put")

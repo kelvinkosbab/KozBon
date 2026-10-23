@@ -8,6 +8,7 @@
 import Testing
 import BonjourAI
 import BonjourModels
+import InternetConnectivity
 @testable import BonjourAppIntents
 
 // MARK: - ExplainServiceTypeIntentTests
@@ -46,5 +47,30 @@ struct ExplainServiceTypeIntentTests {
         let bridge = AppIntentsBridge()
         bridge.makeExplainer = { MockBonjourServiceExplainer() }
         #expect(await ExplainServiceTypeIntent.explanation(fullType: "_nope._tcp", bridge: bridge, serviceTypes: library) == nil)
+    }
+
+    @Test("A cloud explainer reports offline instead of trying")
+    func cloudExplainerOffline() async {
+        let explainer = MockBonjourServiceExplainer()
+        explainer.connectivityRequirement = .internet
+        let bridge = AppIntentsBridge()
+        bridge.makeExplainer = { explainer }
+        bridge.isInternetConnected = { false }
+
+        let outcome = await ExplainServiceTypeIntent.outcome(fullType: "_http._tcp", bridge: bridge, serviceTypes: library)
+
+        #expect(outcome == .offline)
+        #expect(explainer.explainCallCount == 0)
+    }
+
+    @Test("The on-device explainer still answers offline")
+    func onDeviceExplainerOffline() async {
+        let bridge = AppIntentsBridge()
+        bridge.makeExplainer = { MockBonjourServiceExplainer(cannedExplanation: "Web pages.") }
+        bridge.isInternetConnected = { false }
+
+        let outcome = await ExplainServiceTypeIntent.outcome(fullType: "_http._tcp", bridge: bridge, serviceTypes: library)
+
+        #expect(outcome == .explanation("Web pages."))
     }
 }

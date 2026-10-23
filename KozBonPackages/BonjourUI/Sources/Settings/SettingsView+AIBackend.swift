@@ -14,6 +14,7 @@ import BonjourAIGemini
 import BonjourAIOpenAI
 import BonjourCore
 import BonjourLocalization
+import InternetConnectivity
 
 // MARK: - SettingsView + AI Backend Section
 //
@@ -176,8 +177,31 @@ extension SettingsView {
                 isConnected: isConnected,
                 signInLabel: signInLabel(for: provider)
             )
+            if !internetConnectivity.isConnected {
+                offlineNote
+                    .transition(.opacity)
+            }
         }
         .buttonStyle(.borderless)
+    }
+
+    /// Cloud models can't answer or refresh their model list offline.
+    /// Signing in and out stay available: both only touch the Keychain.
+    private var offlineNote: some View {
+        Label {
+            Text(Strings.Connectivity.settingsOfflineNote)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+        } icon: {
+            Image(systemName: Iconography.wifiSlash)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .accessibilityHidden(true)
+        }
+        .padding(.vertical, 4)
+        .accessibilityElement(children: .combine)
+        .accessibilityIdentifier("aiCloud.offlineNote")
     }
 
     /// The model picker for `provider`; each lives in

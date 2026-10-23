@@ -20,11 +20,22 @@ extension BonjourChatViewModel {
     // MARK: - Send Validation
 
     /// Whether the Send button should be disabled. True when
-    /// the assistant is generating OR the input is
-    /// empty/whitespace-only.
-    func sendDisabled(session: any BonjourChatSessionProtocol) -> Bool {
+    /// the assistant is generating, the session needs a connection
+    /// the device doesn't have, OR the input is empty/whitespace-only.
+    func sendDisabled(session: any BonjourChatSessionProtocol, isOffline: Bool = false) -> Bool {
         session.isGenerating
+            || isOffline
             || inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
+    /// Whether `session` can't run because it needs the internet and
+    /// the device is offline. Always `false` for the on-device
+    /// session, which keeps working without a connection.
+    static func isOffline(
+        session: any BonjourChatSessionProtocol,
+        isConnected: Bool
+    ) -> Bool {
+        !session.connectivityRequirement.isSatisfied(isConnected: isConnected)
     }
 
     /// Returns the localized VoiceOver hint that matches the
@@ -35,10 +46,14 @@ extension BonjourChatViewModel {
     /// the empty-input hint, which was actively misleading
     /// while the assistant was still streaming.
     func sendButtonAccessibilityHint(
-        session: any BonjourChatSessionProtocol
+        session: any BonjourChatSessionProtocol,
+        isOffline: Bool = false
     ) -> String {
         if session.isGenerating {
             return String(localized: Strings.Accessibility.chatBusyHint)
+        }
+        if isOffline {
+            return String(localized: Strings.Connectivity.sendOfflineHint)
         }
         let trimmedInput = inputText.trimmingCharacters(in: .whitespacesAndNewlines)
         if trimmedInput.isEmpty {
@@ -73,14 +88,18 @@ extension BonjourChatViewModel {
     ///     animate.
     ///   - areCloudProvidersOffered: Whether the storefront offers any
     ///     cloud backend; see ``BonjourChatPromptBuilder/ChatContext``.
+    ///   - isOffline: The session needs the internet and the device
+    ///     has none. The message stays in the input field so it can be
+    ///     sent once the connection returns.
     func sendMessage(
         _ text: String,
         using session: any BonjourChatSessionProtocol,
         preferencesStore: PreferencesStore,
         reduceMotion: Bool,
-        areCloudProvidersOffered: Bool = true
+        areCloudProvidersOffered: Bool = true,
+        isOffline: Bool = false
     ) async {
-        guard !session.isGenerating else { return }
+        guard !session.isGenerating, !isOffline else { return }
 
         let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
@@ -169,9 +188,10 @@ extension BonjourChatViewModel {
         using session: any BonjourChatSessionProtocol,
         preferencesStore: PreferencesStore,
         reduceMotion: Bool,
-        areCloudProvidersOffered: Bool = true
+        areCloudProvidersOffered: Bool = true,
+        isOffline: Bool = false
     ) async {
-        guard !session.isGenerating else { return }
+        guard !session.isGenerating, !isOffline else { return }
         guard let lastUserMessage = session.messages
             .last(where: { $0.role == .user })?.content,
               !lastUserMessage.isEmpty else {

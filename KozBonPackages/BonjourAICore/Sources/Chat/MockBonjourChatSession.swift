@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import InternetConnectivity
 
 // MARK: - MockBonjourChatSession
 
@@ -20,6 +21,9 @@ public final class MockBonjourChatSession: BonjourChatSessionProtocol {
     public private(set) var isGenerating: Bool = false
     public var error: String?
     public var responseLength: BonjourServicePromptBuilder.ResponseLength = .standard
+
+    /// Set to `.internet` to stand in for a cloud session.
+    public var connectivityRequirement: ConnectivityRequirement = .none
 
     /// Broker exposed for protocol conformance. The mock never
     /// emits intents through it, but tests can call

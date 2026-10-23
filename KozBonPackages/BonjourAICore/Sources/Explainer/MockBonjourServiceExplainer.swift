@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import InternetConnectivity
 import BonjourModels
 
 // MARK: - MockBonjourServiceExplainer
@@ -25,6 +26,9 @@ public final class MockBonjourServiceExplainer: BonjourServiceExplainerProtocol 
     public var isAvailable: Bool
     public var expertiseLevel: BonjourServicePromptBuilder.ExpertiseLevel = .basic
     public var responseLength: BonjourServicePromptBuilder.ResponseLength = .standard
+
+    /// Set to `.internet` to stand in for a cloud explainer.
+    public var connectivityRequirement: ConnectivityRequirement = .none
 
     /// The number of times ``explain(service:)`` has been called.
     public var explainCallCount = 0

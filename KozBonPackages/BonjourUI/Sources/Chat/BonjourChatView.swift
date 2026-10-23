@@ -12,6 +12,7 @@ import BonjourLocalization
 import BonjourModels
 import BonjourScanning
 import BonjourStorage
+import InternetConnectivity
 
 // MARK: - BonjourChatView
 //
@@ -43,6 +44,7 @@ public struct BonjourChatView: View {
     @Environment(\.preferencesStore) var preferencesStore
     @Environment(\.aiCloudCredentialsStore) var credentialsStore
     @Environment(\.aiBackendAvailability) var aiBackendAvailability
+    @Environment(\.internetConnectivity) var internetConnectivity
     @Environment(\.accessibilityReduceMotion) var reduceMotion
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
@@ -149,6 +151,16 @@ public struct BonjourChatView: View {
         case .gemini:            return !hasGeminiKey
         case .openai:            return !hasOpenAIKey
         }
+    }
+
+    /// Whether `session` is a cloud session and the device is offline.
+    /// Sending is paused and ``ChatOfflineBanner`` explains why; the
+    /// on-device session is never blocked.
+    func isOffline(_ session: any BonjourChatSessionProtocol) -> Bool {
+        BonjourChatViewModel.isOffline(
+            session: session,
+            isConnected: internetConnectivity.isConnected
+        )
     }
 
     /// Re-queries the credentials store and refreshes both
@@ -355,7 +367,18 @@ public struct BonjourChatView: View {
             // frosted material instead of clear glass.
             messageList(session: session)
                 .safeAreaInset(edge: .bottom, spacing: 0) {
-                    inputBar(session: session)
+                    VStack(spacing: 0) {
+                        if isOffline(session) {
+                            ChatOfflineBanner()
+                                .padding(.horizontal)
+                                .transition(.opacity)
+                        }
+                        inputBar(session: session)
+                    }
+                    .animation(
+                        reduceMotion ? nil : .default,
+                        value: internetConnectivity.isConnected
+                    )
                 }
                 // Cap the transcript and the compose bar together
                 // so they stay aligned, then center the pair. On a

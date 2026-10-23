@@ -9,6 +9,7 @@ import Foundation
 import BonjourAICore
 import BonjourCore
 import BonjourLocalization
+import InternetConnectivity
 
 // MARK: - GeminiBonjourChatSession
 
@@ -53,6 +54,10 @@ public final class GeminiBonjourChatSession: BonjourChatSessionProtocol {
     public private(set) var isGenerating: Bool = false
     public var error: String?
     public private(set) var errorAction: ChatErrorAction?
+
+    /// Every turn calls the provider's API.
+    public var connectivityRequirement: ConnectivityRequirement { .internet }
+
     public var responseLength: BonjourServicePromptBuilder.ResponseLength = .standard
     public let intentBroker: BonjourChatIntentBroker
 
@@ -321,7 +326,7 @@ public final class GeminiBonjourChatSession: BonjourChatSessionProtocol {
                 description: \(error.localizedDescription)
                 """
             )
-            self.error = error.localizedDescription
+            self.error = AICloudError.displayMessage(for: error)
             self.errorAction = Self.makeErrorAction(for: error)
             rollBackTurn(assistantId: assistantId)
         }

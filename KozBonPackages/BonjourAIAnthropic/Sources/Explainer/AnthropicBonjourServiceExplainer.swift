@@ -9,6 +9,7 @@ import Foundation
 import BonjourAICore
 import BonjourCore
 import BonjourModels
+import InternetConnectivity
 
 // MARK: - AnthropicBonjourServiceExplainer
 
@@ -42,6 +43,9 @@ public final class AnthropicBonjourServiceExplainer: BonjourServiceExplainerProt
     public var explanation: String = ""
     public private(set) var isGenerating: Bool = false
     public var error: String?
+
+    /// Every explanation calls the provider's API.
+    public var connectivityRequirement: ConnectivityRequirement { .internet }
 
     // MARK: - Diagnostics
 
@@ -177,7 +181,7 @@ public final class AnthropicBonjourServiceExplainer: BonjourServiceExplainerProt
         } catch {
             let description = error.localizedDescription
             logger.error("Anthropic explainer stream failed: \(description)")
-            self.error = description
+            self.error = AICloudError.displayMessage(for: error)
         }
     }
 

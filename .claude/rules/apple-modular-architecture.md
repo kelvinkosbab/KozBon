@@ -9,7 +9,7 @@ The target shape is a **thin Xcode app target** that holds almost no code, on to
 
 This rule covers the *architecture decision* and *migration*. For authoring the manifest itself (tool-version, products, resources, settings), see [`apple-spm-package-conventions.md`](./apple-spm-package-conventions.md). To scaffold the package, use the bundle's `scripts/scaffold-spm-package.sh`. To plan a module graph, audit one, or migrate an existing app step by step, invoke the **`swift-modularization-pro`** skill. For a manifest and public-API review, invoke `swift-package-pro`.
 
-> **Reference layout: KozBon.** `KozBonPackages/` holds 15 modules and over 1,200 Swift Testing tests. The app target is two Swift files totalling about 130 lines: an `@main` that returns `AppCoreScene()`, and the `AppShortcutsProvider` Xcode requires there. Every test runs with `swift test --package-path KozBonPackages`. BasicSwiftUtilities follows the same per-module `Sources/` + `Tests/` layout and `makeTargets()` manifest.
+> **Reference layout: KozBon.** `KozBonPackages/` holds 16 modules and over 1,200 Swift Testing tests. The app target is two Swift files totalling about 130 lines: an `@main` that returns `AppCoreScene()`, and the `AppShortcutsProvider` Xcode requires there. Every test runs with `swift test --package-path KozBonPackages`. BasicSwiftUtilities follows the same per-module `Sources/` + `Tests/` layout and `makeTargets()` manifest.
 
 ## Why a local package, not "all code in the .xcodeproj"
 
