@@ -138,24 +138,24 @@ extension BonjourChatPromptBuilder {
         return parts.joined(separator: "\n")
     }
 
-    /// Number of recent releases rendered into the `whatsNewBlock`.
-    /// The full ``ReleaseNotes/all`` table reaches back to 3.0
-    /// (~16 entries, ~2400 tokens) — too much for the on-device
-    /// model's ~4K window alongside the system prompt and live
-    /// network context. Six entries (~900 tokens) covers the
-    /// "latest versions" the user actually asks about while
-    /// staying within budget. Users wanting the complete history
-    /// have the Preferences → About → What's New page.
-    fileprivate static let recentReleaseCap = 6
-
-    /// Query-triggered block that lists KozBon's recent release
-    /// notes when the user's message asks about what's new /
-    /// changelog / recent updates. Returns an empty string
-    /// otherwise so the block adds zero token cost to the common
-    /// case (questions about the user's network). Called from
+    /// Query-triggered block that lists every release in KozBon's
+    /// current major version (4.x while this is written) when the
+    /// user's message asks about what's new / changelog / recent
+    /// updates, so "what's new?" is answered across the whole major
+    /// line rather than only the latest release. Returns an empty
+    /// string otherwise so the block adds zero token cost to the
+    /// common case (questions about the user's network). Called from
     /// ``userTurn`` on every user message and NOT tracked by
     /// `lastContextSignature`, so its per-turn presence doesn't force
     /// re-injection of the stable context.
+    ///
+    /// Only the newest release carries its full `highlights`; older
+    /// ones in the line contribute their one- or two-paragraph
+    /// `summary`. Every 4.x highlight together runs past 3,000
+    /// tokens, which the on-device model's ~4K window can't hold
+    /// beside the system prompt and live network context. The
+    /// current major is read from the newest entry, so the block
+    /// moves on to 5.x by itself when a 5.0 note is prepended.
     ///
     /// Reads the static ``ReleaseNotes/all`` table directly rather
     /// than threading it through ``ChatContext`` — release notes
@@ -167,17 +167,45 @@ extension BonjourChatPromptBuilder {
         guard ChatWhatsNewIntentDetector.wantsWhatsNew(message: query) else {
             return ""
         }
+        let releases = currentMajorReleases(offeringCloudProviders: offeringCloudProviders)
+        guard let latest = releases.first, let major = majorVersion(of: latest.version) else {
+            return ""
+        }
         var parts: [String] = [
-            "RECENT KOZBON RELEASES (newest first — answer \"what's new\" " +
-            "questions ONLY from this list; never invent versions or changes):"
+            "KOZBON \(major).x RELEASES (newest first — when asked what's new, " +
+            "summarize the changes across all of \(major).x, leading with the newest; " +
+            "answer ONLY from this list; never invent versions or changes):",
+            "Version \(latest.version) (latest):"
         ]
-        for release in ReleaseNotes.displayed(offeringCloudProviders: offeringCloudProviders).prefix(recentReleaseCap) {
-            parts.append("Version \(release.version):")
-            for highlight in release.highlights {
-                parts.append("- \(highlight)")
-            }
+        for highlight in latest.highlights {
+            parts.append("- \(highlight)")
+        }
+        for release in releases.dropFirst() {
+            parts.append("Version \(release.version): \(paragraphs(of: release.summary))")
         }
         return parts.joined(separator: "\n")
+    }
+
+    /// The displayed releases that share the newest release's major
+    /// version, newest first.
+    static func currentMajorReleases(offeringCloudProviders: Bool) -> [ReleaseNote] {
+        let displayed = ReleaseNotes.displayed(offeringCloudProviders: offeringCloudProviders)
+        guard let major = displayed.first.flatMap({ majorVersion(of: $0.version) }) else {
+            return []
+        }
+        return displayed.filter { majorVersion(of: $0.version) == major }
+    }
+
+    fileprivate static func majorVersion(of version: String) -> Int? {
+        version.split(separator: ".").first.flatMap { Int($0) }
+    }
+
+    /// Joins a summary's blank-line-separated paragraphs onto one line
+    /// so each release stays a single entry in the block.
+    fileprivate static func paragraphs(of summary: String) -> String {
+        summary
+            .components(separatedBy: "\n\n")
+            .joined(separator: " ")
     }
 
     /// Query-triggered block listing KozBon's Siri actions and

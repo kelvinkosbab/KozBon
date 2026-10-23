@@ -7,9 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Removed
+### Changed
 
-- The "What's new in this version?" suggestion on the Chat screen. Asking the assistant what's new still answers from the real release notes.
+- The Chat screen's "What's new in this version?" suggestion is now "What's new", and the assistant's answer summarizes every 4.x release instead of only the latest few.
 
 ## [4.9.2] - 2026-10-18
 

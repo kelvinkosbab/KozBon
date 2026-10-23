@@ -33,9 +33,10 @@ import Foundation
 /// Localized for all eight languages KozBon ships in: English,
 /// Spanish, French, German, Japanese, Simplified Chinese, plus
 /// Arabic and Hebrew. The Arabic / Hebrew coverage (which the
-/// other chat detectors omit) means a "what's new?" question typed
-/// in any of the eight locales gets the release-notes block
-/// injected. Phrases from every language are checked against
+/// other chat detectors omit) matters because the Chat "What's new"
+/// suggestion ships in all eight locales — tapping it sends the
+/// localized value, which has to match so the release-notes block
+/// actually gets injected. Phrases from every language are checked against
 /// every input, so a user typing English on a localized device
 /// still gets the release-notes path.
 public enum ChatWhatsNewIntentDetector {

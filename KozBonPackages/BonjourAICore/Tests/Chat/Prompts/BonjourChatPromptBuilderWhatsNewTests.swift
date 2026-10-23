@@ -13,11 +13,11 @@ import BonjourCore
 // MARK: - BonjourChatPromptBuilderWhatsNewTests
 
 /// Pins the `whatsNewBlock(query:)` contract: it injects real
-/// release notes ONLY for what's-new queries, caps the entry
-/// count to stay within the on-device model's token budget, and
-/// renders the most-recent versions newest-first with an explicit
-/// "answer only from this list" guard so the model can't
-/// hallucinate version history.
+/// release notes ONLY for what's-new queries, covers every release
+/// in the current major version newest-first, keeps older releases
+/// to their summaries to stay within the on-device model's token
+/// budget, and carries an explicit "answer only from this list"
+/// guard so the model can't hallucinate version history.
 @Suite("BonjourChatPromptBuilder · What's New")
 struct BonjourChatPromptBuilderWhatsNewTests {
 
@@ -34,7 +34,7 @@ struct BonjourChatPromptBuilderWhatsNewTests {
     func populatedForWhatsNewQuery() {
         let block = BonjourChatPromptBuilder.whatsNewBlock(query: "What's new in this version?")
         #expect(!block.isEmpty)
-        #expect(block.contains("RECENT KOZBON RELEASES"))
+        #expect(block.contains("KOZBON 4.x RELEASES"))
     }
 
     // MARK: - Content
@@ -73,18 +73,49 @@ struct BonjourChatPromptBuilderWhatsNewTests {
         #expect(block.lowercased().contains("never invent"))
     }
 
-    // MARK: - Token Budget Cap
+    // MARK: - Major Version Coverage
 
-    @Test("Block caps the number of releases rendered")
-    func capsReleaseCount() {
+    @Test("The Chat \"What's new\" suggestion gets the release notes")
+    func suggestionValueTriggers() {
+        #expect(!BonjourChatPromptBuilder.whatsNewBlock(query: "What's new").isEmpty)
+    }
+
+    @Test("Block covers every release in the current major version and nothing older")
+    func coversCurrentMajorVersion() throws {
         let block = BonjourChatPromptBuilder.whatsNewBlock(query: "what's new?")
-        let renderedVersionCount = ReleaseNotes.all.filter {
-            block.contains("Version \($0.version):")
-        }.count
-        // The full table reaches back to 3.0; the block must render
-        // strictly fewer than all of them to stay within budget.
-        #expect(renderedVersionCount <= 6)
-        #expect(renderedVersionCount < ReleaseNotes.all.count)
+        let latest = try #require(ReleaseNotes.all.first)
+        let major = try #require(latest.version.split(separator: ".").first)
+        for release in ReleaseNotes.all {
+            let isCurrentMajor = release.version.split(separator: ".").first == major
+            #expect(
+                block.contains("Version \(release.version)") == isCurrentMajor,
+                "Version \(release.version) inclusion should match its major version"
+            )
+        }
+        #expect(block.contains("Version \(latest.version) (latest):"))
+    }
+
+    @Test("Older releases contribute their summary, not their highlights")
+    func olderReleasesUseSummaries() throws {
+        let block = BonjourChatPromptBuilder.whatsNewBlock(query: "what's new?")
+        let older = try #require(
+            BonjourChatPromptBuilder.currentMajorReleases(offeringCloudProviders: true).dropFirst().first
+        )
+        let summary = older.summary.components(separatedBy: "\n\n").joined(separator: " ")
+        #expect(block.contains("Version \(older.version): \(summary)"))
+        for highlight in older.highlights where !older.summary.contains(highlight) {
+            #expect(!block.contains(highlight))
+        }
+    }
+
+    @Test("Each release renders on its own line")
+    func oneLinePerRelease() {
+        let block = BonjourChatPromptBuilder.whatsNewBlock(query: "what's new?")
+        let releases = BonjourChatPromptBuilder.currentMajorReleases(offeringCloudProviders: true)
+        let latestHighlightCount = releases.first?.highlights.count ?? 0
+        // Header, latest version line, its highlights, one line per older release.
+        let expected = 2 + latestHighlightCount + releases.count - 1
+        #expect(block.components(separatedBy: "\n").count == expected)
     }
 }
 

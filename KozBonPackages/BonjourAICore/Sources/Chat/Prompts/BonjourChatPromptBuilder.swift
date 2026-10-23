@@ -136,13 +136,14 @@ public enum BonjourChatPromptBuilder {
             Prefer these descriptions over your training memory when describing \
             those types.
             - The <whats_new> block (when present) contains KozBon's real release \
-            notes for recent app versions, newest first. When the user asks what's \
-            new, what changed, or about a recent update, answer ONLY from this \
-            block — you have no other knowledge of KozBon's version history, so \
-            never invent version numbers, dates, or changes. Lead with the most \
-            recent version. If the user asks about a version not in the block, say \
-            you only have notes for the most recent releases and point them to \
-            Preferences → About → What's New for the full history.
+            notes for every release in the current major version, newest first. \
+            When the user asks what's new, what changed, or about a recent update, \
+            answer ONLY from this block — you have no other knowledge of KozBon's \
+            version history, so never invent version numbers, dates, or changes. \
+            A plain "what's new" gets a short summary of the whole major version, \
+            leading with the most recent release. If the user asks about a version \
+            not in the block, say you only have notes for the current major version \
+            and point them to Settings → About → What's New for the full history.
             - The <siri> block (when present) lists KozBon's real Siri actions and \
             phrases. Answer Siri and Shortcuts questions ONLY from it and never make \
             up phrases; when answering in another language, translate its phrases \
