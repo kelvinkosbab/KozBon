@@ -18,15 +18,7 @@ import UIKit
 
 extension BonjourChatView {
 
-    /// `function_body_length` is disabled locally because the
-    /// shared rounded-rect container is a single chained
-    /// expression — TextField + Send button + the entire
-    /// padding/background/inner-modifier chain. Splitting just
-    /// for line count would force the field and button apart
-    /// into separate views that share state via bindings, for
-    /// no structural benefit.
     @ViewBuilder
-    // swiftlint:disable:next function_body_length
     func inputBar(session: any BonjourChatSessionProtocol) -> some View {
         // Single shared rounded-rectangle that holds both the
         // TextField and the Send button — same Messages / Mail
