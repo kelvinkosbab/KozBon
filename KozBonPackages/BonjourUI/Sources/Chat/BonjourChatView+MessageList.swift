@@ -74,6 +74,11 @@ extension BonjourChatView {
             #if !os(visionOS)
             .scrollDismissesKeyboard(.interactively)
             #endif
+            // Rows that land together (the user's bubble and the
+            // "Scanning network…" row) grow the content after the
+            // scroll below has measured it; pinning the bottom keeps
+            // them above the compose bar without a second scroll.
+            .defaultScrollAnchor(.bottom, for: .sizeChanges)
             // A new message (the user's bubble, then the reply's
             // placeholder) or the scan row lands at the bottom,
             // and streamed tokens keep the reply in view.
@@ -81,12 +86,7 @@ extension BonjourChatView {
                 scrollToBottom(session: session, proxy: proxy, duration: 0.3)
             }
             .onChange(of: viewModel.isScanningNetwork) {
-                viewModel.scrollToBottomAfterInsertion(
-                    hasMessages: !session.messages.isEmpty,
-                    proxy: proxy,
-                    anchorID: Self.bottomAnchorID,
-                    reduceMotion: reduceMotion
-                )
+                scrollToBottom(session: session, proxy: proxy, duration: 0.3)
             }
             .onChange(of: session.messages.last?.content) {
                 scrollToBottom(session: session, proxy: proxy, duration: 0.15)
