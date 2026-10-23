@@ -10,6 +10,9 @@ import BonjourAI
 import BonjourCore
 import BonjourLocalization
 import BonjourModels
+#if canImport(UIKit) && !os(watchOS)
+import UIKit
+#endif
 
 // MARK: - Input Bar
 
@@ -66,25 +69,7 @@ extension BonjourChatView {
                     : String(localized: Strings.Accessibility.chatInputHint)
             )
             .accessibilityIdentifier("chat_input_field")
-            .onSubmit {
-                // Synchronous haptic — see the suggestion-button
-                // action in `BonjourChatView+EmptyState.swift` for
-                // the rationale. Lifting the increment out of the
-                // async `sendMessage` path lets feel and sight
-                // land together when the user hits Return.
-                viewModel.submitCount &+= 1
-                isInputFocused = false
-                Task {
-                    await viewModel.sendMessage(
-                        viewModel.inputText,
-                        using: session,
-                        preferencesStore: preferencesStore,
-                        reduceMotion: reduceMotion,
-                        areCloudProvidersOffered: aiBackendAvailability.offersCloudProviders,
-                        isOffline: isOffline(session)
-                    )
-                }
-            }
+            .onSubmit { submitTypedMessage(session: session) }
 
             // Capsule send button anchored to the trailing edge
             // inside the shared container. Sized 44 pt × 32 pt
@@ -105,18 +90,7 @@ extension BonjourChatView {
             // Apple Intelligence, Anthropic Cara orange for the
             // cloud path.
             Button {
-                viewModel.submitCount &+= 1
-                isInputFocused = false
-                Task {
-                    await viewModel.sendMessage(
-                        viewModel.inputText,
-                        using: session,
-                        preferencesStore: preferencesStore,
-                        reduceMotion: reduceMotion,
-                        areCloudProvidersOffered: aiBackendAvailability.offersCloudProviders,
-                        isOffline: isOffline(session)
-                    )
-                }
+                submitTypedMessage(session: session)
             } label: {
                 Image.arrowUp
                     .font(.footnote.weight(.bold))
@@ -174,5 +148,43 @@ extension BonjourChatView {
         // Outer page-level padding stays symmetric so the rounded
         // container is the same distance from both screen edges.
         .padding()
+    }
+
+    /// Sends what the user typed, from Return or the Send button,
+    /// and puts the keyboard away so the reply has the full screen.
+    /// Suggestion chips don't come through here.
+    func submitTypedMessage(session: any BonjourChatSessionProtocol) {
+        // Synchronous haptic — see the suggestion-button action in
+        // `BonjourChatView+EmptyState.swift` for the rationale.
+        // Lifting the increment out of the async `sendMessage` path
+        // lets feel and sight land together.
+        viewModel.submitCount &+= 1
+        dismissKeyboard()
+        Task {
+            await viewModel.sendMessage(
+                viewModel.inputText,
+                using: session,
+                preferencesStore: preferencesStore,
+                reduceMotion: reduceMotion,
+                areCloudProvidersOffered: aiBackendAvailability.offersCloudProviders,
+                isOffline: isOffline(session)
+            )
+        }
+    }
+
+    /// Clearing the focus state alone didn't reliably put the
+    /// keyboard away after a send; the field is disabled as
+    /// generation starts, in the same few updates. Resigning
+    /// through the responder chain dismisses it directly.
+    func dismissKeyboard() {
+        isInputFocused = false
+        #if canImport(UIKit) && !os(watchOS)
+        UIApplication.shared.sendAction(
+            #selector(UIResponder.resignFirstResponder),
+            to: nil,
+            from: nil,
+            for: nil
+        )
+        #endif
     }
 }

@@ -126,6 +126,18 @@ final class BonjourChatViewModel {
     /// scroll-up-then-clear sequence through this flag.
     var pendingClear = false
 
+    /// Whether the transcript is scrolled far enough above its end
+    /// to offer the scroll-to-bottom button. Written by the scroll
+    /// view's geometry observer; read through
+    /// ``showsScrollToBottomButton(hasMessages:)``.
+    var isScrolledAwayFromBottom = false
+
+    /// Bumped by the scroll-to-bottom button. The button lives in
+    /// the compose bar's inset, outside the `ScrollViewReader`, so
+    /// `messageList(session:)` performs the scroll when this
+    /// changes — the same bridge ``pendingClear`` uses.
+    var scrollToBottomRequestCount = 0
+
     // MARK: - Pending Intents
 
     /// Active "create custom service type" intent surfaced from

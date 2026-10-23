@@ -25,6 +25,10 @@ extension BonjourChatView {
     /// typing bubble that replaces it.
     static let pendingAssistantBubbleID = "pending_assistant_bubble"
 
+    /// Zero-height row after all content; the scroll-to-bottom
+    /// button's target.
+    static let bottomAnchorID = "chat_bottom_anchor"
+
     /// The chat surface is a single ScrollView that ALWAYS contains
     /// the empty-state content (intro + suggestion buttons) plus
     /// any messages. On first send the ScrollView animates the
@@ -43,7 +47,7 @@ extension BonjourChatView {
     /// live on the VM where they're testable.
     ///
     /// `function_body_length` is disabled locally because the
-    /// six `.onChange` modifiers are an intrinsically chained
+    /// `.onChange` modifiers are an intrinsically chained
     /// expression — splitting just for line count would shatter
     /// the modifier chain into per-handler helpers that thread
     /// `proxy` through generics for no structural benefit.
@@ -52,7 +56,22 @@ extension BonjourChatView {
     func messageList(session: any BonjourChatSessionProtocol) -> some View {
         ScrollViewReader { proxy in
             ScrollView {
-                messageListContent(session: session)
+                VStack(spacing: 0) {
+                    messageListContent(session: session)
+                    Color.clear
+                        .frame(height: 0)
+                        .id(Self.bottomAnchorID)
+                }
+            }
+            .onScrollGeometryChange(for: Bool.self) { geometry in
+                BonjourChatViewModel.distanceFromBottom(
+                    contentHeight: geometry.contentSize.height,
+                    contentOffsetY: geometry.contentOffset.y,
+                    containerHeight: geometry.containerSize.height,
+                    bottomInset: geometry.contentInsets.bottom
+                ) > BonjourChatViewModel.scrollToBottomThreshold
+            } action: { _, isAway in
+                viewModel.isScrolledAwayFromBottom = isAway
             }
             // Announce the scroll region to VoiceOver users as
             // "Conversation" so they know what they're entering
@@ -104,6 +123,13 @@ extension BonjourChatView {
                     session: session,
                     proxy: proxy,
                     anchorID: Self.emptyStateAnchorID,
+                    reduceMotion: reduceMotion
+                )
+            }
+            .onChange(of: viewModel.scrollToBottomRequestCount) {
+                viewModel.scrollToBottom(
+                    proxy: proxy,
+                    anchorID: Self.bottomAnchorID,
                     reduceMotion: reduceMotion
                 )
             }
@@ -225,6 +251,35 @@ extension BonjourChatView {
             }
         }
         .padding()
+    }
+
+    // MARK: - Scroll-to-Bottom Button
+
+    /// Circular glass button that jumps the transcript to its end.
+    /// Mounted over the compose bar's inset rather than inside the
+    /// scroll view, so it sits above the offline banner instead of
+    /// covering it.
+    var scrollToBottomButton: some View {
+        Button {
+            viewModel.scrollToBottomRequestCount &+= 1
+        } label: {
+            Image.arrowDown
+                .font(.body.weight(.semibold))
+                .accessibilityHidden(true)
+                .frame(width: .size44, height: .size44)
+                .platformGlassBackground(in: Circle())
+                .contentShape(Circle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(Strings.Accessibility.chatScrollToBottom)
+        .accessibilityIdentifier("chat_scroll_to_bottom_button")
+        // The 44 pt circle is fixed, so cap the glyph before it
+        // outgrows it.
+        .dynamicTypeSize(...DynamicTypeSize.accessibility2)
+        .accessibilityShowsLargeContentViewer()
+        #if !os(macOS)
+        .hoverEffect(.highlight)
+        #endif
     }
 
     // MARK: - Error-Banner Action Dispatch

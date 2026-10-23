@@ -77,6 +77,7 @@ public extension Image {
 
     static var arrowUp: Image { Image(systemName: Iconography.arrowUp) }
     static var arrowUpRight: Image { Image(systemName: Iconography.arrowUpRight) }
+    static var arrowDown: Image { Image(systemName: Iconography.arrowDown) }
 
     // MARK: - Clipboard & Copy
 

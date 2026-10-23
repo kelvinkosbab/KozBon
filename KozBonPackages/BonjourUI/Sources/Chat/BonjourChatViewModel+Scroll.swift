@@ -156,6 +156,46 @@ extension BonjourChatViewModel {
         }
     }
 
+    // MARK: - Scroll-to-Bottom Button
+
+    /// How far above its end the transcript must sit before the
+    /// button shows. Taller than a streamed line or two, so the
+    /// button doesn't blink while the auto-scroll catches up with
+    /// a growing reply.
+    nonisolated static let scrollToBottomThreshold: CGFloat = 64
+
+    /// Points of content below the visible region. The region ends
+    /// at the top of the compose bar (or keyboard), which the
+    /// scroll view reports as its bottom content inset, not at the
+    /// bottom of the screen. Negative when everything fits.
+    nonisolated static func distanceFromBottom(
+        contentHeight: CGFloat,
+        contentOffsetY: CGFloat,
+        containerHeight: CGFloat,
+        bottomInset: CGFloat
+    ) -> CGFloat {
+        contentHeight - (contentOffsetY + containerHeight - bottomInset)
+    }
+
+    /// Whether the button should show. Hidden on a fresh chat,
+    /// where only the intro and suggestions are below, and while
+    /// the Clear sequence scrolls the transcript away.
+    func showsScrollToBottomButton(hasMessages: Bool) -> Bool {
+        hasMessages && isScrolledAwayFromBottom && !pendingClear
+    }
+
+    /// Scrolls to the anchor below the last row, so an error banner
+    /// or scanning indicator under the newest message is included.
+    func scrollToBottom(
+        proxy: ScrollViewProxy,
+        anchorID: String,
+        reduceMotion: Bool
+    ) {
+        withAnimation(reduceMotion ? nil : .easeOut(duration: 0.3)) {
+            proxy.scrollTo(anchorID, anchor: .bottom)
+        }
+    }
+
     /// Runs the toolbar's two-step Clear sequence:
     ///
     ///   1. Animate the ScrollView up to the empty-state

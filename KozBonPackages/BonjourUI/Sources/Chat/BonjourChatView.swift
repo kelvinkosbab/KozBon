@@ -163,6 +163,10 @@ public struct BonjourChatView: View {
         )
     }
 
+    func showsScrollToBottomButton(_ session: any BonjourChatSessionProtocol) -> Bool {
+        viewModel.showsScrollToBottomButton(hasMessages: !session.messages.isEmpty)
+    }
+
     /// Re-queries the credentials store and refreshes both
     /// per-backend key flags. Called on first appearance and
     /// after the in-tab sign-in sheet dismisses, mirroring the
@@ -378,6 +382,25 @@ public struct BonjourChatView: View {
                     .animation(
                         reduceMotion ? nil : .default,
                         value: internetConnectivity.isConnected
+                    )
+                    // An overlay so showing the button doesn't grow
+                    // the inset, which would shift the scroll
+                    // geometry that decides whether it shows.
+                    // Bottom-aligned 8 pt above the inset's top edge.
+                    .overlay(alignment: .top) {
+                        if showsScrollToBottomButton(session) {
+                            scrollToBottomButton
+                                .alignmentGuide(.top) { $0[.bottom] + .space8 }
+                                .transition(
+                                    reduceMotion
+                                        ? .opacity
+                                        : .opacity.combined(with: .scale(scale: 0.8))
+                                )
+                        }
+                    }
+                    .animation(
+                        reduceMotion ? nil : .easeInOut(duration: 0.2),
+                        value: showsScrollToBottomButton(session)
                     )
                 }
                 // Cap the transcript and the compose bar together
