@@ -110,6 +110,12 @@ public final class AnthropicBonjourChatSession: BonjourChatSessionProtocol {
     /// for the static parts of the conversation.
     private var lastContextSignature: String?
 
+    /// Signature of the context composed for the in-flight turn.
+    /// Committed to ``lastContextSignature`` only once the turn
+    /// succeeds: a failed turn is rolled out of the history along
+    /// with its `<context>` block, so the retry has to send it again.
+    private var pendingContextSignature: String?
+
     // MARK: - Init
 
     public init(
@@ -279,7 +285,7 @@ public final class AnthropicBonjourChatSession: BonjourChatSessionProtocol {
             isFirstTurn: isFirstTurn,
             contextChanged: contextChanged
         )
-        lastContextSignature = currentSignature
+        pendingContextSignature = currentSignature
         return turnText
     }
 
@@ -408,6 +414,7 @@ public final class AnthropicBonjourChatSession: BonjourChatSessionProtocol {
             rollBackTurn(assistantId: assistantId)
         } else {
             conversationHistory.append(AnthropicMessage(role: .assistant, content: text))
+            lastContextSignature = pendingContextSignature
         }
     }
 

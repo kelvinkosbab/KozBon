@@ -127,6 +127,19 @@ struct GeminiBonjourChatSessionTests {
         #expect(session.error != nil)
     }
 
+    @Test("A retry after a failed first turn re-sends the network context")
+    func retryAfterFailureResendsContext() async throws {
+        let client = MockGeminiClient(error: AICloudError.networkUnavailable)
+        let session = makeSession(client: client)
+
+        session.appendUserMessage("hi")
+        await session.send("hi", context: makeContext())
+        await session.send("hi", context: makeContext())
+
+        let retry = try #require(client.recordedRequests.last?.request.contents.last?.parts.first?.text)
+        #expect(retry.contains("<context>"))
+    }
+
     @Test("An invalid-credentials failure offers the in-app sign-in remediation")
     func offersSignInActionOnAuthFailure() async {
         let client = MockGeminiClient(

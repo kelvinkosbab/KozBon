@@ -113,6 +113,19 @@ struct OpenAIBonjourChatSessionTests {
         #expect(session.error != nil)
     }
 
+    @Test("A retry after a failed first turn re-sends the network context")
+    func retryAfterFailureResendsContext() async throws {
+        let client = MockOpenAIClient(error: AICloudError.networkUnavailable)
+        let session = makeSession(client: client)
+
+        session.appendUserMessage("hi")
+        await session.send("hi", context: makeContext())
+        await session.send("hi", context: makeContext())
+
+        let retry = try #require(client.recordedRequests.last?.request.input.last?.content)
+        #expect(retry.contains("<context>"))
+    }
+
     @Test(
         "Each remediable failure offers the matching action",
         arguments: [
