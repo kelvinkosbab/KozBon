@@ -138,25 +138,18 @@ extension BonjourChatPromptBuilder {
         return parts.joined(separator: "\n")
     }
 
-    /// Query-triggered block that lists every release in KozBon's two
-    /// newest major versions (4.x and 3.x while this is written) when
-    /// the user's message asks about what's new / changelog / recent
-    /// updates, along with how to shape the answer for the user's
-    /// detail level. Returns an empty string otherwise so the block
-    /// adds zero token cost to the common case (questions about the
-    /// user's network). Called from ``userTurn`` on every user message
-    /// and NOT tracked by `lastContextSignature`, so its per-turn
-    /// presence doesn't force re-injection of the stable context.
+    /// Query-triggered block listing every release in KozBon's two
+    /// newest major versions (4.x and 3.x today; read from the table,
+    /// so 5.0 shifts it to 5.x and 4.x) plus how to shape the answer
+    /// for the user's detail level. Empty unless the message asks
+    /// what's new, so ordinary network questions pay nothing. Not
+    /// tracked by `lastContextSignature`.
     ///
-    /// `.basic` asks for two short paragraphs, one per major version,
-    /// each covering every release in that major, and sends only each
-    /// release's `summary`. `.technical` asks for
+    /// `.basic` sends only summaries and asks for two short paragraphs,
+    /// each covering every release in its major. `.technical` asks for
     /// a detailed answer and adds the full `highlights` of the newest
-    /// ``technicalHighlightCount`` releases. Every 4.x and 3.x
-    /// highlight together runs past 2,500 tokens, more than the
-    /// on-device model's ~4K window holds beside the system prompt and
-    /// live network context. The majors are read from the table, so
-    /// the block moves on to 5.x and 4.x when a 5.0 note is prepended.
+    /// ``technicalHighlightCount`` releases; all of them together run
+    /// past 2,500 tokens, too much for the on-device ~4K window.
     ///
     /// Reads the static ``ReleaseNotes/all`` table directly rather
     /// than threading it through ``ChatContext`` — release notes
@@ -204,9 +197,8 @@ extension BonjourChatPromptBuilder {
     /// newest first. Three keeps the block near 1,600 tokens.
     static let technicalHighlightCount = 3
 
-    /// How the assistant should shape a general "what's new" answer at
-    /// the user's detail level. Overrides the usual response-length
-    /// guidance, since a release recap has its own natural shape.
+    /// How to shape a general "what's new" answer at the user's detail
+    /// level; overrides the usual response-length guidance.
     static func whatsNewAnswerDirective(
         releases: [ReleaseNote],
         expertiseLevel: BonjourServicePromptBuilder.ExpertiseLevel
