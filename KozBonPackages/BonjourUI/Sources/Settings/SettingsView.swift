@@ -432,8 +432,9 @@ public struct SettingsView: View {
 
     // MARK: - About Section
 
-    /// Build metadata — marketing version row plus a navigation
-    /// row that pushes the "What's New" release-notes page.
+    /// Build metadata — marketing version row, a navigation row
+    /// that pushes the "What's New" release-notes page, and a link
+    /// to the open-source repository.
     @ViewBuilder
     private var aboutSection: some View {
         Section {
@@ -453,6 +454,22 @@ public struct SettingsView: View {
             }
             .accessibilityHint(Strings.Accessibility.whatsNewHint)
             .accessibilityIdentifier("whats_new_link")
+
+            Link(destination: Constants.Links.sourceRepository) {
+                HStack {
+                    Text(Strings.Settings.sourceCode)
+                    Spacer()
+                    // Marks the row as leaving the app, where the
+                    // What's New row above shows a push chevron.
+                    Image(systemName: "arrow.up.forward")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .flipsForRightToLeftLayoutDirection(true)
+                        .accessibilityHidden(true)
+                }
+            }
+            .accessibilityHint(Strings.Accessibility.sourceCodeHint)
+            .accessibilityIdentifier("source_code_link")
         } header: {
             Text(Strings.Settings.about)
                 .accessibilityAddTraits(.isHeader)

@@ -12529,6 +12529,60 @@
         }
       }
     },
+    "a11y_source_code_hint": {
+      "comment": "VoiceOver hint on the Source Code row in Settings > About. Tapping leaves the app.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opens KozBon's open-source repository in your browser."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abre el repositorio de código abierto de KozBon en tu navegador."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ouvre le dépôt open source de KozBon dans votre navigateur."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Öffnet das Open-Source-Repository von KozBon in deinem Browser."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KozBon のオープンソースリポジトリをブラウザで開きます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在浏览器中打开 KozBon 的开源代码库。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يفتح مستودع KozBon مفتوح المصدر في متصفحك."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פותח את מאגר הקוד הפתוח של KozBon בדפדפן."
+          }
+        }
+      }
+    },
     "a11y_whats_new_version_header_format": {
       "extractionState": "manual",
       "localizations": {
@@ -26416,6 +26470,60 @@
           "stringUnit": {
             "state": "translated",
             "value": "מה חדש"
+          }
+        }
+      }
+    },
+    "settings_source_code": {
+      "comment": "Row label in Settings > About that opens KozBon's open-source repository on GitHub. \"GitHub\" is a brand name; do not translate it.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Source Code on GitHub"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Código fuente en GitHub"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Code source sur GitHub"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quellcode auf GitHub"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub のソースコード"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub 上的源代码"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الشيفرة المصدرية على GitHub"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "קוד המקור ב-GitHub"
           }
         }
       }

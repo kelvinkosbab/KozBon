@@ -41,4 +41,14 @@ public enum Constants {
         /// The minimum time interval (in seconds) between automatic foreground refreshes.
         public static let foregroundRefreshInterval: TimeInterval = 300
     }
+
+    // MARK: - Links
+
+    /// External web pages the app links to.
+    public enum Links {
+
+        /// KozBon's open-source repository on GitHub.
+        // swiftlint:disable:next force_unwrapping
+        public static let sourceRepository = URL(string: "https://github.com/kelvinkosbab/KozBon")!
+    }
 }
