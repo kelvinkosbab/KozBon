@@ -139,7 +139,9 @@ public enum BonjourChatPromptBuilder {
             fresh/stale/missing), the full list of discovered services with \
             hostnames, IP addresses, transport layer (tcp/udp) and TXT records \
             for the top-detailed entries, the user's published services, and the \
-            service type library grouped by category. Consult these fields when \
+            service type library grouped by category. It may also tag each service \
+            with its categories and describe the service types found on the network; \
+            prefer those descriptions over your training memory. Consult these fields when \
             answering — e.g., cite the IP:port when the user asks how to connect, \
             cite TXT records when they ask about device capabilities or model.
             - The <referenced> block (when present) contains authoritative \
@@ -329,13 +331,15 @@ public enum BonjourChatPromptBuilder {
     /// Wraps the context block in `<context>` tags so the model can distinguish it
     /// from the user's actual question.
     ///
-    /// - Parameter context: Current snapshot of services and library.
+    /// - Parameters:
+    ///   - context: Current snapshot of services and library.
+    ///   - budget: How much detail the block carries.
     /// - Returns: A multi-line string safe to prepend to a user message.
     @MainActor
-    public static func contextPreamble(context: ChatContext) -> String {
+    public static func contextPreamble(context: ChatContext, budget: ContextBudget = .onDevice) -> String {
         return """
             <context>
-            \(contextBlock(context: context))
+            \(contextBlock(context: context, budget: budget))
             </context>
 
             """
@@ -363,21 +367,25 @@ public enum BonjourChatPromptBuilder {
     ///   - isFirstTurn: Whether this is the first message in the conversation.
     ///   - contextChanged: Whether the live context has materially changed since the
     ///     last turn. Ignored when `isFirstTurn` is `true`.
+    ///   - budget: How much network and library detail to send. Cloud
+    ///     sessions pass ``ContextBudget/cloud``; compare turns with
+    ///     ``contextSignature(context:budget:)`` at the same budget.
     /// - Returns: The final user turn to send to the model.
     @MainActor
     public static func userTurn(
         message userMessage: String,
         context: ChatContext,
         isFirstTurn: Bool,
-        contextChanged: Bool
+        contextChanged: Bool,
+        budget: ContextBudget = .onDevice
     ) -> String {
         var sections: [String] = []
 
         if isFirstTurn || contextChanged {
-            sections.append(contextPreamble(context: context))
+            sections.append(contextPreamble(context: context, budget: budget))
         }
 
-        let queried = queriedDescriptionsBlock(context: context, query: userMessage)
+        let queried = queriedDescriptionsBlock(context: context, query: userMessage, budget: budget)
         if !queried.isEmpty {
             sections.append("<referenced>\n\(queried)\n</referenced>\n")
         }

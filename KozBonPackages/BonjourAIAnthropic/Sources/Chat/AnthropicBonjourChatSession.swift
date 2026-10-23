@@ -273,14 +273,15 @@ public final class AnthropicBonjourChatSession: BonjourChatSessionProtocol {
         // rendered text reported a change once per wall-clock
         // second and re-sent the whole context on any turn more
         // than a second after the last one.
-        let currentSignature = BonjourChatPromptBuilder.contextSignature(context: context)
+        let currentSignature = BonjourChatPromptBuilder.contextSignature(context: context, budget: .cloud)
         let isFirstTurn = (lastContextSignature == nil)
         let contextChanged = lastContextSignature != currentSignature
         let turnText = BonjourChatPromptBuilder.userTurn(
             message: trimmed,
             context: context,
             isFirstTurn: isFirstTurn,
-            contextChanged: contextChanged
+            contextChanged: contextChanged,
+            budget: .cloud
         )
         pendingContextSignature = currentSignature
         return turnText

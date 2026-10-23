@@ -207,14 +207,15 @@ public final class OpenAIBonjourChatSession: BonjourChatSessionProtocol {
         // Compared on the signature, not the rendered block: the
         // block carries a live "Ns ago" scan counter that changes
         // every second.
-        let currentSignature = BonjourChatPromptBuilder.contextSignature(context: context)
+        let currentSignature = BonjourChatPromptBuilder.contextSignature(context: context, budget: .cloud)
         let isFirstTurn = (lastContextSignature == nil)
         let contextChanged = lastContextSignature != currentSignature
         let turnText = BonjourChatPromptBuilder.userTurn(
             message: trimmed,
             context: context,
             isFirstTurn: isFirstTurn,
-            contextChanged: contextChanged
+            contextChanged: contextChanged,
+            budget: .cloud
         )
         pendingContextSignature = currentSignature
         return turnText
