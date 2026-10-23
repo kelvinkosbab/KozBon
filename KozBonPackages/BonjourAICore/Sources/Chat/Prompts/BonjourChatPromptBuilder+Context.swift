@@ -138,24 +138,18 @@ extension BonjourChatPromptBuilder {
         return parts.joined(separator: "\n")
     }
 
-    /// Number of recent releases rendered into the `whatsNewBlock`.
-    /// The full ``ReleaseNotes/all`` table reaches back to 3.0
-    /// (~16 entries, ~2400 tokens) — too much for the on-device
-    /// model's ~4K window alongside the system prompt and live
-    /// network context. Six entries (~900 tokens) covers the
-    /// "latest versions" the user actually asks about while
-    /// staying within budget. Users wanting the complete history
-    /// have the Preferences → About → What's New page.
-    fileprivate static let recentReleaseCap = 6
-
-    /// Query-triggered block that lists KozBon's recent release
-    /// notes when the user's message asks about what's new /
-    /// changelog / recent updates. Returns an empty string
-    /// otherwise so the block adds zero token cost to the common
-    /// case (questions about the user's network). Called from
-    /// ``userTurn`` on every user message and NOT tracked by
-    /// `lastContextSignature`, so its per-turn presence doesn't force
-    /// re-injection of the stable context.
+    /// Query-triggered block listing every release in KozBon's two
+    /// newest major versions (4.x and 3.x today; read from the table,
+    /// so 5.0 shifts it to 5.x and 4.x) plus how to shape the answer
+    /// for the user's detail level. Empty unless the message asks
+    /// what's new, so ordinary network questions pay nothing. Not
+    /// tracked by `lastContextSignature`.
+    ///
+    /// `.basic` sends only summaries and asks for two short paragraphs,
+    /// each covering every release in its major. `.technical` asks for
+    /// a detailed answer and adds the full `highlights` of the newest
+    /// ``technicalHighlightCount`` releases; all of them together run
+    /// past 2,500 tokens, too much for the on-device ~4K window.
     ///
     /// Reads the static ``ReleaseNotes/all`` table directly rather
     /// than threading it through ``ChatContext`` — release notes
@@ -163,21 +157,113 @@ extension BonjourChatPromptBuilder {
     /// state the context carries. `offeringCloudProviders` drops releases
     /// whose notes name a cloud AI provider, matching the What's New
     /// page.
-    public static func whatsNewBlock(query: String, offeringCloudProviders: Bool = true) -> String {
+    public static func whatsNewBlock(
+        query: String,
+        offeringCloudProviders: Bool = true,
+        expertiseLevel: BonjourServicePromptBuilder.ExpertiseLevel = .basic
+    ) -> String {
         guard ChatWhatsNewIntentDetector.wantsWhatsNew(message: query) else {
             return ""
         }
+        let releases = recentMajorReleases(offeringCloudProviders: offeringCloudProviders)
+        let majors = distinctMajors(of: releases)
+        guard let latest = releases.first, !majors.isEmpty else {
+            return ""
+        }
+        let majorList = majors.map { "\($0).x" }.joined(separator: " and ")
         var parts: [String] = [
-            "RECENT KOZBON RELEASES (newest first — answer \"what's new\" " +
-            "questions ONLY from this list; never invent versions or changes):"
+            "KOZBON \(majorList) RELEASES (newest first; answer ONLY from this " +
+            "list; never invent versions or changes).",
+            whatsNewAnswerDirective(releases: releases, expertiseLevel: expertiseLevel)
         ]
-        for release in ReleaseNotes.displayed(offeringCloudProviders: offeringCloudProviders).prefix(recentReleaseCap) {
-            parts.append("Version \(release.version):")
-            for highlight in release.highlights {
-                parts.append("- \(highlight)")
+        let detailed = expertiseLevel == .technical
+            ? Set(releases.prefix(technicalHighlightCount).map(\.version))
+            : []
+        for release in releases {
+            let label = release.version == latest.version
+                ? "Version \(release.version) (latest)"
+                : "Version \(release.version)"
+            if detailed.contains(release.version) {
+                parts.append("\(label):")
+                parts.append(contentsOf: release.highlights.map { "- \($0)" })
+            } else {
+                parts.append("\(label): \(paragraphs(of: release.summary))")
             }
         }
         return parts.joined(separator: "\n")
+    }
+
+    /// Releases whose full highlights the `.technical` block includes,
+    /// newest first. Three keeps the block near 1,600 tokens.
+    static let technicalHighlightCount = 3
+
+    /// How to shape a general "what's new" answer at the user's detail
+    /// level; overrides the usual response-length guidance.
+    static func whatsNewAnswerDirective(
+        releases: [ReleaseNote],
+        expertiseLevel: BonjourServicePromptBuilder.ExpertiseLevel
+    ) -> String {
+        let majors = distinctMajors(of: releases)
+        let ordered = majors.map { "\($0).x" }.joined(separator: ", then ")
+        let specific = "If the user asks about one specific version or feature, " +
+            "answer just that from the list instead."
+        switch expertiseLevel {
+        case .basic:
+            // The model otherwise leans on the newest release or two, so
+            // name each paragraph's full version span.
+            let spans = majors.map { major in
+                let versions = releases
+                    .filter { majorVersion(of: $0.version) == major }
+                    .map(\.version)
+                return "\(versions.last ?? "") through \(versions.first ?? "")"
+            }.joined(separator: ", then ")
+            return "ANSWER SHAPE: For a general \"what's new\" question, write exactly " +
+                "\(majors.count == 1 ? "one short paragraph" : "two short paragraphs"): one per " +
+                "major version (\(ordered)). Each paragraph sums up EVERY release listed " +
+                "for that major version (\(spans)), not just the newest one or two: group " +
+                "the changes from all of them into a few plain sentences. No headings, no " +
+                "bullet lists, no version-by-version rundown. This overrides the usual " +
+                "length guidance. " + specific
+        case .technical:
+            return "ANSWER SHAPE: For a general \"what's new\" question, give a detailed, " +
+                "technical answer with one section per major version (\(ordered)). Name " +
+                "the versions and the concrete changes in each: new features, AI " +
+                "backends and models, platform and SDK requirements, and architecture " +
+                "or behavior changes where the notes give them. Use the bulleted " +
+                "highlights for the newest releases and the summaries for the rest. " +
+                specific
+        }
+    }
+
+    /// The displayed releases in the two newest major versions,
+    /// newest first.
+    static func recentMajorReleases(offeringCloudProviders: Bool) -> [ReleaseNote] {
+        let displayed = ReleaseNotes.displayed(offeringCloudProviders: offeringCloudProviders)
+        let majors = Set(distinctMajors(of: displayed).prefix(2))
+        return displayed.filter { release in
+            majorVersion(of: release.version).map { majors.contains($0) } ?? false
+        }
+    }
+
+    fileprivate static func majorVersion(of version: String) -> Int? {
+        version.split(separator: ".").first.flatMap { Int($0) }
+    }
+
+    /// The major versions present in `releases`, in table order.
+    fileprivate static func distinctMajors(of releases: [ReleaseNote]) -> [Int] {
+        var seen: [Int] = []
+        for major in releases.compactMap({ majorVersion(of: $0.version) }) where !seen.contains(major) {
+            seen.append(major)
+        }
+        return seen
+    }
+
+    /// Joins a summary's blank-line-separated paragraphs onto one line
+    /// so each release stays a single entry in the block.
+    fileprivate static func paragraphs(of summary: String) -> String {
+        summary
+            .components(separatedBy: "\n\n")
+            .joined(separator: " ")
     }
 
     /// Query-triggered block listing KozBon's Siri actions and

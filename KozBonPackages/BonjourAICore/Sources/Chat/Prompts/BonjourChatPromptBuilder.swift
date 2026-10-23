@@ -69,13 +69,18 @@ public enum BonjourChatPromptBuilder {
         /// of the prompt (App Review, Guideline 5).
         public let areCloudProvidersOffered: Bool
 
+        /// The user's Detail level setting. Shapes per-turn blocks
+        /// whose answer depends on it, like the what's-new recap.
+        public let expertiseLevel: BonjourServicePromptBuilder.ExpertiseLevel
+
         public init(
             discoveredServices: [BonjourService] = [],
             publishedServices: [BonjourService] = [],
             serviceTypeLibrary: [BonjourServiceType] = [],
             lastScanTime: Date? = nil,
             isScanning: Bool = false,
-            areCloudProvidersOffered: Bool = true
+            areCloudProvidersOffered: Bool = true,
+            expertiseLevel: BonjourServicePromptBuilder.ExpertiseLevel = .basic
         ) {
             self.discoveredServices = discoveredServices
             self.publishedServices = publishedServices
@@ -83,6 +88,7 @@ public enum BonjourChatPromptBuilder {
             self.lastScanTime = lastScanTime
             self.isScanning = isScanning
             self.areCloudProvidersOffered = areCloudProvidersOffered
+            self.expertiseLevel = expertiseLevel
         }
     }
 
@@ -136,13 +142,14 @@ public enum BonjourChatPromptBuilder {
             Prefer these descriptions over your training memory when describing \
             those types.
             - The <whats_new> block (when present) contains KozBon's real release \
-            notes for recent app versions, newest first. When the user asks what's \
-            new, what changed, or about a recent update, answer ONLY from this \
-            block — you have no other knowledge of KozBon's version history, so \
-            never invent version numbers, dates, or changes. Lead with the most \
-            recent version. If the user asks about a version not in the block, say \
-            you only have notes for the most recent releases and point them to \
-            Preferences → About → What's New for the full history.
+            notes for every release in the two most recent major versions, newest \
+            first, plus an ANSWER SHAPE line. When the user asks what's new, what \
+            changed, or about a recent update, answer ONLY from this block — you \
+            have no other knowledge of KozBon's version history, so never invent \
+            version numbers, dates, or changes. Follow its ANSWER SHAPE line. If the \
+            user asks about a version not in the block, say you only have notes for \
+            the two most recent major versions and point them to Settings → About → \
+            What's New for the full history.
             - The <siri> block (when present) lists KozBon's real Siri actions and \
             phrases. Answer Siri and Shortcuts questions ONLY from it and never make \
             up phrases; when answering in another language, translate its phrases \
@@ -367,7 +374,11 @@ public enum BonjourChatPromptBuilder {
         // about what's new — same per-turn, query-conditional
         // policy as `<referenced>`, so it never bloats the stable
         // context or multi-turn history for unrelated questions.
-        let whatsNew = whatsNewBlock(query: userMessage, offeringCloudProviders: context.areCloudProvidersOffered)
+        let whatsNew = whatsNewBlock(
+            query: userMessage,
+            offeringCloudProviders: context.areCloudProvidersOffered,
+            expertiseLevel: context.expertiseLevel
+        )
         if !whatsNew.isEmpty {
             sections.append("<whats_new>\n\(whatsNew)\n</whats_new>\n")
         }

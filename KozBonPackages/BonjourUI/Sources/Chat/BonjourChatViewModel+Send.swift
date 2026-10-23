@@ -127,14 +127,18 @@ extension BonjourChatViewModel {
         // surface was frozen post-tap.
         session.appendUserMessage(trimmed)
 
-        let context = await buildChatContext(forMessage: trimmed, areCloudProvidersOffered: areCloudProvidersOffered)
-
         // Response length is derived from the user's Detail-level
         // preference. Basic → standard, Technical → thorough.
         let detailLevel = BonjourServicePromptBuilder.ExpertiseLevel(
             rawValue: preferencesStore.aiExpertiseLevel
         ) ?? .basic
         session.responseLength = detailLevel.responseLength
+
+        let context = await buildChatContext(
+            forMessage: trimmed,
+            areCloudProvidersOffered: areCloudProvidersOffered,
+            expertiseLevel: detailLevel
+        )
 
         endScanningWindow()
         await session.send(trimmed, context: context)
@@ -179,12 +183,16 @@ extension BonjourChatViewModel {
         // a fresh send.
         session.clearError()
 
-        let context = await buildChatContext(forMessage: lastUserMessage, areCloudProvidersOffered: areCloudProvidersOffered)
-
         let detailLevel = BonjourServicePromptBuilder.ExpertiseLevel(
             rawValue: preferencesStore.aiExpertiseLevel
         ) ?? .basic
         session.responseLength = detailLevel.responseLength
+
+        let context = await buildChatContext(
+            forMessage: lastUserMessage,
+            areCloudProvidersOffered: areCloudProvidersOffered,
+            expertiseLevel: detailLevel
+        )
 
         endScanningWindow()
         await session.send(lastUserMessage, context: context)
@@ -217,7 +225,8 @@ extension BonjourChatViewModel {
     /// Siri intents use.
     func buildChatContext(
         forMessage message: String,
-        areCloudProvidersOffered: Bool = true
+        areCloudProvidersOffered: Bool = true,
+        expertiseLevel: BonjourServicePromptBuilder.ExpertiseLevel = .basic
     ) async -> BonjourChatPromptBuilder.ChatContext {
         isHandingOffFromScan = false
         let library = BonjourServiceType.fetchAll()
@@ -267,7 +276,8 @@ extension BonjourChatViewModel {
                 // stale."
                 lastScanTime: Date(),
                 isScanning: false,
-                areCloudProvidersOffered: areCloudProvidersOffered
+                areCloudProvidersOffered: areCloudProvidersOffered,
+                expertiseLevel: expertiseLevel
             )
         }
 
@@ -277,7 +287,8 @@ extension BonjourChatViewModel {
             serviceTypeLibrary: library,
             lastScanTime: services.lastScanTime,
             isScanning: services.serviceScanner.isProcessing,
-            areCloudProvidersOffered: areCloudProvidersOffered
+            areCloudProvidersOffered: areCloudProvidersOffered,
+            expertiseLevel: expertiseLevel
         )
     }
 

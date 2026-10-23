@@ -36,6 +36,28 @@ struct ChatWhatsNewIntentDetectorTests {
         #expect(ChatWhatsNewIntentDetector.wantsWhatsNew(message: "What new features were added recently?"))
     }
 
+    // MARK: - Positive — Suggestion-button values (every locale)
+
+    /// Tapping the Chat "What's new" suggestion sends the localized
+    /// value; if one didn't match, that locale would answer without
+    /// the release notes.
+    @Test("Every localized \"What's new\" suggestion value triggers", arguments: [
+        "What's new",    // en
+        "Novedades",     // es
+        "Quoi de neuf",  // fr
+        "Was ist neu",   // de
+        "新機能",         // ja
+        "新功能",         // zh-Hans
+        "ما الجديد",     // ar
+        "מה חדש"         // he
+    ])
+    func localizedSuggestionValuesTrigger(_ value: String) {
+        #expect(
+            ChatWhatsNewIntentDetector.wantsWhatsNew(message: value),
+            "Suggestion value should inject release notes: \(value)"
+        )
+    }
+
     // MARK: - Positive — Every locale
 
     @Test("Every localized what's-new question triggers", arguments: [
