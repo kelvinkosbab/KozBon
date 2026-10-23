@@ -156,6 +156,7 @@ struct BonjourChatPromptBuilderWhatsNewTests {
     }
 
     @Test("Chat context carries the Detail level into the user turn")
+    @MainActor
     func userTurnUsesContextExpertiseLevel() {
         let technical = BonjourChatPromptBuilder.ChatContext(expertiseLevel: .technical)
         let turn = BonjourChatPromptBuilder.userTurn(
