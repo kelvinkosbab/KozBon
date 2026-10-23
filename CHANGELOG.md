@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- The Chat screen's "What's new in this version?" suggestion is now "What's new", and the assistant's answer covers every 4.x and 3.x release instead of only the latest few. With the Basic detail level it answers in two short paragraphs; with Technical it gives a detailed rundown per major version.
+- The Chat screen's "What's new in this version?" suggestion is now "What's new", and the assistant's answer covers every 4.x and 3.x release instead of only the latest few. With the Basic detail level it answers in two short paragraphs, one per major version covering all of its releases; with Technical it gives a detailed rundown per major version.
 
 ## [4.9.2] - 2026-10-18
 

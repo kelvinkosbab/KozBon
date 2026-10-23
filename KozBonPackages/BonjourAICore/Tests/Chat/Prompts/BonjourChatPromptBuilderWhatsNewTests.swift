@@ -116,6 +116,14 @@ struct BonjourChatPromptBuilderWhatsNewTests {
         let block = BonjourChatPromptBuilder.whatsNewBlock(query: "What's new", expertiseLevel: .basic)
         #expect(block.contains("two short paragraphs"))
         #expect(block.contains("4.x, then 3.x"))
+        // Each paragraph must span the whole major, oldest to newest.
+        #expect(block.contains("EVERY release"))
+        let versions = BonjourChatPromptBuilder.recentMajorReleases(offeringCloudProviders: true).map(\.version)
+        let fours = versions.filter { $0.hasPrefix("4.") }
+        let threes = versions.filter { $0.hasPrefix("3.") }
+        if let first4 = fours.last, let last4 = fours.first, let first3 = threes.last, let last3 = threes.first {
+            #expect(block.contains("\(first4) through \(last4), then \(first3) through \(last3)"))
+        }
         let releases = BonjourChatPromptBuilder.recentMajorReleases(offeringCloudProviders: true)
         for release in releases {
             for highlight in release.highlights where !release.summary.contains(highlight) {

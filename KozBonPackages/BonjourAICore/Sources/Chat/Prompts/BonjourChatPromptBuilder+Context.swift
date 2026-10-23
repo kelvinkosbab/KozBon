@@ -149,7 +149,8 @@ extension BonjourChatPromptBuilder {
     /// presence doesn't force re-injection of the stable context.
     ///
     /// `.basic` asks for two short paragraphs, one per major version,
-    /// and sends only each release's `summary`. `.technical` asks for
+    /// each covering every release in that major, and sends only each
+    /// release's `summary`. `.technical` asks for
     /// a detailed answer and adds the full `highlights` of the newest
     /// ``technicalHighlightCount`` releases. Every 4.x and 3.x
     /// highlight together runs past 2,500 tokens, more than the
@@ -180,7 +181,7 @@ extension BonjourChatPromptBuilder {
         var parts: [String] = [
             "KOZBON \(majorList) RELEASES (newest first; answer ONLY from this " +
             "list; never invent versions or changes).",
-            whatsNewAnswerDirective(majors: majors, expertiseLevel: expertiseLevel)
+            whatsNewAnswerDirective(releases: releases, expertiseLevel: expertiseLevel)
         ]
         let detailed = expertiseLevel == .technical
             ? Set(releases.prefix(technicalHighlightCount).map(\.version))
@@ -207,19 +208,30 @@ extension BonjourChatPromptBuilder {
     /// the user's detail level. Overrides the usual response-length
     /// guidance, since a release recap has its own natural shape.
     static func whatsNewAnswerDirective(
-        majors: [Int],
+        releases: [ReleaseNote],
         expertiseLevel: BonjourServicePromptBuilder.ExpertiseLevel
     ) -> String {
+        let majors = distinctMajors(of: releases)
         let ordered = majors.map { "\($0).x" }.joined(separator: ", then ")
         let specific = "If the user asks about one specific version or feature, " +
             "answer just that from the list instead."
         switch expertiseLevel {
         case .basic:
+            // The model otherwise leans on the newest release or two, so
+            // name each paragraph's full version span.
+            let spans = majors.map { major in
+                let versions = releases
+                    .filter { majorVersion(of: $0.version) == major }
+                    .map(\.version)
+                return "\(versions.last ?? "") through \(versions.first ?? "")"
+            }.joined(separator: ", then ")
             return "ANSWER SHAPE: For a general \"what's new\" question, write exactly " +
                 "\(majors.count == 1 ? "one short paragraph" : "two short paragraphs"): one per " +
-                "major version (\(ordered)), each a few plain sentences on the biggest " +
-                "changes. No headings, no bullet lists, no version-by-version rundown. " +
-                "This overrides the usual length guidance. " + specific
+                "major version (\(ordered)). Each paragraph sums up EVERY release listed " +
+                "for that major version (\(spans)), not just the newest one or two: group " +
+                "the changes from all of them into a few plain sentences. No headings, no " +
+                "bullet lists, no version-by-version rundown. This overrides the usual " +
+                "length guidance. " + specific
         case .technical:
             return "ANSWER SHAPE: For a general \"what's new\" question, give a detailed, " +
                 "technical answer with one section per major version (\(ordered)). Name " +
