@@ -108,10 +108,9 @@ public final class OpenAIBonjourChatSession: BonjourChatSessionProtocol {
 
     /// Max output tokens per turn.
     ///
-    /// Higher than the Claude and Gemini sessions' 1,024 because on
-    /// OpenAI's reasoning models this budget also pays for hidden
-    /// reasoning — at 1,024 a thoughtful model can spend it all
-    /// before writing a word.
+    /// On OpenAI's reasoning models this budget also pays for
+    /// hidden reasoning — at 1,024 a thoughtful model can spend it
+    /// all before writing a word.
     static let maximumResponseTokensPerTurn = 4096
 
     // MARK: - Prewarm

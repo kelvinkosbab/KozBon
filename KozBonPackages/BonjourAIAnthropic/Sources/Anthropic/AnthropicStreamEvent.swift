@@ -32,6 +32,11 @@ enum AnthropicStreamEvent: Equatable, Sendable {
     /// "no more text is coming."
     case messageStop
 
+    /// Why generation ended, from a `message_delta` event's
+    /// `delta.stop_reason`. `end_turn` is a normal finish;
+    /// `max_tokens` means the answer was cut short.
+    case stopReason(String)
+
     /// An error event the API embedded inline (rate limit
     /// reached mid-stream, content-policy block, etc.).
     case error(message: String, type: String?)
@@ -92,6 +97,13 @@ enum AnthropicStreamEvent: Equatable, Sendable {
             return decodeTextDelta(from: raw)
         case "message_stop":
             return .messageStop
+        case "message_delta":
+            // `{"type": "message_delta", "delta": {"stop_reason": "max_tokens"}}`
+            if let delta = raw["delta"] as? [String: Any],
+               let reason = delta["stop_reason"] as? String {
+                return .stopReason(reason)
+            }
+            return .other(type: type)
         case "error":
             return decodeError(from: raw)
         default:

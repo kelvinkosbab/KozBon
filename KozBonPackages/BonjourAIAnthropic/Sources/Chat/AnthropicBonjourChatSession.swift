@@ -136,14 +136,11 @@ public final class AnthropicBonjourChatSession: BonjourChatSessionProtocol {
     /// indistinguishable scrollback behavior.
     static let maxInMemoryMessageCount = 500
 
-    /// Max tokens per Claude response. Sized generously — Claude's
-    /// 200K context window doesn't pressure the chat surface the
-    /// way Apple Foundation Models' ~4K does, so the runaway-
-    /// generation hardening (token cap, ENUMERATION RULES) that
-    /// matters on-device is less critical here. Still bound the
-    /// response so a model glitch can't run a single chat turn
-    /// for thousands of tokens.
-    static let maximumResponseTokensPerTurn = 1024
+    /// Max tokens per Claude response. A runaway bound, not a
+    /// length target — the prompt's LENGTH directive sets the
+    /// length. Sized so a Technical-level answer or a long service
+    /// list finishes instead of being cut off mid-sentence.
+    static let maximumResponseTokensPerTurn = 4096
 
     // MARK: - Prewarm
 

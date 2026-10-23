@@ -137,14 +137,13 @@ public final class GeminiBonjourChatSession: BonjourChatSessionProtocol {
     /// indistinguishable scrollback behavior.
     static let maxInMemoryMessageCount = 500
 
-    /// Max tokens per Gemini response. Sized generously — Gemini's
-    /// 200K context window doesn't pressure the chat surface the
-    /// way Apple Foundation Models' ~4K does, so the runaway-
-    /// generation hardening (token cap, ENUMERATION RULES) that
-    /// matters on-device is less critical here. Still bound the
-    /// response so a model glitch can't run a single chat turn
-    /// for thousands of tokens.
-    static let maximumResponseTokensPerTurn = 1024
+    /// Max output tokens per Gemini response. A runaway bound, not
+    /// a length target — the prompt's LENGTH directive sets the
+    /// length. Larger than the Claude cap because Gemini 2.5 models
+    /// think by default and their thinking tokens count against
+    /// `maxOutputTokens`; at 1,024 a long think left little or no
+    /// room for the answer.
+    static let maximumResponseTokensPerTurn = 8192
 
     // MARK: - Prewarm
 
