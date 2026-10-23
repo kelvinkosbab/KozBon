@@ -124,9 +124,6 @@ public enum Iconography {
     /// Upward-and-trailing arrow — used as the affordance on suggestion chips.
     public static let arrowUpRight = "arrow.up.right"
 
-    /// Downward arrow — the chat transcript's scroll-to-bottom button.
-    public static let arrowDown = "arrow.down"
-
     // MARK: - Clipboard & Copy
 
     /// Copy to clipboard icon.

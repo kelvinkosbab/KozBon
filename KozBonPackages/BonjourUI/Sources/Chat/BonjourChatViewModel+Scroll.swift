@@ -118,40 +118,12 @@ extension BonjourChatViewModel {
         }
     }
 
-    // MARK: - Scroll-to-Bottom Button
-
-    /// How far above its end the transcript must sit before the
-    /// button shows. Taller than a streamed line or two, so the
-    /// button doesn't blink while the auto-scroll catches up with
-    /// a growing reply.
-    nonisolated static let scrollToBottomThreshold: CGFloat = 64
-
-    /// Points of content below the visible region. The region ends
-    /// at the top of the compose bar (or keyboard), which the
-    /// scroll view reports as its bottom content inset, not at the
-    /// bottom of the screen. Negative when everything fits.
-    nonisolated static func distanceFromBottom(
-        contentHeight: CGFloat,
-        contentOffsetY: CGFloat,
-        containerHeight: CGFloat,
-        bottomInset: CGFloat
-    ) -> CGFloat {
-        contentHeight - (contentOffsetY + containerHeight - bottomInset)
-    }
-
-    /// Whether the button should show. Hidden on a fresh chat,
-    /// where only the intro and suggestions are below, and while
-    /// the Clear sequence scrolls the transcript away.
-    func showsScrollToBottomButton(hasMessages: Bool) -> Bool {
-        hasMessages && isScrolledAwayFromBottom && !pendingClear
-    }
+    // MARK: - Scroll to Bottom
 
     /// Scrolls to the anchor below the last row, so an error banner
     /// or scanning indicator under the newest message is included.
-    /// Used after every send (typed or suggestion), while a reply
-    /// streams, and by the scroll-to-bottom button. Reaching the end
-    /// also hides that button, so it never covers the sent bubble.
-    /// A fresh chat stays put on its intro and suggestions.
+    /// Used after every send (typed or suggestion) and while a reply
+    /// streams. A fresh chat stays put on its intro and suggestions.
     func scrollToBottom(
         hasMessages: Bool,
         proxy: ScrollViewProxy,

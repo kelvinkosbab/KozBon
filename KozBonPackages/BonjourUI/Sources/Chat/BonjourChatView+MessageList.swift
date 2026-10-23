@@ -25,8 +25,8 @@ extension BonjourChatView {
     /// typing bubble that replaces it.
     static let pendingAssistantBubbleID = "pending_assistant_bubble"
 
-    /// Zero-height row after all content; the scroll-to-bottom
-    /// button's target.
+    /// Zero-height row after all content; where sends and streamed
+    /// replies scroll to.
     static let bottomAnchorID = "chat_bottom_anchor"
 
     /// The chat surface is a single ScrollView that ALWAYS contains
@@ -61,16 +61,6 @@ extension BonjourChatView {
                         .frame(height: 0)
                         .id(Self.bottomAnchorID)
                 }
-            }
-            .onScrollGeometryChange(for: Bool.self) { geometry in
-                BonjourChatViewModel.distanceFromBottom(
-                    contentHeight: geometry.contentSize.height,
-                    contentOffsetY: geometry.contentOffset.y,
-                    containerHeight: geometry.containerSize.height,
-                    bottomInset: geometry.contentInsets.bottom
-                ) > BonjourChatViewModel.scrollToBottomThreshold
-            } action: { _, isAway in
-                viewModel.isScrolledAwayFromBottom = isAway
             }
             // Announce the scroll region to VoiceOver users as
             // "Conversation" so they know what they're entering
@@ -113,9 +103,6 @@ extension BonjourChatView {
                     anchorID: Self.emptyStateAnchorID,
                     reduceMotion: reduceMotion
                 )
-            }
-            .onChange(of: viewModel.scrollToBottomRequestCount) {
-                scrollToBottom(session: session, proxy: proxy, duration: 0.3)
             }
             .onChange(of: session.messages.isEmpty) { _, isEmpty in
                 viewModel.snapToEmptyStateIfNeeded(
