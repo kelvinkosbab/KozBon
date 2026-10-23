@@ -110,10 +110,7 @@ public final class AnthropicBonjourChatSession: BonjourChatSessionProtocol {
     /// for the static parts of the conversation.
     private var lastContextSignature: String?
 
-    /// Signature of the context composed for the in-flight turn.
-    /// Committed to ``lastContextSignature`` only once the turn
-    /// succeeds: a failed turn is rolled out of the history along
-    /// with its `<context>` block, so the retry has to send it again.
+    /// Committed to ``lastContextSignature`` once the turn succeeds, so a failed turn's retry re-sends `<context>`.
     private var pendingContextSignature: String?
 
     // MARK: - Init
@@ -136,10 +133,8 @@ public final class AnthropicBonjourChatSession: BonjourChatSessionProtocol {
     /// indistinguishable scrollback behavior.
     static let maxInMemoryMessageCount = 500
 
-    /// Max tokens per Claude response. A runaway bound, not a
-    /// length target — the prompt's LENGTH directive sets the
-    /// length. Sized so a Technical-level answer or a long service
-    /// list finishes instead of being cut off mid-sentence.
+    /// Max tokens per Claude response: a runaway bound, not a length
+    /// target, sized so a Technical-level answer isn't cut off.
     static let maximumResponseTokensPerTurn = 4096
 
     // MARK: - Prewarm

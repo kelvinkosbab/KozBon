@@ -98,12 +98,7 @@ enum AnthropicStreamEvent: Equatable, Sendable {
         case "message_stop":
             return .messageStop
         case "message_delta":
-            // `{"type": "message_delta", "delta": {"stop_reason": "max_tokens"}}`
-            if let delta = raw["delta"] as? [String: Any],
-               let reason = delta["stop_reason"] as? String {
-                return .stopReason(reason)
-            }
-            return .other(type: type)
+            return decodeMessageDelta(from: raw)
         case "error":
             return decodeError(from: raw)
         default:
@@ -127,6 +122,15 @@ enum AnthropicStreamEvent: Equatable, Sendable {
             return .textDelta(text)
         }
         return .other(type: "content_block_delta.\(deltaType)")
+    }
+
+    private static func decodeMessageDelta(from raw: [String: Any]) -> AnthropicStreamEvent {
+        // `{"type": "message_delta", "delta": {"stop_reason": "max_tokens"}}`
+        guard let delta = raw["delta"] as? [String: Any],
+              let reason = delta["stop_reason"] as? String else {
+            return .other(type: "message_delta")
+        }
+        return .stopReason(reason)
     }
 
     private static func decodeError(from raw: [String: Any]) -> AnthropicStreamEvent {
