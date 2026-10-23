@@ -430,35 +430,6 @@ public struct SettingsView: View {
         hasCustomServiceTypes = !BonjourServiceType.fetchAllPersistentCopies().isEmpty
     }
 
-    // MARK: - About Section
-
-    /// Build metadata — marketing version row plus a navigation
-    /// row that pushes the "What's New" release-notes page.
-    @ViewBuilder
-    private var aboutSection: some View {
-        Section {
-            LabeledContent(
-                String(localized: Strings.Settings.version),
-                value: AppVersion.marketing
-            )
-            // `monospacedDigit()` keeps the value column aligned
-            // against any neighbouring rows we add later.
-            .monospacedDigit()
-            .accessibilityElement(children: .combine)
-
-            NavigationLink {
-                WhatsNewView()
-            } label: {
-                Text(Strings.Settings.whatsNew)
-            }
-            .accessibilityHint(Strings.Accessibility.whatsNewHint)
-            .accessibilityIdentifier("whats_new_link")
-        } header: {
-            Text(Strings.Settings.about)
-                .accessibilityAddTraits(.isHeader)
-        }
-    }
-
     // MARK: - Helpers
 
     /// A short description of the currently selected expertise level.

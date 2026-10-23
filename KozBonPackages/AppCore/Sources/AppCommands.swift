@@ -7,6 +7,7 @@
 
 #if os(macOS)
 import SwiftUI
+import BonjourCore
 import BonjourLocalization
 // For `RefreshScanAction`, the type behind `\.refreshScan`.
 import BonjourUI
@@ -51,7 +52,7 @@ struct AppCommands: Commands {
         CommandGroup(replacing: .help) {
             Link(
                 String(localized: Strings.Help.kozbonOnGitHub),
-                destination: URL(string: "https://github.com/kelvinkosbab/KozBon")!
+                destination: Constants.Links.sourceRepository
             )
 
             Divider()

@@ -696,6 +696,12 @@ public enum Strings {
             .init("a11y_whats_new_hint", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        /// VoiceOver hint on the "Source Code on GitHub" row in the
+        /// About section — warns that tapping leaves the app.
+        public static var sourceCodeHint: LocalizedStringResource {
+            .init("a11y_source_code_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         /// VoiceOver label for a "What's New" section header.
         /// Visually each header renders as just the bare version
         /// number ("4.4") since the page title gives it context;
@@ -1511,6 +1517,12 @@ public enum Strings {
         /// release-notes page reached from the About section.
         public static var whatsNew: LocalizedStringResource {
             .init("settings_whats_new", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Caption under the "KozBon on GitHub" row in the About
+        /// section, naming the license the source is published under.
+        public static var openSourceLicense: LocalizedStringResource {
+            .init("settings_open_source_license", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         /// A "What's New" release summary in the user's language.

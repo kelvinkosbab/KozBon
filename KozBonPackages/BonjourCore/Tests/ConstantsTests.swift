@@ -51,4 +51,12 @@ struct ConstantsTests {
     func foregroundRefreshIntervalIsPositive() {
         #expect(Constants.Refresh.foregroundRefreshInterval > 0)
     }
+
+    // MARK: - Links
+
+    @Test("`sourceRepository` points at the public GitHub repository over HTTPS")
+    func sourceRepositoryIsGitHubHTTPS() {
+        #expect(Constants.Links.sourceRepository.scheme == "https")
+        #expect(Constants.Links.sourceRepository.host == "github.com")
+    }
 }
