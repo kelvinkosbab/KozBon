@@ -47,7 +47,7 @@ struct BonjourChatPromptBuilderWhatsNewTests {
             return
         }
         // The newest version header must appear before any older one.
-        let latestRange = block.range(of: "Version \(latest.version):")
+        let latestRange = block.range(of: "Version \(latest.version) (latest):")
         #expect(latestRange != nil)
         if let second = ReleaseNotes.all.dropFirst().first,
            let latestRange,
