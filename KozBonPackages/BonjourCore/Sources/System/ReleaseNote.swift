@@ -106,7 +106,6 @@ public enum ReleaseNotes {
                 "Chat scrolls each sent message, typed or a tapped suggestion, into view just above the compose bar, keeps the scanning row and reply in view, and dismisses the keyboard after you send.",
                 // swiftlint:disable:next line_length
                 "Chat's \"What's new in this version?\" suggestion is now \"What's new\", and the answer covers every 4.x and 3.x release, one paragraph per major version with the Basic detail level.",
-                // swiftlint:disable:next line_length
                 "KozBon is open source under the MIT License. Settings, About has a KozBon on GitHub row that opens the repository."
             ]
         ),
