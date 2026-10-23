@@ -48,7 +48,6 @@ public enum Constants {
     public enum Links {
 
         /// KozBon's open-source repository on GitHub.
-        // swiftlint:disable:next force_unwrapping
         public static let sourceRepository = URL(string: "https://github.com/kelvinkosbab/KozBon")!
     }
 }
