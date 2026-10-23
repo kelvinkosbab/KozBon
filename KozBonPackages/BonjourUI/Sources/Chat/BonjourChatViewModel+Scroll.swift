@@ -49,44 +49,6 @@ extension BonjourChatViewModel {
 
     // MARK: - Scroll Coordination
 
-    /// Animates the user's FIRST message in a fresh chat to
-    /// the top of the viewport, so the suggestion buttons
-    /// scroll off above. This is the "browsing → chatting"
-    /// transition; gated on ``hasScrolledFirstUserMessage``
-    /// so it fires exactly once per fresh-chat lifetime.
-    func scrollFirstUserMessageToTop(
-        firstId: UUID?,
-        proxy: ScrollViewProxy,
-        reduceMotion: Bool
-    ) {
-        guard let firstId, !hasScrolledFirstUserMessage else { return }
-        hasScrolledFirstUserMessage = true
-        withAnimation(reduceMotion ? nil : .easeOut(duration: 0.5)) {
-            proxy.scrollTo(firstId, anchor: .top)
-        }
-    }
-
-    /// Scroll-to-bottom for subsequent message arrivals and
-    /// streaming token updates. Gated on `count > 2` so the
-    /// FIRST exchange (user msg + placeholder, possibly
-    /// streaming) keeps the user's bubble pinned at the top
-    /// — without that gate, every streamed token would tug
-    /// the latest content down into view and the user's
-    /// question would scroll off-screen during the first
-    /// response.
-    func scrollLatestMessageToBottom(
-        session: any BonjourChatSessionProtocol,
-        proxy: ScrollViewProxy,
-        duration: Double,
-        reduceMotion: Bool
-    ) {
-        guard session.messages.count > 2,
-              let last = session.messages.last else { return }
-        withAnimation(reduceMotion ? nil : .easeOut(duration: duration)) {
-            proxy.scrollTo(last.id, anchor: .bottom)
-        }
-    }
-
     /// What the transcript should scroll to when the compose
     /// field takes focus.
     ///
@@ -186,12 +148,19 @@ extension BonjourChatViewModel {
 
     /// Scrolls to the anchor below the last row, so an error banner
     /// or scanning indicator under the newest message is included.
+    /// Used after every send (typed or suggestion), while a reply
+    /// streams, and by the scroll-to-bottom button. Reaching the end
+    /// also hides that button, so it never covers the sent bubble.
+    /// A fresh chat stays put on its intro and suggestions.
     func scrollToBottom(
+        hasMessages: Bool,
         proxy: ScrollViewProxy,
         anchorID: String,
+        duration: Double,
         reduceMotion: Bool
     ) {
-        withAnimation(reduceMotion ? nil : .easeOut(duration: 0.3)) {
+        guard hasMessages, !pendingClear else { return }
+        withAnimation(reduceMotion ? nil : .easeOut(duration: duration)) {
             proxy.scrollTo(anchorID, anchor: .bottom)
         }
     }
@@ -231,15 +200,14 @@ extension BonjourChatViewModel {
         Task { @MainActor in
             try? await Task.sleep(for: .milliseconds(450))
             session.reset()
-            hasScrolledFirstUserMessage = false
             pendingClear = false
         }
     }
 
     /// Defensive fallback for any path that clears `messages`
     /// directly (rather than going through the toolbar's
-    /// `pendingClear` flow). Resets the first-message flag
-    /// and snaps the ScrollView back to the top — at this
+    /// `pendingClear` flow). Snaps the ScrollView back to
+    /// the top — at this
     /// point the bubbles are already gone, so this scroll
     /// is effectively a no-op visually but keeps the state
     /// consistent.
@@ -249,7 +217,6 @@ extension BonjourChatViewModel {
         anchorID: String
     ) {
         guard isEmpty, !pendingClear else { return }
-        hasScrolledFirstUserMessage = false
         proxy.scrollTo(anchorID, anchor: .top)
     }
 }

@@ -1,0 +1,60 @@
+//
+//  ChatScrollToBottomButton.swift
+//  BonjourUI
+//
+//  Copyright © 2016-present Kozinga. All rights reserved.
+//
+
+import SwiftUI
+import BonjourAI
+import BonjourCore
+import BonjourLocalization
+
+// MARK: - ChatScrollToBottomButton
+
+/// Round glass button that jumps the Chat transcript to its newest
+/// content. Shown only while the transcript is scrolled up.
+struct ChatScrollToBottomButton: View {
+
+    let action: () -> Void
+
+    @Environment(\.colorSchemeContrast) private var colorSchemeContrast
+
+    /// Grows with Dynamic Type from the 44 pt minimum hit target.
+    @ScaledMetric(relativeTo: .body) private var diameter: CGFloat = .size44
+
+    var body: some View {
+        Button(action: action) {
+            Image.arrowDown
+                .font(.body.weight(.semibold))
+                .foregroundStyle(.primary)
+                .accessibilityHidden(true)
+                .frame(width: diameter, height: diameter)
+                .platformGlassBackground(in: Circle())
+                // Glass alone is too faint an edge under Increase
+                // Contrast, so the circle gets an outline there.
+                .overlay {
+                    if colorSchemeContrast == .increased {
+                        Circle().strokeBorder(.primary, lineWidth: 1)
+                    }
+                }
+                .contentShape(Circle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(Strings.Accessibility.chatScrollToBottom)
+        .accessibilityHint(Strings.Accessibility.chatScrollToBottomHint)
+        .accessibilityIdentifier("chat_scroll_to_bottom_button")
+        // Past this size the circle would crowd the compose bar;
+        // the Large Content Viewer covers anything larger.
+        .dynamicTypeSize(...DynamicTypeSize.accessibility3)
+        .accessibilityShowsLargeContentViewer()
+        #if !os(macOS)
+        .hoverEffect(.highlight)
+        #endif
+    }
+}
+
+#Preview {
+    ChatScrollToBottomButton {}
+        .padding()
+}

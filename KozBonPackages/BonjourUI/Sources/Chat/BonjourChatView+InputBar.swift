@@ -18,6 +18,12 @@ import UIKit
 
 extension BonjourChatView {
 
+    /// Distance from the compose bar's trailing edge to the Send
+    /// capsule's center: the bar's 16 pt outer padding, the field's
+    /// `.space8` trailing inset, and half the 44 pt capsule. The
+    /// scroll-to-bottom button centers on it.
+    nonisolated static let sendButtonCenterTrailingInset: CGFloat = 16 + .space8 + .size44 / 2
+
     @ViewBuilder
     func inputBar(session: any BonjourChatSessionProtocol) -> some View {
         // Single shared rounded-rectangle that holds both the

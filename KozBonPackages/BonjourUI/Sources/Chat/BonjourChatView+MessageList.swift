@@ -31,10 +31,10 @@ extension BonjourChatView {
 
     /// The chat surface is a single ScrollView that ALWAYS contains
     /// the empty-state content (intro + suggestion buttons) plus
-    /// any messages. On first send the ScrollView animates the
-    /// user's bubble to the top of the viewport — the suggestions
+    /// any messages. Each send scrolls to the end, so the user's
+    /// bubble lands just above the compose bar and the suggestions
     /// scroll out above. There's no branch swap between an "empty"
-    /// and a "populated" surface anymore, so the transition feels
+    /// and a "populated" surface, so the transition feels
     /// continuous instead of an instant page change.
     ///
     /// Each `.onChange` handler delegates to a small per-event
@@ -42,9 +42,8 @@ extension BonjourChatView {
     /// function a thin assembly of declarative bindings instead
     /// of a nest of inline closures, and lets each scroll
     /// behavior be documented next to the rule that triggers it.
-    /// The helpers mutate VM state
-    /// (`hasScrolledFirstUserMessage`, `pendingClear`) and so
-    /// live on the VM where they're testable.
+    /// The helpers mutate VM state (`pendingClear`) and so live
+    /// on the VM where they're testable.
     ///
     /// `function_body_length` is disabled locally because the
     /// `.onChange` modifiers are an intrinsically chained
@@ -85,28 +84,17 @@ extension BonjourChatView {
             #if !os(visionOS)
             .scrollDismissesKeyboard(.interactively)
             #endif
-            .onChange(of: session.messages.first?.id) { _, firstId in
-                viewModel.scrollFirstUserMessageToTop(
-                    firstId: firstId,
-                    proxy: proxy,
-                    reduceMotion: reduceMotion
-                )
+            // A new message (the user's bubble, then the reply's
+            // placeholder) or the scan row lands at the bottom,
+            // and streamed tokens keep the reply in view.
+            .onChange(of: session.messages.last?.id) {
+                scrollToBottom(session: session, proxy: proxy, duration: 0.3)
             }
-            .onChange(of: session.messages.last?.id) { _, _ in
-                viewModel.scrollLatestMessageToBottom(
-                    session: session,
-                    proxy: proxy,
-                    duration: 0.3,
-                    reduceMotion: reduceMotion
-                )
+            .onChange(of: viewModel.isScanningNetwork) {
+                scrollToBottom(session: session, proxy: proxy, duration: 0.3)
             }
             .onChange(of: session.messages.last?.content) {
-                viewModel.scrollLatestMessageToBottom(
-                    session: session,
-                    proxy: proxy,
-                    duration: 0.15,
-                    reduceMotion: reduceMotion
-                )
+                scrollToBottom(session: session, proxy: proxy, duration: 0.15)
             }
             .onChange(of: isInputFocused) { _, focused in
                 viewModel.scrollLatestMessageAboveKeyboard(
@@ -127,11 +115,7 @@ extension BonjourChatView {
                 )
             }
             .onChange(of: viewModel.scrollToBottomRequestCount) {
-                viewModel.scrollToBottom(
-                    proxy: proxy,
-                    anchorID: Self.bottomAnchorID,
-                    reduceMotion: reduceMotion
-                )
+                scrollToBottom(session: session, proxy: proxy, duration: 0.3)
             }
             .onChange(of: session.messages.isEmpty) { _, isEmpty in
                 viewModel.snapToEmptyStateIfNeeded(
@@ -253,33 +237,18 @@ extension BonjourChatView {
         .padding()
     }
 
-    // MARK: - Scroll-to-Bottom Button
-
-    /// Circular glass button that jumps the transcript to its end.
-    /// Mounted over the compose bar's inset rather than inside the
-    /// scroll view, so it sits above the offline banner instead of
-    /// covering it.
-    var scrollToBottomButton: some View {
-        Button {
-            viewModel.scrollToBottomRequestCount &+= 1
-        } label: {
-            Image.arrowDown
-                .font(.body.weight(.semibold))
-                .accessibilityHidden(true)
-                .frame(width: .size44, height: .size44)
-                .platformGlassBackground(in: Circle())
-                .contentShape(Circle())
-        }
-        .buttonStyle(.plain)
-        .accessibilityLabel(Strings.Accessibility.chatScrollToBottom)
-        .accessibilityIdentifier("chat_scroll_to_bottom_button")
-        // The 44 pt circle is fixed, so cap the glyph before it
-        // outgrows it.
-        .dynamicTypeSize(...DynamicTypeSize.accessibility2)
-        .accessibilityShowsLargeContentViewer()
-        #if !os(macOS)
-        .hoverEffect(.highlight)
-        #endif
+    fileprivate func scrollToBottom(
+        session: any BonjourChatSessionProtocol,
+        proxy: ScrollViewProxy,
+        duration: Double
+    ) {
+        viewModel.scrollToBottom(
+            hasMessages: !session.messages.isEmpty,
+            proxy: proxy,
+            anchorID: Self.bottomAnchorID,
+            duration: duration,
+            reduceMotion: reduceMotion
+        )
     }
 
     // MARK: - Error-Banner Action Dispatch

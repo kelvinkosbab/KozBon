@@ -107,18 +107,6 @@ final class BonjourChatViewModel {
 
     // MARK: - Scroll Coordination
 
-    /// Set once the user's first message in a fresh chat has
-    /// been animated to the top of the viewport. Drives the
-    /// "suggestions scroll up out of view" UX on first send —
-    /// instead of swapping the empty state for a populated
-    /// message list, the unified ScrollView animates the user's
-    /// bubble to land just below the navigation bar.
-    ///
-    /// Reset to `false` when the chat is cleared, so the
-    /// suggestions reveal again and the next first send re-runs
-    /// the same animation.
-    var hasScrolledFirstUserMessage = false
-
     /// Set when the user taps the Clear toolbar button. Bridges
     /// the toolbar (in `body`) and the scroll handlers in
     /// `messageList(session:)` — the toolbar can't reach

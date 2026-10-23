@@ -893,6 +893,10 @@ public enum Strings {
             .init("a11y_chat_scroll_to_bottom", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        public static var chatScrollToBottomHint: LocalizedStringResource {
+            .init("a11y_chat_scroll_to_bottom_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var chatSuggestionHint: LocalizedStringResource {
             .init("a11y_chat_suggestion_hint", bundle: .atURL(Bundle.module.bundleURL))
         }

@@ -385,17 +385,23 @@ public struct BonjourChatView: View {
                     )
                     // An overlay so showing the button doesn't grow
                     // the inset, which would shift the scroll
-                    // geometry that decides whether it shows.
-                    // Bottom-aligned 8 pt above the inset's top edge.
-                    .overlay(alignment: .top) {
+                    // geometry that decides whether it shows. It
+                    // sits 8 pt above the inset, centered over the
+                    // Send capsule, whatever its scaled size.
+                    .overlay(alignment: .topTrailing) {
                         if showsScrollToBottomButton(session) {
-                            scrollToBottomButton
-                                .alignmentGuide(.top) { $0[.bottom] + .space8 }
-                                .transition(
-                                    reduceMotion
-                                        ? .opacity
-                                        : .opacity.combined(with: .scale(scale: 0.8))
-                                )
+                            ChatScrollToBottomButton {
+                                viewModel.scrollToBottomRequestCount &+= 1
+                            }
+                            .alignmentGuide(.top) { $0[.bottom] + .space8 }
+                            .alignmentGuide(.trailing) {
+                                $0[HorizontalAlignment.center] + Self.sendButtonCenterTrailingInset
+                            }
+                            .transition(
+                                reduceMotion
+                                    ? .opacity
+                                    : .opacity.combined(with: .scale(scale: 0.8))
+                            )
                         }
                     }
                     .animation(
