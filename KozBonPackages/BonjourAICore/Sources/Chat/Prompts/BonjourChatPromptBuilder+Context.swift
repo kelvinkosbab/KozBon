@@ -138,24 +138,24 @@ extension BonjourChatPromptBuilder {
         return parts.joined(separator: "\n")
     }
 
-    /// Query-triggered block that lists every release in KozBon's
-    /// current major version (4.x while this is written) when the
-    /// user's message asks about what's new / changelog / recent
-    /// updates, so "what's new?" is answered across the whole major
-    /// line rather than only the latest release. Returns an empty
-    /// string otherwise so the block adds zero token cost to the
-    /// common case (questions about the user's network). Called from
-    /// ``userTurn`` on every user message and NOT tracked by
-    /// `lastContextSignature`, so its per-turn presence doesn't force
-    /// re-injection of the stable context.
+    /// Query-triggered block that lists every release in KozBon's two
+    /// newest major versions (4.x and 3.x while this is written) when
+    /// the user's message asks about what's new / changelog / recent
+    /// updates, along with how to shape the answer for the user's
+    /// detail level. Returns an empty string otherwise so the block
+    /// adds zero token cost to the common case (questions about the
+    /// user's network). Called from ``userTurn`` on every user message
+    /// and NOT tracked by `lastContextSignature`, so its per-turn
+    /// presence doesn't force re-injection of the stable context.
     ///
-    /// Only the newest release carries its full `highlights`; older
-    /// ones in the line contribute their one- or two-paragraph
-    /// `summary`. Every 4.x highlight together runs past 3,000
-    /// tokens, which the on-device model's ~4K window can't hold
-    /// beside the system prompt and live network context. The
-    /// current major is read from the newest entry, so the block
-    /// moves on to 5.x by itself when a 5.0 note is prepended.
+    /// `.basic` asks for two short paragraphs, one per major version,
+    /// and sends only each release's `summary`. `.technical` asks for
+    /// a detailed answer and adds the full `highlights` of the newest
+    /// ``technicalHighlightCount`` releases. Every 4.x and 3.x
+    /// highlight together runs past 2,500 tokens, more than the
+    /// on-device model's ~4K window holds beside the system prompt and
+    /// live network context. The majors are read from the table, so
+    /// the block moves on to 5.x and 4.x when a 5.0 note is prepended.
     ///
     /// Reads the static ``ReleaseNotes/all`` table directly rather
     /// than threading it through ``ChatContext`` — release notes
@@ -163,41 +163,95 @@ extension BonjourChatPromptBuilder {
     /// state the context carries. `offeringCloudProviders` drops releases
     /// whose notes name a cloud AI provider, matching the What's New
     /// page.
-    public static func whatsNewBlock(query: String, offeringCloudProviders: Bool = true) -> String {
+    public static func whatsNewBlock(
+        query: String,
+        offeringCloudProviders: Bool = true,
+        expertiseLevel: BonjourServicePromptBuilder.ExpertiseLevel = .basic
+    ) -> String {
         guard ChatWhatsNewIntentDetector.wantsWhatsNew(message: query) else {
             return ""
         }
-        let releases = currentMajorReleases(offeringCloudProviders: offeringCloudProviders)
-        guard let latest = releases.first, let major = majorVersion(of: latest.version) else {
+        let releases = recentMajorReleases(offeringCloudProviders: offeringCloudProviders)
+        let majors = distinctMajors(of: releases)
+        guard let latest = releases.first, !majors.isEmpty else {
             return ""
         }
+        let majorList = majors.map { "\($0).x" }.joined(separator: " and ")
         var parts: [String] = [
-            "KOZBON \(major).x RELEASES (newest first — when asked what's new, " +
-            "summarize the changes across all of \(major).x, leading with the newest; " +
-            "answer ONLY from this list; never invent versions or changes):",
-            "Version \(latest.version) (latest):"
+            "KOZBON \(majorList) RELEASES (newest first; answer ONLY from this " +
+            "list; never invent versions or changes).",
+            whatsNewAnswerDirective(majors: majors, expertiseLevel: expertiseLevel)
         ]
-        for highlight in latest.highlights {
-            parts.append("- \(highlight)")
-        }
-        for release in releases.dropFirst() {
-            parts.append("Version \(release.version): \(paragraphs(of: release.summary))")
+        let detailed = expertiseLevel == .technical
+            ? Set(releases.prefix(technicalHighlightCount).map(\.version))
+            : []
+        for release in releases {
+            let label = release.version == latest.version
+                ? "Version \(release.version) (latest)"
+                : "Version \(release.version)"
+            if detailed.contains(release.version) {
+                parts.append("\(label):")
+                parts.append(contentsOf: release.highlights.map { "- \($0)" })
+            } else {
+                parts.append("\(label): \(paragraphs(of: release.summary))")
+            }
         }
         return parts.joined(separator: "\n")
     }
 
-    /// The displayed releases that share the newest release's major
-    /// version, newest first.
-    static func currentMajorReleases(offeringCloudProviders: Bool) -> [ReleaseNote] {
-        let displayed = ReleaseNotes.displayed(offeringCloudProviders: offeringCloudProviders)
-        guard let major = displayed.first.flatMap({ majorVersion(of: $0.version) }) else {
-            return []
+    /// Releases whose full highlights the `.technical` block includes,
+    /// newest first. Three keeps the block near 1,600 tokens.
+    static let technicalHighlightCount = 3
+
+    /// How the assistant should shape a general "what's new" answer at
+    /// the user's detail level. Overrides the usual response-length
+    /// guidance, since a release recap has its own natural shape.
+    static func whatsNewAnswerDirective(
+        majors: [Int],
+        expertiseLevel: BonjourServicePromptBuilder.ExpertiseLevel
+    ) -> String {
+        let ordered = majors.map { "\($0).x" }.joined(separator: ", then ")
+        let specific = "If the user asks about one specific version or feature, " +
+            "answer just that from the list instead."
+        switch expertiseLevel {
+        case .basic:
+            return "ANSWER SHAPE: For a general \"what's new\" question, write exactly " +
+                "\(majors.count == 1 ? "one short paragraph" : "two short paragraphs"): one per " +
+                "major version (\(ordered)), each a few plain sentences on the biggest " +
+                "changes. No headings, no bullet lists, no version-by-version rundown. " +
+                "This overrides the usual length guidance. " + specific
+        case .technical:
+            return "ANSWER SHAPE: For a general \"what's new\" question, give a detailed, " +
+                "technical answer with one section per major version (\(ordered)). Name " +
+                "the versions and the concrete changes in each: new features, AI " +
+                "backends and models, platform and SDK requirements, and architecture " +
+                "or behavior changes where the notes give them. Use the bulleted " +
+                "highlights for the newest releases and the summaries for the rest. " +
+                specific
         }
-        return displayed.filter { majorVersion(of: $0.version) == major }
+    }
+
+    /// The displayed releases in the two newest major versions,
+    /// newest first.
+    static func recentMajorReleases(offeringCloudProviders: Bool) -> [ReleaseNote] {
+        let displayed = ReleaseNotes.displayed(offeringCloudProviders: offeringCloudProviders)
+        let majors = Set(distinctMajors(of: displayed).prefix(2))
+        return displayed.filter { release in
+            majorVersion(of: release.version).map { majors.contains($0) } ?? false
+        }
     }
 
     fileprivate static func majorVersion(of version: String) -> Int? {
         version.split(separator: ".").first.flatMap { Int($0) }
+    }
+
+    /// The major versions present in `releases`, in table order.
+    fileprivate static func distinctMajors(of releases: [ReleaseNote]) -> [Int] {
+        var seen: [Int] = []
+        for major in releases.compactMap({ majorVersion(of: $0.version) }) where !seen.contains(major) {
+            seen.append(major)
+        }
+        return seen
     }
 
     /// Joins a summary's blank-line-separated paragraphs onto one line

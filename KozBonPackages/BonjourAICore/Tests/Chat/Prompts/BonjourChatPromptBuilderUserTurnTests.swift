@@ -200,7 +200,7 @@ struct BonjourChatPromptBuilderUserTurnTests {
             contextChanged: false
         )
         #expect(turn.contains("<whats_new>"))
-        #expect(turn.contains("KOZBON 4.x RELEASES"))
+        #expect(turn.contains("KOZBON 4.x and 3.x RELEASES"))
         // The real most-recent version must appear so the model
         // answers from data, not memory.
         if let latest = ReleaseNotes.all.first {
