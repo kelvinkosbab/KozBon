@@ -16,6 +16,7 @@ import BonjourAICore
 import BonjourAIAnthropic
 import BonjourAppIntents
 import BonjourStorage
+import InternetConnectivity
 
 // MARK: - AppCoreScene
 
@@ -161,6 +162,7 @@ public struct AppCoreScene: Scene {
             .environment(\.chatSession, viewModel.chatSession)
             .environment(\.preferencesStore, viewModel.preferencesStore)
             .environment(\.aiBackendAvailability, viewModel.aiBackendAvailability)
+            .environment(\.internetConnectivity, viewModel.internetConnectivity)
             // Animate the tab-bar tint + chat-tab icon swap
             // when the backend changes mid-session.
             .animation(
@@ -223,6 +225,7 @@ public struct AppCoreScene: Scene {
         Settings {
             SettingsView()
                 .environment(\.aiBackendAvailability, viewModel.aiBackendAvailability)
+                .environment(\.internetConnectivity, viewModel.internetConnectivity)
         }
         #endif
 

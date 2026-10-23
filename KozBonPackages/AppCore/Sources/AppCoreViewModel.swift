@@ -14,6 +14,7 @@ import BonjourAICore
 import BonjourAppIntents
 import BonjourModels
 import BonjourStorage
+import InternetConnectivity
 
 // MARK: - AppCoreViewModel
 
@@ -34,6 +35,11 @@ public final class AppCoreViewModel {
     /// instance the routing factories consult, so a storefront
     /// change reaches routing and Settings together.
     public let aiBackendAvailability: AIBackendAvailability
+
+    /// Whether the device can reach the internet. Started at init,
+    /// not from the scene, because Siri can launch the app in the
+    /// background and still needs to know before calling a cloud model.
+    public let internetConnectivity: any InternetConnectivityMonitorProtocol
 
     /// AI explainer for long-press Insights. Routed by the
     /// cloud-aware factory; mutable so ``refreshAIBackend()`` can
@@ -71,13 +77,16 @@ public final class AppCoreViewModel {
     /// - Parameter aiBackendAvailability: Same sharing rule as
     ///   `preferencesStore`, against the factories' `isBackendOffered`.
     ///   `nil` offers every backend.
+    /// - Parameter internetConnectivity: `nil` creates a live
+    ///   `NWPathMonitor`-backed monitor; tests pass a mock.
     public init(
         dependencies: DependencyContainer,
         explainerFactory: any BonjourServiceExplainerFactoryProtocol,
         chatSessionFactory: any BonjourChatSessionFactoryProtocol,
         credentialsStore: (any AICloudCredentialsStore & Sendable)? = nil,
         preferencesStore: PreferencesStore? = nil,
-        aiBackendAvailability: AIBackendAvailability? = nil
+        aiBackendAvailability: AIBackendAvailability? = nil,
+        internetConnectivity: (any InternetConnectivityMonitorProtocol)? = nil
     ) {
         self.dependencies = dependencies
         self.chatSessionFactory = chatSessionFactory
@@ -85,11 +94,13 @@ public final class AppCoreViewModel {
         self.credentialsStore = credentialsStore
         self.preferencesStore = preferencesStore ?? PreferencesStore()
         self.aiBackendAvailability = aiBackendAvailability ?? AIBackendAvailability()
+        self.internetConnectivity = internetConnectivity ?? InternetConnectivityMonitor()
         self.servicesViewModel = BonjourServicesViewModel(dependencies: dependencies)
         self.explainer = explainerFactory.makeForCurrentEnvironment()
         self.chatSession = chatSessionFactory.makeForCurrentEnvironment(
             publishManager: dependencies.bonjourPublishManager
         )
+        self.internetConnectivity.start()
     }
 
     // MARK: - Tab Visibility
@@ -172,6 +183,9 @@ public final class AppCoreViewModel {
         bridge.publishManager = dependencies.bonjourPublishManager
         bridge.makeExplainer = { [weak self] in
             self?.explainerFactory.makeForCurrentEnvironment()
+        }
+        bridge.isInternetConnected = { [weak self] in
+            self?.internetConnectivity.isConnected ?? true
         }
         bridge.didPublish = { [weak self] service in
             self?.servicesViewModel.recordPublishedService(service)

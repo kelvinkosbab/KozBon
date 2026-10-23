@@ -51,6 +51,12 @@ public final class AppIntentsBridge {
     @ObservationIgnored
     public var makeExplainer: (@MainActor () -> (any BonjourServiceExplainerProtocol)?)?
 
+    /// Whether the device can reach the internet right now. `nil`
+    /// (nothing connected yet) is treated as online so an action
+    /// still tries rather than refusing outright.
+    @ObservationIgnored
+    public var isInternetConnected: (@MainActor () -> Bool)?
+
     /// Called after Siri starts a broadcast.
     @ObservationIgnored
     public var didPublish: (@MainActor (BonjourService) -> Void)?

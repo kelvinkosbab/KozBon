@@ -1876,6 +1876,38 @@ public enum Strings {
         }
     }
 
+    // MARK: - Connectivity
+
+    /// Copy for features that need the internet — the cloud AI
+    /// backends — when the device is offline. Bonjour scanning and
+    /// Apple Intelligence run without it and never show these.
+    public enum Connectivity {
+
+        public static var offlineTitle: LocalizedStringResource {
+            .init("connectivity_offline_title", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Explains why a cloud AI surface is paused while offline.
+        public static var offlineCloudAI: LocalizedStringResource {
+            .init("connectivity_offline_cloud_ai", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Shown when a cloud AI request fails for lack of a connection.
+        public static var requestFailed: LocalizedStringResource {
+            .init("connectivity_request_failed", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// Under the selected cloud backend's controls in Settings.
+        public static var settingsOfflineNote: LocalizedStringResource {
+            .init("connectivity_settings_offline_note", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        /// VoiceOver hint for the chat Send button while offline.
+        public static var sendOfflineHint: LocalizedStringResource {
+            .init("connectivity_send_offline_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+    }
+
     // MARK: - Siri
     //
     // What Siri says after the Scan and List actions run. Returned as
@@ -2046,6 +2078,16 @@ public enum Strings {
                 "siri_explanation_unavailable",
                 bundle: Bundle.module,
                 value: "Insights aren't available right now. Check the AI settings in KozBon.",
+                comment: ""
+            )
+        }
+
+        /// Spoken when Insights needs a cloud model and the device is offline.
+        public static var explanationOffline: String {
+            NSLocalizedString(
+                "siri_explanation_offline",
+                bundle: Bundle.module,
+                value: "Insights need an internet connection with the AI model selected in KozBon. Try again when you're back online.",
                 comment: ""
             )
         }

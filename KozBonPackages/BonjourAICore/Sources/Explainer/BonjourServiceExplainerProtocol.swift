@@ -7,6 +7,7 @@
 
 import Foundation
 import BonjourModels
+import InternetConnectivity
 
 // MARK: - BonjourServiceExplainerProtocol
 
@@ -28,6 +29,11 @@ public protocol BonjourServiceExplainerProtocol: AnyObject, Observable {
 
     /// Whether the AI model is available on this device.
     var isAvailable: Bool { get }
+
+    /// What the explainer needs from the network. Cloud explainers
+    /// return `.internet`; on-device, mock, and simulator explainers
+    /// keep the `.none` default.
+    var connectivityRequirement: ConnectivityRequirement { get }
 
     /// The desired level of technical detail in the explanation.
     var expertiseLevel: BonjourServicePromptBuilder.ExpertiseLevel { get set }
@@ -60,4 +66,12 @@ public protocol BonjourServiceExplainerProtocol: AnyObject, Observable {
     ///   - version: The marketing version the highlight belongs to
     ///     (e.g. "4.6"), to ground the model's answer.
     func explain(releaseHighlight: String, version: String) async
+}
+
+// MARK: - Default Implementations
+
+@MainActor
+public extension BonjourServiceExplainerProtocol {
+
+    var connectivityRequirement: ConnectivityRequirement { .none }
 }

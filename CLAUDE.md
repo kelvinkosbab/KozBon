@@ -43,7 +43,7 @@ The `KozBon` scheme has no test action configured; all tests run through SPM.
 
 `KozBon.xcworkspace` contains:
 - `KozBon.xcodeproj` — the app target (2 Swift files)
-- `KozBonPackages/` — local SPM package (15 modules)
+- `KozBonPackages/` — local SPM package (16 modules)
 
 ### App Target (KozBon/)
 
@@ -63,6 +63,7 @@ Each module follows the `{name}/Sources` and `{name}/Tests` layout:
 |--------|---------|-----------|
 | **AppCore** | Root scene, its view model, macOS menu commands, top-level tab destinations | `AppCoreScene`, `AppCoreViewModel`, `TopLevelDestination` |
 | **LocalNetworkMonitor** | `NWPathMonitor`-backed Wi-Fi / Ethernet path check so Discover can explain why a scan can't reach anything | `LocalNetworkMonitor`, its `@MainActor` protocol + mock |
+| **InternetConnectivity** | `NWPathMonitor`-backed internet reachability, the `ConnectivityRequirement` features declare, and `URLError` offline classification. Gates the cloud AI backends; Bonjour and Apple Intelligence never wait on it | `InternetConnectivityMonitor`, its `@MainActor @Observable` protocol + mock, `ConnectivityRequirement`, `ConnectivityFailure`, `EnvironmentValues.internetConnectivity` |
 | **BonjourCore** | Value types, constants, utilities | `Constants`, `TransportLayer`, `InternetAddress`, `Logger`, `Clipboard` |
 | **BonjourStorage** | Persistence — SwiftData preferences + Core Data custom-service-type store | `PreferencesStore`, `UserPreferences`, `CustomServiceType`, `MyCoreDataStack`, `MyDataManagerObject` |
 | **BonjourLocalization** | Localized strings (8 languages, including RTL: ar, he) | `Strings` enum, `Localizable.xcstrings` |
@@ -81,20 +82,21 @@ Each module follows the `{name}/Sources` and `{name}/Tests` layout:
 
 ```
 App → AppCore, BonjourAppIntents
-AppCore → BonjourUI, BonjourAppIntents, BonjourAI, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourAIOpenAI, BonjourScanning, BonjourModels, BonjourStorage, BonjourLocalization, BonjourCore, Core, CoreUI
-BonjourAppIntents → BonjourAI, BonjourModels, BonjourScanning, BonjourLocalization, LocalNetworkMonitor, BonjourCore
-BonjourUI → BonjourModels, BonjourScanning, BonjourLocalization, BonjourAI, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourAIOpenAI, BonjourStorage, BonjourCore, Core, CoreUI
+AppCore → BonjourUI, BonjourAppIntents, BonjourAI, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourAIOpenAI, BonjourScanning, BonjourModels, BonjourStorage, BonjourLocalization, BonjourCore, InternetConnectivity, Core, CoreUI
+BonjourAppIntents → BonjourAI, BonjourModels, BonjourScanning, BonjourLocalization, LocalNetworkMonitor, InternetConnectivity, BonjourCore
+BonjourUI → BonjourModels, BonjourScanning, BonjourLocalization, BonjourAI, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourAIOpenAI, BonjourStorage, BonjourCore, InternetConnectivity, Core, CoreUI
 BonjourAI → BonjourAICore, BonjourAIApple, BonjourAIAnthropic, BonjourAIGemini, BonjourAIOpenAI, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
 BonjourAIApple → BonjourAICore, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
-BonjourAIAnthropic → BonjourAICore, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
-BonjourAIGemini → BonjourAICore, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
-BonjourAIOpenAI → BonjourAICore, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
-BonjourAICore → BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
+BonjourAIAnthropic → BonjourAICore, InternetConnectivity, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
+BonjourAIGemini → BonjourAICore, InternetConnectivity, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
+BonjourAIOpenAI → BonjourAICore, InternetConnectivity, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
+BonjourAICore → InternetConnectivity, BonjourCore, BonjourModels, BonjourLocalization, BonjourScanning, BonjourStorage
 BonjourScanning → BonjourCore, BonjourModels, LocalNetworkMonitor
 BonjourModels → BonjourCore, BonjourStorage, BonjourLocalization
 BonjourStorage → BonjourCore
 BonjourLocalization → (Foundation only)
 LocalNetworkMonitor → Core
+InternetConnectivity → Core
 BonjourCore → Core (BasicSwiftUtilities)
 ```
 
@@ -172,6 +174,26 @@ them through `PreferencesStore.aiCloudModelIdentifier(for:)` in `BonjourAICore`
 raw `String`s, and an identifier the binary doesn't recognize is **only**
 discarded when a live list proves it retired — otherwise a model newer than the
 build would be silently replaced by the default.
+
+### Offline Handling
+
+Features declare a `ConnectivityRequirement`: `.internet` for every cloud
+chat session and explainer (and `AIBackend.connectivityRequirement` for cloud
+backends), `.none` for Apple Intelligence, mocks, and simulator stubs. Gate on
+the *session's* requirement, not the selected backend, because the routing
+factories can fall back across backends. `AppCoreViewModel` owns the live
+`InternetConnectivityMonitor`, starts it at init (Siri may run with no scene),
+injects it as `\.internetConnectivity`, and hands `AppIntentsBridge` an
+`isInternetConnected` closure.
+
+The monitor is `@Observable`, so the UI follows connectivity live rather than
+asking the user to retry: the chat shows `ChatOfflineBanner` and disables Send,
+the Insights sheet runs its `.task(id:)` once the connection returns, and
+Settings defers the model-catalog fetch the same way. Requests that still fail
+for lack of a connection show `AICloudError.displayMessage(for:)`, which
+localizes `.networkUnavailable` instead of surfacing its English log text.
+`LocalNetworkMonitor` answers a different question (is the local link up for
+Bonjour?) and stays separate.
 
 ### Siri Actions and App State
 

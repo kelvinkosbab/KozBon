@@ -313,7 +313,7 @@ public final class AnthropicBonjourChatSession: BonjourChatSessionProtocol {
                 description: \(error.localizedDescription)
                 """
             )
-            self.error = error.localizedDescription
+            self.error = AICloudError.displayMessage(for: error)
             self.errorAction = Self.makeErrorAction(for: error)
             rollBackTurn(assistantId: assistantId)
         }

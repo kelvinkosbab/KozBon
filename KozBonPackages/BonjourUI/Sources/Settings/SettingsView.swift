@@ -16,6 +16,7 @@ import BonjourCore
 import BonjourLocalization
 import BonjourModels
 import BonjourStorage
+import InternetConnectivity
 
 // MARK: - SettingsView
 
@@ -33,6 +34,7 @@ public struct SettingsView: View {
     @Environment(\.preferencesStore) var preferencesStore
     @Environment(\.aiBackendAvailability) var aiBackendAvailability
     @Environment(\.aiCloudCredentialsStore) var credentialsStore
+    @Environment(\.internetConnectivity) var internetConnectivity
     // `internal` so the `+AIBackend` companion file can read it.
     @Environment(\.accessibilityReduceMotion) var reduceMotion
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
@@ -179,6 +181,7 @@ public struct SettingsView: View {
             .animation(reduceMotion ? nil : .default, value: hasGitHubKey)
             .animation(reduceMotion ? nil : .default, value: hasGeminiKey)
             .animation(reduceMotion ? nil : .default, value: hasOpenAIKey)
+            .animation(reduceMotion ? nil : .default, value: internetConnectivity.isConnected)
             // Refresh the cached custom-types flag on first
             // appearance so the Reset to Defaults section's
             // visibility is correct the moment the form lands.
@@ -190,8 +193,11 @@ public struct SettingsView: View {
             // reflect the current lineups rather than whatever
             // shipped in this binary. No-ops when the cached list
             // is still fresh or no key is configured, so reopening
-            // Settings costs nothing.
-            .task {
+            // Settings costs nothing. Keyed on connectivity: offline,
+            // the pickers keep their cached or built-in lists, and
+            // the fetch runs once the connection returns.
+            .task(id: internetConnectivity.isConnected) {
+                guard internetConnectivity.isConnected else { return }
                 await anthropicModelCatalog.refreshIfNeeded(
                     apiKey: try? credentialsStore.apiKey(for: .anthropic)
                 )

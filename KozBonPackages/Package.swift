@@ -73,7 +73,8 @@ let package = Package(
         .library(name: "BonjourUI", targets: ["BonjourUI"]),
         .library(name: "BonjourAppIntents", targets: ["BonjourAppIntents"]),
         .library(name: "AppCore", targets: ["AppCore"]),
-        .library(name: "LocalNetworkMonitor", targets: ["LocalNetworkMonitor"])
+        .library(name: "LocalNetworkMonitor", targets: ["LocalNetworkMonitor"]),
+        .library(name: "InternetConnectivity", targets: ["InternetConnectivity"])
     ],
     dependencies: [
         .package(url: "https://github.com/kelvinkosbab/Core.git", from: "1.0.1")
@@ -100,12 +101,19 @@ let package = Package(
         dependencies: [.product(name: "Core", package: "Core")]
     )
     + makeTargets(
+        name: "InternetConnectivity",
+        // Same low-level shape as LocalNetworkMonitor: Core for the
+        // `Logger` wrapper and nothing from the Bonjour domain.
+        dependencies: [.product(name: "Core", package: "Core")]
+    )
+    + makeTargets(
         name: "BonjourScanning",
         dependencies: ["BonjourCore", "BonjourModels", "LocalNetworkMonitor"]
     )
     + makeTargets(
         name: "BonjourAICore",
         dependencies: [
+            "InternetConnectivity",
             "BonjourCore",
             "BonjourModels",
             "BonjourLocalization",
@@ -128,6 +136,7 @@ let package = Package(
         name: "BonjourAIAnthropic",
         dependencies: [
             "BonjourAICore",
+            "InternetConnectivity",
             "BonjourCore",
             "BonjourModels",
             "BonjourLocalization",
@@ -146,6 +155,7 @@ let package = Package(
         name: "BonjourAIGemini",
         dependencies: [
             "BonjourAICore",
+            "InternetConnectivity",
             "BonjourCore",
             "BonjourModels",
             "BonjourLocalization",
@@ -162,6 +172,7 @@ let package = Package(
         name: "BonjourAIOpenAI",
         dependencies: [
             "BonjourAICore",
+            "InternetConnectivity",
             "BonjourCore",
             "BonjourModels",
             "BonjourLocalization",
@@ -211,6 +222,7 @@ let package = Package(
             "BonjourAIGemini",
             "BonjourAIOpenAI",
             "BonjourStorage",
+            "InternetConnectivity",
             .product(name: "CoreUI", package: "Core")
         ]
         // Brand marks moved to the per-provider modules
@@ -226,7 +238,8 @@ let package = Package(
             "BonjourModels",
             "BonjourScanning",
             "BonjourLocalization",
-            "LocalNetworkMonitor"
+            "LocalNetworkMonitor",
+            "InternetConnectivity"
         ]
     )
     + makeTargets(
@@ -244,6 +257,7 @@ let package = Package(
             "BonjourStorage",
             "BonjourUI",
             "BonjourAppIntents",
+            "InternetConnectivity",
             .product(name: "CoreUI", package: "Core")
         ]
     )

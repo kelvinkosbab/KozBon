@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import InternetConnectivity
 
 // MARK: - BonjourChatSessionProtocol
 
@@ -52,6 +53,11 @@ public protocol BonjourChatSessionProtocol: AnyObject, Observable {
 
     /// The desired verbosity of assistant responses.
     var responseLength: BonjourServicePromptBuilder.ResponseLength { get set }
+
+    /// What the session needs from the network. Cloud sessions return
+    /// `.internet`; on-device, mock, and simulator sessions keep the
+    /// `.none` default.
+    var connectivityRequirement: ConnectivityRequirement { get }
 
     /// Builds the underlying model session ahead of the user's first
     /// send so suggestion-tap latency doesn't include the cost of
@@ -160,6 +166,9 @@ public extension BonjourChatSessionProtocol {
     /// override this. Apple Foundation Models, simulator, and
     /// mock sessions inherit the nil default.
     var errorAction: ChatErrorAction? { nil }
+
+    /// On-device by default; cloud sessions override with `.internet`.
+    var connectivityRequirement: ConnectivityRequirement { .none }
 
     /// Default implementation clears just ``error`` — sufficient
     /// for sessions whose ``errorAction`` is always `nil`.

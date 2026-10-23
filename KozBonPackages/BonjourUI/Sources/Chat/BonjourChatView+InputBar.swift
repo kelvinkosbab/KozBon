@@ -80,7 +80,8 @@ extension BonjourChatView {
                         using: session,
                         preferencesStore: preferencesStore,
                         reduceMotion: reduceMotion,
-                        areCloudProvidersOffered: aiBackendAvailability.offersCloudProviders
+                        areCloudProvidersOffered: aiBackendAvailability.offersCloudProviders,
+                        isOffline: isOffline(session)
                     )
                 }
             }
@@ -112,7 +113,8 @@ extension BonjourChatView {
                         using: session,
                         preferencesStore: preferencesStore,
                         reduceMotion: reduceMotion,
-                        areCloudProvidersOffered: aiBackendAvailability.offersCloudProviders
+                        areCloudProvidersOffered: aiBackendAvailability.offersCloudProviders,
+                        isOffline: isOffline(session)
                     )
                 }
             } label: {
@@ -126,19 +128,21 @@ extension BonjourChatView {
                     // just the tiny intrinsic-size arrow glyph at
                     // its center.
                     .contentShape(Capsule())
-                    .opacity(viewModel.sendDisabled(session: session) ? 0.4 : 1.0)
+                    .opacity(viewModel.sendDisabled(session: session, isOffline: isOffline(session)) ? 0.4 : 1.0)
                     .animation(
                         reduceMotion ? nil : .easeInOut(duration: 0.15),
-                        value: viewModel.sendDisabled(session: session)
+                        value: viewModel.sendDisabled(session: session, isOffline: isOffline(session))
                     )
             }
             .buttonStyle(.plain)
-            .disabled(viewModel.sendDisabled(session: session))
+            .disabled(viewModel.sendDisabled(session: session, isOffline: isOffline(session)))
             .accessibilityLabel(Strings.Chat.send)
             // Three-way hint so VoiceOver can explain *why* the
             // button is in its current state: busy / empty input
             // / enabled.
-            .accessibilityHint(viewModel.sendButtonAccessibilityHint(session: session))
+            .accessibilityHint(
+                viewModel.sendButtonAccessibilityHint(session: session, isOffline: isOffline(session))
+            )
             .accessibilityIdentifier("chat_send_button")
             // Cap Dynamic Type on the Send capsule. The 44 × 32 pt
             // frame is fixed, so at `.accessibility5` the SF

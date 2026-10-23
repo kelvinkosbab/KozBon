@@ -10,6 +10,7 @@ import BonjourCore
 import BonjourModels
 import BonjourLocalization
 import BonjourStorage
+import InternetConnectivity
 
 // MARK: - ServiceExplanationSheet
 
@@ -76,6 +77,7 @@ public struct ServiceExplanationSheet: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.serviceExplainer) private var injectedExplainer
     @Environment(\.preferencesStore) private var preferencesStore
+    @Environment(\.internetConnectivity) private var internetConnectivity
 
     private let subject: Subject
     // Fallback when `@Environment(\.serviceExplainer)` is not
@@ -90,9 +92,19 @@ public struct ServiceExplanationSheet: View {
     /// `SentenceHapticTracker` for the detection rules.
     @State private var sentenceHapticTracker = SentenceHapticTracker()
 
+    /// Set once an explanation streams to completion, so regaining a
+    /// connection doesn't regenerate an answer the user already has.
+    @State private var didFinishExplaining = false
+
     /// The active explainer — uses the injected one if available, otherwise the local instance.
     private var explainer: any BonjourServiceExplainerProtocol {
         injectedExplainer ?? localExplainer
+    }
+
+    /// A cloud explainer can't start (or restart) without internet;
+    /// the on-device one never waits on this.
+    private var isOffline: Bool {
+        !internetConnectivity.canSatisfy(explainer.connectivityRequirement)
     }
 
     public init(service: BonjourService, isPublished: Bool = false) {
@@ -152,7 +164,9 @@ public struct ServiceExplanationSheet: View {
                     //     ends so the user can see more is coming.
                     //   - Per-sentence haptic tap via `SentenceHapticTracker`
                     //     matches `BonjourChatView` tactile rhythm.
-                    if let error = explainer.error {
+                    if isOffline && !didFinishExplaining {
+                        offlineNotice
+                    } else if let error = explainer.error {
                         Text(error)
                             .foregroundStyle(.red)
                             .accessibilityLabel(Strings.Accessibility.error(error))
@@ -215,7 +229,10 @@ public struct ServiceExplanationSheet: View {
 
             }
         }
-        .task {
+        // Keyed on connectivity so a sheet opened offline starts
+        // generating as soon as the connection returns.
+        .task(id: isOffline) {
+            guard !isOffline, !didFinishExplaining else { return }
             // Both preferences now flow from the single Detail level
             // setting in Preferences. ExpertiseLevel still controls
             // tone/vocabulary directly; ResponseLength is derived from
@@ -228,7 +245,32 @@ public struct ServiceExplanationSheet: View {
             explainer.expertiseLevel = level
             explainer.responseLength = level.responseLength
             await explainSubject()
+            if !Task.isCancelled, explainer.error == nil {
+                didFinishExplaining = true
+            }
         }
+    }
+
+    // MARK: - Offline
+
+    /// Replaces the stream while a cloud explainer has no connection.
+    private var offlineNotice: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Label {
+                Text(Strings.Connectivity.offlineTitle)
+                    .font(.headline)
+            } icon: {
+                Image(systemName: Iconography.wifiSlash)
+                    .foregroundStyle(.secondary)
+                    .accessibilityHidden(true)
+            }
+            Text(Strings.Connectivity.offlineCloudAI)
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityIdentifier("ai_explanation_offline")
     }
 
     // MARK: - Explain

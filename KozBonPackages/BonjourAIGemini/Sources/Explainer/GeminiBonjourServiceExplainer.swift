@@ -9,6 +9,7 @@ import Foundation
 import BonjourAICore
 import BonjourCore
 import BonjourModels
+import InternetConnectivity
 
 // MARK: - GeminiBonjourServiceExplainer
 
@@ -42,6 +43,9 @@ public final class GeminiBonjourServiceExplainer: BonjourServiceExplainerProtoco
     public var explanation: String = ""
     public private(set) var isGenerating: Bool = false
     public var error: String?
+
+    /// Every explanation calls the provider's API.
+    public var connectivityRequirement: ConnectivityRequirement { .internet }
 
     // MARK: - Diagnostics
 
@@ -178,7 +182,7 @@ public final class GeminiBonjourServiceExplainer: BonjourServiceExplainerProtoco
         } catch {
             let description = error.localizedDescription
             logger.error("Gemini explainer stream failed: \(description)")
-            self.error = description
+            self.error = AICloudError.displayMessage(for: error)
         }
     }
 
