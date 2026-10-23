@@ -94,6 +94,23 @@ public enum ReleaseNotes {
     /// Newest-first releases since 3.0.
     public static let all: [ReleaseNote] = [
         ReleaseNote(
+            version: "4.10.0",
+            // swiftlint:disable:next line_length
+            summary: "When you're offline, the cloud AI assistants pause and say so, then pick up again as soon as you're back online. Apple Intelligence and network scanning keep working without the internet.\n\nChat now scrolls each message you send into view and hides the keyboard, and its What's new suggestion covers every 4.x release. KozBon is now open source under the MIT License, with a link to its GitHub repository in Settings.",
+            highlights: [
+                // swiftlint:disable:next line_length
+                "When the device is offline, the cloud AI assistants pause in Chat, Insights, and Settings and say there's no internet connection, then resume on their own once it's back. Apple Intelligence and Bonjour scanning are never blocked.",
+                // swiftlint:disable:next line_length
+                "Cloud AI models now get the network context they need on every turn, including after a failed request, so answers about your devices stay accurate.",
+                // swiftlint:disable:next line_length
+                "Chat scrolls each sent message, typed or a tapped suggestion, into view just above the compose bar, keeps the scanning row and reply in view, and dismisses the keyboard after you send.",
+                // swiftlint:disable:next line_length
+                "Chat's \"What's new in this version?\" suggestion is now \"What's new\", and the answer covers every 4.x and 3.x release, one paragraph per major version with the Basic detail level.",
+                // swiftlint:disable:next line_length
+                "KozBon is open source under the MIT License. Settings, About has a KozBon on GitHub row that opens the repository."
+            ]
+        ),
+        ReleaseNote(
             version: "4.9.2",
             // swiftlint:disable:next line_length
             summary: "KozBon is ready for iPhone Duo. On its inner display, the sidebar and detail pane open side by side, and Settings, Chat, and detail pages keep a readable width.\n\nOn the China mainland App Store, the assistant now uses Apple Intelligence only.",
