@@ -16,6 +16,11 @@ import BonjourLocalization
 /// content. Shown only while the transcript is scrolled up.
 struct ChatScrollToBottomButton: View {
 
+    /// How far the button's center sits from the trailing edge of
+    /// the container it's aligned to, so it can line up over another
+    /// control whatever its own scaled size.
+    var centerTrailingInset: CGFloat = 0
+
     let action: () -> Void
 
     @Environment(\.colorSchemeContrast) private var colorSchemeContrast
@@ -51,6 +56,7 @@ struct ChatScrollToBottomButton: View {
         #if !os(macOS)
         .hoverEffect(.highlight)
         #endif
+        .padding(.trailing, max(0, centerTrailingInset - diameter / 2))
     }
 }
 

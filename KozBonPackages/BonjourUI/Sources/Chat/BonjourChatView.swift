@@ -390,13 +390,12 @@ public struct BonjourChatView: View {
                     // Send capsule, whatever its scaled size.
                     .overlay(alignment: .topTrailing) {
                         if showsScrollToBottomButton(session) {
-                            ChatScrollToBottomButton {
+                            ChatScrollToBottomButton(
+                                centerTrailingInset: Self.sendButtonCenterTrailingInset
+                            ) {
                                 viewModel.scrollToBottomRequestCount &+= 1
                             }
                             .alignmentGuide(.top) { $0[.bottom] + .space8 }
-                            .alignmentGuide(.trailing) {
-                                $0[HorizontalAlignment.center] + Self.sendButtonCenterTrailingInset
-                            }
                             .transition(
                                 reduceMotion
                                     ? .opacity
