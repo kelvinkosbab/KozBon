@@ -121,10 +121,7 @@ private struct OpenShortcutsLabel: View {
                     .accessibilityHidden(true)
             }
             Spacer()
-            Image.externalLink
-                .foregroundStyle(.secondary)
-                .imageScale(.medium)
-                .accessibilityHidden(true)
+            ExternalLinkIndicator()
         }
     }
 
