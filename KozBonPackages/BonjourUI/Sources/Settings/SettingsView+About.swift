@@ -41,11 +41,11 @@ extension SettingsView {
                     VStack(alignment: .leading, spacing: 2) {
                         // Same wording as the macOS Help menu item.
                         Text(Strings.Help.kozbonOnGitHub)
-                        // `Color.secondary`, not `.secondary`: inside a
-                        // `Link` the hierarchical style tints blue.
+                        // `Color.primary`, not `.primary`: inside a `Link`
+                        // the hierarchical style takes the link's tint.
                         Text(Strings.Settings.openSourceLicense)
                             .font(.caption)
-                            .foregroundStyle(Color.secondary)
+                            .foregroundStyle(Color.primary)
                     }
                     Spacer()
                     // Marks the row as leaving the app, where the
