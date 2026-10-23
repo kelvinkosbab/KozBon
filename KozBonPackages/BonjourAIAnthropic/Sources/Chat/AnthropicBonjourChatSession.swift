@@ -110,6 +110,9 @@ public final class AnthropicBonjourChatSession: BonjourChatSessionProtocol {
     /// for the static parts of the conversation.
     private var lastContextSignature: String?
 
+    /// Committed to ``lastContextSignature`` once the turn succeeds, so a failed turn's retry re-sends `<context>`.
+    private var pendingContextSignature: String?
+
     // MARK: - Init
 
     public init(
@@ -130,14 +133,9 @@ public final class AnthropicBonjourChatSession: BonjourChatSessionProtocol {
     /// indistinguishable scrollback behavior.
     static let maxInMemoryMessageCount = 500
 
-    /// Max tokens per Claude response. Sized generously — Claude's
-    /// 200K context window doesn't pressure the chat surface the
-    /// way Apple Foundation Models' ~4K does, so the runaway-
-    /// generation hardening (token cap, ENUMERATION RULES) that
-    /// matters on-device is less critical here. Still bound the
-    /// response so a model glitch can't run a single chat turn
-    /// for thousands of tokens.
-    static let maximumResponseTokensPerTurn = 1024
+    /// Max tokens per Claude response: a runaway bound, not a length
+    /// target, sized so a Technical-level answer isn't cut off.
+    static let maximumResponseTokensPerTurn = 4096
 
     // MARK: - Prewarm
 
@@ -270,16 +268,17 @@ public final class AnthropicBonjourChatSession: BonjourChatSessionProtocol {
         // rendered text reported a change once per wall-clock
         // second and re-sent the whole context on any turn more
         // than a second after the last one.
-        let currentSignature = BonjourChatPromptBuilder.contextSignature(context: context)
+        let currentSignature = BonjourChatPromptBuilder.contextSignature(context: context, budget: .cloud)
         let isFirstTurn = (lastContextSignature == nil)
         let contextChanged = lastContextSignature != currentSignature
         let turnText = BonjourChatPromptBuilder.userTurn(
             message: trimmed,
             context: context,
             isFirstTurn: isFirstTurn,
-            contextChanged: contextChanged
+            contextChanged: contextChanged,
+            budget: .cloud
         )
-        lastContextSignature = currentSignature
+        pendingContextSignature = currentSignature
         return turnText
     }
 
@@ -408,6 +407,7 @@ public final class AnthropicBonjourChatSession: BonjourChatSessionProtocol {
             rollBackTurn(assistantId: assistantId)
         } else {
             conversationHistory.append(AnthropicMessage(role: .assistant, content: text))
+            lastContextSignature = pendingContextSignature
         }
     }
 

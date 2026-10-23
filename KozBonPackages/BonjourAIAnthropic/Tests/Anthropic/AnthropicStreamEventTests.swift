@@ -79,6 +79,15 @@ struct AnthropicStreamEventTests {
         }
     }
 
+    // MARK: - Stop Reason
+
+    @Test("A message_delta carrying a stop reason decodes to `.stopReason`")
+    func decodesStopReason() throws {
+        let payload = #"{"type": "message_delta", "delta": {"stop_reason": "max_tokens"}, "usage": {"output_tokens": 4096}}"#
+        let event = try #require(try AnthropicStreamEvent.decode(payload: payload))
+        #expect(event == .stopReason("max_tokens"))
+    }
+
     // MARK: - Other
 
     @Test("Recognized but unused event types decode to `.other`")

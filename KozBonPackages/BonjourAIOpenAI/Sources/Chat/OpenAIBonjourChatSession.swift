@@ -82,6 +82,12 @@ public final class OpenAIBonjourChatSession: BonjourChatSessionProtocol {
     /// context triggers re-injection.
     private var lastContextSignature: String?
 
+    /// Signature of the context composed for the in-flight turn.
+    /// Committed to ``lastContextSignature`` only once the turn
+    /// succeeds: a failed turn is rolled out of the history along
+    /// with its `<context>` block, so the retry has to send it again.
+    private var pendingContextSignature: String?
+
     // MARK: - Init
 
     public init(
@@ -102,10 +108,9 @@ public final class OpenAIBonjourChatSession: BonjourChatSessionProtocol {
 
     /// Max output tokens per turn.
     ///
-    /// Higher than the Claude and Gemini sessions' 1,024 because on
-    /// OpenAI's reasoning models this budget also pays for hidden
-    /// reasoning — at 1,024 a thoughtful model can spend it all
-    /// before writing a word.
+    /// On OpenAI's reasoning models this budget also pays for
+    /// hidden reasoning — at 1,024 a thoughtful model can spend it
+    /// all before writing a word.
     static let maximumResponseTokensPerTurn = 4096
 
     // MARK: - Prewarm
@@ -202,16 +207,17 @@ public final class OpenAIBonjourChatSession: BonjourChatSessionProtocol {
         // Compared on the signature, not the rendered block: the
         // block carries a live "Ns ago" scan counter that changes
         // every second.
-        let currentSignature = BonjourChatPromptBuilder.contextSignature(context: context)
+        let currentSignature = BonjourChatPromptBuilder.contextSignature(context: context, budget: .cloud)
         let isFirstTurn = (lastContextSignature == nil)
         let contextChanged = lastContextSignature != currentSignature
         let turnText = BonjourChatPromptBuilder.userTurn(
             message: trimmed,
             context: context,
             isFirstTurn: isFirstTurn,
-            contextChanged: contextChanged
+            contextChanged: contextChanged,
+            budget: .cloud
         )
-        lastContextSignature = currentSignature
+        pendingContextSignature = currentSignature
         return turnText
     }
 
@@ -320,6 +326,7 @@ public final class OpenAIBonjourChatSession: BonjourChatSessionProtocol {
             rollBackTurn(assistantId: assistantId)
         } else {
             conversationHistory.append(OpenAIInputMessage(role: .assistant, content: text))
+            lastContextSignature = pendingContextSignature
         }
     }
 

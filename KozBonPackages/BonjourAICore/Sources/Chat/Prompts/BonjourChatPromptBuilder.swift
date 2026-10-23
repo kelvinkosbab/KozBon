@@ -109,6 +109,9 @@ public enum BonjourChatPromptBuilder {
     /// context is injected into each user message only when needed.
     ///
     /// - Parameter responseLength: Desired verbosity of assistant responses.
+    ///   Also picks the tone: the Detail level setting maps Basic to
+    ///   `.standard` and Technical to `.thorough`, so `.thorough` gets
+    ///   the technical tone and everything else the plain-language one.
     /// - Returns: The static system prompt string.
     @MainActor
     // swiftlint:disable:next function_body_length
@@ -116,6 +119,8 @@ public enum BonjourChatPromptBuilder {
         responseLength: BonjourServicePromptBuilder.ResponseLength = .standard
     ) -> String {
         let language = BonjourServicePromptBuilder.preferredLanguageName
+        let device = BonjourServicePromptBuilder.currentDeviceShortName
+        let expertise: BonjourServicePromptBuilder.ExpertiseLevel = responseLength == .thorough ? .technical : .basic
         return """
             TOP PRIORITY: Respond in \(language).
 
@@ -134,7 +139,9 @@ public enum BonjourChatPromptBuilder {
             fresh/stale/missing), the full list of discovered services with \
             hostnames, IP addresses, transport layer (tcp/udp) and TXT records \
             for the top-detailed entries, the user's published services, and the \
-            service type library grouped by category. Consult these fields when \
+            service type library grouped by category. It may also tag each service \
+            with its categories and describe the service types found on the network; \
+            prefer those descriptions over your training memory. Consult these fields when \
             answering — e.g., cite the IP:port when the user asks how to connect, \
             cite TXT records when they ask about device capabilities or model.
             - The <referenced> block (when present) contains authoritative \
@@ -150,6 +157,9 @@ public enum BonjourChatPromptBuilder {
             user asks about a version not in the block, say you only have notes for \
             the two most recent major versions and point them to Settings → About → \
             What's New for the full history.
+            - The <app_help> block (when present) describes KozBon's real screens \
+            and controls. Answer how-to questions about the app ONLY from it and \
+            never invent buttons, menus, or settings.
             - The <siri> block (when present) lists KozBon's real Siri actions and \
             phrases. Answer Siri and Shortcuts questions ONLY from it and never make \
             up phrases; when answering in another language, translate its phrases \
@@ -195,9 +205,10 @@ public enum BonjourChatPromptBuilder {
 
             ---
 
-            You are KozBon's on-device assistant. You help the user understand Bonjour \
+            You are KozBon's assistant. You help the user understand Bonjour \
             (mDNS/DNS-SD) network services on their local network and how to use the \
-            KozBon app.
+            KozBon app. The user is running KozBon on their \(device); when you give \
+            device steps, give them for that device.
 
             ## Scope
             You CAN answer questions about:
@@ -215,8 +226,9 @@ public enum BonjourChatPromptBuilder {
             - Services currently discovered on the user's network
             - Services the user is broadcasting from this device
             - The KozBon service type library and its categories
-            - How to use KozBon (Discover, Library, Preferences tabs; \
-            broadcasting; filtering and sorting)
+            - How to use KozBon (Discover, Library, Chat, and Settings tabs; \
+            broadcasting; filtering and sorting) — when the <app_help> block is \
+            present (see ACCURACY RULES)
             - What's new in recent KozBon releases — new features, changes, and \
             fixes — when the <whats_new> block is present (see ACCURACY RULES)
             - Using KozBon with Siri and the Shortcuts app — when the <siri> block \
@@ -298,13 +310,15 @@ public enum BonjourChatPromptBuilder {
 
             You can mirror your screen in three steps:
 
-            1. Open Control Center on your iPhone.
+            1. Open Control Center.
             2. Tap **Screen Mirroring**.
             3. Choose 'Living Room Apple TV'.
 
             OUTPUT: Start with the first sentence of your answer. Do not emit \
             conversational preamble ("Sure,", "Here's...") — the user sees tokens \
             stream and preambles make that feel slow.
+
+            \(BonjourServicePromptBuilder.expertiseLevelDirective(expertise))
 
             \(BonjourServicePromptBuilder.responseLengthDirective(responseLength))
             """
@@ -317,13 +331,15 @@ public enum BonjourChatPromptBuilder {
     /// Wraps the context block in `<context>` tags so the model can distinguish it
     /// from the user's actual question.
     ///
-    /// - Parameter context: Current snapshot of services and library.
+    /// - Parameters:
+    ///   - context: Current snapshot of services and library.
+    ///   - budget: How much detail the block carries.
     /// - Returns: A multi-line string safe to prepend to a user message.
     @MainActor
-    public static func contextPreamble(context: ChatContext) -> String {
+    public static func contextPreamble(context: ChatContext, budget: ContextBudget = .onDevice) -> String {
         return """
             <context>
-            \(contextBlock(context: context))
+            \(contextBlock(context: context, budget: budget))
             </context>
 
             """
@@ -351,21 +367,25 @@ public enum BonjourChatPromptBuilder {
     ///   - isFirstTurn: Whether this is the first message in the conversation.
     ///   - contextChanged: Whether the live context has materially changed since the
     ///     last turn. Ignored when `isFirstTurn` is `true`.
+    ///   - budget: How much network and library detail to send. Cloud
+    ///     sessions pass ``ContextBudget/cloud``; compare turns with
+    ///     ``contextSignature(context:budget:)`` at the same budget.
     /// - Returns: The final user turn to send to the model.
     @MainActor
     public static func userTurn(
         message userMessage: String,
         context: ChatContext,
         isFirstTurn: Bool,
-        contextChanged: Bool
+        contextChanged: Bool,
+        budget: ContextBudget = .onDevice
     ) -> String {
         var sections: [String] = []
 
         if isFirstTurn || contextChanged {
-            sections.append(contextPreamble(context: context))
+            sections.append(contextPreamble(context: context, budget: budget))
         }
 
-        let queried = queriedDescriptionsBlock(context: context, query: userMessage)
+        let queried = queriedDescriptionsBlock(context: context, query: userMessage, budget: budget)
         if !queried.isEmpty {
             sections.append("<referenced>\n\(queried)\n</referenced>\n")
         }
@@ -386,6 +406,11 @@ public enum BonjourChatPromptBuilder {
         let siri = siriBlock(query: userMessage)
         if !siri.isEmpty {
             sections.append("<siri>\n\(siri)\n</siri>\n")
+        }
+
+        let appHelp = appHelpBlock(query: userMessage)
+        if !appHelp.isEmpty {
+            sections.append("<app_help>\n\(appHelp)\n</app_help>\n")
         }
 
         sections.append(userMessage)

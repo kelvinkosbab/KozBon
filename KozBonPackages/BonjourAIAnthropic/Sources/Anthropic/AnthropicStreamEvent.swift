@@ -32,6 +32,11 @@ enum AnthropicStreamEvent: Equatable, Sendable {
     /// "no more text is coming."
     case messageStop
 
+    /// Why generation ended, from a `message_delta` event's
+    /// `delta.stop_reason`. `end_turn` is a normal finish;
+    /// `max_tokens` means the answer was cut short.
+    case stopReason(String)
+
     /// An error event the API embedded inline (rate limit
     /// reached mid-stream, content-policy block, etc.).
     case error(message: String, type: String?)
@@ -67,22 +72,7 @@ enum AnthropicStreamEvent: Equatable, Sendable {
             return nil
         }
 
-        guard let data = trimmed.data(using: .utf8) else {
-            throw AICloudError.decodingFailure(message: "Non-UTF8 SSE payload.")
-        }
-
-        let raw: [String: Any]
-        do {
-            guard let parsed = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
-                throw AICloudError.decodingFailure(message: "SSE payload is not a JSON object.")
-            }
-            raw = parsed
-        } catch let error as AICloudError {
-            throw error
-        } catch {
-            throw AICloudError.decodingFailure(message: "Invalid JSON: \(error.localizedDescription)")
-        }
-
+        let raw = try parseObject(trimmed)
         guard let type = raw["type"] as? String else {
             throw AICloudError.decodingFailure(message: "SSE payload missing `type` field.")
         }
@@ -92,6 +82,8 @@ enum AnthropicStreamEvent: Equatable, Sendable {
             return decodeTextDelta(from: raw)
         case "message_stop":
             return .messageStop
+        case "message_delta":
+            return decodeMessageDelta(from: raw)
         case "error":
             return decodeError(from: raw)
         default:
@@ -100,6 +92,22 @@ enum AnthropicStreamEvent: Equatable, Sendable {
     }
 
     // MARK: - Private Helpers
+
+    private static func parseObject(_ payload: String) throws -> [String: Any] {
+        guard let data = payload.data(using: .utf8) else {
+            throw AICloudError.decodingFailure(message: "Non-UTF8 SSE payload.")
+        }
+        do {
+            guard let parsed = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+                throw AICloudError.decodingFailure(message: "SSE payload is not a JSON object.")
+            }
+            return parsed
+        } catch let error as AICloudError {
+            throw error
+        } catch {
+            throw AICloudError.decodingFailure(message: "Invalid JSON: \(error.localizedDescription)")
+        }
+    }
 
     private static func decodeTextDelta(from raw: [String: Any]) -> AnthropicStreamEvent {
         // `{"type": "content_block_delta", "delta": {"type": "text_delta", "text": "Hello"}}`
@@ -115,6 +123,15 @@ enum AnthropicStreamEvent: Equatable, Sendable {
             return .textDelta(text)
         }
         return .other(type: "content_block_delta.\(deltaType)")
+    }
+
+    private static func decodeMessageDelta(from raw: [String: Any]) -> AnthropicStreamEvent {
+        // `{"type": "message_delta", "delta": {"stop_reason": "max_tokens"}}`
+        guard let delta = raw["delta"] as? [String: Any],
+              let reason = delta["stop_reason"] as? String else {
+            return .other(type: "message_delta")
+        }
+        return .stopReason(reason)
     }
 
     private static func decodeError(from raw: [String: Any]) -> AnthropicStreamEvent {

@@ -25,30 +25,6 @@ import BonjourModels
 
 extension BonjourChatPromptBuilder {
 
-    // MARK: - Size Caps
-
-    /// Number of discovered services rendered with full detail (addresses,
-    /// TXT records, transport). The rest of the list falls back to a
-    /// compact one-liner.
-    ///
-    /// Sized for Apple's on-device Foundation Model context window
-    /// (~4K tokens). Five rich entries × ~100 tokens each = ~500
-    /// tokens of detailed context, leaving room for the system
-    /// prompt (~1500), tool schemas (~1500), brief tail, library
-    /// summary, and the user message. With 10 entries we routinely
-    /// crossed the limit on service-rich networks and threw
-    /// `exceededContextWindowSize` on the user.
-    fileprivate static let richDetailServiceCap = 5
-
-    /// Hard cap on the total number of discovered services rendered.
-    /// Services beyond this are summarized as "...and N more" so the
-    /// context block has a predictable upper bound.
-    fileprivate static let briefDetailServiceCap = 50
-
-    /// Per-service caps to keep individual rich entries from blowing up.
-    fileprivate static let addressesPerService = 3
-    fileprivate static let txtRecordsPerService = 6
-
     // MARK: - Context Block
 
     /// Builds the data context block listing the user's current services
@@ -80,29 +56,39 @@ extension BonjourChatPromptBuilder {
     /// "idle" vs "never scanned" still counts as a change while
     /// the ticking seconds don't.
     @MainActor
-    public static func contextSignature(context: ChatContext) -> String {
+    public static func contextSignature(context: ChatContext, budget: ContextBudget = .onDevice) -> String {
         var parts: [String] = [scanStatusState(context: context), ""]
-        parts.append(contentsOf: discoveredServicesLines(context: context))
-        parts.append("")
-        parts.append(contentsOf: publishedServicesLines(context: context))
-        parts.append("")
-        parts.append(contentsOf: libraryLines(context: context))
+        parts.append(contentsOf: dataLines(context: context, budget: budget))
         return parts.joined(separator: "\n")
     }
 
     @MainActor
-    public static func contextBlock(context: ChatContext) -> String {
+    public static func contextBlock(context: ChatContext, budget: ContextBudget = .onDevice) -> String {
         var parts: [String] = ["CURRENT CONTEXT:", ""]
-
         parts.append(scanStatusLine(context: context))
         parts.append("")
-        parts.append(contentsOf: discoveredServicesLines(context: context))
-        parts.append("")
-        parts.append(contentsOf: publishedServicesLines(context: context))
-        parts.append("")
-        parts.append(contentsOf: libraryLines(context: context))
-
+        parts.append(contentsOf: dataLines(context: context, budget: budget))
         return parts.joined(separator: "\n")
+    }
+
+    /// Everything in the context block after the scan status. Shared by
+    /// ``contextBlock(context:budget:)`` and
+    /// ``contextSignature(context:budget:)`` so the two can't drift.
+    @MainActor
+    fileprivate static func dataLines(context: ChatContext, budget: ContextBudget) -> [String] {
+        var parts = discoveredServicesLines(context: context, budget: budget)
+        parts.append("")
+        parts.append(contentsOf: publishedServicesLines(context: context, budget: budget))
+        parts.append("")
+        parts.append(contentsOf: libraryLines(context: context, budget: budget))
+        if budget.describesDiscoveredTypes {
+            let described = discoveredTypeLines(context: context, budget: budget)
+            if !described.isEmpty {
+                parts.append("")
+                parts.append(contentsOf: described)
+            }
+        }
+        return parts
     }
 
     /// Query-triggered block that appends detailed descriptions for any
@@ -113,198 +99,35 @@ extension BonjourChatPromptBuilder {
     /// re-injection of the stable context on every turn).
     public static func queriedDescriptionsBlock(
         context: ChatContext,
-        query: String
+        query: String,
+        budget: ContextBudget = .onDevice
     ) -> String {
         let lowered = query.lowercased()
         // Case-insensitive substring match on the type's display name.
         // False positives on very short names (`SSH`, `IPP`) are rare in
         // natural chat questions and cost at most a few extra lines of
         // context — a fair trade for not requiring proper word-boundary
-        // tokenization on every send.
+        // tokenization on every send. Identifiers match only with their
+        // leading underscore (`_hap`, `_ipp._tcp`): a bare `hap` would
+        // fire on every "what happens".
         let matches = context.serviceTypeLibrary.filter { serviceType in
-            !serviceType.name.isEmpty
+            guard serviceType.localizedDetail != nil else { return false }
+            let namedByName = !serviceType.name.isEmpty
                 && lowered.contains(serviceType.name.lowercased())
-                && serviceType.localizedDetail != nil
+            let namedByIdentifier = !serviceType.type.isEmpty
+                && lowered.contains("_\(serviceType.type.lowercased())")
+            return namedByName || namedByIdentifier
         }
         guard !matches.isEmpty else { return "" }
 
         var parts: [String] = ["REFERENCED SERVICE TYPES (from the user's question):"]
-        // Cap at 5 to bound the block size even when the user's message
+        // Capped to bound the block size even when the user's message
         // happens to match many types.
-        for serviceType in matches.prefix(5) {
+        for serviceType in matches.prefix(budget.referencedTypeCap) {
             let detail = serviceType.localizedDetail ?? ""
             parts.append("- \(serviceType.name) (\(serviceType.fullType)): \(detail)")
         }
         return parts.joined(separator: "\n")
-    }
-
-    /// Query-triggered block listing every release in KozBon's two
-    /// newest major versions (4.x and 3.x today; read from the table,
-    /// so 5.0 shifts it to 5.x and 4.x) plus how to shape the answer
-    /// for the user's detail level. Empty unless the message asks
-    /// what's new, so ordinary network questions pay nothing. Not
-    /// tracked by `lastContextSignature`.
-    ///
-    /// `.basic` sends only summaries and asks for two short paragraphs,
-    /// each covering every release in its major. `.technical` asks for
-    /// a detailed answer and adds the full `highlights` of the newest
-    /// ``technicalHighlightCount`` releases; all of them together run
-    /// past 2,500 tokens, too much for the on-device ~4K window.
-    ///
-    /// Reads the static ``ReleaseNotes/all`` table directly rather
-    /// than threading it through ``ChatContext`` — release notes
-    /// are compile-time constant, unlike the per-session network
-    /// state the context carries. `offeringCloudProviders` drops releases
-    /// whose notes name a cloud AI provider, matching the What's New
-    /// page.
-    public static func whatsNewBlock(
-        query: String,
-        offeringCloudProviders: Bool = true,
-        expertiseLevel: BonjourServicePromptBuilder.ExpertiseLevel = .basic
-    ) -> String {
-        guard ChatWhatsNewIntentDetector.wantsWhatsNew(message: query) else {
-            return ""
-        }
-        let releases = recentMajorReleases(offeringCloudProviders: offeringCloudProviders)
-        let majors = distinctMajors(of: releases)
-        guard let latest = releases.first, !majors.isEmpty else {
-            return ""
-        }
-        let majorList = majors.map { "\($0).x" }.joined(separator: " and ")
-        var parts: [String] = [
-            "KOZBON \(majorList) RELEASES (newest first; answer ONLY from this " +
-            "list; never invent versions or changes).",
-            whatsNewAnswerDirective(releases: releases, expertiseLevel: expertiseLevel)
-        ]
-        let detailed = expertiseLevel == .technical
-            ? Set(releases.prefix(technicalHighlightCount).map(\.version))
-            : []
-        for release in releases {
-            let label = release.version == latest.version
-                ? "Version \(release.version) (latest)"
-                : "Version \(release.version)"
-            if detailed.contains(release.version) {
-                parts.append("\(label):")
-                parts.append(contentsOf: release.highlights.map { "- \($0)" })
-            } else {
-                parts.append("\(label): \(paragraphs(of: release.summary))")
-            }
-        }
-        return parts.joined(separator: "\n")
-    }
-
-    /// Releases whose full highlights the `.technical` block includes,
-    /// newest first. Three keeps the block near 1,600 tokens.
-    static let technicalHighlightCount = 3
-
-    /// How to shape a general "what's new" answer at the user's detail
-    /// level; overrides the usual response-length guidance.
-    static func whatsNewAnswerDirective(
-        releases: [ReleaseNote],
-        expertiseLevel: BonjourServicePromptBuilder.ExpertiseLevel
-    ) -> String {
-        let majors = distinctMajors(of: releases)
-        let ordered = majors.map { "\($0).x" }.joined(separator: ", then ")
-        let specific = "If the user asks about one specific version or feature, " +
-            "answer just that from the list instead."
-        switch expertiseLevel {
-        case .basic:
-            // The model otherwise leans on the newest release or two, so
-            // name each paragraph's full version span.
-            let spans = majors.map { major in
-                let versions = releases
-                    .filter { majorVersion(of: $0.version) == major }
-                    .map(\.version)
-                return "\(versions.last ?? "") through \(versions.first ?? "")"
-            }.joined(separator: ", then ")
-            return "ANSWER SHAPE: For a general \"what's new\" question, write exactly " +
-                "\(majors.count == 1 ? "one short paragraph" : "two short paragraphs"): one per " +
-                "major version (\(ordered)). Each paragraph sums up EVERY release listed " +
-                "for that major version (\(spans)), not just the newest one or two: group " +
-                "the changes from all of them into a few plain sentences. No headings, no " +
-                "bullet lists, no version-by-version rundown. This overrides the usual " +
-                "length guidance. " + specific
-        case .technical:
-            return "ANSWER SHAPE: For a general \"what's new\" question, give a detailed, " +
-                "technical answer with one section per major version (\(ordered)). Name " +
-                "the versions and the concrete changes in each: new features, AI " +
-                "backends and models, platform and SDK requirements, and architecture " +
-                "or behavior changes where the notes give them. Use the bulleted " +
-                "highlights for the newest releases and the summaries for the rest. " +
-                specific
-        }
-    }
-
-    /// The displayed releases in the two newest major versions,
-    /// newest first.
-    static func recentMajorReleases(offeringCloudProviders: Bool) -> [ReleaseNote] {
-        let displayed = ReleaseNotes.displayed(offeringCloudProviders: offeringCloudProviders)
-        let majors = Set(distinctMajors(of: displayed).prefix(2))
-        return displayed.filter { release in
-            majorVersion(of: release.version).map { majors.contains($0) } ?? false
-        }
-    }
-
-    fileprivate static func majorVersion(of version: String) -> Int? {
-        version.split(separator: ".").first.flatMap { Int($0) }
-    }
-
-    /// The major versions present in `releases`, in table order.
-    fileprivate static func distinctMajors(of releases: [ReleaseNote]) -> [Int] {
-        var seen: [Int] = []
-        for major in releases.compactMap({ majorVersion(of: $0.version) }) where !seen.contains(major) {
-            seen.append(major)
-        }
-        return seen
-    }
-
-    /// Joins a summary's blank-line-separated paragraphs onto one line
-    /// so each release stays a single entry in the block.
-    fileprivate static func paragraphs(of summary: String) -> String {
-        summary
-            .components(separatedBy: "\n\n")
-            .joined(separator: " ")
-    }
-
-    /// Query-triggered block listing KozBon's Siri actions and
-    /// their phrases, for questions about Siri or the Shortcuts app.
-    /// Empty otherwise, so like ``whatsNewBlock(query:)`` it costs
-    /// nothing on ordinary network questions.
-    ///
-    /// The phrases must match `KozBonAppShortcuts` in the app target;
-    /// update both together.
-    public static func siriBlock(query: String) -> String {
-        guard ChatSiriIntentDetector.wantsSiriHelp(message: query) else {
-            return ""
-        }
-        return """
-        KOZBON SIRI & SHORTCUTS (answer Siri and Shortcuts questions ONLY from \
-        this list; never invent phrases or actions). Every phrase ends with \
-        "with KozBon" and is spoken in the language Siri is set to. Siri learns \
-        them after KozBon has been opened once.
-        - Scan for Services: "Scan my network with KozBon" or "How many devices \
-        are on my network with KozBon". Says how many devices and services it found.
-        - List Discovered Services: "What's on my network with KozBon" or "Show \
-        Bonjour services with KozBon". Lists every service found.
-        - Find Services: "Find printers with KozBon". Also works with Apple \
-        devices, smart home, speakers, AirPlay or media, and remote access or SSH.
-        - Check If Device Is Online: "Check if a device is online with KozBon". \
-        Asks for the device name and answers yes or no.
-        - Explain a Service Type: "Explain a service type with KozBon". Asks \
-        which type and reads a short explanation.
-        - Broadcast a Service: "Broadcast a service with KozBon". Asks for a TCP \
-        service type and a port, then advertises it.
-        - Stop Broadcasting: "Stop broadcasting with KozBon".
-        - Open Service in KozBon: Shortcuts app only, no phrase. Opens a service \
-        an earlier step returned.
-        In the Shortcuts app, tap KozBon to see every action, or add the actions \
-        to a new shortcut and combine them with other steps, for example check \
-        whether the printer is online and then show a notification. Personal \
-        automations can run them when the device joins a Wi-Fi network, and they \
-        can be assigned to the Action Button. On iPhone, iPad, and Vision Pro, \
-        KozBon's Settings tab has a "Using Siri with KozBon" section with these phrases and a button \
-        that opens KozBon in the Shortcuts app.
-        """
     }
 
     // MARK: - Context Section Builders
@@ -335,7 +158,7 @@ extension BonjourChatPromptBuilder {
     }
 
     @MainActor
-    fileprivate static func discoveredServicesLines(context: ChatContext) -> [String] {
+    fileprivate static func discoveredServicesLines(context: ChatContext, budget: ContextBudget) -> [String] {
         guard !context.discoveredServices.isEmpty else {
             return [
                 "Discovered services: none yet " +
@@ -346,7 +169,7 @@ extension BonjourChatPromptBuilder {
         }
         var lines: [String] = ["Discovered services (\(context.discoveredServices.count)):"]
         for (index, service) in context.discoveredServices.enumerated() {
-            if index >= briefDetailServiceCap { break }
+            if index >= budget.briefDetailServiceCap { break }
             // Sanitize every interpolated string from a discovered
             // service. The values originate from arbitrary devices
             // on the local network — a hostile neighbor advertising
@@ -375,21 +198,22 @@ extension BonjourChatPromptBuilder {
             // can run away on.
             lines.append(
                 "\(index + 1). \(cleanName) · \(cleanFullType) · " +
-                "\(transport) · host: \(cleanHostName)"
+                "\(transport) · host: \(cleanHostName)" +
+                categoriesSuffix(for: service.serviceType, budget: budget)
             )
-            if index < richDetailServiceCap {
+            if index < budget.richDetailServiceCap {
                 if !service.addresses.isEmpty {
                     // IP addresses are well-typed (`InternetAddress`),
                     // not free-form strings — they can't carry an
                     // injection payload, so no sanitization is
                     // needed beyond the existing per-service cap.
-                    let addrs = service.addresses.prefix(addressesPerService)
+                    let addrs = service.addresses.prefix(budget.addressesPerService)
                         .map(\.ipPortString)
                         .joined(separator: ", ")
                     lines.append("    addresses: \(addrs)")
                 }
                 if !service.dataRecords.isEmpty {
-                    let records = service.dataRecords.prefix(txtRecordsPerService)
+                    let records = service.dataRecords.prefix(budget.txtRecordsPerService)
                         .map { record in
                             let cleanKey = PromptInjectionSanitizer.sanitize(record.key)
                             let cleanValue = PromptInjectionSanitizer.sanitize(
@@ -403,15 +227,15 @@ extension BonjourChatPromptBuilder {
                 }
             }
         }
-        if context.discoveredServices.count > briefDetailServiceCap {
-            let remainder = context.discoveredServices.count - briefDetailServiceCap
+        if context.discoveredServices.count > budget.briefDetailServiceCap {
+            let remainder = context.discoveredServices.count - budget.briefDetailServiceCap
             lines.append("...and \(remainder) more")
         }
         return lines
     }
 
     @MainActor
-    fileprivate static func publishedServicesLines(context: ChatContext) -> [String] {
+    fileprivate static func publishedServicesLines(context: ChatContext, budget: ContextBudget) -> [String] {
         guard !context.publishedServices.isEmpty else {
             return ["Published services from this device: none"]
         }
@@ -431,13 +255,16 @@ extension BonjourChatPromptBuilder {
                 maxLength: PromptInjectionSanitizer.serviceNameMaxLength
             )
             let cleanFullType = PromptInjectionSanitizer.sanitize(service.serviceType.fullType)
-            lines.append("\(index + 1). \(cleanName) · \(cleanFullType)")
+            lines.append(
+                "\(index + 1). \(cleanName) · \(cleanFullType)" +
+                categoriesSuffix(for: service.serviceType, budget: budget)
+            )
         }
         return lines
     }
 
     @MainActor
-    fileprivate static func libraryLines(context: ChatContext) -> [String] {
+    fileprivate static func libraryLines(context: ChatContext, budget: ContextBudget) -> [String] {
         let library = context.serviceTypeLibrary
         guard !library.isEmpty else {
             return ["Service type library: empty"]
@@ -468,18 +295,69 @@ extension BonjourChatPromptBuilder {
             let matched = library.filter { typeIDs.contains($0.type) }
             guard !matched.isEmpty else { continue }
             matched.forEach { categorizedTypes.insert($0.type) }
-            lines.append("- \(categoryTitle): \(matched.count) types")
+            lines.append(libraryCategoryLine(title: categoryTitle, types: matched, budget: budget))
         }
-        let otherCount = library
-            .count(where: { !categorizedTypes.contains($0.type) })
-        if otherCount > 0 {
-            lines.append("- Other: \(otherCount) types")
+        let others = library.filter { !categorizedTypes.contains($0.type) }
+        if !others.isEmpty {
+            lines.append(libraryCategoryLine(title: "Other", types: others, budget: budget))
         }
         lines.append(
             "When the user asks about a specific type by name, " +
             "its full description will be injected separately."
         )
         return lines
+    }
+
+    /// One library category: just the count on the on-device budget,
+    /// the count plus each type's name on the cloud budget.
+    fileprivate static func libraryCategoryLine(
+        title: String,
+        types: [BonjourServiceType],
+        budget: ContextBudget
+    ) -> String {
+        guard budget.listsLibraryTypeNames else {
+            return "- \(title): \(types.count) types"
+        }
+        // Custom types carry user-entered names, so sanitize them like
+        // any other free-form string headed for the prompt.
+        let names = types
+            .map { PromptInjectionSanitizer.sanitize($0.name, maxLength: PromptInjectionSanitizer.serviceNameMaxLength) }
+            .sorted()
+            .joined(separator: ", ")
+        return "- \(title) (\(types.count) types): \(names)"
+    }
+
+    /// ` · categories: Apple Devices, Media & Streaming` when the
+    /// budget tags categories and the type belongs to any; empty
+    /// otherwise.
+    fileprivate static func categoriesSuffix(for serviceType: BonjourServiceType, budget: ContextBudget) -> String {
+        guard budget.tagsServiceCategories else { return "" }
+        let labels = BonjourServiceCategory.allCases
+            .filter { $0.typeStrings.contains(serviceType.type) }
+            .map(\.promptLabel)
+        return labels.isEmpty ? "" : " · categories: \(labels.joined(separator: ", "))"
+    }
+
+    /// Descriptions of the distinct service types among the listed
+    /// discovered services, so "what is this on my network?" has an
+    /// authoritative answer without the user naming the type.
+    @MainActor
+    fileprivate static func discoveredTypeLines(context: ChatContext, budget: ContextBudget) -> [String] {
+        var seen = Set<String>()
+        var lines: [String] = []
+        for service in context.discoveredServices.prefix(budget.briefDetailServiceCap) {
+            let serviceType = service.serviceType
+            guard seen.insert(serviceType.fullType).inserted,
+                  let detail = serviceType.localizedDetail else { continue }
+            let cleanName = PromptInjectionSanitizer.sanitize(
+                serviceType.name,
+                maxLength: PromptInjectionSanitizer.serviceNameMaxLength
+            )
+            let cleanFullType = PromptInjectionSanitizer.sanitize(serviceType.fullType)
+            lines.append("- \(cleanName) (\(cleanFullType)): \(PromptInjectionSanitizer.sanitize(detail))")
+        }
+        guard !lines.isEmpty else { return [] }
+        return ["Service types on this network (\(lines.count)):"] + lines
     }
 
     // MARK: - Library Categories

@@ -111,6 +111,12 @@ public final class GeminiBonjourChatSession: BonjourChatSessionProtocol {
     /// for the static parts of the conversation.
     private var lastContextSignature: String?
 
+    /// Signature of the context composed for the in-flight turn.
+    /// Committed to ``lastContextSignature`` only once the turn
+    /// succeeds: a failed turn is rolled out of the history along
+    /// with its `<context>` block, so the retry has to send it again.
+    private var pendingContextSignature: String?
+
     // MARK: - Init
 
     public init(
@@ -131,14 +137,13 @@ public final class GeminiBonjourChatSession: BonjourChatSessionProtocol {
     /// indistinguishable scrollback behavior.
     static let maxInMemoryMessageCount = 500
 
-    /// Max tokens per Gemini response. Sized generously — Gemini's
-    /// 200K context window doesn't pressure the chat surface the
-    /// way Apple Foundation Models' ~4K does, so the runaway-
-    /// generation hardening (token cap, ENUMERATION RULES) that
-    /// matters on-device is less critical here. Still bound the
-    /// response so a model glitch can't run a single chat turn
-    /// for thousands of tokens.
-    static let maximumResponseTokensPerTurn = 1024
+    /// Max output tokens per Gemini response. A runaway bound, not
+    /// a length target — the prompt's LENGTH directive sets the
+    /// length. Larger than the Claude cap because Gemini 2.5 models
+    /// think by default and their thinking tokens count against
+    /// `maxOutputTokens`; at 1,024 a long think left little or no
+    /// room for the answer.
+    static let maximumResponseTokensPerTurn = 8192
 
     // MARK: - Prewarm
 
@@ -271,16 +276,17 @@ public final class GeminiBonjourChatSession: BonjourChatSessionProtocol {
         // rendered text reported a change once per wall-clock
         // second and re-sent the whole context on any turn more
         // than a second after the last one.
-        let currentSignature = BonjourChatPromptBuilder.contextSignature(context: context)
+        let currentSignature = BonjourChatPromptBuilder.contextSignature(context: context, budget: .cloud)
         let isFirstTurn = (lastContextSignature == nil)
         let contextChanged = lastContextSignature != currentSignature
         let turnText = BonjourChatPromptBuilder.userTurn(
             message: trimmed,
             context: context,
             isFirstTurn: isFirstTurn,
-            contextChanged: contextChanged
+            contextChanged: contextChanged,
+            budget: .cloud
         )
-        lastContextSignature = currentSignature
+        pendingContextSignature = currentSignature
         return turnText
     }
 
@@ -409,6 +415,7 @@ public final class GeminiBonjourChatSession: BonjourChatSessionProtocol {
             rollBackTurn(assistantId: assistantId)
         } else {
             conversationHistory.append(GeminiContent(role: .model, text: text))
+            lastContextSignature = pendingContextSignature
         }
     }
 

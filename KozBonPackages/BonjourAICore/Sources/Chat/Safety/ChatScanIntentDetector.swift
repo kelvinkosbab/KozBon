@@ -28,8 +28,9 @@ import Foundation
 /// the worse failure mode, so the phrase list bias toward over-
 /// matching.
 ///
-/// Localized for the six languages KozBon ships in: English,
-/// Spanish, French, German, Japanese, and Simplified Chinese.
+/// Localized for the eight languages KozBon ships in: English,
+/// Spanish, French, German, Japanese, Simplified Chinese, Arabic,
+/// and Hebrew.
 /// Phrases from every language are checked against every input —
 /// users typing English on a Spanish device, or mixing languages
 /// in a single sentence, still get the fresh-scan path. Cross-
@@ -73,6 +74,8 @@ public enum ChatScanIntentDetector {
         + germanPhrases
         + japanesePhrases
         + simplifiedChinesePhrases
+        + arabicPhrases
+        + hebrewPhrases
 
     /// English phrases. Grouped by signal type for readability —
     /// possessive + state-noun phrasings, "what's around" question
@@ -307,5 +310,76 @@ public enum ChatScanIntentDetector {
         "网络上",
         "在网络上",
         "广播"
+    ]
+
+    /// Arabic phrases. "شبكتي" ("my network") carries the possessive
+    /// signal and appears in every network-state suggestion. "خدمتي"
+    /// ("my service") is deliberately absent: it's in the localized
+    /// "How do I broadcast my own service?" suggestion, which is an
+    /// app-help question, not a request for live state.
+    static let arabicPhrases: [String] = [
+        "شبكتي",
+        "خدماتي",
+        "أجهزتي",
+        "على الشبكة",
+        "في الشبكة",
+        "ما الخدمات",
+        "ما الأجهزة",
+        "أي الخدمات",
+        "أي الأجهزة",
+        "كم خدمة",
+        "كم جهاز",
+        "كم عدد الخدمات",
+        "كم عدد الأجهزة",
+        "متصل",
+        "افحص",
+        "فحص الشبكة",
+        "امسح الشبكة",
+        "حدّث",
+        "تحديث القائمة",
+        "اكتشف",
+        "المكتشفة",
+        "اعرض الخدمات",
+        "اعرض الأجهزة",
+        "اعرض لي",
+        "ابحث عن خدمات",
+        "ابحث عن أجهزة",
+        "ابحث عن طابعات",
+        "الخدمات المتاحة",
+        "الأجهزة المتاحة",
+        "تبث حاليًا"
+    ]
+
+    /// Hebrew phrases. "ברשת שלי" / "הרשת שלי" carry the possessive
+    /// signal. Bare "משדר" ("broadcast") is left out for the same
+    /// reason as Arabic "خدمتي": the localized broadcast how-to
+    /// suggestion uses it.
+    static let hebrewPhrases: [String] = [
+        "ברשת שלי",
+        "הרשת שלי",
+        "השירותים שלי",
+        "המכשירים שלי",
+        "ברשת",
+        "אילו שירותים",
+        "אילו מכשירים",
+        "כמה שירותים",
+        "כמה מכשירים",
+        "מחובר",
+        "סרוק",
+        "סריקה",
+        "לסרוק",
+        "רענן",
+        "גלה שירותים",
+        "גלה מכשירים",
+        "שהתגלו",
+        "הצג שירותים",
+        "הצג מכשירים",
+        "הצג לי",
+        "מצא שירותים",
+        "מצא מכשירים",
+        "מצא מדפסות",
+        "שירותים זמינים",
+        "מכשירים זמינים",
+        "משדרים כרגע"
     ]
 }

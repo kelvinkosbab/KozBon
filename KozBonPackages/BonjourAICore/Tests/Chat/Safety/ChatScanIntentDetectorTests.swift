@@ -189,8 +189,36 @@ struct ChatScanIntentDetectorTests {
         #expect(ChatScanIntentDetector.wantsFreshScan(message: "有多少设备？"))
     }
 
-    @Test("Combined phrase list spans all six ship languages")
-    func phraseListIsLocalizedAcrossSixLanguages() {
+    @Test("Arabic triggers fresh scan on possessive and action phrases")
+    func arabicTriggers() {
+        // The localized "What services are on my network?" suggestion
+        #expect(ChatScanIntentDetector.wantsFreshScan(message: "ما الخدمات الموجودة على شبكتي؟"))
+        // "Scan the network now"
+        #expect(ChatScanIntentDetector.wantsFreshScan(message: "افحص الشبكة الآن"))
+        // "How many devices are there?"
+        #expect(ChatScanIntentDetector.wantsFreshScan(message: "كم عدد الأجهزة؟"))
+    }
+
+    @Test("Hebrew triggers fresh scan on possessive and action phrases")
+    func hebrewTriggers() {
+        // The localized "What services are on my network?" suggestion
+        #expect(ChatScanIntentDetector.wantsFreshScan(message: "אילו שירותים נמצאים ברשת שלי?"))
+        // "Scan now"
+        #expect(ChatScanIntentDetector.wantsFreshScan(message: "סרוק עכשיו"))
+        // "How many devices are there?"
+        #expect(ChatScanIntentDetector.wantsFreshScan(message: "כמה מכשירים יש?"))
+    }
+
+    @Test("Arabic and Hebrew broadcast how-to suggestions don't trigger a fresh scan")
+    func arabicAndHebrewHowToDontTrigger() {
+        #expect(!ChatScanIntentDetector.wantsFreshScan(message: "كيف أبث خدمتي الخاصة؟"))
+        #expect(!ChatScanIntentDetector.wantsFreshScan(message: "איך אני משדר שירות משלי?"))
+        #expect(!ChatScanIntentDetector.wantsFreshScan(message: "ما هو Matter / Thread؟"))
+        #expect(!ChatScanIntentDetector.wantsFreshScan(message: "מה זה Matter / Thread?"))
+    }
+
+    @Test("Combined phrase list spans all eight ship languages")
+    func phraseListIsLocalizedAcrossEightLanguages() {
         // Defensive check that no language list got accidentally
         // emptied during a refactor. Each must contribute SOME
         // entries; the exact count is intentionally not pinned so
@@ -201,5 +229,7 @@ struct ChatScanIntentDetectorTests {
         #expect(!ChatScanIntentDetector.germanPhrases.isEmpty)
         #expect(!ChatScanIntentDetector.japanesePhrases.isEmpty)
         #expect(!ChatScanIntentDetector.simplifiedChinesePhrases.isEmpty)
+        #expect(!ChatScanIntentDetector.arabicPhrases.isEmpty)
+        #expect(!ChatScanIntentDetector.hebrewPhrases.isEmpty)
     }
 }

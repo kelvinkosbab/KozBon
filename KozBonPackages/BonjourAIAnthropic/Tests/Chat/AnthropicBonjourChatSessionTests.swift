@@ -197,6 +197,19 @@ struct AnthropicBonjourChatSessionTests {
         #expect(session.messages[0].role == .user)
     }
 
+    @Test("A retry after a failed first turn re-sends the network context")
+    func retryAfterFailureResendsContext() async throws {
+        let client = MockAnthropicClient(error: AICloudError.networkUnavailable)
+        let session = makeSession(client: client)
+
+        session.appendUserMessage("hi")
+        await session.send("hi", context: makeContext())
+        await session.send("hi", context: makeContext())
+
+        let retry = try #require(client.recordedRequests.last?.request.messages.last?.content)
+        #expect(retry.contains("<context>"))
+    }
+
     // MARK: - Clear Error
 
     @Test("`clearError` resets both `error` and `errorAction` without touching the conversation")

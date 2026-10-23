@@ -168,6 +168,12 @@ public final class AnthropicClient: AnthropicClientProtocol {
             case .messageStop:
                 continuation.finish()
                 return
+            case .stopReason(let reason):
+                // A cut-off answer is still the best one we have, so
+                // keep its text; just leave a trace of why it ended.
+                if reason == "max_tokens" {
+                    logger.error("Anthropic stopped early: \(reason)")
+                }
             case .error(let message, let type):
                 logger.error("Anthropic inline error (\(type ?? "unknown")): \(message)")
                 throw AICloudError.serverError(provider: .anthropic, message: message)

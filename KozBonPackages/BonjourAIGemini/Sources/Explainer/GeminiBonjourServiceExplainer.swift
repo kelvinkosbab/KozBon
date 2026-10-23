@@ -95,9 +95,10 @@ public final class GeminiBonjourServiceExplainer: BonjourServiceExplainerProtoco
 
     /// Per-explanation token cap. Lower than the chat surface's
     /// cap because Insights answers are by nature shorter — one
-    /// service, two or three paragraphs at most. Larger
-    /// responses are usually a model glitch.
-    static let maximumResponseTokensPerExplanation = 768
+    /// service, two or three paragraphs at most. Still well above
+    /// the answer itself, because Gemini 2.5's thinking tokens
+    /// count against this budget too.
+    static let maximumResponseTokensPerExplanation = 4096
 
     // MARK: - Explain (Service)
 
