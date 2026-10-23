@@ -366,15 +366,15 @@ KozBon מאתר ומסביר את השירותים שמכשירים מפרסמי
 • תמיכה ב-VoiceOver, בגופן דינמי ובהפחתת תנועה
 • זמין בעברית, אנגלית, ספרדית, צרפתית, גרמנית, יפנית, סינית פשוטה וערבית
 
-## What's New in This Version (4.9)
+## What's New in This Version (4.10)
 
-Use the same text on every platform. It recaps all of version 4, so it also covers 4.8 for macOS and visionOS, which skipped that release. Paste each language's block as is; the bullets are plain text.
+Use the same text on every platform. It recaps all of version 4, so platforms that skipped a release are covered too. Paste each language's block as is; the bullets are plain text.
 
 **English (U.S.):**
 
 ```text
-New in 4.9
-KozBon has a new icon: a blue dot sending out ripples, like a scan sweeping the network around it. Service and library details now have an Insights button that asks your chosen AI to explain the service, and TXT records come with a note on what they're for.
+New in 4.10
+When you're offline, the cloud AI assistants pause and say so, then pick up again as soon as you're back online. Apple Intelligence and network scanning keep working without the internet. Chat now scrolls each message you send into view and hides the keyboard. KozBon is now open source under the MIT License, with a link to its GitHub repository in Settings.
 
 Everything new in version 4
 • Chat: ask an AI assistant about the services on your network. It runs a fresh scan when you ask what's out there.
@@ -383,7 +383,9 @@ Everything new in version 4
 • A fresh look: an ambient background on every tab, with a switch to turn it off.
 • A Nearby list organized by device or by service type, with filters and animated sorting.
 • Landscape and wide layouts on iPhone, and better layouts on iPad and Mac.
-• Siri and Shortcuts can scan for services and list what was found.
+• Siri and Shortcuts can find a kind of device, check whether one is online, explain a service type, and start or stop broadcasting.
+• A new app icon.
+• Ready for iPhone Duo.
 • A What's New page in Settings.
 • Requires iOS, iPadOS, macOS, or visionOS 26.
 ```
@@ -391,8 +393,8 @@ Everything new in version 4
 **Spanish (Spain):**
 
 ```text
-Novedades de la 4.9
-KozBon tiene un nuevo icono: un punto azul que emite ondas, como un escaneo que recorre la red a su alrededor. Los detalles de servicios y de la biblioteca tienen ahora un botón Información que pide a la IA elegida que explique el servicio, y los registros TXT incluyen una nota sobre para qué sirven.
+Novedades de la 4.10
+Cuando no tienes conexión, los asistentes de IA en la nube se pausan y te lo indican, y se reanudan en cuanto vuelves a estar en línea. Apple Intelligence y el escaneo de la red siguen funcionando sin internet. El Chat ahora desplaza cada mensaje que envías a la vista y oculta el teclado. KozBon ahora es de código abierto con la licencia MIT, con un enlace a su repositorio de GitHub en Ajustes.
 
 Todo lo nuevo de la versión 4
 • Chat: pregunta a un asistente de IA por los servicios de tu red. Hace un escaneo nuevo cuando preguntas qué hay a tu alrededor.
@@ -401,7 +403,9 @@ Todo lo nuevo de la versión 4
 • Un aspecto renovado: un fondo ambiental en cada pestaña, con un interruptor para desactivarlo.
 • Una lista Cercanos organizada por dispositivo o por tipo de servicio, con filtros y ordenación animada.
 • Diseños horizontales y amplios en el iPhone, y diseños mejorados en el iPad y el Mac.
-• Siri y Atajos pueden buscar servicios y mostrar lo que encuentran.
+• Siri y Atajos pueden encontrar un tipo de dispositivo, comprobar si está conectado, explicar un tipo de servicio e iniciar o detener una emisión.
+• Un nuevo icono para la app.
+• Listo para el iPhone Duo.
 • Una página de Novedades en Ajustes.
 • Requiere iOS, iPadOS, macOS o visionOS 26.
 ```
@@ -409,8 +413,8 @@ Todo lo nuevo de la versión 4
 **French:**
 
 ```text
-Nouveautés de la 4.9
-KozBon a une nouvelle icône : un point bleu qui émet des ondes, comme un balayage du réseau qui l'entoure. Les détails des services et de la bibliothèque ont désormais un bouton Aperçus qui demande à l'IA choisie d'expliquer le service, et les enregistrements TXT sont accompagnés d'une note sur leur utilité.
+Nouveautés de la 4.10
+Hors connexion, les assistants IA dans le cloud se mettent en pause et vous le signalent, puis reprennent dès que vous êtes de nouveau en ligne. Apple Intelligence et l'analyse du réseau continuent de fonctionner sans Internet. Le Chat fait désormais défiler chaque message envoyé pour qu'il reste visible et masque le clavier. KozBon est désormais open source sous licence MIT, avec un lien vers son dépôt GitHub dans Réglages.
 
 Toutes les nouveautés de la version 4
 • Chat : interrogez un assistant IA sur les services de votre réseau. Il lance un nouveau scan quand vous demandez ce qui vous entoure.
@@ -419,7 +423,9 @@ Toutes les nouveautés de la version 4
 • Un nouveau look : un arrière-plan d'ambiance sur chaque onglet, avec un interrupteur pour le désactiver.
 • Une liste À proximité organisée par appareil ou par type de service, avec des filtres et un tri animé.
 • Des mises en page paysage et larges sur iPhone, et de meilleures mises en page sur iPad et Mac.
-• Siri et Raccourcis peuvent rechercher des services et lister ce qu'ils trouvent.
+• Siri et Raccourcis peuvent trouver un type d'appareil, vérifier s'il est en ligne, expliquer un type de service, et lancer ou arrêter une diffusion.
+• Une nouvelle icône d'app.
+• Prêt pour l'iPhone Duo.
 • Une page Nouveautés dans Réglages.
 • Nécessite iOS, iPadOS, macOS ou visionOS 26.
 ```
@@ -427,8 +433,8 @@ Toutes les nouveautés de la version 4
 **German:**
 
 ```text
-Neu in 4.9
-KozBon hat ein neues Symbol: einen blauen Punkt, der Wellen aussendet – wie ein Scan, der das Netzwerk um ihn herum absucht. Dienst- und Bibliotheksdetails haben jetzt eine Schaltfläche „Einblicke“, mit der die gewählte KI den Dienst erklärt, und TXT-Einträge enthalten einen Hinweis, wofür sie dienen.
+Neu in 4.10
+Wenn du offline bist, pausieren die Cloud-KI-Assistenten und weisen darauf hin. Sobald du wieder online bist, machen sie weiter. Apple Intelligence und der Netzwerk-Scan funktionieren auch ohne Internet. Im Chat wird jetzt jede gesendete Nachricht ins Bild gescrollt und die Tastatur ausgeblendet. KozBon ist jetzt Open Source unter der MIT-Lizenz, mit einem Link zum GitHub-Repository in den Einstellungen.
 
 Alles Neue in Version 4
 • Chat: Frag einen KI-Assistenten nach den Diensten in deinem Netzwerk. Er startet einen neuen Scan, wenn du wissen willst, was es in der Nähe gibt.
@@ -437,7 +443,9 @@ Alles Neue in Version 4
 • Ein neuer Look: ein Ambient-Hintergrund auf jedem Tab, mit einem Schalter zum Ausschalten.
 • Eine Liste „In der Nähe“, sortiert nach Gerät oder Diensttyp, mit Filtern und animierter Sortierung.
 • Quer- und Breitformat-Layouts auf dem iPhone sowie bessere Layouts auf iPad und Mac.
-• Siri und Kurzbefehle können nach Diensten suchen und die Funde auflisten.
+• Siri und Kurzbefehle können eine Geräteart finden, prüfen, ob ein Gerät online ist, einen Diensttyp erklären und eine Übertragung starten oder stoppen.
+• Ein neues App-Symbol.
+• Bereit für das iPhone Duo.
 • Eine Seite „Neuigkeiten“ in den Einstellungen.
 • Erfordert iOS, iPadOS, macOS oder visionOS 26.
 ```
@@ -445,8 +453,8 @@ Alles Neue in Version 4
 **Japanese:**
 
 ```text
-4.9の新機能
-KozBon のアイコンが新しくなりました。周囲のネットワークをスキャンするように、青い点から波紋が広がるデザインです。サービスとライブラリの詳細画面に「インサイト」ボタンが追加され、選択したAIがサービスについて説明します。TXTレコードには、その用途を説明するメモが付くようになりました。
+4.10の新機能
+オフラインのときは、クラウドAIアシスタントが一時停止してその旨を表示し、オンラインに戻るとすぐに再開します。Apple Intelligenceとネットワークのスキャンはインターネットなしでも使えます。チャットでは、送信したメッセージが毎回表示される位置までスクロールし、キーボードが閉じるようになりました。KozBonはMITライセンスのオープンソースになり、設定からGitHubリポジトリへのリンクを開けます。
 
 バージョン4の新機能まとめ
 • チャット：ネットワーク上のサービスについてAIアシスタントに質問できます。周りに何があるかを尋ねると、新たにスキャンを実行します。
@@ -455,7 +463,9 @@ KozBon のアイコンが新しくなりました。周囲のネットワーク�
 • 新しいデザイン：すべてのタブにアンビエント背景。スイッチでオフにもできます。
 • 「近く」のリストをデバイス別またはサービスの種類別に整理。フィルタとアニメーション付きの並べ替えにも対応。
 • iPhoneで横向きとワイドレイアウトに対応し、iPadとMacのレイアウトも改善。
-• Siriとショートカットでサービスをスキャンし、見つかったものを一覧表示できます。
+• Siriとショートカットで、特定の種類のデバイスを探す、デバイスがオンラインか確認する、サービスの種類を説明する、ブロードキャストを開始・停止することができます。
+• 新しいアプリアイコン。
+• iPhone Duoに対応。
 • 設定に「新機能」ページを追加。
 • iOS、iPadOS、macOS、またはvisionOS 26が必要です。
 ```
@@ -463,8 +473,8 @@ KozBon のアイコンが新しくなりました。周囲のネットワーク�
 **Chinese (Simplified):**
 
 ```text
-4.9 新功能
-KozBon 换上了新图标：一个蓝点向外发出涟漪，就像在扫描周围的网络。服务和资料库的详细信息页面新增了“洞察”按钮，可让你选择的 AI 解释该服务；TXT 记录也附有说明其用途的注释。
+4.10 新功能
+离线时，云端 AI 助手会暂停并给出提示，重新联网后立即恢复。Apple 智能和网络扫描在没有互联网时也能继续使用。“聊天”现在会将你发送的每条消息滚动到可见位置并收起键盘。KozBon 现已基于 MIT 许可证开源，可在“设置”中打开其 GitHub 仓库链接。
 
 版本 4 全部新功能
 • 聊天：向 AI 助手询问你网络中的服务。当你问周围有什么时，它会重新扫描一次。
@@ -473,7 +483,9 @@ KozBon 换上了新图标：一个蓝点向外发出涟漪，就像在扫描周�
 • 全新外观：每个标签页都有氛围背景，并可通过开关关闭。
 • “附近”列表可按设备或服务类型分组，支持筛选和动画排序。
 • iPhone 支持横屏和宽屏布局，iPad 和 Mac 的布局也更出色。
-• Siri 和快捷指令可以扫描服务并列出找到的内容。
+• Siri 和快捷指令可以查找某类设备、检查设备是否在线、解释服务类型，以及开始或停止广播。
+• 全新的 App 图标。
+• 已为 iPhone Duo 做好准备。
 • “设置”中新增“新功能”页面。
 • 需要 iOS、iPadOS、macOS 或 visionOS 26。
 ```
@@ -481,8 +493,8 @@ KozBon 换上了新图标：一个蓝点向外发出涟漪，就像在扫描周�
 **Arabic:**
 
 ```text
-الجديد في 4.9
-لدى KozBon أيقونة جديدة: نقطة زرقاء تُطلق تموّجات، كأنها تمسح الشبكة من حولها. تتضمن الآن تفاصيل الخدمات والمكتبة زر «رؤى» الذي يطلب من الذكاء الاصطناعي الذي اخترته شرح الخدمة، وتأتي سجلات TXT مع ملاحظة توضّح الغرض منها.
+الجديد في 4.10
+عندما تكون غير متصل بالإنترنت، يتوقف مساعدو الذكاء الاصطناعي السحابيون مؤقتًا ويُعلمونك بذلك، ثم يستأنفون العمل فور عودتك إلى الاتصال. يواصل Apple Intelligence وفحص الشبكة العمل دون إنترنت. أصبحت الدردشة تمرّر كل رسالة ترسلها إلى مجال العرض وتُخفي لوحة المفاتيح. أصبح KozBon مفتوح المصدر بموجب ترخيص MIT، مع رابط إلى مستودعه على GitHub في الإعدادات.
 
 كل جديد الإصدار 4
 • المحادثة: اسأل مساعد ذكاء اصطناعي عن الخدمات على شبكتك. يُجري فحصًا جديدًا عندما تسأل عمّا حولك.
@@ -491,7 +503,9 @@ KozBon 换上了新图标：一个蓝点向外发出涟漪，就像在扫描周�
 • مظهر جديد: خلفية محيطية في كل علامة تبويب، مع مفتاح لإيقافها.
 • قائمة «قريبة» منظّمة حسب الجهاز أو نوع الخدمة، مع عوامل تصفية وفرز متحرّك.
 • تخطيطات أفقية وعريضة على iPhone، وتخطيطات أفضل على iPad وMac.
-• يمكن لـ Siri والاختصارات البحث عن الخدمات وعرض ما عُثر عليه.
+• يمكن لـ Siri والاختصارات العثور على نوع من الأجهزة، والتحقق مما إذا كان جهاز متصلًا، وشرح نوع خدمة، وبدء البث أو إيقافه.
+• أيقونة تطبيق جديدة.
+• جاهز لـ iPhone Duo.
 • صفحة «ما الجديد» في الإعدادات.
 • يتطلب iOS أو iPadOS أو macOS أو visionOS 26.
 ```
@@ -499,8 +513,8 @@ KozBon 换上了新图标：一个蓝点向外发出涟漪，就像在扫描周�
 **Hebrew:**
 
 ```text
-חדש ב-4.9
-ל-KozBon יש סמל חדש: נקודה כחולה שמפיצה אדוות, כמו סריקה של הרשת שסביבה. בפרטי השירותים והספרייה יש עכשיו כפתור ״תובנות״ שמבקש מהבינה המלאכותית שבחרתם להסביר את השירות, ולרשומות TXT מצורפת הערה על מה הן משמשות.
+חדש ב-4.10
+כשאין חיבור לאינטרנט, עוזרי ה-AI בענן מושהים ומודיעים על כך, וממשיכים מיד כשהחיבור חוזר. Apple Intelligence וסריקת הרשת ממשיכים לעבוד גם בלי אינטרנט. הצ׳אט גולל עכשיו כל הודעה שנשלחת אל התצוגה ומסתיר את המקלדת. KozBon היא עכשיו קוד פתוח ברישיון MIT, עם קישור למאגר שלה ב-GitHub בהגדרות.
 
 כל החידושים בגרסה 4
 • צ'אט: שאלו עוזר בינה מלאכותית על השירותים ברשת שלכם. הוא מריץ סריקה חדשה כשאתם שואלים מה יש בסביבה.
@@ -509,7 +523,9 @@ KozBon 换上了新图标：一个蓝点向外发出涟漪，就像在扫描周�
 • מראה חדש: רקע אווירה בכל לשונית, עם מתג לכיבוי.
 • רשימת ״בקרבת מקום״ מאורגנת לפי מכשיר או לפי סוג שירות, עם מסננים ומיון מונפש.
 • פריסות לרוחב ופריסות רחבות ב-iPhone, ופריסות משופרות ב-iPad וב-Mac.
-• Siri וקיצורים יכולים לסרוק שירותים ולהציג את מה שנמצא.
+• Siri וקיצורים יכולים למצוא סוג של מכשיר, לבדוק אם מכשיר מחובר, להסביר סוג שירות ולהתחיל או להפסיק שידור.
+• סמל אפליקציה חדש.
+• מוכנה ל-iPhone Duo.
 • דף ״מה חדש״ בהגדרות.
 • נדרש iOS‏, iPadOS‏, macOS או visionOS 26.
 ```

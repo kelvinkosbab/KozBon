@@ -7,8 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.10.0] - 2026-10-22
+
+### Added
+
+- When the device is offline, the cloud AI assistants pause in Chat, Insights, and Settings with a "No internet connection" message, and resume on their own once the connection is back. Apple Intelligence and Bonjour scanning keep working offline (#96).
+- Settings > About has a "KozBon on GitHub" row, and KozBon is now open source under the MIT License (#93).
+
 ### Changed
 
+- Chat scrolls each message you send into view just above the compose bar and dismisses the keyboard after sending (#97).
+- Cloud AI models get the network context they need on every turn, including after a failed request (#95).
 - The Chat screen's "What's new in this version?" suggestion is now "What's new", and the assistant's answer covers every 4.x and 3.x release instead of only the latest few. With the Basic detail level it answers in two short paragraphs, one per major version covering all of its releases; with Technical it gives a detailed rundown per major version.
 
 ## [4.9.2] - 2026-10-18

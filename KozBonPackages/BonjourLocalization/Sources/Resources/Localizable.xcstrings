@@ -29797,6 +29797,60 @@
         }
       }
     },
+    "When you're offline, the cloud AI assistants pause and say so, then pick up again as soon as you're back online. Apple Intelligence and network scanning keep working without the internet.\n\nChat now scrolls each message you send into view and hides the keyboard, and its What's new suggestion covers every 4.x release. KozBon is now open source under the MIT License, with a link to its GitHub repository in Settings.": {
+      "comment": "What's New summary for KozBon 4.10.0. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When you're offline, the cloud AI assistants pause and say so, then pick up again as soon as you're back online. Apple Intelligence and network scanning keep working without the internet.\n\nChat now scrolls each message you send into view and hides the keyboard, and its What's new suggestion covers every 4.x release. KozBon is now open source under the MIT License, with a link to its GitHub repository in Settings."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuando no tienes conexión, los asistentes de IA en la nube se pausan y te lo indican, y se reanudan en cuanto vuelves a estar en línea. Apple Intelligence y el escaneo de la red siguen funcionando sin internet.\n\nEl Chat ahora desplaza cada mensaje que envías a la vista y oculta el teclado, y su sugerencia Novedades abarca todas las versiones 4.x. KozBon ahora es de código abierto con la licencia MIT, con un enlace a su repositorio de GitHub en Ajustes."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hors connexion, les assistants IA dans le cloud se mettent en pause et vous le signalent, puis reprennent dès que vous êtes de nouveau en ligne. Apple Intelligence et l'analyse du réseau continuent de fonctionner sans Internet.\n\nLe Chat fait désormais défiler chaque message envoyé pour qu'il reste visible et masque le clavier, et sa suggestion Nouveautés couvre toutes les versions 4.x. KozBon est désormais open source sous licence MIT, avec un lien vers son dépôt GitHub dans Réglages."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wenn du offline bist, pausieren die Cloud-KI-Assistenten und weisen darauf hin. Sobald du wieder online bist, machen sie weiter. Apple Intelligence und der Netzwerk-Scan funktionieren auch ohne Internet.\n\nIm Chat wird jetzt jede gesendete Nachricht ins Bild gescrollt und die Tastatur ausgeblendet, und der Vorschlag „Neuigkeiten“ umfasst alle 4.x-Versionen. KozBon ist jetzt Open Source unter der MIT-Lizenz, mit einem Link zum GitHub-Repository in den Einstellungen."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オフラインのときは、クラウドAIアシスタントが一時停止してその旨を表示し、オンラインに戻るとすぐに再開します。Apple Intelligenceとネットワークのスキャンはインターネットなしでも使えます。\n\nチャットでは、送信したメッセージが毎回表示される位置までスクロールし、キーボードが閉じるようになりました。「新機能」の提案は4.xのすべてのリリースを網羅します。KozBonはMITライセンスのオープンソースになり、設定からGitHubリポジトリへのリンクを開けます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "离线时，云端 AI 助手会暂停并给出提示，重新联网后立即恢复。Apple 智能和网络扫描在没有互联网时也能继续使用。\n\n“聊天”现在会将你发送的每条消息滚动到可见位置并收起键盘，“新功能”建议涵盖所有 4.x 版本。KozBon 现已基于 MIT 许可证开源，可在“设置”中打开其 GitHub 仓库链接。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عندما تكون غير متصل بالإنترنت، يتوقف مساعدو الذكاء الاصطناعي السحابيون مؤقتًا ويُعلمونك بذلك، ثم يستأنفون العمل فور عودتك إلى الاتصال. يواصل Apple Intelligence وفحص الشبكة العمل دون إنترنت.\n\nأصبحت الدردشة تمرّر كل رسالة ترسلها إلى مجال العرض وتُخفي لوحة المفاتيح، ويشمل اقتراح «ما الجديد» جميع إصدارات 4.x. أصبح KozBon مفتوح المصدر بموجب ترخيص MIT، مع رابط إلى مستودعه على GitHub في الإعدادات."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "כשאין חיבור לאינטרנט, עוזרי ה-AI בענן מושהים ומודיעים על כך, וממשיכים מיד כשהחיבור חוזר. Apple Intelligence וסריקת הרשת ממשיכים לעבוד גם בלי אינטרנט.\n\nהצ׳אט גולל עכשיו כל הודעה שנשלחת אל התצוגה ומסתיר את המקלדת, וההצעה ״מה חדש״ מכסה את כל גרסאות 4.x. KozBon היא עכשיו קוד פתוח ברישיון MIT, עם קישור למאגר שלה ב-GitHub בהגדרות."
+          }
+        }
+      }
+    },
     "connectivity_offline_title": {
       "extractionState": "manual",
       "localizations": {
