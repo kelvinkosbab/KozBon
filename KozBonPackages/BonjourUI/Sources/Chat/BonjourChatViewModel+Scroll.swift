@@ -137,6 +137,36 @@ extension BonjourChatViewModel {
         }
     }
 
+    /// ``scrollToBottom(hasMessages:proxy:anchorID:duration:reduceMotion:)``
+    /// now and again once the rows have settled. The "Scanning
+    /// network…" row mounts in the same update as the user's bubble,
+    /// and the first pass measures the content before both are laid
+    /// out, leaving them behind the compose bar.
+    func scrollToBottomAfterInsertion(
+        hasMessages: Bool,
+        proxy: ScrollViewProxy,
+        anchorID: String,
+        reduceMotion: Bool
+    ) {
+        scrollToBottom(
+            hasMessages: hasMessages,
+            proxy: proxy,
+            anchorID: anchorID,
+            duration: 0.3,
+            reduceMotion: reduceMotion
+        )
+        Task { @MainActor [weak self] in
+            try? await Task.sleep(for: .milliseconds(300))
+            self?.scrollToBottom(
+                hasMessages: hasMessages,
+                proxy: proxy,
+                anchorID: anchorID,
+                duration: 0.25,
+                reduceMotion: reduceMotion
+            )
+        }
+    }
+
     /// Runs the toolbar's two-step Clear sequence:
     ///
     ///   1. Animate the ScrollView up to the empty-state

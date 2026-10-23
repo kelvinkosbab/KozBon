@@ -81,7 +81,12 @@ extension BonjourChatView {
                 scrollToBottom(session: session, proxy: proxy, duration: 0.3)
             }
             .onChange(of: viewModel.isScanningNetwork) {
-                scrollToBottom(session: session, proxy: proxy, duration: 0.3)
+                viewModel.scrollToBottomAfterInsertion(
+                    hasMessages: !session.messages.isEmpty,
+                    proxy: proxy,
+                    anchorID: Self.bottomAnchorID,
+                    reduceMotion: reduceMotion
+                )
             }
             .onChange(of: session.messages.last?.content) {
                 scrollToBottom(session: session, proxy: proxy, duration: 0.15)
