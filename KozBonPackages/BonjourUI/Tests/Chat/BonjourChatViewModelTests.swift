@@ -39,8 +39,8 @@ import BonjourStorage
 /// uncovered — `ScrollViewProxy` has no public initializer, so
 /// calling those methods from a unit test requires either a
 /// SwiftUI host or a refactor to extract the gating predicates.
-/// The state mutations they perform (`hasScrolledFirstUserMessage`,
-/// `pendingClear`) are observable through the fresh-VM defaults.
+/// The state they mutate (`pendingClear`) is observable through
+/// the fresh-VM defaults.
 @Suite("BonjourChatViewModel")
 @MainActor
 struct BonjourChatViewModelTests {
@@ -107,12 +107,11 @@ struct BonjourChatViewModelTests {
 
     // MARK: - Initial State
 
-    @Test("Fresh VM starts with empty `inputText`, zero `submitCount`, no scrolled flag, no pending intents")
+    @Test("Fresh VM starts with empty `inputText`, zero `submitCount`, no pending intents")
     func freshViewModelStartsClean() {
         let (vm, _) = makeViewModel()
         #expect(vm.inputText.isEmpty)
         #expect(vm.submitCount == 0)
-        #expect(!vm.hasScrolledFirstUserMessage)
         #expect(!vm.pendingClear)
         #expect(vm.pendingCreateTypeIntent == nil)
         #expect(vm.pendingBroadcastIntent == nil)

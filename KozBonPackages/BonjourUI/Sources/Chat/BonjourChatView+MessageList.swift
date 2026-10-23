@@ -25,12 +25,16 @@ extension BonjourChatView {
     /// typing bubble that replaces it.
     static let pendingAssistantBubbleID = "pending_assistant_bubble"
 
+    /// Zero-height row after all content; where sends and streamed
+    /// replies scroll to.
+    static let bottomAnchorID = "chat_bottom_anchor"
+
     /// The chat surface is a single ScrollView that ALWAYS contains
     /// the empty-state content (intro + suggestion buttons) plus
-    /// any messages. On first send the ScrollView animates the
-    /// user's bubble to the top of the viewport — the suggestions
+    /// any messages. Each send scrolls to the end, so the user's
+    /// bubble lands just above the compose bar and the suggestions
     /// scroll out above. There's no branch swap between an "empty"
-    /// and a "populated" surface anymore, so the transition feels
+    /// and a "populated" surface, so the transition feels
     /// continuous instead of an instant page change.
     ///
     /// Each `.onChange` handler delegates to a small per-event
@@ -38,12 +42,11 @@ extension BonjourChatView {
     /// function a thin assembly of declarative bindings instead
     /// of a nest of inline closures, and lets each scroll
     /// behavior be documented next to the rule that triggers it.
-    /// The helpers mutate VM state
-    /// (`hasScrolledFirstUserMessage`, `pendingClear`) and so
-    /// live on the VM where they're testable.
+    /// The helpers mutate VM state (`pendingClear`) and so live
+    /// on the VM where they're testable.
     ///
     /// `function_body_length` is disabled locally because the
-    /// six `.onChange` modifiers are an intrinsically chained
+    /// `.onChange` modifiers are an intrinsically chained
     /// expression — splitting just for line count would shatter
     /// the modifier chain into per-handler helpers that thread
     /// `proxy` through generics for no structural benefit.
@@ -52,7 +55,12 @@ extension BonjourChatView {
     func messageList(session: any BonjourChatSessionProtocol) -> some View {
         ScrollViewReader { proxy in
             ScrollView {
-                messageListContent(session: session)
+                VStack(spacing: 0) {
+                    messageListContent(session: session)
+                    Color.clear
+                        .frame(height: 0)
+                        .id(Self.bottomAnchorID)
+                }
             }
             // Announce the scroll region to VoiceOver users as
             // "Conversation" so they know what they're entering
@@ -66,28 +74,22 @@ extension BonjourChatView {
             #if !os(visionOS)
             .scrollDismissesKeyboard(.interactively)
             #endif
-            .onChange(of: session.messages.first?.id) { _, firstId in
-                viewModel.scrollFirstUserMessageToTop(
-                    firstId: firstId,
-                    proxy: proxy,
-                    reduceMotion: reduceMotion
-                )
+            // Rows that land together (the user's bubble and the
+            // "Scanning network…" row) grow the content after the
+            // scroll below has measured it; pinning the bottom keeps
+            // them above the compose bar without a second scroll.
+            .defaultScrollAnchor(.bottom, for: .sizeChanges)
+            // A new message (the user's bubble, then the reply's
+            // placeholder) or the scan row lands at the bottom,
+            // and streamed tokens keep the reply in view.
+            .onChange(of: session.messages.last?.id) {
+                scrollToBottom(session: session, proxy: proxy, duration: 0.3)
             }
-            .onChange(of: session.messages.last?.id) { _, _ in
-                viewModel.scrollLatestMessageToBottom(
-                    session: session,
-                    proxy: proxy,
-                    duration: 0.3,
-                    reduceMotion: reduceMotion
-                )
+            .onChange(of: viewModel.isScanningNetwork) {
+                scrollToBottom(session: session, proxy: proxy, duration: 0.3)
             }
             .onChange(of: session.messages.last?.content) {
-                viewModel.scrollLatestMessageToBottom(
-                    session: session,
-                    proxy: proxy,
-                    duration: 0.15,
-                    reduceMotion: reduceMotion
-                )
+                scrollToBottom(session: session, proxy: proxy, duration: 0.15)
             }
             .onChange(of: isInputFocused) { _, focused in
                 viewModel.scrollLatestMessageAboveKeyboard(
@@ -225,6 +227,20 @@ extension BonjourChatView {
             }
         }
         .padding()
+    }
+
+    fileprivate func scrollToBottom(
+        session: any BonjourChatSessionProtocol,
+        proxy: ScrollViewProxy,
+        duration: Double
+    ) {
+        viewModel.scrollToBottom(
+            hasMessages: !session.messages.isEmpty,
+            proxy: proxy,
+            anchorID: Self.bottomAnchorID,
+            duration: duration,
+            reduceMotion: reduceMotion
+        )
     }
 
     // MARK: - Error-Banner Action Dispatch
