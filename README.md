@@ -168,4 +168,4 @@ swift package --package-path KozBonPackages \
 
 ## License
 
-Copyright © 2016–present Kozinga. All rights reserved.
+KozBon is released under the [MIT License](LICENSE). Copyright © 2016–present Kozinga.

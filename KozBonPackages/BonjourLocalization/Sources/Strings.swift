@@ -1519,10 +1519,10 @@ public enum Strings {
             .init("settings_whats_new", bundle: .atURL(Bundle.module.bundleURL))
         }
 
-        /// Row label in the About section that opens KozBon's
-        /// open-source repository on GitHub.
-        public static var sourceCode: LocalizedStringResource {
-            .init("settings_source_code", bundle: .atURL(Bundle.module.bundleURL))
+        /// Caption under the "KozBon on GitHub" row in the About
+        /// section, naming the license the source is published under.
+        public static var openSourceLicense: LocalizedStringResource {
+            .init("settings_open_source_license", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         /// A "What's New" release summary in the user's language.

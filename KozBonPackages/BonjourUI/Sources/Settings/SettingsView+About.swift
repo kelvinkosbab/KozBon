@@ -38,7 +38,13 @@ extension SettingsView {
 
             Link(destination: Constants.Links.sourceRepository) {
                 HStack {
-                    Text(Strings.Settings.sourceCode)
+                    VStack(alignment: .leading, spacing: 2) {
+                        // Same wording as the macOS Help menu item.
+                        Text(Strings.Help.kozbonOnGitHub)
+                        Text(Strings.Settings.openSourceLicense)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
                     Spacer()
                     // Marks the row as leaving the app, where the
                     // What's New row above shows a push chevron.

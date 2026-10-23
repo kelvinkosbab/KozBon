@@ -26474,56 +26474,56 @@
         }
       }
     },
-    "settings_source_code": {
-      "comment": "Row label in Settings > About that opens KozBon's open-source repository on GitHub. \"GitHub\" is a brand name; do not translate it.",
+    "settings_open_source_license": {
+      "comment": "Caption under the \"KozBon on GitHub\" row in Settings > About. \"MIT\" is the license name; do not translate it.",
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Source Code on GitHub"
+            "value": "Open source under the MIT License."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Código fuente en GitHub"
+            "value": "Código abierto con licencia MIT."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Code source sur GitHub"
+            "value": "Open source sous licence MIT."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Quellcode auf GitHub"
+            "value": "Open Source unter der MIT-Lizenz."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "GitHub のソースコード"
+            "value": "MIT ライセンスのオープンソースです。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "GitHub 上的源代码"
+            "value": "基于 MIT 许可证开源。"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "الشيفرة المصدرية على GitHub"
+            "value": "مفتوح المصدر بموجب ترخيص MIT."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "קוד המקור ב-GitHub"
+            "value": "קוד פתוח ברישיון MIT."
           }
         }
       }
