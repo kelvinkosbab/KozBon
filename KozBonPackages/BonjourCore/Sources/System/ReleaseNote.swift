@@ -94,6 +94,23 @@ public enum ReleaseNotes {
     /// Newest-first releases since 3.0.
     public static let all: [ReleaseNote] = [
         ReleaseNote(
+            version: "4.11.0",
+            // swiftlint:disable:next line_length
+            summary: "Chat has a Stop button, so you can end a reply while it's still being written. Shortcuts that point at a specific service find it again after KozBon restarts, and stopping a broadcast no longer gets stuck.\n\nLinks that open outside the app share one arrow, which points the right way in Arabic and Hebrew. KozBon also now runs with Apple's strengthened memory protections.",
+            highlights: [
+                // swiftlint:disable:next line_length
+                "Chat has a Stop button in place of Send while a reply is being written. Tapping it ends the reply, keeps what was written so far, and frees the compose bar. Leaving the Chat screen also stops a reply in progress.",
+                // swiftlint:disable:next line_length
+                "Siri and Shortcuts actions saved with a specific service, such as Open in KozBon or Is Device Online, find that service again after KozBon relaunches, by running a fresh scan when it isn't already known.",
+                // swiftlint:disable:next line_length
+                "Stopping a broadcast no longer hangs when the network never confirms it. Publishing again or stopping cleanly ends any earlier attempt, with a short timeout as a backstop.",
+                // swiftlint:disable:next line_length
+                "Rows that open something outside the app (Open Shortcuts, KozBon on GitHub, Get an API key) share one trailing arrow that mirrors correctly in Arabic and Hebrew.",
+                // swiftlint:disable:next line_length
+                "KozBon is built with Apple's Enhanced Security settings and hardened-process entitlements, which add memory-safety protections at runtime."
+            ]
+        ),
+        ReleaseNote(
             version: "4.10.0",
             // swiftlint:disable:next line_length
             summary: "When you're offline, the cloud AI assistants pause and say so, then pick up again as soon as you're back online. Apple Intelligence and network scanning keep working without the internet.\n\nChat now scrolls each message you send into view and hides the keyboard, and its What's new suggestion covers every 4.x release. KozBon is now open source under the MIT License, with a link to its GitHub repository in Settings.",

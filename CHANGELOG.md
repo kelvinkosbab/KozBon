@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.11.0] - 2026-11-06
+
+### Added
+
+- Chat has a Stop button while a reply is being written, and leaving the Chat screen stops a reply in progress (#101).
+- KozBon is built with Enhanced Security and the hardened-process entitlements (#102).
+
+### Fixed
+
+- Siri and Shortcuts actions saved with a specific service find it again after KozBon relaunches (#101).
+- Stopping a broadcast no longer hangs when the network never confirms it (#101).
+- Rows that open something outside the app share one arrow that mirrors in right-to-left languages (#99).
+
 ## [4.10.0] - 2026-10-22
 
 ### Added
