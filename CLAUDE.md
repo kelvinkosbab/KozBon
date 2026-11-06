@@ -6,7 +6,9 @@ KozBon is a multi-platform Apple app for discovering and managing Bonjour (mDNS)
 
 ## Working with Claude
 
-Agent execution conventions — plan multi-step edits before executing, fix course-corrections silently (no "I made a mess" / "let me clean that up" filler), prefer one atomic `Edit` over a chain of small ones — are documented in [`.claude/rules/claude-execution-discipline.md`](.claude/rules/claude-execution-discipline.md). The rule loads automatically into every Claude Code session in this repo.
+Execution conventions (plan multi-step edits, no self-narration, atomic edits) live in [`.claude/rules/claude-execution-discipline.md`](.claude/rules/claude-execution-discipline.md), which loads every session.
+
+**Never push to `main`.** Make every change on a branch and open a pull request against `main`. CI runs on the PR.
 
 ## Build & Run
 
@@ -210,58 +212,28 @@ and never build a scene. Keep that wiring out of the scene.
 - Use `// MARK: -` section headers to organize code within files
 - One type per file, feature-based folder organization
 - Use the zero-parameter `onChange(of:)` closure (iOS 17+), not the deprecated `{ _ in }` form
-- In SwiftUI View body code, do not wrap `@State` mutations in `Task { @MainActor in }` — Views already run on the main actor
-- Use `[weak self]` in `Task` closures that capture `self` with a delay (e.g., `Task.sleep`), to avoid retaining objects past their lifetime
-- Respect `@Environment(\.accessibilityReduceMotion)` — use `withAnimation(reduceMotion ? nil : .default)` instead of bare `withAnimation`
-- Use semantic fonts (`.font(.headline)`) not `.font(.system(.headline))` for Dynamic Type support
 - All user-facing strings must use `BonjourLocalization.Strings.*` — never hardcode English strings in views. **Two compiler-enforced exceptions**, both in the app target (see "App Intents & Siri Strings" below): App Intents metadata and App Shortcut phrases cannot resolve against a package bundle. What Siri *says* at runtime is not metadata, so it goes through `Strings.Siri` like any other string.
 - Service type definitions go in `MyServiceType+Library.swift` — each new type needs a `static private let` definition AND an entry in `tcpServiceTypes` or `udpServiceTypes` array AND a corresponding `NSBonjourServices` entry in `Info.plist`
 
-## Swift 6.2 Strict Concurrency
+## Concurrency (project specifics)
 
-### Core Rules
+Swift 6 language mode with complete checking; the general rules are in `.claude/rules/apple-swift6-strict-concurrency.md`. KozBon's specifics:
 
-- All `Sendable` violations are compile errors, not warnings
-- Prefer `@MainActor` at the **type level** over annotating individual properties or methods
-- Never use `@unchecked Sendable` — redesign to avoid it
-- Avoid `DispatchQueue.main.async` — use structured concurrency (`Task`, `async`/`await`)
-- Avoid global mutable state (`static var`) — use actor-isolated singletons or dependency injection
-
-### Classes
-
-- **View models**: `@MainActor @Observable final class`
-- **Service classes** (scanners, publishers): `@MainActor final class` — implicitly `Sendable`
-- **Core Data** (`MyCoreDataStack`, `MyDataManager`, `CustomServiceType`): `@MainActor` since all access goes through `viewContext`
-- `DependencyContainer`: `final class: Sendable` with `@MainActor init()` for production, nonisolated init for testing
-
-### Protocols
-
-- `@MainActor` protocols (`BonjourServiceScannerProtocol`, `BonjourPublishManagerProtocol`, etc.) inherit `AnyObject, Sendable`
-- When `@MainActor` classes conform to ObjC protocols (`NetServiceDelegate`, `NetServiceBrowserDelegate`), use `@preconcurrency` on the conformance — not `nonisolated` methods
-
-### Value Types
-
-- Structs and enums crossing isolation boundaries must conform to `Sendable` explicitly: `BonjourServiceType`, `InternetAddress`, `TransportLayer`, `BonjourServiceBrowserState`
-
-### Patterns to Follow
-
-- `@MainActor` delegate chains: when both sides are `@MainActor`, call delegate methods directly — no `nonisolated` or `Task` hop needed
-- `nonisolated let` for properties needed by `nonisolated` protocol requirements (e.g., `Identifiable.id`)
-- `nonisolated(unsafe)` only for truly safe statics that can't satisfy the compiler (e.g., `static let sortDescriptors: [NSSortDescriptor]? = nil`)
-- `@preconcurrency` on ObjC protocol conformances and `EnvironmentKey` where the protocol predates concurrency
+- **Service classes** (scanners, publishers) are `@MainActor final class`. **Core Data** types (`MyCoreDataStack`, `MyDataManager`, `CustomServiceType`) are `@MainActor`, since all access goes through `viewContext`.
+- `DependencyContainer` is `final class: Sendable` with a `@MainActor init()` for production and a nonisolated init for tests.
+- `@MainActor` protocols (`BonjourServiceScannerProtocol`, `BonjourPublishManagerProtocol`) inherit `AnyObject, Sendable`.
+- `NetServiceDelegate` / `NetServiceBrowserDelegate` conformances use `@preconcurrency`, not `nonisolated` methods. When both sides of a delegate chain are `@MainActor`, call delegate methods directly.
+- `nonisolated(unsafe)` only for statics like `static let sortDescriptors: [NSSortDescriptor]? = nil`.
 
 ## Localization
 
-- **Module**: `BonjourLocalization` in `KozBonPackages/`
-- **Format**: String Catalog (`.xcstrings`) — JSON-based, supports plurals and format strings
-- **Languages**: English (base), Spanish, French, German, Japanese, Chinese (Simplified), Arabic, Hebrew
-- **RTL support**: Arabic and Hebrew are right-to-left. The app relies on SwiftUI's automatic mirroring — `HStack`, `.leading` / `.trailing` padding and alignment, `Spacer()`, and direction-aware SF Symbols all flip without manual intervention. Apply `.flipsForRightToLeftLayoutDirection(true)` on directional symbols whose meaning depends on direction (e.g. the diagonal `arrow.up.right` on chat suggestion cards). **Never** use absolute `Edge.left` / `.right` padding, `Alignment.left` / `.right`, or `.offset(x:)` without sign-flipping by `@Environment(\.layoutDirection)` — they don't mirror.
-- **Access pattern**: `Text(Strings.NavigationTitles.nearbyServices)` or `String(localized: Strings.Errors.portMin)`
-- **Format strings**: Use methods like `Strings.Errors.portMin(value)` for runtime interpolation
-- **Service descriptions**: Use `serviceType.localizedDetail` (not `.detail`) — looks up translations from the String Catalog
-- **Release notes**: each release in `ReleaseNotes.all` has a 1–2 paragraph English `summary`, which is its own catalog key, displayed on What's New via `Strings.Settings.releaseSummary(_:)`. A new or reworded summary needs a catalog entry in all 8 locales — the validator fails otherwise. The `highlights` bullets are English-only context for the chat assistant and aren't translated.
-- **Adding new strings**: Add the key to `Strings.swift`, add the entry with all 8 translations (including `ar` and `he`) to `Localizable.xcstrings`, validate JSON. `scripts/validate-localizations.py` enforces locale completeness in CI.
-- **Never use `NSLocalizedString`** — all strings go through the `Strings` enum for type safety
+General rules: `.claude/rules/apple-localization-best-practices.md`. KozBon's specifics:
+
+- **Module**: `BonjourLocalization`, String Catalog `Localizable.xcstrings`, 8 languages: en (base), es, fr, de, ja, zh-Hans, ar, he. Arabic and Hebrew are right-to-left; mirror direction-dependent symbols such as the chat cards' `arrow.up.right` with `.flipsForRightToLeftLayoutDirection(true)`.
+- **Access**: `Text(Strings.NavigationTitles.nearbyServices)`, `String(localized: Strings.Errors.portMin)`, and format functions like `Strings.Errors.portMin(value)`.
+- **Service descriptions**: use `serviceType.localizedDetail`, not `.detail`.
+- **Release notes**: each release in `ReleaseNotes.all` has a 1–2 paragraph English `summary`, which is its own catalog key, shown on What's New via `Strings.Settings.releaseSummary(_:)`. A new or reworded summary needs all 8 locales. The `highlights` bullets are English-only chat context and aren't translated.
+- **Adding strings**: add the key to `Strings.swift` and the entry with all 8 translations to `Localizable.xcstrings`. `scripts/validate-localizations.py` enforces completeness in CI.
 
 ## App Intents & Siri Strings
 
@@ -285,24 +257,16 @@ Verify a change by building and inspecting `Metadata.appintents/extract.actionsd
 
 ## SwiftLint
 
-- **Config**: `.swiftlint.yml` in project root
-- **Integration**: Runs as an Xcode Build Phase (lint only, no auto-correct) + GitHub Actions CI on PRs
-- **Run manually**: `swiftlint lint` from project root
-- **Key settings**: line length warns at 140, identifier min length 2, `todo` rule disabled
-- **Excluded**: `KozBon/Legacy/`
-- **Inline disables**: Use `// swiftlint:disable:next <rule>` for intentional violations (e.g., `force_unwrapping` in Core Data, `force_cast` in `MyDataManagerObject`)
-- **File-level disables**: `// swiftlint:disable <rule>` at file top for files with many intentional violations (e.g., `MyServiceType+Library.swift`)
+- **Config**: `.swiftlint.yml` (line length warns at 140; `todo` disabled). There is no Xcode build phase: CI (`swiftlint.yml`) runs `swiftlint lint --strict` on PRs that touch `.swift` files.
+- **Run locally**: `swiftlint lint` from the repo root.
+- Intentional exceptions use `// swiftlint:disable:next <rule>` with a reason (e.g. `force_unwrapping` in Core Data, `force_cast` in `MyDataManagerObject`). `MyServiceType+Library.swift` disables rules at file level.
 
 ## Testing
 
-- **Framework**: Swift Testing (`@Test`, `@Suite`, `#expect`)
-- **Runner**: `swift test --package-path KozBonPackages` is the only test runner. All tests live in `KozBonPackages/` — 1,271 tests across 110 suites covering BonjourCore, BonjourModels, BonjourScanning, BonjourUI, BonjourAICore, BonjourAIAnthropic, BonjourAIGemini, BonjourAIOpenAI, AppCore (including the former app-level `TopLevelDestinationTests`), etc.
-- **Naming**: `<TypeName>Tests.swift` (e.g., `TransportLayerTests.swift`)
-- **`@MainActor` tests**: Use `@MainActor` on the suite when testing `@MainActor`-isolated types
-- **Cross-module testing**: Use `@testable import <Module>` to access internal types, `import <Module>` for public API tests
-- **`CustomServiceTypeTests` in BonjourStorage**: Require Xcode to compile `.xcdatamodeld` — excluded from the SPM test target (`Package.swift` `testExcludes`). The other BonjourStorage tests (SwiftData-backed `PreferencesStore` / `UserPreferences`) run fine under `swift test`
-- **Flaky-test detection (Xcode 27+)**: Re-run the suite under stress with `swift test --package-path KozBonPackages --maximum-repetitions 5 --repeat-until fail` to surface any test that passes on the first run but fails intermittently. Pairs well with `--filter` to scope to a suspect suite. Available with the Xcode 27 toolchain or `xcrun --toolchain Xcode27 swift test …`.
-- **Test failure summary (Xcode 27+)**: The Xcode 27 `swift test` runner prints a consolidated failure summary at the end of the run when one or more test targets fail — no scrolling required to find what broke.
+- **Framework**: Swift Testing (`@Test`, `@Suite`, `#expect`). General rules: `.claude/rules/apple-testing-strategy.md`.
+- **Runner**: `swift test --package-path KozBonPackages` is the only runner; every test lives in `KozBonPackages/`.
+- **`CustomServiceTypeTests` in BonjourStorage** need Xcode to compile `.xcdatamodeld`, so they're excluded from the SPM test target (`testExcludes`). The SwiftData `PreferencesStore` tests run under `swift test`.
+- **Flaky tests (Xcode 27+)**: `swift test --package-path KozBonPackages --maximum-repetitions 5 --repeat-until fail`, scoped with `--filter`.
 
 ## CI / GitHub Actions
 

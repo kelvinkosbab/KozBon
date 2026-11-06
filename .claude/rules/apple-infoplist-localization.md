@@ -1,6 +1,16 @@
 ---
 description: Localizing Info.plist strings on Apple platforms — InfoPlist.xcstrings vs InfoPlist.strings, the INFOPLIST_KEY_* build-settings base value, per-target catalogs, and purpose strings that survive App Store review
 globs: "Info.plist,**/Info.plist,**/InfoPlist.xcstrings,**/InfoPlist.strings,**/*.xcconfig"
+paths:
+  - "Info.plist"
+  - "**/Info.plist"
+  - "**/InfoPlist.xcstrings"
+  - "**/InfoPlist.strings"
+  - "**/*.xcconfig"
+must:
+  - "Every purpose string has a base value in the Info.plist or build settings; catalogs only add translations."
+  - "Declare only the `NS*UsageDescription` keys you use, and say what the data does for the user."
+  - "Mark identifiers (bundle IDs, URL schemes, UTTypes) do-not-translate."
 ---
 
 # Info.plist Localization

@@ -1,6 +1,17 @@
 ---
 description: Patterns for shipping iOS / macOS / tvOS / watchOS / visionOS apps to TestFlight — versioning, App Store Connect API auth, archive + export, code signing, tester groups, beta review, dSYM upload, CI integration
-globs: "**/{Fastfile,Appfile,Matchfile,Deliverfile,Snapfile,Scanfile,Gymfile,exportOptions.plist,ExportOptions.plist,*.entitlements,project.pbxproj,*.yml,*.yaml,Info.plist,*.xcconfig}"
+globs: "**/{Fastfile,Appfile,Matchfile,Deliverfile,Snapfile,Scanfile,Gymfile,exportOptions.plist,ExportOptions.plist,*.entitlements,project.pbxproj,Info.plist,*.xcconfig},.github/workflows/*.{yml,yaml},.gitlab-ci.yml,bitrise.yml,.circleci/config.yml"
+paths:
+  - "**/{Fastfile,Appfile,Matchfile,Deliverfile,Snapfile,Scanfile,Gymfile,exportOptions.plist,ExportOptions.plist,*.entitlements,project.pbxproj,Info.plist,*.xcconfig}"
+  - ".github/workflows/*.{yml,yaml}"
+  - ".gitlab-ci.yml"
+  - "bitrise.yml"
+  - ".circleci/config.yml"
+must:
+  - "`CFBundleVersion` always increases and comes from CI; never hardcode or reuse it."
+  - "Authenticate with an App Store Connect API key (.p8) stored as a CI secret, not an app-specific password."
+  - "Use manual signing in CI and never commit `.p12` certificates or profiles."
+  - "Export with `method: app-store-connect` and upload dSYMs to your crash reporter."
 ---
 
 # Apple TestFlight Deployment
@@ -177,6 +188,8 @@ Alongside the privacy manifest, App Store submissions now carry age-related obli
 - **Regional rules already in force.** Age-assurance requirements cover **Brazil, Australia, Singapore**, plus **Utah** and **Louisiana** in the US, each with its own enforcement date. Since **24 February 2026**, users in Australia, Brazil, and Singapore are blocked from downloading 18+-rated apps unless confirmed as adults. If you ship in those markets, the gate isn't optional.
 - **Keep the age rating questionnaire current.** It's versioned with the listing, not the build — re-check it whenever you add UGC, messaging, or an external content source.
 - **Privacy documentation must be current too** — from September 2026 Apple rejects submissions whose privacy documentation hasn't been updated. Pair this check with the privacy-manifest audit above; they fail the same release for the same reason.
+
+Region-specific storefront requirements (China ICP and generative-AI filings, EU trader status, licensed categories) live in [`apple-regional-compliance.md`](./apple-regional-compliance.md).
 
 Treat all of this as a release-checklist item next to `CFBundleVersion` and the privacy report — a compliance answer that's stale is a rejection, and rejections at review time cost days, not minutes.
 

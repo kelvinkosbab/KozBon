@@ -1,6 +1,13 @@
 ---
 description: Patterns for visionOS apps — scene types, immersion styles, spatial gestures, RealityKit / ECS conventions, head-mounted-display accessibility, USDZ pipeline, performance budgets
 globs: "**/*.swift"
+paths:
+  - "**/*.swift"
+must:
+  - "Check the `openImmersiveSpace` result, provide a visible exit, and dismiss when the scene backgrounds."
+  - "Honor Reduce Motion for all motion; world-lock readable content, never head-lock text."
+  - "Every interactive entity needs a hover effect plus input-target and collision components."
+  - "Hold 90 fps; frame drops cause nausea."
 ---
 
 # visionOS Best Practices

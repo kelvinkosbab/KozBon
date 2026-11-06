@@ -1,6 +1,13 @@
 ---
 description: Enforce patterns for Apple Foundation Models (on-device LLM) integration — session lifecycle, availability gating, streaming, testability
 globs: "**/*.swift"
+paths:
+  - "**/*.swift"
+must:
+  - "Session holders are `@MainActor @Observable final class`; keep one `LanguageModelSession` per conversation."
+  - "Gate on `SystemLanguageModel.default.availability` (each unavailable reason) and a user preference."
+  - "Stream into a placeholder, check `Task.isCancelled` in the loop, and reset `isGenerating` with `defer`."
+  - "Only the real implementation imports FoundationModels; inject a protocol so tests use a mock."
 ---
 
 # Apple Foundation Models

@@ -1,6 +1,12 @@
 ---
 description: Keep in-code comments and commit messages terse — verbosity destroys signal and teammates stop reading
 globs: "**/*.{swift,h,m,mm,kt,kts}"
+paths:
+  - "**/*.{swift,h,m,mm,kt,kts}"
+must:
+  - "Comments explain why, never what; no narration, diff commentary, or commented-out code."
+  - "Commit subject: imperative, at most 72 characters, no period."
+  - "Add a commit body only when the why isn't obvious; never list files or report test runs."
 ---
 
 # Concise Comments & Commits
@@ -21,7 +27,7 @@ Write these:
   ```
 
 - **Trap warnings** — "this looks redundant but removing it breaks X."
-- Doc comments per [`apple-documentation-strategy.md`](./apple-documentation-strategy.md) / `android-documentation-strategy.md` (AppBootstrapAI bundle) — a separate concern with its own rules.
+- Doc comments per [`apple-documentation-strategy.md`](./apple-documentation-strategy.md) / [`android-documentation-strategy.md`](./android-documentation-strategy.md) — a separate concern with its own rules.
 
 Never write these (the AI-assistant signature moves):
 
