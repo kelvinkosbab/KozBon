@@ -7,7 +7,7 @@ Thanks for your interest in KozBon. This document covers what you need to make a
 **Prerequisites:**
 
 - macOS 14+ (Xcode requires it).
-- Xcode 26 or later — KozBon targets iOS 18.6 / macOS 15.6 / visionOS 2.0 minimums but uses iOS 26-only APIs (Foundation Models, `@Entry`) gated behind `#available`. Xcode 26 ships the SDKs.
+- Xcode 27 (release builds require it; see `scripts/release/upload-testflight.sh`). KozBon targets 26 on every platform, so Foundation Models and Liquid Glass need no `#available` checks.
 - Git.
 
 **Clone:**
@@ -45,11 +45,10 @@ xcodebuild test \
 ## Running the linter
 
 ```bash
-cd KozBonPackages
-swift package --allow-writing-to-package-directory swiftlint
+swiftlint lint
 ```
 
-SwiftLint also runs as an Xcode build phase, so warnings surface in your IDE on every build.
+Run it from the repo root. CI runs `swiftlint lint --strict` with SwiftLint 0.65.1 (pinned in `.github/workflows/swiftlint.yml`), so warnings fail a PR; install the same version locally to match.
 
 ## Building for each platform
 

@@ -48,8 +48,25 @@ if [ -n "$(git status --porcelain)" ]; then
     exit 1
 fi
 
+# App Store Connect rejects builds from beta Xcodes, and build 128 was
+# archived with one by accident. Require a release build of the
+# expected major version; override with REQUIRED_XCODE_MAJOR.
+REQUIRED_XCODE_MAJOR="${REQUIRED_XCODE_MAJOR:-27}"
+XCODE_VERSION="$(xcodebuild -version | awk 'NR == 1 { print $2 }')"
+XCODE_BUILD="$(xcodebuild -version | awk 'NR == 2 { print $3 }')"
+if [ "${XCODE_VERSION%%.*}" != "$REQUIRED_XCODE_MAJOR" ]; then
+    echo "error: Xcode $XCODE_VERSION is selected; release builds need Xcode $REQUIRED_XCODE_MAJOR." >&2
+    echo "       Switch with: sudo xcode-select -s /Applications/Xcode.app" >&2
+    exit 1
+fi
+# Beta builds end in a lowercase letter (e.g. 27A5276g).
+if [[ "$XCODE_BUILD" =~ [a-z]$ ]]; then
+    echo "error: Xcode $XCODE_VERSION ($XCODE_BUILD) is a beta; App Store Connect rejects beta-built uploads." >&2
+    exit 1
+fi
+
 COMMIT="$(git rev-parse --short HEAD)"
-echo "==> $PLATFORM from $COMMIT using $(xcodebuild -version | head -1)"
+echo "==> $PLATFORM from $COMMIT using Xcode $XCODE_VERSION ($XCODE_BUILD)"
 
 rm -rf "$BUILD_DIR"
 mkdir -p "$BUILD_DIR"

@@ -21,8 +21,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Pinned so a SwiftLint release can't turn CI red with no code
+      # change. Bump SWIFTLINT_VERSION deliberately.
       - name: Install SwiftLint
-        run: brew install swiftlint
+        env:
+          SWIFTLINT_VERSION: '0.65.1'
+        run: |
+          curl -fsSL -o "$RUNNER_TEMP/swiftlint.zip" \
+            "https://github.com/realm/SwiftLint/releases/download/${SWIFTLINT_VERSION}/portable_swiftlint.zip"
+          unzip -q "$RUNNER_TEMP/swiftlint.zip" -d "$RUNNER_TEMP/swiftlint"
+          echo "$RUNNER_TEMP/swiftlint" >> "$GITHUB_PATH"
+          "$RUNNER_TEMP/swiftlint/swiftlint" version
 
       - name: Run SwiftLint
         run: swiftlint lint --strict --reporter github-actions-logging
