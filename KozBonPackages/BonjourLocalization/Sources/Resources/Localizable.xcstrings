@@ -29797,6 +29797,60 @@
         }
       }
     },
+    "Chat has a Stop button, so you can end a reply while it's still being written. Shortcuts that point at a specific service find it again after KozBon restarts, and stopping a broadcast no longer gets stuck.\n\nLinks that open outside the app share one arrow, which points the right way in Arabic and Hebrew. KozBon also now runs with Apple's strengthened memory protections.": {
+      "comment": "What's New summary for KozBon 4.11.0. The English text is the key.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chat has a Stop button, so you can end a reply while it's still being written. Shortcuts that point at a specific service find it again after KozBon restarts, and stopping a broadcast no longer gets stuck.\n\nLinks that open outside the app share one arrow, which points the right way in Arabic and Hebrew. KozBon also now runs with Apple's strengthened memory protections."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El Chat tiene un botón Detener para cortar una respuesta mientras aún se está escribiendo. Los atajos que apuntan a un servicio concreto vuelven a encontrarlo después de reiniciar KozBon, y dejar de difundir un servicio ya no se queda bloqueado.\n\nLos enlaces que se abren fuera de la app comparten la misma flecha, que apunta en la dirección correcta en árabe y hebreo. Además, KozBon ahora funciona con las protecciones de memoria reforzadas de Apple."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le Chat dispose d'un bouton Arrêter pour interrompre une réponse en cours de rédaction. Les raccourcis qui ciblent un service précis le retrouvent après le redémarrage de KozBon, et l'arrêt d'une diffusion ne reste plus bloqué.\n\nLes liens qui s'ouvrent hors de l'app partagent la même flèche, orientée dans le bon sens en arabe et en hébreu. KozBon bénéficie aussi désormais des protections de mémoire renforcées d'Apple."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Chat hat jetzt eine Stopp-Taste, mit der du eine Antwort abbrichst, während sie noch geschrieben wird. Kurzbefehle, die auf einen bestimmten Dienst zeigen, finden ihn nach einem Neustart von KozBon wieder, und das Beenden einer Übertragung bleibt nicht mehr hängen.\n\nLinks, die außerhalb der App geöffnet werden, haben jetzt alle denselben Pfeil, der auf Arabisch und Hebräisch in die richtige Richtung zeigt. Außerdem läuft KozBon jetzt mit Apples verstärktem Speicherschutz."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "チャットに「停止」ボタンが加わり、作成中の返答を途中で止められるようになりました。特定のサービスを指定したショートカットは、KozBonを再起動したあとも同じサービスを見つけられます。また、ブロードキャストの停止で処理が止まったままになる問題を修正しました。\n\nアプリの外で開くリンクは同じ矢印にそろい、アラビア語とヘブライ語では正しい向きで表示されます。また、KozBonはAppleの強化されたメモリ保護のもとで動作するようになりました。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“聊天”新增“停止”按钮，可以在回复生成过程中随时结束。指向特定服务的快捷指令在 KozBon 重新启动后也能再次找到该服务，停止广播时也不会再卡住。\n\n在 App 外打开的链接现在使用同一个箭头，并在阿拉伯语和希伯来语中指向正确的方向。KozBon 现在还会在 Apple 增强的内存保护下运行。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أصبح في الدردشة زر «إيقاف» لإنهاء الرد أثناء كتابته. وتعثر الاختصارات التي تشير إلى خدمة معيّنة عليها مجددًا بعد إعادة تشغيل KozBon، ولم يعد إيقاف البث يتعثّر.\n\nتستخدم الروابط التي تُفتح خارج التطبيق السهم نفسه، ويشير إلى الاتجاه الصحيح في العربية والعبرية. كما يعمل KozBon الآن مع حماية الذاكرة المعزّزة من Apple."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בצ׳אט יש עכשיו כפתור ״עצור״, כדי לעצור תשובה בזמן שהיא עוד נכתבת. קיצורים שמצביעים על שירות מסוים מוצאים אותו שוב אחרי ש-KozBon מופעלת מחדש, והפסקת שידור כבר לא נתקעת.\n\nקישורים שנפתחים מחוץ לאפליקציה מציגים עכשיו אותו חץ, שמצביע לכיוון הנכון בערבית ובעברית. בנוסף, KozBon פועלת עכשיו עם הגנות הזיכרון המחוזקות של Apple."
+          }
+        }
+      }
+    },
     "When you're offline, the cloud AI assistants pause and say so, then pick up again as soon as you're back online. Apple Intelligence and network scanning keep working without the internet.\n\nChat now scrolls each message you send into view and hides the keyboard, and its What's new suggestion covers every 4.x release. KozBon is now open source under the MIT License, with a link to its GitHub repository in Settings.": {
       "comment": "What's New summary for KozBon 4.10.0. The English text is the key.",
       "extractionState": "manual",
@@ -30165,60 +30219,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "עם מודל הבינה המלאכותית שנבחר ב-KozBon, ההסברים זקוקים לחיבור לאינטרנט. יש לנסות שוב כשהחיבור יחזור."
-          }
-        }
-      }
-    },
-    "Chat has a Stop button, so you can end a reply while it's still being written. Shortcuts that point at a specific service find it again after KozBon restarts, and stopping a broadcast no longer gets stuck.\n\nLinks that open outside the app share one arrow, which points the right way in Arabic and Hebrew. KozBon also now runs with Apple's strengthened memory protections.": {
-      "comment": "What's New summary for KozBon 4.11.0. The English text is the key.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Chat has a Stop button, so you can end a reply while it's still being written. Shortcuts that point at a specific service find it again after KozBon restarts, and stopping a broadcast no longer gets stuck.\n\nLinks that open outside the app share one arrow, which points the right way in Arabic and Hebrew. KozBon also now runs with Apple's strengthened memory protections."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "El Chat tiene un botón Detener para cortar una respuesta mientras aún se está escribiendo. Los atajos que apuntan a un servicio concreto vuelven a encontrarlo después de reiniciar KozBon, y dejar de difundir un servicio ya no se queda bloqueado.\n\nLos enlaces que se abren fuera de la app comparten la misma flecha, que apunta en la dirección correcta en árabe y hebreo. Además, KozBon ahora funciona con las protecciones de memoria reforzadas de Apple."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Le Chat dispose d'un bouton Arrêter pour interrompre une réponse en cours de rédaction. Les raccourcis qui ciblent un service précis le retrouvent après le redémarrage de KozBon, et l'arrêt d'une diffusion ne reste plus bloqué.\n\nLes liens qui s'ouvrent hors de l'app partagent la même flèche, orientée dans le bon sens en arabe et en hébreu. KozBon bénéficie aussi désormais des protections de mémoire renforcées d'Apple."
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Der Chat hat jetzt eine Stopp-Taste, mit der du eine Antwort abbrichst, während sie noch geschrieben wird. Kurzbefehle, die auf einen bestimmten Dienst zeigen, finden ihn nach einem Neustart von KozBon wieder, und das Beenden einer Übertragung bleibt nicht mehr hängen.\n\nLinks, die außerhalb der App geöffnet werden, haben jetzt alle denselben Pfeil, der auf Arabisch und Hebräisch in die richtige Richtung zeigt. Außerdem läuft KozBon jetzt mit Apples verstärktem Speicherschutz."
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "チャットに「停止」ボタンが加わり、作成中の返答を途中で止められるようになりました。特定のサービスを指定したショートカットは、KozBonを再起動したあとも同じサービスを見つけられます。また、ブロードキャストの停止で処理が止まったままになる問題を修正しました。\n\nアプリの外で開くリンクは同じ矢印にそろい、アラビア語とヘブライ語では正しい向きで表示されます。また、KozBonはAppleの強化されたメモリ保護のもとで動作するようになりました。"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "“聊天”新增“停止”按钮，可以在回复生成过程中随时结束。指向特定服务的快捷指令在 KozBon 重新启动后也能再次找到该服务，停止广播时也不会再卡住。\n\n在 App 外打开的链接现在使用同一个箭头，并在阿拉伯语和希伯来语中指向正确的方向。KozBon 现在还会在 Apple 增强的内存保护下运行。"
-          }
-        },
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "أصبح في الدردشة زر «إيقاف» لإنهاء الرد أثناء كتابته. وتعثر الاختصارات التي تشير إلى خدمة معيّنة عليها مجددًا بعد إعادة تشغيل KozBon، ولم يعد إيقاف البث يتعثّر.\n\nتستخدم الروابط التي تُفتح خارج التطبيق السهم نفسه، ويشير إلى الاتجاه الصحيح في العربية والعبرية. كما يعمل KozBon الآن مع حماية الذاكرة المعزّزة من Apple."
-          }
-        },
-        "he": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "בצ׳אט יש עכשיו כפתור ״עצור״, כדי לעצור תשובה בזמן שהיא עוד נכתבת. קיצורים שמצביעים על שירות מסוים מוצאים אותו שוב אחרי ש-KozBon מופעלת מחדש, והפסקת שידור כבר לא נתקעת.\n\nקישורים שנפתחים מחוץ לאפליקציה מציגים עכשיו אותו חץ, שמצביע לכיוון הנכון בערבית ובעברית. בנוסף, KozBon פועלת עכשיו עם הגנות הזיכרון המחוזקות של Apple."
           }
         }
       }
