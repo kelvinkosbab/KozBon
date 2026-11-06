@@ -366,15 +366,15 @@ KozBon מאתר ומסביר את השירותים שמכשירים מפרסמי
 • תמיכה ב-VoiceOver, בגופן דינמי ובהפחתת תנועה
 • זמין בעברית, אנגלית, ספרדית, צרפתית, גרמנית, יפנית, סינית פשוטה וערבית
 
-## What's New in This Version (4.10)
+## What's New in This Version (4.11)
 
 Use the same text on every platform. It recaps all of version 4, so platforms that skipped a release are covered too. Paste each language's block as is; the bullets are plain text.
 
 **English (U.S.):**
 
 ```text
-New in 4.10
-When you're offline, the cloud AI assistants pause and say so, then pick up again as soon as you're back online. Apple Intelligence and network scanning keep working without the internet. Chat now scrolls each message you send into view and hides the keyboard. KozBon is now open source under the MIT License, with a link to its GitHub repository in Settings.
+New in 4.11
+Chat has a Stop button, so you can end a reply while it's still being written. Shortcuts that point at a specific service find it again after KozBon restarts, and stopping a broadcast no longer gets stuck. Links that open outside the app share one arrow, which points the right way in Arabic and Hebrew. KozBon also now runs with Apple's strengthened memory protections.
 
 Everything new in version 4
 • Chat: ask an AI assistant about the services on your network. It runs a fresh scan when you ask what's out there.
@@ -393,8 +393,8 @@ Everything new in version 4
 **Spanish (Spain):**
 
 ```text
-Novedades de la 4.10
-Cuando no tienes conexión, los asistentes de IA en la nube se pausan y te lo indican, y se reanudan en cuanto vuelves a estar en línea. Apple Intelligence y el escaneo de la red siguen funcionando sin internet. El Chat ahora desplaza cada mensaje que envías a la vista y oculta el teclado. KozBon ahora es de código abierto con la licencia MIT, con un enlace a su repositorio de GitHub en Ajustes.
+Novedades de la 4.11
+El Chat tiene un botón Detener para cortar una respuesta mientras aún se está escribiendo. Los atajos que apuntan a un servicio concreto vuelven a encontrarlo después de reiniciar KozBon, y dejar de difundir un servicio ya no se queda bloqueado. Los enlaces que se abren fuera de la app comparten la misma flecha, que apunta en la dirección correcta en árabe y hebreo. Además, KozBon ahora funciona con las protecciones de memoria reforzadas de Apple.
 
 Todo lo nuevo de la versión 4
 • Chat: pregunta a un asistente de IA por los servicios de tu red. Hace un escaneo nuevo cuando preguntas qué hay a tu alrededor.
@@ -413,8 +413,8 @@ Todo lo nuevo de la versión 4
 **French:**
 
 ```text
-Nouveautés de la 4.10
-Hors connexion, les assistants IA dans le cloud se mettent en pause et vous le signalent, puis reprennent dès que vous êtes de nouveau en ligne. Apple Intelligence et l'analyse du réseau continuent de fonctionner sans Internet. Le Chat fait désormais défiler chaque message envoyé pour qu'il reste visible et masque le clavier. KozBon est désormais open source sous licence MIT, avec un lien vers son dépôt GitHub dans Réglages.
+Nouveautés de la 4.11
+Le Chat dispose d'un bouton Arrêter pour interrompre une réponse en cours de rédaction. Les raccourcis qui ciblent un service précis le retrouvent après le redémarrage de KozBon, et l'arrêt d'une diffusion ne reste plus bloqué. Les liens qui s'ouvrent hors de l'app partagent la même flèche, orientée dans le bon sens en arabe et en hébreu. KozBon bénéficie aussi désormais des protections de mémoire renforcées d'Apple.
 
 Toutes les nouveautés de la version 4
 • Chat : interrogez un assistant IA sur les services de votre réseau. Il lance un nouveau scan quand vous demandez ce qui vous entoure.
@@ -433,8 +433,8 @@ Toutes les nouveautés de la version 4
 **German:**
 
 ```text
-Neu in 4.10
-Wenn du offline bist, pausieren die Cloud-KI-Assistenten und weisen darauf hin. Sobald du wieder online bist, machen sie weiter. Apple Intelligence und der Netzwerk-Scan funktionieren auch ohne Internet. Im Chat wird jetzt jede gesendete Nachricht ins Bild gescrollt und die Tastatur ausgeblendet. KozBon ist jetzt Open Source unter der MIT-Lizenz, mit einem Link zum GitHub-Repository in den Einstellungen.
+Neu in 4.11
+Der Chat hat jetzt eine Stopp-Taste, mit der du eine Antwort abbrichst, während sie noch geschrieben wird. Kurzbefehle, die auf einen bestimmten Dienst zeigen, finden ihn nach einem Neustart von KozBon wieder, und das Beenden einer Übertragung bleibt nicht mehr hängen. Links, die außerhalb der App geöffnet werden, haben jetzt alle denselben Pfeil, der auf Arabisch und Hebräisch in die richtige Richtung zeigt. Außerdem läuft KozBon jetzt mit Apples verstärktem Speicherschutz.
 
 Alles Neue in Version 4
 • Chat: Frag einen KI-Assistenten nach den Diensten in deinem Netzwerk. Er startet einen neuen Scan, wenn du wissen willst, was es in der Nähe gibt.
@@ -453,8 +453,8 @@ Alles Neue in Version 4
 **Japanese:**
 
 ```text
-4.10の新機能
-オフラインのときは、クラウドAIアシスタントが一時停止してその旨を表示し、オンラインに戻るとすぐに再開します。Apple Intelligenceとネットワークのスキャンはインターネットなしでも使えます。チャットでは、送信したメッセージが毎回表示される位置までスクロールし、キーボードが閉じるようになりました。KozBonはMITライセンスのオープンソースになり、設定からGitHubリポジトリへのリンクを開けます。
+4.11の新機能
+チャットに「停止」ボタンが加わり、作成中の返答を途中で止められるようになりました。特定のサービスを指定したショートカットは、KozBonを再起動したあとも同じサービスを見つけられます。また、ブロードキャストの停止で処理が止まったままになる問題を修正しました。 アプリの外で開くリンクは同じ矢印にそろい、アラビア語とヘブライ語では正しい向きで表示されます。また、KozBonはAppleの強化されたメモリ保護のもとで動作するようになりました。
 
 バージョン4の新機能まとめ
 • チャット：ネットワーク上のサービスについてAIアシスタントに質問できます。周りに何があるかを尋ねると、新たにスキャンを実行します。
@@ -473,8 +473,8 @@ Alles Neue in Version 4
 **Chinese (Simplified):**
 
 ```text
-4.10 新功能
-离线时，云端 AI 助手会暂停并给出提示，重新联网后立即恢复。Apple 智能和网络扫描在没有互联网时也能继续使用。“聊天”现在会将你发送的每条消息滚动到可见位置并收起键盘。KozBon 现已基于 MIT 许可证开源，可在“设置”中打开其 GitHub 仓库链接。
+4.11 新功能
+“聊天”新增“停止”按钮，可以在回复生成过程中随时结束。指向特定服务的快捷指令在 KozBon 重新启动后也能再次找到该服务，停止广播时也不会再卡住。 在 App 外打开的链接现在使用同一个箭头，并在阿拉伯语和希伯来语中指向正确的方向。KozBon 现在还会在 Apple 增强的内存保护下运行。
 
 版本 4 全部新功能
 • 聊天：向 AI 助手询问你网络中的服务。当你问周围有什么时，它会重新扫描一次。
@@ -493,8 +493,8 @@ Alles Neue in Version 4
 **Arabic:**
 
 ```text
-الجديد في 4.10
-عندما تكون غير متصل بالإنترنت، يتوقف مساعدو الذكاء الاصطناعي السحابيون مؤقتًا ويُعلمونك بذلك، ثم يستأنفون العمل فور عودتك إلى الاتصال. يواصل Apple Intelligence وفحص الشبكة العمل دون إنترنت. أصبحت الدردشة تمرّر كل رسالة ترسلها إلى مجال العرض وتُخفي لوحة المفاتيح. أصبح KozBon مفتوح المصدر بموجب ترخيص MIT، مع رابط إلى مستودعه على GitHub في الإعدادات.
+الجديد في 4.11
+أصبح في الدردشة زر «إيقاف» لإنهاء الرد أثناء كتابته. وتعثر الاختصارات التي تشير إلى خدمة معيّنة عليها مجددًا بعد إعادة تشغيل KozBon، ولم يعد إيقاف البث يتعثّر. تستخدم الروابط التي تُفتح خارج التطبيق السهم نفسه، ويشير إلى الاتجاه الصحيح في العربية والعبرية. كما يعمل KozBon الآن مع حماية الذاكرة المعزّزة من Apple.
 
 كل جديد الإصدار 4
 • المحادثة: اسأل مساعد ذكاء اصطناعي عن الخدمات على شبكتك. يُجري فحصًا جديدًا عندما تسأل عمّا حولك.
@@ -513,8 +513,8 @@ Alles Neue in Version 4
 **Hebrew:**
 
 ```text
-חדש ב-4.10
-כשאין חיבור לאינטרנט, עוזרי ה-AI בענן מושהים ומודיעים על כך, וממשיכים מיד כשהחיבור חוזר. Apple Intelligence וסריקת הרשת ממשיכים לעבוד גם בלי אינטרנט. הצ׳אט גולל עכשיו כל הודעה שנשלחת אל התצוגה ומסתיר את המקלדת. KozBon היא עכשיו קוד פתוח ברישיון MIT, עם קישור למאגר שלה ב-GitHub בהגדרות.
+חדש ב-4.11
+בצ׳אט יש עכשיו כפתור ״עצור״, כדי לעצור תשובה בזמן שהיא עוד נכתבת. קיצורים שמצביעים על שירות מסוים מוצאים אותו שוב אחרי ש-KozBon מופעלת מחדש, והפסקת שידור כבר לא נתקעת. קישורים שנפתחים מחוץ לאפליקציה מציגים עכשיו אותו חץ, שמצביע לכיוון הנכון בערבית ובעברית. בנוסף, KozBon פועלת עכשיו עם הגנות הזיכרון המחוזקות של Apple.
 
 כל החידושים בגרסה 4
 • צ'אט: שאלו עוזר בינה מלאכותית על השירותים ברשת שלכם. הוא מריץ סריקה חדשה כשאתם שואלים מה יש בסביבה.
