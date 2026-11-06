@@ -8,6 +8,7 @@ Thanks for your interest in KozBon. This document covers what you need to make a
 
 - macOS 14+ (Xcode requires it).
 - Xcode 27 (release builds require it; see `scripts/release/upload-testflight.sh`). KozBon targets 26 on every platform, so Foundation Models and Liquid Glass need no `#available` checks.
+- Archive with `scripts/release/upload-testflight.sh <ios|macos|visionos> [--dry-run]`, not Xcode's Product > Archive. Enhanced Security builds the app as arm64e, and only the script passes `ENABLE_ENHANCED_SECURITY=YES` to the local packages so they build arm64e too.
 - Git.
 
 **Clone:**
