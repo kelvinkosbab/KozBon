@@ -284,7 +284,7 @@ All workflows use `macos-26` runner with concurrency groups and SPM caching.
 - **No duplicate service types**: Each `(type, transportLayer)` pair must be unique in the library arrays. Duplicates cause redundant scanners and duplicate discovered services.
 - **Info.plist NSBonjourServices**: Every service type the app wants to discover must be listed here. Format: `_type._transport` (e.g., `_http._tcp`). No duplicates.
 - **service-names-port-numbers.csv**: IANA registry reference file bundled as a resource. Not parsed at runtime — service types are hardcoded in the Swift library.
-- **BonjourService.id** uses `serviceIdentifier` (cached from `NetService.hashValue` at init) — stable within a session but not across launches.
+- **BonjourService.id** is `logicalIdentity` (`name|type|domain`), so it's stable across launches and dedups per-interface duplicates.
 - **Core Data model in package**: `iDiscover.xcdatamodeld` lives in `BonjourStorage/Sources/Resources/` (alongside the SwiftData preferences container) and is loaded via `Bundle.module`. SPM CLI (`swift test`) cannot compile `.xcdatamodeld` — use Xcode for the Core Data tests.
 - **`@_exported import Core`**: `BonjourCore/Sources/Exports.swift` re-exports the `Core` package so downstream modules get `Logger`/`Loggable` without explicitly importing `Core`.
 - **SF Symbol validation**: All `imageSystemName` values in `BonjourServiceType+UI.swift` are verified valid SF Symbols. When adding new ones, validate with `NSImage(systemSymbolName:accessibilityDescription:)`.
