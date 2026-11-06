@@ -1,0 +1,7 @@
+# Links in vendored AppBootstrapAI files (.claude/) that point at files
+# shipped only in the bundle repo, not in KozBon. Kept unedited so
+# bundle upgrades stay clean.
+file://.*/templates/Package\.template\.swift
+file://.*/scripts/scaffold-spm-package\.sh
+file://.*/\.claude/rules/android-.*\.md
+file://.*/\.claude/rules/cross-platform-development\.md
