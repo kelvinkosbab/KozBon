@@ -155,9 +155,8 @@ xcodebuild -workspace KozBon.xcworkspace -scheme KozBon \
 # SPM package tests (fastest — no simulator needed)
 swift test --package-path KozBonPackages
 
-# Lint
-swift package --package-path KozBonPackages \
-  --allow-writing-to-package-directory swiftlint
+# Lint (from the repo root)
+swiftlint lint
 ```
 
 ## Resources
