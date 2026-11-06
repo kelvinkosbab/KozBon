@@ -1,6 +1,13 @@
 ---
 description: Enforce Swift 6.4 strict concurrency rules when writing or reviewing Swift code
 globs: "**/*.swift"
+paths:
+  - "**/*.swift"
+must:
+  - "Never use `@unchecked Sendable`; redesign instead."
+  - "Put `@MainActor` on the type, not on individual methods."
+  - "Prefer structured concurrency over `DispatchQueue.main.async`; no global mutable `static var`."
+  - "Objective-C delegate conformances use `@preconcurrency`, not `nonisolated` methods."
 ---
 
 # Swift 6.4 Strict Concurrency

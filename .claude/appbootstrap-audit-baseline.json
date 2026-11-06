@@ -1,0 +1,240 @@
+{
+  "schema_version": 1,
+  "note": "Accepted AppBootstrapAI audit findings. Give every entry a reason; delete entries as you fix them.",
+  "entries": [
+    {
+      "id": "apple-privacy-userdefaults",
+      "file": "KozBon/PrivacyInfo.xcprivacy",
+      "count": 1,
+      "reason": "False positive: the only matches are doc comments in the model catalogs; the app never calls UserDefaults or @AppStorage."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/AppCore/Tests/AppCoreViewModelTests.swift",
+      "count": 1,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAI/Tests/Routing/CloudAwareBonjourChatSessionFactoryTests.swift",
+      "count": 5,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAI/Tests/Routing/CloudAwareBonjourServiceExplainerFactoryTests.swift",
+      "count": 3,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAI/Tests/Routing/CloudAwareOpenAIRoutingTests.swift",
+      "count": 7,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAIAnthropic/Sources/Anthropic/AnthropicClient.swift",
+      "count": 4,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAIAnthropic/Sources/Anthropic/AnthropicModel.swift",
+      "count": 3,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAIAnthropic/Sources/Anthropic/AnthropicModelCatalog.swift",
+      "count": 1,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAIAnthropic/Sources/Chat/AnthropicBonjourChatSession.swift",
+      "count": 1,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAIAnthropic/Sources/Explainer/AnthropicBonjourServiceExplainer.swift",
+      "count": 2,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAIAnthropic/Sources/Image+AnthropicBrand.swift",
+      "count": 1,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAIAnthropic/Tests/Anthropic/AnthropicClientTests+ErrorMapping.swift",
+      "count": 2,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAIAnthropic/Tests/Anthropic/AnthropicConfigurationTests.swift",
+      "count": 1,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAIAnthropic/Tests/Anthropic/AnthropicMessageRequestTests.swift",
+      "count": 1,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAIAnthropic/Tests/Anthropic/AnthropicModelCatalogTests.swift",
+      "count": 8,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAIAnthropic/Tests/Chat/AnthropicBonjourChatSessionTests.swift",
+      "count": 1,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAICore/Tests/AICloudErrorTests.swift",
+      "count": 1,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAIGemini/Sources/Explainer/GeminiBonjourServiceExplainer.swift",
+      "count": 1,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAIGemini/Sources/Gemini/GeminiClient.swift",
+      "count": 4,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAIGemini/Sources/Gemini/GeminiModel.swift",
+      "count": 3,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAIGemini/Sources/Gemini/GeminiModelCatalog.swift",
+      "count": 1,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAIGemini/Sources/Image+GeminiBrand.swift",
+      "count": 1,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAIGemini/Tests/Gemini/GeminiModelCatalogClientTests.swift",
+      "count": 2,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAIGemini/Tests/Gemini/GeminiModelCatalogTests.swift",
+      "count": 7,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAIOpenAI/Sources/Chat/OpenAIBonjourChatSession.swift",
+      "count": 1,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAIOpenAI/Sources/Explainer/OpenAIBonjourServiceExplainer.swift",
+      "count": 2,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAIOpenAI/Sources/Image+OpenAIBrand.swift",
+      "count": 1,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAIOpenAI/Sources/OpenAI/OpenAIClient.swift",
+      "count": 5,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAIOpenAI/Sources/OpenAI/OpenAIModelCatalog.swift",
+      "count": 1,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAIOpenAI/Tests/Chat/OpenAIBonjourChatSessionTests.swift",
+      "count": 1,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourAIOpenAI/Tests/OpenAI/PreferencesStoreOpenAIModelTests.swift",
+      "count": 4,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourCore/Sources/System/ReleaseNote.swift",
+      "count": 14,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourCore/Tests/System/ReleaseNoteTests.swift",
+      "count": 1,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourLocalization/Sources/Resources/Localizable.xcstrings",
+      "count": 301,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourUI/Tests/DesignSystem/AIBackendStyleTests.swift",
+      "count": 4,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "ai-brand-in-ui",
+      "file": "KozBonPackages/BonjourUI/Tests/Settings/AICloudSignInViewModelTests.swift",
+      "count": 2,
+      "reason": "Provider names appear only in the backend picker, sign-in sheets, and tests; AIBackendAvailability withholds every cloud provider on the China mainland storefront (ADR 0005-0007)."
+    },
+    {
+      "id": "swift-strong-delegate",
+      "file": "KozBonPackages/BonjourModels/Tests/Service/BonjourServiceTests.swift",
+      "count": 1,
+      "reason": "Test spies that the test itself owns; no production delegate is held strongly."
+    },
+    {
+      "id": "swift-strong-delegate",
+      "file": "KozBonPackages/BonjourScanning/Tests/Scanning/BonjourServiceScannerDelegateFlowTests.swift",
+      "count": 1,
+      "reason": "Test spies that the test itself owns; no production delegate is held strongly."
+    },
+    {
+      "id": "swift-literal-color",
+      "file": "KozBonPackages/BonjourUI/Sources/Settings/ShortcutsGuideView.swift",
+      "count": 3,
+      "reason": "ShortcutsGuideView draws the Shortcuts app tile in its own brand colours on purpose."
+    }
+  ]
+}

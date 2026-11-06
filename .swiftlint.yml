@@ -1,7 +1,6 @@
 # SwiftLint Configuration for KozBon
 
 excluded:
-  - KozBon/Legacy
   # Build output and generated sources. Linting these produces violations
   # nobody can act on — SwiftPM's generated test `runner.swift` alone trips
   # file_length, line_length (at error severity), force_unwrapping, and more.

@@ -1,6 +1,13 @@
 ---
 description: Apple design system and core UI components — a DesignSystem module with semantic color, type, spacing, and shape tokens; Dynamic Type-safe custom fonts; component styles (ButtonStyle/LabelStyle) over wrapper views; Liquid Glass adoption; environment theming; previews and a component gallery
 globs: "**/*.swift"
+paths:
+  - "**/*.swift"
+must:
+  - "Features use role-named design tokens, never literal colors, fonts, or spacing."
+  - "Custom fonts scale with Dynamic Type (`relativeTo:`); text styles are the type scale."
+  - "Prefer styles (`ButtonStyle`, `LabelStyle`) over wrapper views, and system components first."
+  - "Standard components adopt Liquid Glass for free; remove custom bar backgrounds and use glass only for floating controls."
 ---
 
 # Apple Design System & Core UI Components
@@ -44,7 +51,11 @@ An app without a design system accretes `Color(red:green:blue:)`, `.font(.system
 - **A small spacing scale** (`Spacing.xs = 4 … xl = 32`) as `CGFloat` constants. Pick from the scale; a `13` in a view is a finding.
 - **Spacing that sits next to text scales with it** — `@ScaledMetric(relativeTo: .body) private var rowSpacing = Spacing.m`.
 - **Corners follow their container** — `ConcentricRectangle()` / `.containerShape(_:)` so nested rounded shapes stay concentric with the device and window corners on iOS 26+. A hardcoded `cornerRadius: 12` inside a sheet looks wrong next to the system's.
-- **Minimum hit target 44×44pt** for every control, regardless of glyph size.
+- **Minimum hit target 44×44pt** for every control, regardless of glyph size. On macOS the touch target is **36×36pt** with the control's size unchanged — see [`apple-mac-touch.md`](./apple-mac-touch.md).
+
+### Motion
+
+- **Motion tokens live here too** — a role-named `Motion` namespace (`feedback`, `standard`, `enter`, `exit`) instead of durations and curves at call sites. See [`apple-motion-design.md`](./apple-motion-design.md).
 
 ## Liquid Glass (iOS 26+ SDKs)
 

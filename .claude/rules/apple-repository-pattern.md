@@ -1,6 +1,13 @@
 ---
 description: Apple data layer and the repository pattern — protocol-based repositories returning Sendable domain models, actor or Sendable implementations under Swift 6, local store as the single source of truth with AsyncSequence observation, DTO/persistence/domain mapping, typed errors, in-flight dedup, injection at the composition root, and in-memory fakes for tests
 globs: "**/*.swift"
+paths:
+  - "**/*.swift"
+must:
+  - "Protocol in a domain module; implementation is an `actor` or stateless `Sendable` class, never `@MainActor`."
+  - "Only `Sendable` domain values cross the boundary, never `NSManagedObject` or `@Model`."
+  - "Local store is the source of truth; map transport errors to typed domain errors."
+  - "No generic `Repository<T>` CRUD base."
 ---
 
 # Apple Repository Pattern (Data Layer)

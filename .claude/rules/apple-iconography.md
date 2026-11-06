@@ -1,6 +1,13 @@
 ---
 description: Apple iconography — SF Symbols (typed facade, rendering modes, variants, symbol effects, availability), custom symbols in asset catalogs, icon sizing via font, icon accessibility, and app icons built with Icon Composer (layered Liquid Glass icons, dark/tinted/clear variants)
 globs: "**/*.swift"
+paths:
+  - "**/*.swift"
+must:
+  - "Use a typed `AppIcon` facade; no raw `systemName:` strings in features."
+  - "Size symbols with fonts or `imageScale`, never `.resizable().frame(...)`; keep 44pt hit targets."
+  - "Icon-only buttons keep a `Label` with `.labelStyle(.iconOnly)`; decorative icons are hidden."
+  - "App icons come from Icon Composer, with no baked mask or shadow."
 ---
 
 # Apple Iconography
