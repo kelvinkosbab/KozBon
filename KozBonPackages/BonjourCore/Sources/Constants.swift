@@ -31,6 +31,10 @@ public enum Constants {
 
         /// Delay in milliseconds to work around NetService publish callback bug.
         public static let publishDelayMilliseconds = 500
+
+        /// How long `unPublish()` waits for `netServiceDidStop` before
+        /// returning anyway.
+        public static let unpublishTimeout: Duration = .seconds(3)
     }
 
     // MARK: - Refresh

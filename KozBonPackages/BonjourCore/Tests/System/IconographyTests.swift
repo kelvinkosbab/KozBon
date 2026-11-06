@@ -85,6 +85,7 @@ struct IconographyTests {
         Iconography.refresh,
         // Arrows
         Iconography.arrowUp,
+        Iconography.stop,
         Iconography.arrowUpRight,
         // Clipboard & Copy
         Iconography.copy,

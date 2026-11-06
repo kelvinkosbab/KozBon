@@ -120,6 +120,7 @@ public enum Iconography {
 
     /// Upward arrow — used as the Send glyph in the chat compose bar.
     public static let arrowUp = "arrow.up"
+    public static let stop = "stop.fill"
 
     /// Upward-and-trailing arrow — used as the affordance on suggestion chips.
     public static let arrowUpRight = "arrow.up.right"

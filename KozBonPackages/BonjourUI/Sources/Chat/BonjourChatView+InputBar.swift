@@ -81,10 +81,15 @@ extension BonjourChatView {
             // follows the active AI backend's brand — blue for
             // Apple Intelligence, Anthropic Cara orange for the
             // cloud path.
+            // While a reply streams, the same capsule becomes Stop.
             Button {
-                submitTypedMessage(session: session)
+                if session.isGenerating {
+                    viewModel.stopGenerating()
+                } else {
+                    submitTypedMessage(session: session)
+                }
             } label: {
-                Image.arrowUp
+                (session.isGenerating ? Image.stop : Image.arrowUp)
                     .font(.footnote.weight(.bold))
                     .foregroundStyle(.white)
                     .accessibilityHidden(true)
@@ -94,20 +99,21 @@ extension BonjourChatView {
                     // just the tiny intrinsic-size arrow glyph at
                     // its center.
                     .contentShape(Capsule())
-                    .opacity(viewModel.sendDisabled(session: session, isOffline: isOffline(session)) ? 0.4 : 1.0)
+                    .opacity(isSendButtonDisabled(session) ? 0.4 : 1.0)
                     .animation(
                         reduceMotion ? nil : .easeInOut(duration: 0.15),
-                        value: viewModel.sendDisabled(session: session, isOffline: isOffline(session))
+                        value: isSendButtonDisabled(session)
                     )
             }
             .buttonStyle(.plain)
-            .disabled(viewModel.sendDisabled(session: session, isOffline: isOffline(session)))
-            .accessibilityLabel(Strings.Chat.send)
-            // Three-way hint so VoiceOver can explain *why* the
-            // button is in its current state: busy / empty input
-            // / enabled.
+            .disabled(isSendButtonDisabled(session))
+            .accessibilityLabel(session.isGenerating ? Strings.Chat.stop : Strings.Chat.send)
+            // Explains the button's current state: stop / offline /
+            // empty input / enabled.
             .accessibilityHint(
-                viewModel.sendButtonAccessibilityHint(session: session, isOffline: isOffline(session))
+                session.isGenerating
+                    ? String(localized: Strings.Accessibility.chatStopHint)
+                    : viewModel.sendButtonAccessibilityHint(session: session, isOffline: isOffline(session))
             )
             .accessibilityIdentifier("chat_send_button")
             // Cap Dynamic Type on the Send capsule. The 44 × 32 pt
@@ -152,7 +158,7 @@ extension BonjourChatView {
         // lets feel and sight land together.
         viewModel.submitCount &+= 1
         dismissKeyboard()
-        Task {
+        viewModel.sendTask = Task {
             await viewModel.sendMessage(
                 viewModel.inputText,
                 using: session,
@@ -162,6 +168,12 @@ extension BonjourChatView {
                 isOffline: isOffline(session)
             )
         }
+    }
+
+    /// Stop stays enabled while a reply streams; otherwise the
+    /// usual send rules apply.
+    func isSendButtonDisabled(_ session: any BonjourChatSessionProtocol) -> Bool {
+        !session.isGenerating && viewModel.sendDisabled(session: session, isOffline: isOffline(session))
     }
 
     /// Clearing the focus state alone didn't reliably put the

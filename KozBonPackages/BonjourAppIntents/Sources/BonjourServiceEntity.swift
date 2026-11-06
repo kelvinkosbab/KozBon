@@ -29,11 +29,9 @@ public struct BonjourServiceEntity: AppEntity, Sendable, Hashable {
 
     // MARK: - Identity
 
-    /// Stable per-session identifier from `BonjourService.id`
-    /// (derived from `NetService.hashValue`). Stable across the
-    /// life of a single scan but not across launches, so
-    /// ``BonjourServiceEntityQuery`` can only resolve ids from the
-    /// latest scan in this process.
+    /// The service's DNS-SD identity, `name|type|domain`, from
+    /// `BonjourService.logicalIdentity`. It survives relaunches, so a
+    /// Shortcut that saved a service still finds it after a new scan.
     public let id: String
 
     /// Voice-friendly version of ``name``. For most services
@@ -107,10 +105,9 @@ public struct BonjourServiceEntity: AppEntity, Sendable, Hashable {
     /// the App Intents boundary.
     @MainActor
     public init(from service: BonjourService) {
-        // `BonjourService.id` is `Int`; a `String` id survives the
-        // App Intents archive format and Shortcuts' serialization
-        // without surprises.
-        self.id = String(service.id)
+        // Not `BonjourService.id`: that comes from `NetService.hashValue`
+        // and changes every launch, which breaks saved Shortcuts.
+        self.id = service.logicalIdentity
         // Returns user-given names ("Living Room TV") verbatim and
         // substitutes a device class for hostname-style ones
         // ("iPhone-1F2A" → "iPhone").
@@ -155,16 +152,33 @@ public struct BonjourServiceEntityQuery: EntityQuery {
 
     private let store: RecentServiceEntities
 
+    /// Scans for services when an id isn't in the latest List result,
+    /// as happens for a saved Shortcut after a relaunch. `nil` in tests.
+    private let rescan: (@Sendable () async -> [BonjourServiceEntity])?
+
     public init() {
         self.store = .shared
+        self.rescan = { await Self.scanForEntities() }
     }
 
-    init(store: RecentServiceEntities) {
+    init(
+        store: RecentServiceEntities,
+        rescan: (@Sendable () async -> [BonjourServiceEntity])? = nil
+    ) {
         self.store = store
+        self.rescan = rescan
     }
 
     public func entities(for identifiers: [BonjourServiceEntity.ID]) async throws -> [BonjourServiceEntity] {
-        await store.entities(for: identifiers)
+        let cached = await store.entities(for: identifiers)
+        guard let rescan, cached.count < Set(identifiers).count else { return cached }
+        await store.replace(with: await rescan())
+        return await store.entities(for: identifiers)
+    }
+
+    @MainActor
+    private static func scanForEntities() async -> [BonjourServiceEntity] {
+        await IntentScan.run().services.map(BonjourServiceEntity.init(from:))
     }
 
     public func suggestedEntities() async throws -> [BonjourServiceEntity] {

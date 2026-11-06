@@ -116,7 +116,7 @@ extension BonjourChatView {
             // out the press animation and adds perceived latency.
             // Users tap the input manually when they're ready
             // to type a follow-up.
-            Task {
+            viewModel.sendTask = Task {
                 await viewModel.sendMessage(
                     text,
                     using: session,

@@ -7,7 +7,6 @@
 
 import Foundation
 import Testing
-import BonjourAI
 import BonjourCore
 import BonjourModels
 import BonjourAICore

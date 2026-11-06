@@ -239,6 +239,9 @@ public struct BonjourChatView: View {
                     viewModel.onAppear(injectedSession: injectedSession)
                     refreshCloudKeyState()
                 }
+                // Leaving the chat stops the reply instead of letting it
+                // stream to a screen nobody is looking at.
+                .onDisappear { viewModel.stopGenerating() }
                 // Animate the swap between the sign-in prompt
                 // and the normal chat content (message list +
                 // compose bar). Without this the swap is an
