@@ -72,12 +72,18 @@ rm -rf "$BUILD_DIR"
 mkdir -p "$BUILD_DIR"
 
 echo "==> Archiving"
+# ENABLE_ENHANCED_SECURITY is set on the KozBon project, which makes the app
+# target build an arm64e slice. Project settings don't reach the
+# KozBonPackages modules, so without this command-line override they build
+# arm64 only and the app fails with "Unable to resolve module dependency:
+# 'AppCore'". Passing it here applies it to every target, packages included.
 xcodebuild archive \
     -workspace KozBon.xcworkspace \
     -scheme KozBon \
     -destination "$DESTINATION" \
     -archivePath "$ARCHIVE_PATH" \
-    -allowProvisioningUpdates
+    -allowProvisioningUpdates \
+    ENABLE_ENHANCED_SECURITY=YES
 
 echo "==> Exporting"
 xcodebuild -exportArchive \
