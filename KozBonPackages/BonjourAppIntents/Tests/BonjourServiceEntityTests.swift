@@ -95,11 +95,12 @@ struct BonjourServiceEntityTests {
         #expect(entity.serviceTypeDisplayName == "AirPlay")
     }
 
-    @Test("`init(from:)` projects `BonjourService.id` (Int) to a stable String identifier")
-    func projectsIdToString() {
+    @Test("The entity id is the service's DNS-SD identity, which survives relaunches")
+    func idIsLogicalIdentity() {
         let service = makeService()
         let entity = BonjourServiceEntity(from: service)
-        #expect(entity.id == String(service.id))
+        #expect(entity.id == service.logicalIdentity)
+        #expect(entity.id == BonjourServiceEntity(from: makeService()).id)
     }
 
     @Test("Two entities from the same service are equal (Hashable conformance honors id)")
@@ -133,6 +134,16 @@ struct BonjourServiceEntityTests {
         let query = BonjourServiceEntityQuery(store: store)
         let result = try await query.entities(for: ["not-a-service"])
         #expect(result.isEmpty)
+    }
+
+    @Test("An id missing from the latest result triggers a rescan, as for a saved Shortcut after relaunch")
+    func queryRescansForMissingIds() async throws {
+        let store = RecentServiceEntities()
+        let printer = BonjourServiceEntity(from: makeService(name: "Office Printer", type: "ipp"))
+
+        let query = BonjourServiceEntityQuery(store: store, rescan: { [printer] })
+        let result = try await query.entities(for: [printer.id])
+        #expect(result == [printer])
     }
 
     @Test("Suggestions are the latest List result, and empty before any scan")

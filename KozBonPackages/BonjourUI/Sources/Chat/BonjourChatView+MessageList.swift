@@ -282,7 +282,7 @@ extension BonjourChatView {
             isInputFocused = false
             viewModel.pendingClear = true
         case .retry:
-            Task {
+            viewModel.sendTask = Task {
                 await viewModel.retryLastSend(
                     using: session,
                     preferencesStore: preferencesStore,

@@ -7,7 +7,6 @@
 
 import Foundation
 import Testing
-import BonjourAI
 import BonjourAICore
 @testable import BonjourAIAnthropic
 

@@ -167,7 +167,15 @@ public final class BonjourService: NSObject, @preconcurrency NetServiceDelegate 
         self.isStopping = true
         self.isResolving = false
         self.isPublishing = false
-        self.didStop = didStop
+        // Chain rather than replace, so a second `stop()` before
+        // `netServiceDidStop` doesn't strand the first caller.
+        let previousDidStop = self.didStop
+        self.didStop = {
+            previousDidStop?()
+            didStop?()
+        }
+        // An in-flight `publishService()` would otherwise never return.
+        self.publishContinuation?.resume(throwing: CancellationError())
         self.publishContinuation = nil
         self.service.stop()
     }
@@ -237,6 +245,9 @@ public final class BonjourService: NSObject, @preconcurrency NetServiceDelegate 
     /// Publishes this service on the network. Throws ``PublishError/didNotPublish`` on failure.
     public func publishService() async throws {
         try await withCheckedThrowingContinuation { continuation in
+            // A repeated publish supersedes the earlier one; resume it
+            // so its caller isn't left suspended.
+            self.publishContinuation?.resume(throwing: CancellationError())
             self.publishContinuation = continuation
             self.isPublishing = true
             self.service.publish()
@@ -246,11 +257,19 @@ public final class BonjourService: NSObject, @preconcurrency NetServiceDelegate 
     /// Stops and un-publishes this service from the network.
     public func unPublish() async {
         await withCheckedContinuation { continuation in
+            let resumer = ResumeOnce(continuation)
             self.stop {
                 Task { @MainActor in
                     try? await Task.sleep(for: .milliseconds(Constants.Network.publishDelayMilliseconds))
-                    continuation.resume()
+                    resumer.resume()
                 }
+            }
+            // `netServiceDidStop` isn't guaranteed (e.g. stopping a
+            // service that never started publishing), so don't wait on
+            // it forever.
+            Task { @MainActor in
+                try? await Task.sleep(for: Constants.Network.unpublishTimeout)
+                resumer.resume()
             }
         }
     }

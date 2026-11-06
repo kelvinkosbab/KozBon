@@ -883,6 +883,10 @@ public enum Strings {
             .init("a11y_chat_busy_hint", bundle: .atURL(Bundle.module.bundleURL))
         }
 
+        public static var chatStopHint: LocalizedStringResource {
+            .init("a11y_chat_stop_hint", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
         public static var chatClearHistoryHint: LocalizedStringResource {
             .init("a11y_chat_clear_history_hint", bundle: .atURL(Bundle.module.bundleURL))
         }
@@ -1662,6 +1666,10 @@ public enum Strings {
 
         public static var send: LocalizedStringResource {
             .init("chat_send", bundle: .atURL(Bundle.module.bundleURL))
+        }
+
+        public static var stop: LocalizedStringResource {
+            .init("chat_stop", bundle: .atURL(Bundle.module.bundleURL))
         }
 
         public static var emptyTitle: LocalizedStringResource {

@@ -68,6 +68,17 @@ final class BonjourChatViewModel {
     /// path.
     var submitCount: Int = 0
 
+    /// The send in flight, kept so Stop and leaving the chat can
+    /// cancel it. The sessions stop streaming when their task is
+    /// cancelled.
+    var sendTask: Task<Void, Never>?
+
+    /// Cancels the reply being written. The text received so far stays.
+    func stopGenerating() {
+        sendTask?.cancel()
+        sendTask = nil
+    }
+
     /// Sentence-detector that fires a lighter `.sensoryFeedback`
     /// at the end of each completed sentence in the streamed
     /// assistant response. Owns its own state machine; the chat
