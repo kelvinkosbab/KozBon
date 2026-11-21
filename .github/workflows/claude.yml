@@ -1,0 +1,43 @@
+name: Claude
+
+# Answers "@claude" in PR and issue comments. Only users with write access
+# can trigger it (the action's default). Claude may push commits to a branch
+# when asked, so this job gets contents: write.
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  claude:
+    if: |
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
+      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
+      (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
+      actions: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Claude
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          allow_fork_prs: 'false'
+          claude_args: |
+            --max-turns 30
+            --append-system-prompt "Follow CLAUDE.md and the rules in .claude/rules/. Never push to main. This runner is Linux, so you can't build or test with Xcode or swift test here; say so rather than claiming a change was verified."
