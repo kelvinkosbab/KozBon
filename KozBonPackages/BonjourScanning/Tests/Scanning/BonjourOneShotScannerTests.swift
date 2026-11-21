@@ -36,42 +36,67 @@ struct BonjourOneShotScannerTests {
         )
     }
 
+    /// A runner whose scan window ends immediately, for tests that
+    /// only check what happens around the window.
+    private func makeImmediateRunner(scanner: MockBonjourServiceScanner) -> BonjourOneShotScanner {
+        BonjourOneShotScanner(scanner: scanner, waitForScanWindow: { _ in })
+    }
+
+    /// Starts a scan behind `gate` and returns once the runner is
+    /// listening, so the caller can simulate callbacks and then
+    /// `gate.close()`.
+    private func startGatedScan(
+        scanner: MockBonjourServiceScanner,
+        gate: ScanWindowGate
+    ) async -> Task<[BonjourService], Never> {
+        let runner = BonjourOneShotScanner(scanner: scanner, waitForScanWindow: gate.wait)
+        let runTask = Task { @MainActor in
+            await runner.run()
+        }
+        await gate.waitUntilOpen()
+        return runTask
+    }
+
     // MARK: - Lifecycle
 
     @Test("`run` starts the scanner once at the beginning of the call")
     func runStartsScannerOnce() async {
         let mock = MockBonjourServiceScanner()
-        let runner = BonjourOneShotScanner(scanner: mock)
-        _ = await runner.run(timeout: .milliseconds(50))
+        let runner = makeImmediateRunner(scanner: mock)
+        _ = await runner.run()
         #expect(mock.startScanCallCount == 1)
     }
 
     @Test("`run` stops the scanner once at the end of the call")
     func runStopsScannerOnce() async {
         let mock = MockBonjourServiceScanner()
-        let runner = BonjourOneShotScanner(scanner: mock)
-        _ = await runner.run(timeout: .milliseconds(50))
+        let runner = makeImmediateRunner(scanner: mock)
+        _ = await runner.run()
         #expect(mock.stopScanCallCount == 1)
     }
 
     @Test("`run` installs itself as the scanner's delegate during the scan window")
     func runTakesDelegateSlotDuringScan() async {
         let mock = MockBonjourServiceScanner()
-        let runner = BonjourOneShotScanner(scanner: mock)
+        let gate = ScanWindowGate()
+        let runTask = await startGatedScan(scanner: mock, gate: gate)
 
-        // Drive a scan in the background so we can observe the
-        // delegate slot mid-scan. The 200 ms window gives the
-        // observer task time to inspect the slot before the
-        // scanner stops.
-        let runTask = Task { @MainActor in
-            await runner.run(timeout: .milliseconds(200))
-        }
-
-        // Give the runner a tick to install its delegate.
-        try? await Task.sleep(for: .milliseconds(50))
         #expect(mock.delegate != nil, "Delegate should be installed during scan")
 
+        gate.close()
         _ = await runTask.value
+    }
+
+    @Test("`run` waits for exactly the requested timeout")
+    func runWaitsForRequestedTimeout() async {
+        let mock = MockBonjourServiceScanner()
+        let gate = ScanWindowGate()
+        let runner = BonjourOneShotScanner(scanner: mock, waitForScanWindow: gate.wait)
+        gate.close()
+
+        _ = await runner.run(timeout: .milliseconds(1_500))
+
+        #expect(gate.requestedDurations == [.milliseconds(1_500)])
     }
 
     @Test("`run` restores the prior delegate after the scan ends")
@@ -80,8 +105,8 @@ struct BonjourOneShotScannerTests {
         let prior = TrackingDelegate()
         mock.delegate = prior
 
-        let runner = BonjourOneShotScanner(scanner: mock)
-        _ = await runner.run(timeout: .milliseconds(50))
+        let runner = makeImmediateRunner(scanner: mock)
+        _ = await runner.run()
 
         // The runner takes the delegate slot while it scans,
         // then must restore the original value so a long-running
@@ -95,19 +120,14 @@ struct BonjourOneShotScannerTests {
     @Test("`run` returns services discovered during the scan window")
     func runReturnsDiscoveredServices() async {
         let mock = MockBonjourServiceScanner()
-        let runner = BonjourOneShotScanner(scanner: mock)
+        let gate = ScanWindowGate()
         let serviceA = makeService(name: "Living Room TV")
         let serviceB = makeService(name: "Bedroom Speaker")
 
-        let runTask = Task { @MainActor in
-            await runner.run(timeout: .milliseconds(200))
-        }
-        // Wait briefly for the scan to start, then simulate
-        // discoveries. The mock scanner forwards each one
-        // through the delegate the runner installed.
-        try? await Task.sleep(for: .milliseconds(50))
+        let runTask = await startGatedScan(scanner: mock, gate: gate)
         mock.simulateServiceFound(serviceA)
         mock.simulateServiceFound(serviceB)
+        gate.close()
 
         let discovered = await runTask.value
         #expect(discovered.count == 2)
@@ -118,8 +138,8 @@ struct BonjourOneShotScannerTests {
     @Test("`run` returns an empty array when nothing is discovered before the timeout")
     func runReturnsEmptyWhenNothingFound() async {
         let mock = MockBonjourServiceScanner()
-        let runner = BonjourOneShotScanner(scanner: mock)
-        let discovered = await runner.run(timeout: .milliseconds(50))
+        let runner = makeImmediateRunner(scanner: mock)
+        let discovered = await runner.run()
         #expect(discovered.isEmpty)
     }
 
@@ -130,16 +150,14 @@ struct BonjourOneShotScannerTests {
         // The runner must collapse these by id so the
         // returned array doesn't contain duplicates.
         let mock = MockBonjourServiceScanner()
-        let runner = BonjourOneShotScanner(scanner: mock)
+        let gate = ScanWindowGate()
         let service = makeService(name: "Living Room TV")
 
-        let runTask = Task { @MainActor in
-            await runner.run(timeout: .milliseconds(200))
-        }
-        try? await Task.sleep(for: .milliseconds(50))
+        let runTask = await startGatedScan(scanner: mock, gate: gate)
         mock.simulateServiceFound(service)
         mock.simulateServiceFound(service)
         mock.simulateServiceFound(service)
+        gate.close()
 
         let discovered = await runTask.value
         #expect(discovered.count == 1)
@@ -148,17 +166,15 @@ struct BonjourOneShotScannerTests {
     @Test("`run` honors `didRemove` — removed services don't appear in the returned array")
     func runHonorsRemoveCallbacks() async {
         let mock = MockBonjourServiceScanner()
-        let runner = BonjourOneShotScanner(scanner: mock)
+        let gate = ScanWindowGate()
         let staying = makeService(name: "Persistent")
         let leaving = makeService(name: "Transient")
 
-        let runTask = Task { @MainActor in
-            await runner.run(timeout: .milliseconds(200))
-        }
-        try? await Task.sleep(for: .milliseconds(50))
+        let runTask = await startGatedScan(scanner: mock, gate: gate)
         mock.simulateServiceFound(staying)
         mock.simulateServiceFound(leaving)
         mock.simulateServiceLost(leaving)
+        gate.close()
 
         let discovered = await runTask.value
         #expect(discovered.count == 1)
@@ -168,17 +184,15 @@ struct BonjourOneShotScannerTests {
     @Test("`run` honors `didReset` — clears collected services if the scanner resets mid-window")
     func runHonorsResetCallbacks() async {
         let mock = MockBonjourServiceScanner()
-        let runner = BonjourOneShotScanner(scanner: mock)
+        let gate = ScanWindowGate()
         let beforeReset = makeService(name: "Before")
         let afterReset = makeService(name: "After")
 
-        let runTask = Task { @MainActor in
-            await runner.run(timeout: .milliseconds(200))
-        }
-        try? await Task.sleep(for: .milliseconds(50))
+        let runTask = await startGatedScan(scanner: mock, gate: gate)
         mock.simulateServiceFound(beforeReset)
         mock.simulateReset()
         mock.simulateServiceFound(afterReset)
+        gate.close()
 
         let discovered = await runTask.value
         #expect(discovered.count == 1)
@@ -193,15 +207,13 @@ struct BonjourOneShotScannerTests {
         // collecting and return a partial result so the
         // caller can present a graceful summary.
         let mock = MockBonjourServiceScanner()
-        let runner = BonjourOneShotScanner(scanner: mock)
+        let gate = ScanWindowGate()
         let service = makeService(name: "Resilient")
 
-        let runTask = Task { @MainActor in
-            await runner.run(timeout: .milliseconds(200))
-        }
-        try? await Task.sleep(for: .milliseconds(50))
+        let runTask = await startGatedScan(scanner: mock, gate: gate)
         mock.simulateServiceFound(service)
         mock.simulateError("transient network failure")
+        gate.close()
 
         let discovered = await runTask.value
         #expect(discovered.count == 1)

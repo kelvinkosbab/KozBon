@@ -41,6 +41,7 @@ public final class BonjourOneShotScanner {
     // MARK: - Properties
 
     private let scanner: BonjourServiceScannerProtocol
+    private let waitForScanWindow: @MainActor (Duration) async -> Void
     private let collector = Collector()
 
     // MARK: - Init
@@ -52,8 +53,18 @@ public final class BonjourOneShotScanner {
     /// callers shouldn't share the same scanner with another
     /// long-running consumer (e.g. the app's Discover tab) at the
     /// same time, as the delegate would get clobbered.
-    public init(scanner: BonjourServiceScannerProtocol) {
+    ///
+    /// - Parameters:
+    ///   - scanner: The scanner to drive.
+    ///   - waitForScanWindow: Suspends for the scan window. Defaults
+    ///     to a cancellable `Task.sleep`; tests inject a gate they
+    ///     open and close themselves so they never depend on real time.
+    public init(
+        scanner: BonjourServiceScannerProtocol,
+        waitForScanWindow: @escaping @MainActor (Duration) async -> Void = { try? await Task.sleep(for: $0) }
+    ) {
         self.scanner = scanner
+        self.waitForScanWindow = waitForScanWindow
     }
 
     // MARK: - Run
@@ -84,11 +95,9 @@ public final class BonjourOneShotScanner {
         scanner.delegate = collector
         scanner.startScan(publishedServices: publishedServices)
 
-        // `Task.sleep` is the right primitive: cooperatively
-        // cancellable, wakes early on cancellation, doesn't
-        // block the actor. If the surrounding intent is
-        // cancelled (e.g. Siri timeout), we exit cleanly.
-        try? await Task.sleep(for: timeout)
+        // The default wait is a cancellable `Task.sleep`, so a
+        // cancelled intent (e.g. Siri timeout) exits cleanly.
+        await waitForScanWindow(timeout)
 
         scanner.stopScan()
         scanner.delegate = priorDelegate
