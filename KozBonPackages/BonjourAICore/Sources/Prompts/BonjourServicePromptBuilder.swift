@@ -141,9 +141,19 @@ public enum BonjourServicePromptBuilder {
             - Never invent port numbers, protocol versions, or vendor names.
             - For TXT records:
               · You may interpret these documented keys directly: `txtvers`, `rmodel`, \
-            `model`, `pv`, `deviceid`, `srcvers`, `features`, `fn`, `md`.
+            `model`, `pv`, `deviceid`, `srcvers`, `features`, `fn`, `md`, `am`, `osvers`, \
+            `ty`, `product`, `pdl`, `rp`, `note`, `adminurl`, `UUID`, `usb_MFG`, `usb_MDL`, \
+            `Color`, `Duplex`, `path`, `id`, `ve`.
+              · For each interpreted key, say what its value tells you about this \
+            particular device (its model, name, software version, or capabilities), not \
+            just what the key means in general.
+              · For a long opaque value (a public key, hash, or hex bitmask), describe what \
+            kind of value it is instead of repeating it.
               · For every other key, write exactly: "The device advertises `<key>=<value>`." \
             Do NOT speculate about meaning.
+            - The "Identified device" line comes from this app's own lookup. When it says \
+            "exact model", state the model plainly; otherwise hedge it ("this is probably \
+            an iPhone").
             - If the full type contains `apple-mobdev`, `companion-link`, `apple-sasl`, or \
             another Apple-internal prefix, acknowledge it's an undocumented Apple internal \
             service. Describe its likely broad function, never invent specifics.
@@ -171,6 +181,14 @@ public enum BonjourServicePromptBuilder {
             (1-2 sentences explaining what this service is and its purpose. For example, \
             "AirPlay lets this Apple TV receive audio and video from other Apple devices \
             on the same network.")
+
+            ## This device
+            (2-4 short bullets about the specific device advertising this service, using \
+            only the provided data: what kind of device it is ("Identified device", model \
+            TXT keys), its advertised name, its host name, and its IP addresses — note \
+            whether it has IPv4, IPv6, or both. If the data doesn't identify the device, \
+            say so in one sentence instead of guessing. For a service broadcast from this \
+            device, say it is your own device.)
 
             ## Why devices advertise this
             (Explain the typical purpose of this service type. Do NOT speculate about \
@@ -251,7 +269,8 @@ public enum BonjourServicePromptBuilder {
     ///   - expertiseLevel: The desired detail level for the explanation.
     ///   - responseLength: The desired verbosity of the response.
     /// - Returns: A formatted prompt string including device context, service details,
-    ///   addresses, protocol description, and TXT records.
+    ///   protocol description, the identified device with its names and addresses,
+    ///   and one line per TXT record.
     @MainActor
     public static func buildPrompt(
         service: BonjourService,
@@ -276,22 +295,16 @@ public enum BonjourServicePromptBuilder {
         parts.append("Service name: \(serviceType.name)")
         parts.append("Full type: \(serviceType.fullType)")
         parts.append("Transport layer: \(serviceType.transportLayer.string.uppercased())")
-        parts.append("Host name: \(service.hostName)")
-        parts.append("Device advertising the service: \(service.service.name)")
-        parts.append("Domain: \(service.service.domain)")
-
-        if !service.addresses.isEmpty {
-            let addressStrings = service.addresses.map(\.ipPortString)
-            parts.append("IP addresses: \(addressStrings.joined(separator: ", "))")
-        }
-
         if let detail = serviceType.detail {
             parts.append("Protocol description: \(detail)")
         }
 
+        parts.append("")
+        parts.append(contentsOf: deviceLines(for: service))
+
         if !service.dataRecords.isEmpty {
-            let records = service.dataRecords.map { "\($0.key)=\($0.value)" }
-            parts.append("TXT records: \(records.joined(separator: ", "))")
+            parts.append("")
+            parts.append(contentsOf: txtRecordLines(for: service.dataRecords))
         }
 
         parts.append("")

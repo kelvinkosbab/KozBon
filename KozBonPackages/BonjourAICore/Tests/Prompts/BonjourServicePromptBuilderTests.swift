@@ -224,10 +224,11 @@ struct BonjourServicePromptBuilderTests {
 
     // MARK: - Structured Output
 
-    @Test("System instructions enforce the four-section markdown template the renderer expects")
+    @Test("System instructions enforce the five-section markdown template the renderer expects")
     func systemInstructionsContainsStructuredSections() {
         let instructions = BonjourServicePromptBuilder.systemInstructions
         #expect(instructions.contains("## What it does"))
+        #expect(instructions.contains("## This device"))
         // Renamed from "Why it's running" to "Why devices advertise this" so
         // the heading anchors the answer to the service type's typical
         // deployment rather than inviting speculation about the user's setup.
