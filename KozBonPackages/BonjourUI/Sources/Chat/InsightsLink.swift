@@ -52,42 +52,59 @@ struct InsightsLink: View {
 
     @Environment(\.preferencesStore) private var preferencesStore
     @Environment(\.aiCloudCredentialsStore) private var credentialsStore
-    @Environment(\.hapticFeedback) private var hapticFeedback
     @Environment(\.openURL) private var openURL
     @Environment(\.colorSchemeContrast) private var colorSchemeContrast
 
     private let style: Style
     private let action: () -> Void
 
+    /// Bumped when Insights opens; drives a `.medium` impact.
+    @State private var explainTapCount = 0
+
+    /// Bumped by the enable / sign-in calls to action; drives a
+    /// lighter impact, since they leave the screen rather than open
+    /// Insights.
+    @State private var callToActionTapCount = 0
+
     /// Creates the Insights link.
     ///
     /// - Parameters:
     ///   - style: The capsule list row, or the navigation bar button.
-    ///   - action: Presents the Insights sheet. Called after a
-    ///     `.medium` haptic has already fired.
+    ///   - action: Presents the Insights sheet. The link plays its
+    ///     own `.medium` impact, so callers add no haptic.
     init(style: Style = .capsule, action: @escaping () -> Void) {
         self.style = style
         self.action = action
     }
 
     var body: some View {
+        content
+            // Declarative haptics, like the chat's submit tap. SwiftUI
+            // plays them where the hardware has a Taptic Engine and
+            // skips them elsewhere, so no platform gating is needed.
+            .sensoryFeedback(.impact(weight: .medium), trigger: explainTapCount)
+            .sensoryFeedback(.impact(weight: .light), trigger: callToActionTapCount)
+    }
+
+    @ViewBuilder
+    private var content: some View {
         switch state {
         case .explain(let backend):
             control(title: Strings.Insights.explainWithAI, backend: backend) {
-                hapticFeedback.play(.medium)
+                explainTapCount += 1
                 action()
             }
             .accessibilityIdentifier(style == .toolbar ? "insights_toolbar_button" : "insights_link")
 
         case .enableAppleIntelligence:
             control(title: Strings.Insights.enableAppleIntelligence, backend: .appleIntelligence) {
-                hapticFeedback.play(.light)
+                callToActionTapCount += 1
                 openAppleIntelligenceSettings()
             }
 
         case .signIn(let backend, let provider):
             control(title: Self.signInTitle(for: provider), backend: backend) {
-                hapticFeedback.play(.light)
+                callToActionTapCount += 1
                 NotificationCenter.default.post(
                     name: .aiCloudSignInRequested,
                     object: nil,
