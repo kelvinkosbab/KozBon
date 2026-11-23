@@ -1,0 +1,97 @@
+name: Claude PR Review
+
+# Automatic agentic review of every non-draft PR that touches code.
+# Comments only: the job can't push, approve, or merge.
+# Needs the Claude GitHub app installed on the repo and an
+# ANTHROPIC_API_KEY repository secret.
+
+on:
+  pull_request:
+    branches: [ "main" ]
+    types: [opened, synchronize, ready_for_review, reopened]
+    paths:
+      - '**/*.swift'
+      - '**/Package.swift'
+      - '**/Package.resolved'
+      - '**/*.xcstrings'
+      - '**/*.plist'
+      - '**/*.xcprivacy'
+      - '**/*.entitlements'
+      - '**/project.pbxproj'
+      - '.github/workflows/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    name: Review
+    if: github.event.pull_request.draft == false
+    # Reviewing reads code and the diff; it never builds, so Linux is enough
+    # and far cheaper than macos-26.
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      pull-requests: write
+      id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Claude review
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          # Secrets aren't passed to fork PRs anyway; skip them cleanly.
+          allow_fork_prs: 'false'
+          use_sticky_comment: 'true'
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ github.event.pull_request.number }}
+
+            You are reviewing a pull request for KozBon, a multi-platform
+            SwiftUI app (iOS, macOS, tvOS, watchOS, visionOS 26) for Bonjour
+            service discovery. The PR branch is checked out in the working
+            directory. Read CLAUDE.md first, then the rules in .claude/rules/
+            that apply to the files this PR changes. Treat them as the
+            project's standards.
+
+            Use `gh pr diff` and `gh pr view` to see the change. Review only
+            what this PR changes, and focus on, in order:
+
+            1. Correctness bugs: logic errors, crashes, force unwraps outside
+               the documented exceptions, broken edge cases.
+            2. Swift 6 strict concurrency: actor isolation, Sendable, @MainActor
+               on Core Data and service classes, @preconcurrency delegates,
+               no new nonisolated(unsafe) beyond the documented statics.
+            3. SwiftUI and MVVM: the conventions in apple-swiftui-mvvm.md,
+               zero-parameter onChange, no new #available(... 26 ...) gates.
+            4. Localization: every user-facing string goes through
+               BonjourLocalization.Strings with all 8 locales in the catalog
+               (App Intents metadata in the app target is the exception).
+            5. Service library: a new service type needs its static
+               definition, an entry in tcpServiceTypes or udpServiceTypes, and
+               an NSBonjourServices entry in Info.plist, with no duplicates.
+            6. AI backends and privacy: API keys stay in the Keychain, Gemini
+               keys go in the x-goog-api-key header, China storefront gating
+               via AIBackendAvailability is respected.
+            7. Tests: new behaviour has Swift Testing coverage under
+               KozBonPackages/.
+
+            Don't comment on formatting SwiftLint already enforces, and don't
+            pad the review with praise or restate the diff. If nothing is
+            wrong, say so in one line.
+
+            Post specific issues as inline comments with
+            `mcp__github_inline_comment__create_inline_comment` (confirmed:
+            true), each saying what is wrong and how to fix it. Post one short
+            top-level summary with `gh pr comment`. Only post GitHub comments;
+            don't put review text in your final message.
+          claude_args: |
+            --max-turns 30
+            --allowedTools "mcp__github_inline_comment__create_inline_comment,Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Read,Grep,Glob"

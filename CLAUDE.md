@@ -276,8 +276,10 @@ Verify a change by building and inspecting `Metadata.appintents/extract.actionsd
 | **SPM Package Tests** (`spm-tests.yml`) | Push + PR when `KozBonPackages/` changes | `swift build` + `swift test` |
 | **SwiftLint** (`swiftlint.yml`) | PR when `.swift` files change | Lint with inline PR annotations |
 | **Multi-platform Build** (`multiplatform-build.yml`) | Push + PR to main | macOS + visionOS builds in parallel |
+| **Claude PR Review** (`claude-review.yml`) | Non-draft PR to main when code, catalogs, plists or workflows change | `anthropics/claude-code-action` reviews the diff against this file and `.claude/rules/`, posting inline comments and one sticky summary. Comment-only |
+| **Claude** (`claude.yml`) | `@claude` in a PR/issue comment or review, from users with write access | Answers questions or pushes fixes to the PR branch on request |
 
-All workflows use `macos-26` runner with concurrency groups and SPM caching.
+The build workflows use the `macos-26` runner with concurrency groups and SPM caching. The two Claude workflows run on `ubuntu-latest` because they never build, so they can't verify a change compiles; the build workflows do that. Both need the Claude GitHub app on the repo and an `ANTHROPIC_API_KEY` repository secret, and skip fork PRs. The review prompt lives in `claude-review.yml`; edit it there when a convention here changes.
 
 ## Important Gotchas
 
