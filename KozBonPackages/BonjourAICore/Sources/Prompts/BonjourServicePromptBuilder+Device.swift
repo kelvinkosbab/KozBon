@@ -8,9 +8,51 @@
 import Foundation
 import BonjourModels
 
-// MARK: - Device and TXT Lines
+#if canImport(UIKit)
+import UIKit
+#endif
 
+// MARK: - BonjourServicePromptBuilder + Device
+
+/// The device half of the prompt builder: the reader's own device,
+/// and the device behind the service being explained with its TXT
+/// records. Split out to keep the main file and its enum body under
+/// the length limits.
 extension BonjourServicePromptBuilder {
+
+    // MARK: - Device Context
+
+    /// A description of the current device for contextualizing AI responses.
+    @MainActor
+    public static var deviceContext: String {
+        #if os(iOS)
+        let device = UIDevice.current
+        return "I am using an \(device.model) running \(device.systemName) \(device.systemVersion) (device name: \(device.name))"
+        #elseif os(macOS)
+        let osVersion = ProcessInfo.processInfo.operatingSystemVersionString
+        return "I am using a Mac running macOS \(osVersion) (hostname: \(ProcessInfo.processInfo.hostName))"
+        #elseif os(visionOS)
+        return "I am using an Apple Vision Pro running visionOS"
+        #else
+        return "I am using an Apple device"
+        #endif
+    }
+
+    /// A short name for the current device (e.g., "iPhone", "Mac", "Apple Vision Pro").
+    @MainActor
+    public static var currentDeviceShortName: String {
+        #if os(iOS)
+        UIDevice.current.model
+        #elseif os(macOS)
+        "Mac"
+        #elseif os(visionOS)
+        "Apple Vision Pro"
+        #else
+        "device"
+        #endif
+    }
+
+    // MARK: - Device and TXT Lines
 
     /// The lines describing the device behind the service: what this
     /// app identified it as, its advertised name, host name, domain,

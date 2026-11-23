@@ -9,10 +9,6 @@ import Foundation
 import BonjourCore
 import BonjourModels
 
-#if canImport(UIKit)
-import UIKit
-#endif
-
 // MARK: - BonjourServicePromptBuilder
 
 /// Builds contextual prompts for the AI explainer from Bonjour service metadata.
@@ -225,38 +221,6 @@ public enum BonjourServicePromptBuilder {
         }
         let locale = Locale(identifier: languageCode)
         return locale.localizedString(forLanguageCode: languageCode) ?? "English"
-    }
-
-    // MARK: - Device Context
-
-    /// A description of the current device for contextualizing AI responses.
-    @MainActor
-    public static var deviceContext: String {
-        #if os(iOS)
-        let device = UIDevice.current
-        return "I am using an \(device.model) running \(device.systemName) \(device.systemVersion) (device name: \(device.name))"
-        #elseif os(macOS)
-        let osVersion = ProcessInfo.processInfo.operatingSystemVersionString
-        return "I am using a Mac running macOS \(osVersion) (hostname: \(ProcessInfo.processInfo.hostName))"
-        #elseif os(visionOS)
-        return "I am using an Apple Vision Pro running visionOS"
-        #else
-        return "I am using an Apple device"
-        #endif
-    }
-
-    /// A short name for the current device (e.g., "iPhone", "Mac", "Apple Vision Pro").
-    @MainActor
-    public static var currentDeviceShortName: String {
-        #if os(iOS)
-        UIDevice.current.model
-        #elseif os(macOS)
-        "Mac"
-        #elseif os(visionOS)
-        "Apple Vision Pro"
-        #else
-        "device"
-        #endif
     }
 
     // MARK: - Prompt Builder
