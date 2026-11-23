@@ -91,7 +91,7 @@ extension BonjourServicePromptBuilder {
         case .high:
             "exact model, from the device's TXT records"
         case .medium:
-            "device family, matched from its name; the exact model is unknown"
+            "device family, matched from its name; specific model unknown"
         case .low:
             "device class, inferred from the service type alone"
         }
